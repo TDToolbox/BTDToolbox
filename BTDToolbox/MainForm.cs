@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -51,6 +52,24 @@ namespace BTDToolbox
             JetForm jf = new JetForm(file);
             jf.MdiParent = this;
             jf.Show();
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Settings.readGamePath() == "")
+            {
+                OpenFileDialog fileDiag = new OpenFileDialog();
+                fileDiag.Title = "Open game exe";
+                fileDiag.DefaultExt = "exe";
+                fileDiag.Filter = "Exe files (*.exe)|*.exe|All files (*.*)|*.*";
+                fileDiag.Multiselect = false;
+                if (fileDiag.ShowDialog() == DialogResult.OK)
+                {
+                    file = fileDiag.FileName;
+                    Settings.setGamePath(file);
+                }
+            }
+            Process.Start(Settings.readGamePath());
         }
     }
 }
