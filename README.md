@@ -1,3 +1,3 @@
-*BTD Toolbox
+*BTD Toolbox*
 
 a fully featured .jet editor
