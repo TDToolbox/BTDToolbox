@@ -30,12 +30,10 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btdpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newJetWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,8 +41,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.windowToolStripMenuItem});
+            this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -58,12 +55,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.viewToolStripMenuItem.Text = "Edit";
             // 
             // openToolStripMenuItem
             // 
@@ -87,20 +78,11 @@
             this.btdpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.btdpToolStripMenuItem.Text = ".btdp";
             // 
-            // windowToolStripMenuItem
+            // viewToolStripMenuItem
             // 
-            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newJetWindowToolStripMenuItem});
-            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.windowToolStripMenuItem.Text = "Window";
-            // 
-            // newJetWindowToolStripMenuItem
-            // 
-            this.newJetWindowToolStripMenuItem.Name = "newJetWindowToolStripMenuItem";
-            this.newJetWindowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newJetWindowToolStripMenuItem.Text = "New Jet window";
-            this.newJetWindowToolStripMenuItem.Click += new System.EventHandler(this.newJetWindowToolStripMenuItem_Click);
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.viewToolStripMenuItem.Text = "Edit";
             // 
             // TD_Toolbox_Window
             // 
@@ -128,8 +110,6 @@
         private System.Windows.Forms.ToolStripMenuItem jetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btdpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newJetWindowToolStripMenuItem;
     }
 }
 
