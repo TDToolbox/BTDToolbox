@@ -68,19 +68,19 @@
             this.btdpToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Text = "New";
             // 
             // jetToolStripMenuItem
             // 
             this.jetToolStripMenuItem.Name = "jetToolStripMenuItem";
-            this.jetToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.jetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.jetToolStripMenuItem.Text = "Project from .jet";
             this.jetToolStripMenuItem.Click += new System.EventHandler(this.jetToolStripMenuItem_Click);
             // 
             // btdpToolStripMenuItem
             // 
             this.btdpToolStripMenuItem.Name = "btdpToolStripMenuItem";
-            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
             // 
             // viewToolStripMenuItem
@@ -110,8 +110,6 @@
             this.consoleToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.consoleToolStripMenuItem.Text = "Console";
             this.consoleToolStripMenuItem.Click += new System.EventHandler(this.consoleToolStripMenuItem_Click);
-            
-            
             // 
             // TD_Toolbox_Window
             // 
