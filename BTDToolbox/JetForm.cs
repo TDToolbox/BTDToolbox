@@ -10,13 +10,15 @@ namespace BTDToolbox
     public partial class JetForm : Form
     {
         private String filePath;
+        private TD_Toolbox_Window Form;
         private string tempName;
 
-        public JetForm(String filePath)
+        public JetForm(String filePath, TD_Toolbox_Window Form)
         {
             InitializeComponent();
             this.FormClosing += this.JetForm_Closed;
             this.filePath = filePath;
+            this.Form = Form;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -166,6 +168,17 @@ namespace BTDToolbox
             if(selected.Count == 1)
             {
                 ConsoleHandler.appendLog(this.Text + "\\" + selected[0].Text);
+            }
+        }
+
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+            if (Selected.Count == 1)
+            {
+                JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                JsonWindow.MdiParent = Form;
+                JsonWindow.Show();
             }
         }
     }
