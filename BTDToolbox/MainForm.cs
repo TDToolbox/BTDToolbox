@@ -56,6 +56,7 @@ namespace BTDToolbox
             try
             {
                 Process.Start(Settings.readGamePath());
+                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
             } catch (Exception ex)
             {
                 ConsoleHandler.appendLog("No launch dir defined or is wrong.");
@@ -71,7 +72,6 @@ namespace BTDToolbox
                 }
                 ConsoleHandler.appendLog("Launch dir saved in launchSettings.txt");
             }
-            ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
         }
 
         private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
