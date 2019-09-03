@@ -120,7 +120,6 @@
             this.Name = "JetForm";
             this.Text = "JetViewer";
             this.Load += new System.EventHandler(this.JetForm_Load);
-            this.FormClosed += this.JetForm_Closed;
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();

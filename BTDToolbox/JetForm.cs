@@ -21,20 +21,49 @@ namespace BTDToolbox
 
         }
 
+        public void saveProject(String path)
+        {
+            DirectoryInfo proj = new DirectoryInfo(tempName);
+            proj.MoveTo(path);
+        }
+
         private void JetForm_Load(object sender, EventArgs e)
         {
-            Random rand = new Random();
-            ZipFile archive = new ZipFile(filePath);
-            archive.Password = "Q%_{6#Px]]";
-            string livePath = Environment.CurrentDirectory;
-            tempName = (livePath + "\\temp_" + rand.Next());
-            this.Text = tempName;
-            MessageBox.Show("Click 'Ok' to create temp files, this can take up to 30 seconds.");
-            archive.ExtractAll(tempName);
-            PopulateTreeView();
+            refreshWindow();
         }
+
+        public void refreshWindow()
+        {
+            if(File.Exists(tempName + "\\meta.tproj"))
+            {
+                PopulateTreeView();
+            } else
+            {
+                Random rand = new Random();
+                ZipFile archive = new ZipFile(filePath);
+                archive.Password = "Q%_{6#Px]]";
+                ConsoleHandler.appendLog("Creating temp files...");
+                if (MessageBox.Show("Click 'Ok' to create temp files, this can take up to 2 seconds.", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    string livePath = Environment.CurrentDirectory;
+                    tempName = (livePath + "\\temp_" + rand.Next());
+                    this.Text = tempName;
+                    archive.ExtractAll(tempName);
+                    ConsoleHandler.appendLog("Temp files created at: " + tempName);
+                    PopulateTreeView();
+                    return;
+                }
+                ConsoleHandler.appendLog("Temp files creation canceled");
+            }
+        }
+
         private void JetForm_Closed(object sender, EventArgs e)
         {
+            if(tempName == null)
+            {
+                return;
+            }
+            ConsoleHandler.appendLog("Deleting temp files...");
             DirectoryInfo temp = new DirectoryInfo(tempName);
             foreach (FileInfo file in temp.GetFiles())
             {
@@ -45,6 +74,7 @@ namespace BTDToolbox
                 dir.Delete(true);
             }
             temp.Delete();
+            ConsoleHandler.appendLog("Deleting temp files deleted!");
         }
 
         private void PopulateTreeView()
@@ -109,6 +139,11 @@ namespace BTDToolbox
                 listView1.Items.Add(item);
             }
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

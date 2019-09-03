@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BTDToolbox
@@ -23,7 +16,10 @@ namespace BTDToolbox
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
-
+            ConsoleHandler.console = new Console();
+            ConsoleHandler.console.MdiParent = this;
+            ConsoleHandler.console.Show();
+            ConsoleHandler.appendLog("Program loaded!");
         }
 
         private void newJetWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,8 +52,10 @@ namespace BTDToolbox
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ConsoleHandler.appendLog("Launching game...");
             if (Settings.readGamePath() == "")
             {
+                ConsoleHandler.appendLog("No launch dir defined");
                 OpenFileDialog fileDiag = new OpenFileDialog();
                 fileDiag.Title = "Open game exe";
                 fileDiag.DefaultExt = "exe";
@@ -68,8 +66,30 @@ namespace BTDToolbox
                     file = fileDiag.FileName;
                     Settings.setGamePath(file);
                 }
+                ConsoleHandler.appendLog("Launch dir saved in launchSettings.txt");
             }
             Process.Start(Settings.readGamePath());
+            ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
+        }
+
+        private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.console.Show();
+        }
+
+        private void existingProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void jetToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void projectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
