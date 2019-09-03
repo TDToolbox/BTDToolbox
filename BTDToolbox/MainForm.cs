@@ -61,6 +61,7 @@ namespace BTDToolbox
         {
             JetForm jf = new JetForm(file, this);
             jf.MdiParent = this;
+            
             jf.Show();
         }
 
@@ -103,5 +104,9 @@ namespace BTDToolbox
             
         }
 
+        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

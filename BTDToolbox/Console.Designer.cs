@@ -55,20 +55,26 @@
             // 
             this.console_log.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.console_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.console_log.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.console_log.ForeColor = System.Drawing.Color.White;
             this.console_log.FormattingEnabled = true;
+            this.console_log.ItemHeight = 15;
             this.console_log.Location = new System.Drawing.Point(13, 13);
             this.console_log.Name = "console_log";
-            this.console_log.Size = new System.Drawing.Size(890, 225);
+            this.console_log.Size = new System.Drawing.Size(890, 214);
             this.console_log.TabIndex = 2;
             // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.ClientSize = new System.Drawing.Size(915, 279);
             this.Controls.Add(this.console_log);
             this.Controls.Add(this.invoke_button);
             this.Controls.Add(this.invoke_textbox);
+            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "Console";
             this.Text = "Console";
             this.Load += new System.EventHandler(this.Console_Load);
