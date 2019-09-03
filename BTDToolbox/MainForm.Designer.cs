@@ -37,6 +37,7 @@
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jsonEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +47,8 @@
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.runToolStripMenuItem,
-            this.viewToolStripMenuItem1});
+            this.viewToolStripMenuItem1,
+            this.jsonEditorToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1483, 24);
@@ -73,14 +75,14 @@
             // jetToolStripMenuItem
             // 
             this.jetToolStripMenuItem.Name = "jetToolStripMenuItem";
-            this.jetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.jetToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.jetToolStripMenuItem.Text = "Project from .jet";
             this.jetToolStripMenuItem.Click += new System.EventHandler(this.jetToolStripMenuItem_Click);
             // 
             // btdpToolStripMenuItem
             // 
             this.btdpToolStripMenuItem.Name = "btdpToolStripMenuItem";
-            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
             // 
             // viewToolStripMenuItem
@@ -111,6 +113,13 @@
             this.consoleToolStripMenuItem.Text = "Console";
             this.consoleToolStripMenuItem.Click += new System.EventHandler(this.consoleToolStripMenuItem_Click);
             // 
+            // jsonEditorToolStripMenuItem
+            // 
+            this.jsonEditorToolStripMenuItem.Name = "jsonEditorToolStripMenuItem";
+            this.jsonEditorToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.jsonEditorToolStripMenuItem.Text = "Json Editor";
+            this.jsonEditorToolStripMenuItem.Click += new System.EventHandler(this.JsonEditorToolStripMenuItem_Click);
+            // 
             // TD_Toolbox_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -140,6 +149,7 @@
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem consoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jsonEditorToolStripMenuItem;
     }
 }
 

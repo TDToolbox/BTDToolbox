@@ -88,5 +88,12 @@ namespace BTDToolbox
         {
             
         }
+
+        private void JsonEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JsonEditor editor = new JsonEditor();
+            editor.MdiParent = this;
+            editor.Show();
+        }
     }
 }
