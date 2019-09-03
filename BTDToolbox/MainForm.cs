@@ -53,9 +53,12 @@ namespace BTDToolbox
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Launching game...");
-            if (Settings.readGamePath() == "")
+            try
             {
-                ConsoleHandler.appendLog("No launch dir defined");
+                Process.Start(Settings.readGamePath());
+            } catch (Exception ex)
+            {
+                ConsoleHandler.appendLog("No launch dir defined or is wrong.");
                 OpenFileDialog fileDiag = new OpenFileDialog();
                 fileDiag.Title = "Open game exe";
                 fileDiag.DefaultExt = "exe";
@@ -68,7 +71,6 @@ namespace BTDToolbox
                 }
                 ConsoleHandler.appendLog("Launch dir saved in launchSettings.txt");
             }
-            Process.Start(Settings.readGamePath());
             ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
         }
 
@@ -78,11 +80,6 @@ namespace BTDToolbox
         }
 
         private void existingProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void jetToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }

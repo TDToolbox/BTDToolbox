@@ -21,12 +21,6 @@ namespace BTDToolbox
 
         }
 
-        public void saveProject(String path)
-        {
-            DirectoryInfo proj = new DirectoryInfo(tempName);
-            proj.MoveTo(path);
-        }
-
         private void JetForm_Load(object sender, EventArgs e)
         {
             refreshWindow();
@@ -34,35 +28,25 @@ namespace BTDToolbox
 
         public void refreshWindow()
         {
-            if(File.Exists(tempName + "\\meta.tproj"))
+            Random rand = new Random();
+            ZipFile archive = new ZipFile(filePath);
+            archive.Password = "Q%_{6#Px]]";
+            ConsoleHandler.appendLog("Creating temp files...");
+            if (MessageBox.Show("Click 'Ok' to create temp files, this can take up to 2 minutes.", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
+                string livePath = Environment.CurrentDirectory;
+                tempName = (livePath + "\\temp_" + rand.Next());
+                this.Text = tempName;
+                archive.ExtractAll(tempName);
+                ConsoleHandler.appendLog("Temp files created at: " + tempName);
                 PopulateTreeView();
-            } else
-            {
-                Random rand = new Random();
-                ZipFile archive = new ZipFile(filePath);
-                archive.Password = "Q%_{6#Px]]";
-                ConsoleHandler.appendLog("Creating temp files...");
-                if (MessageBox.Show("Click 'Ok' to create temp files, this can take up to 2 seconds.", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                {
-                    string livePath = Environment.CurrentDirectory;
-                    tempName = (livePath + "\\temp_" + rand.Next());
-                    this.Text = tempName;
-                    archive.ExtractAll(tempName);
-                    ConsoleHandler.appendLog("Temp files created at: " + tempName);
-                    PopulateTreeView();
-                    return;
-                }
-                ConsoleHandler.appendLog("Temp files creation canceled");
+                return;
             }
+            ConsoleHandler.appendLog("Temp files creation canceled");
         }
 
         private void JetForm_Closed(object sender, EventArgs e)
         {
-            if(tempName == null)
-            {
-                return;
-            }
             ConsoleHandler.appendLog("Deleting temp files...");
             DirectoryInfo temp = new DirectoryInfo(tempName);
             foreach (FileInfo file in temp.GetFiles())
@@ -144,6 +128,24 @@ namespace BTDToolbox
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+        
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fileDiag = new SaveFileDialog();
+            fileDiag.Title = "Save .jet";
+            fileDiag.DefaultExt = "jet";
+            fileDiag.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
+            if (fileDiag.ShowDialog() == DialogResult.OK)
+            {
+                ZipFile toExport = new ZipFile();
+
+            }
         }
     }
 }
