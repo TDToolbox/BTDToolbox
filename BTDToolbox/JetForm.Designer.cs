@@ -64,9 +64,12 @@
             // 
             // treeView1
             // 
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.ForeColor = System.Drawing.Color.White;
             this.treeView1.ImageIndex = 0;
             this.treeView1.ImageList = this.imageList1;
+            this.treeView1.ItemHeight = 24;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
@@ -95,11 +98,13 @@
             // 
             // listView1
             // 
+            this.listView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.name_column,
             this.type_column,
             this.time_modified_column});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.ForeColor = System.Drawing.Color.White;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";

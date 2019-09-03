@@ -57,5 +57,10 @@ namespace BTDToolbox
             float.TryParse(toolStripTextBox1.Text, out FontSize);
             FontSize = textBox1.Font.Size;
         }
+
+        private void JsonEditor_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
