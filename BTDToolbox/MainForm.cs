@@ -57,7 +57,7 @@ namespace BTDToolbox
             {
                 Process.Start(Settings.readGamePath());
                 ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
-            } catch (Exception ex)
+            } catch (Exception)
             {
                 ConsoleHandler.appendLog("No launch dir defined or is wrong.");
                 OpenFileDialog fileDiag = new OpenFileDialog();
