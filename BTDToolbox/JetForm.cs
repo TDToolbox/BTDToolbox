@@ -1,5 +1,7 @@
 ﻿using Ionic.Zip;
+using Ionic.Zlib;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,6 +16,7 @@ namespace BTDToolbox
         public JetForm(String filePath, TD_Toolbox_Window Form)
         {
             InitializeComponent();
+            this.FormClosing += this.JetForm_Closed;
             this.filePath = filePath;
             this.Form = Form;
         }
@@ -49,18 +52,21 @@ namespace BTDToolbox
 
         private void JetForm_Closed(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Deleting temp files...");
-            DirectoryInfo temp = new DirectoryInfo(tempName);
-            foreach (FileInfo file in temp.GetFiles())
+            try
             {
-                file.Delete();
-            }
-            foreach (DirectoryInfo dir in temp.GetDirectories())
-            {
-                dir.Delete(true);
-            }
-            temp.Delete();
-            ConsoleHandler.appendLog("Deleting temp files deleted!");
+                ConsoleHandler.appendLog("Deleting temp files...");
+                DirectoryInfo temp = new DirectoryInfo(tempName);
+                foreach (FileInfo file in temp.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in temp.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+                temp.Delete();
+                ConsoleHandler.appendLog("Deleting temp files deleted!");
+            } catch (Exception) { }
         }
 
         private void PopulateTreeView()
@@ -147,7 +153,21 @@ namespace BTDToolbox
             if (fileDiag.ShowDialog() == DialogResult.OK)
             {
                 ZipFile toExport = new ZipFile();
+                toExport.Password = "Q%_{6#Px]]";
+                toExport.AddDirectory(tempName);
+                toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
+                toExport.Name = fileDiag.FileName;
+                toExport.CompressionLevel = CompressionLevel.Level6;
+                toExport.Save();
+            }
+        }
 
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection selected = listView1.SelectedItems;
+            if(selected.Count == 1)
+            {
+                ConsoleHandler.appendLog(this.Text + "\\" + selected[0].Text);
             }
         }
 

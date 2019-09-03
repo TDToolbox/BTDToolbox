@@ -37,7 +37,6 @@
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.jsonEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,8 +46,7 @@
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.runToolStripMenuItem,
-            this.viewToolStripMenuItem1,
-            this.jsonEditorToolStripMenuItem});
+            this.viewToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1483, 24);
@@ -112,7 +110,8 @@
             this.consoleToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.consoleToolStripMenuItem.Text = "Console";
             this.consoleToolStripMenuItem.Click += new System.EventHandler(this.consoleToolStripMenuItem_Click);
-            // 
+            
+          // 
             // jsonEditorToolStripMenuItem
             // 
             this.jsonEditorToolStripMenuItem.Name = "jsonEditorToolStripMenuItem";
@@ -149,7 +148,6 @@
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem consoleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem jsonEditorToolStripMenuItem;
     }
 }
 
