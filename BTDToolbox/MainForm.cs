@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BTDToolbox
@@ -12,6 +14,7 @@ namespace BTDToolbox
         public TD_Toolbox_Window()
         {
             InitializeComponent();
+            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.Black;
         }
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
