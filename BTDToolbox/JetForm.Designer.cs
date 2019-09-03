@@ -88,12 +88,14 @@
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.saveButton.ForeColor = System.Drawing.Color.White;
             this.saveButton.Location = new System.Drawing.Point(0, 627);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(530, 23);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
-            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.UseVisualStyleBackColor = false;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // listView1
@@ -103,10 +105,9 @@
             this.name_column,
             this.type_column,
             this.time_modified_column});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.ForeColor = System.Drawing.Color.White;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.Location = new System.Drawing.Point(2, 3);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(530, 651);
             this.listView1.SmallImageList = this.imageList1;
@@ -118,12 +119,12 @@
             // name_column
             // 
             this.name_column.Text = "Name";
-            this.name_column.Width = 293;
+            this.name_column.Width = 384;
             // 
             // type_column
             // 
             this.type_column.Text = "Type";
-            this.type_column.Width = 93;
+            this.type_column.Width = 63;
             // 
             // time_modified_column
             // 

@@ -20,7 +20,6 @@ namespace BTDToolbox
             InitializeComponent();
             this.Path = Path;
             
-
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
             int TabsMultiplier = 1;

@@ -20,6 +20,7 @@ namespace BTDToolbox
             this.FormClosing += this.JetForm_Closed;
             this.filePath = filePath;
             this.Form = Form;
+            //.OfType<ListView.>().FirstOrDefault().BackColor = Color.Black;
         }
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form)
         {
@@ -176,9 +177,14 @@ namespace BTDToolbox
             ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
             if (Selected.Count == 1)
             {
-                JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
-                JsonWindow.MdiParent = Form;
-                JsonWindow.Show();
+                try
+                {
+                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                    JsonWindow.MdiParent = Form;
+                    JsonWindow.Show();
+                } catch (Exception)
+                {
+                }
             }
         }
     }
