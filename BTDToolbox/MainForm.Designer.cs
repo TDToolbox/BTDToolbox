@@ -111,12 +111,6 @@
             this.consoleToolStripMenuItem.Text = "Console";
             this.consoleToolStripMenuItem.Click += new System.EventHandler(this.consoleToolStripMenuItem_Click);
             
-          // 
-            // jsonEditorToolStripMenuItem
-            // 
-            this.jsonEditorToolStripMenuItem.Name = "jsonEditorToolStripMenuItem";
-            this.jsonEditorToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.jsonEditorToolStripMenuItem.Text = "Json Editor";
             
             // 
             // TD_Toolbox_Window
