@@ -24,7 +24,7 @@ namespace BTDToolbox
 
         private void newJetWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            JetForm jf = new JetForm(file);
+            JetForm jf = new JetForm(file, this);
             jf.MdiParent = this;
             jf.Show();
         }
@@ -45,7 +45,7 @@ namespace BTDToolbox
 
         private void jetOpen(String file)
         {
-            JetForm jf = new JetForm(file);
+            JetForm jf = new JetForm(file, this);
             jf.MdiParent = this;
             jf.Show();
         }
@@ -89,11 +89,5 @@ namespace BTDToolbox
             
         }
 
-        private void JsonEditorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            JsonEditor editor = new JsonEditor();
-            editor.MdiParent = this;
-            editor.Show();
-        }
     }
 }

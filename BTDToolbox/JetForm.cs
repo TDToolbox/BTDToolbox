@@ -8,12 +8,14 @@ namespace BTDToolbox
     public partial class JetForm : Form
     {
         private String filePath;
+        private TD_Toolbox_Window Form;
         private string tempName;
 
-        public JetForm(String filePath)
+        public JetForm(String filePath, TD_Toolbox_Window Form)
         {
             InitializeComponent();
             this.filePath = filePath;
+            this.Form = Form;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -97,6 +99,7 @@ namespace BTDToolbox
             TreeNode newSelected = e.Node;
             listView1.Items.Clear();
             DirectoryInfo nodeDirInfo = (DirectoryInfo)newSelected.Tag;
+            this.Text = nodeDirInfo.FullName;
             ListViewItem.ListViewSubItem[] subItems;
             ListViewItem item = null;
 
@@ -145,6 +148,17 @@ namespace BTDToolbox
             {
                 ZipFile toExport = new ZipFile();
 
+            }
+        }
+
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+            if (Selected.Count == 1)
+            {
+                JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                JsonWindow.MdiParent = Form;
+                JsonWindow.Show();
             }
         }
     }

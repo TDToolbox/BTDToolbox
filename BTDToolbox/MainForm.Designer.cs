@@ -118,7 +118,7 @@
             this.jsonEditorToolStripMenuItem.Name = "jsonEditorToolStripMenuItem";
             this.jsonEditorToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.jsonEditorToolStripMenuItem.Text = "Json Editor";
-            this.jsonEditorToolStripMenuItem.Click += new System.EventHandler(this.JsonEditorToolStripMenuItem_Click);
+            
             // 
             // TD_Toolbox_Window
             // 
