@@ -162,15 +162,6 @@ namespace BTDToolbox
             }
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListView.SelectedListViewItemCollection selected = listView1.SelectedItems;
-            if(selected.Count == 1)
-            {
-                ConsoleHandler.appendLog(this.Text + "\\" + selected[0].Text);
-            }
-        }
-
         private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
