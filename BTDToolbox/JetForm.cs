@@ -10,6 +10,7 @@ namespace BTDToolbox
     public partial class JetForm : Form
     {
         private String filePath;
+        private DirectoryInfo dirInfo;
         private TD_Toolbox_Window Form;
         private string tempName;
 
@@ -20,6 +21,13 @@ namespace BTDToolbox
             this.filePath = filePath;
             this.Form = Form;
         }
+        public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form)
+        {
+            InitializeComponent();
+            this.FormClosing += this.JetForm_Closed;
+            this.dirInfo = dirInfo;
+            this.Form = Form;
+        }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -28,45 +36,46 @@ namespace BTDToolbox
 
         private void JetForm_Load(object sender, EventArgs e)
         {
-            refreshWindow();
+            if (filePath != null)
+            {
+                openJetWindow();
+            }
+            else if (dirInfo != null)
+            {
+                openDirWindow();
+            }
         }
 
-        public void refreshWindow()
+        public void openDirWindow()
+        {
+            tempName = dirInfo.FullName;
+            this.Text = tempName;
+            PopulateTreeView();
+            return;
+        }
+
+        public void openJetWindow()
         {
             Random rand = new Random();
             ZipFile archive = new ZipFile(filePath);
             archive.Password = "Q%_{6#Px]]";
-            ConsoleHandler.appendLog("Creating temp files...");
-            if (MessageBox.Show("Click 'Ok' to create temp files, this can take up to 2 minutes.", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            ConsoleHandler.appendLog("Creating project files...");
+            if (MessageBox.Show("Click 'Ok' to create project files, this can take up to 2 minutes.", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 string livePath = Environment.CurrentDirectory;
-                tempName = (livePath + "\\temp_" + rand.Next());
+                tempName = (livePath + "\\proj_" + rand.Next());
                 this.Text = tempName;
                 archive.ExtractAll(tempName);
-                ConsoleHandler.appendLog("Temp files created at: " + tempName);
+                ConsoleHandler.appendLog("Project files created at: " + tempName);
                 PopulateTreeView();
                 return;
             }
-            ConsoleHandler.appendLog("Temp files creation canceled");
+            ConsoleHandler.appendLog("Project files creation canceled");
         }
 
         private void JetForm_Closed(object sender, EventArgs e)
         {
-            try
-            {
-                ConsoleHandler.appendLog("Deleting temp files...");
-                DirectoryInfo temp = new DirectoryInfo(tempName);
-                foreach (FileInfo file in temp.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in temp.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-                temp.Delete();
-                ConsoleHandler.appendLog("Deleting temp files deleted!");
-            } catch (Exception) { }
+            
         }
 
         private void PopulateTreeView()

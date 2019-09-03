@@ -20,6 +20,20 @@ namespace BTDToolbox
             ConsoleHandler.console.MdiParent = this;
             ConsoleHandler.console.Show();
             ConsoleHandler.appendLog("Program loaded!");
+            
+            ConsoleHandler.appendLog("Searching for existing projects...");
+            DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
+            foreach(DirectoryInfo subdir in dirInfo.GetDirectories())
+            {
+                if(subdir.Name.StartsWith("proj_"))
+                {
+                    ConsoleHandler.appendLog("Loading project " + subdir.Name);
+                    JetForm jf = new JetForm(subdir, this);
+                    jf.MdiParent = this;
+                    jf.Show();
+                    ConsoleHandler.appendLog("Loaded project " + subdir.Name);
+                }
+            }
         }
 
         private void newJetWindowToolStripMenuItem_Click(object sender, EventArgs e)
