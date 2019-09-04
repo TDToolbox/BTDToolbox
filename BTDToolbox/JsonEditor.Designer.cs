@@ -91,6 +91,7 @@
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.AcceptsReturn = true;
+            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.MaxLength = 2;
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(20, 25);
@@ -100,8 +101,7 @@
             // 
             // JsonEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1085, 603);
             this.Controls.Add(this.toolStrip1);

@@ -33,6 +33,8 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btdpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.existingProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,8 +42,6 @@
             this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreBackupjetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.existingProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,6 +94,21 @@
             this.btdpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
             // 
+            // openToolStripMenuItem1
+            // 
+            this.openToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.existingProjectToolStripMenuItem});
+            this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
+            this.openToolStripMenuItem1.Text = "Open";
+            // 
+            // existingProjectToolStripMenuItem
+            // 
+            this.existingProjectToolStripMenuItem.Name = "existingProjectToolStripMenuItem";
+            this.existingProjectToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.existingProjectToolStripMenuItem.Text = "Existing project";
+            this.existingProjectToolStripMenuItem.Click += new System.EventHandler(this.existingProjectToolStripMenuItem_Click_1);
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
@@ -143,29 +158,13 @@
             // restoreBackupjetToolStripMenuItem
             // 
             this.restoreBackupjetToolStripMenuItem.Name = "restoreBackupjetToolStripMenuItem";
-            this.restoreBackupjetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restoreBackupjetToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.restoreBackupjetToolStripMenuItem.Text = "Restore backup .jet";
             this.restoreBackupjetToolStripMenuItem.Click += new System.EventHandler(this.restoreBackupjetToolStripMenuItem_Click);
             // 
-            // openToolStripMenuItem1
-            // 
-            this.openToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.existingProjectToolStripMenuItem});
-            this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem1.Text = "Open";
-            // 
-            // existingProjectToolStripMenuItem
-            // 
-            this.existingProjectToolStripMenuItem.Name = "existingProjectToolStripMenuItem";
-            this.existingProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.existingProjectToolStripMenuItem.Text = "Existing project";
-            this.existingProjectToolStripMenuItem.Click += new System.EventHandler(this.existingProjectToolStripMenuItem_Click_1);
-            // 
             // TD_Toolbox_Window
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1483, 741);
             this.Controls.Add(this.menuStrip1);
@@ -173,7 +172,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TD_Toolbox_Window";
-            this.Text = "Toolbox - Made by DisabledMallis";
+            this.Text = "Toolbox - Made by DisabledMallis and Gurrenm3";
             this.Load += new System.EventHandler(this.TD_Toolbox_Window_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

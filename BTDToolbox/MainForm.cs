@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static BTDToolbox.ProjectConfigs;
 using static System.Environment;
 
 namespace BTDToolbox
@@ -11,25 +13,72 @@ namespace BTDToolbox
     public partial class TD_Toolbox_Window : Form {
 
         private string file;
+        public int mainFormFontSize;
+        public bool enableConsole;
+        MainWindow mainForm;
+        string mainFormOutput;
+        string livePath = Environment.CurrentDirectory;
 
         public TD_Toolbox_Window()
         {
             InitializeComponent();
+
+            try
+            {
+                string json = File.ReadAllText(livePath + "\\config\\main_form.json");
+                MainWindow deserializedMainForm = JsonConvert.DeserializeObject<MainWindow>(json);
+
+                Size MainFormSize = new Size(deserializedMainForm.SizeX, deserializedMainForm.SizeY);
+                this.Size = MainFormSize;
+
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = new Point(deserializedMainForm.PosX, deserializedMainForm.PosY);
+
+                Font mainFormFontSize = new Font("Microsoft Sans Serif", deserializedMainForm.FontSize);
+                this.Font = mainFormFontSize;
+
+                enableConsole = deserializedMainForm.EnableConsole;
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, true);
+                mainFormOutput = JsonConvert.SerializeObject(mainForm);
+
+                string livePath = Environment.CurrentDirectory;
+                StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
+                writeMainForm.Write(mainFormOutput);
+                writeMainForm.Close();
+            }
+            catch (System.ArgumentException)
+            {
+                mainFormFontSize = 10;
+            }
+
+
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.Black;
+
+            this.FormClosed += exitHandling;
         }
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
             ConsoleHandler.console = new Console();
             ConsoleHandler.console.MdiParent = this;
-            ConsoleHandler.console.Show();
+            if (enableConsole == true)
+            {
+                ConsoleHandler.console.Show();
+            }
+            else
+            {
+                ConsoleHandler.console.Hide();
+            }
             ConsoleHandler.appendLog("Program loaded!");
-            
+
             ConsoleHandler.appendLog("Searching for existing projects...");
             DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
-            foreach(DirectoryInfo subdir in dirInfo.GetDirectories())
+            foreach (DirectoryInfo subdir in dirInfo.GetDirectories())
             {
-                if(subdir.Name.StartsWith("proj_"))
+                if (subdir.Name.StartsWith("proj_"))
                 {
                     ConsoleHandler.appendLog("Loading project " + subdir.Name);
                     JetForm jf = new JetForm(subdir, this, subdir.Name);
@@ -38,6 +87,7 @@ namespace BTDToolbox
                     ConsoleHandler.appendLog("Loaded project " + subdir.Name);
                 }
             }
+            
         }
 
         /*
@@ -84,7 +134,17 @@ namespace BTDToolbox
 
         private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.console.Show();
+            if (ConsoleHandler.console.Visible)
+            {
+                ConsoleHandler.console.Hide();
+                enableConsole = false;
+            }
+            else
+            {
+                enableConsole = true;
+                ConsoleHandler.console.Show();
+                //TD_Toolbox_Window_Load(sender, e);
+            }
         }
 
         private void existingProjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -122,6 +182,17 @@ namespace BTDToolbox
                 jf.MdiParent = this;
                 jf.Show();
             }
+        }
+
+        private void exitHandling(object sender, EventArgs e)
+        {
+            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole);
+            mainFormOutput = JsonConvert.SerializeObject(mainForm);
+
+            string livePath = Environment.CurrentDirectory;
+            StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
+            writeMainForm.Write(mainFormOutput);
+            writeMainForm.Close();
         }
     }
 }

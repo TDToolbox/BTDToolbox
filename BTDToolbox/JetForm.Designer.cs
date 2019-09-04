@@ -69,6 +69,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.treeView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeView1.ForeColor = System.Drawing.Color.White;
             this.treeView1.ImageIndex = 0;
             this.treeView1.ImageList = this.imageList1;
@@ -111,6 +112,7 @@
             this.name_column,
             this.type_column,
             this.time_modified_column});
+            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView1.ForeColor = System.Drawing.Color.White;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(2, 3);
@@ -138,8 +140,7 @@
             // 
             // JetForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 651);
             this.Controls.Add(this.splitContainer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
