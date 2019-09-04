@@ -15,7 +15,7 @@ namespace BTDToolbox
         public TD_Toolbox_Window()
         {
             InitializeComponent();
-            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.Black;
+            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15,15,15);
         }
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
@@ -40,15 +40,6 @@ namespace BTDToolbox
             }
         }
 
-        /*
-        private void newJetWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            JetForm jf = new JetForm(file, this, file.);
-            jf.MdiParent = this;
-            jf.Show();
-        }
-        */
-
         private void jetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDiag = new OpenFileDialog();
@@ -59,15 +50,10 @@ namespace BTDToolbox
             if(fileDiag.ShowDialog() == DialogResult.OK)
             {
                 file = fileDiag.FileName;
-                jetOpen(file, fileDiag.SafeFileName);
+                JetForm jf = new JetForm(file, this, fileDiag.SafeFileName);
+                jf.MdiParent = this;
+                jf.Show();
             }
-        }
-
-        private void jetOpen(String file, string projName)
-        {
-            JetForm jf = new JetForm(file, this, projName);
-            jf.MdiParent = this;
-            jf.Show();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
@@ -85,21 +71,6 @@ namespace BTDToolbox
         private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.console.Show();
-        }
-
-        private void existingProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void projectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
 
         private void restoreBackupjetToolStripMenuItem_Click(object sender, EventArgs e)

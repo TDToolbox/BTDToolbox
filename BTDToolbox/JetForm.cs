@@ -3,7 +3,9 @@ using Ionic.Zlib;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static System.Windows.Forms.ToolStripItem;
 
@@ -11,6 +13,15 @@ namespace BTDToolbox
 {
     public partial class JetForm : Form
     {
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+        [DllImport("User32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+
         private String filePath;
         private DirectoryInfo dirInfo;
         private TD_Toolbox_Window Form;
@@ -23,6 +34,8 @@ namespace BTDToolbox
         public JetForm(String filePath, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
+            splitContainer1.Panel1.MouseMove += ToolbarDrag;
+
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
@@ -33,10 +46,17 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
+
+            this.treeView1.AfterSelect += treeView1_AfterSelect;
+
+            this.FormBorderStyle = FormBorderStyle.None;
         }
+
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
+            splitContainer1.Panel1.MouseMove += ToolbarDrag;
+
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
@@ -47,6 +67,10 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
+
+            this.treeView1.AfterSelect += treeView1_AfterSelect;
+
+            this.FormBorderStyle = FormBorderStyle.None;
         }
 
         private void initSelContextMenu()
@@ -179,16 +203,6 @@ namespace BTDToolbox
                 listView1.Items.Add(item);
             }
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
         }
         
         private void saveButton_Click(object sender, EventArgs e)
@@ -421,6 +435,86 @@ namespace BTDToolbox
                     };
                 item.SubItems.AddRange(subItems);
                 listView1.Items.Add(item);
+            }
+        }
+
+        private void ToolbarDrag(object sender, MouseEventArgs e)
+        {
+            if(e.Button==MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            }
+        }
+
+        private void close_button_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+        /*
+         * Low
+         * Level
+         * Resizing
+         * Do
+         * not
+         * touch
+         * pls
+         */
+        protected override void WndProc(ref Message m)
+        {
+            const int RESIZE_HANDLE_SIZE = 10;
+
+            switch (m.Msg)
+            {
+                case 0x0084/*NCHITTEST*/ :
+                    base.WndProc(ref m);
+
+                    if ((int)m.Result == 0x01/*HTCLIENT*/)
+                    {
+                        Point screenPoint = new Point(m.LParam.ToInt32());
+                        Point clientPoint = this.PointToClient(screenPoint);
+                        if (clientPoint.Y <= RESIZE_HANDLE_SIZE)
+                        {
+                            if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                                m.Result = (IntPtr)13/*HTTOPLEFT*/ ;
+                            else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                                m.Result = (IntPtr)12/*HTTOP*/ ;
+                            else
+                                m.Result = (IntPtr)14/*HTTOPRIGHT*/ ;
+                        }
+                        else if (clientPoint.Y <= (Size.Height - RESIZE_HANDLE_SIZE))
+                        {
+                            if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                                m.Result = (IntPtr)10/*HTLEFT*/ ;
+                            else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                                m.Result = (IntPtr)2/*HTCAPTION*/ ;
+                            else
+                                m.Result = (IntPtr)11/*HTRIGHT*/ ;
+                        }
+                        else
+                        {
+                            if (clientPoint.X <= RESIZE_HANDLE_SIZE)
+                                m.Result = (IntPtr)16/*HTBOTTOMLEFT*/ ;
+                            else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
+                                m.Result = (IntPtr)15/*HTBOTTOM*/ ;
+                            else
+                                m.Result = (IntPtr)17/*HTBOTTOMRIGHT*/ ;
+                        }
+                    }
+                    return;
+            }
+            base.WndProc(ref m);
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.Style |= 0x20000; // <--- use 0x20000
+                return cp;
             }
         }
     }
