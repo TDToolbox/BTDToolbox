@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,15 +60,21 @@ namespace BTDToolbox
 
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
-            int TabsMultiplier = 1;
-            string Tabs = new string ('\t', TabsMultiplier);
-            
+
+            JToken jt = JToken.Parse(unformattedText);
+            formattedText = jt.ToString(Formatting.Indented);
+            textBox1.Text = formattedText;
+
+            /*int TabsMultiplier = 1;
+            string Tabs = new string ('\t', TabsMultiplier);*/
+
+            /*
             for (int i = 0; i < unformattedText.Length; i++)
             {
                 if (unformattedText[i] == '{')
                 {
                     TabsMultiplier = TabsMultiplier + 1;
-                    formattedText = formattedText + unformattedText[i];
+                    formattedText = formattedText + "\r\n" + unformattedText[i] + "\r\n\t";
                 }
                 else if (unformattedText[i] == '}')
                 {
@@ -79,7 +86,7 @@ namespace BTDToolbox
                     formattedText = formattedText + unformattedText[i];
                 }
             }
-            textBox1.Text = formattedText;
+            */
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
