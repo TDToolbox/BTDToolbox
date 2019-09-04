@@ -20,7 +20,7 @@ namespace BTDToolbox
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
-            ConsoleHandler.console = new Console();
+            ConsoleHandler.console = new NewConsole();
             ConsoleHandler.console.MdiParent = this;
             ConsoleHandler.console.Show();
             ConsoleHandler.appendLog("Program loaded!");
@@ -93,6 +93,13 @@ namespace BTDToolbox
                 jf.MdiParent = this;
                 jf.Show();
             }
+        }
+
+        private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThemedFormTemplate tft = new ThemedFormTemplate();
+            tft.MdiParent = this;
+            tft.Show();
         }
     }
 }

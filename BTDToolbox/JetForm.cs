@@ -21,6 +21,16 @@ namespace BTDToolbox
         [DllImport("User32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
+        //for resizing
+        int Mx;
+        int My;
+        int Sw;
+        int Sh;
+        bool mov;
+
+        //Resize defaults
+        int minWidth = 200;
+        int minHeight = 100;
 
         private String filePath;
         private DirectoryInfo dirInfo;
@@ -39,6 +49,11 @@ namespace BTDToolbox
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
+
+            Sizer.MouseDown += SizerMouseDown;
+            Sizer.MouseMove += SizerMouseMove;
+            Sizer.MouseUp += SizerMouseUp;
+
             this.filePath = filePath;
             this.Form = Form;
             this.projName = projName;
@@ -50,6 +65,8 @@ namespace BTDToolbox
             this.treeView1.AfterSelect += treeView1_AfterSelect;
 
             this.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
@@ -60,6 +77,11 @@ namespace BTDToolbox
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
+
+            Sizer.MouseDown += SizerMouseDown;
+            Sizer.MouseMove += SizerMouseMove;
+            Sizer.MouseUp += SizerMouseUp;
+
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
@@ -71,6 +93,8 @@ namespace BTDToolbox
             this.treeView1.AfterSelect += treeView1_AfterSelect;
 
             this.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         private void initSelContextMenu()
@@ -204,7 +228,39 @@ namespace BTDToolbox
             }
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
-        
+
+        private void SizerMouseDown(object sender, MouseEventArgs e)
+        {
+            mov = true;
+            My = MousePosition.Y;
+            Mx = MousePosition.X;
+            Sw = Width;
+            Sh = Height;
+        }
+        private void SizerMouseMove(object sender, MouseEventArgs e)
+        {
+            if (mov == true)
+            {
+                splitContainer1.SplitterDistance = 25;
+                //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
+                splitContainer1.Dock = DockStyle.Fill;
+                Width = MousePosition.X - Mx + Sw;
+                Height = MousePosition.Y - My + Sh;
+            }
+        }
+        private void SizerMouseUp(object sender, MouseEventArgs e)
+        {
+            mov = false;
+            if (Width < minWidth)
+            {
+                Width = minWidth;
+            }
+            if (Height < minHeight)
+            {
+                Height = minHeight;
+            }
+        }
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog fileDiag = new SaveFileDialog();
@@ -227,7 +283,8 @@ namespace BTDToolbox
                     JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
                     JsonWindow.MdiParent = Form;
                     JsonWindow.Show();
-                } catch (Exception)
+                }
+                catch (Exception)
                 {
                 }
             }
@@ -236,7 +293,7 @@ namespace BTDToolbox
         {
             try
             {
-                if(e.Button == MouseButtons.Right)
+                if (e.Button == MouseButtons.Right)
                 {
                     ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
                     if (Selected.Count == 1)
@@ -248,7 +305,7 @@ namespace BTDToolbox
 
                         empMenu.Show(listView1, e.Location);
                     }
-                    else if(Selected.Count > 1)
+                    else if (Selected.Count > 1)
                     {
                         multiSelMenu.Show(listView1, e.Location);
                     }
@@ -261,7 +318,7 @@ namespace BTDToolbox
 
         private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if(e.ClickedItem.Text == "Rename")
+            if (e.ClickedItem.Text == "Rename")
             {
                 try
                 {
@@ -271,7 +328,7 @@ namespace BTDToolbox
                 {
                 }
             }
-            if(e.ClickedItem.Text=="Delete")
+            if (e.ClickedItem.Text == "Delete")
             {
                 try
                 {
@@ -348,7 +405,7 @@ namespace BTDToolbox
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
             ofd.Title = "Select items to add";
-            if(ofd.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
                 foreach (string name in ofd.FileNames)
                 {
@@ -391,7 +448,7 @@ namespace BTDToolbox
         }
         private void delete()
         {
-            if(MessageBox.Show("Are you sure you want to delete the selected item(s)?", "Confirmation", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show("Are you sure you want to delete the selected item(s)?", "Confirmation", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
                 foreach (ListViewItem item in Selected)
@@ -440,7 +497,7 @@ namespace BTDToolbox
 
         private void ToolbarDrag(object sender, MouseEventArgs e)
         {
-            if(e.Button==MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
@@ -450,72 +507,6 @@ namespace BTDToolbox
         private void close_button_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-
-        /*
-         * Low
-         * Level
-         * Resizing
-         * Do
-         * not
-         * touch
-         * pls
-         */
-        protected override void WndProc(ref Message m)
-        {
-            const int RESIZE_HANDLE_SIZE = 10;
-
-            switch (m.Msg)
-            {
-                case 0x0084/*NCHITTEST*/ :
-                    base.WndProc(ref m);
-
-                    if ((int)m.Result == 0x01/*HTCLIENT*/)
-                    {
-                        Point screenPoint = new Point(m.LParam.ToInt32());
-                        Point clientPoint = this.PointToClient(screenPoint);
-                        if (clientPoint.Y <= RESIZE_HANDLE_SIZE)
-                        {
-                            if (clientPoint.X <= RESIZE_HANDLE_SIZE)
-                                m.Result = (IntPtr)13/*HTTOPLEFT*/ ;
-                            else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
-                                m.Result = (IntPtr)12/*HTTOP*/ ;
-                            else
-                                m.Result = (IntPtr)14/*HTTOPRIGHT*/ ;
-                        }
-                        else if (clientPoint.Y <= (Size.Height - RESIZE_HANDLE_SIZE))
-                        {
-                            if (clientPoint.X <= RESIZE_HANDLE_SIZE)
-                                m.Result = (IntPtr)10/*HTLEFT*/ ;
-                            else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
-                                m.Result = (IntPtr)2/*HTCAPTION*/ ;
-                            else
-                                m.Result = (IntPtr)11/*HTRIGHT*/ ;
-                        }
-                        else
-                        {
-                            if (clientPoint.X <= RESIZE_HANDLE_SIZE)
-                                m.Result = (IntPtr)16/*HTBOTTOMLEFT*/ ;
-                            else if (clientPoint.X < (Size.Width - RESIZE_HANDLE_SIZE))
-                                m.Result = (IntPtr)15/*HTBOTTOM*/ ;
-                            else
-                                m.Result = (IntPtr)17/*HTBOTTOMRIGHT*/ ;
-                        }
-                    }
-                    return;
-            }
-            base.WndProc(ref m);
-        }
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.Style |= 0x20000; // <--- use 0x20000
-                return cp;
-            }
         }
     }
 }

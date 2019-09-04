@@ -34,6 +34,7 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.close_button = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.Sizer = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -77,13 +78,16 @@
             this.close_button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.close_button.BackColor = System.Drawing.Color.Red;
+            this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
             this.close_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.close_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.close_button.ForeColor = System.Drawing.Color.White;
             this.close_button.Location = new System.Drawing.Point(736, -2);
             this.close_button.Name = "close_button";
-            this.close_button.Size = new System.Drawing.Size(64, 28);
+            this.close_button.Size = new System.Drawing.Size(64, 26);
             this.close_button.TabIndex = 1;
             this.close_button.Text = "X";
             this.close_button.UseVisualStyleBackColor = false;
@@ -108,13 +112,26 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Black;
+            this.splitContainer1.Panel2.Controls.Add(this.Sizer);
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Size = new System.Drawing.Size(800, 651);
             this.splitContainer1.SplitterDistance = 26;
             this.splitContainer1.TabIndex = 1;
             // 
+            // Sizer
+            // 
+            this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Sizer.Location = new System.Drawing.Point(789, 609);
+            this.Sizer.Name = "Sizer";
+            this.Sizer.Size = new System.Drawing.Size(10, 11);
+            this.Sizer.TabIndex = 1;
+            // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.splitContainer);
             this.panel1.Location = new System.Drawing.Point(13, 4);
             this.panel1.Name = "panel1";
@@ -243,5 +260,6 @@
         private System.Windows.Forms.ColumnHeader name_column;
         private System.Windows.Forms.ColumnHeader type_column;
         private System.Windows.Forms.ColumnHeader time_modified_column;
+        private System.Windows.Forms.Panel Sizer;
     }
 }
