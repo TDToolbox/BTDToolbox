@@ -38,7 +38,7 @@ namespace BTDToolbox
 
                 enableConsole = deserializedMainForm.EnableConsole;
             }
-            catch (System.IO.FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, true);
                 mainFormOutput = JsonConvert.SerializeObject(mainForm);
@@ -47,6 +47,10 @@ namespace BTDToolbox
                 StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
                 writeMainForm.Write(mainFormOutput);
                 writeMainForm.Close();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Directory.CreateDirectory(livePath + "\\config");
             }
             catch (System.ArgumentException)
             {
@@ -157,6 +161,14 @@ namespace BTDToolbox
       
         private void exitHandling(object sender, EventArgs e)
         {
+            if(ConsoleHandler.console.Visible)
+            {
+                enableConsole = true;
+            }
+            else
+            {
+                enableConsole = false;
+            }
             mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole);
             mainFormOutput = JsonConvert.SerializeObject(mainForm);
 
@@ -164,12 +176,12 @@ namespace BTDToolbox
             StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
             writeMainForm.Write(mainFormOutput);
             writeMainForm.Close();
-         }
-         private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
-         
+        }
+        private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
+        { 
             ThemedFormTemplate tft = new ThemedFormTemplate();
             tft.MdiParent = this;
             tft.Show();
-         }
+        }
     }
 }
