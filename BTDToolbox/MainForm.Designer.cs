@@ -160,7 +160,7 @@
             // restoreBackupjetToolStripMenuItem
             // 
             this.restoreBackupjetToolStripMenuItem.Name = "restoreBackupjetToolStripMenuItem";
-            this.restoreBackupjetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restoreBackupjetToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.restoreBackupjetToolStripMenuItem.Text = "Restore backup .jet";
             this.restoreBackupjetToolStripMenuItem.Click += new System.EventHandler(this.restoreBackupjetToolStripMenuItem_Click);
             // 
@@ -182,8 +182,7 @@
             // 
             // TD_Toolbox_Window
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1483, 741);
             this.Controls.Add(this.menuStrip1);
@@ -191,7 +190,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TD_Toolbox_Window";
-            this.Text = "Toolbox - Made by DisabledMallis";
+            this.Text = "Toolbox - Made by DisabledMallis and Gurrenm3";
             this.Load += new System.EventHandler(this.TD_Toolbox_Window_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

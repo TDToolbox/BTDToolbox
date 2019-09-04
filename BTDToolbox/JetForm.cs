@@ -1,5 +1,6 @@
 ﻿using Ionic.Zip;
 using Ionic.Zlib;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -7,12 +8,15 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static BTDToolbox.ProjectConfigs;
 using static System.Windows.Forms.ToolStripItem;
 
 namespace BTDToolbox
 {
     public partial class JetForm : Form
     {
+    
+        string livePath = Environment.CurrentDirectory;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
@@ -41,6 +45,10 @@ namespace BTDToolbox
         private ContextMenuStrip empMenu;
         private ContextMenuStrip multiSelMenu;
 
+        public static float jetFormFontSize;
+        string jetFormOutput;
+        Window jetForm;
+
         public JetForm(String filePath, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
@@ -61,7 +69,7 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
-
+            
             this.treeView1.AfterSelect += treeView1_AfterSelect;
 
             this.FormBorderStyle = FormBorderStyle.None;
@@ -89,6 +97,33 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
+
+            try
+            {
+                string json = File.ReadAllText(livePath + "\\config\\jetForm.json");
+                Window deserializedJetForm = JsonConvert.DeserializeObject<Window>(json);
+
+                Size JetFormSize = new Size(deserializedJetForm.SizeX, deserializedJetForm.SizeY);
+                this.Size = JetFormSize;
+
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = new Point(deserializedJetForm.PosX, deserializedJetForm.PosY);
+
+                Font jetFormFontSize = new Font("Microsoft Sans Serif", deserializedJetForm.FontSize);
+                this.Font = jetFormFontSize;
+            } catch (System.IO.FileNotFoundException)
+            {
+                jetForm = new Window("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10);
+                jetFormOutput = JsonConvert.SerializeObject(jetForm);
+
+                StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
+                writeConsoleForm.Write(jetFormOutput);
+                writeConsoleForm.Close();
+            }
+            catch (System.ArgumentException)
+            {
+                jetFormFontSize = 10;
+            }
 
             this.treeView1.AfterSelect += treeView1_AfterSelect;
 
@@ -162,6 +197,14 @@ namespace BTDToolbox
         private void JetForm_Closed(object sender, EventArgs e)
         {
             JetProps.decrement(this);
+            
+            jetForm = new Window("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size);
+            jetFormOutput = JsonConvert.SerializeObject(jetForm);
+
+            StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
+            writeConsoleForm.Write(jetFormOutput);
+            writeConsoleForm.Close();
+            
         }
 
         private void PopulateTreeView()
