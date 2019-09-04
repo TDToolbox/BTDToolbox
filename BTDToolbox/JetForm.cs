@@ -2,8 +2,10 @@
 using Ionic.Zlib;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.ToolStripItem;
 
 namespace BTDToolbox
 {
@@ -52,6 +54,7 @@ namespace BTDToolbox
             selMenu = new ContextMenuStrip();
             selMenu.Items.Add("Rename");
             selMenu.Items.Add("Delete");
+            selMenu.Items.Add("Copy");
             selMenu.Items.Add("Restore original");
             selMenu.ItemClicked += jsonContextClicked;
         }
@@ -59,12 +62,14 @@ namespace BTDToolbox
         {
             multiSelMenu = new ContextMenuStrip();
             multiSelMenu.Items.Add("Delete");
+            multiSelMenu.Items.Add("Copy");
             multiSelMenu.ItemClicked += multiJsonContextClicked;
         }
         private void initEmpContextMenu()
         {
             empMenu = new ContextMenuStrip();
             empMenu.Items.Add("Add");
+            empMenu.Items.Add("Paste");
             empMenu.ItemClicked += listContextClicked;
         }
 
@@ -226,6 +231,7 @@ namespace BTDToolbox
                     }
                     else if (Selected.Count == 0 || Selected == null)
                     {
+
                         empMenu.Show(listView1, e.Location);
                     }
                     else if(Selected.Count > 1)
@@ -261,6 +267,16 @@ namespace BTDToolbox
                 {
                 }
             }
+            if (e.ClickedItem.Text == "Copy")
+            {
+                try
+                {
+                    copy();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
         private void listContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -274,6 +290,16 @@ namespace BTDToolbox
                 {
                 }
             }
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    paste();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
         private void multiJsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -282,6 +308,16 @@ namespace BTDToolbox
                 try
                 {
                     delete();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Copy")
+            {
+                try
+                {
+                    copy();
                 }
                 catch (Exception)
                 {
@@ -353,6 +389,38 @@ namespace BTDToolbox
 
                     item.Remove();
                 }
+            }
+        }
+        private void copy()
+        {
+            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+            StringCollection pathCollection = new StringCollection();
+            foreach (ListViewItem item in Selected)
+            {
+                string currentPath = this.Text;
+                string toCopy = currentPath + "\\" + item.Text;
+
+                pathCollection.Add(toCopy);
+            }
+            Clipboard.SetFileDropList(pathCollection);
+        }
+        private void paste()
+        {
+            string targetDir = this.Text;
+            StringCollection files = Clipboard.GetFileDropList();
+            foreach (string name in files)
+            {
+                FileInfo info = new FileInfo(name);
+                File.Copy(name, targetDir + "\\" + info.Name);
+
+                ListViewItem item = new ListViewItem(info.Name, 1);
+                ListViewItem.ListViewSubItem[] subItems = new ListViewItem.ListViewSubItem[]
+                    {
+                        new ListViewItem.ListViewSubItem(item, "File"),
+                        new ListViewItem.ListViewSubItem(item, "null")
+                    };
+                item.SubItems.AddRange(subItems);
+                listView1.Items.Add(item);
             }
         }
     }
