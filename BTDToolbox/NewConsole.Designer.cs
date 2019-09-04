@@ -33,9 +33,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Sizer = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.Panel();
-            this.console_log = new System.Windows.Forms.ListBox();
             this.invoke_button = new System.Windows.Forms.Button();
             this.invoke_textbox = new System.Windows.Forms.TextBox();
+            this.console_log = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -119,21 +119,6 @@
             this.contentPanel.Size = new System.Drawing.Size(691, 201);
             this.contentPanel.TabIndex = 0;
             // 
-            // console_log
-            // 
-            this.console_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.console_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.console_log.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.console_log.ForeColor = System.Drawing.Color.White;
-            this.console_log.FormattingEnabled = true;
-            this.console_log.ItemHeight = 15;
-            this.console_log.Location = new System.Drawing.Point(4, 3);
-            this.console_log.Name = "console_log";
-            this.console_log.Size = new System.Drawing.Size(684, 169);
-            this.console_log.TabIndex = 5;
-            // 
             // invoke_button
             // 
             this.invoke_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -151,10 +136,24 @@
             this.invoke_textbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.invoke_textbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.invoke_textbox.Location = new System.Drawing.Point(4, 178);
+            this.invoke_textbox.Location = new System.Drawing.Point(4, 176);
             this.invoke_textbox.Name = "invoke_textbox";
             this.invoke_textbox.Size = new System.Drawing.Size(475, 20);
             this.invoke_textbox.TabIndex = 3;
+            // 
+            // console_log
+            // 
+            this.console_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.console_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.console_log.ForeColor = System.Drawing.Color.White;
+            this.console_log.Location = new System.Drawing.Point(4, 4);
+            this.console_log.Multiline = true;
+            this.console_log.Name = "console_log";
+            this.console_log.ReadOnly = true;
+            this.console_log.Size = new System.Drawing.Size(684, 165);
+            this.console_log.TabIndex = 5;
             // 
             // NewConsole
             // 
@@ -182,8 +181,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel Sizer;
         private System.Windows.Forms.Panel contentPanel;
-        private System.Windows.Forms.ListBox console_log;
         private System.Windows.Forms.Button invoke_button;
         private System.Windows.Forms.TextBox invoke_textbox;
+        private System.Windows.Forms.TextBox console_log;
     }
 }

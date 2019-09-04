@@ -29,8 +29,9 @@ namespace BTDToolbox
                     ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
                     break;
                 }
-                catch (Exception)
+                catch (Exception exc)
                 {
+                    ConsoleHandler.appendLog(exc.ToString());
                     ConsoleHandler.appendLog("No launch dir defined or is wrong.");
                     OpenFileDialog fileDiag = new OpenFileDialog();
                     fileDiag.Title = "Open game exe";

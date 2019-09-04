@@ -65,6 +65,7 @@ namespace BTDToolbox
             this.filePath = filePath;
             this.Form = Form;
             this.projName = projName;
+            ConsoleHandler.appendLog(projName);
 
             initMultiContextMenu();
             initSelContextMenu();
@@ -93,6 +94,7 @@ namespace BTDToolbox
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
+            ConsoleHandler.appendLog(projName);
 
             initMultiContextMenu();
             initSelContextMenu();
@@ -191,6 +193,7 @@ namespace BTDToolbox
                 this.tempName = extract.FullName;
                 PopulateTreeView();
                 dirInfo = extract;
+                this.projName = extract.Name;
             }
         }
 

@@ -112,13 +112,17 @@ namespace BTDToolbox
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(JetProps.get().Count <= 1)
+            if(JetProps.get().Count == 1)
             {
                 Launcher.launchGame(JetProps.getForm(0));
             }
+            else if(JetProps.get().Count < 1)
+            {
+                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+            }
             else
             {
-                MessageBox.Show("You have multiple .jets open, only one can be launched.");
+                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
             }
         }
 

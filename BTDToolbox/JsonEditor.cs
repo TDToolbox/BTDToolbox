@@ -64,29 +64,6 @@ namespace BTDToolbox
             JToken jt = JToken.Parse(unformattedText);
             formattedText = jt.ToString(Formatting.Indented);
             textBox1.Text = formattedText;
-
-            /*int TabsMultiplier = 1;
-            string Tabs = new string ('\t', TabsMultiplier);*/
-
-            /*
-            for (int i = 0; i < unformattedText.Length; i++)
-            {
-                if (unformattedText[i] == '{')
-                {
-                    TabsMultiplier = TabsMultiplier + 1;
-                    formattedText = formattedText + "\r\n" + unformattedText[i] + "\r\n\t";
-                }
-                else if (unformattedText[i] == '}')
-                {
-                    TabsMultiplier = TabsMultiplier - 1;
-                    formattedText = formattedText + unformattedText[i] + "\r\n";
-                }
-                else
-                {
-                    formattedText = formattedText + unformattedText[i];
-                }
-            }
-            */
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
@@ -98,18 +75,20 @@ namespace BTDToolbox
         {
             float FontSize = 0;
             float.TryParse(toolStripTextBox1.Text, out FontSize);
-            FontSize = textBox1.Font.Size;
+            try
+            {
+                textBox1.Font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Regular);
+            } catch (Exception)
+            {
+                textBox1.Font = new Font(FontFamily.GenericSansSerif, 10f, FontStyle.Regular);
+            }
         }
 
         private void JsonEditor_Load(object sender, EventArgs e)
         {
 
         }
-
-        private void toolStripTextBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
         private void exitHandling(object sender, EventArgs e)
         {
             jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, jsonEditorFont);

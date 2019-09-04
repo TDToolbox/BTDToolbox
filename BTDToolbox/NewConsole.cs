@@ -99,7 +99,7 @@ namespace BTDToolbox
 
         public void appendLog(String log)
         {
-            console_log.Items.Add(log);
+            console_log.Text += log + "\r\n";
         }
     }
 }
