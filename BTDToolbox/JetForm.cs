@@ -3,16 +3,39 @@ using Ionic.Zlib;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfigs;
+using static System.Windows.Forms.ToolStripItem;
 
 namespace BTDToolbox
 {
     public partial class JetForm : Form
     {
+    
         string livePath = Environment.CurrentDirectory;
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+        [DllImport("User32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        //for resizing
+        int Mx;
+        int My;
+        int Sw;
+        int Sh;
+        bool mov;
+
+        //Resize defaults
+        int minWidth = 200;
+        int minHeight = 100;
+
         private String filePath;
         private DirectoryInfo dirInfo;
         private TD_Toolbox_Window Form;
@@ -29,9 +52,16 @@ namespace BTDToolbox
         public JetForm(String filePath, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
+            splitContainer1.Panel1.MouseMove += ToolbarDrag;
+
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
+
+            Sizer.MouseDown += SizerMouseDown;
+            Sizer.MouseMove += SizerMouseMove;
+            Sizer.MouseUp += SizerMouseUp;
+
             this.filePath = filePath;
             this.Form = Form;
             this.projName = projName;
@@ -39,14 +69,27 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
+            
+            this.treeView1.AfterSelect += treeView1_AfterSelect;
 
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
+
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
+            splitContainer1.Panel1.MouseMove += ToolbarDrag;
+
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
+
+            Sizer.MouseDown += SizerMouseDown;
+            Sizer.MouseMove += SizerMouseMove;
+            Sizer.MouseUp += SizerMouseUp;
+
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
@@ -81,6 +124,12 @@ namespace BTDToolbox
             {
                 jetFormFontSize = 10;
             }
+
+            this.treeView1.AfterSelect += treeView1_AfterSelect;
+
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         private void initSelContextMenu()
@@ -88,6 +137,7 @@ namespace BTDToolbox
             selMenu = new ContextMenuStrip();
             selMenu.Items.Add("Rename");
             selMenu.Items.Add("Delete");
+            selMenu.Items.Add("Copy");
             selMenu.Items.Add("Restore original");
             selMenu.ItemClicked += jsonContextClicked;
         }
@@ -95,12 +145,14 @@ namespace BTDToolbox
         {
             multiSelMenu = new ContextMenuStrip();
             multiSelMenu.Items.Add("Delete");
+            multiSelMenu.Items.Add("Copy");
             multiSelMenu.ItemClicked += multiJsonContextClicked;
         }
         private void initEmpContextMenu()
         {
             empMenu = new ContextMenuStrip();
             empMenu.Items.Add("Add");
+            empMenu.Items.Add("Paste");
             empMenu.ItemClicked += listContextClicked;
         }
 
@@ -220,16 +272,38 @@ namespace BTDToolbox
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SizerMouseDown(object sender, MouseEventArgs e)
         {
-            
+            mov = true;
+            My = MousePosition.Y;
+            Mx = MousePosition.X;
+            Sw = Width;
+            Sh = Height;
+        }
+        private void SizerMouseMove(object sender, MouseEventArgs e)
+        {
+            if (mov == true)
+            {
+                splitContainer1.SplitterDistance = 25;
+                //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
+                splitContainer1.Dock = DockStyle.Fill;
+                Width = MousePosition.X - Mx + Sw;
+                Height = MousePosition.Y - My + Sh;
+            }
+        }
+        private void SizerMouseUp(object sender, MouseEventArgs e)
+        {
+            mov = false;
+            if (Width < minWidth)
+            {
+                Width = minWidth;
+            }
+            if (Height < minHeight)
+            {
+                Height = minHeight;
+            }
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-        
         private void saveButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog fileDiag = new SaveFileDialog();
@@ -252,7 +326,8 @@ namespace BTDToolbox
                     JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
                     JsonWindow.MdiParent = Form;
                     JsonWindow.Show();
-                } catch (Exception)
+                }
+                catch (Exception)
                 {
                 }
             }
@@ -261,7 +336,7 @@ namespace BTDToolbox
         {
             try
             {
-                if(e.Button == MouseButtons.Right)
+                if (e.Button == MouseButtons.Right)
                 {
                     ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
                     if (Selected.Count == 1)
@@ -270,9 +345,10 @@ namespace BTDToolbox
                     }
                     else if (Selected.Count == 0 || Selected == null)
                     {
+
                         empMenu.Show(listView1, e.Location);
                     }
-                    else if(Selected.Count > 1)
+                    else if (Selected.Count > 1)
                     {
                         multiSelMenu.Show(listView1, e.Location);
                     }
@@ -285,7 +361,7 @@ namespace BTDToolbox
 
         private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if(e.ClickedItem.Text == "Rename")
+            if (e.ClickedItem.Text == "Rename")
             {
                 try
                 {
@@ -295,11 +371,21 @@ namespace BTDToolbox
                 {
                 }
             }
-            if(e.ClickedItem.Text=="Delete")
+            if (e.ClickedItem.Text == "Delete")
             {
                 try
                 {
                     delete();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Copy")
+            {
+                try
+                {
+                    copy();
                 }
                 catch (Exception)
                 {
@@ -318,6 +404,16 @@ namespace BTDToolbox
                 {
                 }
             }
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    paste();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
         private void multiJsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -326,6 +422,16 @@ namespace BTDToolbox
                 try
                 {
                     delete();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Copy")
+            {
+                try
+                {
+                    copy();
                 }
                 catch (Exception)
                 {
@@ -342,7 +448,7 @@ namespace BTDToolbox
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
             ofd.Title = "Select items to add";
-            if(ofd.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
                 foreach (string name in ofd.FileNames)
                 {
@@ -385,7 +491,7 @@ namespace BTDToolbox
         }
         private void delete()
         {
-            if(MessageBox.Show("Are you sure you want to delete the selected item(s)?", "Confirmation", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show("Are you sure you want to delete the selected item(s)?", "Confirmation", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
                 foreach (ListViewItem item in Selected)
@@ -398,6 +504,52 @@ namespace BTDToolbox
                     item.Remove();
                 }
             }
+        }
+        private void copy()
+        {
+            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+            StringCollection pathCollection = new StringCollection();
+            foreach (ListViewItem item in Selected)
+            {
+                string currentPath = this.Text;
+                string toCopy = currentPath + "\\" + item.Text;
+
+                pathCollection.Add(toCopy);
+            }
+            Clipboard.SetFileDropList(pathCollection);
+        }
+        private void paste()
+        {
+            string targetDir = this.Text;
+            StringCollection files = Clipboard.GetFileDropList();
+            foreach (string name in files)
+            {
+                FileInfo info = new FileInfo(name);
+                File.Copy(name, targetDir + "\\" + info.Name);
+
+                ListViewItem item = new ListViewItem(info.Name, 1);
+                ListViewItem.ListViewSubItem[] subItems = new ListViewItem.ListViewSubItem[]
+                    {
+                        new ListViewItem.ListViewSubItem(item, "File"),
+                        new ListViewItem.ListViewSubItem(item, "null")
+                    };
+                item.SubItems.AddRange(subItems);
+                listView1.Items.Add(item);
+            }
+        }
+
+        private void ToolbarDrag(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            }
+        }
+
+        private void close_button_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -21,8 +21,7 @@ namespace BTDToolbox
 
         public TD_Toolbox_Window()
         {
-            InitializeComponent();
-
+            InitializeComponent(); 
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\main_form.json");
@@ -58,11 +57,12 @@ namespace BTDToolbox
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.Black;
 
             this.FormClosed += exitHandling;
+            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15,15,15);
         }
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
-            ConsoleHandler.console = new Console();
+            ConsoleHandler.console = new NewConsole();
             ConsoleHandler.console.MdiParent = this;
             if (enableConsole == true)
             {
@@ -90,15 +90,6 @@ namespace BTDToolbox
             
         }
 
-        /*
-        private void newJetWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            JetForm jf = new JetForm(file, this, file.);
-            jf.MdiParent = this;
-            jf.Show();
-        }
-        */
-
         private void jetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDiag = new OpenFileDialog();
@@ -109,15 +100,10 @@ namespace BTDToolbox
             if(fileDiag.ShowDialog() == DialogResult.OK)
             {
                 file = fileDiag.FileName;
-                jetOpen(file, fileDiag.SafeFileName);
+                JetForm jf = new JetForm(file, this, fileDiag.SafeFileName);
+                jf.MdiParent = this;
+                jf.Show();
             }
-        }
-
-        private void jetOpen(String file, string projName)
-        {
-            JetForm jf = new JetForm(file, this, projName);
-            jf.MdiParent = this;
-            jf.Show();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
@@ -147,21 +133,6 @@ namespace BTDToolbox
             }
         }
 
-        private void existingProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void projectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void restoreBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Launcher.restoreGame();
@@ -183,7 +154,7 @@ namespace BTDToolbox
                 jf.Show();
             }
         }
-
+      
         private void exitHandling(object sender, EventArgs e)
         {
             mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole);
@@ -193,6 +164,12 @@ namespace BTDToolbox
             StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
             writeMainForm.Write(mainFormOutput);
             writeMainForm.Close();
-        }
+         }
+         private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
+         
+            ThemedFormTemplate tft = new ThemedFormTemplate();
+            tft.MdiParent = this;
+            tft.Show();
+         }
     }
 }
