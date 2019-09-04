@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Environment;
 
 namespace BTDToolbox
 {
@@ -31,7 +32,7 @@ namespace BTDToolbox
                 if(subdir.Name.StartsWith("proj_"))
                 {
                     ConsoleHandler.appendLog("Loading project " + subdir.Name);
-                    JetForm jf = new JetForm(subdir, this);
+                    JetForm jf = new JetForm(subdir, this, subdir.Name);
                     jf.MdiParent = this;
                     jf.Show();
                     ConsoleHandler.appendLog("Loaded project " + subdir.Name);
@@ -39,12 +40,14 @@ namespace BTDToolbox
             }
         }
 
+        /*
         private void newJetWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            JetForm jf = new JetForm(file, this);
+            JetForm jf = new JetForm(file, this, file.);
             jf.MdiParent = this;
             jf.Show();
         }
+        */
 
         private void jetToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -56,39 +59,26 @@ namespace BTDToolbox
             if(fileDiag.ShowDialog() == DialogResult.OK)
             {
                 file = fileDiag.FileName;
-                jetOpen(file);
+                jetOpen(file, fileDiag.SafeFileName);
             }
         }
 
-        private void jetOpen(String file)
+        private void jetOpen(String file, string projName)
         {
-            JetForm jf = new JetForm(file, this);
+            JetForm jf = new JetForm(file, this, projName);
             jf.MdiParent = this;
-            
             jf.Show();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Launching game...");
-            try
+            if(JetProps.get().Count <= 1)
             {
-                Process.Start(Settings.readGamePath());
-                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
-            } catch (Exception)
+                Launcher.launchGame(JetProps.getForm(0));
+            }
+            else
             {
-                ConsoleHandler.appendLog("No launch dir defined or is wrong.");
-                OpenFileDialog fileDiag = new OpenFileDialog();
-                fileDiag.Title = "Open game exe";
-                fileDiag.DefaultExt = "exe";
-                fileDiag.Filter = "Exe files (*.exe)|*.exe|All files (*.*)|*.*";
-                fileDiag.Multiselect = false;
-                if (fileDiag.ShowDialog() == DialogResult.OK)
-                {
-                    file = fileDiag.FileName;
-                    Settings.setGamePath(file);
-                }
-                ConsoleHandler.appendLog("Launch dir saved in launchSettings.txt");
+                MessageBox.Show("You have multiple .jets open, only one can be launched.");
             }
         }
 
@@ -110,6 +100,28 @@ namespace BTDToolbox
         private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void restoreBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Launcher.restoreGame();
+        }
+
+        private void existingProjectToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Select project folder";
+            fbd.ShowNewFolderButton = false;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                string selected = fbd.SelectedPath;
+                DirectoryInfo dirInfo = new DirectoryInfo(selected);
+                string[] split = fbd.SelectedPath.Split('\\');
+                string name = split[split.Length - 1];
+                JetForm jf = new JetForm(dirInfo, this, name);
+                jf.MdiParent = this;
+                jf.Show();
+            }
         }
     }
 }

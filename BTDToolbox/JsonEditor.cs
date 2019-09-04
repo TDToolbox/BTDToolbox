@@ -61,5 +61,10 @@ namespace BTDToolbox
         {
 
         }
+
+        private void toolStripTextBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -36,6 +36,7 @@
     <Reference Include="DotNetZip, Version=1.13.3.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.13.3\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -59,12 +60,15 @@
       <DependentUpon>Console.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleHandler.cs" />
+    <Compile Include="JetCompiler.cs" />
+    <Compile Include="JetProps.cs" />
     <Compile Include="JsonEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="JsonEditor.Designer.cs">
       <DependentUpon>JsonEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Launcher.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
