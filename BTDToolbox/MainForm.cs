@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfigs;
 using static System.Environment;
@@ -18,6 +19,11 @@ namespace BTDToolbox
         MainWindow mainForm;
         string mainFormOutput;
         string livePath = Environment.CurrentDirectory;
+
+        private const int SB_BOTH = 3;
+        private const int WM_NCCALCSIZE = 0x83;
+        [DllImport("user32.dll")]
+        private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
 
         public TD_Toolbox_Window()
         {
@@ -62,6 +68,16 @@ namespace BTDToolbox
 
             this.FormClosed += exitHandling;
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15,15,15);
+
+            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
+            this.BackgroundImageLayout = ImageLayout.Center;
+            this.Resize += mainResize;
+        }
+
+        private void mainResize(object sender, EventArgs e)
+        {
+            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
+            this.BackgroundImageLayout = ImageLayout.Center;
         }
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
@@ -92,6 +108,13 @@ namespace BTDToolbox
                 }
             }
             
+            foreach(Control con in Controls)
+            {
+                if(con is MdiClient)
+                {
+                    mdiClient = con as MdiClient;
+                }
+            }
         }
 
         private void jetToolStripMenuItem_Click(object sender, EventArgs e)
@@ -205,5 +228,20 @@ namespace BTDToolbox
             findForm.find = false;
             
         }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (mdiClient != null)
+            {
+                try
+                {
+                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0 /*Hide the ScrollBars*/);
+                } catch (Exception)
+                {
+                }
+            }
+            base.WndProc(ref m);
+        }
+        MdiClient mdiClient = null;
     }
 }

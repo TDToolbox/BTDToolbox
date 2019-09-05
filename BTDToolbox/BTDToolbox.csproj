@@ -133,6 +133,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ThemedFormTemplate.resx">
       <DependentUpon>ThemedFormTemplate.cs</DependentUpon>
@@ -153,6 +154,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resize_Icon.png" />
+    <None Include="Resources\PossibleBTD5MODIcon.png" />
+    <None Include="Resources\PossibleBTD5MODIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

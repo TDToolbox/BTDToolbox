@@ -11,9 +11,6 @@ namespace BTDToolbox
     {
         public static float consoleLogFont;
         string livePath = Environment.CurrentDirectory;
-        string consoleFormOutput;
-
-        Window consoleForm;
 
         public Console()
         {
