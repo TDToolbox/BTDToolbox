@@ -53,6 +53,8 @@ namespace BTDToolbox
         {
             InitializeComponent();
             splitContainer1.Panel1.MouseMove += ToolbarDrag;
+            splitContainer1.Panel2.MouseMove += ToolbarDrag;
+            splitContainer1.MouseMove += ToolbarDrag;
 
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
@@ -82,6 +84,8 @@ namespace BTDToolbox
         {
             InitializeComponent();
             splitContainer1.Panel1.MouseMove += ToolbarDrag;
+            splitContainer1.Panel2.MouseMove += ToolbarDrag;
+            splitContainer1.MouseMove += ToolbarDrag;
 
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
@@ -156,11 +160,6 @@ namespace BTDToolbox
             empMenu.Items.Add("Add");
             empMenu.Items.Add("Paste");
             empMenu.ItemClicked += listContextClicked;
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void JetForm_Load(object sender, EventArgs e)
@@ -274,6 +273,53 @@ namespace BTDToolbox
             }
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
+        private void goUpButton_Click(object sender, EventArgs e)
+        {
+            TreeNode current = treeView1.SelectedNode;
+            try
+            {
+                if(current.Text != projName)
+                {
+                    treeView1.SelectedNode = current.Parent;
+                }
+            }
+            catch (NullReferenceException)
+            {
+            }
+        }
+        private void ListView1_DoubleClicked(object sender, EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+            if (Selected.Count == 1)
+            {
+                try
+                {
+                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                    JsonWindow.MdiParent = Form;
+                    JsonWindow.Show();
+                }
+                catch (Exception)
+                {
+                    try
+                    {
+                        if (!Selected[0].Text.Contains("."))
+                        {
+                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
+                            {
+                                if (node.Text == Selected[0].Text)
+                                {
+                                    node.Expand();
+                                    treeView1.SelectedNode = node;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+        }
 
         private void SizerMouseDown(object sender, MouseEventArgs e)
         {
@@ -288,7 +334,6 @@ namespace BTDToolbox
             if (mov == true)
             {
                 splitContainer1.SplitterDistance = 25;
-                //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
                 splitContainer1.Dock = DockStyle.Fill;
                 Width = MousePosition.X - Mx + Sw;
                 Height = MousePosition.Y - My + Sh;
@@ -319,22 +364,7 @@ namespace BTDToolbox
             }
         }
 
-        private void ListView1_DoubleClicked(object sender, EventArgs e)
-        {
-            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
-            if (Selected.Count == 1)
-            {
-                try
-                {
-                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
-                    JsonWindow.MdiParent = Form;
-                    JsonWindow.Show();
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
+        //Context caller
         private void ListView1_RightClicked(object sender, MouseEventArgs e)
         {
             try
@@ -362,6 +392,7 @@ namespace BTDToolbox
             }
         }
 
+        //Context caller
         private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == "Rename")
@@ -443,7 +474,7 @@ namespace BTDToolbox
         }
 
 
-
+        //Context menu methods
         private void add()
         {
             string targetDir = this.Text;
@@ -541,6 +572,7 @@ namespace BTDToolbox
             }
         }
 
+        //Toolbar methods
         private void ToolbarDrag(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -549,7 +581,6 @@ namespace BTDToolbox
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
-
         private void close_button_Click(object sender, EventArgs e)
         {
             this.Close();

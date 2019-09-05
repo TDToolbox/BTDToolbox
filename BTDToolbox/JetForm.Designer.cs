@@ -43,6 +43,7 @@
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.type_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.time_modified_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.goUpButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -151,6 +152,7 @@
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.goUpButton);
             this.splitContainer.Panel2.Controls.Add(this.saveButton);
             this.splitContainer.Panel2.Controls.Add(this.listView1);
             this.splitContainer.Size = new System.Drawing.Size(775, 605);
@@ -201,9 +203,9 @@
             this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView1.ForeColor = System.Drawing.Color.White;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(2, 3);
+            this.listView1.Location = new System.Drawing.Point(2, 27);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(518, 606);
+            this.listView1.Size = new System.Drawing.Size(518, 582);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -224,11 +226,22 @@
             this.time_modified_column.Text = "Last Modified";
             this.time_modified_column.Width = 80;
             // 
+            // goUpButton
+            // 
+            this.goUpButton.Location = new System.Drawing.Point(2, 3);
+            this.goUpButton.Name = "goUpButton";
+            this.goUpButton.Size = new System.Drawing.Size(75, 23);
+            this.goUpButton.TabIndex = 2;
+            this.goUpButton.Text = "Up";
+            this.goUpButton.UseVisualStyleBackColor = true;
+            this.goUpButton.Click += new System.EventHandler(this.goUpButton_Click);
+            // 
             // JetForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 651);
             this.Controls.Add(this.splitContainer1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JetForm";
             this.Text = "JetViewer";
@@ -262,5 +275,6 @@
         private System.Windows.Forms.ColumnHeader type_column;
         private System.Windows.Forms.ColumnHeader time_modified_column;
         private System.Windows.Forms.Panel Sizer;
+        private System.Windows.Forms.Button goUpButton;
     }
 }
