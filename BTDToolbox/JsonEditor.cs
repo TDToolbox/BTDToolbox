@@ -18,8 +18,8 @@ namespace BTDToolbox
     {
         public static float jsonEditorFont;
         private string Path;
-        private string reverseFileName;
         public string fileName;
+        public string searchPhrase;
         string livePath = Environment.CurrentDirectory;
 
         Window jsonEditor;
@@ -47,9 +47,9 @@ namespace BTDToolbox
                 this.Location = new Point(deserializedJsonEditor.PosX, deserializedJsonEditor.PosY);
 
                 jsonEditorFont = deserializedJsonEditor.FontSize;
-                textBox1.Font = new Font("Microsoft Sans Serif", jsonEditorFont);
+                Editor_TextBox.Font = new Font("Microsoft Sans Serif", jsonEditorFont);
 
-                toolStripTextBox1.Text = jsonEditorFont.ToString();
+                FontSize_TextBox.Text = jsonEditorFont.ToString();
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -70,45 +70,62 @@ namespace BTDToolbox
 
             JToken jt = JToken.Parse(unformattedText);
             formattedText = jt.ToString(Formatting.Indented);
-            textBox1.Text = formattedText;
-        }
-
-        private void TextBox1_TextChanged(object sender, EventArgs e)
-        {
-            File.WriteAllText(Path, textBox1.Text);
-        }
-
-        private void ToolStripTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            float FontSize = 0;
-            float.TryParse(toolStripTextBox1.Text, out FontSize);
-            try
-            {
-                textBox1.Font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Regular);
-            } catch (Exception)
-            {
-                textBox1.Font = new Font(FontFamily.GenericSansSerif, 10f, FontStyle.Regular);
-            }
+            Editor_TextBox.Text = formattedText;
         }
 
         private void JsonEditor_Load(object sender, EventArgs e)
         {
 
         }
+        private void Editor_TextBox_TextChanged(object sender, EventArgs e)
+        {
+            File.WriteAllText(Path, Editor_TextBox.Text);
+        }
+
         
+        private void FindButton_Click(object sender, EventArgs e)
+        {
+            if (Find_TextBox.Text.Length <= 0)
+            {
+                MessageBox.Show("You didn't enter anything to search for. Please Try Again");
+            }
+            else
+            {
+                this.Find_TextBox.Text = searchPhrase;
+            }
+        }
+
+        private void ReplaceButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ReplaceAllButton_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
+        {
+            float FontSize = 0;
+            float.TryParse(FontSize_TextBox.Text, out FontSize);
+            try
+            {
+                Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Regular);
+            }
+            catch (Exception)
+            {
+                Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, 10f, FontStyle.Regular);
+            }
+        }
         private void exitHandling(object sender, EventArgs e)
         {
-            jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, textBox1.Font.Size);
+            jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, Editor_TextBox.Font.Size);
             jsonEditorOutput = JsonConvert.SerializeObject(jsonEditor);
 
             StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
             writeJsonEditorForm.Write(jsonEditorOutput);
             writeJsonEditorForm.Close();
-        }
-
-        private void ToolStripTextBox1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

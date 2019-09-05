@@ -17,13 +17,15 @@ namespace BTDToolbox
         public string windowName;
         public FindWindow()
         {
+
             InitializeComponent();
             if (find == true)
             {
                 this.Text = toolStripButton1.Text;
             }
-        }
 
+        }
+        public event EventHandler SearchJsonEditor;
         private void ToolStripButton1_Click(object sender, EventArgs e)
         {
             find = true;
@@ -36,6 +38,14 @@ namespace BTDToolbox
             find = false;
             replace = true;
             this.Text = toolStripButton2.Text;
+        }
+        
+        void Button1_Click(object sender, EventArgs e)
+        {
+            if (SearchJsonEditor != null)
+            {
+                SearchJsonEditor(sender, e);
+            }
         }
     }
 }
