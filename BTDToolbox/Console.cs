@@ -18,7 +18,7 @@ namespace BTDToolbox
         public Console()
         {
             InitializeComponent();
-
+            /*
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\console_form.json");
@@ -47,6 +47,7 @@ namespace BTDToolbox
                 console_log.Font = new Font("Microsoft Sans Serif", 10);
             }
             this.FormClosed += exitHandling;
+            */
         }
 
         private void Console_Load(object sender, EventArgs e)
@@ -69,7 +70,7 @@ namespace BTDToolbox
         {
             console_log.Items.Add(log);
         }
-
+        /*
         private void exitHandling(object sender, EventArgs e)
         {
             ConsoleHandler.console.Visible = false;
@@ -80,6 +81,6 @@ namespace BTDToolbox
             StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\console_form.json", false);
             writeConsoleForm.Write(consoleFormOutput);
             writeConsoleForm.Close();
-        }
+        }*/
     }
 }

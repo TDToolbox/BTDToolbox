@@ -34,6 +34,7 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.close_button = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.Sizer = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -43,7 +44,6 @@
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.type_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.time_modified_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Sizer = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -119,6 +119,16 @@
             this.splitContainer1.SplitterDistance = 26;
             this.splitContainer1.TabIndex = 1;
             // 
+            // Sizer
+            // 
+            this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
+            this.Sizer.Location = new System.Drawing.Point(790, 610);
+            this.Sizer.Name = "Sizer";
+            this.Sizer.Size = new System.Drawing.Size(10, 11);
+            this.Sizer.TabIndex = 1;
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -147,8 +157,9 @@
             this.splitContainer.Panel2.Controls.Add(this.saveButton);
             this.splitContainer.Panel2.Controls.Add(this.listView1);
             this.splitContainer.Size = new System.Drawing.Size(775, 605);
-            this.splitContainer.SplitterDistance = 251;
+            this.splitContainer.SplitterDistance = 253;
             this.splitContainer.TabIndex = 2;
+            this.splitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
             // 
             // treeView1
             // 
@@ -226,16 +237,6 @@
             // 
             this.time_modified_column.Text = "Last Modified";
             this.time_modified_column.Width = 80;
-            // 
-            // Sizer
-            // 
-            this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
-            this.Sizer.Location = new System.Drawing.Point(790, 610);
-            this.Sizer.Name = "Sizer";
-            this.Sizer.Size = new System.Drawing.Size(10, 11);
-            this.Sizer.TabIndex = 1;
             // 
             // JetForm
             // 

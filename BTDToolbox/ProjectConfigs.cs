@@ -43,5 +43,23 @@ namespace BTDToolbox
                 EnableConsole = enableConsole;
             }
         }
+        public class JetExplorer : Window
+        {
+            public int TreeViewX { get; set; }
+            public int TreeViewY { get; set; }
+            public float TreeViewFontSize { get; set; }
+            public JetExplorer(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, int treeViewX, int treeViewY, float treeViewFontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            {
+                WindowName = windowName;
+                SizeX = sizeX;
+                SizeY = sizeY;
+                PosX = posX;
+                PosY = posY;
+                FontSize = fontSize;
+                TreeViewX = treeViewX;
+                TreeViewY = treeViewY;
+                TreeViewFontSize = treeViewFontSize;
+            }
+        }
     }
 }

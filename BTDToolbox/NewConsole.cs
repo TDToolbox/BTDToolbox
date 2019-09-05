@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BTDToolbox.ProjectConfigs;
 
 namespace BTDToolbox
 {
@@ -32,6 +35,13 @@ namespace BTDToolbox
         int minWidth = 200;
         int minHeight = 100;
 
+        //Config variables
+        Window consoleForm;
+        public static float consoleLogFont;
+        string livePath = Environment.CurrentDirectory;
+        string consoleFormOutput;
+
+
         public NewConsole()
         {
             InitializeComponent();
@@ -46,11 +56,41 @@ namespace BTDToolbox
             Sizer.MouseMove += SizerMouseMove;
             Sizer.MouseUp += SizerMouseUp;
 
+            try
+            {
+                string json = File.ReadAllText(livePath + "\\config\\console_form.json");
+                Window deserializedConsoleForm = JsonConvert.DeserializeObject<Window>(json);
+
+                Size ConsoleFormSize = new Size(deserializedConsoleForm.SizeX, deserializedConsoleForm.SizeY);
+                this.Size = ConsoleFormSize;
+
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = new Point(deserializedConsoleForm.PosX, deserializedConsoleForm.PosY);
+
+                consoleLogFont = deserializedConsoleForm.FontSize;
+                console_log.Font = new Font("Microsoft Sans Serif", consoleLogFont);
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                consoleForm = new Window("Console", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10);
+                consoleFormOutput = JsonConvert.SerializeObject(consoleForm);
+
+                StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\console_form.json", false);
+                writeConsoleForm.Write(consoleFormOutput);
+                writeConsoleForm.Close();
+            }
+            catch (System.ArgumentException)
+            {
+                console_log.Font = new Font("Microsoft Sans Serif", 10);
+            }
+
             close_button.Click += close_button_Click;
+            this.FormClosed += exitHandling;
         }
 
         private void close_button_Click(object sender, EventArgs e)
         {
+            serializeConfig();
             this.Hide();
         }
 
@@ -100,6 +140,19 @@ namespace BTDToolbox
         public void appendLog(String log)
         {
             console_log.Text += log + "\r\n";
+        }
+        private void serializeConfig()
+        {
+            consoleForm = new Window("Console", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, consoleLogFont);
+            consoleFormOutput = JsonConvert.SerializeObject(consoleForm);
+
+            StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\console_form.json", false);
+            writeConsoleForm.Write(consoleFormOutput);
+            writeConsoleForm.Close();
+        }
+        private void exitHandling(object sender, EventArgs e)
+        {
+            serializeConfig();
         }
     }
 }
