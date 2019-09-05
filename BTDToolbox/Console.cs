@@ -46,8 +46,6 @@ namespace BTDToolbox
             {
                 console_log.Font = new Font("Microsoft Sans Serif", 10);
             }
-            
-            //this.FormClosing += Console_Close;
             this.FormClosed += exitHandling;
         }
 
@@ -56,9 +54,6 @@ namespace BTDToolbox
         }
         private void Console_Close(object sender, FormClosingEventArgs e)
         {
-            //this.Hide();
-            
-            //e.Cancel = true;
             if (ConsoleHandler.console.Visible)
             {
                 ConsoleHandler.console.Hide();

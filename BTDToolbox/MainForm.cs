@@ -137,7 +137,6 @@ namespace BTDToolbox
             {
                 enableConsole = true;
                 ConsoleHandler.console.Show();
-                //TD_Toolbox_Window_Load(sender, e);
             }
         }
 
@@ -186,6 +185,25 @@ namespace BTDToolbox
             ThemedFormTemplate tft = new ThemedFormTemplate();
             tft.MdiParent = this;
             tft.Show();
+        }
+
+        private void FindToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FindWindow findForm = new FindWindow();
+            findForm.Show();
+            findForm.Text = "Find";
+            findForm.replace = false;
+            findForm.find = true;
+        }
+
+        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FindWindow findForm = new FindWindow();
+            findForm.Show();
+            findForm.Text = "Replace";
+            findForm.replace = true;
+            findForm.find = false;
+            
         }
     }
 }
