@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreditViewer));
             this.contentPanel = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.close_button = new System.Windows.Forms.Button();
@@ -107,10 +108,11 @@
             // 
             this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Sizer.Location = new System.Drawing.Point(789, 410);
+            this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
+            this.Sizer.Location = new System.Drawing.Point(790, 411);
             this.Sizer.Name = "Sizer";
             this.Sizer.Size = new System.Drawing.Size(10, 10);
-            this.Sizer.TabIndex = 1;
+            this.Sizer.TabIndex = 2;
             // 
             // CreditViewer
             // 

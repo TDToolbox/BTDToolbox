@@ -78,6 +78,7 @@ namespace BTDToolbox
         {
             this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
             this.BackgroundImageLayout = ImageLayout.Center;
+
         }
 
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
@@ -243,5 +244,12 @@ namespace BTDToolbox
             base.WndProc(ref m);
         }
         MdiClient mdiClient = null;
+
+        private void creditsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreditViewer cv = new CreditViewer();
+            cv.MdiParent = this;
+            cv.Show();
+        }
     }
 }
