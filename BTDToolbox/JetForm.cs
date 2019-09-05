@@ -50,6 +50,7 @@ namespace BTDToolbox
         string jetFormOutput;
         int treeViewX;
         int treeViewY;
+        int splitterDistance;
         float treeViewFontSize;
         JetExplorer jetExplorerConfig;
 
@@ -59,7 +60,7 @@ namespace BTDToolbox
             splitContainer1.Panel1.MouseMove += ToolbarDrag;
             splitContainer1.Panel2.MouseMove += ToolbarDrag;
             splitContainer1.MouseMove += ToolbarDrag;
-
+            
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
@@ -90,7 +91,7 @@ namespace BTDToolbox
             splitContainer1.Panel1.MouseMove += ToolbarDrag;
             splitContainer1.Panel2.MouseMove += ToolbarDrag;
             splitContainer1.MouseMove += ToolbarDrag;
-
+            
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
@@ -122,17 +123,12 @@ namespace BTDToolbox
                 Font jetFormFontSize = new Font("Microsoft Sans Serif", deserializedJetForm.FontSize);
                 this.Font = jetFormFontSize;
 
-                treeViewX = deserializedJetForm.TreeViewX;
-                treeViewY = deserializedJetForm.TreeViewY;
+                splitterDistance = deserializedJetForm.SplitterDistance;
+                splitContainer.SplitterDistance = splitterDistance;
                 treeViewFontSize = deserializedJetForm.TreeViewFontSize;
             } catch (System.IO.FileNotFoundException)
             {
-                jetExplorerConfig = new JetExplorer("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, this.treeView1.Width, this.treeView1.Height, this.treeView1.Font.Size);
-                jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
-
-                StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
-                writeConsoleForm.Write(jetFormOutput);
-                writeConsoleForm.Close();
+                SerializeConfig();
             }
             catch (System.ArgumentException)
             {
@@ -144,6 +140,8 @@ namespace BTDToolbox
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
+
+            this.FormClosed += exitHandling;
         }
         
         private void initSelContextMenu()
@@ -207,14 +205,7 @@ namespace BTDToolbox
         private void JetForm_Closed(object sender, EventArgs e)
         {
             JetProps.decrement(this);
-
-            jetExplorerConfig = new JetExplorer("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, this.treeView1.Width, this.treeView1.Height, this.treeView1.Font.Size);
-            jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
-
-            StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
-            writeConsoleForm.Write(jetFormOutput);
-            writeConsoleForm.Close();
-            
+            SerializeConfig();
         }
 
         private void PopulateTreeView()
@@ -596,7 +587,20 @@ namespace BTDToolbox
 
         private void SplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
+            splitterDistance = splitContainer.SplitterDistance;
+        }
+        private void SerializeConfig()
+        {
+            jetExplorerConfig = new JetExplorer("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
+            StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
+            writeConsoleForm.Write(jetFormOutput);
+            writeConsoleForm.Close();
+        }
+        private void exitHandling(object sender, EventArgs e)
+        {
+            SerializeConfig();
         }
     }
 }

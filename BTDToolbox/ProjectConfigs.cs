@@ -45,10 +45,9 @@ namespace BTDToolbox
         }
         public class JetExplorer : Window
         {
-            public int TreeViewX { get; set; }
-            public int TreeViewY { get; set; }
+            public int SplitterDistance { get; set; }
             public float TreeViewFontSize { get; set; }
-            public JetExplorer(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, int treeViewX, int treeViewY, float treeViewFontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            public JetExplorer(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, int splitterDistance, float treeViewFontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
             {
                 WindowName = windowName;
                 SizeX = sizeX;
@@ -56,8 +55,7 @@ namespace BTDToolbox
                 PosX = posX;
                 PosY = posY;
                 FontSize = fontSize;
-                TreeViewX = treeViewX;
-                TreeViewY = treeViewY;
+                SplitterDistance = splitterDistance;
                 TreeViewFontSize = treeViewFontSize;
             }
         }
