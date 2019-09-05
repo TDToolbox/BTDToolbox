@@ -63,6 +63,12 @@
       <DependentUpon>Console.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleHandler.cs" />
+    <Compile Include="FindWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FindWindow.Designer.cs">
+      <DependentUpon>FindWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="JetCompiler.cs" />
     <Compile Include="JetProps.cs" />
     <Compile Include="JsonEditor.cs">
@@ -102,6 +108,9 @@
     </Compile>
     <EmbeddedResource Include="Console.resx">
       <DependentUpon>Console.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FindWindow.resx">
+      <DependentUpon>FindWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JsonEditor.resx">
       <DependentUpon>JsonEditor.cs</DependentUpon>

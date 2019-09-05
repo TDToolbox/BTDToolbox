@@ -18,6 +18,8 @@ namespace BTDToolbox
     {
         public static float jsonEditorFont;
         private string Path;
+        private string reverseFileName;
+        public string fileName;
         string livePath = Environment.CurrentDirectory;
 
         Window jsonEditor;
@@ -26,9 +28,13 @@ namespace BTDToolbox
         public JsonEditor(string Path)
         {
             InitializeComponent();
-            this.FormClosed += exitHandling;
-            this.Path = Path;
 
+            this.Path = Path;
+            this.FormClosed += exitHandling;
+
+            FileInfo info = new FileInfo(Path);
+            this.Text = info.Name;
+            
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\json_editor.json");
@@ -42,6 +48,8 @@ namespace BTDToolbox
 
                 jsonEditorFont = deserializedJsonEditor.FontSize;
                 textBox1.Font = new Font("Microsoft Sans Serif", jsonEditorFont);
+
+                toolStripTextBox1.Text = jsonEditorFont.ToString();
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -56,7 +64,6 @@ namespace BTDToolbox
             {
                 jsonEditorFont = 10;
             }
-
 
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
@@ -91,12 +98,17 @@ namespace BTDToolbox
         
         private void exitHandling(object sender, EventArgs e)
         {
-            jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, jsonEditorFont);
+            jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, textBox1.Font.Size);
             jsonEditorOutput = JsonConvert.SerializeObject(jsonEditor);
 
             StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
             writeJsonEditorForm.Write(jsonEditorOutput);
             writeJsonEditorForm.Close();
+        }
+
+        private void ToolStripTextBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
