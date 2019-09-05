@@ -165,6 +165,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "NewConsole";
             this.Text = "NewConsole";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NewConsole_KeyDown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);

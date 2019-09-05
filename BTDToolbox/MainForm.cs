@@ -72,6 +72,7 @@ namespace BTDToolbox
             this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
             this.BackgroundImageLayout = ImageLayout.Center;
             this.Resize += mainResize;
+            this.KeyPreview = true;
         }
 
         private void mainResize(object sender, EventArgs e)
@@ -250,6 +251,24 @@ namespace BTDToolbox
             CreditViewer cv = new CreditViewer();
             cv.MdiParent = this;
             cv.Show();
+        }
+        private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    Launcher.launchGame(JetProps.getForm(0));
+                }
+                else if (JetProps.get().Count < 1)
+                {
+                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                }
+                else
+                {
+                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                }
+            }
         }
     }
 }
