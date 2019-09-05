@@ -252,7 +252,6 @@ namespace BTDToolbox
             cv.MdiParent = this;
             cv.Show();
         }
-
         private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
