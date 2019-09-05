@@ -63,6 +63,12 @@
       <DependentUpon>Console.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleHandler.cs" />
+    <Compile Include="CreditViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreditViewer.Designer.cs">
+      <DependentUpon>CreditViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Find.cs" />
     <Compile Include="FindWindow.cs">
       <SubType>Form</SubType>
@@ -110,6 +116,9 @@
     <EmbeddedResource Include="Console.resx">
       <DependentUpon>Console.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CreditViewer.resx">
+      <DependentUpon>CreditViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FindWindow.resx">
       <DependentUpon>FindWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,6 +142,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ThemedFormTemplate.resx">
       <DependentUpon>ThemedFormTemplate.cs</DependentUpon>
@@ -153,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resize_Icon.png" />
+    <None Include="Resources\PossibleBTD5MODIcon.png" />
+    <None Include="Resources\PossibleBTD5MODIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

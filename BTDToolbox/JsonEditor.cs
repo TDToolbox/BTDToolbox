@@ -217,7 +217,7 @@ namespace BTDToolbox
                     this.Replace_Button.Visible = false;
                 }
             }
-            /*if (e.Control && e.KeyCode == Keys.R)
+            if (e.Control && e.KeyCode == Keys.H)
             {
                 isReplacing = !isReplacing;
                 this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
@@ -235,7 +235,22 @@ namespace BTDToolbox
                     this.Replace_TextBox.Visible = true;
                     this.Replace_Button.Visible = true;
                 }
-            }*/
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    Launcher.launchGame(JetProps.getForm(0));
+                }
+                else if (JetProps.get().Count < 1)
+                {
+                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                }
+                else
+                {
+                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                }
+            }
         }
         private void Find_TextBox_KeyDown(object sender, KeyEventArgs e)
         {

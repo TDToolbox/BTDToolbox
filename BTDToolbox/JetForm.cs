@@ -602,5 +602,43 @@ namespace BTDToolbox
         {
             SerializeConfig();
         }
+
+        private void JetForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    Launcher.launchGame(JetProps.getForm(0));
+                }
+                else if (JetProps.get().Count < 1)
+                {
+                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                }
+                else
+                {
+                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                }
+            }
+        }
+
+        private void SplitContainer1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    Launcher.launchGame(JetProps.getForm(0));
+                }
+                else if (JetProps.get().Count < 1)
+                {
+                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                }
+                else
+                {
+                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                }
+            }
+        }
     }
 }
