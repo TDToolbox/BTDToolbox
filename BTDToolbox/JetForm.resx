@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAA4
-        CAAAAk1TRnQBSQFMAgEBAgEAAXABAAFwAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CAAAAk1TRnQBSQFMAgEBAgEAAYgBAAGIAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAARADAAEBAQABCAYAAQQYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -164,6 +164,21 @@
 </value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Sizer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkUso
+        RFEcxn8GeY0szEKyuIthhYRkqSFSlGZGGSzce8eMqbnXdO/IxlLZKguPjdfCxpqtha1SyqNkY2tFbKTr
+        f+6omdQop07n13fO93XOdyBwkDUtt6oHLDvvRMci2kxiVqt5po5qGuiiWzfd3GRsNE7Z8XFLhVpvulQW
+        /xuNyUXXhApNeMjMOXnhBeGB1XxO8Y5wyFzSk8Knwp2OXFD4XulGgV8Up30OqMyQE48OC4eEtXQJGyVs
+        LjmWcL9wOGnZkh+YKXBS8ZpiK7ti/txTvTC4aE/HlC6zjTHGmWQKDYMVMmTJS18ZbFFcorIfKeNv9f1T
+        4jLElcEUxwjLWOi+H/UHv7t1U329haRgBKqfPO+tHWq24GvT8z4PPe/rCCof4cIu+pcPYPBd9M2iFt6H
+        pnU4uyxqxjacb0DLQ053dF+qlBlIpeD1RL4pAc3XUD9X6O1nn+M7iEtXE1ewuwcdacmeL/Pu2tLe/jzj
+        90fkG6k5cr3lkxirAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4wkFCzgSjrlznQAAABl0RVh0
+        Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAABKSURBVChTjczJDQAgCERRi6AJeqZXjJgxbiyH
+        yb9MXiMirUxEtHRmZmt6HiIaniGm8i6i3/MtuvJPRI+zJz5yJKJ2zsQlV8RZ0Q631roNxFsHEgAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAIEAQAAEABADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAABMLAAATCwAAEAAAABAA

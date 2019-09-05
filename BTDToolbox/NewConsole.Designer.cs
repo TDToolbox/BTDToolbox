@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewConsole));
             this.close_button = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
             this.Sizer = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.console_log = new System.Windows.Forms.TextBox();
             this.invoke_button = new System.Windows.Forms.Button();
             this.invoke_textbox = new System.Windows.Forms.TextBox();
-            this.console_log = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -100,6 +101,7 @@
             // 
             this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
             this.Sizer.Location = new System.Drawing.Point(704, 205);
             this.Sizer.Name = "Sizer";
             this.Sizer.Size = new System.Drawing.Size(10, 10);
@@ -118,6 +120,20 @@
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Size = new System.Drawing.Size(691, 201);
             this.contentPanel.TabIndex = 0;
+            // 
+            // console_log
+            // 
+            this.console_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.console_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.console_log.ForeColor = System.Drawing.Color.White;
+            this.console_log.Location = new System.Drawing.Point(4, 4);
+            this.console_log.Multiline = true;
+            this.console_log.Name = "console_log";
+            this.console_log.ReadOnly = true;
+            this.console_log.Size = new System.Drawing.Size(684, 165);
+            this.console_log.TabIndex = 5;
             // 
             // invoke_button
             // 
@@ -140,20 +156,6 @@
             this.invoke_textbox.Name = "invoke_textbox";
             this.invoke_textbox.Size = new System.Drawing.Size(475, 20);
             this.invoke_textbox.TabIndex = 3;
-            // 
-            // console_log
-            // 
-            this.console_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.console_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.console_log.ForeColor = System.Drawing.Color.White;
-            this.console_log.Location = new System.Drawing.Point(4, 4);
-            this.console_log.Multiline = true;
-            this.console_log.Name = "console_log";
-            this.console_log.ReadOnly = true;
-            this.console_log.Size = new System.Drawing.Size(684, 165);
-            this.console_log.TabIndex = 5;
             // 
             // NewConsole
             // 

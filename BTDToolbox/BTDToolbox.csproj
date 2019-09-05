@@ -63,6 +63,7 @@
       <DependentUpon>Console.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleHandler.cs" />
+    <Compile Include="Find.cs" />
     <Compile Include="FindWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resize_Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -38,12 +38,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.goUpButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.type_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.time_modified_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.goUpButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -123,7 +123,8 @@
             // 
             this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Sizer.Location = new System.Drawing.Point(789, 609);
+            this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
+            this.Sizer.Location = new System.Drawing.Point(790, 610);
             this.Sizer.Name = "Sizer";
             this.Sizer.Size = new System.Drawing.Size(10, 11);
             this.Sizer.TabIndex = 1;
@@ -156,8 +157,9 @@
             this.splitContainer.Panel2.Controls.Add(this.saveButton);
             this.splitContainer.Panel2.Controls.Add(this.listView1);
             this.splitContainer.Size = new System.Drawing.Size(775, 605);
-            this.splitContainer.SplitterDistance = 251;
+            this.splitContainer.SplitterDistance = 253;
             this.splitContainer.TabIndex = 2;
+            this.splitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
             // 
             // treeView1
             // 
@@ -175,6 +177,16 @@
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.Size = new System.Drawing.Size(253, 606);
             this.treeView1.TabIndex = 0;
+            // 
+            // goUpButton
+            // 
+            this.goUpButton.Location = new System.Drawing.Point(2, 3);
+            this.goUpButton.Name = "goUpButton";
+            this.goUpButton.Size = new System.Drawing.Size(75, 23);
+            this.goUpButton.TabIndex = 2;
+            this.goUpButton.Text = "Up";
+            this.goUpButton.UseVisualStyleBackColor = true;
+            this.goUpButton.Click += new System.EventHandler(this.goUpButton_Click);
             // 
             // saveButton
             // 
@@ -226,16 +238,6 @@
             this.time_modified_column.Text = "Last Modified";
             this.time_modified_column.Width = 80;
             // 
-            // goUpButton
-            // 
-            this.goUpButton.Location = new System.Drawing.Point(2, 3);
-            this.goUpButton.Name = "goUpButton";
-            this.goUpButton.Size = new System.Drawing.Size(75, 23);
-            this.goUpButton.TabIndex = 2;
-            this.goUpButton.Text = "Up";
-            this.goUpButton.UseVisualStyleBackColor = true;
-            this.goUpButton.Click += new System.EventHandler(this.goUpButton_Click);
-            // 
             // JetForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -274,7 +276,7 @@
         private System.Windows.Forms.ColumnHeader name_column;
         private System.Windows.Forms.ColumnHeader type_column;
         private System.Windows.Forms.ColumnHeader time_modified_column;
-        private System.Windows.Forms.Panel Sizer;
         private System.Windows.Forms.Button goUpButton;
+        private System.Windows.Forms.Panel Sizer;
     }
 }

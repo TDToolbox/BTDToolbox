@@ -45,9 +45,13 @@ namespace BTDToolbox
         private ContextMenuStrip empMenu;
         private ContextMenuStrip multiSelMenu;
 
+        //Config values
         public static float jetFormFontSize;
         string jetFormOutput;
-        Window jetForm;
+        int treeViewX;
+        int treeViewY;
+        float treeViewFontSize;
+        JetExplorer jetExplorerConfig;
 
         public JetForm(String filePath, TD_Toolbox_Window Form, string projName)
         {
@@ -107,7 +111,7 @@ namespace BTDToolbox
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                Window deserializedJetForm = JsonConvert.DeserializeObject<Window>(json);
+                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(json);
 
                 Size JetFormSize = new Size(deserializedJetForm.SizeX, deserializedJetForm.SizeY);
                 this.Size = JetFormSize;
@@ -117,10 +121,14 @@ namespace BTDToolbox
 
                 Font jetFormFontSize = new Font("Microsoft Sans Serif", deserializedJetForm.FontSize);
                 this.Font = jetFormFontSize;
+
+                treeViewX = deserializedJetForm.TreeViewX;
+                treeViewY = deserializedJetForm.TreeViewY;
+                treeViewFontSize = deserializedJetForm.TreeViewFontSize;
             } catch (System.IO.FileNotFoundException)
             {
-                jetForm = new Window("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10);
-                jetFormOutput = JsonConvert.SerializeObject(jetForm);
+                jetExplorerConfig = new JetExplorer("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, this.treeView1.Width, this.treeView1.Height, this.treeView1.Font.Size);
+                jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
                 StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
                 writeConsoleForm.Write(jetFormOutput);
@@ -137,7 +145,7 @@ namespace BTDToolbox
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
-
+        
         private void initSelContextMenu()
         {
             selMenu = new ContextMenuStrip();
@@ -199,9 +207,9 @@ namespace BTDToolbox
         private void JetForm_Closed(object sender, EventArgs e)
         {
             JetProps.decrement(this);
-            
-            jetForm = new Window("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size);
-            jetFormOutput = JsonConvert.SerializeObject(jetForm);
+
+            jetExplorerConfig = new JetExplorer("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, this.treeView1.Width, this.treeView1.Height, this.treeView1.Font.Size);
+            jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
             StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
             writeConsoleForm.Write(jetFormOutput);
@@ -239,7 +247,7 @@ namespace BTDToolbox
                 nodeToAddTo.Nodes.Add(aNode);
             }
         }
-
+        
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode newSelected = e.Node;
@@ -584,6 +592,11 @@ namespace BTDToolbox
         private void close_button_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void SplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
         }
     }
 }
