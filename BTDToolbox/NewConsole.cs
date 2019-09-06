@@ -141,6 +141,7 @@ namespace BTDToolbox
         {
             console_log.Text += log + "\r\n";
         }
+
         private void serializeConfig()
         {
             consoleForm = new Window("Console", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, consoleLogFont);

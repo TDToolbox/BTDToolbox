@@ -12,16 +12,16 @@ namespace BTDToolbox
         public static void increment(JetForm form)
         {
             jetformlist.Add(form);
-            ConsoleHandler.appendLog("Jet windows opened: " + jetformlist.Count);
+            //ConsoleHandler.appendLog("Jet windows opened: " + jetformlist.Count);
         }
         public static void decrement(JetForm form)
         {
             jetformlist.Remove(form);
-            ConsoleHandler.appendLog("Jet windows opened: " + jetformlist.Count);
+            //ConsoleHandler.appendLog("Jet windows opened: " + jetformlist.Count);
         }
         public static List<JetForm> get()
         {
-            ConsoleHandler.appendLog("Jet windows opened: " + jetformlist.Count);
+            //ConsoleHandler.appendLog("Jet windows opened: " + jetformlist.Count);
             return jetformlist;
         }
         public static JetForm getForm(int num)

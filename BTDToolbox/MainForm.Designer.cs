@@ -48,7 +48,6 @@
             this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -183,7 +182,7 @@
             // restoreBackupjetToolStripMenuItem
             // 
             this.restoreBackupjetToolStripMenuItem.Name = "restoreBackupjetToolStripMenuItem";
-            this.restoreBackupjetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restoreBackupjetToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.restoreBackupjetToolStripMenuItem.Text = "Restore backup .jet";
             this.restoreBackupjetToolStripMenuItem.Click += new System.EventHandler(this.restoreBackupjetToolStripMenuItem_Click);
             // 
@@ -209,13 +208,6 @@
             this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.themedFormToolStripMenuItem_Click);
-            // 
-            // creditsToolStripMenuItem
-            // 
-            this.creditsToolStripMenuItem.Name = "creditsToolStripMenuItem";
-            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.creditsToolStripMenuItem.Text = "Credits";
-            this.creditsToolStripMenuItem.Click += new System.EventHandler(this.creditsToolStripMenuItem_Click);
             // 
             // TD_Toolbox_Window
             // 
