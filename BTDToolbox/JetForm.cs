@@ -141,12 +141,6 @@ namespace BTDToolbox
             this.SetStyle(ControlStyles.ResizeRedraw, true);
 
             this.FormClosed += exitHandling;
-            if (jetImportCancelled)
-            {
-                MessageBox.Show("17");
-                this.Close();
-                //this.Hide();
-            }
         }
         
         private void initSelContextMenu()
@@ -175,6 +169,7 @@ namespace BTDToolbox
 
         private void JetForm_Load(object sender, EventArgs e)
         {
+            
             if (filePath != null)
             {
                 openJetWindow();

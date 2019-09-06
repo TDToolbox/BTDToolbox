@@ -139,7 +139,8 @@ namespace BTDToolbox
 
         public void appendLog(String log)
         {
-            console_log.Text += log + "\r\n";
+            //console_log.Text += log + "\r\n";
+            console_log.AppendText(log + "\r\n");
         }
         private void serializeConfig()
         {
@@ -172,6 +173,11 @@ namespace BTDToolbox
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
             }
+        }
+
+        private void Console_log_TextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

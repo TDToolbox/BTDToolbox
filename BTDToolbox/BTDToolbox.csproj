@@ -69,6 +69,12 @@
     <Compile Include="CreditViewer.Designer.cs">
       <DependentUpon>CreditViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtractingJet_Window.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtractingJet_Window.Designer.cs">
+      <DependentUpon>ExtractingJet_Window.cs</DependentUpon>
+    </Compile>
     <Compile Include="Find.cs" />
     <Compile Include="FindWindow.cs">
       <SubType>Form</SubType>
@@ -76,11 +82,11 @@
     <Compile Include="FindWindow.Designer.cs">
       <DependentUpon>FindWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="SetProjectName.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="SetProjectName.Designer.cs">
+      <DependentUpon>SetProjectName.cs</DependentUpon>
     </Compile>
     <Compile Include="JetCompiler.cs" />
     <Compile Include="JetProps.cs" />
@@ -125,11 +131,14 @@
     <EmbeddedResource Include="CreditViewer.resx">
       <DependentUpon>CreditViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ExtractingJet_Window.resx">
+      <DependentUpon>ExtractingJet_Window.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FindWindow.resx">
       <DependentUpon>FindWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="SetProjectName.resx">
+      <DependentUpon>SetProjectName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JsonEditor.resx">
       <DependentUpon>JsonEditor.cs</DependentUpon>

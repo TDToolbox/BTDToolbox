@@ -8,7 +8,10 @@ namespace BTDToolbox
 {
     class JetCompiler
     {
-        public static bool jetImportCancelled;
+        public static bool hasCustomProjectName;
+        public static string customProjectName;
+        public static string projectName;
+        public static int filesInJet;
         public static void compile(DirectoryInfo target, string outputPath)
         {
             ZipFile toExport = new ZipFile();
@@ -34,13 +37,24 @@ namespace BTDToolbox
             {
                 TD_Toolbox_Window.jetImportCancelled = false;
                 string livePath = Environment.CurrentDirectory;
-                string tempName = (livePath + "\\proj_" + rand.Next());
-                archive.ExtractAll(tempName);
-                ConsoleHandler.appendLog("Project files created at: " + tempName);
-                DirectoryInfo returner = new DirectoryInfo(tempName);
-                
-                return returner;
+                if (hasCustomProjectName)
+                {
+                    projectName = (livePath + "\\proj_" + customProjectName);
+                }
+                else
+                {
+                    int randName = rand.Next(10000000, 99999999);
+                    projectName = (livePath + "\\proj_" + randName);
+                }
 
+                //Extract and count progress
+                filesInJet = archive.Count;
+                //archive.ExtractProgress += ExtractingJet_Window.ZipExtractProgress;
+                archive.ExtractAll(projectName);
+                
+                ConsoleHandler.appendLog("Project files created at: " + projectName);
+                DirectoryInfo returner = new DirectoryInfo(projectName);
+                return returner;
             }
             return null;
 

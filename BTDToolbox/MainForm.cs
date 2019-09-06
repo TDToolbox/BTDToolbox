@@ -13,21 +13,36 @@ namespace BTDToolbox
 {
     public partial class TD_Toolbox_Window : Form {
 
-        private string file;
-        public int mainFormFontSize;
-        public bool enableConsole;
-        MainWindow mainForm;
-        string mainFormOutput;
+        //Form variables
         string livePath = Environment.CurrentDirectory;
         public string projectDirPath;
+        
+
+        //Config variables
+        MainWindow mainForm;
+        public static string file;
+        public int mainFormFontSize;
+        public bool enableConsole;
+        string mainFormOutput;
+        public static string projName;
+        public static bool openJetForm;
+
+
+        //Import project variables
         public static bool jetImportCancelled;
+        public static bool hasCustomName;
 
 
+        //Scroll bar variables
         private const int SB_BOTH = 3;
         private const int WM_NCCALCSIZE = 0x83;
         [DllImport("user32.dll")]
         private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
 
+
+        //
+        //Initialize window
+        //
         public TD_Toolbox_Window()
         {
             InitializeComponent(); 
@@ -61,7 +76,7 @@ namespace BTDToolbox
                 mainFormFontSize = 10;
             }
 
-
+            
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.Black;
 
             this.FormClosed += exitHandling;
@@ -71,15 +86,12 @@ namespace BTDToolbox
             this.BackgroundImageLayout = ImageLayout.Center;
             this.Resize += mainResize;
             this.KeyPreview = true;
+
+            if (openJetForm)
+            {
+                OpenJetForm();
+            }
         }
-
-        private void mainResize(object sender, EventArgs e)
-        {
-            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
-            this.BackgroundImageLayout = ImageLayout.Center;
-
-        }
-
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
             ConsoleHandler.console = new NewConsole();
@@ -97,31 +109,82 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("Searching for existing projects...");
             DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
             foreach (DirectoryInfo subdir in dirInfo.GetDirectories())
-                {
-                if (subdir.Name.StartsWith("proj_"))
-                    {
-                    ConsoleHandler.appendLog("Loading project " + subdir.Name);
-                        JetForm jf = new JetForm(subdir, this, subdir.Name);
-                        jf.MdiParent = this;
-                        jf.Show();
-                        ConsoleHandler.appendLog("Loaded project " + subdir.Name);
-                    }
-                }
-            
-            foreach(Control con in Controls)
             {
-                if(con is MdiClient)
+                if (subdir.Name.StartsWith("proj_"))
+                {
+                    ConsoleHandler.appendLog("Loading project " + subdir.Name);
+                    JetForm jf = new JetForm(subdir, this, subdir.Name);
+                    jf.MdiParent = this;
+                    jf.Show();
+                    ConsoleHandler.appendLog("Loaded project " + subdir.Name);
+                }
+            }
+
+            foreach (Control con in Controls)
+            {
+                if (con is MdiClient)
                 {
                     mdiClient = con as MdiClient;
                 }
             }
         }
-
-        private void jetToolStripMenuItem_Click(object sender, EventArgs e)
+        public void OpenJetForm()
         {
-            jetImportCancelled = false;
+            JetForm jf = new JetForm(livePath, this, projName);
+            jf.MdiParent = this;
+            jf.Show();
+        }
+
+        private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    Launcher.launchGame(JetProps.getForm(0));
+                }
+                else if (JetProps.get().Count < 1)
+                {
+                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                }
+                else
+                {
+                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                }
+            }
+            if (e.KeyCode == Keys.F1)
+            {
+                ExtractingJet_Window loading = new ExtractingJet_Window();
+                loading.Show();
+            }
+            if (e.Control && e.KeyCode == Keys.N)
+            {
+                ImportNewJew();
+            }
+        }
+        private void mainResize(object sender, EventArgs e)
+        {
+            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
+            this.BackgroundImageLayout = ImageLayout.Center;
+
+        }
+        private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThemedFormTemplate tft = new ThemedFormTemplate();
+            tft.MdiParent = this;
+            tft.Show();
+        }
+        //
+        //Open or Create Projects
+        //
+        public void ImportNewJet_Click(object sender, EventArgs e)
+        {
+            ImportNewJew();
+        }
+        public static void ImportNewJew()
+        {
             OpenFileDialog fileDiag = new OpenFileDialog();
-            
+
             fileDiag.Title = "Open .jet";
             fileDiag.DefaultExt = "jet";
             fileDiag.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
@@ -134,23 +197,8 @@ namespace BTDToolbox
 
                 if (bytes == "PK")
                 {
-                    if (jetImportCancelled == false)
-                    {
-                        JetForm jf = new JetForm(file, this, fileDiag.SafeFileName);
-                        jf.MdiParent = this;
-
-
-                        //jf.Show will open whether or not user cancels import. Need to show "Will take 2 minutes"
-                        //outside of jf.Show
-
-                        //insert change here if you want to prevent jet form from opening if user cancels import
-                        jf.Show();
-                        if (jetImportCancelled == true)
-                        {
-                            jf.Close();
-                        }
-                    }
-                    
+                    var setProjectName = new SetProjectName();
+                    setProjectName.Show();
                 }
                 else
                 {
@@ -158,43 +206,7 @@ namespace BTDToolbox
                 }
             }
         }
-
-            private void runToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if(JetProps.get().Count == 1)
-            {
-                Launcher.launchGame(JetProps.getForm(0));
-            }
-            else if(JetProps.get().Count < 1)
-            {
-                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-            }
-            else
-            {
-                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-            }
-        }
-
-        private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ConsoleHandler.console.Visible)
-            {
-                ConsoleHandler.console.Hide();
-                enableConsole = false;
-            }
-            else
-            {
-                enableConsole = true;
-                ConsoleHandler.console.Show();
-            }
-        }
-
-        private void restoreBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Launcher.restoreGame();
-        }
-
-        private void existingProjectToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void OpenExistingProject_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.Description = "Select project folder";
@@ -218,10 +230,78 @@ namespace BTDToolbox
                 }
             }
         }
-      
+        //
+        //UI Buttons
+        //
+        private void LaunchProgram_ToolStrip_Click(object sender, EventArgs e)
+        {
+            if (JetProps.get().Count == 1)
+            {
+                Launcher.launchGame(JetProps.getForm(0));
+            }
+            else if (JetProps.get().Count < 1)
+            {
+                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+            }
+            else
+            {
+                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+            }
+        }
+        private void RestoreBackup_Click(object sender, EventArgs e)
+        {
+            Launcher.restoreGame();
+        }
+        private void ToggleConsole_Click(object sender, EventArgs e)
+        {
+            if (ConsoleHandler.console.Visible)
+            {
+                ConsoleHandler.console.Hide();
+                enableConsole = false;
+            }
+            else
+            {
+                enableConsole = true;
+                ConsoleHandler.console.Show();
+            }
+        }
+        private void Find_Button_Click(object sender, EventArgs e)
+        {
+            FindWindow findForm = new FindWindow();
+            findForm.Show();
+            findForm.Text = "Find";
+            findForm.replace = false;
+            findForm.find = true;
+        }
+        private void Replace_Button_Click(object sender, EventArgs e)
+        {
+            FindWindow findForm = new FindWindow();
+            findForm.Show();
+            findForm.Text = "Replace";
+            findForm.replace = true;
+            findForm.find = false;
+        }
+        private void Credits_Click(object sender, EventArgs e)
+        {
+            CreditViewer cv = new CreditViewer();
+            cv.MdiParent = this;
+            cv.Show();
+        }
+        //
+        //Config stuff
+        //
+        private void SerializeConfig()
+        {
+            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory);
+            mainFormOutput = JsonConvert.SerializeObject(mainForm);
+
+            StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
+            writeMainForm.Write(mainFormOutput);
+            writeMainForm.Close();
+        }
         private void exitHandling(object sender, EventArgs e)
         {
-            if(ConsoleHandler.console.Visible)
+            if (ConsoleHandler.console.Visible)
             {
                 enableConsole = true;
             }
@@ -231,32 +311,9 @@ namespace BTDToolbox
             }
             SerializeConfig();
         }
-        private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
-        { 
-            ThemedFormTemplate tft = new ThemedFormTemplate();
-            tft.MdiParent = this;
-            tft.Show();
-        }
-
-        private void FindToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FindWindow findForm = new FindWindow();
-            findForm.Show();
-            findForm.Text = "Find";
-            findForm.replace = false;
-            findForm.find = true;
-        }
-
-        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            FindWindow findForm = new FindWindow();
-            findForm.Show();
-            findForm.Text = "Replace";
-            findForm.replace = true;
-            findForm.find = false;
-            
-        }
-
+        //
+        //Extra
+        //
         protected override void WndProc(ref Message m)
         {
             if (mdiClient != null)
@@ -264,7 +321,8 @@ namespace BTDToolbox
                 try
                 {
                     ShowScrollBar(mdiClient.Handle, SB_BOTH, 0 /*Hide the ScrollBars*/);
-                } catch (Exception)
+                }
+                catch (Exception)
                 {
                 }
             }
@@ -272,39 +330,5 @@ namespace BTDToolbox
         }
         MdiClient mdiClient = null;
 
-        private void creditsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CreditViewer cv = new CreditViewer();
-            cv.MdiParent = this;
-            cv.Show();
-        }
-        private void SerializeConfig()
-        {
-            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory);
-            mainFormOutput = JsonConvert.SerializeObject(mainForm);
-            
-            StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
-            writeMainForm.Write(mainFormOutput);
-            writeMainForm.Close();
-        }
-
-        private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                if (JetProps.get().Count == 1)
-                {
-                    Launcher.launchGame(JetProps.getForm(0));
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
-            }
-        }
     }
 }
