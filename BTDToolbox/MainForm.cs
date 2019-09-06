@@ -69,14 +69,14 @@ namespace BTDToolbox
             this.FormClosed += exitHandling;
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15,15,15);
 
-            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
+            this.BackgroundImage = Properties.Resources.TDToolboxPNG;
             this.BackgroundImageLayout = ImageLayout.Center;
             this.Resize += mainResize;
         }
 
         private void mainResize(object sender, EventArgs e)
         {
-            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
+            this.BackgroundImage = Properties.Resources.TDToolboxPNG;
             this.BackgroundImageLayout = ImageLayout.Center;
 
         }
@@ -206,7 +206,7 @@ namespace BTDToolbox
         }
         private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
         { 
-            ThemedFormTemplate tft = new ThemedFormTemplate();
+            ThemedForm tft = new ThemedForm();
             tft.MdiParent = this;
             tft.Show();
         }

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace BTDToolbox
 {
-    public partial class ThemedFormTemplate : Form
+    public partial class ThemedForm : Form
     {
         //Low level for toolbar dragging
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -32,7 +32,7 @@ namespace BTDToolbox
         int minWidth = 200;
         int minHeight = 100;
 
-        public ThemedFormTemplate()
+        public ThemedForm()
         {
             InitializeComponent();
 

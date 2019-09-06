@@ -38,6 +38,8 @@ namespace BTDToolbox
         {
             InitializeComponent();
 
+            JsonProps.increment(this);
+
             this.Path = Path;
             this.FormClosed += exitHandling;
 
@@ -83,19 +85,43 @@ namespace BTDToolbox
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
 
-            JToken jt = JToken.Parse(unformattedText);
-            formattedText = jt.ToString(Formatting.Indented);
-            Editor_TextBox.Text = formattedText;
+            try
+            {
+                JToken jt = JToken.Parse(unformattedText);
+                formattedText = jt.ToString(Formatting.Indented);
+                Editor_TextBox.Text = formattedText;
+            }
+            catch (Exception)
+            {
+                Editor_TextBox.Text = unformattedText;
+            }
 
         }
 
         private void JsonEditor_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                JToken.Parse(this.Editor_TextBox.Text);
+                linticator.BackColor = Color.Green;
+            }
+            catch (Exception)
+            {
+                linticator.BackColor = Color.Red;
+            }
         }
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Path, Editor_TextBox.Text);
+            try
+            {
+                JToken.Parse(this.Editor_TextBox.Text);
+                linticator.BackColor = Color.Green;
+            }
+            catch (Exception)
+            {
+                linticator.BackColor = Color.Red;
+            }
         }
         private void FindButton_Click(object sender, EventArgs e)
         {
@@ -189,6 +215,8 @@ namespace BTDToolbox
         {
             jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, Editor_TextBox.Font.Size);
             jsonEditorOutput = JsonConvert.SerializeObject(jsonEditor);
+
+            JsonProps.decrement(this);
 
             StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
             writeJsonEditorForm.Write(jsonEditorOutput);
