@@ -32,7 +32,8 @@ namespace BTDToolbox
         public class MainWindow : Window
         {
             public bool EnableConsole { get; set; }
-            public MainWindow(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, bool enableConsole) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            public string DirPath { get; set; }
+            public MainWindow(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, bool enableConsole, string dirPath) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
             {
                 WindowName = windowName;
                 SizeX = sizeX;
@@ -40,6 +41,7 @@ namespace BTDToolbox
                 PosX = posX;
                 PosY = posY;
                 FontSize = fontSize;
+                DirPath = dirPath;
                 EnableConsole = enableConsole;
             }
         }

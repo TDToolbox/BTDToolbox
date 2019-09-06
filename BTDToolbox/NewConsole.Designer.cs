@@ -132,6 +132,7 @@
             this.console_log.Multiline = true;
             this.console_log.Name = "console_log";
             this.console_log.ReadOnly = true;
+            this.console_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.console_log.Size = new System.Drawing.Size(684, 165);
             this.console_log.TabIndex = 5;
             // 

@@ -19,6 +19,9 @@ namespace BTDToolbox
         MainWindow mainForm;
         string mainFormOutput;
         string livePath = Environment.CurrentDirectory;
+        public string projectDirPath;
+        public static bool jetImportCancelled;
+
 
         private const int SB_BOTH = 3;
         private const int WM_NCCALCSIZE = 0x83;
@@ -43,16 +46,11 @@ namespace BTDToolbox
                 this.Font = mainFormFontSize;
 
                 enableConsole = deserializedMainForm.EnableConsole;
+                projectDirPath = deserializedMainForm.DirPath;
             }
             catch (FileNotFoundException)
             {
-                mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, true);
-                mainFormOutput = JsonConvert.SerializeObject(mainForm);
-
-                string livePath = Environment.CurrentDirectory;
-                StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
-                writeMainForm.Write(mainFormOutput);
-                writeMainForm.Close();
+                SerializeConfig();
             }
             catch (DirectoryNotFoundException)
             {
@@ -99,16 +97,16 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("Searching for existing projects...");
             DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
             foreach (DirectoryInfo subdir in dirInfo.GetDirectories())
-            {
-                if (subdir.Name.StartsWith("proj_"))
                 {
+                if (subdir.Name.StartsWith("proj_"))
+                    {
                     ConsoleHandler.appendLog("Loading project " + subdir.Name);
-                    JetForm jf = new JetForm(subdir, this, subdir.Name);
-                    jf.MdiParent = this;
-                    jf.Show();
-                    ConsoleHandler.appendLog("Loaded project " + subdir.Name);
+                        JetForm jf = new JetForm(subdir, this, subdir.Name);
+                        jf.MdiParent = this;
+                        jf.Show();
+                        ConsoleHandler.appendLog("Loaded project " + subdir.Name);
+                    }
                 }
-            }
             
             foreach(Control con in Controls)
             {
@@ -121,21 +119,47 @@ namespace BTDToolbox
 
         private void jetToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            jetImportCancelled = false;
             OpenFileDialog fileDiag = new OpenFileDialog();
+            
             fileDiag.Title = "Open .jet";
             fileDiag.DefaultExt = "jet";
             fileDiag.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
             fileDiag.Multiselect = false;
-            if(fileDiag.ShowDialog() == DialogResult.OK)
+            if (fileDiag.ShowDialog() == DialogResult.OK)
             {
                 file = fileDiag.FileName;
-                JetForm jf = new JetForm(file, this, fileDiag.SafeFileName);
-                jf.MdiParent = this;
-                jf.Show();
+                byte[] jetBytes = File.ReadAllBytes(file).Take(2).ToArray();
+                string bytes = "" + (char)jetBytes[0] + (char)jetBytes[1];
+
+                if (bytes == "PK")
+                {
+                    if (jetImportCancelled == false)
+                    {
+                        JetForm jf = new JetForm(file, this, fileDiag.SafeFileName);
+                        jf.MdiParent = this;
+
+
+                        //jf.Show will open whether or not user cancels import. Need to show "Will take 2 minutes"
+                        //outside of jf.Show
+
+                        //insert change here if you want to prevent jet form from opening if user cancels import
+                        jf.Show();
+                        if (jetImportCancelled == true)
+                        {
+                            jf.Close();
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Error!! Not a valid .Jet File. Please try again...");
+                }
             }
         }
 
-        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+            private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(JetProps.get().Count == 1)
             {
@@ -175,15 +199,23 @@ namespace BTDToolbox
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.Description = "Select project folder";
             fbd.ShowNewFolderButton = false;
+            fbd.SelectedPath = projectDirPath;
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 string selected = fbd.SelectedPath;
                 DirectoryInfo dirInfo = new DirectoryInfo(selected);
                 string[] split = fbd.SelectedPath.Split('\\');
                 string name = split[split.Length - 1];
-                JetForm jf = new JetForm(dirInfo, this, name);
-                jf.MdiParent = this;
-                jf.Show();
+                if (!name.StartsWith("proj_"))
+                {
+                    MessageBox.Show("Error!! Not a valid project file. Please try again...");
+                }
+                else
+                {
+                    JetForm jf = new JetForm(dirInfo, this, name);
+                    jf.MdiParent = this;
+                    jf.Show();
+                }
             }
         }
       
@@ -197,13 +229,7 @@ namespace BTDToolbox
             {
                 enableConsole = false;
             }
-            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole);
-            mainFormOutput = JsonConvert.SerializeObject(mainForm);
-
-            string livePath = Environment.CurrentDirectory;
-            StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
-            writeMainForm.Write(mainFormOutput);
-            writeMainForm.Close();
+            SerializeConfig();
         }
         private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
         { 
@@ -251,6 +277,15 @@ namespace BTDToolbox
             CreditViewer cv = new CreditViewer();
             cv.MdiParent = this;
             cv.Show();
+        }
+        private void SerializeConfig()
+        {
+            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory);
+            mainFormOutput = JsonConvert.SerializeObject(mainForm);
+            
+            StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
+            writeMainForm.Write(mainFormOutput);
+            writeMainForm.Close();
         }
 
         private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)

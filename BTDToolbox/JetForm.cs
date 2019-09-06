@@ -48,11 +48,10 @@ namespace BTDToolbox
         //Config values
         public static float jetFormFontSize;
         string jetFormOutput;
-        int treeViewX;
-        int treeViewY;
         int splitterDistance;
         float treeViewFontSize;
         JetExplorer jetExplorerConfig;
+        public static bool jetImportCancelled;
 
         public JetForm(String filePath, TD_Toolbox_Window Form, string projName)
         {
@@ -142,6 +141,12 @@ namespace BTDToolbox
             this.SetStyle(ControlStyles.ResizeRedraw, true);
 
             this.FormClosed += exitHandling;
+            if (jetImportCancelled)
+            {
+                MessageBox.Show("17");
+                this.Close();
+                //this.Hide();
+            }
         }
         
         private void initSelContextMenu()
