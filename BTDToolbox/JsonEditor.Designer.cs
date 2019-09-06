@@ -94,42 +94,44 @@
             // Undo_Button
             // 
             this.Undo_Button.Name = "Undo_Button";
-            this.Undo_Button.Size = new System.Drawing.Size(200, 22);
+            this.Undo_Button.Size = new System.Drawing.Size(201, 22);
             this.Undo_Button.Text = "Undo                (Ctrl + Z)";
             // 
             // Redo_Button
             // 
             this.Redo_Button.Name = "Redo_Button";
-            this.Redo_Button.Size = new System.Drawing.Size(200, 22);
+            this.Redo_Button.Size = new System.Drawing.Size(201, 22);
             this.Redo_Button.Text = "Redo                 (Ctrl + R)";
             // 
             // ShowFindMenu_Button
             // 
             this.ShowFindMenu_Button.Name = "ShowFindMenu_Button";
-            this.ShowFindMenu_Button.Size = new System.Drawing.Size(200, 22);
+            this.ShowFindMenu_Button.Size = new System.Drawing.Size(201, 22);
             this.ShowFindMenu_Button.Text = "Find                  (Ctrl + F)";
             // 
             // ShowReplaceMenu_Button
             // 
             this.ShowReplaceMenu_Button.Name = "ShowReplaceMenu_Button";
-            this.ShowReplaceMenu_Button.Size = new System.Drawing.Size(200, 22);
-            this.ShowReplaceMenu_Button.Text = "Replace            (Ctrl + R)";
+            this.ShowReplaceMenu_Button.Size = new System.Drawing.Size(201, 22);
+            this.ShowReplaceMenu_Button.Text = "Replace            (Ctrl + H)";
+            this.ShowReplaceMenu_Button.Click += new System.EventHandler(this.ShowReplaceMenu_Button_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(198, 6);
             // 
             // ChangeFontSize_MenuItem
             // 
             this.ChangeFontSize_MenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FontSize_TextBox});
             this.ChangeFontSize_MenuItem.Name = "ChangeFontSize_MenuItem";
-            this.ChangeFontSize_MenuItem.Size = new System.Drawing.Size(200, 22);
+            this.ChangeFontSize_MenuItem.Size = new System.Drawing.Size(201, 22);
             this.ChangeFontSize_MenuItem.Text = "Change Font Size";
             // 
             // FontSize_TextBox
             // 
+            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -144,6 +146,7 @@
             // Replace_TextBox
             // 
             this.Replace_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Replace_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Replace_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Replace_TextBox.Name = "Replace_TextBox";
             this.Replace_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -167,13 +170,13 @@
             // ReplaceButton_DropDown
             // 
             this.ReplaceButton_DropDown.Name = "ReplaceButton_DropDown";
-            this.ReplaceButton_DropDown.Size = new System.Drawing.Size(180, 22);
+            this.ReplaceButton_DropDown.Size = new System.Drawing.Size(132, 22);
             this.ReplaceButton_DropDown.Text = "Replace";
             // 
             // ReplaceAllButton_DropDown
             // 
             this.ReplaceAllButton_DropDown.Name = "ReplaceAllButton_DropDown";
-            this.ReplaceAllButton_DropDown.Size = new System.Drawing.Size(180, 22);
+            this.ReplaceAllButton_DropDown.Size = new System.Drawing.Size(132, 22);
             this.ReplaceAllButton_DropDown.Text = "Replace All";
             // 
             // toolStripSeparator2

@@ -129,7 +129,6 @@ namespace BTDToolbox
         }
         private void ReplaceButton_DropDown_Click(object sender, EventArgs e)
         {
-
             if (Find_TextBox.Text.Length <= 0)
             {
                 MessageBox.Show("You didn't enter anything to search for. Please Try Again");
@@ -171,7 +170,6 @@ namespace BTDToolbox
                     startPosition = Editor_TextBox.Find(Find_TextBox.Text, startPosition, endEditor, RichTextBoxFinds.None);
                     if (startPosition >= 0)
                     {
-                        //findNextPhrase = false;
                         numPhraseFound++;
                         //Editor_TextBox.SelectionColor = Color.Blue;       //saving this value for later use
                         endPosition = this.Find_TextBox.Text.Length;
@@ -180,7 +178,6 @@ namespace BTDToolbox
                     }
                 }
             }
-            
         }
         private void ReplaceAllButton_DropDown_Click(object sender, EventArgs e)
         {
@@ -248,7 +245,7 @@ namespace BTDToolbox
                     this.Replace_Button.Visible = false;
                 }
             }
-            if (e.Control && e.KeyCode == Keys.R)
+            if (e.Control && e.KeyCode == Keys.H)
             {
                 isReplacing = !isReplacing;
                 this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
@@ -265,6 +262,21 @@ namespace BTDToolbox
                     this.toolStripSeparator2.Visible = true;
                     this.Replace_TextBox.Visible = true;
                     this.Replace_Button.Visible = true;
+                }
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    Launcher.launchGame(JetProps.getForm(0));
+                }
+                else if (JetProps.get().Count < 1)
+                {
+                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                }
+                else
+                {
+                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
             }
         }
@@ -300,6 +312,11 @@ namespace BTDToolbox
                     if (i == -1)
                     {
                         isCurrentlySearching = false;
+                        break;
+                    }
+                    if (startPosition >= endEditor)
+                    {
+                        MessageBox.Show("Reached the end of the file");
                         break;
                     }
                     startPosition = Editor_TextBox.Find(Find_TextBox.Text, startPosition, endEditor, RichTextBoxFinds.None);

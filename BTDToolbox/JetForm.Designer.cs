@@ -248,6 +248,7 @@
             this.Name = "JetForm";
             this.Text = "JetViewer";
             this.Load += new System.EventHandler(this.JetForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.JetForm_KeyDown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
