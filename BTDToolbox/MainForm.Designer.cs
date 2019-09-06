@@ -215,7 +215,7 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.themedFormToolStripMenuItem_Click);
             // 

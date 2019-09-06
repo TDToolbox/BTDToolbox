@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfigs;
 using static System.Windows.Forms.ToolStripItem;
@@ -193,13 +194,10 @@ namespace BTDToolbox
         {
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
             DirectoryInfo extract = JetCompiler.decompile(filePath, dir);
-            if (extract != null)
-            {
-                this.tempName = extract.FullName;
-                PopulateTreeView();
-                dirInfo = extract;
-                this.projName = extract.Name;
-            }
+            this.tempName = extract.FullName;
+            dirInfo = extract;
+            this.projName = extract.Name;
+            PopulateTreeView();
         }
 
         private void JetForm_Closed(object sender, EventArgs e)
@@ -291,27 +289,38 @@ namespace BTDToolbox
             ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
             if (Selected.Count == 1)
             {
-                try
-                {
-                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
-                    JsonWindow.MdiParent = Form;
-                    JsonWindow.Show();
-                }
-                catch (Exception)
+                if (!Selected[0].Text.Contains("."))
                 {
                     try
                     {
-                        if (!Selected[0].Text.Contains("."))
+                        foreach (TreeNode node in treeView1.SelectedNode.Nodes)
                         {
-                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
+                            if (node.Text == Selected[0].Text)
                             {
-                                if (node.Text == Selected[0].Text)
-                                {
-                                    node.Expand();
-                                    treeView1.SelectedNode = node;
-                                }
+                                node.Expand();
+                                treeView1.SelectedNode = node;
                             }
                         }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                else
+                {
+                    foreach(JsonEditor je in JsonProps.jsonformlist)
+                    {
+                        if(je.Text==Selected[0].Text)
+                        {
+                            je.BringToFront();
+                            return;
+                        }
+                    }
+                    try
+                    {
+                        JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                        JsonWindow.MdiParent = Form;
+                        JsonWindow.Show();
                     }
                     catch (Exception)
                     {
