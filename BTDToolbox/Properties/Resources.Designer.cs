@@ -123,21 +123,10 @@ namespace BTDToolbox.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Resize_Icon
-        {
-            get
-            {
+        internal static System.Drawing.Bitmap Resize_Icon {
+            get {
                 object obj = ResourceManager.GetObject("Resize_Icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-                
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
-        /// </summary>
-        internal static System.Drawing.Icon PossibleBTD5MODIcon {
-            get {
-                object obj = ResourceManager.GetObject("PossibleBTD5MODIcon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
             }
         }
     }
