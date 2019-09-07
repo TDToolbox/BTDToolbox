@@ -171,31 +171,6 @@ namespace BTDToolbox.Properties {
         }
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
-        internal static System.Drawing.Icon PossibleBTD5MODIcon {
-            get {
-                object obj = ResourceManager.GetObject("PossibleBTD5MODIcon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
         
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PossibleBTD5MODIcon1 {
-            get {
-                object obj = ResourceManager.GetObject("PossibleBTD5MODIcon1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Resize_Icon {
-            get {
-                object obj = ResourceManager.GetObject("Resize_Icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
