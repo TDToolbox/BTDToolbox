@@ -14,7 +14,7 @@ using static BTDToolbox.ProjectConfigs;
 
 namespace BTDToolbox
 {
-    public partial class JsonEditor : Form
+    public partial class JsonEditor : ThemedForm
     {
         string livePath = Environment.CurrentDirectory;
         private string Path;
@@ -87,15 +87,29 @@ namespace BTDToolbox
             formattedText = jt.ToString(Formatting.Indented);
             Editor_TextBox.Text = formattedText;
 
-        }
-
-        private void JsonEditor_Load(object sender, EventArgs e)
-        {
-
+            try
+            {
+                JObject.Parse(this.Editor_TextBox.Text);
+                this.lintPanel.BackColor = Color.Green;
+            }
+            catch (Exception)
+            {
+                this.lintPanel.BackColor = Color.Red;
+            }
+            this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
         }
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Path, Editor_TextBox.Text);
+            try
+            {
+                JObject.Parse(this.Editor_TextBox.Text);
+                this.lintPanel.BackColor = Color.Green;
+            }
+            catch (Exception)
+            {
+                this.lintPanel.BackColor = Color.Red;
+            }
         }
         private void FindButton_Click(object sender, EventArgs e)
         {

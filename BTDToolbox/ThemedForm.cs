@@ -47,6 +47,11 @@ namespace BTDToolbox
             Sizer.MouseUp += SizerMouseUp;
 
             close_button.Click += close_button_Click;
+            this.Load += onThemedLoad;
+        }
+        public void onThemedLoad(object sender, EventArgs e)
+        {
+            titleSeperator.SplitterDistance = 25;
         }
 
         public virtual void close_button_Click(object sender, EventArgs e)

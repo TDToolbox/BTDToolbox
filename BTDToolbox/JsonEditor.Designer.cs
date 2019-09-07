@@ -1,6 +1,6 @@
 ﻿namespace BTDToolbox
 {
-    partial class JsonEditor
+    partial class JsonEditor : ThemedForm
     {
         /// <summary>
         /// Required designer variable.
@@ -26,9 +26,10 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private new void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonEditor));
+            this.Editor_TextBox = new System.Windows.Forms.RichTextBox();
             this.JsonToolstrip = new System.Windows.Forms.ToolStrip();
             this.Edit_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.Undo_Button = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,9 +47,51 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.Find_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.FindNext_Button = new System.Windows.Forms.ToolStripButton();
-            this.Editor_TextBox = new System.Windows.Forms.RichTextBox();
+            this.lintPanel = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
+            this.titleSeperator.Panel1.SuspendLayout();
+            this.titleSeperator.Panel2.SuspendLayout();
+            this.titleSeperator.SuspendLayout();
+            this.contentPanel.SuspendLayout();
             this.JsonToolstrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // titleSeperator
+            // 
+            // 
+            // TitleLabel
+            // 
+            this.TitleLabel.Size = new System.Drawing.Size(72, 16);
+            this.TitleLabel.Text = "JsonEditor";
+            // 
+            // contentPanel
+            // 
+            this.contentPanel.Controls.Add(this.lintPanel);
+            this.contentPanel.Controls.Add(this.JsonToolstrip);
+            this.contentPanel.Controls.Add(this.Editor_TextBox);
+            // 
+            // close_button
+            // 
+            this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            // 
+            // Editor_TextBox
+            // 
+            this.Editor_TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Editor_TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.Editor_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Editor_TextBox.ForeColor = System.Drawing.Color.White;
+            this.Editor_TextBox.Location = new System.Drawing.Point(4, 28);
+            this.Editor_TextBox.Name = "Editor_TextBox";
+            this.Editor_TextBox.Size = new System.Drawing.Size(769, 375);
+            this.Editor_TextBox.TabIndex = 2;
+            this.Editor_TextBox.Text = "";
+            this.Editor_TextBox.TextChanged += new System.EventHandler(this.Editor_TextBox_TextChanged);
+            this.Editor_TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Editor_TextBox_KeyDown);
             // 
             // JsonToolstrip
             // 
@@ -63,8 +106,8 @@
             this.FindNext_Button});
             this.JsonToolstrip.Location = new System.Drawing.Point(0, 0);
             this.JsonToolstrip.Name = "JsonToolstrip";
-            this.JsonToolstrip.Size = new System.Drawing.Size(1085, 25);
-            this.JsonToolstrip.TabIndex = 1;
+            this.JsonToolstrip.Size = new System.Drawing.Size(776, 25);
+            this.JsonToolstrip.TabIndex = 2;
             this.JsonToolstrip.Text = "toolStrip1";
             // 
             // Edit_DropDown
@@ -103,14 +146,12 @@
             this.ShowFindMenu_Button.Name = "ShowFindMenu_Button";
             this.ShowFindMenu_Button.Size = new System.Drawing.Size(201, 22);
             this.ShowFindMenu_Button.Text = "Find                  (Ctrl + F)";
-            this.ShowFindMenu_Button.Click += new System.EventHandler(this.ShowFindMenu_Button_Click);
             // 
             // ShowReplaceMenu_Button
             // 
             this.ShowReplaceMenu_Button.Name = "ShowReplaceMenu_Button";
             this.ShowReplaceMenu_Button.Size = new System.Drawing.Size(201, 22);
             this.ShowReplaceMenu_Button.Text = "Replace            (Ctrl + H)";
-            this.ShowReplaceMenu_Button.Click += new System.EventHandler(this.ShowReplaceMenu_Button_Click);
             // 
             // toolStripSeparator3
             // 
@@ -131,7 +172,6 @@
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
             // 
             // toolStripSeparator1
             // 
@@ -169,14 +209,12 @@
             this.ReplaceButton_DropDown.Name = "ReplaceButton_DropDown";
             this.ReplaceButton_DropDown.Size = new System.Drawing.Size(132, 22);
             this.ReplaceButton_DropDown.Text = "Replace";
-            this.ReplaceButton_DropDown.Click += new System.EventHandler(this.ReplaceButton_DropDown_Click);
             // 
             // ReplaceAllButton_DropDown
             // 
             this.ReplaceAllButton_DropDown.Name = "ReplaceAllButton_DropDown";
             this.ReplaceAllButton_DropDown.Size = new System.Drawing.Size(132, 22);
             this.ReplaceAllButton_DropDown.Text = "Replace All";
-            this.ReplaceAllButton_DropDown.Click += new System.EventHandler(this.ReplaceAllButton_DropDown_Click);
             // 
             // toolStripSeparator2
             // 
@@ -194,7 +232,6 @@
             this.Find_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Find_TextBox.Name = "Find_TextBox";
             this.Find_TextBox.Size = new System.Drawing.Size(200, 25);
-            this.Find_TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Find_TextBox_KeyDown);
             // 
             // FindNext_Button
             // 
@@ -208,44 +245,40 @@
             this.FindNext_Button.Name = "FindNext_Button";
             this.FindNext_Button.Size = new System.Drawing.Size(62, 22);
             this.FindNext_Button.Text = "Find Next";
-            this.FindNext_Button.Click += new System.EventHandler(this.FindButton_Click);
             // 
-            // Editor_TextBox
+            // lintPanel
             // 
-            this.Editor_TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Editor_TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.Editor_TextBox.ForeColor = System.Drawing.Color.White;
-            this.Editor_TextBox.Location = new System.Drawing.Point(0, 28);
-            this.Editor_TextBox.Name = "Editor_TextBox";
-            this.Editor_TextBox.Size = new System.Drawing.Size(1085, 573);
-            this.Editor_TextBox.TabIndex = 2;
-            this.Editor_TextBox.Text = "";
-            this.Editor_TextBox.TextChanged += new System.EventHandler(this.Editor_TextBox_TextChanged);
-            this.Editor_TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Editor_TextBox_KeyDown);
+            this.lintPanel.BackColor = System.Drawing.Color.Red;
+            this.lintPanel.ForeColor = System.Drawing.Color.Black;
+            this.lintPanel.Location = new System.Drawing.Point(63, 0);
+            this.lintPanel.Name = "lintPanel";
+            this.lintPanel.Size = new System.Drawing.Size(25, 25);
+            this.lintPanel.TabIndex = 3;
             // 
             // JsonEditor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1085, 603);
-            this.Controls.Add(this.Editor_TextBox);
-            this.Controls.Add(this.JsonToolstrip);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "JsonEditor";
             this.Text = "JsonEditor";
-            this.Load += new System.EventHandler(this.JsonEditor_Load);
+            this.titleSeperator.Panel1.ResumeLayout(false);
+            this.titleSeperator.Panel1.PerformLayout();
+            this.titleSeperator.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
+            this.titleSeperator.ResumeLayout(false);
+            this.contentPanel.ResumeLayout(false);
+            this.contentPanel.PerformLayout();
             this.JsonToolstrip.ResumeLayout(false);
             this.JsonToolstrip.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
+        private System.Windows.Forms.RichTextBox Editor_TextBox;
         private System.Windows.Forms.ToolStrip JsonToolstrip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripDropDownButton Edit_DropDown;
         private System.Windows.Forms.ToolStripMenuItem Undo_Button;
         private System.Windows.Forms.ToolStripMenuItem Redo_Button;
@@ -254,13 +287,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem ChangeFontSize_MenuItem;
         private System.Windows.Forms.ToolStripTextBox FontSize_TextBox;
-        private System.Windows.Forms.RichTextBox Editor_TextBox;
-        private System.Windows.Forms.ToolStripTextBox Find_TextBox;
-        private System.Windows.Forms.ToolStripButton FindNext_Button;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripTextBox Replace_TextBox;
         private System.Windows.Forms.ToolStripDropDownButton Replace_Button;
         private System.Windows.Forms.ToolStripMenuItem ReplaceButton_DropDown;
         private System.Windows.Forms.ToolStripMenuItem ReplaceAllButton_DropDown;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripTextBox Find_TextBox;
+        private System.Windows.Forms.ToolStripButton FindNext_Button;
+        private System.Windows.Forms.Panel lintPanel;
     }
 }
