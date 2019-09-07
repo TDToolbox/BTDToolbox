@@ -11,12 +11,12 @@ using static System.Environment;
 
 namespace BTDToolbox
 {
-    public partial class TD_Toolbox_Window : Form {
+    public partial class TD_Toolbox_Window : Form
+    {
 
         //Form variables
         string livePath = Environment.CurrentDirectory;
         public string projectDirPath;
-        
 
         //Config variables
         MainWindow mainForm;
@@ -27,25 +27,18 @@ namespace BTDToolbox
         public static string projName;
         public static bool openJetForm;
 
-
-        //Import project variables
-        public static bool jetImportCancelled;
-        public static bool hasCustomName;
-
-
         //Scroll bar variables
         private const int SB_BOTH = 3;
         private const int WM_NCCALCSIZE = 0x83;
         [DllImport("user32.dll")]
         private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
 
-
         //
         //Initialize window
         //
         public TD_Toolbox_Window()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\main_form.json");
@@ -76,11 +69,11 @@ namespace BTDToolbox
                 mainFormFontSize = 10;
             }
 
-            
+
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.Black;
 
-            this.FormClosed += exitHandling;
-            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15,15,15);
+            this.FormClosed += ExitHandling;
+            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
 
             this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
             this.BackgroundImageLayout = ImageLayout.Center;
@@ -134,7 +127,6 @@ namespace BTDToolbox
             jf.MdiParent = this;
             jf.Show();
         }
-
         private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
@@ -168,7 +160,7 @@ namespace BTDToolbox
             this.BackgroundImageLayout = ImageLayout.Center;
 
         }
-        private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Debug_ThemedForm_Click(object sender, EventArgs e)
         {
             ThemedForm tft = new ThemedForm();
             tft.MdiParent = this;
@@ -198,6 +190,7 @@ namespace BTDToolbox
                 if (bytes == "PK")
                 {
                     var setProjectName = new SetProjectName();
+                    ExtractingJet_Window.file = file;
                     setProjectName.Show();
                 }
                 else
@@ -233,7 +226,7 @@ namespace BTDToolbox
         //
         //UI Buttons
         //
-        private void LaunchProgram_ToolStrip_Click(object sender, EventArgs e)
+        private void LaunchProgram_Click(object sender, EventArgs e)
         {
             if (JetProps.get().Count == 1)
             {
@@ -281,7 +274,7 @@ namespace BTDToolbox
             findForm.replace = true;
             findForm.find = false;
         }
-        private void Credits_Click(object sender, EventArgs e)
+        private void OpenCredits_Click(object sender, EventArgs e)
         {
             CreditViewer cv = new CreditViewer();
             cv.MdiParent = this;
@@ -299,7 +292,7 @@ namespace BTDToolbox
             writeMainForm.Write(mainFormOutput);
             writeMainForm.Close();
         }
-        private void exitHandling(object sender, EventArgs e)
+        private void ExitHandling(object sender, EventArgs e)
         {
             if (ConsoleHandler.console.Visible)
             {
@@ -312,7 +305,7 @@ namespace BTDToolbox
             SerializeConfig();
         }
         //
-        //Extra
+        //Mdi Stuff
         //
         protected override void WndProc(ref Message m)
         {
@@ -329,12 +322,5 @@ namespace BTDToolbox
             base.WndProc(ref m);
         }
         MdiClient mdiClient = null;
-
-        private void NullJetFormToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            JetForm jf = new JetForm();
-            jf.MdiParent = this;
-            jf.Show();
-        }
     }
 }

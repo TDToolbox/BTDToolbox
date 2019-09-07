@@ -14,7 +14,7 @@ namespace BTDToolbox
     {
         public static string projectName;
         public bool hasClickedRandomName;
-        public static bool doesProjectAlreadyExist;
+        //public static bool doesProjectAlreadyExist;
 
         public SetProjectName()
         {
@@ -25,7 +25,10 @@ namespace BTDToolbox
             this.AcceptButton = CreateProject_Button;
             ExtractingJet_Window.isDecompiling = true;
         }
-
+        private void SetProjectName_Load(object sender, EventArgs e)
+        {
+            this.Show();
+        }
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
             if (!hasClickedRandomName)
@@ -36,12 +39,12 @@ namespace BTDToolbox
                 }
                 else
                 {
-                        
+
                     ExtractingJet_Window.hasCustomProjectName = true;
                     ExtractingJet_Window.projectName = ProjectName_TextBox.Text;
                     this.Close();
                     var extractT = new ExtractingJet_Window();
-                        
+
                 }
             }
             else
@@ -55,7 +58,7 @@ namespace BTDToolbox
         {
             if (hasClickedRandomName)
             {
-                CreateProject_Button.Location = new Point(CreateProject_Button.Location.X, CreateProject_Button.Location.Y + 40) ;
+                CreateProject_Button.Location = new Point(CreateProject_Button.Location.X, CreateProject_Button.Location.Y + 40);
             }
             hasClickedRandomName = false;
             ProjectName_TextBox.Visible = true;
@@ -69,7 +72,9 @@ namespace BTDToolbox
                 ProjectName_TextBox.Visible = false;
                 CreateProject_Button.Location = new Point(CreateProject_Button.Location.X, CreateProject_Button.Location.Y - 40);
             }
-            
+
         }
+
+
     }
 }
