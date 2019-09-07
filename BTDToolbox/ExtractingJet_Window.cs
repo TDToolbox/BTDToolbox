@@ -83,7 +83,6 @@ namespace BTDToolbox
                 int randName = rand.Next(10000000, 99999999);
                 projectName = (livePath + "\\proj_" + randName);
             }
-
             //Extract and count progress
             try
             {
@@ -103,10 +102,25 @@ namespace BTDToolbox
             }
             catch (Ionic.Zip.ZipException)
             {
-                MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?");
-                var reopenSetProjectName = new SetProjectName();
-                reopenSetProjectName.Show();
-                this.Close();
+                DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
+                if (varr == DialogResult.OK)
+                {
+                    System.IO.DirectoryInfo deleteDir = new DirectoryInfo(projectName);
+                    foreach (FileInfo file in deleteDir.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in deleteDir.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                }
+                if (varr == DialogResult.Cancel)
+                {
+                    var reopenSetProjectName = new SetProjectName();
+                    reopenSetProjectName.Show();
+                    this.Close();
+                }
             }
             return null;
         }
