@@ -116,7 +116,7 @@
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(155, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(154, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
             // 
@@ -177,15 +177,16 @@
             // ToggleConsole
             // 
             this.ToggleConsole.Name = "ToggleConsole";
-            this.ToggleConsole.Size = new System.Drawing.Size(134, 22);
+            this.ToggleConsole.Size = new System.Drawing.Size(180, 22);
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
             // 
             // fileExplorerToolStripMenuItem
             // 
             this.fileExplorerToolStripMenuItem.Name = "fileExplorerToolStripMenuItem";
-            this.fileExplorerToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.fileExplorerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fileExplorerToolStripMenuItem.Text = "Jet Explorer";
+            this.fileExplorerToolStripMenuItem.Click += new System.EventHandler(this.FileExplorerToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -224,14 +225,14 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // nullJetFormToolStripMenuItem
             // 
             this.nullJetFormToolStripMenuItem.Name = "nullJetFormToolStripMenuItem";
-            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             // 
             // versionTag
             // 

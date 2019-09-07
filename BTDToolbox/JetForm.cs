@@ -31,7 +31,10 @@ namespace BTDToolbox
         int splitterDistance;
         float treeViewFontSize;
         JetExplorer jetExplorerConfig;
-        public static bool jetImportCancelled;
+        public string lastProject;
+
+        //Load Last Project Variables
+        int numProjectLoadCancelled;
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
@@ -44,6 +47,7 @@ namespace BTDToolbox
             this.Form = Form;
             this.projName = projName;
             ConsoleHandler.appendLog(projName);
+            ExtractingJet_Window.currentProject = projName;
 
             initMultiContextMenu();
             initSelContextMenu();
@@ -62,7 +66,7 @@ namespace BTDToolbox
 
                 Font jetFormFontSize = new Font("Microsoft Sans Serif", deserializedJetForm.FontSize);
                 this.Font = jetFormFontSize;
-
+                lastProject = deserializedJetForm.LastProject;
                 splitterDistance = deserializedJetForm.SplitterDistance;
                 fileViewContainer.SplitterDistance = splitterDistance;
                 treeViewFontSize = deserializedJetForm.TreeViewFontSize;
@@ -114,7 +118,20 @@ namespace BTDToolbox
             openDirWindow();
             JetProps.increment(this);
         }
+        public void LoadLastProject()
+        {
+            DialogResult varr = MessageBox.Show("Do you want to load your last project? Click Cancel if you want to create a new project.", "", MessageBoxButtons.OKCancel);
+            if (varr == DialogResult.OK)
+            {
+                this.Show();
+                //ConsoleHandler.appendLog("Loaded project " + subdir.Name);
+            }
+            if (varr == DialogResult.Cancel)
+            {
+                    TD_Toolbox_Window.ImportNewJew();
+            }
 
+        }
         public void openDirWindow()
         {
             tempName = dirInfo.FullName;
@@ -261,14 +278,8 @@ namespace BTDToolbox
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fileDiag = new SaveFileDialog();
-            fileDiag.Title = "Save .jet";
-            fileDiag.DefaultExt = "jet";
-            fileDiag.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
-            if (fileDiag.ShowDialog() == DialogResult.OK)
-            {
-                JetCompiler.compile(dirInfo, fileDiag.FileName);
-            }
+            ExtractingJet_Window.isCompiling = true;
+            var compile = new ExtractingJet_Window();
         }
 
         //Context caller
@@ -482,9 +493,9 @@ namespace BTDToolbox
         {
             splitterDistance = fileViewContainer.SplitterDistance;
         }
-        private void SerializeConfig()
+        internal void SerializeConfig()
         {
-            jetExplorerConfig = new JetExplorer("Jet Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
             jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
             StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);

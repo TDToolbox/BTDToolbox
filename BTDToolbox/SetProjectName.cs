@@ -23,10 +23,12 @@ namespace BTDToolbox
             this.Left = 100;
             this.Top = 100;
             this.AcceptButton = CreateProject_Button;
+            this.Activate();
             ExtractingJet_Window.isDecompiling = true;
         }
         private void SetProjectName_Load(object sender, EventArgs e)
         {
+            
             this.Show();
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)
@@ -39,8 +41,8 @@ namespace BTDToolbox
                 }
                 else
                 {
-
                     ExtractingJet_Window.hasCustomProjectName = true;
+                    ExtractingJet_Window.launchProgram = false;
                     ExtractingJet_Window.customName = ProjectName_TextBox.Text;
                     this.Close();
                     var extractT = new ExtractingJet_Window();
@@ -50,7 +52,8 @@ namespace BTDToolbox
             else
             {
                 this.Close();
-                var extractT = new ExtractingJet_Window();
+                ExtractingJet_Window.launchProgram = false;
+                var extractT = new ExtractingJet_Window();   
             }
         }
 

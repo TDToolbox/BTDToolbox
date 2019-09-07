@@ -187,9 +187,9 @@
     <None Include="Resources\json-file_dark.ico" />
     <None Include="Resources\ico3.ico" />
     <None Include="Resources\ico2.ico" />
+    <None Include="Resources\JSON_Invalid.png" />
     <None Include="Resources\Resize_Icon.png" />
-    <None Include="Resources\JSON valid.png" />
-    <None Include="Resources\JSON Invalid.png" />
+    <None Include="Resources\JSON_valid.png" />
     <None Include="Resources\BTD_icon_2_512x512.png" />
     <None Include="Resources\PossibleBTD5MODIcon.png" />
     <None Include="Resources\PossibleBTD5MODIcon.ico" />
