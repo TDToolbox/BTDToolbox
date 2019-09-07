@@ -23,10 +23,12 @@ namespace BTDToolbox
             this.Left = 100;
             this.Top = 100;
             this.AcceptButton = CreateProject_Button;
+            this.Activate();
             ExtractingJet_Window.isDecompiling = true;
         }
         private void SetProjectName_Load(object sender, EventArgs e)
         {
+            
             this.Show();
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)

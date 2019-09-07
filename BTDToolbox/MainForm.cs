@@ -16,13 +16,17 @@ namespace BTDToolbox
         //Form variables
         string livePath = Environment.CurrentDirectory;
         public string projectDirPath;
-
         private static TD_Toolbox_Window toolbox;
 
         string version = "Alpha 0.0.1";
 
+        //Project Variables
+        public DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
+
         //Config variables
         MainWindow mainForm;
+        public bool loadLastProject;
+        internal static string lastProject;
         public static string file;
         public int mainFormFontSize;
         public bool enableConsole;
@@ -73,10 +77,9 @@ namespace BTDToolbox
             {
                 mainFormFontSize = 10;
             }
-
             this.FormClosed += ExitHandling;
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
-
+            
             Random rand = new Random();
             if(rand.Next(0,2)==1)
             {
@@ -90,19 +93,20 @@ namespace BTDToolbox
             this.BackgroundImageLayout = ImageLayout.Center;
             this.Resize += mainResize;
             this.KeyPreview = true;
-
+            
             if (openJetForm)
             {
                 OpenJetForm();
             }
-
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
+
             ConsoleHandler.console = new NewConsole();
             ConsoleHandler.console.MdiParent = this;
+            //LoadLastProject();
             if (enableConsole == true)
             {
                 ConsoleHandler.console.Show();
@@ -111,22 +115,23 @@ namespace BTDToolbox
             {
                 ConsoleHandler.console.Hide();
             }
+            
             ConsoleHandler.appendLog("Program loaded!");
-
             ConsoleHandler.appendLog("Searching for existing projects...");
-            DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
+
             foreach (DirectoryInfo subdir in dirInfo.GetDirectories())
             {
+
+                JetForm jf = new JetForm(subdir, this, subdir.Name);
+
                 if (subdir.Name.StartsWith("proj_"))
                 {
                     ConsoleHandler.appendLog("Loading project " + subdir.Name);
-                    JetForm jf = new JetForm(subdir, this, subdir.Name);
                     jf.MdiParent = this;
                     jf.Show();
                     ConsoleHandler.appendLog("Loaded project " + subdir.Name);
                 }
             }
-
             foreach (Control con in Controls)
             {
                 if (con is MdiClient)
@@ -134,6 +139,7 @@ namespace BTDToolbox
                     mdiClient = con as MdiClient;
                 }
             }
+            
         }
 
         public static TD_Toolbox_Window getInstance()
@@ -344,5 +350,10 @@ namespace BTDToolbox
             base.WndProc(ref m);
         }
         MdiClient mdiClient = null;
+
+        private void FileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenJetForm();
+        }
     }
 }
