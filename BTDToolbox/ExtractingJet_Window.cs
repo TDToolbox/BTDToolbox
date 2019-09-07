@@ -34,6 +34,7 @@ namespace BTDToolbox
         public ExtractingJet_Window()
         {
             InitializeComponent();
+            this.Show();
             this.StartPosition = FormStartPosition.Manual;
             this.Left = 120;
             this.Top = 120;
@@ -44,16 +45,14 @@ namespace BTDToolbox
             if (isDecompiling)
             {
                 this.Text = "Extracting....";
-                this.Show();
                 DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
                 DirectoryInfo extract = this.decompile(file, dir);
             }
         }
         private void ExtractJet_Window_Load(object sender, EventArgs e)
         {
-
+            this.Show();
         }
-
 
         public static void compile(DirectoryInfo target, string outputPath)
         {
@@ -68,7 +67,7 @@ namespace BTDToolbox
 
         public DirectoryInfo decompile(string inputPath, DirectoryInfo targetFolder)
         {
-            
+
             Random rand = new Random();
             ZipFile archive = new ZipFile(inputPath);
             archive.Password = "Q%_{6#Px]]";
@@ -84,9 +83,8 @@ namespace BTDToolbox
                 int randName = rand.Next(10000000, 99999999);
                 projectName = (livePath + "\\proj_" + randName);
             }
-            
+
             //Extract and count progress
-            
             try
             {
                 using (ZipFile zip = ZipFile.Read(inputPath))
@@ -98,25 +96,32 @@ namespace BTDToolbox
                 ConsoleHandler.appendLog("Project files created at: " + projectName);
                 this.Close();
             }
-            catch(Ionic.Zip.ZipException)
+            catch (Ionic.Zip.ZipException)
             {
                 MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?");
                 var reopenSetProjectName = new SetProjectName();
                 reopenSetProjectName.Show();
-                SetProjectName.doesProjectAlreadyExist = true;
                 this.Close();
             }
             return null;
-            
         }
-        
+
         private void ZipExtractProgress(object sender, ExtractProgressEventArgs e)
         {
             if (e.TotalBytesToTransfer > 0)
-            {   
-                progressBar.Value = Convert.ToInt32(100 * e.BytesTransferred / e.TotalBytesToTransfer);
+            {
+                label1.Refresh();
+                CurrentFileProgress_Label.Refresh();
+                richTextBox1.Text = e.CurrentEntry.FileName;
+                richTextBox1.Refresh();
+                CurrentFileProgress.Value = Convert.ToInt32(100 * e.BytesTransferred / e.TotalBytesToTransfer);
                 e.BytesTransferred++;
             }
+            if (e.EventType != ZipProgressEventType.Extracting_BeforeExtractEntry)
+                return;
+            filesExtracted++;
+            TotalProgress_ProgressBar.Value = 100 * filesExtracted / totalFiles;
+            this.Refresh();
         }
     }
 }

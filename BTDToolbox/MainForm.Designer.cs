@@ -161,7 +161,7 @@
             this.Launch_Program_ToolStrip.Name = "Launch_Program_ToolStrip";
             this.Launch_Program_ToolStrip.Size = new System.Drawing.Size(73, 20);
             this.Launch_Program_ToolStrip.Text = "Launch 🚀";
-            this.Launch_Program_ToolStrip.Click += new System.EventHandler(this.LaunchProgram_ToolStrip_Click);
+            this.Launch_Program_ToolStrip.Click += new System.EventHandler(this.LaunchProgram_Click);
             // 
             // viewToolStripMenuItem1
             // 
@@ -208,7 +208,7 @@
             this.Credits.Name = "Credits";
             this.Credits.Size = new System.Drawing.Size(174, 22);
             this.Credits.Text = "Credits";
-            this.Credits.Click += new System.EventHandler(this.Credits_Click);
+            this.Credits.Click += new System.EventHandler(this.OpenCredits_Click);
             // 
             // debugToolStripMenuItem
             // 
@@ -225,14 +225,7 @@
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
             this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
-            this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.themedFormToolStripMenuItem_Click);
-            // 
-            // nullJetFormToolStripMenuItem
-            // 
-            this.nullJetFormToolStripMenuItem.Name = "nullJetFormToolStripMenuItem";
-            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.nullJetFormToolStripMenuItem.Text = "Null JetForm";
-            this.nullJetFormToolStripMenuItem.Click += new System.EventHandler(this.NullJetFormToolStripMenuItem_Click);
+            this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // TD_Toolbox_Window
             // 
