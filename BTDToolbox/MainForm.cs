@@ -13,10 +13,11 @@ namespace BTDToolbox
 {
     public partial class TD_Toolbox_Window : Form
     {
-
         //Form variables
         string livePath = Environment.CurrentDirectory;
         public string projectDirPath;
+
+        private static TD_Toolbox_Window toolbox;
 
         //Config variables
         MainWindow mainForm;
@@ -39,6 +40,7 @@ namespace BTDToolbox
         public TD_Toolbox_Window()
         {
             InitializeComponent();
+            toolbox = this;
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\main_form.json");
@@ -121,9 +123,15 @@ namespace BTDToolbox
                 }
             }
         }
+
+        public static TD_Toolbox_Window getInstance()
+        {
+            return toolbox;
+        }
         public void OpenJetForm()
         {
-            JetForm jf = new JetForm(livePath, this, projName);
+            DirectoryInfo dinfo = new DirectoryInfo(livePath);
+            JetForm jf = new JetForm(dinfo, this, projName);
             jf.MdiParent = this;
             jf.Show();
         }
