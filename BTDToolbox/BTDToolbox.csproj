@@ -180,7 +180,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="JSON invalid_2.png" />
     <Content Include="Resize_Icon.png" />
+    <None Include="Resources\Resize_Icon.png" />
+    <None Include="Resources\JSON valid.png" />
+    <None Include="Resources\JSON Invalid.png" />
     <None Include="Resources\BTD_icon_2_512x512.png" />
     <None Include="Resources\PossibleBTD5MODIcon.png" />
     <None Include="Resources\PossibleBTD5MODIcon.ico" />
