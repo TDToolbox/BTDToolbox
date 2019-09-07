@@ -49,9 +49,11 @@ namespace BTDToolbox
         {
             public int SplitterDistance { get; set; }
             public float TreeViewFontSize { get; set; }
-            public JetExplorer(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, int splitterDistance, float treeViewFontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            public string LastProject { get; set; }
+            public JetExplorer(string windowName, string lastProject, int sizeX, int sizeY, int posX, int posY, float fontSize, int splitterDistance, float treeViewFontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
             {
                 WindowName = windowName;
+                LastProject = lastProject;
                 SizeX = sizeX;
                 SizeY = sizeY;
                 PosX = posX;
