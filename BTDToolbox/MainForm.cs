@@ -19,6 +19,8 @@ namespace BTDToolbox
 
         private static TD_Toolbox_Window toolbox;
 
+        string version = "Alpha 0.0.1";
+
         //Config variables
         MainWindow mainForm;
         public static string file;
@@ -27,6 +29,7 @@ namespace BTDToolbox
         string mainFormOutput;
         public static string projName;
         public static bool openJetForm;
+        private Bitmap bgImg;
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
@@ -71,13 +74,19 @@ namespace BTDToolbox
                 mainFormFontSize = 10;
             }
 
-
-            Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.Black;
-
             this.FormClosed += ExitHandling;
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
 
-            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
+            Random rand = new Random();
+            if(rand.Next(0,2)==1)
+            {
+                bgImg = Properties.Resources.Logo2;
+            }else
+            {
+                bgImg = Properties.Resources.Logo1;
+            }
+
+            this.BackgroundImage = bgImg;
             this.BackgroundImageLayout = ImageLayout.Center;
             this.Resize += mainResize;
             this.KeyPreview = true;
@@ -86,6 +95,9 @@ namespace BTDToolbox
             {
                 OpenJetForm();
             }
+
+            this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
+            this.versionTag.Text = version;
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
@@ -164,9 +176,8 @@ namespace BTDToolbox
         }
         private void mainResize(object sender, EventArgs e)
         {
-            this.BackgroundImage = Properties.Resources.PossibleBTD5MODIcon1;
+            this.BackgroundImage = bgImg;
             this.BackgroundImageLayout = ImageLayout.Center;
-
         }
         private void Debug_ThemedForm_Click(object sender, EventArgs e)
         {
