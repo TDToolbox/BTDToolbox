@@ -258,7 +258,9 @@ namespace BTDToolbox
         {
             if (JetProps.get().Count == 1)
             {
-                Launcher.launchGame(JetProps.getForm(0));
+                ExtractingJet_Window.isCompiling = true;
+                ExtractingJet_Window.launchProgram = true;
+                var compile = new ExtractingJet_Window();
             }
             else if (JetProps.get().Count < 1)
             {
@@ -271,7 +273,7 @@ namespace BTDToolbox
         }
         private void RestoreBackup_Click(object sender, EventArgs e)
         {
-            Launcher.restoreGame();
+            ExtractingJet_Window.restoreGame();
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {

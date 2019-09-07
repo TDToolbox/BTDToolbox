@@ -224,5 +224,21 @@ namespace BTDToolbox
             TotalProgress_ProgressBar.Value = 100 * filesCompiled / totalFiles;
             this.Refresh();
         }
+
+        //Restore backup .jet
+        public static void restoreGame()
+        {
+            if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
+            {
+                MessageBox.Show("No backup found that can be restored! Use steam to re-download the original .jet");
+                return;
+            }
+            ConsoleHandler.appendLog("Restoring backup .jet");
+            string gameJetPath = Settings.readGamePath() + "\\..\\Assets\\BTD5.jet";
+            File.Delete(gameJetPath);
+            File.Copy(Environment.CurrentDirectory + "\\Backups\\Original.jet", gameJetPath);
+            ConsoleHandler.appendLog("Backup restored");
+            MessageBox.Show("Backup .jet restored!");
+        }
     }
 }
