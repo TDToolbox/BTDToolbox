@@ -30,7 +30,7 @@ namespace BTDToolbox
         public static int totalFiles;
         public static int filesExtracted;
         public static bool isProjectCreated;
-
+        public static int filesCompiled;
 
         public ExtractingJet_Window()
         {
@@ -75,15 +75,19 @@ namespace BTDToolbox
             this.Show();
         }
 
-        public static void compile(DirectoryInfo target, string outputPath)
+        public void compileLaunch(DirectoryInfo target, string outputPath)
         {
+            filesCompiled = 0;
             ZipFile toExport = new ZipFile();
+            totalFiles = toExport.Count();
             toExport.Password = "Q%_{6#Px]]";
+            toExport.AddProgress += ZipCompileProgress;
             toExport.AddDirectory(target.FullName);
             toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
             toExport.Name = outputPath;
             toExport.CompressionLevel = CompressionLevel.Level6;
             toExport.Save();
+            this.Hide();
         }
 
         public DirectoryInfo decompile(string inputPath, DirectoryInfo targetFolder)
@@ -138,6 +142,24 @@ namespace BTDToolbox
                 return;
             filesExtracted++;
             TotalProgress_ProgressBar.Value = 100 * filesExtracted / totalFiles;
+            this.Refresh();
+        }
+        private void ZipCompileProgress(object sender, AddProgressEventArgs e)
+        {
+            if (e.TotalBytesToTransfer > 0)
+            {
+                label1.Refresh();
+                CurrentFileProgress_Label.Refresh();
+                richTextBox1.Text = e.CurrentEntry.FileName;
+                //ConsoleHandler.appendLog(e.CurrentEntry.FileName);
+                richTextBox1.Refresh();
+                CurrentFileProgress.Value = Convert.ToInt32(100 * e.BytesTransferred / e.TotalBytesToTransfer);
+                e.BytesTransferred++;
+            }
+            if (e.EventType != ZipProgressEventType.Adding_AfterAddEntry)
+                return;
+            filesCompiled++;
+            TotalProgress_ProgressBar.Value = 100 * filesCompiled / totalFiles;
             this.Refresh();
         }
     }

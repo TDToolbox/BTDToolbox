@@ -23,8 +23,10 @@ namespace BTDToolbox
                         ConsoleHandler.appendLog("Backup done");
                     }
                     DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + form.projName);
-                    JetCompiler.compile(projDir, gameJetPath);
                     ConsoleHandler.appendLog("Compiling jet...");
+                    ExtractingJet_Window ejw = new ExtractingJet_Window();
+                    ejw.compileLaunch(projDir, gameJetPath);
+                    ConsoleHandler.appendLog("Jet compiled");
                     Process.Start(Settings.readGamePath());
                     ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
                     break;

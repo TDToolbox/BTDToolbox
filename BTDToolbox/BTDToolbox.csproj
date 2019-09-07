@@ -181,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resize_Icon.png" />
+    <None Include="Resources\BTD_icon_2_512x512.png" />
     <None Include="Resources\PossibleBTD5MODIcon.png" />
     <None Include="Resources\PossibleBTD5MODIcon.ico" />
   </ItemGroup>

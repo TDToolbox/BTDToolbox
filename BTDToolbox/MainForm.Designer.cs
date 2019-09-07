@@ -51,6 +51,7 @@
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nullJetFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionTag = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -223,15 +224,34 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
+            // 
+            // nullJetFormToolStripMenuItem
+            // 
+            this.nullJetFormToolStripMenuItem.Name = "nullJetFormToolStripMenuItem";
+            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            // 
+            // versionTag
+            // 
+            this.versionTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.versionTag.AutoSize = true;
+            this.versionTag.BackColor = System.Drawing.Color.Transparent;
+            this.versionTag.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.versionTag.ForeColor = System.Drawing.Color.White;
+            this.versionTag.Location = new System.Drawing.Point(12, 677);
+            this.versionTag.Name = "versionTag";
+            this.versionTag.Size = new System.Drawing.Size(98, 55);
+            this.versionTag.TabIndex = 3;
+            this.versionTag.Text = "null";
             // 
             // TD_Toolbox_Window
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1483, 741);
+            this.Controls.Add(this.versionTag);
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.Color.Black;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -272,6 +292,7 @@
         private System.Windows.Forms.ToolStripMenuItem openRecentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileExplorerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nullJetFormToolStripMenuItem;
+        private System.Windows.Forms.Label versionTag;
     }
 }
 
