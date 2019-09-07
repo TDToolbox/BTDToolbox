@@ -90,8 +90,13 @@ namespace BTDToolbox
                 using (ZipFile zip = ZipFile.Read(inputPath))
                 {
                     totalFiles = archive.Count();
+                    filesExtracted = 0;
                     archive.ExtractProgress += ZipExtractProgress;
                     archive.ExtractAll(projectName);
+                    DirectoryInfo dinfo = new DirectoryInfo(projectName);
+                    JetForm jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
+                    jf.MdiParent = TD_Toolbox_Window.getInstance();
+                    jf.Show();
                 }
                 ConsoleHandler.appendLog("Project files created at: " + projectName);
                 this.Close();

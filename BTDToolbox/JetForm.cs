@@ -17,7 +17,6 @@ namespace BTDToolbox
     {
         string livePath = Environment.CurrentDirectory;
 
-        private String filePath;
         private DirectoryInfo dirInfo;
         private TD_Toolbox_Window Form;
         private string tempName;
@@ -33,35 +32,6 @@ namespace BTDToolbox
         float treeViewFontSize;
         JetExplorer jetExplorerConfig;
         public static bool jetImportCancelled;
-
-        public JetForm()
-        {
-            InitializeComponent();
-        }
-
-        public JetForm(String filePath, TD_Toolbox_Window Form, string projName)
-        {
-            InitializeComponent();
-            
-            this.FormClosing += this.JetForm_Closed;
-            listView1.DoubleClick += ListView1_DoubleClicked;
-            listView1.MouseUp += ListView1_RightClicked;
-
-            this.filePath = filePath;
-            this.Form = Form;
-            this.projName = projName;
-            ConsoleHandler.appendLog(projName);
-
-            initMultiContextMenu();
-            initSelContextMenu();
-            initEmpContextMenu();
-            
-            this.treeView1.AfterSelect += treeView1_AfterSelect;
-
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
-        }
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
@@ -141,15 +111,7 @@ namespace BTDToolbox
 
         private void JetForm_Load(object sender, EventArgs e)
         {
-            
-            if (filePath != null)
-            {
-                openJetWindow();
-            }
-            else if (dirInfo != null)
-            {
-                openDirWindow();
-            }
+            openDirWindow();
             JetProps.increment(this);
         }
 
@@ -159,19 +121,6 @@ namespace BTDToolbox
             this.Text = tempName;
             PopulateTreeView();
             return;
-        }
-
-        public void openJetWindow()
-        {
-            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-            DirectoryInfo extract = JetCompiler.decompile(filePath, dir);
-            if (extract != null)
-            {
-                this.tempName = extract.FullName;
-                PopulateTreeView();
-                dirInfo = extract;
-                this.projName = extract.Name;
-            }
         }
 
         private void JetForm_Closed(object sender, EventArgs e)
@@ -210,7 +159,7 @@ namespace BTDToolbox
                 nodeToAddTo.Nodes.Add(aNode);
             }
         }
-        
+
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode newSelected = e.Node;
@@ -220,30 +169,39 @@ namespace BTDToolbox
             ListViewItem.ListViewSubItem[] subItems;
             ListViewItem item = null;
 
-            foreach (DirectoryInfo dir in nodeDirInfo.GetDirectories())
+            try
             {
-                item = new ListViewItem(dir.Name, 0);
-                subItems = new ListViewItem.ListViewSubItem[]
+                foreach (DirectoryInfo dir in nodeDirInfo.GetDirectories())
                 {
-                    new ListViewItem.ListViewSubItem(item, "Directory"), new ListViewItem.ListViewSubItem(item, dir.LastAccessTime.ToShortDateString())
-                };
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
-            }
-            foreach (FileInfo file in nodeDirInfo.GetFiles())
-            {
-                item = new ListViewItem(file.Name, 1);
-                subItems = new ListViewItem.ListViewSubItem[]
+                    item = new ListViewItem(dir.Name, 0);
+                    subItems = new ListViewItem.ListViewSubItem[]
                     {
+                    new ListViewItem.ListViewSubItem(item, "Directory"), new ListViewItem.ListViewSubItem(item, dir.LastAccessTime.ToShortDateString())
+                    };
+                    item.SubItems.AddRange(subItems);
+                    listView1.Items.Add(item);
+                }
+                foreach (FileInfo file in nodeDirInfo.GetFiles())
+                {
+                    item = new ListViewItem(file.Name, 1);
+                    subItems = new ListViewItem.ListViewSubItem[]
+                        {
                         new ListViewItem.ListViewSubItem(item, "File"),
                         new ListViewItem.ListViewSubItem(item, file.LastAccessTime.ToShortDateString())
-                    };
+                        };
 
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
+                    item.SubItems.AddRange(subItems);
+                    listView1.Items.Add(item);
+                }
+                listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            catch (DirectoryNotFoundException)
+            {
+                MessageBox.Show("Project was desynced and can no longer be used");
+                this.Close();
+            }
         }
+
         private void goUpButton_Click(object sender, EventArgs e)
         {
             TreeNode current = treeView1.SelectedNode;
