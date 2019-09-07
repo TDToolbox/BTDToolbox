@@ -31,11 +31,9 @@ namespace BTDToolbox
             if (MessageBox.Show("Click 'Ok' to create project files, this can take up to 2 minutes.", "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
             {
                 ConsoleHandler.appendLog("Project files creation canceled");
-                TD_Toolbox_Window.jetImportCancelled = true;
             }
             else
             {
-                TD_Toolbox_Window.jetImportCancelled = false;
                 string livePath = Environment.CurrentDirectory;
                 if (hasCustomProjectName)
                 {
@@ -51,7 +49,7 @@ namespace BTDToolbox
                 filesInJet = archive.Count;
                 //archive.ExtractProgress += ExtractingJet_Window.ZipExtractProgress;
                 archive.ExtractAll(projectName);
-                
+
                 ConsoleHandler.appendLog("Project files created at: " + projectName);
                 DirectoryInfo returner = new DirectoryInfo(projectName);
                 return returner;
