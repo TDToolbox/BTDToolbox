@@ -22,6 +22,7 @@ namespace BTDToolbox
         //Project name variables
         public static bool hasCustomProjectName;
         public static string projectName;
+        public static string customName;
         public static int filesInJet;
 
         //Extraction variables
@@ -46,7 +47,27 @@ namespace BTDToolbox
             {
                 this.Text = "Extracting....";
                 DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-                DirectoryInfo extract = this.decompile(file, dir);
+
+                try
+                {
+                    DirectoryInfo extract = this.decompile(file, dir);
+                }
+                catch
+                {
+                    DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
+                    if (varr == DialogResult.OK)
+                    {
+                        Directory.Delete(projectName, true);
+                        MessageBox.Show("deleted");
+                        DirectoryInfo extract = this.decompile(file, dir);
+                    }
+                    if (varr == DialogResult.Cancel)
+                    {
+                        var reopenSetProjectName = new SetProjectName();
+                        reopenSetProjectName.Show();
+                        this.Close();
+                    }
+                }
             }
         }
         private void ExtractJet_Window_Load(object sender, EventArgs e)
@@ -76,7 +97,7 @@ namespace BTDToolbox
             string livePath = Environment.CurrentDirectory;
             if (hasCustomProjectName)
             {
-                projectName = (livePath + "\\proj_" + projectName);
+                projectName = (livePath + "\\proj_" + customName);
             }
             else
             {
@@ -84,44 +105,21 @@ namespace BTDToolbox
                 projectName = (livePath + "\\proj_" + randName);
             }
             //Extract and count progress
-            try
+            
+            using (ZipFile zip = ZipFile.Read(inputPath))
             {
-                using (ZipFile zip = ZipFile.Read(inputPath))
-                {
-                    totalFiles = archive.Count();
-                    filesExtracted = 0;
-                    archive.ExtractProgress += ZipExtractProgress;
-                    archive.ExtractAll(projectName);
-                    DirectoryInfo dinfo = new DirectoryInfo(projectName);
-                    JetForm jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
-                    jf.MdiParent = TD_Toolbox_Window.getInstance();
-                    jf.Show();
-                }
-                ConsoleHandler.appendLog("Project files created at: " + projectName);
-                this.Close();
+                totalFiles = archive.Count();
+                filesExtracted = 0;
+                archive.ExtractProgress += ZipExtractProgress;
+                archive.ExtractAll(projectName);
+                DirectoryInfo dinfo = new DirectoryInfo(projectName);
+                JetForm jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
+                jf.MdiParent = TD_Toolbox_Window.getInstance();
+                jf.Show();
             }
-            catch (Ionic.Zip.ZipException)
-            {
-                DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
-                if (varr == DialogResult.OK)
-                {
-                    System.IO.DirectoryInfo deleteDir = new DirectoryInfo(projectName);
-                    foreach (FileInfo file in deleteDir.GetFiles())
-                    {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in deleteDir.GetDirectories())
-                    {
-                        dir.Delete(true);
-                    }
-                }
-                if (varr == DialogResult.Cancel)
-                {
-                    var reopenSetProjectName = new SetProjectName();
-                    reopenSetProjectName.Show();
-                    this.Close();
-                }
-            }
+            ConsoleHandler.appendLog("Project files created at: " + projectName);
+            this.Close();
+
             return null;
         }
 
