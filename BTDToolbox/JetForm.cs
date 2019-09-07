@@ -223,7 +223,16 @@ namespace BTDToolbox
             {
                 try
                 {
-                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                    string targetPath = this.Text + "\\" + Selected[0].Text;
+                    foreach (JsonEditor jedit in JsonProps.get())
+                    {
+                        if (jedit.Path == targetPath)
+                        {
+                            jedit.BringToFront();
+                            return;
+                        }
+                    }
+                    JsonEditor JsonWindow = new JsonEditor(targetPath);
                     JsonWindow.MdiParent = Form;
                     JsonWindow.Show();
                 }
