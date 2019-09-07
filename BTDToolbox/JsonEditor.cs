@@ -83,17 +83,16 @@ namespace BTDToolbox
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
 
-            JToken jt = JToken.Parse(unformattedText);
-            formattedText = jt.ToString(Formatting.Indented);
-            Editor_TextBox.Text = formattedText;
-
             try
             {
-                JObject.Parse(this.Editor_TextBox.Text);
+                JToken jt = JToken.Parse(unformattedText);
+                formattedText = jt.ToString(Formatting.Indented);
+                Editor_TextBox.Text = formattedText;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
             }
             catch (Exception)
             {
+                Editor_TextBox.Text = unformattedText;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
             }
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
