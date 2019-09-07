@@ -41,7 +41,7 @@ namespace BTDToolbox
                 {
 
                     ExtractingJet_Window.hasCustomProjectName = true;
-                    ExtractingJet_Window.projectName = ProjectName_TextBox.Text;
+                    ExtractingJet_Window.customName = ProjectName_TextBox.Text;
                     this.Close();
                     var extractT = new ExtractingJet_Window();
 

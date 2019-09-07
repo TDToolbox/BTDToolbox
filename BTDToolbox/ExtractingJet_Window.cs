@@ -22,6 +22,7 @@ namespace BTDToolbox
         //Project name variables
         public static bool hasCustomProjectName;
         public static string projectName;
+        public static string customName;
         public static int filesInJet;
 
         //Extraction variables
@@ -29,7 +30,7 @@ namespace BTDToolbox
         public static int totalFiles;
         public static int filesExtracted;
         public static bool isProjectCreated;
-
+        public static int filesCompiled;
 
         public ExtractingJet_Window()
         {
@@ -46,7 +47,27 @@ namespace BTDToolbox
             {
                 this.Text = "Extracting....";
                 DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-                DirectoryInfo extract = this.decompile(file, dir);
+
+                try
+                {
+                    DirectoryInfo extract = this.decompile(file, dir);
+                }
+                catch
+                {
+                    DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
+                    if (varr == DialogResult.OK)
+                    {
+                        Directory.Delete(projectName, true);
+                        MessageBox.Show("deleted");
+                        DirectoryInfo extract = this.decompile(file, dir);
+                    }
+                    if (varr == DialogResult.Cancel)
+                    {
+                        var reopenSetProjectName = new SetProjectName();
+                        reopenSetProjectName.Show();
+                        this.Close();
+                    }
+                }
             }
         }
         private void ExtractJet_Window_Load(object sender, EventArgs e)
@@ -54,15 +75,19 @@ namespace BTDToolbox
             this.Show();
         }
 
-        public static void compile(DirectoryInfo target, string outputPath)
+        public void compileLaunch(DirectoryInfo target, string outputPath)
         {
+            filesCompiled = 0;
             ZipFile toExport = new ZipFile();
+            totalFiles = toExport.Count();
             toExport.Password = "Q%_{6#Px]]";
+            toExport.AddProgress += ZipCompileProgress;
             toExport.AddDirectory(target.FullName);
             toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
             toExport.Name = outputPath;
             toExport.CompressionLevel = CompressionLevel.Level6;
             toExport.Save();
+            this.Hide();
         }
 
         public DirectoryInfo decompile(string inputPath, DirectoryInfo targetFolder)
@@ -76,7 +101,7 @@ namespace BTDToolbox
             string livePath = Environment.CurrentDirectory;
             if (hasCustomProjectName)
             {
-                projectName = (livePath + "\\proj_" + projectName);
+                projectName = (livePath + "\\proj_" + customName);
             }
             else
             {
@@ -84,44 +109,21 @@ namespace BTDToolbox
                 projectName = (livePath + "\\proj_" + randName);
             }
             //Extract and count progress
-            try
+            
+            using (ZipFile zip = ZipFile.Read(inputPath))
             {
-                using (ZipFile zip = ZipFile.Read(inputPath))
-                {
-                    totalFiles = archive.Count();
-                    filesExtracted = 0;
-                    archive.ExtractProgress += ZipExtractProgress;
-                    archive.ExtractAll(projectName);
-                    DirectoryInfo dinfo = new DirectoryInfo(projectName);
-                    JetForm jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
-                    jf.MdiParent = TD_Toolbox_Window.getInstance();
-                    jf.Show();
-                }
-                ConsoleHandler.appendLog("Project files created at: " + projectName);
-                this.Close();
+                totalFiles = archive.Count();
+                filesExtracted = 0;
+                archive.ExtractProgress += ZipExtractProgress;
+                archive.ExtractAll(projectName);
+                DirectoryInfo dinfo = new DirectoryInfo(projectName);
+                JetForm jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
+                jf.MdiParent = TD_Toolbox_Window.getInstance();
+                jf.Show();
             }
-            catch (Ionic.Zip.ZipException)
-            {
-                DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
-                if (varr == DialogResult.OK)
-                {
-                    System.IO.DirectoryInfo deleteDir = new DirectoryInfo(projectName);
-                    foreach (FileInfo file in deleteDir.GetFiles())
-                    {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in deleteDir.GetDirectories())
-                    {
-                        dir.Delete(true);
-                    }
-                }
-                if (varr == DialogResult.Cancel)
-                {
-                    var reopenSetProjectName = new SetProjectName();
-                    reopenSetProjectName.Show();
-                    this.Close();
-                }
-            }
+            ConsoleHandler.appendLog("Project files created at: " + projectName);
+            this.Close();
+
             return null;
         }
 
@@ -140,6 +142,24 @@ namespace BTDToolbox
                 return;
             filesExtracted++;
             TotalProgress_ProgressBar.Value = 100 * filesExtracted / totalFiles;
+            this.Refresh();
+        }
+        private void ZipCompileProgress(object sender, AddProgressEventArgs e)
+        {
+            if (e.TotalBytesToTransfer > 0)
+            {
+                label1.Refresh();
+                CurrentFileProgress_Label.Refresh();
+                richTextBox1.Text = e.CurrentEntry.FileName;
+                //ConsoleHandler.appendLog(e.CurrentEntry.FileName);
+                richTextBox1.Refresh();
+                CurrentFileProgress.Value = Convert.ToInt32(100 * e.BytesTransferred / e.TotalBytesToTransfer);
+                e.BytesTransferred++;
+            }
+            if (e.EventType != ZipProgressEventType.Adding_AfterAddEntry)
+                return;
+            filesCompiled++;
+            TotalProgress_ProgressBar.Value = 100 * filesCompiled / totalFiles;
             this.Refresh();
         }
     }
