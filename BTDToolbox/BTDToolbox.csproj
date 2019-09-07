@@ -183,6 +183,10 @@
   <ItemGroup>
     <Content Include="JSON invalid_2.png" />
     <Content Include="Resize_Icon.png" />
+    <None Include="Resources\json-file_light.ico" />
+    <None Include="Resources\json-file_dark.ico" />
+    <None Include="Resources\ico3.ico" />
+    <None Include="Resources\ico2.ico" />
     <None Include="Resources\Resize_Icon.png" />
     <None Include="Resources\JSON valid.png" />
     <None Include="Resources\JSON Invalid.png" />

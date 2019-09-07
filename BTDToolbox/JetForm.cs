@@ -37,7 +37,6 @@ namespace BTDToolbox
         {
             InitializeComponent();
             
-            this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
 
@@ -83,6 +82,7 @@ namespace BTDToolbox
             this.SetStyle(ControlStyles.ResizeRedraw, true);
 
             this.FormClosed += exitHandling;
+            this.FormClosing += this.JetForm_Closed;
         }
         
         private void initSelContextMenu()

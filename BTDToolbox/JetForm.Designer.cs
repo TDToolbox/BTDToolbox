@@ -37,22 +37,28 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.type_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.time_modified_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
+            this.contentPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileViewContainer)).BeginInit();
             this.fileViewContainer.Panel1.SuspendLayout();
             this.fileViewContainer.Panel2.SuspendLayout();
             this.fileViewContainer.SuspendLayout();
             this.SuspendLayout();
             // 
+            // titleSeperator
+            // 
+            // 
             // TitleLabel
             // 
             this.TitleLabel.Size = new System.Drawing.Size(67, 16);
             this.TitleLabel.Text = "JetViewer";
+            // 
+            // contentPanel
+            // 
+            this.contentPanel.Controls.Add(this.fileViewContainer);
             // 
             // close_button
             // 
@@ -66,7 +72,7 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "ico3.ico");
-            this.imageList1.Images.SetKeyName(1, "jeteditor.ico");
+            this.imageList1.Images.SetKeyName(1, "json-file_light.png");
             // 
             // fileViewContainer
             // 
@@ -84,7 +90,7 @@
             this.fileViewContainer.Panel2.Controls.Add(this.goUpButton);
             this.fileViewContainer.Panel2.Controls.Add(this.saveButton);
             this.fileViewContainer.Panel2.Controls.Add(this.listView1);
-            this.fileViewContainer.Size = new System.Drawing.Size(775, 605);
+            this.fileViewContainer.Size = new System.Drawing.Size(776, 406);
             this.fileViewContainer.SplitterDistance = 253;
             this.fileViewContainer.TabIndex = 2;
             this.fileViewContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
@@ -103,7 +109,7 @@
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(253, 606);
+            this.treeView1.Size = new System.Drawing.Size(253, 407);
             this.treeView1.TabIndex = 0;
             // 
             // goUpButton
@@ -122,9 +128,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.saveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.saveButton.ForeColor = System.Drawing.Color.White;
-            this.saveButton.Location = new System.Drawing.Point(0, 582);
+            this.saveButton.Location = new System.Drawing.Point(0, 383);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(518, 23);
+            this.saveButton.Size = new System.Drawing.Size(519, 23);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
@@ -137,15 +143,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.name_column,
-            this.type_column,
-            this.time_modified_column});
-            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.name_column});
+            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView1.ForeColor = System.Drawing.Color.White;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(2, 27);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(518, 582);
+            this.listView1.Size = new System.Drawing.Size(519, 383);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -154,21 +158,10 @@
             // name_column
             // 
             this.name_column.Text = "Name";
-            this.name_column.Width = 384;
-            // 
-            // type_column
-            // 
-            this.type_column.Text = "Type";
-            this.type_column.Width = 63;
-            // 
-            // time_modified_column
-            // 
-            this.time_modified_column.Text = "Last Modified";
-            this.time_modified_column.Width = 80;
+            this.name_column.Width = 517;
             // 
             // JetForm
             // 
-            this.contentPanel.Controls.Add(this.fileViewContainer);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -176,17 +169,18 @@
             this.Text = "JetViewer";
             this.Load += new System.EventHandler(this.JetForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.JetForm_KeyDown);
-            this.Controls.SetChildIndex(this.titleSeperator, 0);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();
             this.titleSeperator.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
             this.titleSeperator.ResumeLayout(false);
+            this.contentPanel.ResumeLayout(false);
             this.fileViewContainer.Panel1.ResumeLayout(false);
             this.fileViewContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fileViewContainer)).EndInit();
             this.fileViewContainer.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -196,9 +190,7 @@
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader name_column;
-        private System.Windows.Forms.ColumnHeader type_column;
-        private System.Windows.Forms.ColumnHeader time_modified_column;
         private System.Windows.Forms.Button goUpButton;
+        private System.Windows.Forms.ColumnHeader name_column;
     }
 }
