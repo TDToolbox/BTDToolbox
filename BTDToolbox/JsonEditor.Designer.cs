@@ -41,8 +41,8 @@
             this.FontSize_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Replace_TextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.Replace_Button = new System.Windows.Forms.ToolStripDropDownButton();
-            this.ReplaceButton_DropDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReplaceDropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.ReplaceButton = new System.Windows.Forms.ToolStripMenuItem();
             this.ReplaceAllButton_DropDown = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.Find_TextBox = new System.Windows.Forms.ToolStripTextBox();
@@ -100,7 +100,7 @@
             this.Edit_DropDown,
             this.toolStripSeparator1,
             this.Replace_TextBox,
-            this.Replace_Button,
+            this.ReplaceDropDown,
             this.toolStripSeparator2,
             this.Find_TextBox,
             this.FindNext_Button});
@@ -146,6 +146,7 @@
             this.ShowFindMenu_Button.Name = "ShowFindMenu_Button";
             this.ShowFindMenu_Button.Size = new System.Drawing.Size(201, 22);
             this.ShowFindMenu_Button.Text = "Find                  (Ctrl + F)";
+            this.ShowFindMenu_Button.Click += new System.EventHandler(this.ShowFindMenu_Button_Click_1);
             // 
             // ShowReplaceMenu_Button
             // 
@@ -188,33 +189,35 @@
             this.Replace_TextBox.Name = "Replace_TextBox";
             this.Replace_TextBox.Size = new System.Drawing.Size(200, 25);
             // 
-            // Replace_Button
+            // ReplaceDropDown
             // 
-            this.Replace_Button.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Replace_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.Replace_Button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.Replace_Button.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ReplaceButton_DropDown,
+            this.ReplaceDropDown.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.ReplaceDropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.ReplaceDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ReplaceDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ReplaceButton,
             this.ReplaceAllButton_DropDown});
-            this.Replace_Button.ForeColor = System.Drawing.Color.White;
-            this.Replace_Button.Image = ((System.Drawing.Image)(resources.GetObject("Replace_Button.Image")));
-            this.Replace_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Replace_Button.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
-            this.Replace_Button.Name = "Replace_Button";
-            this.Replace_Button.Size = new System.Drawing.Size(61, 22);
-            this.Replace_Button.Text = "Replace";
+            this.ReplaceDropDown.ForeColor = System.Drawing.Color.White;
+            this.ReplaceDropDown.Image = ((System.Drawing.Image)(resources.GetObject("ReplaceDropDown.Image")));
+            this.ReplaceDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ReplaceDropDown.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
+            this.ReplaceDropDown.Name = "ReplaceDropDown";
+            this.ReplaceDropDown.Size = new System.Drawing.Size(61, 22);
+            this.ReplaceDropDown.Text = "Replace";
             // 
-            // ReplaceButton_DropDown
+            // ReplaceButton
             // 
-            this.ReplaceButton_DropDown.Name = "ReplaceButton_DropDown";
-            this.ReplaceButton_DropDown.Size = new System.Drawing.Size(132, 22);
-            this.ReplaceButton_DropDown.Text = "Replace";
+            this.ReplaceButton.Name = "ReplaceButton";
+            this.ReplaceButton.Size = new System.Drawing.Size(132, 22);
+            this.ReplaceButton.Text = "Replace";
+            this.ReplaceButton.Click += new System.EventHandler(this.ReplaceButton_Click);
             // 
             // ReplaceAllButton_DropDown
             // 
             this.ReplaceAllButton_DropDown.Name = "ReplaceAllButton_DropDown";
             this.ReplaceAllButton_DropDown.Size = new System.Drawing.Size(132, 22);
             this.ReplaceAllButton_DropDown.Text = "Replace All";
+            this.ReplaceAllButton_DropDown.Click += new System.EventHandler(this.ReplaceAllButton_DropDown_Click_1);
             // 
             // toolStripSeparator2
             // 
@@ -243,16 +246,19 @@
             this.FindNext_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.FindNext_Button.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
             this.FindNext_Button.Name = "FindNext_Button";
-            this.FindNext_Button.Size = new System.Drawing.Size(62, 22);
+            this.FindNext_Button.Size = new System.Drawing.Size(61, 22);
             this.FindNext_Button.Text = "Find Next";
+            this.FindNext_Button.Click += new System.EventHandler(this.FindNext_Button_Click);
             // 
             // lintPanel
             // 
-            this.lintPanel.BackColor = System.Drawing.Color.Red;
+            this.lintPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lintPanel.BackgroundImage = global::BTDToolbox.Properties.Resources.JSON_valid;
+            this.lintPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.lintPanel.ForeColor = System.Drawing.Color.Black;
             this.lintPanel.Location = new System.Drawing.Point(63, 0);
             this.lintPanel.Name = "lintPanel";
-            this.lintPanel.Size = new System.Drawing.Size(25, 25);
+            this.lintPanel.Size = new System.Drawing.Size(50, 25);
             this.lintPanel.TabIndex = 3;
             // 
             // JsonEditor
@@ -289,8 +295,8 @@
         private System.Windows.Forms.ToolStripTextBox FontSize_TextBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripTextBox Replace_TextBox;
-        private System.Windows.Forms.ToolStripDropDownButton Replace_Button;
-        private System.Windows.Forms.ToolStripMenuItem ReplaceButton_DropDown;
+        private System.Windows.Forms.ToolStripDropDownButton ReplaceDropDown;
+        private System.Windows.Forms.ToolStripMenuItem ReplaceButton;
         private System.Windows.Forms.ToolStripMenuItem ReplaceAllButton_DropDown;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripTextBox Find_TextBox;

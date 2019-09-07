@@ -48,7 +48,7 @@ namespace BTDToolbox
             this.FindNext_Button.Visible = false;
             this.toolStripSeparator2.Visible = false;
             this.Replace_TextBox.Visible = false;
-            this.Replace_Button.Visible = false;
+            this.ReplaceDropDown.Visible = false;
 
             try
             {
@@ -90,11 +90,11 @@ namespace BTDToolbox
             try
             {
                 JObject.Parse(this.Editor_TextBox.Text);
-                this.lintPanel.BackColor = Color.Green;
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
             }
             catch (Exception)
             {
-                this.lintPanel.BackColor = Color.Red;
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
             }
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
         }
@@ -104,84 +104,14 @@ namespace BTDToolbox
             try
             {
                 JObject.Parse(this.Editor_TextBox.Text);
-                this.lintPanel.BackColor = Color.Green;
+                //this.lintPanel.BackColor = Color.Green;
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
             }
             catch (Exception)
             {
-                this.lintPanel.BackColor = Color.Red;
+                //this.lintPanel.BackColor = Color.Red;
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
             }
-        }
-        private void FindButton_Click(object sender, EventArgs e)
-        {
-            FindText();
-        }
-        private void ReplaceButton_DropDown_Click(object sender, EventArgs e)
-        {
-            if (Find_TextBox.Text.Length <= 0)
-            {
-                MessageBox.Show("You didn't enter anything to search for. Please Try Again");
-            }
-            if (Replace_TextBox.Text.Length <= 0)
-            {
-                MessageBox.Show("You didn't enter anything to replace with. Please Try Again");
-            }
-            if (findNextPhrase)
-            {
-                MessageBox.Show("You need to find something before you can try replacing it...");
-            }
-            else if (findNextPhrase == false)
-            {
-                Editor_TextBox.Text = Editor_TextBox.Text.Remove(startPosition - endPosition, Find_TextBox.Text.Length);
-                Editor_TextBox.Text = Editor_TextBox.Text.Insert(startPosition - endPosition, Replace_TextBox.Text);
-                endPosition = this.Replace_TextBox.Text.Length;
-                startPosition = startPosition + endPosition;
-
-                endEditor = Editor_TextBox.Text.Length;
-
-                startPosition = Editor_TextBox.SelectionStart + 1;
-
-                if (previousSearchPhrase != Find_TextBox.Text)
-                {
-                    endPosition = 0;
-                    numPhraseFound = 0;
-                }
-
-                for (int i = 0; i < endEditor; i = startPosition)
-                {
-                    previousSearchPhrase = this.Find_TextBox.Text;
-                    isCurrentlySearching = true;
-                    if (i == -1)
-                    {
-                        isCurrentlySearching = false;
-                        break;
-                    }
-                    startPosition = Editor_TextBox.Find(Find_TextBox.Text, startPosition, endEditor, RichTextBoxFinds.None);
-                    if (startPosition >= 0)
-                    {
-                        numPhraseFound++;
-                        //Editor_TextBox.SelectionColor = Color.Blue;       //saving this value for later use
-                        endPosition = this.Find_TextBox.Text.Length;
-                        startPosition = startPosition + endPosition;
-                        break;
-                    }
-                }
-            }
-        }
-        private void ReplaceAllButton_DropDown_Click(object sender, EventArgs e)
-        {
-            if (Find_TextBox.Text.Length <= 0)
-            {
-                MessageBox.Show("You didn't enter anything to search for. Please Try Again");
-            }
-            else if (Replace_TextBox.Text.Length <= 0)
-            {
-                MessageBox.Show("You didn't enter anything to replace with. Please Try Again");
-            }
-            else
-            {
-                Editor_TextBox.Text = Editor_TextBox.Text.Replace(Find_TextBox.Text, Replace_TextBox.Text);
-            }
-            
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -205,18 +135,11 @@ namespace BTDToolbox
             writeJsonEditorForm.Write(jsonEditorOutput);
             writeJsonEditorForm.Close();
         }
-        private void ShowFindMenu_Button_Click(object sender, EventArgs e)
-        {
-            ShowFindMenu();
-        }
-        private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
-        {
-            ShowReplaceMenu();
-        }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.F)
             {
+                /*
                 isFinding = !isFinding;
                 this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
                 this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
@@ -228,17 +151,18 @@ namespace BTDToolbox
                     this.FindNext_Button.Visible = false;
                     this.toolStripSeparator2.Visible = false;
                     this.Replace_TextBox.Visible = false;
-                    this.Replace_Button.Visible = false;
-                }
+                    this.ReplaceDropDown.Visible = false;
+                }*/
+                ShowFindMenu();
             }
             if (e.Control && e.KeyCode == Keys.H)
-            {
+            {/*
                 isReplacing = !isReplacing;
                 this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
                 this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
                 this.toolStripSeparator2.Visible = !this.toolStripSeparator2.Visible;
                 this.Replace_TextBox.Visible = !this.Replace_TextBox.Visible;
-                this.Replace_Button.Visible = !this.Replace_Button.Visible;
+                this.ReplaceDropDown.Visible = !this.ReplaceDropDown.Visible;
                 if (isFinding)
                 {
                     isFinding = false;
@@ -247,8 +171,9 @@ namespace BTDToolbox
                     this.FindNext_Button.Visible = true;
                     this.toolStripSeparator2.Visible = true;
                     this.Replace_TextBox.Visible = true;
-                    this.Replace_Button.Visible = true;
-                }
+                    this.ReplaceDropDown.Visible = true;
+                }*/
+                ShowReplaceMenu();
             }
             if (e.KeyCode == Keys.F5)
             {
@@ -264,13 +189,6 @@ namespace BTDToolbox
                 {
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
-            }
-        }
-        private void Find_TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                FindText();
             }
         }
         private void FindText()
@@ -337,7 +255,7 @@ namespace BTDToolbox
                 this.FindNext_Button.Visible = false;
                 this.toolStripSeparator2.Visible = false;
                 this.Replace_TextBox.Visible = false;
-                this.Replace_Button.Visible = false;
+                this.ReplaceDropDown.Visible = false;
             }
         }
         private void ShowReplaceMenu()
@@ -347,7 +265,7 @@ namespace BTDToolbox
             this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
             this.toolStripSeparator2.Visible = !this.toolStripSeparator2.Visible;
             this.Replace_TextBox.Visible = !this.Replace_TextBox.Visible;
-            this.Replace_Button.Visible = !this.Replace_Button.Visible;
+            this.ReplaceDropDown.Visible = !this.ReplaceDropDown.Visible;
             if (isFinding)
             {
                 isFinding = false;
@@ -356,8 +274,83 @@ namespace BTDToolbox
                 this.FindNext_Button.Visible = true;
                 this.toolStripSeparator2.Visible = true;
                 this.Replace_TextBox.Visible = true;
-                this.Replace_Button.Visible = true;
+                this.ReplaceDropDown.Visible = true;
             }
+        }
+        private void ShowFindMenu_Button_Click_1(object sender, EventArgs e)
+        {
+            ShowFindMenu();
+        }
+        private void ReplaceButton_Click(object sender, EventArgs e)
+        {
+            if (Find_TextBox.Text.Length <= 0)
+            {
+                MessageBox.Show("You didn't enter anything to search for. Please Try Again");
+            }
+            if (Replace_TextBox.Text.Length <= 0)
+            {
+                MessageBox.Show("You didn't enter anything to replace with. Please Try Again");
+            }
+            if (findNextPhrase)
+            {
+                MessageBox.Show("You need to find something before you can try replacing it...");
+            }
+            else if (findNextPhrase == false)
+            {
+                Editor_TextBox.Text = Editor_TextBox.Text.Remove(startPosition - endPosition, Find_TextBox.Text.Length);
+                Editor_TextBox.Text = Editor_TextBox.Text.Insert(startPosition - endPosition, Replace_TextBox.Text);
+                endPosition = this.Replace_TextBox.Text.Length;
+                startPosition = startPosition + endPosition;
+
+                endEditor = Editor_TextBox.Text.Length;
+
+                startPosition = Editor_TextBox.SelectionStart + 1;
+
+                if (previousSearchPhrase != Find_TextBox.Text)
+                {
+                    endPosition = 0;
+                    numPhraseFound = 0;
+                }
+
+                for (int i = 0; i < endEditor; i = startPosition)
+                {
+                    previousSearchPhrase = this.Find_TextBox.Text;
+                    isCurrentlySearching = true;
+                    if (i == -1)
+                    {
+                        isCurrentlySearching = false;
+                        break;
+                    }
+                    startPosition = Editor_TextBox.Find(Find_TextBox.Text, startPosition, endEditor, RichTextBoxFinds.None);
+                    if (startPosition >= 0)
+                    {
+                        numPhraseFound++;
+                        //Editor_TextBox.SelectionColor = Color.Blue;       //saving this value for later use
+                        endPosition = this.Find_TextBox.Text.Length;
+                        startPosition = startPosition + endPosition;
+                        break;
+                    }
+                }
+            }
+        }
+        private void ReplaceAllButton_DropDown_Click_1(object sender, EventArgs e)
+        {
+            if (Find_TextBox.Text.Length <= 0)
+            {
+                MessageBox.Show("You didn't enter anything to search for. Please Try Again");
+            }
+            else if (Replace_TextBox.Text.Length <= 0)
+            {
+                MessageBox.Show("You didn't enter anything to replace with. Please Try Again");
+            }
+            else
+            {
+                Editor_TextBox.Text = Editor_TextBox.Text.Replace(Find_TextBox.Text, Replace_TextBox.Text);
+            }
+        }
+        private void FindNext_Button_Click(object sender, EventArgs e)
+        {
+            FindText();
         }
     }
 }
