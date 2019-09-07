@@ -29,9 +29,12 @@ namespace BTDToolbox
                     ExtractingJet_Window.launchProgram = true;
                     ExtractingJet_Window ejw = new ExtractingJet_Window();
                     ejw.compile(projDir, gameJetPath);
+                    ejw.FormClosed += (object sender, FormClosedEventArgs arg) =>
+                    {
+                        Process.Start(Settings.readGamePath());
+                        ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
+                    };
                     ConsoleHandler.appendLog("Jet compiled");
-                    Process.Start(Settings.readGamePath());
-                    ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
                     break;
                 }
                 catch (Exception exc)
@@ -65,6 +68,7 @@ namespace BTDToolbox
                 }
             }
         }
+
 
         public static void restoreGame()
         {
