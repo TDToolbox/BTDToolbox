@@ -8,8 +8,8 @@ namespace BTDToolbox
 {
     class JetCompiler
     {
-        public static bool hasCustomProjectName;
-        public static string customProjectName;
+        public static bool hasCustomProjectName = false;
+        public static string customProjectName = "";
         public static string projectName;
         public static int filesInJet;
         public static void compile(DirectoryInfo target, string outputPath)

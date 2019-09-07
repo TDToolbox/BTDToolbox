@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonEditor));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.JsonToolstrip = new System.Windows.Forms.ToolStrip();
             this.Edit_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.Undo_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Redo_Button = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,13 +47,13 @@
             this.Find_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.FindNext_Button = new System.Windows.Forms.ToolStripButton();
             this.Editor_TextBox = new System.Windows.Forms.RichTextBox();
-            this.toolStrip1.SuspendLayout();
+            this.JsonToolstrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // JsonToolstrip
             // 
-            this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.JsonToolstrip.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.JsonToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Edit_DropDown,
             this.toolStripSeparator1,
             this.Replace_TextBox,
@@ -61,11 +61,11 @@
             this.toolStripSeparator2,
             this.Find_TextBox,
             this.FindNext_Button});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1085, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.JsonToolstrip.Location = new System.Drawing.Point(0, 0);
+            this.JsonToolstrip.Name = "JsonToolstrip";
+            this.JsonToolstrip.Size = new System.Drawing.Size(1085, 25);
+            this.JsonToolstrip.TabIndex = 1;
+            this.JsonToolstrip.Text = "toolStrip1";
             // 
             // Edit_DropDown
             // 
@@ -206,7 +206,7 @@
             this.FindNext_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.FindNext_Button.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
             this.FindNext_Button.Name = "FindNext_Button";
-            this.FindNext_Button.Size = new System.Drawing.Size(61, 22);
+            this.FindNext_Button.Size = new System.Drawing.Size(62, 22);
             this.FindNext_Button.Text = "Find Next";
             this.FindNext_Button.Click += new System.EventHandler(this.FindButton_Click);
             // 
@@ -231,20 +231,20 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1085, 603);
             this.Controls.Add(this.Editor_TextBox);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.JsonToolstrip);
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "JsonEditor";
             this.Text = "JsonEditor";
             this.Load += new System.EventHandler(this.JsonEditor_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.JsonToolstrip.ResumeLayout(false);
+            this.JsonToolstrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip JsonToolstrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripDropDownButton Edit_DropDown;
         private System.Windows.Forms.ToolStripMenuItem Undo_Button;

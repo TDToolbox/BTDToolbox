@@ -1,6 +1,6 @@
 ﻿namespace BTDToolbox
 {
-    partial class ThemedFormTemplate
+    partial class ThemedForm
     {
         /// <summary>
         /// Required designer variable.
@@ -26,41 +26,43 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThemedFormTemplate));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThemedForm));
+            this.titleSeperator = new System.Windows.Forms.SplitContainer();
             this.close_button = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.TitleLabel = new System.Windows.Forms.Label();
             this.Sizer = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
+            this.titleSeperator.Panel1.SuspendLayout();
+            this.titleSeperator.Panel2.SuspendLayout();
+            this.titleSeperator.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // titleSeperator
             // 
-            this.splitContainer1.BackColor = System.Drawing.Color.Black;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.titleSeperator.BackColor = System.Drawing.Color.Black;
+            this.titleSeperator.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.titleSeperator.IsSplitterFixed = true;
+            this.titleSeperator.Location = new System.Drawing.Point(0, 0);
+            this.titleSeperator.Name = "titleSeperator";
+            this.titleSeperator.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer1.Panel1
+            // titleSeperator.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.close_button);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.titleSeperator.Panel1.BackColor = System.Drawing.Color.Black;
+            this.titleSeperator.Panel1.Controls.Add(this.close_button);
+            this.titleSeperator.Panel1.Controls.Add(this.TitleLabel);
             // 
-            // splitContainer1.Panel2
+            // titleSeperator.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.Sizer);
-            this.splitContainer1.Panel2.Controls.Add(this.contentPanel);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 25;
-            this.splitContainer1.TabIndex = 0;
+            this.titleSeperator.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.titleSeperator.Panel2.Controls.Add(this.Sizer);
+            this.titleSeperator.Panel2.Controls.Add(this.contentPanel);
+            this.titleSeperator.Size = new System.Drawing.Size(800, 450);
+            this.titleSeperator.SplitterDistance = 25;
+            this.titleSeperator.TabIndex = 0;
             // 
             // close_button
             // 
@@ -74,34 +76,34 @@
             this.close_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.close_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.close_button.ForeColor = System.Drawing.Color.White;
-            this.close_button.Location = new System.Drawing.Point(736, -2);
+            this.close_button.Location = new System.Drawing.Point(732, -3);
             this.close_button.Name = "close_button";
-            this.close_button.Size = new System.Drawing.Size(64, 26);
+            this.close_button.Size = new System.Drawing.Size(65, 27);
             this.close_button.TabIndex = 2;
             this.close_button.Text = "X";
             this.close_button.UseVisualStyleBackColor = false;
             this.close_button.Click += new System.EventHandler(this.close_button_Click);
             // 
-            // label1
+            // TitleLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Black;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(13, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Title";
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.BackColor = System.Drawing.Color.Black;
+            this.TitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TitleLabel.ForeColor = System.Drawing.Color.White;
+            this.TitleLabel.Location = new System.Drawing.Point(13, 7);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(34, 16);
+            this.TitleLabel.TabIndex = 0;
+            this.TitleLabel.Text = "Title";
             // 
             // Sizer
             // 
             this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
-            this.Sizer.Location = new System.Drawing.Point(789, 410);
+            this.Sizer.Location = new System.Drawing.Point(788, 409);
             this.Sizer.Name = "Sizer";
-            this.Sizer.Size = new System.Drawing.Size(10, 10);
+            this.Sizer.Size = new System.Drawing.Size(12, 12);
             this.Sizer.TabIndex = 1;
             // 
             // contentPanel
@@ -115,30 +117,30 @@
             this.contentPanel.Size = new System.Drawing.Size(776, 406);
             this.contentPanel.TabIndex = 0;
             // 
-            // ThemedFormTemplate
+            // ThemedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.titleSeperator);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "ThemedFormTemplate";
+            this.Name = "ThemedForm";
             this.Text = "ThemedFormTemplate";
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.titleSeperator.Panel1.ResumeLayout(false);
+            this.titleSeperator.Panel1.PerformLayout();
+            this.titleSeperator.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
+            this.titleSeperator.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel contentPanel;
-        private System.Windows.Forms.Button close_button;
-        private System.Windows.Forms.Panel Sizer;
+        public System.Windows.Forms.SplitContainer titleSeperator;
+        public System.Windows.Forms.Label TitleLabel;
+        public System.Windows.Forms.Panel contentPanel;
+        public System.Windows.Forms.Button close_button;
+        public System.Windows.Forms.Panel Sizer;
     }
 }

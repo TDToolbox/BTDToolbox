@@ -13,28 +13,9 @@ using static System.Windows.Forms.ToolStripItem;
 
 namespace BTDToolbox
 {
-    public partial class JetForm : Form
+    public partial class JetForm : ThemedForm
     {
-    
         string livePath = Environment.CurrentDirectory;
-
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HTCAPTION = 0x2;
-        [DllImport("User32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImport("User32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        //for resizing
-        int Mx;
-        int My;
-        int Sw;
-        int Sh;
-        bool mov;
-
-        //Resize defaults
-        int minWidth = 200;
-        int minHeight = 100;
 
         private String filePath;
         private DirectoryInfo dirInfo;
@@ -53,20 +34,18 @@ namespace BTDToolbox
         JetExplorer jetExplorerConfig;
         public static bool jetImportCancelled;
 
+        public JetForm()
+        {
+            InitializeComponent();
+        }
+
         public JetForm(String filePath, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
-            splitContainer1.Panel1.MouseMove += ToolbarDrag;
-            splitContainer1.Panel2.MouseMove += ToolbarDrag;
-            splitContainer1.MouseMove += ToolbarDrag;
             
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
-
-            Sizer.MouseDown += SizerMouseDown;
-            Sizer.MouseMove += SizerMouseMove;
-            Sizer.MouseUp += SizerMouseUp;
 
             this.filePath = filePath;
             this.Form = Form;
@@ -87,17 +66,10 @@ namespace BTDToolbox
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
-            splitContainer1.Panel1.MouseMove += ToolbarDrag;
-            splitContainer1.Panel2.MouseMove += ToolbarDrag;
-            splitContainer1.MouseMove += ToolbarDrag;
             
             this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
-
-            Sizer.MouseDown += SizerMouseDown;
-            Sizer.MouseMove += SizerMouseMove;
-            Sizer.MouseUp += SizerMouseUp;
 
             this.dirInfo = dirInfo;
             this.Form = Form;
@@ -123,7 +95,7 @@ namespace BTDToolbox
                 this.Font = jetFormFontSize;
 
                 splitterDistance = deserializedJetForm.SplitterDistance;
-                splitContainer.SplitterDistance = splitterDistance;
+                fileViewContainer.SplitterDistance = splitterDistance;
                 treeViewFontSize = deserializedJetForm.TreeViewFontSize;
             } catch (System.IO.FileNotFoundException)
             {
@@ -320,37 +292,6 @@ namespace BTDToolbox
             }
         }
 
-        private void SizerMouseDown(object sender, MouseEventArgs e)
-        {
-            mov = true;
-            My = MousePosition.Y;
-            Mx = MousePosition.X;
-            Sw = Width;
-            Sh = Height;
-        }
-        private void SizerMouseMove(object sender, MouseEventArgs e)
-        {
-            if (mov == true)
-            {
-                splitContainer1.SplitterDistance = 25;
-                splitContainer1.Dock = DockStyle.Fill;
-                Width = MousePosition.X - Mx + Sw;
-                Height = MousePosition.Y - My + Sh;
-            }
-        }
-        private void SizerMouseUp(object sender, MouseEventArgs e)
-        {
-            mov = false;
-            if (Width < minWidth)
-            {
-                Width = minWidth;
-            }
-            if (Height < minHeight)
-            {
-                Height = minHeight;
-            }
-        }
-
         private void saveButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog fileDiag = new SaveFileDialog();
@@ -472,7 +413,6 @@ namespace BTDToolbox
             }
         }
 
-
         //Context menu methods
         private void add()
         {
@@ -571,23 +511,9 @@ namespace BTDToolbox
             }
         }
 
-        //Toolbar methods
-        private void ToolbarDrag(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-            }
-        }
-        private void close_button_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void SplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            splitterDistance = splitContainer.SplitterDistance;
+            splitterDistance = fileViewContainer.SplitterDistance;
         }
         private void SerializeConfig()
         {

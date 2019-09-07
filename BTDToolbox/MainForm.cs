@@ -170,7 +170,7 @@ namespace BTDToolbox
         }
         private void themedFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ThemedFormTemplate tft = new ThemedFormTemplate();
+            ThemedForm tft = new ThemedForm();
             tft.MdiParent = this;
             tft.Show();
         }
@@ -330,5 +330,11 @@ namespace BTDToolbox
         }
         MdiClient mdiClient = null;
 
+        private void NullJetFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JetForm jf = new JetForm();
+            jf.MdiParent = this;
+            jf.Show();
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace BTDToolbox
 {
-    public partial class ThemedFormTemplate : Form
+    public partial class ThemedForm : Form
     {
         //Low level for toolbar dragging
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -32,15 +32,15 @@ namespace BTDToolbox
         int minWidth = 200;
         int minHeight = 100;
 
-        public ThemedFormTemplate()
+        public ThemedForm()
         {
             InitializeComponent();
 
             this.FormBorderStyle = FormBorderStyle.None;
 
-            splitContainer1.Panel1.MouseMove += ToolbarDrag;
-            splitContainer1.Panel2.MouseMove += ToolbarDrag;
-            splitContainer1.MouseMove += ToolbarDrag;
+            titleSeperator.Panel1.MouseMove += ToolbarDrag;
+            titleSeperator.Panel2.MouseMove += ToolbarDrag;
+            titleSeperator.MouseMove += ToolbarDrag;
 
             Sizer.MouseDown += SizerMouseDown;
             Sizer.MouseMove += SizerMouseMove;
@@ -49,7 +49,7 @@ namespace BTDToolbox
             close_button.Click += close_button_Click;
         }
 
-        private void close_button_Click(object sender, EventArgs e)
+        public virtual void close_button_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -67,9 +67,9 @@ namespace BTDToolbox
         {
             if (mov == true)
             {
-                splitContainer1.SplitterDistance = 25;
+                titleSeperator.SplitterDistance = 25;
                 //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
-                splitContainer1.Dock = DockStyle.Fill;
+                titleSeperator.Dock = DockStyle.Fill;
                 Width = MousePosition.X - Mx + Sw;
                 Height = MousePosition.Y - My + Sh;
             }

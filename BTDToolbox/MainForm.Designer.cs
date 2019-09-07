@@ -44,12 +44,13 @@
             this.Launch_Program_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestoreBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.Credits = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nullJetFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -114,7 +115,7 @@
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(154, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(155, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
             // 
@@ -175,9 +176,15 @@
             // ToggleConsole
             // 
             this.ToggleConsole.Name = "ToggleConsole";
-            this.ToggleConsole.Size = new System.Drawing.Size(180, 22);
+            this.ToggleConsole.Size = new System.Drawing.Size(134, 22);
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
+            // 
+            // fileExplorerToolStripMenuItem
+            // 
+            this.fileExplorerToolStripMenuItem.Name = "fileExplorerToolStripMenuItem";
+            this.fileExplorerToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.fileExplorerToolStripMenuItem.Text = "Jet Explorer";
             // 
             // helpToolStripMenuItem
             // 
@@ -206,7 +213,8 @@
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.themedFormToolStripMenuItem});
+            this.themedFormToolStripMenuItem,
+            this.nullJetFormToolStripMenuItem});
             this.debugToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
@@ -215,15 +223,16 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.themedFormToolStripMenuItem_Click);
             // 
-            // fileExplorerToolStripMenuItem
+            // nullJetFormToolStripMenuItem
             // 
-            this.fileExplorerToolStripMenuItem.Name = "fileExplorerToolStripMenuItem";
-            this.fileExplorerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.fileExplorerToolStripMenuItem.Text = "Jet Explorer";
+            this.nullJetFormToolStripMenuItem.Name = "nullJetFormToolStripMenuItem";
+            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nullJetFormToolStripMenuItem.Text = "Null JetForm";
+            this.nullJetFormToolStripMenuItem.Click += new System.EventHandler(this.NullJetFormToolStripMenuItem_Click);
             // 
             // TD_Toolbox_Window
             // 
@@ -269,6 +278,7 @@
         private System.Windows.Forms.ToolStripMenuItem Credits;
         private System.Windows.Forms.ToolStripMenuItem openRecentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nullJetFormToolStripMenuItem;
     }
 }
 

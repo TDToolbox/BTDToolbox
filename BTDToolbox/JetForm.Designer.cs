@@ -1,6 +1,6 @@
 ﻿namespace BTDToolbox
 {
-    partial class JetForm
+    partial class JetForm : ThemedForm
     {
         /// <summary>
         /// Required designer variable.
@@ -26,17 +26,12 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private new void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JetForm));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.titleLabel = new System.Windows.Forms.Label();
-            this.close_button = new System.Windows.Forms.Button();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.Sizer = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.fileViewContainer = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.goUpButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
@@ -44,16 +39,27 @@
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.type_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.time_modified_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
-            this.splitContainer.Panel1.SuspendLayout();
-            this.splitContainer.Panel2.SuspendLayout();
-            this.splitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
+            this.titleSeperator.Panel1.SuspendLayout();
+            this.titleSeperator.Panel2.SuspendLayout();
+            this.titleSeperator.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileViewContainer)).BeginInit();
+            this.fileViewContainer.Panel1.SuspendLayout();
+            this.fileViewContainer.Panel2.SuspendLayout();
+            this.fileViewContainer.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // TitleLabel
+            // 
+            this.TitleLabel.Size = new System.Drawing.Size(67, 16);
+            this.TitleLabel.Text = "JetViewer";
+            // 
+            // close_button
+            // 
+            this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
             // 
             // imageList1
             // 
@@ -62,104 +68,26 @@
             this.imageList1.Images.SetKeyName(0, "ico3.ico");
             this.imageList1.Images.SetKeyName(1, "jeteditor.ico");
             // 
-            // titleLabel
+            // fileViewContainer
             // 
-            this.titleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.titleLabel.AutoSize = true;
-            this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleLabel.Location = new System.Drawing.Point(4, 7);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(67, 16);
-            this.titleLabel.TabIndex = 0;
-            this.titleLabel.Text = "JetViewer";
+            this.fileViewContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.fileViewContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileViewContainer.Location = new System.Drawing.Point(0, 0);
+            this.fileViewContainer.Name = "fileViewContainer";
             // 
-            // close_button
+            // fileViewContainer.Panel1
             // 
-            this.close_button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.close_button.BackColor = System.Drawing.Color.Red;
-            this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            this.close_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.close_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.close_button.ForeColor = System.Drawing.Color.White;
-            this.close_button.Location = new System.Drawing.Point(736, -2);
-            this.close_button.Name = "close_button";
-            this.close_button.Size = new System.Drawing.Size(64, 26);
-            this.close_button.TabIndex = 1;
-            this.close_button.Text = "X";
-            this.close_button.UseVisualStyleBackColor = false;
-            this.close_button.Click += new System.EventHandler(this.close_button_Click);
+            this.fileViewContainer.Panel1.Controls.Add(this.treeView1);
             // 
-            // splitContainer1
+            // fileViewContainer.Panel2
             // 
-            this.splitContainer1.BackColor = System.Drawing.Color.Black;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Black;
-            this.splitContainer1.Panel1.Controls.Add(this.close_button);
-            this.splitContainer1.Panel1.Controls.Add(this.titleLabel);
-            this.splitContainer1.Panel1.ForeColor = System.Drawing.Color.White;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Black;
-            this.splitContainer1.Panel2.Controls.Add(this.Sizer);
-            this.splitContainer1.Panel2.Controls.Add(this.panel1);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 651);
-            this.splitContainer1.SplitterDistance = 26;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // Sizer
-            // 
-            this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
-            this.Sizer.Location = new System.Drawing.Point(790, 610);
-            this.Sizer.Name = "Sizer";
-            this.Sizer.Size = new System.Drawing.Size(10, 11);
-            this.Sizer.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.splitContainer);
-            this.panel1.Location = new System.Drawing.Point(13, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(775, 605);
-            this.panel1.TabIndex = 0;
-            // 
-            // splitContainer
-            // 
-            this.splitContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer.Name = "splitContainer";
-            // 
-            // splitContainer.Panel1
-            // 
-            this.splitContainer.Panel1.Controls.Add(this.treeView1);
-            // 
-            // splitContainer.Panel2
-            // 
-            this.splitContainer.Panel2.Controls.Add(this.goUpButton);
-            this.splitContainer.Panel2.Controls.Add(this.saveButton);
-            this.splitContainer.Panel2.Controls.Add(this.listView1);
-            this.splitContainer.Size = new System.Drawing.Size(775, 605);
-            this.splitContainer.SplitterDistance = 253;
-            this.splitContainer.TabIndex = 2;
-            this.splitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
+            this.fileViewContainer.Panel2.Controls.Add(this.goUpButton);
+            this.fileViewContainer.Panel2.Controls.Add(this.saveButton);
+            this.fileViewContainer.Panel2.Controls.Add(this.listView1);
+            this.fileViewContainer.Size = new System.Drawing.Size(775, 605);
+            this.fileViewContainer.SplitterDistance = 253;
+            this.fileViewContainer.TabIndex = 2;
+            this.fileViewContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
             // 
             // treeView1
             // 
@@ -240,37 +168,31 @@
             // 
             // JetForm
             // 
+            this.contentPanel.Controls.Add(this.fileViewContainer);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(800, 651);
-            this.Controls.Add(this.splitContainer1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JetForm";
             this.Text = "JetViewer";
             this.Load += new System.EventHandler(this.JetForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.JetForm_KeyDown);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.splitContainer.Panel1.ResumeLayout(false);
-            this.splitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
-            this.splitContainer.ResumeLayout(false);
+            this.Controls.SetChildIndex(this.titleSeperator, 0);
+            this.titleSeperator.Panel1.ResumeLayout(false);
+            this.titleSeperator.Panel1.PerformLayout();
+            this.titleSeperator.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
+            this.titleSeperator.ResumeLayout(false);
+            this.fileViewContainer.Panel1.ResumeLayout(false);
+            this.fileViewContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fileViewContainer)).EndInit();
+            this.fileViewContainer.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         #endregion
 
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Button close_button;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.SplitContainer splitContainer;
+        private System.Windows.Forms.SplitContainer fileViewContainer;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.ListView listView1;
@@ -278,6 +200,5 @@
         private System.Windows.Forms.ColumnHeader type_column;
         private System.Windows.Forms.ColumnHeader time_modified_column;
         private System.Windows.Forms.Button goUpButton;
-        private System.Windows.Forms.Panel Sizer;
     }
 }
