@@ -39,8 +39,8 @@ namespace BTDToolbox
                 }
                 else
                 {
-
                     ExtractingJet_Window.hasCustomProjectName = true;
+                    ExtractingJet_Window.launchProgram = false;
                     ExtractingJet_Window.customName = ProjectName_TextBox.Text;
                     this.Close();
                     var extractT = new ExtractingJet_Window();
@@ -50,7 +50,8 @@ namespace BTDToolbox
             else
             {
                 this.Close();
-                var extractT = new ExtractingJet_Window();
+                ExtractingJet_Window.launchProgram = false;
+                var extractT = new ExtractingJet_Window();   
             }
         }
 

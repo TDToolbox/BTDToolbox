@@ -31,7 +31,6 @@ namespace BTDToolbox
         int splitterDistance;
         float treeViewFontSize;
         JetExplorer jetExplorerConfig;
-        public static bool jetImportCancelled;
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
@@ -45,6 +44,7 @@ namespace BTDToolbox
             this.Form = Form;
             this.projName = projName;
             ConsoleHandler.appendLog(projName);
+            ExtractingJet_Window.currentProject = projName;
 
             initMultiContextMenu();
             initSelContextMenu();
@@ -252,14 +252,8 @@ namespace BTDToolbox
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fileDiag = new SaveFileDialog();
-            fileDiag.Title = "Save .jet";
-            fileDiag.DefaultExt = "jet";
-            fileDiag.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
-            if (fileDiag.ShowDialog() == DialogResult.OK)
-            {
-                JetCompiler.compile(dirInfo, fileDiag.FileName);
-            }
+            ExtractingJet_Window.isCompiling = true;
+            var compile = new ExtractingJet_Window();
         }
 
         //Context caller

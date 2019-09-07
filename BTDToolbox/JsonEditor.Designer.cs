@@ -253,7 +253,6 @@
             // lintPanel
             // 
             this.lintPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lintPanel.BackgroundImage = global::BTDToolbox.Properties.Resources.JSON_valid;
             this.lintPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.lintPanel.ForeColor = System.Drawing.Color.Black;
             this.lintPanel.Location = new System.Drawing.Point(63, 0);
@@ -265,6 +264,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackgroundImage = global::BTDToolbox.Properties.Resources.JSON_valid;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "JsonEditor";

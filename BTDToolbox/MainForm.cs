@@ -153,7 +153,9 @@ namespace BTDToolbox
             {
                 if (JetProps.get().Count == 1)
                 {
-                    Launcher.launchGame(JetProps.getForm(0));
+                    ExtractingJet_Window.launchProgram = true;
+                    ExtractingJet_Window.isCompiling = true;
+                    var compileLaunch = new ExtractingJet_Window();                 
                 }
                 else if (JetProps.get().Count < 1)
                 {
@@ -164,14 +166,15 @@ namespace BTDToolbox
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
             }
-            if (e.KeyCode == Keys.F1)
-            {
-                ExtractingJet_Window loading = new ExtractingJet_Window();
-                loading.Show();
-            }
             if (e.Control && e.KeyCode == Keys.N)
             {
                 ImportNewJew();
+            }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                ExtractingJet_Window.isCompiling = true;
+                ExtractingJet_Window.launchProgram = false;
+                ExtractingJet_Window ejw = new ExtractingJet_Window();
             }
         }
         private void mainResize(object sender, EventArgs e)

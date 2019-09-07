@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace BTDToolbox
         //Project Variables
         public static bool isCompiling;
         public static bool isDecompiling;
+        public string livePath = Environment.CurrentDirectory;
 
         //Project name variables
         public static bool hasCustomProjectName;
@@ -32,9 +34,15 @@ namespace BTDToolbox
         public static bool isProjectCreated;
         public static int filesCompiled;
 
+        //Compile variables
+        public static bool launchProgram;
+        public static string currentProject;
+        public DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+
         public ExtractingJet_Window()
         {
             InitializeComponent();
+            
             this.Show();
             this.StartPosition = FormStartPosition.Manual;
             this.Left = 120;
@@ -42,12 +50,57 @@ namespace BTDToolbox
             if (isCompiling)
             {
                 this.Text = "Compiling....";
+                isDecompiling = false;
+
+                //Just do a quick check to see if launchsettings.txt exists
+                try
+                {
+                    string path = System.IO.File.ReadAllText(livePath + "\\launchsettings.txt");
+                }
+                catch (FileNotFoundException)
+                {
+                    MessageBox.Show("No launch dir defined or is wrong. Please select BTD5.exe so the program can export your project...");
+                    ConsoleHandler.appendLog("No launch dir defined or is wrong.");
+                    OpenFileDialog fileDiag = new OpenFileDialog();
+                    fileDiag.Title = "Open game exe";
+                    fileDiag.DefaultExt = "exe";
+                    fileDiag.Filter = "Exe files (*.exe)|*.exe|All files (*.*)|*.*";
+                    fileDiag.Multiselect = false;
+                    if (fileDiag.ShowDialog() == DialogResult.OK)
+                    {
+                        string file = fileDiag.FileName;
+                        Settings.setGamePath(file);
+                        string jet = file + "\\..\\Assets\\BTD5.jet";
+                        ConsoleHandler.appendLog("Launch settings saved in launchSettings.txt");
+                    }
+                }
+                finally
+                {
+                    string path = System.IO.File.ReadAllText(livePath + "\\launchsettings.txt");
+                    string gameJetPath = path + "\\..\\Assets\\BTD5.jet";
+                    DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
+
+                    if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
+                    {
+                        ConsoleHandler.appendLog("Jet backup not found, creating one...");
+                        Directory.CreateDirectory(Environment.CurrentDirectory + "\\Backups");
+                        File.Copy(gameJetPath, Environment.CurrentDirectory + "\\Backups\\Original.jet");
+                        ConsoleHandler.appendLog("Backup done");
+                    }
+                    ConsoleHandler.appendLog("Compiling jet...");
+                    this.compile(projDir, gameJetPath);
+                    ConsoleHandler.appendLog("Jet compiled");
+                }
+                if (launchProgram)
+                {
+                    Process.Start(Settings.readGamePath());
+                    ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
+                }
             }
             if (isDecompiling)
             {
                 this.Text = "Extracting....";
-                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-
+                isCompiling = false;
                 try
                 {
                     DirectoryInfo extract = this.decompile(file, dir);
@@ -58,7 +111,6 @@ namespace BTDToolbox
                     if (varr == DialogResult.OK)
                     {
                         Directory.Delete(projectName, true);
-                        MessageBox.Show("deleted");
                         DirectoryInfo extract = this.decompile(file, dir);
                     }
                     if (varr == DialogResult.Cancel)
@@ -72,14 +124,30 @@ namespace BTDToolbox
         }
         private void ExtractJet_Window_Load(object sender, EventArgs e)
         {
+            if (isCompiling)
+            {
+                CurrentFileProgress_Label.Hide();
+                CurrentFileProgress.Hide();
+
+                TotalProgress_ProgressBar.Location = new Point(TotalProgress_ProgressBar.Location.X, TotalProgress_ProgressBar.Location.Y - 50);
+                TotalProgress_Label.Location = new Point(TotalProgress_Label.Location.X, TotalProgress_Label.Location.Y - 50);
+                richTextBox1.Location = new Point(richTextBox1.Location.X, richTextBox1.Location.Y - 50);
+                label1.Location = new Point(label1.Location.X, label1.Location.Y - 50);
+                this.Size = new Size(this.Size.Width, this.Size.Height - 50);
+                pictureBox1.Location = new Point(pictureBox1.Location.X, pictureBox1.Location.Y - 50);
+            }
             this.Show();
         }
 
-        public void compileLaunch(DirectoryInfo target, string outputPath)
+        public void compile(DirectoryInfo target, string outputPath)
         {
+            DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
+            int numFiles = Directory.GetFiles((Environment.CurrentDirectory + "\\" + currentProject), "*", SearchOption.AllDirectories).Length;
+            int numFolders = Directory.GetDirectories(Environment.CurrentDirectory + "\\" + currentProject, "*", SearchOption.AllDirectories).Count();
+            totalFiles = numFiles + numFolders;
+
             filesCompiled = 0;
             ZipFile toExport = new ZipFile();
-            totalFiles = toExport.Count();
             toExport.Password = "Q%_{6#Px]]";
             toExport.AddProgress += ZipCompileProgress;
             toExport.AddDirectory(target.FullName);
@@ -98,7 +166,6 @@ namespace BTDToolbox
             archive.Password = "Q%_{6#Px]]";
             ConsoleHandler.appendLog("Creating project files...");
 
-            string livePath = Environment.CurrentDirectory;
             if (hasCustomProjectName)
             {
                 projectName = (livePath + "\\proj_" + customName);
@@ -146,18 +213,13 @@ namespace BTDToolbox
         }
         private void ZipCompileProgress(object sender, AddProgressEventArgs e)
         {
-            if (e.TotalBytesToTransfer > 0)
-            {
-                label1.Refresh();
-                CurrentFileProgress_Label.Refresh();
-                richTextBox1.Text = e.CurrentEntry.FileName;
-                //ConsoleHandler.appendLog(e.CurrentEntry.FileName);
-                richTextBox1.Refresh();
-                CurrentFileProgress.Value = Convert.ToInt32(100 * e.BytesTransferred / e.TotalBytesToTransfer);
-                e.BytesTransferred++;
-            }
             if (e.EventType != ZipProgressEventType.Adding_AfterAddEntry)
                 return;
+            if (TotalProgress_ProgressBar.Value == 100)
+            {
+                this.Close();
+            }
+            richTextBox1.Text = e.CurrentEntry.FileName;
             filesCompiled++;
             TotalProgress_ProgressBar.Value = 100 * filesCompiled / totalFiles;
             this.Refresh();
