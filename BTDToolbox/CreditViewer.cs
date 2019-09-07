@@ -20,8 +20,8 @@ namespace BTDToolbox
             InitializeComponent();
 
             WebClient client = new WebClient();
-            //string credText = client.DownloadString("https://raw.githubusercontent.com/TDToolbox/Credits/master/credits.tdc");
-            string credText = client.DownloadString("A:\\Desktop Files\\BTDTools\\BTDTools\\Credits\\credits.tdc");
+            string credText = client.DownloadString("https://raw.githubusercontent.com/TDToolbox/Credits/master/credits.tdc");
+            //string credText = client.DownloadString("A:\\Desktop Files\\BTDTools\\BTDTools\\Credits\\credits.tdc");
             string[] split = credText.Split('\n');
 
             int y = -10;

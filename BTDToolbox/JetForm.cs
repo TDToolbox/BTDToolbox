@@ -40,7 +40,6 @@ namespace BTDToolbox
         {
             InitializeComponent();
             
-            this.FormClosing += this.JetForm_Closed;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
 
@@ -87,7 +86,7 @@ namespace BTDToolbox
             this.SetStyle(ControlStyles.ResizeRedraw, true);
 
             this.FormClosed += exitHandling;
-            
+            this.FormClosing += this.JetForm_Closed;
         }
         
         private void initSelContextMenu()
@@ -241,7 +240,16 @@ namespace BTDToolbox
             {
                 try
                 {
-                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                    string targetPath = this.Text + "\\" + Selected[0].Text;
+                    foreach (JsonEditor jedit in JsonProps.get())
+                    {
+                        if (jedit.Path == targetPath)
+                        {
+                            jedit.BringToFront();
+                            return;
+                        }
+                    }
+                    JsonEditor JsonWindow = new JsonEditor(targetPath);
                     JsonWindow.MdiParent = Form;
                     JsonWindow.Show();
                 }

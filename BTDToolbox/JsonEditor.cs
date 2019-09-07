@@ -17,7 +17,7 @@ namespace BTDToolbox
     public partial class JsonEditor : ThemedForm
     {
         string livePath = Environment.CurrentDirectory;
-        private string Path;
+        public string Path;
         public string fileName;
         
         public int numPhraseFound;
@@ -96,7 +96,22 @@ namespace BTDToolbox
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
             }
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
+
+            JsonProps.increment(this);
+
+            this.Load += EditorLoading;
         }
+
+        private void EditorLoading(object sender, EventArgs e)
+        {
+            bool close = false;
+            
+            if(close)
+            {
+                this.Close();
+            }
+        }
+
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Path, Editor_TextBox.Text);
@@ -133,6 +148,8 @@ namespace BTDToolbox
             StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
             writeJsonEditorForm.Write(jsonEditorOutput);
             writeJsonEditorForm.Close();
+
+            JsonProps.decrement(this);
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {

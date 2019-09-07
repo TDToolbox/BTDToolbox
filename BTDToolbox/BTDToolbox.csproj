@@ -82,6 +82,7 @@
     <Compile Include="FindWindow.Designer.cs">
       <DependentUpon>FindWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="JsonProps.cs" />
     <Compile Include="SetProjectName.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +183,10 @@
   <ItemGroup>
     <Content Include="JSON invalid_2.png" />
     <Content Include="Resize_Icon.png" />
+    <None Include="Resources\json-file_light.ico" />
+    <None Include="Resources\json-file_dark.ico" />
+    <None Include="Resources\ico3.ico" />
+    <None Include="Resources\ico2.ico" />
     <None Include="Resources\JSON_Invalid.png" />
     <None Include="Resources\Resize_Icon.png" />
     <None Include="Resources\JSON_valid.png" />
