@@ -189,12 +189,6 @@ namespace BTDToolbox
             {
                 ImportNewJew();
             }
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                ExtractingJet_Window.isCompiling = true;
-                ExtractingJet_Window.launchProgram = false;
-                ExtractingJet_Window ejw = new ExtractingJet_Window();
-            }
         }
         private void mainResize(object sender, EventArgs e)
         {

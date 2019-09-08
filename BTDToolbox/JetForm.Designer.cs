@@ -220,6 +220,7 @@
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
+            this.saveButton.Click += new System.EventHandler(this.SaveButton_Click_1);
             this.saveButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.saveButton_Click);
             // 
             // listView1

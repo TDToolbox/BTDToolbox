@@ -40,7 +40,7 @@ namespace BTDToolbox
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
-            
+            this.KeyPreview = true;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
 
@@ -492,6 +492,16 @@ namespace BTDToolbox
             {
                 saveButton.PerformClick();
             }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                //ExtractingJet_Window.isCompiling = true;
+                //ExtractingJet_Window.launchProgram = false;
+                //ExtractingJet_Window ejw = new ExtractingJet_Window();
+
+                ExtractingJet_Window.currentProject = projName;
+                ExtractingJet_Window.isOutput = true;
+                new ExtractingJet_Window();
+            }
         }
 
         private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
@@ -555,13 +565,13 @@ namespace BTDToolbox
                 if (StartNode.Text.ToLower().Contains(SearchText.ToLower()))
                 {
                     CurrentNodeMatches.Add(StartNode);
-                };
+                }
                 if (StartNode.Nodes.Count != 0)
                 {
                     SearchNodes(SearchText, StartNode.Nodes[0]);//Recursive Search 
-                };
+                }
                 StartNode = StartNode.NextNode;
-            };
+            }
         }
 
         private void NextSearchResultButton_Click(object sender, EventArgs e)
@@ -575,6 +585,11 @@ namespace BTDToolbox
                 selected = 0;
                 treeView1.SelectedNode = CurrentNodeMatches[selected];
             }
+        }
+
+        private void SaveButton_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
