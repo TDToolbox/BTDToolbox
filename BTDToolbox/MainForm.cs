@@ -145,27 +145,30 @@ namespace BTDToolbox
             if (lastProject != "" && lastProject != null)
             {
                 DirectoryInfo dinfo = new DirectoryInfo(livePath + "\\" + lastProject);
-                foreach (JetForm o in JetProps.get())
+                if(dinfo.Exists)
                 {
-                    if (o.projName == projName)
+                    foreach (JetForm o in JetProps.get())
                     {
-                        MessageBox.Show("The project is already opened..");
-                        return;
+                        if (o.projName == projName)
+                        {
+                            MessageBox.Show("The project is already opened..");
+                            return;
+                        }
                     }
+                    JetForm jf = new JetForm(dinfo, this, projName);
+                    try
+                    {
+                        string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
+                        JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                        lastProject = deserializedJetForm.LastProject;
+                    }
+                    catch
+                    {
+                        jf.SerializeConfig();
+                    }
+                    jf.MdiParent = this;
+                    jf.Show();
                 }
-                JetForm jf = new JetForm(dinfo, this, projName);
-                try
-                {
-                    string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                    JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
-                    lastProject = deserializedJetForm.LastProject;
-                }
-                catch
-                {
-                    jf.SerializeConfig();
-                }
-                jf.MdiParent = this;
-                jf.Show();
             }
         }
         private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
@@ -378,6 +381,11 @@ namespace BTDToolbox
             {
                 //JetForm jf = new JetForm(dinfo, this, projName);
             }
+
+            string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
+            JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+            lastProject = deserializedJetForm.LastProject;
+
             OpenJetForm();
         }
 
