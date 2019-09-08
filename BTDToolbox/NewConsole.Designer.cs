@@ -73,7 +73,6 @@
             this.console_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.console_log.Size = new System.Drawing.Size(769, 371);
             this.console_log.TabIndex = 5;
-            this.console_log.TextChanged += new System.EventHandler(this.Console_log_TextChanged);
             // 
             // invoke_button
             // 

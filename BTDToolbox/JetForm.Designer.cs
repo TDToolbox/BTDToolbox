@@ -32,7 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JetForm));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.fileViewContainer = new System.Windows.Forms.SplitContainer();
+            this.findPanel = new System.Windows.Forms.Panel();
+            this.nextSearchResultButton = new System.Windows.Forms.Button();
+            this.instanceCountLabel = new System.Windows.Forms.Label();
+            this.findBox = new System.Windows.Forms.TextBox();
+            this.findLabel = new System.Windows.Forms.Label();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.lastSelectedLabel = new System.Windows.Forms.Label();
             this.goUpButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -46,6 +52,7 @@
             this.fileViewContainer.Panel1.SuspendLayout();
             this.fileViewContainer.Panel2.SuspendLayout();
             this.fileViewContainer.SuspendLayout();
+            this.findPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleSeperator
@@ -83,10 +90,12 @@
             // 
             // fileViewContainer.Panel1
             // 
+            this.fileViewContainer.Panel1.Controls.Add(this.findPanel);
             this.fileViewContainer.Panel1.Controls.Add(this.treeView1);
             // 
             // fileViewContainer.Panel2
             // 
+            this.fileViewContainer.Panel2.Controls.Add(this.lastSelectedLabel);
             this.fileViewContainer.Panel2.Controls.Add(this.goUpButton);
             this.fileViewContainer.Panel2.Controls.Add(this.saveButton);
             this.fileViewContainer.Panel2.Controls.Add(this.listView1);
@@ -94,6 +103,71 @@
             this.fileViewContainer.SplitterDistance = 253;
             this.fileViewContainer.TabIndex = 2;
             this.fileViewContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
+            // 
+            // findPanel
+            // 
+            this.findPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.findPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.findPanel.Controls.Add(this.nextSearchResultButton);
+            this.findPanel.Controls.Add(this.instanceCountLabel);
+            this.findPanel.Controls.Add(this.findBox);
+            this.findPanel.Controls.Add(this.findLabel);
+            this.findPanel.Location = new System.Drawing.Point(0, 349);
+            this.findPanel.Name = "findPanel";
+            this.findPanel.Size = new System.Drawing.Size(253, 58);
+            this.findPanel.TabIndex = 1;
+            this.findPanel.Visible = false;
+            // 
+            // nextSearchResultButton
+            // 
+            this.nextSearchResultButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.nextSearchResultButton.Location = new System.Drawing.Point(3, 29);
+            this.nextSearchResultButton.Name = "nextSearchResultButton";
+            this.nextSearchResultButton.Size = new System.Drawing.Size(160, 23);
+            this.nextSearchResultButton.TabIndex = 3;
+            this.nextSearchResultButton.Text = "Next Result";
+            this.nextSearchResultButton.UseVisualStyleBackColor = true;
+            this.nextSearchResultButton.Click += new System.EventHandler(this.NextSearchResultButton_Click);
+            // 
+            // instanceCountLabel
+            // 
+            this.instanceCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.instanceCountLabel.AutoSize = true;
+            this.instanceCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instanceCountLabel.ForeColor = System.Drawing.Color.White;
+            this.instanceCountLabel.Location = new System.Drawing.Point(169, 32);
+            this.instanceCountLabel.Name = "instanceCountLabel";
+            this.instanceCountLabel.Size = new System.Drawing.Size(78, 16);
+            this.instanceCountLabel.TabIndex = 2;
+            this.instanceCountLabel.Text = "Instances: 0";
+            // 
+            // findBox
+            // 
+            this.findBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.findBox.Location = new System.Drawing.Point(47, 3);
+            this.findBox.Name = "findBox";
+            this.findBox.Size = new System.Drawing.Size(203, 20);
+            this.findBox.TabIndex = 1;
+            this.findBox.TextChanged += new System.EventHandler(this.searchbox_textChanged);
+            // 
+            // findLabel
+            // 
+            this.findLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.findLabel.AutoSize = true;
+            this.findLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.findLabel.ForeColor = System.Drawing.Color.White;
+            this.findLabel.Location = new System.Drawing.Point(3, 3);
+            this.findLabel.Name = "findLabel";
+            this.findLabel.Size = new System.Drawing.Size(44, 20);
+            this.findLabel.TabIndex = 0;
+            this.findLabel.Text = "Find:";
             // 
             // treeView1
             // 
@@ -111,6 +185,18 @@
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.Size = new System.Drawing.Size(253, 407);
             this.treeView1.TabIndex = 0;
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeView_CheckHotkey);
+            // 
+            // lastSelectedLabel
+            // 
+            this.lastSelectedLabel.AutoSize = true;
+            this.lastSelectedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lastSelectedLabel.ForeColor = System.Drawing.Color.White;
+            this.lastSelectedLabel.Location = new System.Drawing.Point(79, 3);
+            this.lastSelectedLabel.Name = "lastSelectedLabel";
+            this.lastSelectedLabel.Size = new System.Drawing.Size(110, 20);
+            this.lastSelectedLabel.TabIndex = 3;
+            this.lastSelectedLabel.Text = "Last Selection";
             // 
             // goUpButton
             // 
@@ -134,7 +220,7 @@
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.saveButton_Click);
             // 
             // listView1
             // 
@@ -177,8 +263,11 @@
             this.contentPanel.ResumeLayout(false);
             this.fileViewContainer.Panel1.ResumeLayout(false);
             this.fileViewContainer.Panel2.ResumeLayout(false);
+            this.fileViewContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileViewContainer)).EndInit();
             this.fileViewContainer.ResumeLayout(false);
+            this.findPanel.ResumeLayout(false);
+            this.findPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -192,5 +281,11 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button goUpButton;
         private System.Windows.Forms.ColumnHeader name_column;
+        private System.Windows.Forms.Panel findPanel;
+        private System.Windows.Forms.TextBox findBox;
+        private System.Windows.Forms.Label findLabel;
+        private System.Windows.Forms.Label instanceCountLabel;
+        private System.Windows.Forms.Button nextSearchResultButton;
+        private System.Windows.Forms.Label lastSelectedLabel;
     }
 }

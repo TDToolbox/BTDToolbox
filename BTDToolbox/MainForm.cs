@@ -26,7 +26,6 @@ namespace BTDToolbox
         //Config variables
         MainWindow mainForm;
         public bool loadLastProject;
-        internal static string lastProject;
         public static string file;
         public int mainFormFontSize;
         public bool enableConsole;
@@ -273,7 +272,7 @@ namespace BTDToolbox
         }
         private void RestoreBackup_Click(object sender, EventArgs e)
         {
-            Launcher.restoreGame();
+            ExtractingJet_Window.restoreGame();
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
