@@ -167,6 +167,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JetForm";
             this.Text = "JetViewer";
+            this.Activated += new System.EventHandler(this.JetForm_Activated);
             this.Load += new System.EventHandler(this.JetForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.JetForm_KeyDown);
             this.titleSeperator.Panel1.ResumeLayout(false);

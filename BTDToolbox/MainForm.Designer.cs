@@ -44,7 +44,7 @@
             this.Launch_Program_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenJetExplorer = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestoreBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.Credits = new System.Windows.Forms.ToolStripMenuItem();
@@ -168,7 +168,7 @@
             // 
             this.viewToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToggleConsole,
-            this.fileExplorerToolStripMenuItem});
+            this.OpenJetExplorer});
             this.viewToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
             this.viewToolStripMenuItem1.Name = "viewToolStripMenuItem1";
             this.viewToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
@@ -181,12 +181,12 @@
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
             // 
-            // fileExplorerToolStripMenuItem
+            // OpenJetExplorer
             // 
-            this.fileExplorerToolStripMenuItem.Name = "fileExplorerToolStripMenuItem";
-            this.fileExplorerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.fileExplorerToolStripMenuItem.Text = "Jet Explorer";
-            this.fileExplorerToolStripMenuItem.Click += new System.EventHandler(this.FileExplorerToolStripMenuItem_Click);
+            this.OpenJetExplorer.Name = "OpenJetExplorer";
+            this.OpenJetExplorer.Size = new System.Drawing.Size(180, 22);
+            this.OpenJetExplorer.Text = "Jet Explorer";
+            this.OpenJetExplorer.Click += new System.EventHandler(this.OpenJetExplorer_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -291,7 +291,7 @@
         private System.Windows.Forms.ToolStripMenuItem Replace_Button;
         private System.Windows.Forms.ToolStripMenuItem Credits;
         private System.Windows.Forms.ToolStripMenuItem openRecentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fileExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenJetExplorer;
         private System.Windows.Forms.ToolStripMenuItem nullJetFormToolStripMenuItem;
         private System.Windows.Forms.Label versionTag;
     }

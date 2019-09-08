@@ -8,7 +8,7 @@ namespace BTDToolbox
     class Launcher
     {
         public static void launchGame(JetForm form)
-        {
+        {/*
             while (true)
             {
                 ConsoleHandler.appendLog("Launching game...");
@@ -79,6 +79,7 @@ namespace BTDToolbox
             File.Copy(Environment.CurrentDirectory + "\\Backups\\Original.jet", gameJetPath);
             ConsoleHandler.appendLog("Backup restored");
             MessageBox.Show("Backup .jet restored!");
+        }*/
         }
     }
 }

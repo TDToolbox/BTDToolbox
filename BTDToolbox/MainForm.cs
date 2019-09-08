@@ -34,6 +34,7 @@ namespace BTDToolbox
         public static string projName;
         public static bool openJetForm;
         private Bitmap bgImg;
+        internal static bool isProjOpen;
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
@@ -64,6 +65,11 @@ namespace BTDToolbox
 
                 enableConsole = deserializedMainForm.EnableConsole;
                 projectDirPath = deserializedMainForm.DirPath;
+
+
+                string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
+                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                lastProject = deserializedJetForm.LastProject;
             }
             catch (FileNotFoundException)
             {
@@ -119,19 +125,8 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("Program loaded!");
             ConsoleHandler.appendLog("Searching for existing projects...");
 
-            foreach (DirectoryInfo subdir in dirInfo.GetDirectories())
-            {
+            OpenJetForm();
 
-                JetForm jf = new JetForm(subdir, this, subdir.Name);
-
-                if (subdir.Name.StartsWith("proj_"))
-                {
-                    ConsoleHandler.appendLog("Loading project " + subdir.Name);
-                    jf.MdiParent = this;
-                    jf.Show();
-                    ConsoleHandler.appendLog("Loaded project " + subdir.Name);
-                }
-            }
             foreach (Control con in Controls)
             {
                 if (con is MdiClient)
@@ -148,8 +143,26 @@ namespace BTDToolbox
         }
         public void OpenJetForm()
         {
-            DirectoryInfo dinfo = new DirectoryInfo(livePath);
+            DirectoryInfo dinfo = new DirectoryInfo(livePath + "\\" + lastProject);
+            foreach (JetForm o in JetProps.get())
+            {
+                if (o.projName == projName)
+                {
+                    MessageBox.Show("The project is already opened..");
+                    return;
+                }
+            }
             JetForm jf = new JetForm(dinfo, this, projName);
+            try
+            {
+                string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
+                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                lastProject = deserializedJetForm.LastProject;
+            }
+            catch
+            {
+                jf.SerializeConfig();
+            }
             jf.MdiParent = this;
             jf.Show();
         }
@@ -229,6 +242,10 @@ namespace BTDToolbox
         }
         private void OpenExistingProject_Click(object sender, EventArgs e)
         {
+            BrowseForExistingProjects();
+        }
+        private void BrowseForExistingProjects()
+        {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.Description = "Select project folder";
             fbd.ShowNewFolderButton = false;
@@ -273,7 +290,7 @@ namespace BTDToolbox
         }
         private void RestoreBackup_Click(object sender, EventArgs e)
         {
-            Launcher.restoreGame();
+            //Launcher.restoreGame();
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
@@ -353,8 +370,11 @@ namespace BTDToolbox
         }
         MdiClient mdiClient = null;
 
-        private void FileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenJetExplorer_Click(object sender, EventArgs e)
         {
+            string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
+            JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+            lastProject = deserializedJetForm.LastProject;
             OpenJetForm();
         }
     }
