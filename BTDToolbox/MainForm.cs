@@ -169,7 +169,6 @@ namespace BTDToolbox
                     jf.MdiParent = this;
                     jf.Show();
                 }
-                
             }
         }
         private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
