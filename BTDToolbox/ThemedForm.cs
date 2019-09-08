@@ -101,5 +101,10 @@ namespace BTDToolbox
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
+
+        private void ThemedForm_Resize(object sender, EventArgs e)
+        {
+            TD_Toolbox_Window.getInstance().Refresh();
+        }
     }
 }
