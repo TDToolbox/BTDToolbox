@@ -26,7 +26,6 @@ namespace BTDToolbox
         //Config variables
         MainWindow mainForm;
         public bool loadLastProject;
-        internal static string lastProject;
         public static string file;
         public int mainFormFontSize;
         public bool enableConsole;

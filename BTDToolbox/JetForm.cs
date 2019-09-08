@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfigs;
@@ -34,7 +35,6 @@ namespace BTDToolbox
         public string lastProject;
 
         //Load Last Project Variables
-        int numProjectLoadCancelled;
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
@@ -278,8 +278,9 @@ namespace BTDToolbox
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            ExtractingJet_Window.isCompiling = true;
-            var compile = new ExtractingJet_Window();
+            ExtractingJet_Window.currentProject = projName;
+            ExtractingJet_Window.isOutput = true;
+            new ExtractingJet_Window();
         }
 
         //Context caller
@@ -526,6 +527,10 @@ namespace BTDToolbox
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
             }
+            if(e.Control && e.KeyCode == Keys.S)
+            {
+                saveButton.PerformClick();
+            }
         }
 
         private void SplitContainer1_KeyDown(object sender, KeyEventArgs e)
@@ -546,6 +551,82 @@ namespace BTDToolbox
                 {
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
+            }
+        }
+
+        private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
+        {
+            if(e.Control&&e.KeyCode == Keys.F)
+            {
+                if(findPanel.Visible)
+                {
+                    findPanel.Visible=false;
+                }
+                else
+                {
+                    findPanel.Visible = true;
+                    findBox.Select();
+                }
+            }
+        }
+
+        private List<TreeNode> CurrentNodeMatches = new List<TreeNode>();
+        private string LastSearchText;
+        private int LastNodeIndex = 0;
+        private int selected;
+        private void searchbox_textChanged(object sender, EventArgs e)
+        {
+            string searchText = findBox.Text;
+            selected = 0;
+            if (String.IsNullOrEmpty(searchText))
+            {
+                return;
+            };
+            if (LastSearchText != searchText)
+            {
+                //It's a new Search
+                CurrentNodeMatches.Clear();
+                LastSearchText = searchText;
+                LastNodeIndex = 0;
+                SearchNodes(searchText, treeView1.Nodes[0]);
+            }
+            if (LastNodeIndex >= 0 && CurrentNodeMatches.Count > 0 && LastNodeIndex < CurrentNodeMatches.Count)
+            {
+                TreeNode selectedNode = CurrentNodeMatches[LastNodeIndex];
+                LastNodeIndex++;
+                this.treeView1.SelectedNode = selectedNode;
+                this.treeView1.SelectedNode.Expand();
+                this.treeView1.Select();
+            }
+            instanceCountLabel.Text = "Instances: " + CurrentNodeMatches.Count;
+            findBox.Select();
+        }
+        private void SearchNodes(string SearchText, TreeNode StartNode)
+        {
+            while (StartNode != null)
+            {
+                if (StartNode.Text.ToLower().Contains(SearchText.ToLower()))
+                {
+                    CurrentNodeMatches.Add(StartNode);
+                };
+                if (StartNode.Nodes.Count != 0)
+                {
+                    SearchNodes(SearchText, StartNode.Nodes[0]);//Recursive Search 
+                };
+                StartNode = StartNode.NextNode;
+            };
+        }
+
+        private void NextSearchResultButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                selected++;
+                treeView1.SelectedNode = CurrentNodeMatches[selected];
+            } catch(ArgumentOutOfRangeException)
+            {
+                selected = 0;
+                treeView1.SelectedNode = CurrentNodeMatches[selected];
             }
         }
     }
