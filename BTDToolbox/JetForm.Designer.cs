@@ -100,7 +100,7 @@
             this.fileViewContainer.Panel2.Controls.Add(this.saveButton);
             this.fileViewContainer.Panel2.Controls.Add(this.listView1);
             this.fileViewContainer.Size = new System.Drawing.Size(776, 406);
-            this.fileViewContainer.SplitterDistance = 253;
+            this.fileViewContainer.SplitterDistance = 251;
             this.fileViewContainer.TabIndex = 2;
             this.fileViewContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
             // 
@@ -115,7 +115,7 @@
             this.findPanel.Controls.Add(this.findLabel);
             this.findPanel.Location = new System.Drawing.Point(0, 349);
             this.findPanel.Name = "findPanel";
-            this.findPanel.Size = new System.Drawing.Size(253, 58);
+            this.findPanel.Size = new System.Drawing.Size(269, 58);
             this.findPanel.TabIndex = 1;
             this.findPanel.Visible = false;
             // 
@@ -126,7 +126,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.nextSearchResultButton.Location = new System.Drawing.Point(3, 29);
             this.nextSearchResultButton.Name = "nextSearchResultButton";
-            this.nextSearchResultButton.Size = new System.Drawing.Size(160, 23);
+            this.nextSearchResultButton.Size = new System.Drawing.Size(176, 23);
             this.nextSearchResultButton.TabIndex = 3;
             this.nextSearchResultButton.Text = "Next Result";
             this.nextSearchResultButton.UseVisualStyleBackColor = true;
@@ -139,7 +139,7 @@
             this.instanceCountLabel.AutoSize = true;
             this.instanceCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.instanceCountLabel.ForeColor = System.Drawing.Color.White;
-            this.instanceCountLabel.Location = new System.Drawing.Point(169, 32);
+            this.instanceCountLabel.Location = new System.Drawing.Point(185, 32);
             this.instanceCountLabel.Name = "instanceCountLabel";
             this.instanceCountLabel.Size = new System.Drawing.Size(78, 16);
             this.instanceCountLabel.TabIndex = 2;
@@ -152,7 +152,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.findBox.Location = new System.Drawing.Point(47, 3);
             this.findBox.Name = "findBox";
-            this.findBox.Size = new System.Drawing.Size(203, 20);
+            this.findBox.Size = new System.Drawing.Size(219, 20);
             this.findBox.TabIndex = 1;
             this.findBox.TextChanged += new System.EventHandler(this.searchbox_textChanged);
             // 
@@ -183,7 +183,7 @@
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(253, 407);
+            this.treeView1.Size = new System.Drawing.Size(251, 407);
             this.treeView1.TabIndex = 0;
             this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeView_CheckHotkey);
             // 
@@ -216,7 +216,7 @@
             this.saveButton.ForeColor = System.Drawing.Color.White;
             this.saveButton.Location = new System.Drawing.Point(0, 383);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(519, 23);
+            this.saveButton.Size = new System.Drawing.Size(503, 23);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
@@ -278,7 +278,6 @@
 
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.SplitContainer fileViewContainer;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button goUpButton;
@@ -289,5 +288,6 @@
         private System.Windows.Forms.Label instanceCountLabel;
         private System.Windows.Forms.Button nextSearchResultButton;
         private System.Windows.Forms.Label lastSelectedLabel;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }

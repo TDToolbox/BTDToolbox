@@ -13,8 +13,8 @@ namespace BTDToolbox
         public class Window
         {
             public string WindowName { get; set; }
-            public int SizeX { get; set; }
-            public int SizeY { get; set; }
+            public int SizeX = 0;
+            public int SizeY = 0;
             public int PosX { get; set; }
             public int PosY { get; set; }
             public float FontSize { get; set; }
@@ -32,8 +32,9 @@ namespace BTDToolbox
         public class MainWindow : Window
         {
             public bool EnableConsole { get; set; }
+            public bool Fullscreen { get; set; }
             public string DirPath { get; set; }
-            public MainWindow(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, bool enableConsole, string dirPath) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            public MainWindow(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, bool enableConsole, string dirPath, bool fullscreen) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
             {
                 WindowName = windowName;
                 SizeX = sizeX;
@@ -43,6 +44,7 @@ namespace BTDToolbox
                 FontSize = fontSize;
                 DirPath = dirPath;
                 EnableConsole = enableConsole;
+                Fullscreen = fullscreen;
             }
         }
         public class JetExplorer : Window
