@@ -374,6 +374,7 @@ namespace BTDToolbox
             string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
             JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
             lastProject = deserializedJetForm.LastProject;
+
             OpenJetForm();
         }
 
