@@ -32,7 +32,9 @@ otherwise, youll see this:
 Awesome! You've changed the files and want to see the result, sweet!
 To test, ensure you only have **ONE** JetViewer window open. This window's project will be compiled for the testing.
 Now, simply click ``Launch`` on the main window's menu bar.
+
 ![Launch Button](https://media.discordapp.net/attachments/231001909442379776/620354734972338186/unknown.png)
+
 Your mod will be compiled into a .jet and the game will be launched with your mod.
 If you dont have a backup of your .jet, the program will save one in the ``Backups`` folder regardless if its a legitemate .jet or not.
 
