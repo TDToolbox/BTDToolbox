@@ -61,6 +61,7 @@ namespace BTDToolbox
                 lbl.Show();
                 y += size;
             }
+            this.Size = new Size(this.Size.Width, y+25);
         }
     }
 }
