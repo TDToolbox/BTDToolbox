@@ -501,33 +501,8 @@ namespace BTDToolbox
 
         private void JetForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F5)
-            {
-                if (JetProps.get().Count == 1)
-                {
-                    ExtractingJet_Window.isCompiling = true;
-                    ExtractingJet_Window.launchProgram = true;
-                    var compile = new ExtractingJet_Window();
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
-            }
             if (e.Control && e.KeyCode == Keys.S)
             {
-                saveButton.PerformClick();
-            }
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                //ExtractingJet_Window.isCompiling = true;
-                //ExtractingJet_Window.launchProgram = false;
-                //ExtractingJet_Window ejw = new ExtractingJet_Window();
-
                 ExtractingJet_Window.currentProject = projName;
                 ExtractingJet_Window.isOutput = true;
                 new ExtractingJet_Window();
