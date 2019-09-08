@@ -82,10 +82,15 @@ namespace BTDToolbox
             {
                 Directory.CreateDirectory(livePath + "\\config");
             }
-            catch (System.ArgumentException)
+            catch (ArgumentException)
             {
                 mainFormFontSize = 10;
             }
+            catch(Exception)
+            {
+                MessageBox.Show("There was a failure in serializing the configurations, please delete the 'config' folder and try again.");
+            }
+
             this.FormClosed += ExitHandling;
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
             
@@ -331,12 +336,19 @@ namespace BTDToolbox
         //
         private void SerializeConfig()
         {
-            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory, WindowState==FormWindowState.Maximized);
-            mainFormOutput = JsonConvert.SerializeObject(mainForm);
+            try
+            {
+                mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory, WindowState == FormWindowState.Maximized);
+                mainFormOutput = JsonConvert.SerializeObject(mainForm);
 
-            StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
-            writeMainForm.Write(mainFormOutput);
-            writeMainForm.Close();
+                StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
+                writeMainForm.Write(mainFormOutput);
+                writeMainForm.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("There were problems with saving configurations. Things may not act normally.");
+            }
         }
         private void ExitHandling(object sender, EventArgs e)
         {
@@ -371,11 +383,17 @@ namespace BTDToolbox
 
         private void OpenJetExplorer_Click(object sender, EventArgs e)
         {
-            string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-            JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
-            lastProject = deserializedJetForm.LastProject;
+            try
+            {
+                string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
+                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                lastProject = deserializedJetForm.LastProject;
 
-            OpenJetForm();
+                OpenJetForm();
+            } catch (Exception ex)
+            {
+                ConsoleHandler.appendLog(ex.StackTrace);
+            }
         }
 
         private void TD_Toolbox_Window_Resize(object sender, EventArgs e)

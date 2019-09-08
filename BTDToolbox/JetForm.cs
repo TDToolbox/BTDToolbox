@@ -81,6 +81,10 @@ namespace BTDToolbox
             {
                 jetFormFontSize = 10;
             }
+            catch (Exception)
+            {
+                MessageBox.Show("There was an error. Please try again if the window is blank.");
+            }
 
             this.treeView1.AfterSelect += treeView1_AfterSelect;
 
@@ -486,9 +490,27 @@ namespace BTDToolbox
             }
             jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
-            StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
-            writeConsoleForm.Write(jetFormOutput);
-            writeConsoleForm.Close();
+            try
+            {
+                StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
+                writeConsoleForm.Write(jetFormOutput);
+                writeConsoleForm.Close();
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    Directory.CreateDirectory(livePath + "\\config");
+                    File.Create(livePath + "\\config\\jetForm.json");
+                    StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
+                    writeConsoleForm.Write(jetFormOutput);
+                    writeConsoleForm.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Failed to serialize JetForm settings, delete the 'config' folder. You will need to manually open your project next time.");
+                }
+            }
 
         }
         private void exitHandling(object sender, EventArgs e)
