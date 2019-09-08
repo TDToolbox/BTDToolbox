@@ -33,7 +33,7 @@ namespace BTDToolbox
         int splitterDistance;
         float treeViewFontSize;
         JetExplorer jetExplorerConfig;
-        public string lastProject;
+        public static string lastProject;
 
         //Load Last Project Variables
 
@@ -46,6 +46,7 @@ namespace BTDToolbox
 
             this.dirInfo = dirInfo;
             this.Form = Form;
+            //this.projName = projName;
             this.projName = projName;
             ConsoleHandler.appendLog(projName);
             ExtractingJet_Window.currentProject = projName;
@@ -53,7 +54,7 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
-
+            
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\jetForm.json");
@@ -71,6 +72,7 @@ namespace BTDToolbox
                 splitterDistance = deserializedJetForm.SplitterDistance;
                 fileViewContainer.SplitterDistance = splitterDistance;
                 treeViewFontSize = deserializedJetForm.TreeViewFontSize;
+                SerializeConfig();
             } catch (System.IO.FileNotFoundException)
             {
                 SerializeConfig();
@@ -118,20 +120,6 @@ namespace BTDToolbox
         {
             openDirWindow();
             JetProps.increment(this);
-        }
-        public void LoadLastProject()
-        {
-            DialogResult varr = MessageBox.Show("Do you want to load your last project? Click Cancel if you want to create a new project.", "", MessageBoxButtons.OKCancel);
-            if (varr == DialogResult.OK)
-            {
-                this.Show();
-                //ConsoleHandler.appendLog("Loaded project " + subdir.Name);
-            }
-            if (varr == DialogResult.Cancel)
-            {
-                    TD_Toolbox_Window.ImportNewJew();
-            }
-
         }
         public void openDirWindow()
         {
@@ -459,12 +447,22 @@ namespace BTDToolbox
         }
         internal void SerializeConfig()
         {
-            jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            if (projName == null)
+            {
+                jetExplorerConfig = new JetExplorer("Jet Form", lastProject, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            }
+            else
+            {
+                jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            }
+            
+            
             jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
             StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
             writeConsoleForm.Write(jetFormOutput);
             writeConsoleForm.Close();
+
         }
         private void exitHandling(object sender, EventArgs e)
         {
@@ -511,6 +509,13 @@ namespace BTDToolbox
                 }
             }
         }
+
+
+        private void JetForm_Activated(object sender, EventArgs e)
+        {
+            SerializeConfig();
+        }
+
 
         private List<TreeNode> CurrentNodeMatches = new List<TreeNode>();
         private string LastSearchText;
