@@ -20,13 +20,16 @@ You can use ``CTRL+F`` to search for folders in the JetViewer's treeview.
 Expand the project tree until you reach a file you need.
 Double click on any .json file in the file view to open the json editor.
 The json editor will check to make sure your json is valid.
-if your json is valid, youll see this: ![Valid Json](https://media.discordapp.net/attachments/231001909442379776/620355121703813120/unknown.png)
-otherwise, youll see this: ![Invalid Json](https://media.discordapp.net/attachments/231001909442379776/620355210640097280/unknown.png)
+if your json is valid, youll see this:
+![Valid Json](https://media.discordapp.net/attachments/231001909442379776/620355121703813120/unknown.png)
+otherwise, youll see this:
+![Invalid Json](https://media.discordapp.net/attachments/231001909442379776/620355210640097280/unknown.png)
 
 ### Testing a mod
 Awesome! You've changed the files and want to see the result, sweet!
 To test, ensure you only have **ONE** JetViewer window open. This window's project will be compiled for the testing.
-Now, simply click ``Launch`` on the main window's menu bar. ![Launch Button](https://media.discordapp.net/attachments/231001909442379776/620354734972338186/unknown.png)
+Now, simply click ``Launch`` on the main window's menu bar.
+![Launch Button](https://media.discordapp.net/attachments/231001909442379776/620354734972338186/unknown.png)
 Your mod will be compiled into a .jet and the game will be launched with your mod.
 If you dont have a backup of your .jet, the program will save one in the ``Backups`` folder regardless if its a legitemate .jet or not.
 
