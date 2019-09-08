@@ -371,5 +371,10 @@ namespace BTDToolbox
             lastProject = deserializedJetForm.LastProject;
             OpenJetForm();
         }
+
+        private void TD_Toolbox_Window_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
+        }
     }
 }

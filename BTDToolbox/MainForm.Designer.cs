@@ -177,14 +177,14 @@
             // ToggleConsole
             // 
             this.ToggleConsole.Name = "ToggleConsole";
-            this.ToggleConsole.Size = new System.Drawing.Size(180, 22);
+            this.ToggleConsole.Size = new System.Drawing.Size(133, 22);
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
             // 
             // OpenJetExplorer
             // 
             this.OpenJetExplorer.Name = "OpenJetExplorer";
-            this.OpenJetExplorer.Size = new System.Drawing.Size(180, 22);
+            this.OpenJetExplorer.Size = new System.Drawing.Size(133, 22);
             this.OpenJetExplorer.Text = "Jet Explorer";
             this.OpenJetExplorer.Click += new System.EventHandler(this.OpenJetExplorer_Click);
             // 
@@ -262,6 +262,7 @@
             this.Text = "Toolbox - Made by DisabledMallis and Gurrenm3";
             this.Load += new System.EventHandler(this.TD_Toolbox_Window_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TD_Toolbox_Window_KeyDown);
+            this.Resize += new System.EventHandler(this.TD_Toolbox_Window_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
