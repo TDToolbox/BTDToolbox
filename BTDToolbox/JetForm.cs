@@ -54,7 +54,7 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
-
+            
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\jetForm.json");
@@ -73,8 +73,7 @@ namespace BTDToolbox
                 fileViewContainer.SplitterDistance = splitterDistance;
                 treeViewFontSize = deserializedJetForm.TreeViewFontSize;
                 SerializeConfig();
-            }
-            catch (System.IO.FileNotFoundException)
+            } catch (System.IO.FileNotFoundException)
             {
                 SerializeConfig();
             }
@@ -485,8 +484,6 @@ namespace BTDToolbox
             {
                 jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
             }
-
-
             jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
             StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
@@ -503,6 +500,20 @@ namespace BTDToolbox
         {
             if (e.Control && e.KeyCode == Keys.S)
             {
+                ExtractingJet_Window.currentProject = projName;
+                ExtractingJet_Window.isOutput = true;
+                new ExtractingJet_Window();
+            }
+            if(e.Control && e.KeyCode == Keys.S)
+            {
+                saveButton.PerformClick();
+            }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                //ExtractingJet_Window.isCompiling = true;
+                //ExtractingJet_Window.launchProgram = false;
+                //ExtractingJet_Window ejw = new ExtractingJet_Window();
+
                 ExtractingJet_Window.currentProject = projName;
                 ExtractingJet_Window.isOutput = true;
                 new ExtractingJet_Window();
