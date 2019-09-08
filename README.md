@@ -21,8 +21,11 @@ Expand the project tree until you reach a file you need.
 Double click on any .json file in the file view to open the json editor.
 The json editor will check to make sure your json is valid.
 if your json is valid, youll see this:
+
 ![Valid Json](https://media.discordapp.net/attachments/231001909442379776/620355121703813120/unknown.png)
+
 otherwise, youll see this:
+
 ![Invalid Json](https://media.discordapp.net/attachments/231001909442379776/620355210640097280/unknown.png)
 
 ### Testing a mod
