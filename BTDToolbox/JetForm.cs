@@ -236,7 +236,36 @@ namespace BTDToolbox
         }
         private void ListView1_DoubleClicked(object sender, EventArgs e)
         {
-
+            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+            if (Selected.Count == 1)
+            {
+                try
+                {
+                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                    JsonWindow.MdiParent = Form;
+                    JsonWindow.Show();
+                }
+                catch (Exception)
+                {
+                    try
+                    {
+                        if (!Selected[0].Text.Contains("."))
+                        {
+                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
+                            {
+                                if (node.Text == Selected[0].Text)
+                                {
+                                    node.Expand();
+                                    treeView1.SelectedNode = node;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -489,10 +518,6 @@ namespace BTDToolbox
                 {
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
-            }
-            if(e.Control && e.KeyCode == Keys.S)
-            {
-                saveButton.PerformClick();
             }
         }
 
