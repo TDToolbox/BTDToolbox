@@ -172,7 +172,14 @@ namespace BTDToolbox
             toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
             toExport.Name = outputPath;
             toExport.CompressionLevel = CompressionLevel.Level6;
-            toExport.Save();
+            try
+            {
+                toExport.Save();
+            }
+            catch
+            {
+                MessageBox.Show("ERROR! The game is currently running. Please close the game and try again...");
+            }
             this.Hide();
         }
 
