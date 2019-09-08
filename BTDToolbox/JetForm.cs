@@ -504,20 +504,6 @@ namespace BTDToolbox
                 ExtractingJet_Window.isOutput = true;
                 new ExtractingJet_Window();
             }
-            if(e.Control && e.KeyCode == Keys.S)
-            {
-                saveButton.PerformClick();
-            }
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                //ExtractingJet_Window.isCompiling = true;
-                //ExtractingJet_Window.launchProgram = false;
-                //ExtractingJet_Window ejw = new ExtractingJet_Window();
-
-                ExtractingJet_Window.currentProject = projName;
-                ExtractingJet_Window.isOutput = true;
-                new ExtractingJet_Window();
-            }
         }
 
         private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
