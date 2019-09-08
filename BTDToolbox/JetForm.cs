@@ -33,19 +33,20 @@ namespace BTDToolbox
         int splitterDistance;
         float treeViewFontSize;
         JetExplorer jetExplorerConfig;
-        public string lastProject;
+        public static string lastProject;
 
         //Load Last Project Variables
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
-            
+            this.KeyPreview = true;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
 
             this.dirInfo = dirInfo;
             this.Form = Form;
+            //this.projName = projName;
             this.projName = projName;
             ConsoleHandler.appendLog(projName);
             ExtractingJet_Window.currentProject = projName;
@@ -71,7 +72,9 @@ namespace BTDToolbox
                 splitterDistance = deserializedJetForm.SplitterDistance;
                 fileViewContainer.SplitterDistance = splitterDistance;
                 treeViewFontSize = deserializedJetForm.TreeViewFontSize;
-            } catch (System.IO.FileNotFoundException)
+                SerializeConfig();
+            }
+            catch (System.IO.FileNotFoundException)
             {
                 SerializeConfig();
             }
@@ -89,7 +92,7 @@ namespace BTDToolbox
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
         }
-        
+
         private void initSelContextMenu()
         {
             selMenu = new ContextMenuStrip();
@@ -118,20 +121,6 @@ namespace BTDToolbox
         {
             openDirWindow();
             JetProps.increment(this);
-        }
-        public void LoadLastProject()
-        {
-            DialogResult varr = MessageBox.Show("Do you want to load your last project? Click Cancel if you want to create a new project.", "", MessageBoxButtons.OKCancel);
-            if (varr == DialogResult.OK)
-            {
-                this.Show();
-                //ConsoleHandler.appendLog("Loaded project " + subdir.Name);
-            }
-            if (varr == DialogResult.Cancel)
-            {
-                    TD_Toolbox_Window.ImportNewJew();
-            }
-
         }
         public void openDirWindow()
         {
@@ -225,7 +214,7 @@ namespace BTDToolbox
             TreeNode current = treeView1.SelectedNode;
             try
             {
-                if(current.Text != projName)
+                if (current.Text != projName)
                 {
                     treeView1.SelectedNode = current.Parent;
                 }
@@ -488,12 +477,22 @@ namespace BTDToolbox
         }
         internal void SerializeConfig()
         {
-            jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            if (projName == null)
+            {
+                jetExplorerConfig = new JetExplorer("Jet Form", lastProject, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            }
+            else
+            {
+                jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+            }
+
+
             jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
             StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
             writeConsoleForm.Write(jetFormOutput);
             writeConsoleForm.Close();
+
         }
         private void exitHandling(object sender, EventArgs e)
         {
@@ -519,15 +518,29 @@ namespace BTDToolbox
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
                 }
             }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                saveButton.PerformClick();
+            }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                //ExtractingJet_Window.isCompiling = true;
+                //ExtractingJet_Window.launchProgram = false;
+                //ExtractingJet_Window ejw = new ExtractingJet_Window();
+
+                ExtractingJet_Window.currentProject = projName;
+                ExtractingJet_Window.isOutput = true;
+                new ExtractingJet_Window();
+            }
         }
 
         private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
         {
-            if(e.Control&&e.KeyCode == Keys.F)
+            if (e.Control && e.KeyCode == Keys.F)
             {
-                if(findPanel.Visible)
+                if (findPanel.Visible)
                 {
-                    findPanel.Visible=false;
+                    findPanel.Visible = false;
                 }
                 else
                 {
@@ -536,6 +549,13 @@ namespace BTDToolbox
                 }
             }
         }
+
+
+        private void JetForm_Activated(object sender, EventArgs e)
+        {
+            SerializeConfig();
+        }
+
 
         private List<TreeNode> CurrentNodeMatches = new List<TreeNode>();
         private string LastSearchText;
@@ -575,13 +595,13 @@ namespace BTDToolbox
                 if (StartNode.Text.ToLower().Contains(SearchText.ToLower()))
                 {
                     CurrentNodeMatches.Add(StartNode);
-                };
+                }
                 if (StartNode.Nodes.Count != 0)
                 {
                     SearchNodes(SearchText, StartNode.Nodes[0]);//Recursive Search 
-                };
+                }
                 StartNode = StartNode.NextNode;
-            };
+            }
         }
 
         private void NextSearchResultButton_Click(object sender, EventArgs e)
@@ -590,11 +610,17 @@ namespace BTDToolbox
             {
                 selected++;
                 treeView1.SelectedNode = CurrentNodeMatches[selected];
-            } catch(ArgumentOutOfRangeException)
+            }
+            catch (ArgumentOutOfRangeException)
             {
                 selected = 0;
                 treeView1.SelectedNode = CurrentNodeMatches[selected];
             }
+        }
+
+        private void SaveButton_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
