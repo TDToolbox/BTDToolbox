@@ -192,7 +192,7 @@ namespace BTDToolbox
             }
             if (e.Control && e.KeyCode == Keys.N)
             {
-                ImportNewJew();
+                AddNewJet();
             }
         }
         private void mainResize(object sender, EventArgs e)
@@ -211,9 +211,9 @@ namespace BTDToolbox
         //
         public void ImportNewJet_Click(object sender, EventArgs e)
         {
-            ImportNewJew();
+            AddNewJet();
         }
-        public static void ImportNewJew()
+        public static void AddNewJet()
         {
             OpenFileDialog fileDiag = new OpenFileDialog();
 
