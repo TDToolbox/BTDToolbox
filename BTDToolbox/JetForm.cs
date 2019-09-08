@@ -91,7 +91,7 @@ namespace BTDToolbox
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
         }
-        
+
         private void initSelContextMenu()
         {
             selMenu = new ContextMenuStrip();
@@ -213,7 +213,7 @@ namespace BTDToolbox
             TreeNode current = treeView1.SelectedNode;
             try
             {
-                if(current.Text != projName)
+                if (current.Text != projName)
                 {
                     treeView1.SelectedNode = current.Parent;
                 }
@@ -484,8 +484,6 @@ namespace BTDToolbox
             {
                 jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
             }
-            
-            
             jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
             StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
@@ -500,22 +498,11 @@ namespace BTDToolbox
 
         private void JetForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F5)
+            if (e.Control && e.KeyCode == Keys.S)
             {
-                if (JetProps.get().Count == 1)
-                {
-                    ExtractingJet_Window.isCompiling = true;
-                    ExtractingJet_Window.launchProgram = true;
-                    var compile = new ExtractingJet_Window();
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
+                ExtractingJet_Window.currentProject = projName;
+                ExtractingJet_Window.isOutput = true;
+                new ExtractingJet_Window();
             }
             if(e.Control && e.KeyCode == Keys.S)
             {
@@ -535,11 +522,11 @@ namespace BTDToolbox
 
         private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
         {
-            if(e.Control&&e.KeyCode == Keys.F)
+            if (e.Control && e.KeyCode == Keys.F)
             {
-                if(findPanel.Visible)
+                if (findPanel.Visible)
                 {
-                    findPanel.Visible=false;
+                    findPanel.Visible = false;
                 }
                 else
                 {
@@ -609,7 +596,8 @@ namespace BTDToolbox
             {
                 selected++;
                 treeView1.SelectedNode = CurrentNodeMatches[selected];
-            } catch(ArgumentOutOfRangeException)
+            }
+            catch (ArgumentOutOfRangeException)
             {
                 selected = 0;
                 treeView1.SelectedNode = CurrentNodeMatches[selected];
