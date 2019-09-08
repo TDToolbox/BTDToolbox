@@ -31,9 +31,7 @@ namespace BTDToolbox
         public bool enableConsole;
         string mainFormOutput;
         public static string projName;
-        public static bool openJetForm;
         private Bitmap bgImg;
-        internal static bool isProjOpen;
         public string lastProject;
 
         //Scroll bar variables
@@ -62,6 +60,11 @@ namespace BTDToolbox
 
                 Font mainFormFontSize = new Font("Microsoft Sans Serif", deserializedMainForm.FontSize);
                 this.Font = mainFormFontSize;
+
+                if (deserializedMainForm.Fullscreen)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
 
                 enableConsole = deserializedMainForm.EnableConsole;
                 projectDirPath = deserializedMainForm.DirPath;
@@ -100,10 +103,6 @@ namespace BTDToolbox
             this.Resize += mainResize;
             this.KeyPreview = true;
             
-            if (openJetForm)
-            {
-                OpenJetForm();
-            }
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
         }
@@ -143,28 +142,31 @@ namespace BTDToolbox
         }
         public void OpenJetForm()
         {
-            DirectoryInfo dinfo = new DirectoryInfo(livePath + "\\" + lastProject);
-            foreach (JetForm o in JetProps.get())
+            if (lastProject != "" && lastProject != null)
             {
-                if (o.projName == projName)
+                DirectoryInfo dinfo = new DirectoryInfo(livePath + "\\" + lastProject);
+                foreach (JetForm o in JetProps.get())
                 {
-                    MessageBox.Show("The project is already opened..");
-                    return;
+                    if (o.projName == projName)
+                    {
+                        MessageBox.Show("The project is already opened..");
+                        return;
+                    }
                 }
+                JetForm jf = new JetForm(dinfo, this, projName);
+                try
+                {
+                    string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
+                    JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                    lastProject = deserializedJetForm.LastProject;
+                }
+                catch
+                {
+                    jf.SerializeConfig();
+                }
+                jf.MdiParent = this;
+                jf.Show();
             }
-            JetForm jf = new JetForm(dinfo, this, projName);
-            try
-            {
-                string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
-                lastProject = deserializedJetForm.LastProject;
-            }
-            catch
-            {
-                jf.SerializeConfig();
-            }
-            jf.MdiParent = this;
-            jf.Show();
         }
         private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -326,7 +328,7 @@ namespace BTDToolbox
         //
         private void SerializeConfig()
         {
-            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory);
+            mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory, WindowState==FormWindowState.Maximized);
             mainFormOutput = JsonConvert.SerializeObject(mainForm);
 
             StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
@@ -366,6 +368,7 @@ namespace BTDToolbox
 
         private void OpenJetExplorer_Click(object sender, EventArgs e)
         {
+            
             string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
             JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
             lastProject = deserializedJetForm.LastProject;

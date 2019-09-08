@@ -37,12 +37,12 @@
             this.instanceCountLabel = new System.Windows.Forms.Label();
             this.findBox = new System.Windows.Forms.TextBox();
             this.findLabel = new System.Windows.Forms.Label();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.lastSelectedLabel = new System.Windows.Forms.Label();
             this.goUpButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.treeView1 = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -100,7 +100,7 @@
             this.fileViewContainer.Panel2.Controls.Add(this.saveButton);
             this.fileViewContainer.Panel2.Controls.Add(this.listView1);
             this.fileViewContainer.Size = new System.Drawing.Size(776, 406);
-            this.fileViewContainer.SplitterDistance = 253;
+            this.fileViewContainer.SplitterDistance = 251;
             this.fileViewContainer.TabIndex = 2;
             this.fileViewContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.SplitContainer_SplitterMoved);
             // 
@@ -115,7 +115,7 @@
             this.findPanel.Controls.Add(this.findLabel);
             this.findPanel.Location = new System.Drawing.Point(0, 349);
             this.findPanel.Name = "findPanel";
-            this.findPanel.Size = new System.Drawing.Size(253, 58);
+            this.findPanel.Size = new System.Drawing.Size(269, 58);
             this.findPanel.TabIndex = 1;
             this.findPanel.Visible = false;
             // 
@@ -126,7 +126,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.nextSearchResultButton.Location = new System.Drawing.Point(3, 29);
             this.nextSearchResultButton.Name = "nextSearchResultButton";
-            this.nextSearchResultButton.Size = new System.Drawing.Size(160, 23);
+            this.nextSearchResultButton.Size = new System.Drawing.Size(176, 23);
             this.nextSearchResultButton.TabIndex = 3;
             this.nextSearchResultButton.Text = "Next Result";
             this.nextSearchResultButton.UseVisualStyleBackColor = true;
@@ -139,7 +139,7 @@
             this.instanceCountLabel.AutoSize = true;
             this.instanceCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.instanceCountLabel.ForeColor = System.Drawing.Color.White;
-            this.instanceCountLabel.Location = new System.Drawing.Point(169, 32);
+            this.instanceCountLabel.Location = new System.Drawing.Point(185, 32);
             this.instanceCountLabel.Name = "instanceCountLabel";
             this.instanceCountLabel.Size = new System.Drawing.Size(78, 16);
             this.instanceCountLabel.TabIndex = 2;
@@ -152,7 +152,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.findBox.Location = new System.Drawing.Point(47, 3);
             this.findBox.Name = "findBox";
-            this.findBox.Size = new System.Drawing.Size(203, 20);
+            this.findBox.Size = new System.Drawing.Size(219, 20);
             this.findBox.TabIndex = 1;
             this.findBox.TextChanged += new System.EventHandler(this.searchbox_textChanged);
             // 
@@ -168,24 +168,6 @@
             this.findLabel.Size = new System.Drawing.Size(44, 20);
             this.findLabel.TabIndex = 0;
             this.findLabel.Text = "Find:";
-            // 
-            // treeView1
-            // 
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.treeView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeView1.ForeColor = System.Drawing.Color.White;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.ItemHeight = 24;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(253, 407);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeView_CheckHotkey);
             // 
             // lastSelectedLabel
             // 
@@ -216,7 +198,7 @@
             this.saveButton.ForeColor = System.Drawing.Color.White;
             this.saveButton.Location = new System.Drawing.Point(0, 383);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(519, 23);
+            this.saveButton.Size = new System.Drawing.Size(503, 23);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
@@ -236,7 +218,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(2, 27);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(519, 383);
+            this.listView1.Size = new System.Drawing.Size(503, 383);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -246,6 +228,24 @@
             // 
             this.name_column.Text = "Name";
             this.name_column.Width = 517;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.treeView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeView1.ForeColor = System.Drawing.Color.White;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.ItemHeight = 24;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.Size = new System.Drawing.Size(251, 407);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeView_CheckHotkey);
             // 
             // JetForm
             // 
@@ -278,7 +278,6 @@
 
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.SplitContainer fileViewContainer;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button goUpButton;
@@ -289,5 +288,6 @@
         private System.Windows.Forms.Label instanceCountLabel;
         private System.Windows.Forms.Button nextSearchResultButton;
         private System.Windows.Forms.Label lastSelectedLabel;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
