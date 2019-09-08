@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfigs;
 using static System.Windows.Forms.ToolStripItem;
@@ -34,7 +36,6 @@ namespace BTDToolbox
         public static string lastProject;
 
         //Load Last Project Variables
-        int numProjectLoadCancelled;
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
@@ -223,51 +224,14 @@ namespace BTDToolbox
         }
         private void ListView1_DoubleClicked(object sender, EventArgs e)
         {
-            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
-            if (Selected.Count == 1)
-            {
-                try
-                {
-                    string targetPath = this.Text + "\\" + Selected[0].Text;
-                    foreach (JsonEditor jedit in JsonProps.get())
-                    {
-                        if (jedit.Path == targetPath)
-                        {
-                            jedit.BringToFront();
-                            return;
-                        }
-                    }
-                    JsonEditor JsonWindow = new JsonEditor(targetPath);
-                    JsonWindow.MdiParent = Form;
-                    JsonWindow.Show();
-                }
-                catch (Exception)
-                {
-                    try
-                    {
-                        if (!Selected[0].Text.Contains("."))
-                        {
-                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
-                            {
-                                if (node.Text == Selected[0].Text)
-                                {
-                                    node.Expand();
-                                    treeView1.SelectedNode = node;
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-            }
+
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            ExtractingJet_Window.isCompiling = true;
-            var compile = new ExtractingJet_Window();
+            ExtractingJet_Window.currentProject = projName;
+            ExtractingJet_Window.isOutput = true;
+            new ExtractingJet_Window();
         }
 
         //Context caller
@@ -511,7 +475,9 @@ namespace BTDToolbox
             {
                 if (JetProps.get().Count == 1)
                 {
-                    Launcher.launchGame(JetProps.getForm(0));
+                    ExtractingJet_Window.isCompiling = true;
+                    ExtractingJet_Window.launchProgram = true;
+                    var compile = new ExtractingJet_Window();
                 }
                 else if (JetProps.get().Count < 1)
                 {
@@ -520,32 +486,95 @@ namespace BTDToolbox
                 else
                 {
                     MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                }
+            }
+            if(e.Control && e.KeyCode == Keys.S)
+            {
+                saveButton.PerformClick();
+            }
+        }
+
+        private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
+        {
+            if(e.Control&&e.KeyCode == Keys.F)
+            {
+                if(findPanel.Visible)
+                {
+                    findPanel.Visible=false;
+                }
+                else
+                {
+                    findPanel.Visible = true;
+                    findBox.Select();
                 }
             }
         }
 
-        private void SplitContainer1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                if (JetProps.get().Count == 1)
-                {
-                    Launcher.launchGame(JetProps.getForm(0));
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
-            }
-        }
 
         private void JetForm_Activated(object sender, EventArgs e)
         {
             SerializeConfig();
+        }
+
+
+        private List<TreeNode> CurrentNodeMatches = new List<TreeNode>();
+        private string LastSearchText;
+        private int LastNodeIndex = 0;
+        private int selected;
+        private void searchbox_textChanged(object sender, EventArgs e)
+        {
+            string searchText = findBox.Text;
+            selected = 0;
+            if (String.IsNullOrEmpty(searchText))
+            {
+                return;
+            };
+            if (LastSearchText != searchText)
+            {
+                //It's a new Search
+                CurrentNodeMatches.Clear();
+                LastSearchText = searchText;
+                LastNodeIndex = 0;
+                SearchNodes(searchText, treeView1.Nodes[0]);
+            }
+            if (LastNodeIndex >= 0 && CurrentNodeMatches.Count > 0 && LastNodeIndex < CurrentNodeMatches.Count)
+            {
+                TreeNode selectedNode = CurrentNodeMatches[LastNodeIndex];
+                LastNodeIndex++;
+                this.treeView1.SelectedNode = selectedNode;
+                this.treeView1.SelectedNode.Expand();
+                this.treeView1.Select();
+            }
+            instanceCountLabel.Text = "Instances: " + CurrentNodeMatches.Count;
+            findBox.Select();
+        }
+        private void SearchNodes(string SearchText, TreeNode StartNode)
+        {
+            while (StartNode != null)
+            {
+                if (StartNode.Text.ToLower().Contains(SearchText.ToLower()))
+                {
+                    CurrentNodeMatches.Add(StartNode);
+                };
+                if (StartNode.Nodes.Count != 0)
+                {
+                    SearchNodes(SearchText, StartNode.Nodes[0]);//Recursive Search 
+                };
+                StartNode = StartNode.NextNode;
+            };
+        }
+
+        private void NextSearchResultButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                selected++;
+                treeView1.SelectedNode = CurrentNodeMatches[selected];
+            } catch(ArgumentOutOfRangeException)
+            {
+                selected = 0;
+                treeView1.SelectedNode = CurrentNodeMatches[selected];
+            }
         }
     }
 }

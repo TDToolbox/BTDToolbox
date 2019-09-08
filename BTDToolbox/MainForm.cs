@@ -26,7 +26,6 @@ namespace BTDToolbox
         //Config variables
         MainWindow mainForm;
         public bool loadLastProject;
-        internal static string lastProject;
         public static string file;
         public int mainFormFontSize;
         public bool enableConsole;
@@ -35,6 +34,7 @@ namespace BTDToolbox
         public static bool openJetForm;
         private Bitmap bgImg;
         internal static bool isProjOpen;
+        public string lastProject;
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
@@ -290,7 +290,7 @@ namespace BTDToolbox
         }
         private void RestoreBackup_Click(object sender, EventArgs e)
         {
-            //Launcher.restoreGame();
+            ExtractingJet_Window.restoreGame();
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {

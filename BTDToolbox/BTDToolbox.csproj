@@ -97,7 +97,6 @@
     <Compile Include="JsonEditor.Designer.cs">
       <DependentUpon>JsonEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Launcher.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +148,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="JetForm.resx">
       <DependentUpon>JetForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NewConsole.resx">
       <DependentUpon>NewConsole.cs</DependentUpon>

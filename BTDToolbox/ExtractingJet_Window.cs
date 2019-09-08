@@ -18,6 +18,7 @@ namespace BTDToolbox
     {
         //Project Variables
         public static bool isCompiling;
+        public static bool isOutput;
         public static bool isDecompiling;
         public string livePath = Environment.CurrentDirectory;
 
@@ -43,10 +44,27 @@ namespace BTDToolbox
         {
             InitializeComponent();
             
-            this.Show();
             this.StartPosition = FormStartPosition.Manual;
             this.Left = 120;
             this.Top = 120;
+            if(isOutput)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Title = "Export .jet";
+                sfd.DefaultExt = "jet";
+                sfd.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
+                if(sfd.ShowDialog() == DialogResult.OK)
+                {
+                    this.Show();
+                    DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
+                    ConsoleHandler.appendLog("Compiling jet...");
+                    this.compile(projDir, sfd.FileName);
+                    ConsoleHandler.appendLog("Jet compiled");
+                }
+                return;
+            }
+
+            this.Show();
             if (isCompiling)
             {
                 this.Text = "Compiling....";
@@ -223,6 +241,22 @@ namespace BTDToolbox
             filesCompiled++;
             TotalProgress_ProgressBar.Value = 100 * filesCompiled / totalFiles;
             this.Refresh();
+        }
+
+        //Restore backup .jet
+        public static void restoreGame()
+        {
+            if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
+            {
+                MessageBox.Show("No backup found that can be restored! Use steam to re-download the original .jet");
+                return;
+            }
+            ConsoleHandler.appendLog("Restoring backup .jet");
+            string gameJetPath = Settings.readGamePath() + "\\..\\Assets\\BTD5.jet";
+            File.Delete(gameJetPath);
+            File.Copy(Environment.CurrentDirectory + "\\Backups\\Original.jet", gameJetPath);
+            ConsoleHandler.appendLog("Backup restored");
+            MessageBox.Show("Backup .jet restored!");
         }
     }
 }
