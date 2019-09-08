@@ -371,17 +371,6 @@ namespace BTDToolbox
 
         private void OpenJetExplorer_Click(object sender, EventArgs e)
         {
-         try
-            {
-                string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
-                lastProject = deserializedJetForm.LastProject;
-            }
-            catch
-            {
-                //JetForm jf = new JetForm(dinfo, this, projName);
-            }
-
             string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
             JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
             lastProject = deserializedJetForm.LastProject;
