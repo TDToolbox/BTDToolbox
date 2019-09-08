@@ -141,7 +141,7 @@ namespace BTDToolbox.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon PossibleBTD5MODIcon {
             get {
@@ -151,7 +151,7 @@ namespace BTDToolbox.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap PossibleBTD5MODIcon1 {
             get {
@@ -161,7 +161,7 @@ namespace BTDToolbox.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Resize_Icon {
             get {
