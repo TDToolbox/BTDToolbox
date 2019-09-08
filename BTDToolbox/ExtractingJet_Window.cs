@@ -61,6 +61,7 @@ namespace BTDToolbox
                     this.compile(projDir, sfd.FileName);
                     ConsoleHandler.appendLog("Jet compiled");
                 }
+                isOutput = false;
                 return;
             }
 
@@ -114,11 +115,11 @@ namespace BTDToolbox
                     Process.Start(Settings.readGamePath());
                     ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
                 }
+                isCompiling = false;
             }
             if (isDecompiling)
             {
                 this.Text = "Extracting....";
-                isCompiling = false;
                 try
                 {
                     DirectoryInfo extract = this.decompile(file, dir);
@@ -138,6 +139,7 @@ namespace BTDToolbox
                         this.Close();
                     }
                 }
+                isDecompiling = false;
             }
         }
         private void ExtractJet_Window_Load(object sender, EventArgs e)
