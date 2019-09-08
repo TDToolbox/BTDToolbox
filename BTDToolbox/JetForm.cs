@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfigs;
 using static System.Windows.Forms.ToolStripItem;
@@ -235,45 +236,7 @@ namespace BTDToolbox
         }
         private void ListView1_DoubleClicked(object sender, EventArgs e)
         {
-            ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
-            if (Selected.Count == 1)
-            {
-                try
-                {
-                    string targetPath = this.Text + "\\" + Selected[0].Text;
-                    foreach (JsonEditor jedit in JsonProps.get())
-                    {
-                        if (jedit.Path == targetPath)
-                        {
-                            jedit.BringToFront();
-                            return;
-                        }
-                    }
-                    JsonEditor JsonWindow = new JsonEditor(targetPath);
-                    JsonWindow.MdiParent = Form;
-                    JsonWindow.Show();
-                }
-                catch (Exception)
-                {
-                    try
-                    {
-                        if (!Selected[0].Text.Contains("."))
-                        {
-                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
-                            {
-                                if (node.Text == Selected[0].Text)
-                                {
-                                    node.Expand();
-                                    treeView1.SelectedNode = node;
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-            }
+
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -530,27 +493,6 @@ namespace BTDToolbox
             if(e.Control && e.KeyCode == Keys.S)
             {
                 saveButton.PerformClick();
-            }
-        }
-
-        private void SplitContainer1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                if (JetProps.get().Count == 1)
-                {
-                    ExtractingJet_Window.isCompiling = true;
-                    ExtractingJet_Window.launchProgram = true;
-                    var compile = new ExtractingJet_Window();
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
             }
         }
 

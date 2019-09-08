@@ -38,11 +38,11 @@
             this.findBox = new System.Windows.Forms.TextBox();
             this.findLabel = new System.Windows.Forms.Label();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.lastSelectedLabel = new System.Windows.Forms.Label();
             this.goUpButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lastSelectedLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -187,6 +187,17 @@
             this.treeView1.TabIndex = 0;
             this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeView_CheckHotkey);
             // 
+            // lastSelectedLabel
+            // 
+            this.lastSelectedLabel.AutoSize = true;
+            this.lastSelectedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lastSelectedLabel.ForeColor = System.Drawing.Color.White;
+            this.lastSelectedLabel.Location = new System.Drawing.Point(79, 3);
+            this.lastSelectedLabel.Name = "lastSelectedLabel";
+            this.lastSelectedLabel.Size = new System.Drawing.Size(110, 20);
+            this.lastSelectedLabel.TabIndex = 3;
+            this.lastSelectedLabel.Text = "Last Selection";
+            // 
             // goUpButton
             // 
             this.goUpButton.Location = new System.Drawing.Point(2, 3);
@@ -209,7 +220,7 @@
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.saveButton_Click);
             // 
             // listView1
             // 
@@ -234,17 +245,6 @@
             // 
             this.name_column.Text = "Name";
             this.name_column.Width = 517;
-            // 
-            // lastSelectedLabel
-            // 
-            this.lastSelectedLabel.AutoSize = true;
-            this.lastSelectedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastSelectedLabel.ForeColor = System.Drawing.Color.White;
-            this.lastSelectedLabel.Location = new System.Drawing.Point(79, 3);
-            this.lastSelectedLabel.Name = "lastSelectedLabel";
-            this.lastSelectedLabel.Size = new System.Drawing.Size(110, 20);
-            this.lastSelectedLabel.TabIndex = 3;
-            this.lastSelectedLabel.Text = "Last Selection";
             // 
             // JetForm
             // 
