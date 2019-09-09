@@ -16,10 +16,12 @@ namespace BTDToolbox
 {
     public partial class JsonEditor : ThemedForm
     {
+        //Project variables
         string livePath = Environment.CurrentDirectory;
         public string Path;
         public string fileName;
         
+        //Find and replace variables
         public int numPhraseFound;
         public int startPosition;
         public int endPosition;
@@ -28,11 +30,13 @@ namespace BTDToolbox
         public string previousSearchPhrase;
         public bool isReplacing;
         public bool isFinding;
-        public bool findNextPhrase = true;
+        public bool findNextPhrase;
 
-        Window jsonEditor;
+        //Congif variables
+        JsonEditorConfig jsonEditorConfig;
         string jsonEditorOutput;
         public static float jsonEditorFont;
+        public string lastJsonFile;
 
         public JsonEditor(string Path)
         {
@@ -42,8 +46,7 @@ namespace BTDToolbox
             this.FormClosed += exitHandling;
 
             FileInfo info = new FileInfo(Path);
-            this.Text = info.Name;
-
+            this.Text = info.Name;            
             this.Find_TextBox.Visible = false;
             this.FindNext_Button.Visible = false;
             this.toolStripSeparator2.Visible = false;
@@ -53,7 +56,7 @@ namespace BTDToolbox
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\json_editor.json");
-                Window deserializedJsonEditor = JsonConvert.DeserializeObject<Window>(json);
+                JsonEditorConfig deserializedJsonEditor = JsonConvert.DeserializeObject<JsonEditorConfig>(json);
 
                 Size JsonEditorSize = new Size(deserializedJsonEditor.SizeX, deserializedJsonEditor.SizeY);
                 this.Size = JsonEditorSize;
@@ -68,12 +71,7 @@ namespace BTDToolbox
             }
             catch (System.IO.FileNotFoundException)
             {
-                jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10);
-                jsonEditorOutput = JsonConvert.SerializeObject(jsonEditor);
-
-                StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
-                writeJsonEditorForm.Write(jsonEditorOutput);
-                writeJsonEditorForm.Close();
+                SerializeConfig();
             }
             catch (System.ArgumentException)
             {
@@ -111,19 +109,16 @@ namespace BTDToolbox
                 this.Close();
             }
         }
-
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Path, Editor_TextBox.Text);
             try
             {
                 JObject.Parse(this.Editor_TextBox.Text);
-                //this.lintPanel.BackColor = Color.Green;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
             }
             catch (Exception)
             {
-                //this.lintPanel.BackColor = Color.Red;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
             }
         }
@@ -142,8 +137,15 @@ namespace BTDToolbox
         }
         private void exitHandling(object sender, EventArgs e)
         {
-            jsonEditor = new Window("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, Editor_TextBox.Font.Size);
-            jsonEditorOutput = JsonConvert.SerializeObject(jsonEditor);
+            SerializeConfig();
+            JsonProps.decrement(this);
+        }
+        private void SerializeConfig()
+        {
+            FileInfo info = new FileInfo(Path);
+
+            jsonEditorConfig = new JsonEditorConfig("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, Editor_TextBox.Font.Size) ;
+            jsonEditorOutput = JsonConvert.SerializeObject(jsonEditorConfig);
 
             StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
             writeJsonEditorForm.Write(jsonEditorOutput);
@@ -155,40 +157,10 @@ namespace BTDToolbox
         {
             if (e.Control && e.KeyCode == Keys.F)
             {
-                /*
-                isFinding = !isFinding;
-                this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
-                this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
-                if (isReplacing)
-                {
-                    isFinding = false;
-                    isReplacing = false;
-                    this.Find_TextBox.Visible = false;
-                    this.FindNext_Button.Visible = false;
-                    this.toolStripSeparator2.Visible = false;
-                    this.Replace_TextBox.Visible = false;
-                    this.ReplaceDropDown.Visible = false;
-                }*/
                 ShowFindMenu();
             }
             if (e.Control && e.KeyCode == Keys.H)
-            {/*
-                isReplacing = !isReplacing;
-                this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
-                this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
-                this.toolStripSeparator2.Visible = !this.toolStripSeparator2.Visible;
-                this.Replace_TextBox.Visible = !this.Replace_TextBox.Visible;
-                this.ReplaceDropDown.Visible = !this.ReplaceDropDown.Visible;
-                if (isFinding)
-                {
-                    isFinding = false;
-                    isReplacing = true;
-                    this.Find_TextBox.Visible = true;
-                    this.FindNext_Button.Visible = true;
-                    this.toolStripSeparator2.Visible = true;
-                    this.Replace_TextBox.Visible = true;
-                    this.ReplaceDropDown.Visible = true;
-                }*/
+            {
                 ShowReplaceMenu();
             }
             if (e.KeyCode == Keys.F5)
@@ -369,6 +341,10 @@ namespace BTDToolbox
         private void FindNext_Button_Click(object sender, EventArgs e)
         {
             FindText();
+        }
+        private void JsonEditor_Load(object sender, EventArgs e)
+        {
+            SerializeConfig();
         }
     }
 }
