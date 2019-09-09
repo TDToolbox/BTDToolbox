@@ -39,6 +39,9 @@ namespace BTDToolbox
         public static bool launchProgram;
         public static string currentProject;
         public DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+        public DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
+        public static string path = System.IO.File.ReadAllText(Environment.CurrentDirectory + "\\launchsettings.txt");
+        public string gameJetPath = path + "\\..\\Assets\\BTD5.jet";
 
         public ExtractingJet_Window()
         {
@@ -95,9 +98,9 @@ namespace BTDToolbox
                 }
                 finally
                 {
-                    string path = System.IO.File.ReadAllText(livePath + "\\launchsettings.txt");
-                    string gameJetPath = path + "\\..\\Assets\\BTD5.jet";
-                    DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
+                    //string path = System.IO.File.ReadAllText(livePath + "\\launchsettings.txt");
+                    //string gameJetPath = path + "\\..\\Assets\\BTD5.jet";
+                    //DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
 
                     if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
                     {
@@ -107,7 +110,9 @@ namespace BTDToolbox
                         ConsoleHandler.appendLog("Backup done");
                     }
                     ConsoleHandler.appendLog("Compiling jet...");
-                    this.compile(projDir, gameJetPath);
+
+                    //this.compile(projDir, gameJetPath);
+                    CallCompile();
                     ConsoleHandler.appendLog("Jet compiled");
                 }
                 if (launchProgram)
@@ -158,7 +163,14 @@ namespace BTDToolbox
             }
             this.Show();
         }
-
+        private async void CallCompile()
+        {
+            await CompileAsync(projDir, gameJetPath);
+        }
+        private Task CompileAsync(DirectoryInfo target, string outputPath)
+        {
+            return Task.Factory.StartNew(() => compile(target, outputPath));
+        }
         public void compile(DirectoryInfo target, string outputPath)
         {
             DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
@@ -203,14 +215,14 @@ namespace BTDToolbox
                 projectName = (livePath + "\\proj_" + randName);
             }
             //Extract and count progress
-            
+            DirectoryInfo dinfo = new DirectoryInfo(projectName);
             using (ZipFile zip = ZipFile.Read(inputPath))
             {
                 totalFiles = archive.Count();
                 filesExtracted = 0;
                 archive.ExtractProgress += ZipExtractProgress;
                 archive.ExtractAll(projectName);
-                DirectoryInfo dinfo = new DirectoryInfo(projectName);
+                
                 JetForm jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
                 jf.MdiParent = TD_Toolbox_Window.getInstance();
                 jf.Show();
@@ -218,7 +230,7 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("Project files created at: " + projectName);
             this.Close();
 
-            return null;
+            return dinfo;
         }
 
         private void ZipExtractProgress(object sender, ExtractProgressEventArgs e)
