@@ -181,7 +181,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="JSON invalid_2.png" />
+    <Content Include="Resources\JSON invalid_2.png" />
     <Content Include="Resize_Icon.png" />
     <None Include="Resources\json-file_light.ico" />
     <None Include="Resources\json-file_dark.ico" />
