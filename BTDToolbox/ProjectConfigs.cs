@@ -65,5 +65,17 @@ namespace BTDToolbox
                 TreeViewFontSize = treeViewFontSize;
             }
         }
+        public class JsonEditorConfig : Window
+        {
+            public JsonEditorConfig(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            {
+                WindowName = windowName;
+                SizeX = sizeX;
+                SizeY = sizeY;
+                PosX = posX;
+                PosY = posY;
+                FontSize = fontSize;
+            }
+        }
     }
 }

@@ -269,6 +269,7 @@
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "JsonEditor";
             this.Text = "JsonEditor";
+            this.Load += new System.EventHandler(this.JsonEditor_Load);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();
             this.titleSeperator.Panel2.ResumeLayout(false);
