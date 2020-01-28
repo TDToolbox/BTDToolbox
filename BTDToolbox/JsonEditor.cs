@@ -33,7 +33,7 @@ namespace BTDToolbox
         public bool findNextPhrase;
 
         //Congif variables
-        JsonEditorConfig jsonEditorConfig;
+        JsonEditor_Config jsonEditorConfig;
         string jsonEditorOutput;
         public static float jsonEditorFont;
         public string lastJsonFile;
@@ -56,7 +56,7 @@ namespace BTDToolbox
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\json_editor.json");
-                JsonEditorConfig deserializedJsonEditor = JsonConvert.DeserializeObject<JsonEditorConfig>(json);
+                JsonEditor_Config deserializedJsonEditor = JsonConvert.DeserializeObject<JsonEditor_Config>(json);
 
                 Size JsonEditorSize = new Size(deserializedJsonEditor.SizeX, deserializedJsonEditor.SizeY);
                 this.Size = JsonEditorSize;
@@ -144,7 +144,7 @@ namespace BTDToolbox
         {
             FileInfo info = new FileInfo(Path);
 
-            jsonEditorConfig = new JsonEditorConfig("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, Editor_TextBox.Font.Size) ;
+            jsonEditorConfig = new JsonEditor_Config("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, Editor_TextBox.Font.Size) ;
             jsonEditorOutput = JsonConvert.SerializeObject(jsonEditorConfig);
 
             StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
@@ -165,22 +165,27 @@ namespace BTDToolbox
             }
             if (e.KeyCode == Keys.F5)
             {
-                if (JetProps.get().Count == 1)
-                {
-                    ExtractingJet_Window.isCompiling = true;
-                    ExtractingJet_Window.launchProgram = true;
-                    var compile = new ExtractingJet_Window();
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
+                launchGame();
             }
         }
+
+        private void launchGame()
+        {
+            if (JetProps.get().Count == 1)
+            {
+                ExtractingJet_Window.switchCase = "launch";
+                var compile = new ExtractingJet_Window();
+            }
+            else if (JetProps.get().Count < 1)
+            {
+                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+            }
+            else
+            {
+                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+            }
+        }
+
         private void FindText()
         {
             if (Find_TextBox.Text.Length <= 0)

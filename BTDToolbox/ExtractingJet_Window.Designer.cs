@@ -28,27 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.CurrentFileProgress = new System.Windows.Forms.ProgressBar();
             this.TotalProgress_ProgressBar = new System.Windows.Forms.ProgressBar();
-            this.CurrentFileProgress_Label = new System.Windows.Forms.Label();
             this.TotalProgress_Label = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CurrentFileProgress_Label = new System.Windows.Forms.Label();
+            this.CurrentFileProgress = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 155);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 15);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Current File:";
             // 
             // richTextBox1
             // 
@@ -64,30 +52,12 @@
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
-            // CurrentFileProgress
-            // 
-            this.CurrentFileProgress.Location = new System.Drawing.Point(31, 39);
-            this.CurrentFileProgress.Name = "CurrentFileProgress";
-            this.CurrentFileProgress.Size = new System.Drawing.Size(435, 27);
-            this.CurrentFileProgress.TabIndex = 0;
-            // 
             // TotalProgress_ProgressBar
             // 
             this.TotalProgress_ProgressBar.Location = new System.Drawing.Point(31, 95);
             this.TotalProgress_ProgressBar.Name = "TotalProgress_ProgressBar";
             this.TotalProgress_ProgressBar.Size = new System.Drawing.Size(435, 27);
             this.TotalProgress_ProgressBar.TabIndex = 0;
-            // 
-            // CurrentFileProgress_Label
-            // 
-            this.CurrentFileProgress_Label.AutoSize = true;
-            this.CurrentFileProgress_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.CurrentFileProgress_Label.ForeColor = System.Drawing.Color.White;
-            this.CurrentFileProgress_Label.Location = new System.Drawing.Point(28, 21);
-            this.CurrentFileProgress_Label.Name = "CurrentFileProgress_Label";
-            this.CurrentFileProgress_Label.Size = new System.Drawing.Size(125, 15);
-            this.CurrentFileProgress_Label.TabIndex = 3;
-            this.CurrentFileProgress_Label.Text = "Current File Progress:";
             // 
             // TotalProgress_Label
             // 
@@ -108,6 +78,36 @@
             this.pictureBox1.Size = new System.Drawing.Size(503, 118);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(12, 155);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 15);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Current File:";
+            // 
+            // CurrentFileProgress_Label
+            // 
+            this.CurrentFileProgress_Label.AutoSize = true;
+            this.CurrentFileProgress_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.CurrentFileProgress_Label.ForeColor = System.Drawing.Color.White;
+            this.CurrentFileProgress_Label.Location = new System.Drawing.Point(28, 21);
+            this.CurrentFileProgress_Label.Name = "CurrentFileProgress_Label";
+            this.CurrentFileProgress_Label.Size = new System.Drawing.Size(125, 15);
+            this.CurrentFileProgress_Label.TabIndex = 3;
+            this.CurrentFileProgress_Label.Text = "Current File Progress:";
+            // 
+            // CurrentFileProgress
+            // 
+            this.CurrentFileProgress.Location = new System.Drawing.Point(31, 39);
+            this.CurrentFileProgress.Name = "CurrentFileProgress";
+            this.CurrentFileProgress.Size = new System.Drawing.Size(435, 27);
+            this.CurrentFileProgress.TabIndex = 0;
             // 
             // ExtractingJet_Window
             // 
@@ -132,12 +132,12 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.ProgressBar CurrentFileProgress;
         private System.Windows.Forms.ProgressBar TotalProgress_ProgressBar;
-        private System.Windows.Forms.Label CurrentFileProgress_Label;
         private System.Windows.Forms.Label TotalProgress_Label;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label CurrentFileProgress_Label;
+        private System.Windows.Forms.ProgressBar CurrentFileProgress;
     }
 }

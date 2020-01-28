@@ -65,8 +65,7 @@ namespace BTDToolbox
 
         public void appendLog(String log)
         {
-            //console_log.Text += log + "\r\n";
-            console_log.AppendText(log + "\r\n");
+            console_log.Invoke(new Action(() => console_log.AppendText(log + "\r\n")));
         }
         private void serializeConfig()
         {
@@ -86,20 +85,23 @@ namespace BTDToolbox
         {
             if (e.KeyCode == Keys.F5)
             {
-                if (JetProps.get().Count == 1)
-                {
-                    ExtractingJet_Window.isCompiling = true;
-                    ExtractingJet_Window.launchProgram = true;
-                    var compile = new ExtractingJet_Window();
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
+                launchGame();
+            }
+        }
+        private void launchGame()
+        {
+            if (JetProps.get().Count == 1)
+            {
+                ExtractingJet_Window.switchCase = "launch";
+                var compile = new ExtractingJet_Window();
+            }
+            else if (JetProps.get().Count < 1)
+            {
+                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+            }
+            else
+            {
+                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
             }
         }
     }

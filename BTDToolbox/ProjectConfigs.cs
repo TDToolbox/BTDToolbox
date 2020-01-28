@@ -29,12 +29,12 @@ namespace BTDToolbox
             }
 
         }
-        public class MainWindow : Window
+        public class MainForm_Config : Window
         {
             public bool EnableConsole { get; set; }
             public bool Fullscreen { get; set; }
             public string DirPath { get; set; }
-            public MainWindow(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, bool enableConsole, string dirPath, bool fullscreen) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            public MainForm_Config(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize, bool enableConsole, string dirPath, bool fullscreen) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
             {
                 WindowName = windowName;
                 SizeX = sizeX;
@@ -47,12 +47,12 @@ namespace BTDToolbox
                 Fullscreen = fullscreen;
             }
         }
-        public class JetExplorer : Window
+        public class JetExplorer_Config : Window
         {
             public int SplitterDistance { get; set; }
             public float TreeViewFontSize { get; set; }
             public string LastProject { get; set; }
-            public JetExplorer(string windowName, string lastProject, int sizeX, int sizeY, int posX, int posY, float fontSize, int splitterDistance, float treeViewFontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            public JetExplorer_Config(string windowName, string lastProject, int sizeX, int sizeY, int posX, int posY, float fontSize, int splitterDistance, float treeViewFontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
             {
                 WindowName = windowName;
                 LastProject = lastProject;
@@ -65,9 +65,9 @@ namespace BTDToolbox
                 TreeViewFontSize = treeViewFontSize;
             }
         }
-        public class JsonEditorConfig : Window
+        public class JsonEditor_Config : Window
         {
-            public JsonEditorConfig(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
+            public JsonEditor_Config(string windowName, int sizeX, int sizeY, int posX, int posY, float fontSize) : base(windowName, sizeX, sizeY, posX, posY, fontSize)
             {
                 WindowName = windowName;
                 SizeX = sizeX;
@@ -75,6 +75,15 @@ namespace BTDToolbox
                 PosX = posX;
                 PosY = posY;
                 FontSize = fontSize;
+            }
+        }
+        public class LaunchSettings_Config
+        {
+            public string GameDir { get; set; }
+
+            public LaunchSettings_Config(string gameDir)
+            {
+                GameDir = gameDir;
             }
         }
     }

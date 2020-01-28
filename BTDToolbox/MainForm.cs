@@ -24,7 +24,7 @@ namespace BTDToolbox
         public DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
 
         //Config variables
-        MainWindow mainForm;
+        MainForm_Config mainForm_Config;
         public bool loadLastProject;
         public static string file;
         public int mainFormFontSize;
@@ -50,7 +50,7 @@ namespace BTDToolbox
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\main_form.json");
-                MainWindow deserializedMainForm = JsonConvert.DeserializeObject<MainWindow>(json);
+                MainForm_Config deserializedMainForm = JsonConvert.DeserializeObject<MainForm_Config>(json);
 
                 Size MainFormSize = new Size(deserializedMainForm.SizeX, deserializedMainForm.SizeY);
                 this.Size = MainFormSize;
@@ -71,7 +71,7 @@ namespace BTDToolbox
 
 
                 string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(deSerialJetForm);
                 lastProject = deserializedJetForm.LastProject;
             }
             catch (FileNotFoundException)
@@ -164,7 +164,7 @@ namespace BTDToolbox
                     try
                     {
                         string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                        JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                        JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(deSerialJetForm);
                         lastProject = deserializedJetForm.LastProject;
                     }
                     catch
@@ -180,20 +180,7 @@ namespace BTDToolbox
         {
             if (e.KeyCode == Keys.F5)
             {
-                if (JetProps.get().Count == 1)
-                {
-                    ExtractingJet_Window.launchProgram = true;
-                    ExtractingJet_Window.isCompiling = true;
-                    var compileLaunch = new ExtractingJet_Window();                 
-                }
-                else if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
+                launchGame();
             }
             if (e.Control && e.KeyCode == Keys.N)
             {
@@ -275,12 +262,11 @@ namespace BTDToolbox
         //
         //UI Buttons
         //
-        private void LaunchProgram_Click(object sender, EventArgs e)
+        private void launchGame()
         {
             if (JetProps.get().Count == 1)
             {
-                ExtractingJet_Window.isCompiling = true;
-                ExtractingJet_Window.launchProgram = true;
+                ExtractingJet_Window.switchCase = "launch";
                 var compile = new ExtractingJet_Window();
             }
             else if (JetProps.get().Count < 1)
@@ -291,6 +277,10 @@ namespace BTDToolbox
             {
                 MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
             }
+        }
+        private void LaunchProgram_Click(object sender, EventArgs e)
+        {
+            launchGame();
         }
         private void RestoreBackup_Click(object sender, EventArgs e)
         {
@@ -338,8 +328,8 @@ namespace BTDToolbox
         {
             try
             {
-                mainForm = new MainWindow("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory, WindowState == FormWindowState.Maximized);
-                mainFormOutput = JsonConvert.SerializeObject(mainForm);
+                mainForm_Config = new MainForm_Config("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory, WindowState == FormWindowState.Maximized);
+                mainFormOutput = JsonConvert.SerializeObject(mainForm_Config);
 
                 StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
                 writeMainForm.Write(mainFormOutput);
@@ -386,7 +376,7 @@ namespace BTDToolbox
             try
             {
                 string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(deSerialJetForm);
+                JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(deSerialJetForm);
                 lastProject = deserializedJetForm.LastProject;
 
                 OpenJetForm();

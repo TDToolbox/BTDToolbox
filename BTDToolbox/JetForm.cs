@@ -32,7 +32,7 @@ namespace BTDToolbox
         string jetFormOutput;
         int splitterDistance;
         float treeViewFontSize;
-        JetExplorer jetExplorerConfig;
+        JetExplorer_Config jetExplorerConfig;
         public static string lastProject;
 
         //Load Last Project Variables
@@ -58,7 +58,7 @@ namespace BTDToolbox
             try
             {
                 string json = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer>(json);
+                JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(json);
 
                 Size JetFormSize = new Size(deserializedJetForm.SizeX, deserializedJetForm.SizeY);
                 this.Size = JetFormSize;
@@ -482,11 +482,11 @@ namespace BTDToolbox
         {
             if (projName == null)
             {
-                jetExplorerConfig = new JetExplorer("Jet Form", lastProject, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+                jetExplorerConfig = new JetExplorer_Config("Jet Form", lastProject, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
             }
             else
             {
-                jetExplorerConfig = new JetExplorer("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
+                jetExplorerConfig = new JetExplorer_Config("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
             }
             jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
 
