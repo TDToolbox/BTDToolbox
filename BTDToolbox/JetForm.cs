@@ -81,10 +81,10 @@ namespace BTDToolbox
             {
                 jetFormFontSize = 10;
             }
-            catch (Exception)
+            /*catch (Exception)
             {
                 MessageBox.Show("There was an error. Please try again if the window is blank.");
-            }
+            }*/
 
             this.treeView1.AfterSelect += treeView1_AfterSelect;
 
@@ -263,7 +263,6 @@ namespace BTDToolbox
         private void saveButton_Click(object sender, EventArgs e)
         {
             ExtractingJet_Window.currentProject = projName;
-            ExtractingJet_Window.isOutput = true;
             new ExtractingJet_Window();
         }
 
@@ -523,7 +522,7 @@ namespace BTDToolbox
             if (e.Control && e.KeyCode == Keys.S)
             {
                 ExtractingJet_Window.currentProject = projName;
-                ExtractingJet_Window.isOutput = true;
+                ExtractingJet_Window.switchCase = "output";
                 new ExtractingJet_Window();
             }
         }

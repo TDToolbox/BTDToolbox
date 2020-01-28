@@ -20,38 +20,35 @@ namespace BTDToolbox
     public partial class ExtractingJet_Window : Form
     {
         //Project Variables
-        public static bool isOutput;
-        public static bool isDecompiling;
         public string livePath = Environment.CurrentDirectory;
         public static string switchCase = "";
-        LaunchSettings_Config launchSettings_Config;
-        string configOutput;
 
         //Project name variables
-        public static bool hasCustomProjectName;
-        public static string projectName;
-        public static string customName;
-        public static int filesInJet;
-
-        //Extraction variables
-        public static string file;
-        public static int totalFiles;
-        public static int filesExtracted;
-        public static bool isProjectCreated;
-        
-
-        //Compile variables
-        public Thread compThread;
-        public static bool launchProgram = false;
+        public static bool hasCustomProjectName = false;
         public static string currentProject = "";
+        public static string projectName = "";
+        public static string customName = "";
+        string projectDest = "";
+        string sourceJet = "";
+        JetForm jf;
+
+        //zip variables
+        string exportPath = "";
+        public static int totalFiles = 0;        
         public int filesTransfered = 0;
-        public DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-        public DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
+        public static bool launchProgram = false;
 
         //Config variables
+        LaunchSettings_Config launchSettings_Config;
+        string configOutput = "";
         public string gameDir;
         public string exePath;
         public string steamJetPath;
+
+        //Threads
+        Thread thread_RestoreGame;
+        Thread compThread;
+        Thread thread_DecompileJet;
 
         public ExtractingJet_Window()
         {
@@ -63,33 +60,40 @@ namespace BTDToolbox
 
             if (is_GamePath_Valid() == false)
             {
+                ConsoleHandler.appendLog("Error identifying Game Directory or Backups. Please browse for your EXE again...\r\n");
                 browseForExe();
+                Validate_Backup();
             }
 
             switch (switchCase)
             {
                 case "output":
                     this.Text = "Compiling....";
-                    Outputting();
+                    OutputJet();
                     break;
                 case "compile":
                     this.Text = "Compiling....";
-                    compileJet_V2();
-                    break;
-                case "decompile":
-                    this.Text = "Decompiling....";
-                    Decompiling_NEW();
+                    compile_and_overwrite_Jet();
                     break;
                 case "launch":
                     this.Text = "Compiling....";
                     launchProgram = true;
-                    compileJet_V2();
+                    compile_and_overwrite_Jet();
+                    break;
+                case "decompile":
+                    this.Text = "Decompiling....";
+                    Decompile_NEW2();
+                    break;
+                case "backup":
+                    this.Text = "Restoring backup....";
+                    restoreGame();
                     break;
                 default:
                     MessageBox.Show("You did not enter a valid operation! There is an issue with the code");
                     break;
             }
         }
+        
         private void ExtractJet_Window_Load(object sender, EventArgs e)
         {
             CurrentFileProgress_Label.Hide();
@@ -101,62 +105,17 @@ namespace BTDToolbox
             label1.Location = new Point(label1.Location.X, label1.Location.Y - 50);
             this.Size = new Size(this.Size.Width, this.Size.Height - 50);
             pictureBox1.Location = new Point(pictureBox1.Location.X, pictureBox1.Location.Y - 50);
-
-            //this.Show();
         }
-
-        public DirectoryInfo decompile(string inputPath, DirectoryInfo targetFolder)
-        {
-
-            Random rand = new Random();
-            ZipFile archive = new ZipFile(inputPath);
-            archive.Password = "Q%_{6#Px]]";
-            ConsoleHandler.appendLog("Creating project files...");
-
-            if (hasCustomProjectName)
-            {
-                projectName = (livePath + "\\proj_" + customName);
-            }
-            else
-            {
-                int randName = rand.Next(10000000, 99999999);
-                projectName = (livePath + "\\proj_" + randName);
-            }
-            //Extract and count progress
-            DirectoryInfo dinfo = new DirectoryInfo(projectName);
-            using (ZipFile zip = ZipFile.Read(inputPath))
-            {
-                totalFiles = archive.Count();
-                filesExtracted = 0;
-                archive.ExtractProgress += ZipExtractProgress;
-                archive.ExtractAll(projectName);
-                
-                JetForm jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
-                jf.MdiParent = TD_Toolbox_Window.getInstance();
-                jf.Show();
-            }
-            ConsoleHandler.appendLog("Project files created at: " + projectName);
-            this.Close();
-
-            return dinfo;
-        }
-
         private void ZipExtractProgress(object sender, ExtractProgressEventArgs e)
         {
-            if (e.TotalBytesToTransfer > 0)
-            {
-                label1.Refresh();
-                CurrentFileProgress_Label.Refresh();
-                richTextBox1.Text = e.CurrentEntry.FileName;
-                richTextBox1.Refresh();
-                CurrentFileProgress.Value = Convert.ToInt32(100 * e.BytesTransferred / e.TotalBytesToTransfer);
-                e.BytesTransferred++;
-            }
             if (e.EventType != ZipProgressEventType.Extracting_BeforeExtractEntry)
                 return;
-            filesExtracted++;
-            TotalProgress_ProgressBar.Value = 100 * filesExtracted / totalFiles;
-            this.Refresh();
+            if (filesTransfered >= (totalFiles / 100))
+            {
+                TotalProgress_ProgressBar.Invoke(new Action(() => TotalProgress_ProgressBar.Value = 100 * filesTransfered / totalFiles));
+            }
+
+            filesTransfered++;
         }
         private void ZipCompileProgress(object sender, AddProgressEventArgs e)
         {
@@ -169,30 +128,9 @@ namespace BTDToolbox
             filesTransfered++;
         }
 
-        //Restore backup .jet
-        public static void restoreGame()
-        {
-            if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
-            {
-                MessageBox.Show("No backup found that can be restored! Use steam to re-download the original .jet");
-                return;
-            }
-            ConsoleHandler.appendLog("Restoring backup .jet");
-            string gameJetPath = Settings.readGamePath() + "\\..\\Assets\\BTD5.jet";
-            File.Delete(gameJetPath);
-            File.Copy(Environment.CurrentDirectory + "\\Backups\\Original.jet", gameJetPath);
-            ConsoleHandler.appendLog("Backup restored");
-            MessageBox.Show("Backup .jet restored!");
-        }
-
-
-
-
-
-
-
-
-
+        //
+        //Class wide functions
+        //
         private bool is_GamePath_Valid()
         {
             if (gameDir == null || gameDir == "")
@@ -220,7 +158,6 @@ namespace BTDToolbox
                 steamJetPath = gameDir + "\\Assets\\BTD5.jet";
 
                 SerializeConfig();
-                //Settings.setGamePath(fileDiag.FileName);  //this has been replaced with a config files
                 ConsoleHandler.appendLog("Launch settings saved in \\config\\btd5_launch_settings.json");
             }
         }
@@ -274,14 +211,20 @@ namespace BTDToolbox
                 ConsoleHandler.appendLog("Backup successfully validated.");
             }
         }
-        private void compileJet_V2()
+
+
+        //
+        //Compile functions
+        //
+        private void compile_and_overwrite_Jet()
         {
             this.Show();
             Validate_Backup();
-            compThread = new Thread(CompileThread2);
+            exportPath = steamJetPath;
+            compThread = new Thread(CompileThread);
             compThread.Start();
-        }
-        private void CompileThread2()
+        } 
+        private void CompileThread()
         {
             ConsoleHandler.appendLog("Compiling jet...");
             DirectoryInfo projDir = new DirectoryInfo(livePath + "\\" + currentProject);
@@ -297,7 +240,7 @@ namespace BTDToolbox
             toExport.AddProgress += ZipCompileProgress;
             toExport.AddDirectory(projDir.FullName);
             toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
-            toExport.Name = steamJetPath;
+            toExport.Name = exportPath;
             toExport.CompressionLevel = CompressionLevel.Level6;
 
             toExport.Save();
@@ -306,81 +249,12 @@ namespace BTDToolbox
             if(launchProgram == true)
             {
                 Process.Start(gameDir + "//BTD5-Win.exe");
-                //Process.Start(Settings.readGamePath());  //this has been replaced with a config files
                 ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
             }
             this.Invoke(new Action(() => this.Close()));
             compThread.Abort();
         }
-        public void compileJet_OLD()
-        {
-            //Just do a quick check to see if launchsettings.txt exists
-            try
-            {
-                string path = File.ReadAllText(livePath + "\\launchsettings.txt");
-                //MessageBox.Show(path);
-                string gameJetPath = path + "\\..\\Assets\\BTD5.jet";
-
-                DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
-
-                if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
-                {
-                    ConsoleHandler.appendLog("Jet backup not found, creating one...");
-                    Directory.CreateDirectory(Environment.CurrentDirectory + "\\Backups");
-                    File.Copy(gameJetPath, Environment.CurrentDirectory + "\\Backups\\Original.jet");
-                    ConsoleHandler.appendLog("Backup done");
-                }
-                ConsoleHandler.appendLog("Compiling jet...");
-
-                //Thread comp = new Thread(CompileThread);
-                //comp.Start();
-                ConsoleHandler.appendLog("Jet compiled");
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show("No launch dir defined or is wrong. Please select BTD5.exe so the program can export your project...");
-                ConsoleHandler.appendLog("No launch dir defined or is wrong.");
-                OpenFileDialog fileDiag = new OpenFileDialog();
-                fileDiag.Title = "Open game exe";
-                fileDiag.DefaultExt = "exe";
-                fileDiag.Filter = "Exe files (*.exe)|*.exe|All files (*.*)|*.*";
-                fileDiag.Multiselect = false;
-                if (fileDiag.ShowDialog() == DialogResult.OK)
-                {
-                    string file = fileDiag.FileName;
-                    file = file.Replace("BTD5-Win.exe", "");
-                    Settings.setGamePath(file);
-                    string jet = file + "\\..\\Assets\\BTD5.jet";
-                    ConsoleHandler.appendLog("Launch settings saved in launchSettings.txt");
-                }
-            }
-            /*if (launchProgram)
-            {
-
-                if (isCompiling == false)
-                {
-                    Process.Start(Settings.readGamePath());
-                    ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
-                }
-                else
-                {
-                    while (isCompiling == true)
-                    {
-                        //Thread.Sleep(1000);
-                        this.Invoke(new Action(() => this.Refresh()));
-                        richTextBox1.Invoke(new Action(() => richTextBox1.Refresh()));
-                        TotalProgress_ProgressBar.Invoke(new Action(() => TotalProgress_ProgressBar.Refresh()));
-                        if (isCompiling == false)
-                        {
-                            Process.Start(Settings.readGamePath());
-                            ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
-                        }
-                    }
-                }
-            }*/
-            //isCompiling = false;
-        }
-        private void Outputting()
+        private void OutputJet()
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Export .jet";
@@ -389,39 +263,102 @@ namespace BTDToolbox
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 this.Show();
-                DirectoryInfo projDir = new DirectoryInfo(Environment.CurrentDirectory + "\\" + currentProject);
-                ConsoleHandler.appendLog("Compiling jet...");
-                //this.compile(projDir, sfd.FileName);
-                ConsoleHandler.appendLog("Jet compiled");
+                exportPath = sfd.FileName;
+                compThread = new Thread(CompileThread);
+                compThread.Start();
             }
-            isOutput = false;
-            return;
         }
 
-        private void Decompiling_NEW()
+
+        //
+        //Decompile functions
+        //
+        private void Decompile_NEW2()
         {
-            this.Text = "Extracting....";
+            Random rand = new Random();
+            sourceJet = livePath + "\\Backups\\Original.jet";
+
+            if (hasCustomProjectName)
+            {
+                projectName = (livePath + "\\proj_" + customName);
+            }
+            else
+            {
+                int randName = rand.Next(1, 99999999);
+                projectName = (livePath + "\\proj_" + randName);
+            }
+            projectDest = projectName;
+
+            thread_DecompileJet = new Thread(DecompileThread);
+            thread_DecompileJet.Start();
+
+            DirectoryInfo dinfo = new DirectoryInfo(projectName);
+            jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
+            jf.MdiParent = TD_Toolbox_Window.getInstance();
+        }
+
+        private void DecompileThread()
+        {
+            ZipFile archive = new ZipFile(sourceJet);
+            archive.Password = "Q%_{6#Px]]";
+            ConsoleHandler.appendLog("Creating project files...");
+
+            //Extract and count progress
+            DirectoryInfo dinfo = new DirectoryInfo(projectName);
+
+            this.Show();
+            this.Refresh();
             try
             {
-                DirectoryInfo extract = this.decompile(file, dir);
+                using (ZipFile zip = ZipFile.Read(sourceJet))
+                {
+                    totalFiles = archive.Count();
+                    filesTransfered = 0;
+                    archive.ExtractProgress += ZipExtractProgress;
+                    archive.ExtractAll(projectDest);
+                }
+                ConsoleHandler.appendLog("Project files created at: " + projectName);
+                jf.Invoke(new Action(() => jf.Show()));
             }
-            catch
+            catch (Exception)
             {
+                this.Hide();
+
                 DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
                 if (varr == DialogResult.OK)
                 {
+                    MessageBox.Show("Overwriting existing project... Please close the current Jet Explorer window.");
                     Directory.Delete(projectName, true);
-                    DirectoryInfo extract = this.decompile(file, dir);
+                    DecompileThread();
                 }
                 if (varr == DialogResult.Cancel)
                 {
                     var reopenSetProjectName = new SetProjectName();
                     reopenSetProjectName.Show();
-                    this.Close();
+                    this.Invoke(new Action(() => this.Close()));
+                    thread_DecompileJet.Abort();
                 }
             }
-            isDecompiling = false;
-        }
 
+            this.Invoke(new Action(() => this.Close()));
+            thread_DecompileJet.Abort();
+        }
+        //
+        //Restore Backup
+        //
+        private void restoreGame()
+        {
+            thread_RestoreGame = new Thread(restoreGame_Thread);
+            thread_RestoreGame.Start();
+        }
+        private void restoreGame_Thread()
+        {
+            ConsoleHandler.appendLog("Restoring backup .jet");
+            File.Delete(steamJetPath);
+            File.Copy(Environment.CurrentDirectory + "\\Backups\\Original.jet", steamJetPath);
+            ConsoleHandler.appendLog("Backup restored\r\n");
+            //this.Invoke(new Action(() => this.Close()));
+            thread_RestoreGame.Abort();
+        }
     }
 }

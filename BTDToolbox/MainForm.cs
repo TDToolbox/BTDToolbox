@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfigs;
 using static System.Environment;
@@ -222,7 +223,7 @@ namespace BTDToolbox
                 if (bytes == "PK")
                 {
                     var setProjectName = new SetProjectName();
-                    ExtractingJet_Window.file = file;
+                    //ExtractingJet_Window.file = file;     //come back to this. Otherwise it will open twice
                     setProjectName.Show();
                 }
                 else
@@ -284,7 +285,8 @@ namespace BTDToolbox
         }
         private void RestoreBackup_Click(object sender, EventArgs e)
         {
-            ExtractingJet_Window.restoreGame();
+            ExtractingJet_Window.switchCase = "backup";
+            var compile = new ExtractingJet_Window();
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
