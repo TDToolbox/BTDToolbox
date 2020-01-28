@@ -33,11 +33,13 @@
             this.File_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.New_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.ImportNewJet = new System.Windows.Forms.ToolStripMenuItem();
+            this.NewProject_From_Backup = new System.Windows.Forms.ToolStripMenuItem();
             this.btdpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenExistingProject = new System.Windows.Forms.ToolStripMenuItem();
             this.openRecentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Find_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Replace_Button = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +54,7 @@
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nullJetFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
+            this.remakeBackupjetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,7 +80,8 @@
             this.New_ToolStrip,
             this.openToolStripMenuItem1,
             this.openRecentToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.saveToolStripMenuItem});
             this.File_ToolStrip.ForeColor = System.Drawing.Color.White;
             this.File_ToolStrip.Name = "File_ToolStrip";
             this.File_ToolStrip.Size = new System.Drawing.Size(37, 20);
@@ -87,22 +91,30 @@
             // 
             this.New_ToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ImportNewJet,
+            this.NewProject_From_Backup,
             this.btdpToolStripMenuItem});
             this.New_ToolStrip.Name = "New_ToolStrip";
-            this.New_ToolStrip.Size = new System.Drawing.Size(142, 22);
+            this.New_ToolStrip.Size = new System.Drawing.Size(180, 22);
             this.New_ToolStrip.Text = "New";
             // 
             // ImportNewJet
             // 
             this.ImportNewJet.Name = "ImportNewJet";
-            this.ImportNewJet.Size = new System.Drawing.Size(171, 22);
+            this.ImportNewJet.Size = new System.Drawing.Size(182, 22);
             this.ImportNewJet.Text = "Project from .jet";
             this.ImportNewJet.Click += new System.EventHandler(this.ImportNewJet_Click);
+            // 
+            // NewProject_From_Backup
+            // 
+            this.NewProject_From_Backup.Name = "NewProject_From_Backup";
+            this.NewProject_From_Backup.Size = new System.Drawing.Size(182, 22);
+            this.NewProject_From_Backup.Text = "Project from Backup";
+            this.NewProject_From_Backup.Click += new System.EventHandler(this.NewProject_From_Backup_Click);
             // 
             // btdpToolStripMenuItem
             // 
             this.btdpToolStripMenuItem.Name = "btdpToolStripMenuItem";
-            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
             // 
             // openToolStripMenuItem1
@@ -110,27 +122,34 @@
             this.openToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OpenExistingProject});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(154, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(155, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -177,14 +196,14 @@
             // ToggleConsole
             // 
             this.ToggleConsole.Name = "ToggleConsole";
-            this.ToggleConsole.Size = new System.Drawing.Size(133, 22);
+            this.ToggleConsole.Size = new System.Drawing.Size(134, 22);
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
             // 
             // OpenJetExplorer
             // 
             this.OpenJetExplorer.Name = "OpenJetExplorer";
-            this.OpenJetExplorer.Size = new System.Drawing.Size(133, 22);
+            this.OpenJetExplorer.Size = new System.Drawing.Size(134, 22);
             this.OpenJetExplorer.Text = "Jet Explorer";
             this.OpenJetExplorer.Click += new System.EventHandler(this.OpenJetExplorer_Click);
             // 
@@ -192,6 +211,7 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RestoreBackup,
+            this.remakeBackupjetToolStripMenuItem,
             this.Credits});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -201,14 +221,14 @@
             // RestoreBackup
             // 
             this.RestoreBackup.Name = "RestoreBackup";
-            this.RestoreBackup.Size = new System.Drawing.Size(174, 22);
-            this.RestoreBackup.Text = "Restore backup .jet";
+            this.RestoreBackup.Size = new System.Drawing.Size(191, 22);
+            this.RestoreBackup.Text = "Restore to backup .jet";
             this.RestoreBackup.Click += new System.EventHandler(this.RestoreBackup_Click);
             // 
             // Credits
             // 
             this.Credits.Name = "Credits";
-            this.Credits.Size = new System.Drawing.Size(174, 22);
+            this.Credits.Size = new System.Drawing.Size(191, 22);
             this.Credits.Text = "Credits";
             this.Credits.Click += new System.EventHandler(this.OpenCredits_Click);
             // 
@@ -225,14 +245,14 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // nullJetFormToolStripMenuItem
             // 
             this.nullJetFormToolStripMenuItem.Name = "nullJetFormToolStripMenuItem";
-            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             // 
             // versionTag
             // 
@@ -246,6 +266,13 @@
             this.versionTag.Size = new System.Drawing.Size(98, 55);
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
+            // 
+            // remakeBackupjetToolStripMenuItem
+            // 
+            this.remakeBackupjetToolStripMenuItem.Name = "remakeBackupjetToolStripMenuItem";
+            this.remakeBackupjetToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.remakeBackupjetToolStripMenuItem.Text = "Recompile Backup .jet";
+            this.remakeBackupjetToolStripMenuItem.Click += new System.EventHandler(this.RemakeBackupjetToolStripMenuItem_Click);
             // 
             // TD_Toolbox_Window
             // 
@@ -295,6 +322,9 @@
         private System.Windows.Forms.ToolStripMenuItem OpenJetExplorer;
         private System.Windows.Forms.ToolStripMenuItem nullJetFormToolStripMenuItem;
         private System.Windows.Forms.Label versionTag;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem NewProject_From_Backup;
+        private System.Windows.Forms.ToolStripMenuItem remakeBackupjetToolStripMenuItem;
     }
 }
 

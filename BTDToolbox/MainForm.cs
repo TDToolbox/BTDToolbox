@@ -181,7 +181,7 @@ namespace BTDToolbox
         {
             if (e.KeyCode == Keys.F5)
             {
-                launchGame();
+                compileJet("launch");
             }
             if (e.Control && e.KeyCode == Keys.N)
             {
@@ -263,25 +263,28 @@ namespace BTDToolbox
         //
         //UI Buttons
         //
-        private void launchGame()
+        private void compileJet(string switchCase)
         {
             if (JetProps.get().Count == 1)
             {
-                ExtractingJet_Window.switchCase = "launch";
+                ExtractingJet_Window.switchCase = switchCase;
                 var compile = new ExtractingJet_Window();
             }
-            else if (JetProps.get().Count < 1)
+            if (switchCase == "launch")
             {
-                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-            }
-            else
-            {
-                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                if (JetProps.get().Count < 1)
+                {
+                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                }
+                else
+                {
+                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                }
             }
         }
         private void LaunchProgram_Click(object sender, EventArgs e)
         {
-            launchGame();
+            compileJet("launch");
         }
         private void RestoreBackup_Click(object sender, EventArgs e)
         {
@@ -391,6 +394,21 @@ namespace BTDToolbox
         private void TD_Toolbox_Window_Resize(object sender, EventArgs e)
         {
             this.Refresh();
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            compileJet("output");
+        }
+
+        private void NewProject_From_Backup_Click(object sender, EventArgs e)
+        {
+            compileJet("decompile backup");
+        }
+
+        private void RemakeBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            compileJet("clean backup");
         }
     }
 }

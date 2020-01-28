@@ -49,7 +49,7 @@ namespace BTDToolbox
             //this.projName = projName;
             this.projName = projName;
             ConsoleHandler.appendLog(projName);
-            ExtractingJet_Window.currentProject = projName;
+            //ExtractingJet_Window.currentProject = projName;
 
             initMultiContextMenu();
             initSelContextMenu();
@@ -262,8 +262,7 @@ namespace BTDToolbox
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            ExtractingJet_Window.currentProject = projName;
-            new ExtractingJet_Window();
+            saveJet();
         }
 
         //Context caller
@@ -521,9 +520,7 @@ namespace BTDToolbox
         {
             if (e.Control && e.KeyCode == Keys.S)
             {
-                ExtractingJet_Window.currentProject = projName;
-                ExtractingJet_Window.switchCase = "output";
-                new ExtractingJet_Window();
+                saveJet();
             }
         }
 
@@ -613,7 +610,16 @@ namespace BTDToolbox
 
         private void SaveButton_Click_1(object sender, EventArgs e)
         {
-
+            saveJet();
+        }
+        private void saveJet()
+        {
+            if (JetProps.get().Count == 1)
+            {
+                ExtractingJet_Window.currentProject = projName;
+                ExtractingJet_Window.switchCase = "output";
+                var compile = new ExtractingJet_Window();
+            }
         }
     }
 }

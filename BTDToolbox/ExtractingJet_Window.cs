@@ -84,9 +84,18 @@ namespace BTDToolbox
                     this.Text = "Decompiling....";
                     Decompile_NEW2();
                     break;
+                case "decompile backup":
+                    this.Text = "Decompiling....";
+                    var newProject = new SetProjectName();
+                    newProject.Show();
+                    break;
                 case "backup":
                     this.Text = "Restoring backup....";
                     restoreGame();
+                    break;
+                case "clean backup":
+                    this.Text = "replacing backup....";
+                    Clear_Backup();
                     break;
                 default:
                     MessageBox.Show("You did not enter a valid operation! There is an issue with the code");
@@ -197,6 +206,12 @@ namespace BTDToolbox
                 Directory.CreateDirectory(livePath + "\\config");
             }
         }
+        private void Clear_Backup()
+        {
+            ConsoleHandler.appendLog("Clearing Backup .jet");
+            File.Delete(livePath + "\\Backups\\Original.jet");
+            Validate_Backup();
+        }
         private void Validate_Backup()
         {
             if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
@@ -226,33 +241,40 @@ namespace BTDToolbox
         } 
         private void CompileThread()
         {
-            ConsoleHandler.appendLog("Compiling jet...");
-            DirectoryInfo projDir = new DirectoryInfo(livePath + "\\" + currentProject);
+            /*try
+            {*/
+                ConsoleHandler.appendLog("Compiling jet...");
+                DirectoryInfo projDir = new DirectoryInfo(livePath + "\\" + currentProject);
 
-            int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
-            int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
-            totalFiles = numFiles + numFolders;
+                int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
+                int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
+                totalFiles = numFiles + numFolders;
 
 
-            filesTransfered = 0;
-            ZipFile toExport = new ZipFile();
-            toExport.Password = "Q%_{6#Px]]";
-            toExport.AddProgress += ZipCompileProgress;
-            toExport.AddDirectory(projDir.FullName);
-            toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
-            toExport.Name = exportPath;
-            toExport.CompressionLevel = CompressionLevel.Level6;
+                filesTransfered = 0;
+                ZipFile toExport = new ZipFile();
+                toExport.Password = "Q%_{6#Px]]";
+                toExport.AddProgress += ZipCompileProgress;
+                toExport.AddDirectory(projDir.FullName);
+                toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
+                toExport.Name = exportPath;
+                toExport.CompressionLevel = CompressionLevel.Level6;
 
-            toExport.Save();
-            toExport.Dispose();
+                toExport.Save();
+                toExport.Dispose();
 
-            if(launchProgram == true)
+                if(launchProgram == true)
+                {
+                    Process.Start(gameDir + "//BTD5-Win.exe");
+                    ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
+                }
+                this.Invoke(new Action(() => this.Close()));
+                compThread.Abort();
+            /*}
+            catch(Exception)
             {
-                Process.Start(gameDir + "//BTD5-Win.exe");
-                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
-            }
-            this.Invoke(new Action(() => this.Close()));
-            compThread.Abort();
+                ConsoleHandler.appendLog("Process was cancelled by the user, or there was an error");
+            }*/
         }
         private void OutputJet()
         {
