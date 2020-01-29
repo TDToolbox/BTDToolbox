@@ -38,7 +38,7 @@
             this.contentPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // titleSeperator
             // 
             // 
             // TitleLabel
@@ -98,12 +98,11 @@
             // 
             // NewConsole
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "NewConsole";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "NewConsole";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NewConsole_KeyDown);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();
             this.titleSeperator.Panel2.ResumeLayout(false);

@@ -246,7 +246,7 @@
             this.FindNext_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.FindNext_Button.Margin = new System.Windows.Forms.Padding(5, 1, 5, 2);
             this.FindNext_Button.Name = "FindNext_Button";
-            this.FindNext_Button.Size = new System.Drawing.Size(61, 22);
+            this.FindNext_Button.Size = new System.Drawing.Size(62, 22);
             this.FindNext_Button.Text = "Find Next";
             this.FindNext_Button.Click += new System.EventHandler(this.FindNext_Button_Click);
             // 
@@ -268,6 +268,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "JsonEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "JsonEditor";
             this.Load += new System.EventHandler(this.JsonEditor_Load);
             this.titleSeperator.Panel1.ResumeLayout(false);

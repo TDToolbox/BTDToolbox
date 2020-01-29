@@ -40,6 +40,7 @@
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -83,6 +84,8 @@
       <DependentUpon>FindWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonProps.cs" />
+    <Compile Include="ProjectConfig.cs" />
+    <Compile Include="SerializeOps.cs" />
     <Compile Include="SetProjectName.cs">
       <SubType>Form</SubType>
     </Compile>

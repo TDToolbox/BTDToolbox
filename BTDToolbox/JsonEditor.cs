@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfigs;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
@@ -33,7 +33,9 @@ namespace BTDToolbox
         public bool findNextPhrase;
 
         //Congif variables
-        JsonEditor_Config jsonEditorConfig;
+        //JsonEditor_Config jsonEditorConfig;
+        ConfigFile programData;
+        
         string jsonEditorOutput;
         public static float jsonEditorFont;
         public string lastJsonFile;
@@ -41,7 +43,8 @@ namespace BTDToolbox
         public JsonEditor(string Path)
         {
             InitializeComponent();
-
+            Deserialize_Config();
+            StartUp();
             this.Path = Path;
             this.FormClosed += exitHandling;
 
@@ -53,7 +56,7 @@ namespace BTDToolbox
             this.Replace_TextBox.Visible = false;
             this.ReplaceDropDown.Visible = false;
 
-            try
+            /*try
             {
                 string json = File.ReadAllText(livePath + "\\config\\json_editor.json");
                 JsonEditor_Config deserializedJsonEditor = JsonConvert.DeserializeObject<JsonEditor_Config>(json);
@@ -65,7 +68,8 @@ namespace BTDToolbox
                 this.Location = new Point(deserializedJsonEditor.PosX, deserializedJsonEditor.PosY);
 
                 jsonEditorFont = deserializedJsonEditor.FontSize;
-                Editor_TextBox.Font = new Font("Microsoft Sans Serif", jsonEditorFont);
+                Editor_TextBox.Font = new Font("Consolas", jsonEditorFont);
+                //Editor_TextBox.Font = new Font("Microsoft Sans Serif", jsonEditorFont);
 
                 FontSize_TextBox.Text = jsonEditorFont.ToString();
             }
@@ -75,8 +79,8 @@ namespace BTDToolbox
             }
             catch (System.ArgumentException)
             {
-                jsonEditorFont = 10;
-            }
+                jsonEditorFont = 14;
+            }*/
 
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
@@ -99,7 +103,20 @@ namespace BTDToolbox
 
             this.Load += EditorLoading;
         }
+        private void StartUp()
+        {
 
+            this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
+            this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
+
+            jsonEditorFont = programData.JSON_Editor_FontSize;
+            Editor_TextBox.Font = new Font("Consolas", jsonEditorFont);
+            FontSize_TextBox.Text = jsonEditorFont.ToString();
+        }
+        private void Deserialize_Config()
+        {
+            programData = Serializer.Deserialize_Config();
+        }
         private void EditorLoading(object sender, EventArgs e)
         {
             bool close = false;
@@ -137,10 +154,10 @@ namespace BTDToolbox
         }
         private void exitHandling(object sender, EventArgs e)
         {
-            SerializeConfig();
+            Serializer.SaveConfig(this, "json editor", programData);
             JsonProps.decrement(this);
         }
-        private void SerializeConfig()
+        /*private void SerializeConfig()
         {
             FileInfo info = new FileInfo(Path);
 
@@ -152,7 +169,7 @@ namespace BTDToolbox
             writeJsonEditorForm.Close();
 
             JsonProps.decrement(this);
-        }
+        }*/
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.F)
@@ -349,7 +366,7 @@ namespace BTDToolbox
         }
         private void JsonEditor_Load(object sender, EventArgs e)
         {
-            SerializeConfig();
+            Serializer.SaveConfig(this, "json editor", programData);
         }
     }
 }

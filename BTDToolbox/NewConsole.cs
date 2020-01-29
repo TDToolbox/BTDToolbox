@@ -10,56 +10,40 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfigs;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
     public partial class NewConsole : ThemedForm
     {
         //Config variables
-        Window consoleForm;
+        ConfigFile programData;
         public static float consoleLogFont;
         string livePath = Environment.CurrentDirectory;
-        string consoleFormOutput;
+        float fontSize;
 
 
         public NewConsole() : base()
         {
             InitializeComponent();
-            try
-            {
-                string json = File.ReadAllText(livePath + "\\config\\console_form.json");
-                Window deserializedConsoleForm = JsonConvert.DeserializeObject<Window>(json);
-
-                Size ConsoleFormSize = new Size(deserializedConsoleForm.SizeX, deserializedConsoleForm.SizeY);
-                this.Size = ConsoleFormSize;
-
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(deserializedConsoleForm.PosX, deserializedConsoleForm.PosY);
-
-                consoleLogFont = deserializedConsoleForm.FontSize;
-                console_log.Font = new Font("Microsoft Sans Serif", consoleLogFont);
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                consoleForm = new Window("Console", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10);
-                consoleFormOutput = JsonConvert.SerializeObject(consoleForm);
-
-                StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\console_form.json", false);
-                writeConsoleForm.Write(consoleFormOutput);
-                writeConsoleForm.Close();
-            }
-            catch (System.ArgumentException)
-            {
-                console_log.Font = new Font("Microsoft Sans Serif", 10);
-            }
+            StartUp();
 
             this.FormClosed += exitHandling;
         }
 
+        private void StartUp()
+        {
+            Deserialize_Config();
+
+            this.Size = new Size(programData.Console_SizeX, programData.Console_SizeY);
+            this.Location = new Point(programData.Console_PosX, programData.Console_PosY);
+            fontSize = programData.Console_FontSize;
+            this.Font = new Font("Consolas", fontSize);
+        }
+
         public override void close_button_Click(object sender, EventArgs e)
         {
-            serializeConfig();
+            Serializer.SaveConfig(this, "console", programData);
             this.Hide();
         }
 
@@ -67,42 +51,13 @@ namespace BTDToolbox
         {
             console_log.Invoke(new Action(() => console_log.AppendText(log + "\r\n")));
         }
-        private void serializeConfig()
-        {
-            consoleForm = new Window("Console", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, consoleLogFont);
-            consoleFormOutput = JsonConvert.SerializeObject(consoleForm);
-
-            StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\console_form.json", false);
-            writeConsoleForm.Write(consoleFormOutput);
-            writeConsoleForm.Close();
-        }
         private void exitHandling(object sender, EventArgs e)
         {
-            serializeConfig();
+            Serializer.SaveConfig(this, "console", programData);
         }
-
-        private void NewConsole_KeyDown(object sender, KeyEventArgs e)
+        private void Deserialize_Config()
         {
-            if (e.KeyCode == Keys.F5)
-            {
-                launchGame();
-            }
-        }
-        private void launchGame()
-        {
-            if (JetProps.get().Count == 1)
-            {
-                ExtractingJet_Window.switchCase = "launch";
-                var compile = new ExtractingJet_Window();
-            }
-            else if (JetProps.get().Count < 1)
-            {
-                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-            }
-            else
-            {
-                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-            }
+            programData = Serializer.Deserialize_Config();
         }
     }
 }

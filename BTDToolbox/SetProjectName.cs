@@ -14,7 +14,6 @@ namespace BTDToolbox
     {
         public static string projectName;
         public bool hasClickedRandomName;
-        //public static bool doesProjectAlreadyExist;
 
         public SetProjectName()
         {
@@ -25,11 +24,6 @@ namespace BTDToolbox
             this.AcceptButton = CreateProject_Button;
             this.Activate();
             ExtractingJet_Window.switchCase = "decompile";
-        }
-        private void SetProjectName_Load(object sender, EventArgs e)
-        {
-            
-            this.Show();
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {

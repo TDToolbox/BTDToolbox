@@ -307,6 +307,7 @@ namespace BTDToolbox
                 int randName = rand.Next(1, 99999999);
                 projectName = (livePath + "\\proj_" + randName);
             }
+            TD_Toolbox_Window.projName = projectName;
             projectDest = projectName;
 
             backgroundThread = new Thread(DecompileThread);

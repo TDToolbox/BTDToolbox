@@ -10,7 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfigs;
+using static BTDToolbox.ProjectConfig;
 using static System.Windows.Forms.ToolStripItem;
 
 namespace BTDToolbox
@@ -28,11 +28,11 @@ namespace BTDToolbox
         private ContextMenuStrip multiSelMenu;
 
         //Config values
+        ConfigFile programData;
         public static float jetFormFontSize;
         string jetFormOutput;
         int splitterDistance;
         float treeViewFontSize;
-        JetExplorer_Config jetExplorerConfig;
         public static string lastProject;
 
         //Load Last Project Variables
@@ -40,13 +40,14 @@ namespace BTDToolbox
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
+            Deserialize_Config();
+
             this.KeyPreview = true;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
 
             this.dirInfo = dirInfo;
             this.Form = Form;
-            //this.projName = projName;
             this.projName = projName;
             ConsoleHandler.appendLog(projName);
             //ExtractingJet_Window.currentProject = projName;
@@ -55,7 +56,7 @@ namespace BTDToolbox
             initSelContextMenu();
             initEmpContextMenu();
             
-            try
+            /*try
             {
                 string json = File.ReadAllText(livePath + "\\config\\jetForm.json");
                 JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(json);
@@ -80,7 +81,7 @@ namespace BTDToolbox
             catch (System.ArgumentException)
             {
                 jetFormFontSize = 10;
-            }
+            }*/
             /*catch (Exception)
             {
                 MessageBox.Show("There was an error. Please try again if the window is blank.");
@@ -95,7 +96,10 @@ namespace BTDToolbox
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
         }
-
+        private void Deserialize_Config()
+        {
+            programData = Serializer.Deserialize_Config();
+        }
         private void initSelContextMenu()
         {
             selMenu = new ContextMenuStrip();
@@ -136,7 +140,7 @@ namespace BTDToolbox
         private void JetForm_Closed(object sender, EventArgs e)
         {
             JetProps.decrement(this);
-            SerializeConfig();
+            Serializer.SaveConfig(this, "jet explorer", programData);
         }
 
         private void PopulateTreeView()
@@ -476,7 +480,7 @@ namespace BTDToolbox
         {
             splitterDistance = fileViewContainer.SplitterDistance;
         }
-        internal void SerializeConfig()
+        /*internal void SerializeConfig()
         {
             if (projName == null)
             {
@@ -510,10 +514,10 @@ namespace BTDToolbox
                 }
             }
 
-        }
+        }*/
         private void exitHandling(object sender, EventArgs e)
         {
-            SerializeConfig();
+            Serializer.SaveConfig(this, "jet explorer", programData);
         }
 
         private void JetForm_KeyDown(object sender, KeyEventArgs e)
@@ -543,7 +547,7 @@ namespace BTDToolbox
 
         private void JetForm_Activated(object sender, EventArgs e)
         {
-            SerializeConfig();
+            Serializer.SaveConfig(this, "jet explorer", programData);
         }
 
 

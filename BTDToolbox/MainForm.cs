@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfigs;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
@@ -22,15 +22,16 @@ namespace BTDToolbox
         public DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
 
         //Config variables
-        MainForm_Config mainForm_Config;
+        ConfigFile programData;
+        bool firstUse = true;
         public bool loadLastProject;
         public static string file;
         public int mainFormFontSize;
-        public bool enableConsole;
-        string mainFormOutput;
+        public static bool enableConsole;
         public static string projName;
         private Bitmap bgImg;
         public string lastProject;
+        float fontSize;
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
@@ -45,84 +46,81 @@ namespace BTDToolbox
         {
             InitializeComponent();
             toolbox = this;
-            try
-            {
-                string json = File.ReadAllText(livePath + "\\config\\main_form.json");
-                MainForm_Config deserializedMainForm = JsonConvert.DeserializeObject<MainForm_Config>(json);
+            Startup();
 
-                Size MainFormSize = new Size(deserializedMainForm.SizeX, deserializedMainForm.SizeY);
-                this.Size = MainFormSize;
-
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(deserializedMainForm.PosX, deserializedMainForm.PosY);
-
-                Font mainFormFontSize = new Font("Microsoft Sans Serif", deserializedMainForm.FontSize);
-                this.Font = mainFormFontSize;
-
-                if (deserializedMainForm.Fullscreen)
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                }
-
-                enableConsole = deserializedMainForm.EnableConsole;
-                projectDirPath = deserializedMainForm.DirPath;
-
-
-                string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(deSerialJetForm);
-                lastProject = deserializedJetForm.LastProject;
-            }
-            catch (FileNotFoundException)
-            {
-                SerializeConfig();
-            }
-            catch (DirectoryNotFoundException)
-            {
-                Directory.CreateDirectory(livePath + "\\config");
-            }
-            catch (ArgumentException)
-            {
-                mainFormFontSize = 10;
-            }
-            catch(Exception)
-            {
-                MessageBox.Show("There was a failure in serializing the configurations, please delete the 'config' folder and try again.");
-            }
-
-            this.FormClosed += ExitHandling;
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
-            
-            Random rand = new Random();
-            if(rand.Next(0,2)==1)
-            {
-                bgImg = Properties.Resources.Logo2;
-            }else
-            {
-                bgImg = Properties.Resources.Logo1;
-            }
-
-            this.BackgroundImage = bgImg;
             this.BackgroundImageLayout = ImageLayout.Center;
             this.Resize += mainResize;
             this.KeyPreview = true;
-            
+
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
+
+            Random rand = new Random();
+            switch (rand.Next(0, 2))
+            {
+                case 0:
+                    bgImg = Properties.Resources.Logo1;
+                    break;
+                case 1:
+                    bgImg = Properties.Resources.Logo2;
+                    break;
+            }
+
+            this.BackgroundImage = bgImg;
+            this.FormClosed += ExitHandling;
+        }
+        private void Startup()
+        {
+            try
+            {
+                Deserialize_Config();
+
+                bool existingUser = programData.ExistingUser;
+                if (existingUser == false)
+                    firstUse = true;
+                else
+                    firstUse = false;
+
+                this.Size = new Size(programData.Main_SizeX, programData.Main_SizeY);
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = new Point(programData.Main_PosX, programData.Main_PosY);
+                this.Font = new Font("Microsoft Sans Serif", programData.Main_FontSize);
+                if (programData.Main_Fullscreen)
+                    this.WindowState = FormWindowState.Maximized;
+
+                enableConsole = programData.EnableConsole;
+                projectDirPath = programData.LastProject_Path;
+                lastProject = programData.LastProject;
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw ex;
+                //  SerializeConfig();
+            }
+            catch (System.NullReferenceException ex) 
+            {
+                throw ex;
+                //  SerializeConfig();
+                ;
+            }
+            catch (ArgumentException)
+            {
+                fontSize = 10;
+                programData.Console_FontSize = fontSize;
+                // SerializeConfig();
+            }
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
 
             ConsoleHandler.console = new NewConsole();
             ConsoleHandler.console.MdiParent = this;
-            //LoadLastProject();
+
             if (enableConsole == true)
-            {
                 ConsoleHandler.console.Show();
-            }
             else
-            {
                 ConsoleHandler.console.Hide();
-            }
             
             ConsoleHandler.appendLog("Program loaded!");
             ConsoleHandler.appendLog("Searching for existing projects...");
@@ -130,13 +128,8 @@ namespace BTDToolbox
             OpenJetForm();
 
             foreach (Control con in Controls)
-            {
                 if (con is MdiClient)
-                {
                     mdiClient = con as MdiClient;
-                }
-            }
-            
         }
 
         public static TD_Toolbox_Window getInstance()
@@ -147,7 +140,8 @@ namespace BTDToolbox
         {
             if (lastProject != "" && lastProject != null)
             {
-                DirectoryInfo dinfo = new DirectoryInfo(livePath + "\\" + lastProject);
+                //DirectoryInfo dinfo = new DirectoryInfo(livePath + "\\" + lastProject);
+                DirectoryInfo dinfo = new DirectoryInfo(lastProject);
                 if(dinfo.Exists)
                 {
                     foreach (JetForm o in JetProps.get())
@@ -159,16 +153,6 @@ namespace BTDToolbox
                         }
                     }
                     JetForm jf = new JetForm(dinfo, this, projName);
-                    try
-                    {
-                        string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                        JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(deSerialJetForm);
-                        lastProject = deserializedJetForm.LastProject;
-                    }
-                    catch
-                    {
-                        jf.SerializeConfig();
-                    }
                     jf.MdiParent = this;
                     jf.Show();
                 }
@@ -335,21 +319,9 @@ namespace BTDToolbox
         //
         //Config stuff
         //
-        private void SerializeConfig()
+        private void Deserialize_Config()
         {
-            try
-            {
-                mainForm_Config = new MainForm_Config("Main Form", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, this.Font.Size, enableConsole, Environment.CurrentDirectory, WindowState == FormWindowState.Maximized);
-                mainFormOutput = JsonConvert.SerializeObject(mainForm_Config);
-
-                StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\main_form.json", false);
-                writeMainForm.Write(mainFormOutput);
-                writeMainForm.Close();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("There were problems with saving configurations. Things may not act normally.");
-            }
+            programData = Serializer.Deserialize_Config();
         }
         private void ExitHandling(object sender, EventArgs e)
         {
@@ -361,7 +333,7 @@ namespace BTDToolbox
             {
                 enableConsole = false;
             }
-            SerializeConfig();
+            Serializer.SaveConfig(this, "main", programData);
         }
         //
         //Mdi Stuff
@@ -386,10 +358,6 @@ namespace BTDToolbox
         {
             try
             {
-                string deSerialJetForm = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(deSerialJetForm);
-                lastProject = deserializedJetForm.LastProject;
-
                 OpenJetForm();
             } catch (Exception ex)
             {
