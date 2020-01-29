@@ -265,22 +265,31 @@ namespace BTDToolbox
         //
         private void compileJet(string switchCase)
         {
-            if (JetProps.get().Count == 1)
+            if (switchCase == "launch")
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    ExtractingJet_Window.switchCase = switchCase;
+                    var compile = new ExtractingJet_Window();
+                }
+                else
+                {
+                    if (JetProps.get().Count < 1)
+                    {
+                        MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                    }
+                }
+            }
+            else
             {
                 ExtractingJet_Window.switchCase = switchCase;
                 var compile = new ExtractingJet_Window();
             }
-            if (switchCase == "launch")
-            {
-                if (JetProps.get().Count < 1)
-                {
-                    MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                }
-                else
-                {
-                    MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                }
-            }
+            
         }
         private void LaunchProgram_Click(object sender, EventArgs e)
         {

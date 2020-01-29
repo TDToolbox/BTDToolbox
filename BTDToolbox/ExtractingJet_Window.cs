@@ -46,9 +46,7 @@ namespace BTDToolbox
         public string steamJetPath;
 
         //Threads
-        Thread thread_RestoreGame;
-        Thread compThread;
-        Thread thread_DecompileJet;
+        Thread backgroundThread;
 
         public ExtractingJet_Window()
         {
@@ -144,7 +142,7 @@ namespace BTDToolbox
         {
             if (gameDir == null || gameDir == "")
             {
-                MessageBox.Show("No launch dir defined or is wrong. Please select BTD5-Win.exe or Battles-Win.exe so the program can export your project...");
+                MessageBox.Show("Please browse for your game's  .EXE  file");
                 ConsoleHandler.appendLog("Launch Directory not detected or is invalid...");
                 return false;
             }
@@ -236,8 +234,8 @@ namespace BTDToolbox
             this.Show();
             Validate_Backup();
             exportPath = steamJetPath;
-            compThread = new Thread(CompileThread);
-            compThread.Start();
+            backgroundThread = new Thread(CompileThread);
+            backgroundThread.Start();
         } 
         private void CompileThread()
         {
@@ -269,7 +267,7 @@ namespace BTDToolbox
                     ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
                 }
                 this.Invoke(new Action(() => this.Close()));
-                compThread.Abort();
+            backgroundThread.Abort();
             /*}
             catch(Exception)
             {
@@ -286,8 +284,8 @@ namespace BTDToolbox
             {
                 this.Show();
                 exportPath = sfd.FileName;
-                compThread = new Thread(CompileThread);
-                compThread.Start();
+                backgroundThread = new Thread(CompileThread);
+                backgroundThread.Start();
             }
         }
 
@@ -311,8 +309,8 @@ namespace BTDToolbox
             }
             projectDest = projectName;
 
-            thread_DecompileJet = new Thread(DecompileThread);
-            thread_DecompileJet.Start();
+            backgroundThread = new Thread(DecompileThread);
+            backgroundThread.Start();
 
             DirectoryInfo dinfo = new DirectoryInfo(projectName);
             jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
@@ -358,20 +356,20 @@ namespace BTDToolbox
                     var reopenSetProjectName = new SetProjectName();
                     reopenSetProjectName.Show();
                     this.Invoke(new Action(() => this.Close()));
-                    thread_DecompileJet.Abort();
+                    backgroundThread.Abort();
                 }
             }
 
             this.Invoke(new Action(() => this.Close()));
-            thread_DecompileJet.Abort();
+            backgroundThread.Abort();
         }
         //
         //Restore Backup
         //
         private void restoreGame()
         {
-            thread_RestoreGame = new Thread(restoreGame_Thread);
-            thread_RestoreGame.Start();
+            backgroundThread = new Thread(restoreGame_Thread);
+            backgroundThread.Start();
         }
         private void restoreGame_Thread()
         {
@@ -380,7 +378,7 @@ namespace BTDToolbox
             File.Copy(Environment.CurrentDirectory + "\\Backups\\Original.jet", steamJetPath);
             ConsoleHandler.appendLog("Backup restored\r\n");
             //this.Invoke(new Action(() => this.Close()));
-            thread_RestoreGame.Abort();
+            backgroundThread.Abort();
         }
     }
 }
