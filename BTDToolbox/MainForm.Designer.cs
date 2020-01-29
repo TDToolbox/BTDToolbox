@@ -49,12 +49,13 @@
             this.OpenJetExplorer = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestoreBackup = new System.Windows.Forms.ToolStripMenuItem();
+            this.remakeBackupjetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Credits = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nullJetFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.remakeBackupjetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.existingJetFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -120,7 +121,8 @@
             // openToolStripMenuItem1
             // 
             this.openToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenExistingProject});
+            this.OpenExistingProject,
+            this.existingJetFileToolStripMenuItem});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
             this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem1.Text = "Open";
@@ -128,7 +130,7 @@
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(155, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(180, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
             // 
@@ -221,14 +223,21 @@
             // RestoreBackup
             // 
             this.RestoreBackup.Name = "RestoreBackup";
-            this.RestoreBackup.Size = new System.Drawing.Size(191, 22);
-            this.RestoreBackup.Text = "Restore to backup .jet";
+            this.RestoreBackup.Size = new System.Drawing.Size(224, 22);
+            this.RestoreBackup.Text = "Restore game  .jet to backup";
             this.RestoreBackup.Click += new System.EventHandler(this.RestoreBackup_Click);
+            // 
+            // remakeBackupjetToolStripMenuItem
+            // 
+            this.remakeBackupjetToolStripMenuItem.Name = "remakeBackupjetToolStripMenuItem";
+            this.remakeBackupjetToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.remakeBackupjetToolStripMenuItem.Text = "Get a new backup  .jet";
+            this.remakeBackupjetToolStripMenuItem.Click += new System.EventHandler(this.RemakeBackupjetToolStripMenuItem_Click);
             // 
             // Credits
             // 
             this.Credits.Name = "Credits";
-            this.Credits.Size = new System.Drawing.Size(191, 22);
+            this.Credits.Size = new System.Drawing.Size(224, 22);
             this.Credits.Text = "Credits";
             this.Credits.Click += new System.EventHandler(this.OpenCredits_Click);
             // 
@@ -245,14 +254,14 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // nullJetFormToolStripMenuItem
             // 
             this.nullJetFormToolStripMenuItem.Name = "nullJetFormToolStripMenuItem";
-            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.nullJetFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             // 
             // versionTag
             // 
@@ -267,12 +276,11 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // remakeBackupjetToolStripMenuItem
+            // existingJetFileToolStripMenuItem
             // 
-            this.remakeBackupjetToolStripMenuItem.Name = "remakeBackupjetToolStripMenuItem";
-            this.remakeBackupjetToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.remakeBackupjetToolStripMenuItem.Text = "Recompile Backup .jet";
-            this.remakeBackupjetToolStripMenuItem.Click += new System.EventHandler(this.RemakeBackupjetToolStripMenuItem_Click);
+            this.existingJetFileToolStripMenuItem.Name = "existingJetFileToolStripMenuItem";
+            this.existingJetFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.existingJetFileToolStripMenuItem.Text = "Existing Jet File";
             // 
             // TD_Toolbox_Window
             // 
@@ -325,6 +333,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NewProject_From_Backup;
         private System.Windows.Forms.ToolStripMenuItem remakeBackupjetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem existingJetFileToolStripMenuItem;
     }
 }
 
