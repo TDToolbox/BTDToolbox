@@ -36,7 +36,6 @@ namespace BTDToolbox
         //JsonEditor_Config jsonEditorConfig;
         ConfigFile programData;
         
-        string jsonEditorOutput;
         public static float jsonEditorFont;
         public string lastJsonFile;
 
@@ -55,32 +54,6 @@ namespace BTDToolbox
             this.toolStripSeparator2.Visible = false;
             this.Replace_TextBox.Visible = false;
             this.ReplaceDropDown.Visible = false;
-
-            /*try
-            {
-                string json = File.ReadAllText(livePath + "\\config\\json_editor.json");
-                JsonEditor_Config deserializedJsonEditor = JsonConvert.DeserializeObject<JsonEditor_Config>(json);
-
-                Size JsonEditorSize = new Size(deserializedJsonEditor.SizeX, deserializedJsonEditor.SizeY);
-                this.Size = JsonEditorSize;
-
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(deserializedJsonEditor.PosX, deserializedJsonEditor.PosY);
-
-                jsonEditorFont = deserializedJsonEditor.FontSize;
-                Editor_TextBox.Font = new Font("Consolas", jsonEditorFont);
-                //Editor_TextBox.Font = new Font("Microsoft Sans Serif", jsonEditorFont);
-
-                FontSize_TextBox.Text = jsonEditorFont.ToString();
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                SerializeConfig();
-            }
-            catch (System.ArgumentException)
-            {
-                jsonEditorFont = 14;
-            }*/
 
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
@@ -143,33 +116,24 @@ namespace BTDToolbox
         {
             float FontSize = 0;
             float.TryParse(FontSize_TextBox.Text, out FontSize);
-            try
+            if (FontSize < 3)
+                FontSize = 3;
+            jsonEditorFont = FontSize;
+            Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Regular);
+            /*try
             {
                 Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Regular);
             }
             catch (Exception)
             {
-                Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, 10f, FontStyle.Regular);
-            }
+                Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, 13f, FontStyle.Regular);
+            }*/
         }
         private void exitHandling(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "json editor", programData);
             JsonProps.decrement(this);
         }
-        /*private void SerializeConfig()
-        {
-            FileInfo info = new FileInfo(Path);
-
-            jsonEditorConfig = new JsonEditor_Config("Json Editor", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, Editor_TextBox.Font.Size) ;
-            jsonEditorOutput = JsonConvert.SerializeObject(jsonEditorConfig);
-
-            StreamWriter writeJsonEditorForm = new StreamWriter(livePath + "\\config\\json_editor.json", false);
-            writeJsonEditorForm.Write(jsonEditorOutput);
-            writeJsonEditorForm.Close();
-
-            JsonProps.decrement(this);
-        }*/
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.F)

@@ -79,7 +79,7 @@ namespace BTDToolbox
                 cfg.JSON_Editor_SizeY = frm.Size.Height;
                 cfg.JSON_Editor_PosX = frm.Location.X;
                 cfg.JSON_Editor_PosY = frm.Location.Y;
-                cfg.JSON_Editor_FontSize = frm.Font.Size;
+                cfg.JSON_Editor_FontSize = JsonEditor.jsonEditorFont;//frm.Font.Size;
             }
 
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
