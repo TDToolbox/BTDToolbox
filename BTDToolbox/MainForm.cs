@@ -19,7 +19,7 @@ namespace BTDToolbox
         public string projectDirPath;
         private static TD_Toolbox_Window toolbox;
 
-        string version = "Alpha 0.0.1";
+        string version = "Alpha 0.0.2";
 
         //Project Variables
         public DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
