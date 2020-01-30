@@ -13,7 +13,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfigs;
+using static BTDToolbox.ProjectConfig;
+
 
 namespace BTDToolbox
 {
@@ -39,9 +40,11 @@ namespace BTDToolbox
         public static bool launchProgram = false;
 
         //Config variables
-        LaunchSettings_Config launchSettings_Config;
-        string configOutput = "";
+        ConfigFile programData;
         public string gameDir;
+        public static string BTD5_Dir;
+        public static string BTDB_Dir;
+        public string gameName;
         public string exePath;
         public string steamJetPath;
 
@@ -51,7 +54,7 @@ namespace BTDToolbox
         public ExtractingJet_Window()
         {
             InitializeComponent();
-            ReadConfig();
+            StartUp();
             this.StartPosition = FormStartPosition.Manual;
             this.Left = 120;
             this.Top = 120;
@@ -60,9 +63,44 @@ namespace BTDToolbox
             {
                 ConsoleHandler.appendLog("Error identifying Game Directory or Backups. Please browse for your EXE again...\r\n");
                 browseForExe();
-                Validate_Backup();
+                if (is_GamePath_Valid() == false)
+                {
+                    MessageBox.Show("The EXE was not found... Please try again.");
+                    this.Close();
+                }
+                else
+                {
+                    Validate_Backup();
+                    SwitchCase();
+                }   
             }
+            else
+            {
+                Validate_Backup();
+                SwitchCase();
+            }
+        }
+        private void StartUp()
+        {
+            Deserialize_Config();
+            BTD5_Dir = programData.BTD5_Directory;
+            BTDB_Dir = programData.BTDB_Directory;
 
+            if (programData.CurrentGame == "BTD5")
+            {
+                gameDir = BTD5_Dir;
+                gameName = "BTD5";
+                steamJetPath = gameDir + "\\Assets\\btd5.jet";
+            }
+            else if (programData.CurrentGame == "BTDB")
+            {
+                gameDir = BTDB_Dir;
+                gameName = "BTDB";
+                steamJetPath = gameDir + "\\Assets\\data.jet";
+            }
+        }
+        private void SwitchCase()
+        {
             switch (switchCase)
             {
                 case "output":
@@ -100,7 +138,6 @@ namespace BTDToolbox
                     break;
             }
         }
-        
         private void ExtractJet_Window_Load(object sender, EventArgs e)
         {
             CurrentFileProgress_Label.Hide();
@@ -140,69 +177,94 @@ namespace BTDToolbox
         //
         private bool is_GamePath_Valid()
         {
-            if (gameDir == null || gameDir == "")
+            if (programData.CurrentGame == "BTD5")
             {
-                MessageBox.Show("Please browse for your game's  .EXE  file");
-                ConsoleHandler.appendLog("Launch Directory not detected or is invalid...");
-                return false;
+                if (BTD5_Dir == null || BTD5_Dir == "")
+                {
+                    ConsoleHandler.appendLog("Launch Directory not detected or is invalid...");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
-            else
+            else if (programData.CurrentGame == "BTDB")
             {
-                return true;
+                if (BTDB_Dir == null || BTDB_Dir == "")
+                {
+                    ConsoleHandler.appendLog("Launch Directory not detected or is invalid...");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
+            return false;
         }
         private void browseForExe()
         {
+            string game = "";
+
+            if (programData.CurrentGame == "BTD5")
+            {
+                game = "BTD5-Win.exe";
+            }
+            else if (programData.CurrentGame == "BTDB")
+            {
+                game = "Battles-Win.exe";
+            }
+
+            MessageBox.Show("Please browse for " + game);
+
             OpenFileDialog fileDiag = new OpenFileDialog();
             fileDiag.Title = "Open game exe";
             fileDiag.DefaultExt = "exe";
             fileDiag.Filter = "Exe files (*.exe)|*.exe|All files (*.*)|*.*";
             fileDiag.Multiselect = false;
+
+
             if (fileDiag.ShowDialog() == DialogResult.OK)
             {
-                gameDir = fileDiag.FileName.Replace("\\BTD5-Win.exe", "");
-                exePath = gameDir + "\\BTD5-Win.exe";
-                steamJetPath = gameDir + "\\Assets\\BTD5.jet";
+                if (programData.CurrentGame == "BTD5")
+                {
+                    if (fileDiag.FileName.Contains("BTD5-Win.exe"))
+                    {
+                        BTD5_Dir = fileDiag.FileName.Replace("\\BTD5-Win.exe", "");
+                        gameDir = fileDiag.FileName.Replace("\\BTD5-Win.exe", "");
+                        exePath = gameDir + "\\BTD5-Win.exe";
+                        steamJetPath = gameDir + "\\Assets\\BTD5.jet";
+                    }
+                    else
+                    {
+                        MessageBox.Show("You didn't select BTD5-Win.exe\r\nYou need to select the proper exe.\r\nIf you are trying to mod a different game, please try creating a project for that game instead");
+                        ConsoleHandler.appendLog("Invalid game selected... Please try again, or try making a project for a different game.");
+                    }
+                }
+                else if (programData.CurrentGame == "BTDB")
+                {
+                    if (fileDiag.FileName.Contains("Battles-Win.exe"))
+                    {
+                        BTDB_Dir = fileDiag.FileName.Replace("\\Battles-Win.exe", "");
+                        gameDir = fileDiag.FileName.Replace("\\Battles-Win.exe", "");
+                        exePath = gameDir + "\\Battles-Win.exe";
+                        steamJetPath = gameDir + "\\Assets\\data.jet";
+                    }
+                    else
+                    {
+                        MessageBox.Show("You didn't select Battles-Win.exe\r\nYou need to select the proper exe.\r\nIf you are trying to mod a different game, please try creating a project for that game instead");
+                        ConsoleHandler.appendLog("Invalid game selected... Please try again, or try making a project for a different game.");
+                    }
+                }
 
-                SerializeConfig();
-                ConsoleHandler.appendLog("Launch settings saved in \\config\\btd5_launch_settings.json");
+                Serializer.SaveConfig(this, "directories", programData);
+                ConsoleHandler.appendLog("Launch settings saved in settings.json");
             }
         }
-        private void SerializeConfig()
+        private void Deserialize_Config()
         {
-            try
-            {
-                launchSettings_Config = new LaunchSettings_Config(gameDir);
-                configOutput = JsonConvert.SerializeObject(launchSettings_Config);
-
-                StreamWriter writeMainForm = new StreamWriter(livePath + "\\config\\btd5_launch_settings.json", false);
-                writeMainForm.Write(configOutput);
-                writeMainForm.Close();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("There were problems with saving configurations. Things may not act normally.");
-            }
-        }
-        private void ReadConfig()
-        {
-            try
-            {
-                string json = File.ReadAllText(livePath + "\\config\\btd5_launch_settings.json");
-                LaunchSettings_Config deserialized_LaunchSettings = JsonConvert.DeserializeObject<LaunchSettings_Config>(json);
-
-                gameDir = deserialized_LaunchSettings.GameDir;
-                exePath = gameDir + "BTD5-Win.exe";
-                steamJetPath = gameDir + "\\Assets\\BTD5.jet";
-            }
-            catch (FileNotFoundException)
-            {
-                SerializeConfig();
-            }
-            catch (DirectoryNotFoundException)
-            {
-                Directory.CreateDirectory(livePath + "\\config");
-            }
+            programData = Serializer.Deserialize_Config();
         }
         private void Clear_Backup()
         {
@@ -212,11 +274,13 @@ namespace BTDToolbox
         }
         private void Validate_Backup()
         {
-            if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\Original.jet"))
+            MessageBox.Show(programData.CurrentGame);
+            string backupName = programData.CurrentGame + "_Original.jet";
+            if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\" + backupName))
             {
                 ConsoleHandler.appendLog("Jet backup not found, creating one...");
                 Directory.CreateDirectory(Environment.CurrentDirectory + "\\Backups");
-                File.Copy(steamJetPath, Environment.CurrentDirectory + "\\Backups\\Original.jet");
+                File.Copy(steamJetPath, Environment.CurrentDirectory + "\\Backups\\" + backupName);
                 ConsoleHandler.appendLog("Backup done");
             }
             else
@@ -233,46 +297,39 @@ namespace BTDToolbox
         {
             this.Show();
             Validate_Backup();
-            exportPath = steamJetPath;
+            exportPath = BTD5_Dir + "\\Assets\\BTD5.jet";
             backgroundThread = new Thread(CompileThread);
             backgroundThread.Start();
         } 
         private void CompileThread()
         {
-            /*try
-            {*/
-                ConsoleHandler.appendLog("Compiling jet...");
-                DirectoryInfo projDir = new DirectoryInfo(livePath + "\\" + currentProject);
-
-                int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
-                int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
-                totalFiles = numFiles + numFolders;
+            ConsoleHandler.appendLog("Compiling jet...");
+            DirectoryInfo projDir = new DirectoryInfo(programData.LastProject);
+            MessageBox.Show(projDir.ToString());
+            int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
+            int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
+            totalFiles = numFiles + numFolders;
 
 
-                filesTransfered = 0;
-                ZipFile toExport = new ZipFile();
-                toExport.Password = "Q%_{6#Px]]";
-                toExport.AddProgress += ZipCompileProgress;
-                toExport.AddDirectory(projDir.FullName);
-                toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
-                toExport.Name = exportPath;
-                toExport.CompressionLevel = CompressionLevel.Level6;
+            filesTransfered = 0;
+            ZipFile toExport = new ZipFile();
+            toExport.Password = "Q%_{6#Px]]";
+            toExport.AddProgress += ZipCompileProgress;
+            toExport.AddDirectory(projDir.FullName);
+            toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
+            toExport.Name = exportPath;
+            toExport.CompressionLevel = CompressionLevel.Level6;
 
-                toExport.Save();
-                toExport.Dispose();
+            toExport.Save();
+            toExport.Dispose();
 
-                if(launchProgram == true)
-                {
-                    Process.Start(gameDir + "//BTD5-Win.exe");
-                    ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
-                }
-                this.Invoke(new Action(() => this.Close()));
-            backgroundThread.Abort();
-            /*}
-            catch(Exception)
+            if(launchProgram == true)
             {
-                ConsoleHandler.appendLog("Process was cancelled by the user, or there was an error");
-            }*/
+                Process.Start(BTD5_Dir + "//BTD5-Win.exe");
+                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
+            }
+            this.Invoke(new Action(() => this.Close()));
+            backgroundThread.Abort();
         }
         private void OutputJet()
         {

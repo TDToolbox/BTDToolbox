@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿
+using Microsoft.WindowsAPICodePack.Dialogs;
+using Newtonsoft.Json;
 using System;
 using System.Drawing;
 using System.IO;
@@ -23,6 +25,7 @@ namespace BTDToolbox
 
         //Config variables
         ConfigFile programData;
+        public static string gameName;
         bool firstUse = true;
         public bool loadLastProject;
         public static string file;
@@ -72,44 +75,23 @@ namespace BTDToolbox
         }
         private void Startup()
         {
-            try
-            {
-                Deserialize_Config();
+            Deserialize_Config();
+            bool existingUser = programData.ExistingUser;
+            if (existingUser == false)
+                firstUse = true;
+            else
+                firstUse = false;
 
-                bool existingUser = programData.ExistingUser;
-                if (existingUser == false)
-                    firstUse = true;
-                else
-                    firstUse = false;
+            this.Size = new Size(programData.Main_SizeX, programData.Main_SizeY);
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(programData.Main_PosX, programData.Main_PosY);
+            this.Font = new Font("Microsoft Sans Serif", programData.Main_FontSize);
+            if (programData.Main_Fullscreen)
+                this.WindowState = FormWindowState.Maximized;
 
-                this.Size = new Size(programData.Main_SizeX, programData.Main_SizeY);
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(programData.Main_PosX, programData.Main_PosY);
-                this.Font = new Font("Microsoft Sans Serif", programData.Main_FontSize);
-                if (programData.Main_Fullscreen)
-                    this.WindowState = FormWindowState.Maximized;
-
-                enableConsole = programData.EnableConsole;
-                projectDirPath = programData.LastProject_Path;
-                lastProject = programData.LastProject;
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw ex;
-                //  SerializeConfig();
-            }
-            catch (System.NullReferenceException ex) 
-            {
-                throw ex;
-                //  SerializeConfig();
-                ;
-            }
-            catch (ArgumentException)
-            {
-                fontSize = 10;
-                programData.Console_FontSize = fontSize;
-                // SerializeConfig();
-            }
+            enableConsole = programData.EnableConsole;
+            projectDirPath = programData.LastProject_Path;
+            lastProject = programData.LastProject;
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
@@ -140,7 +122,6 @@ namespace BTDToolbox
         {
             if (lastProject != "" && lastProject != null)
             {
-                //DirectoryInfo dinfo = new DirectoryInfo(livePath + "\\" + lastProject);
                 DirectoryInfo dinfo = new DirectoryInfo(lastProject);
                 if(dinfo.Exists)
                 {
@@ -219,15 +200,17 @@ namespace BTDToolbox
         }
         private void BrowseForExistingProjects()
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select project folder";
-            fbd.ShowNewFolderButton = false;
-            fbd.SelectedPath = projectDirPath;
-            if (fbd.ShowDialog() == DialogResult.OK)
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            dialog.Title = "Browse for an existing project";
+            dialog.Multiselect = false;
+            dialog.InitialDirectory = livePath;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                string selected = fbd.SelectedPath;
+                string selected = dialog.FileName;
                 DirectoryInfo dirInfo = new DirectoryInfo(selected);
-                string[] split = fbd.SelectedPath.Split('\\');
+                string[] split = dialog.FileName.Split('\\');
                 string name = split[split.Length - 1];
                 if (!name.StartsWith("proj_"))
                 {
@@ -250,6 +233,7 @@ namespace BTDToolbox
             {
                 if (JetProps.get().Count == 1)
                 {
+                    
                     ExtractingJet_Window.switchCase = switchCase;
                     var compile = new ExtractingJet_Window();
                 }
@@ -377,12 +361,43 @@ namespace BTDToolbox
 
         private void NewProject_From_Backup_Click(object sender, EventArgs e)
         {
-            compileJet("decompile backup");
+
+            //compileJet("decompile backup");
         }
 
         private void RemakeBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             compileJet("clean backup");
+        }
+
+        private void Open_Existing_JetFile_Click(object sender, EventArgs e)
+        {
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Browse for an existing .jet file";
+            ofd.DefaultExt = "jet";
+            ofd.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                ExtractingJet_Window.projectName = ofd.FileName;
+                compileJet("decompile");
+            }
+        }
+
+        private void New_BTD5_Proj_Click(object sender, EventArgs e)
+        {
+            gameName = "BTD5";
+            programData.CurrentGame = gameName;
+            Serializer.SaveConfig(this, "game", programData);
+            compileJet("decompile backup");
+        }
+
+        private void New_BTDB_Proj_Click(object sender, EventArgs e)
+        {
+            gameName = "BTDB";
+            programData.CurrentGame = gameName;
+            Serializer.SaveConfig(this, "game", programData);
+            compileJet("decompile backup");
         }
     }
 }

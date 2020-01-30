@@ -222,7 +222,6 @@
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
             this.saveButton.Click += new System.EventHandler(this.SaveButton_Click_1);
-            this.saveButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.saveButton_Click);
             // 
             // listView1
             // 
@@ -254,6 +253,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JetForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "JetViewer";
             this.Activated += new System.EventHandler(this.JetForm_Activated);
             this.Load += new System.EventHandler(this.JetForm_Load);

@@ -18,7 +18,6 @@ namespace BTDToolbox
     public partial class JetForm : ThemedForm
     {
         string livePath = Environment.CurrentDirectory;
-
         private DirectoryInfo dirInfo;
         private TD_Toolbox_Window Form;
         private string tempName;
@@ -29,19 +28,14 @@ namespace BTDToolbox
 
         //Config values
         ConfigFile programData;
-        public static float jetFormFontSize;
-        string jetFormOutput;
-        int splitterDistance;
-        float treeViewFontSize;
+        public static float jetExplorer_FontSize;
+        public static int jetExplorer_SplitterWidth;
         public static string lastProject;
-
-        //Load Last Project Variables
 
         public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
         {
             InitializeComponent();
-            Deserialize_Config();
-
+            StartUp();
             this.KeyPreview = true;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
@@ -50,42 +44,10 @@ namespace BTDToolbox
             this.Form = Form;
             this.projName = projName;
             ConsoleHandler.appendLog(projName);
-            //ExtractingJet_Window.currentProject = projName;
 
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
-            
-            /*try
-            {
-                string json = File.ReadAllText(livePath + "\\config\\jetForm.json");
-                JetExplorer_Config deserializedJetForm = JsonConvert.DeserializeObject<JetExplorer_Config>(json);
-
-                Size JetFormSize = new Size(deserializedJetForm.SizeX, deserializedJetForm.SizeY);
-                this.Size = JetFormSize;
-
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(deserializedJetForm.PosX, deserializedJetForm.PosY);
-
-                Font jetFormFontSize = new Font("Microsoft Sans Serif", deserializedJetForm.FontSize);
-                this.Font = jetFormFontSize;
-                lastProject = deserializedJetForm.LastProject;
-                splitterDistance = deserializedJetForm.SplitterDistance;
-                fileViewContainer.SplitterDistance = splitterDistance;
-                treeViewFontSize = deserializedJetForm.TreeViewFontSize;
-                SerializeConfig();
-            } catch (System.IO.FileNotFoundException)
-            {
-                SerializeConfig();
-            }
-            catch (System.ArgumentException)
-            {
-                jetFormFontSize = 10;
-            }*/
-            /*catch (Exception)
-            {
-                MessageBox.Show("There was an error. Please try again if the window is blank.");
-            }*/
 
             this.treeView1.AfterSelect += treeView1_AfterSelect;
 
@@ -99,6 +61,18 @@ namespace BTDToolbox
         private void Deserialize_Config()
         {
             programData = Serializer.Deserialize_Config();
+        }
+        private void StartUp()
+        {
+            Deserialize_Config();
+            this.Size = new Size(programData.JetExplorer_SizeX, programData.JetExplorer_SizeY);
+            this.Location = new Point(programData.JetExplorer_PosX, programData.JetExplorer_PosY);
+
+            //jetExplorer_FontSize = programData.JetExplorer_FolderView_FontSize;
+            this.Font = new Font("Microsoft Sans Serif", programData.JetExplorer_FontSize);
+            lastProject = programData.LastProject;
+            jetExplorer_SplitterWidth = programData.JetExplorer_SplitterWidth;
+            fileViewContainer.SplitterDistance = jetExplorer_SplitterWidth;
         }
         private void initSelContextMenu()
         {
@@ -478,7 +452,7 @@ namespace BTDToolbox
 
         private void SplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            splitterDistance = fileViewContainer.SplitterDistance;
+            jetExplorer_SplitterWidth = fileViewContainer.SplitterDistance;
         }
         /*internal void SerializeConfig()
         {

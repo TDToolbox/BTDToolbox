@@ -18,9 +18,7 @@ namespace BTDToolbox
         public SetProjectName()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.Manual;
-            this.Left = 100;
-            this.Top = 100;
+
             this.AcceptButton = CreateProject_Button;
             this.Activate();
             ExtractingJet_Window.switchCase = "decompile";

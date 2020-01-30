@@ -32,12 +32,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.File_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.New_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImportNewJet = new System.Windows.Forms.ToolStripMenuItem();
+            this.New_BTD5_Proj = new System.Windows.Forms.ToolStripMenuItem();
+            this.New_BTDB_Proj = new System.Windows.Forms.ToolStripMenuItem();
             this.NewProject_From_Backup = new System.Windows.Forms.ToolStripMenuItem();
             this.btdpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Open_Existing_JetFile = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenExistingProject = new System.Windows.Forms.ToolStripMenuItem();
-            this.existingJetFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openRecentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,10 +53,17 @@
             this.RestoreBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.remakeBackupjetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Credits = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nullJetFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
+            this.spriteEditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contactUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +76,8 @@
             this.Launch_Program_ToolStrip,
             this.viewToolStripMenuItem1,
             this.helpToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.debugToolStripMenuItem,
+            this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1483, 24);
@@ -91,71 +100,80 @@
             // New_ToolStrip
             // 
             this.New_ToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ImportNewJet,
+            this.New_BTD5_Proj,
+            this.New_BTDB_Proj,
             this.NewProject_From_Backup,
             this.btdpToolStripMenuItem});
             this.New_ToolStrip.Name = "New_ToolStrip";
-            this.New_ToolStrip.Size = new System.Drawing.Size(142, 22);
+            this.New_ToolStrip.Size = new System.Drawing.Size(180, 22);
             this.New_ToolStrip.Text = "New";
             // 
-            // ImportNewJet
+            // New_BTD5_Proj
             // 
-            this.ImportNewJet.Name = "ImportNewJet";
-            this.ImportNewJet.Size = new System.Drawing.Size(182, 22);
-            this.ImportNewJet.Text = "Project from .jet";
-            this.ImportNewJet.Click += new System.EventHandler(this.ImportNewJet_Click);
+            this.New_BTD5_Proj.Name = "New_BTD5_Proj";
+            this.New_BTD5_Proj.Size = new System.Drawing.Size(180, 22);
+            this.New_BTD5_Proj.Text = "BTD5 Project";
+            this.New_BTD5_Proj.Click += new System.EventHandler(this.New_BTD5_Proj_Click);
+            // 
+            // New_BTDB_Proj
+            // 
+            this.New_BTDB_Proj.Name = "New_BTDB_Proj";
+            this.New_BTDB_Proj.Size = new System.Drawing.Size(180, 22);
+            this.New_BTDB_Proj.Text = "BTD Battles Project";
+            this.New_BTDB_Proj.Click += new System.EventHandler(this.New_BTDB_Proj_Click);
             // 
             // NewProject_From_Backup
             // 
             this.NewProject_From_Backup.Name = "NewProject_From_Backup";
-            this.NewProject_From_Backup.Size = new System.Drawing.Size(182, 22);
-            this.NewProject_From_Backup.Text = "Project from Backup";
+            this.NewProject_From_Backup.Size = new System.Drawing.Size(180, 22);
+            this.NewProject_From_Backup.Text = "Project from .jet";
             this.NewProject_From_Backup.Click += new System.EventHandler(this.NewProject_From_Backup_Click);
             // 
             // btdpToolStripMenuItem
             // 
             this.btdpToolStripMenuItem.Name = "btdpToolStripMenuItem";
-            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
             // 
             // openToolStripMenuItem1
             // 
             this.openToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenExistingProject,
-            this.existingJetFileToolStripMenuItem});
+            this.Open_Existing_JetFile,
+            this.OpenExistingProject});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem1.Text = "Open";
+            // 
+            // Open_Existing_JetFile
+            // 
+            this.Open_Existing_JetFile.Name = "Open_Existing_JetFile";
+            this.Open_Existing_JetFile.Size = new System.Drawing.Size(180, 22);
+            this.Open_Existing_JetFile.Text = "Existing .jet";
+            this.Open_Existing_JetFile.Click += new System.EventHandler(this.Open_Existing_JetFile_Click);
             // 
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(155, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(180, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
-            // 
-            // existingJetFileToolStripMenuItem
-            // 
-            this.existingJetFileToolStripMenuItem.Name = "existingJetFileToolStripMenuItem";
-            this.existingJetFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.existingJetFileToolStripMenuItem.Text = "Existing Jet File";
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
@@ -204,14 +222,14 @@
             // ToggleConsole
             // 
             this.ToggleConsole.Name = "ToggleConsole";
-            this.ToggleConsole.Size = new System.Drawing.Size(134, 22);
+            this.ToggleConsole.Size = new System.Drawing.Size(180, 22);
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
             // 
             // OpenJetExplorer
             // 
             this.OpenJetExplorer.Name = "OpenJetExplorer";
-            this.OpenJetExplorer.Size = new System.Drawing.Size(134, 22);
+            this.OpenJetExplorer.Size = new System.Drawing.Size(180, 22);
             this.OpenJetExplorer.Text = "Jet Explorer";
             this.OpenJetExplorer.Click += new System.EventHandler(this.OpenJetExplorer_Click);
             // 
@@ -220,6 +238,7 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RestoreBackup,
             this.remakeBackupjetToolStripMenuItem,
+            this.contactUsToolStripMenuItem,
             this.Credits});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -246,6 +265,29 @@
             this.Credits.Size = new System.Drawing.Size(224, 22);
             this.Credits.Text = "Credits";
             this.Credits.Click += new System.EventHandler(this.OpenCredits_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
+            this.spriteEditingToolStripMenuItem});
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(79, 20);
+            this.toolStripMenuItem1.Text = "Other Tools";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Text = "Mod Loader";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Text = "NKHook";
             // 
             // debugToolStripMenuItem
             // 
@@ -282,6 +324,33 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
+            // spriteEditingToolStripMenuItem
+            // 
+            this.spriteEditingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.spriteSheetDecompilerToolStripMenuItem,
+            this.spriteAnimationVisualizerToolStripMenuItem});
+            this.spriteEditingToolStripMenuItem.Name = "spriteEditingToolStripMenuItem";
+            this.spriteEditingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spriteEditingToolStripMenuItem.Text = "Sprite Editing";
+            // 
+            // spriteSheetDecompilerToolStripMenuItem
+            // 
+            this.spriteSheetDecompilerToolStripMenuItem.Name = "spriteSheetDecompilerToolStripMenuItem";
+            this.spriteSheetDecompilerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.spriteSheetDecompilerToolStripMenuItem.Text = "Sprite Sheet Decompiler";
+            // 
+            // spriteAnimationVisualizerToolStripMenuItem
+            // 
+            this.spriteAnimationVisualizerToolStripMenuItem.Name = "spriteAnimationVisualizerToolStripMenuItem";
+            this.spriteAnimationVisualizerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.spriteAnimationVisualizerToolStripMenuItem.Text = "Sprite/Animation Visualizer";
+            // 
+            // contactUsToolStripMenuItem
+            // 
+            this.contactUsToolStripMenuItem.Name = "contactUsToolStripMenuItem";
+            this.contactUsToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.contactUsToolStripMenuItem.Text = "Contact Us";
+            // 
             // TD_Toolbox_Window
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -311,7 +380,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem File_ToolStrip;
         private System.Windows.Forms.ToolStripMenuItem New_ToolStrip;
-        private System.Windows.Forms.ToolStripMenuItem ImportNewJet;
         private System.Windows.Forms.ToolStripMenuItem btdpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Launch_Program_ToolStrip;
@@ -323,7 +391,6 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem OpenExistingProject;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem themedFormToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Find_Button;
         private System.Windows.Forms.ToolStripMenuItem Replace_Button;
         private System.Windows.Forms.ToolStripMenuItem Credits;
@@ -334,7 +401,17 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NewProject_From_Backup;
         private System.Windows.Forms.ToolStripMenuItem remakeBackupjetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem existingJetFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Open_Existing_JetFile;
+        private System.Windows.Forms.ToolStripMenuItem New_BTD5_Proj;
+        private System.Windows.Forms.ToolStripMenuItem New_BTDB_Proj;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem themedFormToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spriteEditingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spriteSheetDecompilerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spriteAnimationVisualizerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem contactUsToolStripMenuItem;
     }
 }
 
