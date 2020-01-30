@@ -13,11 +13,19 @@ namespace BTDToolbox
     public partial class SetProjectName : Form
     {
         public static string projectName;
+        public static string gameName;
         public bool hasClickedRandomName;
 
         public SetProjectName()
         {
             InitializeComponent();
+            
+            if (gameName == "BTDB")
+            {
+                CreateProject_Button.Text = "Continue";
+            }
+            else
+                CreateProject_Button.Text = "Create Project";
 
             this.AcceptButton = CreateProject_Button;
             this.Activate();
@@ -33,17 +41,37 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ExtractingJet_Window.hasCustomProjectName = true;
-                    ExtractingJet_Window.customName = ProjectName_TextBox.Text;
-                    this.Close();
-                    var extractT = new ExtractingJet_Window();
+                    if (gameName == "BTDB")
+                    {
+                        var getPass = new Get_BTDB_Password();
+                        Get_BTDB_Password.projectName = ProjectName_TextBox.Text;
+                        getPass.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        ExtractingJet_Window.hasCustomProjectName = true;
+                        ExtractingJet_Window.customName = ProjectName_TextBox.Text;
+                        this.Close();
+                        var extractT = new ExtractingJet_Window();
+                    }
+                    
 
                 }
             }
             else
             {
-                this.Close();
-                var extractT = new ExtractingJet_Window();   
+                if (gameName == "BTDB")
+                {
+                    var getPass = new Get_BTDB_Password();
+                    getPass.Show();
+                    this.Close();
+                }
+                else
+                {
+                    this.Close();
+                    var extractT = new ExtractingJet_Window();
+                }   
             }
         }
 
@@ -67,7 +95,5 @@ namespace BTDToolbox
             }
 
         }
-
-
     }
 }

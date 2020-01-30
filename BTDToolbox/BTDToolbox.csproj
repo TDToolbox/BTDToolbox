@@ -89,6 +89,12 @@
     <Compile Include="FindWindow.Designer.cs">
       <DependentUpon>FindWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Get_BTDB_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Get_BTDB_Password.Designer.cs">
+      <DependentUpon>Get_BTDB_Password.cs</DependentUpon>
+    </Compile>
     <Compile Include="JsonProps.cs" />
     <Compile Include="ProjectConfig.cs" />
     <Compile Include="SerializeOps.cs" />
@@ -151,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FindWindow.resx">
       <DependentUpon>FindWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Get_BTDB_Password.resx">
+      <DependentUpon>Get_BTDB_Password.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SetProjectName.resx">
       <DependentUpon>SetProjectName.cs</DependentUpon>

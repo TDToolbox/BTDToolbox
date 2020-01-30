@@ -30,10 +30,10 @@
         {
             this.ProjectName_TextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.CreateProject_Button = new System.Windows.Forms.Button();
             this.CustomName_RadioButton = new System.Windows.Forms.RadioButton();
             this.RandomName_RadioButton = new System.Windows.Forms.RadioButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.CreateProject_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,17 +57,6 @@
             this.label1.Size = new System.Drawing.Size(186, 17);
             this.label1.TabIndex = 3;
             this.label1.Text = "Please enter a project name";
-            // 
-            // CreateProject_Button
-            // 
-            this.CreateProject_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateProject_Button.Location = new System.Drawing.Point(200, 105);
-            this.CreateProject_Button.Name = "CreateProject_Button";
-            this.CreateProject_Button.Size = new System.Drawing.Size(133, 23);
-            this.CreateProject_Button.TabIndex = 4;
-            this.CreateProject_Button.Text = "Create Project";
-            this.CreateProject_Button.UseVisualStyleBackColor = true;
-            this.CreateProject_Button.Click += new System.EventHandler(this.CreateProject_Button_Click);
             // 
             // CustomName_RadioButton
             // 
@@ -102,16 +91,27 @@
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.pictureBox1.Location = new System.Drawing.Point(140, -1);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(288, 186);
+            this.pictureBox1.Size = new System.Drawing.Size(288, 253);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
+            // 
+            // CreateProject_Button
+            // 
+            this.CreateProject_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CreateProject_Button.Location = new System.Drawing.Point(201, 106);
+            this.CreateProject_Button.Name = "CreateProject_Button";
+            this.CreateProject_Button.Size = new System.Drawing.Size(133, 23);
+            this.CreateProject_Button.TabIndex = 4;
+            this.CreateProject_Button.Text = "Create Project";
+            this.CreateProject_Button.UseVisualStyleBackColor = true;
+            this.CreateProject_Button.Click += new System.EventHandler(this.CreateProject_Button_Click);
             // 
             // SetProjectName
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(405, 180);
+            this.ClientSize = new System.Drawing.Size(405, 179);
             this.Controls.Add(this.RandomName_RadioButton);
             this.Controls.Add(this.CustomName_RadioButton);
             this.Controls.Add(this.CreateProject_Button);
@@ -119,6 +119,8 @@
             this.Controls.Add(this.ProjectName_TextBox);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SetProjectName";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Project Name";
@@ -132,9 +134,9 @@
 
         private System.Windows.Forms.TextBox ProjectName_TextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button CreateProject_Button;
         private System.Windows.Forms.RadioButton CustomName_RadioButton;
         private System.Windows.Forms.RadioButton RandomName_RadioButton;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button CreateProject_Button;
     }
 }

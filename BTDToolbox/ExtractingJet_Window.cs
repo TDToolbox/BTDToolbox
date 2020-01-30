@@ -34,6 +34,7 @@ namespace BTDToolbox
         JetForm jf;
 
         //zip variables
+        public static string jetPassword;
         string exportPath = "";
         public static int totalFiles = 0;        
         public int filesTransfered = 0;
@@ -44,6 +45,7 @@ namespace BTDToolbox
         public string gameDir;
         public static string BTD5_Dir;
         public static string BTDB_Dir;
+        public static string BackupGame = "";
         public string gameName;
         public string exePath;
         public string steamJetPath;
@@ -91,12 +93,14 @@ namespace BTDToolbox
                 gameDir = BTD5_Dir;
                 gameName = "BTD5";
                 steamJetPath = gameDir + "\\Assets\\btd5.jet";
+                exePath = BTD5_Dir + "\\BTD5-Win.exe";
             }
             else if (programData.CurrentGame == "BTDB")
             {
                 gameDir = BTDB_Dir;
                 gameName = "BTDB";
                 steamJetPath = gameDir + "\\Assets\\data.jet";
+                exePath = BTDB_Dir + "\\Battles-Win.exe";
             }
         }
         private void SwitchCase()
@@ -122,6 +126,7 @@ namespace BTDToolbox
                     break;
                 case "decompile backup":
                     this.Text = "Decompiling....";
+                    SetProjectName.gameName = gameName;
                     var newProject = new SetProjectName();
                     newProject.Show();
                     break;
@@ -224,7 +229,9 @@ namespace BTDToolbox
             fileDiag.Filter = "Exe files (*.exe)|*.exe|All files (*.*)|*.*";
             fileDiag.Multiselect = false;
 
-
+            //
+            //I can clean this up by using game in the parts below
+            //
             if (fileDiag.ShowDialog() == DialogResult.OK)
             {
                 if (programData.CurrentGame == "BTD5")
@@ -274,7 +281,6 @@ namespace BTDToolbox
         }
         private void Validate_Backup()
         {
-            MessageBox.Show(programData.CurrentGame);
             string backupName = programData.CurrentGame + "_Original.jet";
             if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\" + backupName))
             {
@@ -305,7 +311,6 @@ namespace BTDToolbox
         {
             ConsoleHandler.appendLog("Compiling jet...");
             DirectoryInfo projDir = new DirectoryInfo(programData.LastProject);
-            MessageBox.Show(projDir.ToString());
             int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
             int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
             totalFiles = numFiles + numFolders;
@@ -325,7 +330,7 @@ namespace BTDToolbox
 
             if(launchProgram == true)
             {
-                Process.Start(BTD5_Dir + "//BTD5-Win.exe");
+                Process.Start(exePath);
                 ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
             }
             this.Invoke(new Action(() => this.Close()));
@@ -353,16 +358,17 @@ namespace BTDToolbox
         private void Decompile_NEW2()
         {
             Random rand = new Random();
-            sourceJet = livePath + "\\Backups\\Original.jet";
+            sourceJet = livePath + "\\Backups\\" + gameName +"_Original.jet";
+            projectName = (livePath + "\\proj_" + gameName + "_");
 
             if (hasCustomProjectName)
             {
-                projectName = (livePath + "\\proj_" + customName);
+                projectName = projectName + customName;
             }
             else
             {
                 int randName = rand.Next(1, 99999999);
-                projectName = (livePath + "\\proj_" + randName);
+                projectName = projectName + randName;
             }
             TD_Toolbox_Window.projName = projectName;
             projectDest = projectName;
@@ -378,27 +384,48 @@ namespace BTDToolbox
         private void DecompileThread()
         {
             ZipFile archive = new ZipFile(sourceJet);
-            archive.Password = "Q%_{6#Px]]";
             ConsoleHandler.appendLog("Creating project files...");
 
+            if (gameName != "BTDB")
+            {
+                jetPassword = "Q%_{6#Px]]";
+            }
+
+            archive.Password = jetPassword;
             //Extract and count progress
             DirectoryInfo dinfo = new DirectoryInfo(projectName);
 
             this.Show();
             this.Refresh();
-            try
+
+            bool badPass = false;
+            if (!File.Exists(projectDest))
             {
                 using (ZipFile zip = ZipFile.Read(sourceJet))
                 {
                     totalFiles = archive.Count();
                     filesTransfered = 0;
                     archive.ExtractProgress += ZipExtractProgress;
-                    archive.ExtractAll(projectDest);
+
+                    try
+                    {
+                        archive.ExtractAll(projectDest);
+                    }
+                    //catch (BadPasswordException)
+                    catch (Exception)
+                    {
+                        badPass = true;
+                        MessageBox.Show("You entered an invalid password. Check console for more details.");
+                        ConsoleHandler.appendLog("You entered an invalid password. You need to enter the CORRECT password for the version of BTD Battles that you are trying to mod");
+                    }
                 }
-                ConsoleHandler.appendLog("Project files created at: " + projectName);
-                jf.Invoke(new Action(() => jf.Show()));
+                if (badPass != true)
+                {
+                    ConsoleHandler.appendLog("Project files created at: " + projectName);
+                    jf.Invoke(new Action(() => jf.Show()));
+                }
             }
-            catch (Exception)
+            else
             {
                 this.Hide();
 
@@ -411,6 +438,7 @@ namespace BTDToolbox
                 }
                 if (varr == DialogResult.Cancel)
                 {
+                    SetProjectName.gameName = gameName;
                     var reopenSetProjectName = new SetProjectName();
                     reopenSetProjectName.Show();
                     this.Invoke(new Action(() => this.Close()));
@@ -418,8 +446,8 @@ namespace BTDToolbox
                 }
             }
 
-            this.Invoke(new Action(() => this.Close()));
-            backgroundThread.Abort();
+            /*this.Invoke(new Action(() => this.Close()));
+            backgroundThread.Abort();*/
         }
         //
         //Restore Backup
@@ -431,10 +459,22 @@ namespace BTDToolbox
         }
         private void restoreGame_Thread()
         {
+            string tempString = "";
+            if (BackupGame == "BTD5")
+            {
+                tempString = steamJetPath;
+                steamJetPath = BTD5_Dir + "\\Assets\\BTD5.jet";
+            }
+            else if (BackupGame == "BTDB")
+            {
+                tempString = steamJetPath;
+                steamJetPath = BTDB_Dir + "\\Assets\\data.jet";
+            }
             ConsoleHandler.appendLog("Restoring backup .jet");
             File.Delete(steamJetPath);
-            File.Copy(Environment.CurrentDirectory + "\\Backups\\Original.jet", steamJetPath);
+            File.Copy(Environment.CurrentDirectory + "\\Backups\\"+ BackupGame + "_Original.jet", steamJetPath);
             ConsoleHandler.appendLog("Backup restored\r\n");
+            steamJetPath = tempString;
             //this.Invoke(new Action(() => this.Close()));
             backgroundThread.Abort();
         }

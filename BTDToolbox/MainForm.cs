@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 
@@ -22,6 +23,7 @@ namespace BTDToolbox
 
         //Project Variables
         public DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
+        Thread backupThread;
 
         //Config variables
         ConfigFile programData;
@@ -78,9 +80,10 @@ namespace BTDToolbox
             Deserialize_Config();
             bool existingUser = programData.ExistingUser;
             if (existingUser == false)
-                firstUse = true;
-            else
-                firstUse = false;
+            {
+                backupThread = new Thread(FirstTimeUse);
+                backupThread.Start();
+            }
 
             this.Size = new Size(programData.Main_SizeX, programData.Main_SizeY);
             this.StartPosition = FormStartPosition.Manual;
@@ -113,7 +116,10 @@ namespace BTDToolbox
                 if (con is MdiClient)
                     mdiClient = con as MdiClient;
         }
-
+        private void FirstTimeUse()
+        {
+            MessageBox.Show("Welcome to BTD Toolbox! This is a place holder. IF you are seeing this message, please contact staff");
+        }
         public static TD_Toolbox_Window getInstance()
         {
             return toolbox;
@@ -260,11 +266,6 @@ namespace BTDToolbox
         {
             compileJet("launch");
         }
-        private void RestoreBackup_Click(object sender, EventArgs e)
-        {
-            ExtractingJet_Window.switchCase = "backup";
-            var compile = new ExtractingJet_Window();
-        }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
             if (ConsoleHandler.console.Visible)
@@ -398,6 +399,20 @@ namespace BTDToolbox
             programData.CurrentGame = gameName;
             Serializer.SaveConfig(this, "game", programData);
             compileJet("decompile backup");
+        }
+
+        private void Backup_BTD5_Click(object sender, EventArgs e)
+        {
+            ExtractingJet_Window.BackupGame = "BTD5";
+            ExtractingJet_Window.switchCase = "backup";
+            var compile = new ExtractingJet_Window();
+        }
+
+        private void Backup_BTDB_Click(object sender, EventArgs e)
+        {
+            ExtractingJet_Window.BackupGame = "BTDB";
+            ExtractingJet_Window.switchCase = "backup";
+            var compile = new ExtractingJet_Window();
         }
     }
 }
