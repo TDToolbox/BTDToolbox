@@ -224,6 +224,16 @@ namespace BTDToolbox
                 }
                 else
                 {
+                    if (name.StartsWith("proj_BTD5"))
+                    {
+                        gameName = "BTD5";
+                    }
+                    else if (name.StartsWith("proj_BTDB"))
+                    {
+                        gameName = "BTDB";
+                    }
+                    projName = dialog.FileName;
+                    Serializer.SaveConfig(this, "game", programData);
                     JetForm jf = new JetForm(dirInfo, this, name);
                     jf.MdiParent = this;
                     jf.Show();
