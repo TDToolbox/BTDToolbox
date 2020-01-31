@@ -20,7 +20,7 @@ namespace BTDToolbox
         string livePath = Environment.CurrentDirectory;
         public string Path;
         public string fileName;
-        
+
         //Find and replace variables
         public int numPhraseFound;
         public int startPosition;
@@ -324,7 +324,6 @@ namespace BTDToolbox
             int w = 25;
             // get total lines of richTextBox1
             int line = Editor_TextBox.Lines.Length;
-
             if (line <= 99)
             {
                 w = 20 + (int)Editor_TextBox.Font.Size;
@@ -342,27 +341,20 @@ namespace BTDToolbox
         }
         public void AddLineNumbers()
         {
-            // create & set Point pt to (0,0)
             Point pt = new Point(0, 0);
-            // get First Index & First Line from richTextBox1
             int First_Index = Editor_TextBox.GetCharIndexFromPosition(pt);
             int First_Line = Editor_TextBox.GetLineFromCharIndex(First_Index);
-            // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively
             pt.X = ClientRectangle.Width;
             pt.Y = ClientRectangle.Height;
-            // get Last Index & Last Line from richTextBox1
+
             int Last_Index = Editor_TextBox.GetCharIndexFromPosition(pt);
             int Last_Line = Editor_TextBox.GetLineFromCharIndex(Last_Index);
-            // set Center alignment to LineNumberTextBox
             tB_line.SelectionAlignment = HorizontalAlignment.Center;
-            // set LineNumberTextBox text to null & width to getWidth() function value
             tB_line.Text = "";
             tB_line.Width = getWidth();
-            // now add each line number to LineNumberTextBox upto last line
             for (int i = First_Line; i <= Last_Line + 2; i++)
             {
-                tB_line.Text += i + 1 + "\n";
-                
+                tB_line.Text += i + 1 + "\n";   
             }
         }
 
@@ -397,95 +389,121 @@ namespace BTDToolbox
 
         private void Editor_TextBox_MouseClick(object sender, MouseEventArgs e)
         {
-            int index = Editor_TextBox.SelectionStart - 1;
-            char[] ch = Editor_TextBox.Text.ToCharArray();//.IndexOf(index);
-            char selectedText;
-            findNextPhrase = true;
-            endEditor = Editor_TextBox.Text.Length;
-            startPosition = Editor_TextBox.SelectionStart;//+ 1;
-
-            if (index < 0)
-                index = 0;
-            else if (index > Editor_TextBox.Text.Length)
-                index = Editor_TextBox.Text.Length;
-            selectedText = ch[index];
+            SearchForPairs();
+        }
+        private void SearchForPairs()
+        {
+            int duplicate = -1;
+            string searchDirection = "";
             string searchText = "";
+
+            int index = Editor_TextBox.SelectionStart;
+            char[] ch = Editor_TextBox.Text.ToCharArray();
+            char selectedText;
+            int duplicatesFound = 0;
+
+            endEditor = Editor_TextBox.Text.Length;
+            startPosition = Editor_TextBox.SelectionStart;
+
+            if (index - 1 < 0)
+                index = 0;
+            else if (index - 1 > Editor_TextBox.Text.Length)
+                index = Editor_TextBox.Text.Length;
+            selectedText = ch[index - 1];
 
             switch (selectedText)
             {
                 case '[':
+                    searchDirection = "down";
                     searchText = "]";
                     break;
                 case ']':
+                    searchDirection = "up";
                     searchText = "[";
                     break;
                 case '{':
+                    searchDirection = "down";
                     searchText = "}";
                     break;
                 case '}':
+                    searchDirection = "up";
                     searchText = "{";
                     break;
                 case '(':
+                    searchDirection = "down";
                     searchText = ")";
                     break;
                 case ')':
+                    searchDirection = "up";
                     searchText = "(";
                     break;
-            }            
-
-            if (previousSearchPhrase != searchText)
-            {
-                endPosition = 0;
-                numPhraseFound = 0;
             }
-            for (int i = 0; i < endEditor; i = startPosition)
+
+            for (int i = 0; i < endEditor + 1; i = startPosition)
             {
-                previousSearchPhrase = selectedText.ToString();
-                isCurrentlySearching = true;
-                if (i == -1 || startPosition >= endEditor || startPosition <= 0)
+                duplicate = -1;
+                if (startPosition >= endEditor + 1 || i == -1)
                 {
-                    isCurrentlySearching = false;
-                    MessageBox.Show("i = -1");
                     break;
                 }
-                startPosition = Editor_TextBox.Find(searchText, startPosition, endEditor, RichTextBoxFinds.None);
-                if (startPosition >= 0)
+                else
                 {
-                    //we found the character, lets make sure its the match
-
-                    int duplicate = Editor_TextBox.Find(selectedText.ToString(), index, startPosition, RichTextBoxFinds.None);
-                    if (duplicate < endPosition)
+                    if (searchDirection == "down")
                     {
-                        index = startPosition + 1;
-                        startPosition = startPosition + 1;
+                        startPosition = Editor_TextBox.Find(searchText, index, endEditor + 1, RichTextBoxFinds.None);
+                        if (startPosition >= 0)
+                        {
+                            //we found the character, lets make sure its the correct match to our pair
+                            duplicate = Editor_TextBox.Find(selectedText.ToString(), index, startPosition + 1, RichTextBoxFinds.NoHighlight);
+                            if (duplicate != -1)
+                            {
+                                duplicatesFound++;
+                                index = duplicate + 1;
+                            }
+                            else
+                            {
+                                if (duplicatesFound != 0)
+                                {
+                                    index = startPosition + 1;
+                                    duplicatesFound--;
+                                }
+                                else
+                                    break;
+                            }
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        findNextPhrase = false;
-                        numPhraseFound++;
-                        Editor_TextBox.SelectionColor = Color.White;       //saving this value for later use
-                        endPosition = searchText.Length;
-                        startPosition = startPosition + endPosition;
-                        break;
+                        startPosition = Editor_TextBox.Find(searchText, 0, index, RichTextBoxFinds.Reverse);
+                        if (startPosition >= 0)
+                        {
+                            //we found the character, lets make sure its the match
+                            duplicate = Editor_TextBox.Find(selectedText.ToString(), startPosition, index - 1, RichTextBoxFinds.Reverse | RichTextBoxFinds.NoHighlight);
+                            if (duplicate != -1)
+                            {
+                                duplicatesFound++;
+                                index = duplicate - 1;
+                            }
+                            else
+                            {
+                                if (duplicatesFound != 0)
+                                {
+                                    index = startPosition - 1;
+                                    duplicatesFound--;
+                                }
+                                else
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-
-                    
                 }
             }
-
-        }
-        private int CustomIndexOf(string source, char toFind, int min, int max)
-        {
-            int index = -1;
-            for (int i = min; i < max; i++)
-            {
-                index = source.IndexOf(toFind, index + 1);
-
-                if (index == -1)
-                    break;
-            }
-
-            return index;
         }
     }
 }
