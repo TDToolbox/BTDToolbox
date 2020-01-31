@@ -332,5 +332,10 @@ namespace BTDToolbox
         {
             Serializer.SaveConfig(this, "json editor", programData);
         }
+
+        private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
+        {
+            ShowReplaceMenu();
+        }
     }
 }
