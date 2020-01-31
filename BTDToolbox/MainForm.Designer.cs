@@ -78,9 +78,9 @@
             this.viewToolStripMenuItem,
             this.Launch_Program_ToolStrip,
             this.viewToolStripMenuItem1,
+            this.toolStripMenuItem1,
             this.helpToolStripMenuItem,
-            this.debugToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.debugToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1483, 24);
