@@ -430,24 +430,25 @@ namespace BTDToolbox
             this.Refresh();
 
             bool badPass = false;
-            if (!File.Exists(projectDest))
+
+            if (!dinfo.Exists)
             {
                 using (ZipFile zip = ZipFile.Read(sourceJet))
                 {
                     totalFiles = archive.Count();
                     filesTransfered = 0;
                     archive.ExtractProgress += ZipExtractProgress;
-
+                    
                     try
                     {
                         archive.ExtractAll(projectDest);
                     }
-                    //catch (BadPasswordException)
-                    catch (Exception)
+                    catch (BadPasswordException)
                     {
                         badPass = true;
                         MessageBox.Show("You entered an invalid password. Check console for more details.");
                         ConsoleHandler.appendLog("You entered an invalid password. You need to enter the CORRECT password for the version of BTD Battles that you are trying to mod");
+                        Directory.Delete(dinfo.ToString(), true);
                     }
                 }
                 if (badPass != true)

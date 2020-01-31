@@ -34,10 +34,6 @@ namespace BTDToolbox
                     cfg.BTDB_Directory = cfg.BTDB_Directory;
                 else
                     cfg.BTDB_Directory = BTDB_Dir;
-                if (BTDB_Dir == null)
-                    cfg.BTDB_Directory = cfg.BTDB_Directory;
-                else
-                    cfg.BTDB_Directory = BTDB_Dir;
             }
 
             if (formName == "main")

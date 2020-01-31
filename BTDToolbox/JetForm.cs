@@ -36,27 +36,25 @@ namespace BTDToolbox
         {
             InitializeComponent();
             StartUp();
-            this.KeyPreview = true;
-            listView1.DoubleClick += ListView1_DoubleClicked;
-            listView1.MouseUp += ListView1_RightClicked;
 
             this.dirInfo = dirInfo;
             this.Form = Form;
-            this.projName = projName;
-            ConsoleHandler.appendLog(projName);
-
+            this.projName = projName;            
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
-
-            this.treeView1.AfterSelect += treeView1_AfterSelect;
-
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
-
-            this.FormClosed += exitHandling;
-            this.FormClosing += this.JetForm_Closed;
+            
+            if(projName.Contains("BTD5"))
+            {
+                TD_Toolbox_Window.gameName = "BTD5";
+            }
+            else if (projName.Contains("BTDB"))
+            {
+                TD_Toolbox_Window.gameName = "BTDB";
+            }
+            ConsoleHandler.appendLog("Game: " + TD_Toolbox_Window.gameName);
+            ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
+            Serializer.SaveConfig(this, "game", programData);
         }
         private void Deserialize_Config()
         {
@@ -64,25 +62,26 @@ namespace BTDToolbox
         }
         private void StartUp()
         {
+            //config stuff
             Deserialize_Config();
             this.Size = new Size(programData.JetExplorer_SizeX, programData.JetExplorer_SizeY);
             this.Location = new Point(programData.JetExplorer_PosX, programData.JetExplorer_PosY);
 
-            //jetExplorer_FontSize = programData.JetExplorer_FolderView_FontSize;
             this.Font = new Font("Microsoft Sans Serif", programData.JetExplorer_FontSize);
             lastProject = programData.LastProject;
             jetExplorer_SplitterWidth = programData.JetExplorer_SplitterWidth;
             fileViewContainer.SplitterDistance = jetExplorer_SplitterWidth;
-
-            if (programData.LastProject.Contains("BTD5"))
-            {
-                TD_Toolbox_Window.gameName = "BTD5";
-            }
-            else
-            {
-                TD_Toolbox_Window.gameName = "BTDB";
-            }
-            Serializer.SaveConfig(this, "game", programData);
+            
+            //other setup
+            this.KeyPreview = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
+            listView1.DoubleClick += ListView1_DoubleClicked;
+            listView1.MouseUp += ListView1_RightClicked;
+            this.treeView1.AfterSelect += treeView1_AfterSelect;
+            this.FormClosed += exitHandling;
+            this.FormClosing += this.JetForm_Closed;
         }
         private void initSelContextMenu()
         {

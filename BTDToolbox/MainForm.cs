@@ -94,6 +94,11 @@ namespace BTDToolbox
 
             enableConsole = programData.EnableConsole;
             lastProject = programData.LastProject;
+
+            if (lastProject != null)
+            {
+
+            }
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
@@ -128,7 +133,11 @@ namespace BTDToolbox
             if (lastProject != "" && lastProject != null)
             {
                 DirectoryInfo dinfo = new DirectoryInfo(lastProject);
-                if(dinfo.Exists)
+                string[] split = dinfo.ToString().Split('\\');
+                string name = split[split.Length - 1];
+                projName = name;
+
+                if (dinfo.Exists)
                 {
                     foreach (JetForm o in JetProps.get())
                     {
@@ -142,6 +151,16 @@ namespace BTDToolbox
                     jf.MdiParent = this;
                     jf.Show();
                     projName = dinfo.ToString();
+
+                    /*if (projName.Contains("BTD5"))
+                    {
+                        gameName = "BTD5";
+                    }
+                    else if (projName.Contains("BTDB"))
+                    {
+                        gameName = "BTDB";
+                    }
+                    Serializer.SaveConfig(this, "game", programData);*/
                 }
             }
         }
@@ -224,11 +243,11 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    if (dialog.FileName.Contains("BTD5"))
+                    if (selected.Contains("BTD5"))
                     {
                         gameName = "BTD5";
                     }
-                    else if (dialog.FileName.Contains("BTDB"))
+                    else
                     {
                         gameName = "BTDB";
                     }
@@ -245,8 +264,6 @@ namespace BTDToolbox
         //
         private void compileJet(string switchCase)
         {
-            //MessageBox.Show(gameName);
-            //Serializer.SaveConfig(this, "game", programData);
             if (switchCase.Contains("BTDB"))
             {
                 ExtractingJet_Window.currentProject = projName;
@@ -411,7 +428,6 @@ namespace BTDToolbox
         private void New_BTD5_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTD5";
-            programData.CurrentGame = gameName;
             Serializer.SaveConfig(this, "game", programData);
             compileJet("decompile backup");
         }
