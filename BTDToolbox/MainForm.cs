@@ -93,7 +93,6 @@ namespace BTDToolbox
                 this.WindowState = FormWindowState.Maximized;
 
             enableConsole = programData.EnableConsole;
-            projectDirPath = programData.LastProject_Path;
             lastProject = programData.LastProject;
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
@@ -142,6 +141,7 @@ namespace BTDToolbox
                     JetForm jf = new JetForm(dinfo, this, projName);
                     jf.MdiParent = this;
                     jf.Show();
+                    projName = dinfo.ToString();
                 }
             }
         }
@@ -224,11 +224,11 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    if (name.StartsWith("proj_BTD5"))
+                    if (dialog.FileName.Contains("BTD5"))
                     {
                         gameName = "BTD5";
                     }
-                    else if (name.StartsWith("proj_BTDB"))
+                    else if (dialog.FileName.Contains("BTDB"))
                     {
                         gameName = "BTDB";
                     }
@@ -245,12 +245,21 @@ namespace BTDToolbox
         //
         private void compileJet(string switchCase)
         {
+            //MessageBox.Show(gameName);
+            //Serializer.SaveConfig(this, "game", programData);
+            if (switchCase.Contains("BTDB"))
+            {
+                ExtractingJet_Window.currentProject = projName;
+            }
             if (switchCase == "launch")
             {
                 if (JetProps.get().Count == 1)
                 {
-                    
-                    ExtractingJet_Window.switchCase = switchCase;
+                    ExtractingJet_Window.launchProgram = true;
+                    if (programData.CurrentGame == "BTDB")
+                        ExtractingJet_Window.switchCase = "compile BTDB";
+                    else
+                        ExtractingJet_Window.switchCase = "compile";
                     var compile = new ExtractingJet_Window();
                 }
                 else
@@ -267,6 +276,7 @@ namespace BTDToolbox
             }
             else
             {
+                ExtractingJet_Window.launchProgram = false;
                 ExtractingJet_Window.switchCase = switchCase;
                 var compile = new ExtractingJet_Window();
             }
@@ -367,7 +377,10 @@ namespace BTDToolbox
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            compileJet("output");
+            if (programData.CurrentGame != "BTDB")
+                compileJet("output");
+            else
+                compileJet("output BTDB");
         }
 
         private void NewProject_From_Backup_Click(object sender, EventArgs e)

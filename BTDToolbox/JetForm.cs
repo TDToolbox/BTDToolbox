@@ -73,6 +73,16 @@ namespace BTDToolbox
             lastProject = programData.LastProject;
             jetExplorer_SplitterWidth = programData.JetExplorer_SplitterWidth;
             fileViewContainer.SplitterDistance = jetExplorer_SplitterWidth;
+
+            if (programData.LastProject.Contains("BTD5"))
+            {
+                TD_Toolbox_Window.gameName = "BTD5";
+            }
+            else
+            {
+                TD_Toolbox_Window.gameName = "BTDB";
+            }
+            Serializer.SaveConfig(this, "game", programData);
         }
         private void initSelContextMenu()
         {
@@ -236,11 +246,6 @@ namespace BTDToolbox
                     }
                 }
             }
-        }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            saveJet();
         }
 
         //Context caller
@@ -454,41 +459,7 @@ namespace BTDToolbox
         {
             jetExplorer_SplitterWidth = fileViewContainer.SplitterDistance;
         }
-        /*internal void SerializeConfig()
-        {
-            if (projName == null)
-            {
-                jetExplorerConfig = new JetExplorer_Config("Jet Form", lastProject, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
-            }
-            else
-            {
-                jetExplorerConfig = new JetExplorer_Config("Jet Form", projName, this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10, splitterDistance, this.treeView1.Font.Size);
-            }
-            jetFormOutput = JsonConvert.SerializeObject(jetExplorerConfig);
-
-            try
-            {
-                StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
-                writeConsoleForm.Write(jetFormOutput);
-                writeConsoleForm.Close();
-            }
-            catch (Exception)
-            {
-                try
-                {
-                    Directory.CreateDirectory(livePath + "\\config");
-                    File.Create(livePath + "\\config\\jetForm.json");
-                    StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\jetForm.json", false);
-                    writeConsoleForm.Write(jetFormOutput);
-                    writeConsoleForm.Close();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Failed to serialize JetForm settings, delete the 'config' folder. You will need to manually open your project next time.");
-                }
-            }
-
-        }*/
+        
         private void exitHandling(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "jet explorer", programData);
@@ -596,6 +567,8 @@ namespace BTDToolbox
             {
                 ExtractingJet_Window.currentProject = projName;
                 ExtractingJet_Window.switchCase = "output";
+                if (programData.CurrentGame == "BTDB")
+                    ExtractingJet_Window.switchCase = "output BTDB";
                 var compile = new ExtractingJet_Window();
             }
         }

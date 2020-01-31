@@ -15,7 +15,7 @@ namespace BTDToolbox
             public string BTDB_Directory { get; set; }
             public string LastProject { get; set; }
             public string CurrentGame { get; set; }
-            public string LastProject_Path { get; set; }
+            public string ExportPath { get; set; }
             public bool ExistingUser { get; set; }
 
 

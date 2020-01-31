@@ -13,11 +13,23 @@ namespace BTDToolbox
     public partial class Get_BTDB_Password : Form
     {
         public static string projectName;
+        public static bool setPassword;
+        public static string compileOperation;
 
         public Get_BTDB_Password()
         {
             InitializeComponent();
             this.AcceptButton = CreateProject_Button;
+            
+            if (setPassword == true)
+            {
+                ExportingJet();                
+            }
+        }
+        private void ExportingJet()
+        {
+            CreateProject_Button.Text = "Submit Password";
+            this.Text = "Enter password to compile...";
         }
 
         private void CreateProject_Button_Click(object sender, EventArgs e)
@@ -29,6 +41,13 @@ namespace BTDToolbox
             }
             else
             {
+                if (setPassword == true)
+                {
+                    if (compileOperation.Contains("output"))
+                        ExtractingJet_Window.switchCase = "output";
+                    else if (compileOperation.Contains("compile"))
+                        ExtractingJet_Window.switchCase = "compile";
+                }
                 if (projectName != null || projectName != "")
                 {
                     ExtractingJet_Window.hasCustomProjectName = true;
@@ -40,7 +59,9 @@ namespace BTDToolbox
                 }
                 ExtractingJet_Window.jetPassword = password;
                 var extract = new ExtractingJet_Window();
-                //this.Close();
+
+                if (setPassword == true)
+                    this.Close();
             }
         }
     }

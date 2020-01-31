@@ -111,9 +111,17 @@ namespace BTDToolbox
                     this.Text = "Compiling....";
                     OutputJet();
                     break;
+                case "output BTDB":
+                    this.Text = "Compiling....";
+                    ExportBTDB();
+                    break;
                 case "compile":
                     this.Text = "Compiling....";
                     compile_and_overwrite_Jet();
+                    break;
+                case "compile BTDB":
+                    this.Text = "Compiling....";
+                    ExportBTDB();
                     break;
                 case "launch":
                     this.Text = "Compiling....";
@@ -276,7 +284,7 @@ namespace BTDToolbox
         private void Clear_Backup()
         {
             ConsoleHandler.appendLog("Clearing Backup .jet");
-            File.Delete(livePath + "\\Backups\\Original.jet");
+            File.Delete(livePath + "\\Backups\\" + programData.CurrentGame + "_Original.jet");
             Validate_Backup();
         }
         private void Validate_Backup()
@@ -303,7 +311,14 @@ namespace BTDToolbox
         {
             this.Show();
             Validate_Backup();
-            exportPath = BTD5_Dir + "\\Assets\\BTD5.jet";
+            if (programData.CurrentGame == "BTD5")
+            {
+                exportPath = BTD5_Dir + "\\Assets\\BTD5.jet";
+            }
+            else if (programData.CurrentGame == "BTDB")
+            {
+                exportPath = BTDB_Dir + "\\Assets\\data.jet";
+            }
             backgroundThread = new Thread(CompileThread);
             backgroundThread.Start();
         } 
@@ -318,17 +333,22 @@ namespace BTDToolbox
 
             filesTransfered = 0;
             ZipFile toExport = new ZipFile();
-            toExport.Password = "Q%_{6#Px]]";
+            if (programData.CurrentGame != "BTDB")
+            {
+                jetPassword = "Q%_{6#Px]]";
+            }
+
+            toExport.Password = jetPassword;
             toExport.AddProgress += ZipCompileProgress;
             toExport.AddDirectory(projDir.FullName);
             toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
             toExport.Name = exportPath;
             toExport.CompressionLevel = CompressionLevel.Level6;
-
             toExport.Save();
             toExport.Dispose();
 
-            if(launchProgram == true)
+
+            if (launchProgram == true)
             {
                 Process.Start(exePath);
                 ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
@@ -350,7 +370,18 @@ namespace BTDToolbox
                 backgroundThread.Start();
             }
         }
-
+        private void ExportBTDB()
+        {
+            programData.CurrentGame = "BTDB";
+            programData.LastProject = currentProject;
+            Get_BTDB_Password.compileOperation = switchCase;
+            Get_BTDB_Password.projectName = currentProject;
+            Get_BTDB_Password.setPassword = true;
+            var setPass = new Get_BTDB_Password();
+            
+            setPass.Show();
+            this.Close();
+        }
 
         //
         //Decompile functions
