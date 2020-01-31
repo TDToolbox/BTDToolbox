@@ -19,6 +19,7 @@ namespace BTDToolbox
         //Config variables
         ConfigFile programData;
         public static float consoleLogFont;
+        public string lastMessage;
         string livePath = Environment.CurrentDirectory;
         float fontSize;
 
@@ -49,7 +50,12 @@ namespace BTDToolbox
 
         public void appendLog(String log)
         {
-            console_log.Invoke(new Action(() => console_log.AppendText(log + "\r\n")));
+            if (log != lastMessage)
+            {
+                console_log.Invoke(new Action(() => console_log.AppendText(">> " + log + "\r\n")));
+                lastMessage = log;
+            }
+
         }
         private void exitHandling(object sender, EventArgs e)
         {

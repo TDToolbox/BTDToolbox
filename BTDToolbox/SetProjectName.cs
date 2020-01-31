@@ -19,7 +19,7 @@ namespace BTDToolbox
         public SetProjectName()
         {
             InitializeComponent();
-            
+            ExtractingJet_Window.switchCase = "decompile";
             if (gameName == "BTDB")
             {
                 CreateProject_Button.Text = "Continue";
@@ -29,7 +29,6 @@ namespace BTDToolbox
 
             this.AcceptButton = CreateProject_Button;
             this.Activate();
-            ExtractingJet_Window.switchCase = "decompile";
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {

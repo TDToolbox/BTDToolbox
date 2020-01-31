@@ -19,7 +19,7 @@ namespace BTDToolbox
         public string projectDirPath;
         private static TD_Toolbox_Window toolbox;
 
-        string version = "Alpha 0.0.2";
+        string version = "Alpha 0.0.3";
 
         //Project Variables
         public DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
@@ -464,6 +464,12 @@ namespace BTDToolbox
         {
             ExtractingJet_Window.BackupGame = "BTD5";
             compileJet("clean backup");
+        }
+
+        private void TestForm_Click(object sender, EventArgs e)
+        {
+            var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
+            editor.Show();
         }
     }
 }

@@ -39,6 +39,7 @@ namespace BTDToolbox
         public static int totalFiles = 0;        
         public int filesTransfered = 0;
         public static bool launchProgram = false;
+        bool cancelProgress;
 
         //Config variables
         ConfigFile programData;
@@ -169,18 +170,33 @@ namespace BTDToolbox
                 return;
             if (filesTransfered >= (totalFiles / 100))
             {
-                TotalProgress_ProgressBar.Invoke(new Action(() => TotalProgress_ProgressBar.Value = 100 * filesTransfered / totalFiles));
+                try
+                {
+                    TotalProgress_ProgressBar.Invoke(new Action(() => TotalProgress_ProgressBar.Value = 100 * filesTransfered / totalFiles));
+                }
+                catch (Exception ex)
+                {
+                    PrintError(ex.Message);
+                }
             }
 
             filesTransfered++;
         }
         private void ZipCompileProgress(object sender, AddProgressEventArgs e)
         {
+            
             if (e.EventType != ZipProgressEventType.Adding_AfterAddEntry)
                 return;
             if (filesTransfered >= (totalFiles/100))
             {
-                TotalProgress_ProgressBar.Invoke(new Action(() => TotalProgress_ProgressBar.Value = 100 * filesTransfered / totalFiles));
+                try
+                {
+                    TotalProgress_ProgressBar.Invoke(new Action(() => TotalProgress_ProgressBar.Value = 100 * filesTransfered / totalFiles));
+                }
+                catch(Exception ex)
+                {
+                    PrintError(ex.Message);
+                }
             }
             filesTransfered++;
         }
@@ -348,14 +364,28 @@ namespace BTDToolbox
             toExport.Save();
             toExport.Dispose();
 
-
-            if (launchProgram == true)
+            if (cancelProgress == true)
             {
-                Process.Start(exePath);
-                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
+                toExport.Dispose();
             }
-            this.Invoke(new Action(() => this.Close()));
+            else
+            {
+                if (launchProgram == true)
+                {
+                    Process.Start(exePath);
+                    ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
+                }
+            }
+            try
+            {
+                this.Invoke(new Action(() => this.Close()));
+            }
+            catch (Exception ex)
+            {
+                PrintError(ex.Message);
+            }
             backgroundThread.Abort();
+
         }
         private void OutputJet()
         {
@@ -368,6 +398,7 @@ namespace BTDToolbox
                 this.Show();
                 exportPath = sfd.FileName;
                 backgroundThread = new Thread(CompileThread);
+
                 backgroundThread.Start();
             }
         }
@@ -458,7 +489,7 @@ namespace BTDToolbox
                         badPass = true;
                         MessageBox.Show("You entered an invalid password. Check console for more details.");
                         ConsoleHandler.appendLog("You entered an invalid password. You need to enter the CORRECT password for the version of BTD Battles that you are trying to mod");
-                        Directory.Delete(dinfo.ToString(), true);
+                        DeleteDirectory(dinfo.ToString());
                     }
                 }
                 if (badPass != true)
@@ -475,7 +506,8 @@ namespace BTDToolbox
                 if (varr == DialogResult.OK)
                 {
                     MessageBox.Show("Overwriting existing project... Please close the current Jet Explorer window.");
-                    Directory.Delete(projectName, true);
+                    //Directory.Delete(projectName, true);
+                    DeleteDirectory(projectName);
                     DecompileThread();
                 }
                 if (varr == DialogResult.Cancel)
@@ -519,6 +551,26 @@ namespace BTDToolbox
             steamJetPath = tempString;
             //this.Invoke(new Action(() => this.Close()));
             backgroundThread.Abort();
+        }
+        private void PrintError(string exception)
+        {
+            ConsoleHandler.appendLog("An error occured that may prevent the program from running properly.\r\nThe error is below: \r\n\r\n" + exception + "\r\n");
+            this.Close();
+        }
+        private void ExtractingJet_Window_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            cancelProgress = true;
+        }
+        public static void DeleteDirectory(string path)
+        {
+            var directory = new DirectoryInfo(path) { Attributes = FileAttributes.Normal };
+
+            foreach (var info in directory.GetFileSystemInfos("*", SearchOption.AllDirectories))
+            {
+                info.Attributes = FileAttributes.Normal;
+            }
+
+            directory.Delete(true);
         }
     }
 }

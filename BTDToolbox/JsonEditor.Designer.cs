@@ -49,6 +49,7 @@
             this.FindNext_Button = new System.Windows.Forms.ToolStripButton();
             this.lintPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tB_line = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -68,6 +69,7 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.tB_line);
             this.contentPanel.Controls.Add(this.lintPanel);
             this.contentPanel.Controls.Add(this.JsonToolstrip);
             this.contentPanel.Controls.Add(this.Editor_TextBox);
@@ -89,11 +91,15 @@
             this.Editor_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Editor_TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Editor_TextBox.ForeColor = System.Drawing.Color.White;
-            this.Editor_TextBox.Location = new System.Drawing.Point(75, 28);
+            this.Editor_TextBox.Location = new System.Drawing.Point(63, 28);
             this.Editor_TextBox.Name = "Editor_TextBox";
-            this.Editor_TextBox.Size = new System.Drawing.Size(698, 375);
+            this.Editor_TextBox.Size = new System.Drawing.Size(710, 375);
             this.Editor_TextBox.TabIndex = 2;
             this.Editor_TextBox.Text = "";
+            this.Editor_TextBox.SelectionChanged += new System.EventHandler(this.Editor_TextBox_SelectionChanged);
+            this.Editor_TextBox.VScroll += new System.EventHandler(this.Editor_TextBox_VScroll);
+            this.Editor_TextBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Editor_TextBox_MouseClick);
+            this.Editor_TextBox.FontChanged += new System.EventHandler(this.Editor_TextBox_FontChanged);
             this.Editor_TextBox.TextChanged += new System.EventHandler(this.Editor_TextBox_TextChanged);
             this.Editor_TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Editor_TextBox_KeyDown);
             // 
@@ -277,6 +283,24 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // tB_line
+            // 
+            this.tB_line.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.tB_line.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.tB_line.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tB_line.Font = new System.Drawing.Font("Consolas", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tB_line.ForeColor = System.Drawing.Color.DarkGray;
+            this.tB_line.Location = new System.Drawing.Point(4, 28);
+            this.tB_line.Name = "tB_line";
+            this.tB_line.ReadOnly = true;
+            this.tB_line.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.tB_line.Size = new System.Drawing.Size(53, 374);
+            this.tB_line.TabIndex = 5;
+            this.tB_line.Text = "";
+            this.tB_line.WordWrap = false;
+            this.tB_line.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TB_line_MouseDown);
+            // 
             // JsonEditor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -323,5 +347,6 @@
         private System.Windows.Forms.ToolStripButton FindNext_Button;
         private System.Windows.Forms.Panel lintPanel;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.RichTextBox tB_line;
     }
 }
