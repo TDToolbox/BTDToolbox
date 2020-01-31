@@ -122,7 +122,7 @@ namespace BTDToolbox
         }
         private void FirstTimeUse()
         {
-            MessageBox.Show("Welcome to BTD Toolbox! This is a place holder. IF you are seeing this message, please contact staff");
+            MessageBox.Show("Welcome to BTD Toolbox! This is a place holder. IF you are using Toolbox version 0.0.4 or higher and seeing this message, please contact staff, cuz we need to add a welcome screen already :)");
         }
         public static TD_Toolbox_Window getInstance()
         {
