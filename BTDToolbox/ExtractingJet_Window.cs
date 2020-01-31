@@ -283,19 +283,20 @@ namespace BTDToolbox
         }
         private void Clear_Backup()
         {
-            ConsoleHandler.appendLog("Clearing Backup .jet");
-            File.Delete(livePath + "\\Backups\\" + programData.CurrentGame + "_Original.jet");
+            ConsoleHandler.appendLog("Clearing Backup .jet for " + BackupGame);
+            File.Delete(livePath + "\\Backups\\" + BackupGame + "_Original.jet");
             Validate_Backup();
         }
         private void Validate_Backup()
         {
+            ConsoleHandler.appendLog("Attempting to validate backup...");
             string backupName = programData.CurrentGame + "_Original.jet";
             if (!File.Exists(Environment.CurrentDirectory + "\\Backups\\" + backupName))
             {
-                ConsoleHandler.appendLog("Jet backup not found, creating one...");
+                ConsoleHandler.appendLog("Jet backup not found for" + programData.CurrentGame + ", creating one...");
                 Directory.CreateDirectory(Environment.CurrentDirectory + "\\Backups");
                 File.Copy(steamJetPath, Environment.CurrentDirectory + "\\Backups\\" + backupName);
-                ConsoleHandler.appendLog("Backup done");
+                ConsoleHandler.appendLog("Backup created");
             }
             else
             {
@@ -372,15 +373,24 @@ namespace BTDToolbox
         }
         private void ExportBTDB()
         {
-            programData.CurrentGame = "BTDB";
-            programData.LastProject = currentProject;
+            TD_Toolbox_Window.gameName = "BTDB";
             Get_BTDB_Password.compileOperation = switchCase;
             Get_BTDB_Password.projectName = currentProject;
             Get_BTDB_Password.setPassword = true;
             var setPass = new Get_BTDB_Password();
-            
-            setPass.Show();
-            this.Close();
+
+            //Serializer.SaveConfig(this, "jet explorer", programData);
+            if (jetPassword != null)
+            {
+                setPass.Close();
+                if (switchCase.Contains("output"))
+                    OutputJet();
+                else if (switchCase.Contains("compile"))
+                    compile_and_overwrite_Jet();
+            }
+            else
+                setPass.Show();
+            //this.Close();
         }
 
         //

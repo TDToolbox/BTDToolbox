@@ -52,8 +52,8 @@
             this.Backup_BTD5 = new System.Windows.Forms.ToolStripMenuItem();
             this.Backup_BTDB = new System.Windows.Forms.ToolStripMenuItem();
             this.remakeBackupjetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replaceBTD5jetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replaceDatajetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Replace_BTD5_Backup = new System.Windows.Forms.ToolStripMenuItem();
+            this.Replace_BTDB_Backup = new System.Windows.Forms.ToolStripMenuItem();
             this.contactUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Credits = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,28 +113,28 @@
             // New_BTD5_Proj
             // 
             this.New_BTD5_Proj.Name = "New_BTD5_Proj";
-            this.New_BTD5_Proj.Size = new System.Drawing.Size(172, 22);
+            this.New_BTD5_Proj.Size = new System.Drawing.Size(180, 22);
             this.New_BTD5_Proj.Text = "BTD5 Project";
             this.New_BTD5_Proj.Click += new System.EventHandler(this.New_BTD5_Proj_Click);
             // 
             // New_BTDB_Proj
             // 
             this.New_BTDB_Proj.Name = "New_BTDB_Proj";
-            this.New_BTDB_Proj.Size = new System.Drawing.Size(172, 22);
+            this.New_BTDB_Proj.Size = new System.Drawing.Size(180, 22);
             this.New_BTDB_Proj.Text = "BTD Battles Project";
             this.New_BTDB_Proj.Click += new System.EventHandler(this.New_BTDB_Proj_Click);
             // 
             // NewProject_From_Backup
             // 
             this.NewProject_From_Backup.Name = "NewProject_From_Backup";
-            this.NewProject_From_Backup.Size = new System.Drawing.Size(172, 22);
+            this.NewProject_From_Backup.Size = new System.Drawing.Size(180, 22);
             this.NewProject_From_Backup.Text = "Project from .jet";
             this.NewProject_From_Backup.Click += new System.EventHandler(this.NewProject_From_Backup_Click);
             // 
             // btdpToolStripMenuItem
             // 
             this.btdpToolStripMenuItem.Name = "btdpToolStripMenuItem";
-            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
             // 
             // openToolStripMenuItem1
@@ -259,24 +259,26 @@
             // remakeBackupjetToolStripMenuItem
             // 
             this.remakeBackupjetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.replaceBTD5jetToolStripMenuItem,
-            this.replaceDatajetToolStripMenuItem});
+            this.Replace_BTD5_Backup,
+            this.Replace_BTDB_Backup});
             this.remakeBackupjetToolStripMenuItem.Name = "remakeBackupjetToolStripMenuItem";
             this.remakeBackupjetToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.remakeBackupjetToolStripMenuItem.Text = "Get a new backup  .jet";
             this.remakeBackupjetToolStripMenuItem.Click += new System.EventHandler(this.RemakeBackupjetToolStripMenuItem_Click);
             // 
-            // replaceBTD5jetToolStripMenuItem
+            // Replace_BTD5_Backup
             // 
-            this.replaceBTD5jetToolStripMenuItem.Name = "replaceBTD5jetToolStripMenuItem";
-            this.replaceBTD5jetToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.replaceBTD5jetToolStripMenuItem.Text = "Replace BTD5.jet";
+            this.Replace_BTD5_Backup.Name = "Replace_BTD5_Backup";
+            this.Replace_BTD5_Backup.Size = new System.Drawing.Size(180, 22);
+            this.Replace_BTD5_Backup.Text = "Replace BTD5.jet";
+            this.Replace_BTD5_Backup.Click += new System.EventHandler(this.Replace_BTD5_Backup_Click);
             // 
-            // replaceDatajetToolStripMenuItem
+            // Replace_BTDB_Backup
             // 
-            this.replaceDatajetToolStripMenuItem.Name = "replaceDatajetToolStripMenuItem";
-            this.replaceDatajetToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.replaceDatajetToolStripMenuItem.Text = "Replace data.jet";
+            this.Replace_BTDB_Backup.Name = "Replace_BTDB_Backup";
+            this.Replace_BTDB_Backup.Size = new System.Drawing.Size(180, 22);
+            this.Replace_BTDB_Backup.Text = "Replace data.jet";
+            this.Replace_BTDB_Backup.Click += new System.EventHandler(this.Replace_BTDB_Backup_Click);
             // 
             // contactUsToolStripMenuItem
             // 
@@ -438,8 +440,8 @@
         private System.Windows.Forms.ToolStripMenuItem contactUsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Backup_BTD5;
         private System.Windows.Forms.ToolStripMenuItem Backup_BTDB;
-        private System.Windows.Forms.ToolStripMenuItem replaceBTD5jetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem replaceDatajetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Replace_BTD5_Backup;
+        private System.Windows.Forms.ToolStripMenuItem Replace_BTDB_Backup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
     }
 }

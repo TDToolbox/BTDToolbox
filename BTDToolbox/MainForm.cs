@@ -408,7 +408,7 @@ namespace BTDToolbox
 
         private void RemakeBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            compileJet("clean backup");
+            
         }
 
         private void Open_Existing_JetFile_Click(object sender, EventArgs e)
@@ -452,6 +452,18 @@ namespace BTDToolbox
             ExtractingJet_Window.BackupGame = "BTDB";
             ExtractingJet_Window.switchCase = "backup";
             var compile = new ExtractingJet_Window();
+        }
+
+        private void Replace_BTDB_Backup_Click(object sender, EventArgs e)
+        {
+            ExtractingJet_Window.BackupGame = "BTDB";
+            compileJet("clean backup");
+        }
+
+        private void Replace_BTD5_Backup_Click(object sender, EventArgs e)
+        {
+            ExtractingJet_Window.BackupGame = "BTD5";
+            compileJet("clean backup");
         }
     }
 }

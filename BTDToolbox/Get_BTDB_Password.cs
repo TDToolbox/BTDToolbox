@@ -23,7 +23,15 @@ namespace BTDToolbox
             
             if (setPassword == true)
             {
-                ExportingJet();                
+                if (ExtractingJet_Window.jetPassword != null)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    ExportingJet();
+                }
+                
             }
         }
         private void ExportingJet()

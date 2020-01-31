@@ -48,12 +48,14 @@
             this.Find_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.FindNext_Button = new System.Windows.Forms.ToolStripButton();
             this.lintPanel = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.JsonToolstrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // titleSeperator
@@ -69,6 +71,7 @@
             this.contentPanel.Controls.Add(this.lintPanel);
             this.contentPanel.Controls.Add(this.JsonToolstrip);
             this.contentPanel.Controls.Add(this.Editor_TextBox);
+            this.contentPanel.Controls.Add(this.pictureBox1);
             // 
             // close_button
             // 
@@ -86,9 +89,9 @@
             this.Editor_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Editor_TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Editor_TextBox.ForeColor = System.Drawing.Color.White;
-            this.Editor_TextBox.Location = new System.Drawing.Point(4, 28);
+            this.Editor_TextBox.Location = new System.Drawing.Point(75, 28);
             this.Editor_TextBox.Name = "Editor_TextBox";
-            this.Editor_TextBox.Size = new System.Drawing.Size(769, 375);
+            this.Editor_TextBox.Size = new System.Drawing.Size(698, 375);
             this.Editor_TextBox.TabIndex = 2;
             this.Editor_TextBox.Text = "";
             this.Editor_TextBox.TextChanged += new System.EventHandler(this.Editor_TextBox_TextChanged);
@@ -170,7 +173,6 @@
             // 
             // FontSize_TextBox
             // 
-            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -185,7 +187,6 @@
             // Replace_TextBox
             // 
             this.Replace_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Replace_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Replace_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Replace_TextBox.Name = "Replace_TextBox";
             this.Replace_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -232,7 +233,6 @@
             // Find_TextBox
             // 
             this.Find_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Find_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Find_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Find_TextBox.Name = "Find_TextBox";
             this.Find_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -261,6 +261,18 @@
             this.lintPanel.Size = new System.Drawing.Size(60, 24);
             this.lintPanel.TabIndex = 3;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 16);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 387);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
             // JsonEditor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -281,6 +293,7 @@
             this.contentPanel.PerformLayout();
             this.JsonToolstrip.ResumeLayout(false);
             this.JsonToolstrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -305,5 +318,6 @@
         private System.Windows.Forms.ToolStripTextBox Find_TextBox;
         private System.Windows.Forms.ToolStripButton FindNext_Button;
         private System.Windows.Forms.Panel lintPanel;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
