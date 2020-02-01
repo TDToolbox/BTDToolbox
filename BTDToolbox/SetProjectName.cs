@@ -23,9 +23,15 @@ namespace BTDToolbox
             if (gameName == "BTDB")
             {
                 CreateProject_Button.Text = "Continue";
+                if (ExtractingJet_Window.customName.Length > 0)
+                {
+                    ProjectName_TextBox.Text = ExtractingJet_Window.customName;
+                }
             }
             else
                 CreateProject_Button.Text = "Create Project";
+            
+            
 
             this.AcceptButton = CreateProject_Button;
             this.Activate();
@@ -54,8 +60,6 @@ namespace BTDToolbox
                         this.Close();
                         var extractT = new ExtractingJet_Window();
                     }
-                    
-
                 }
             }
             else

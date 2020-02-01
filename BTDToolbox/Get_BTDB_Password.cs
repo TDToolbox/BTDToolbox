@@ -56,7 +56,7 @@ namespace BTDToolbox
                     else if (compileOperation.Contains("compile"))
                         ExtractingJet_Window.switchCase = "compile";
                 }
-                if (projectName != null || projectName != "")
+                if (projectName != null && projectName != "")
                 {
                     ExtractingJet_Window.hasCustomProjectName = true;
                     ExtractingJet_Window.customName = projectName;
@@ -65,11 +65,11 @@ namespace BTDToolbox
                 {
                     ExtractingJet_Window.hasCustomProjectName = false;
                 }
+                ExtractingJet_Window.customName = projectName;
                 ExtractingJet_Window.jetPassword = password;
                 var extract = new ExtractingJet_Window();
 
-                if (setPassword == true)
-                    this.Close();
+                this.Close();
             }
         }
     }

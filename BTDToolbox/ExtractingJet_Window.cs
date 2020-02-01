@@ -456,7 +456,7 @@ namespace BTDToolbox
         private void DecompileThread()
         {
             ZipFile archive = new ZipFile(sourceJet);
-            ConsoleHandler.appendLog("Creating project files...");
+            //ConsoleHandler.appendLog("Creating project files...");
 
             if (gameName != "BTDB")
             {
@@ -469,9 +469,7 @@ namespace BTDToolbox
 
             this.Show();
             this.Refresh();
-
             bool badPass = false;
-
             if (!dinfo.Exists)
             {
                 using (ZipFile zip = ZipFile.Read(sourceJet))
@@ -482,26 +480,34 @@ namespace BTDToolbox
                     
                     try
                     {
-                        archive.ExtractAll(projectDest);
+                        if (badPass != true)
+                        {
+                            archive.ExtractAll(projectDest);
+                            ExtractingJet_Window.customName = "";
+                        }
+                        else
+                        {
+                            MessageBox.Show("Badd Password error. Contact staff if you are seeing this");
+                        }
                     }
                     catch (BadPasswordException)
                     {
+                        DeleteDirectory(dinfo.ToString());
                         badPass = true;
                         MessageBox.Show("You entered an invalid password. Check console for more details.");
-                        ConsoleHandler.appendLog("You entered an invalid password. You need to enter the CORRECT password for the version of BTD Battles that you are trying to mod");
-                        DeleteDirectory(dinfo.ToString());
+                        ConsoleHandler.appendLog("You entered an invalid password. You need to enter the CORRECT password for the version of BTD Battles that you are trying to mod");                        
                     }
-                }
-                if (badPass != true)
-                {
-                    ConsoleHandler.appendLog("Project files created at: " + projectName);
-                    jf.Invoke(new Action(() => jf.Show()));
+                    if (badPass != true)
+                    {
+                        ConsoleHandler.appendLog("Project files created at: " + projectName);
+                        jf.Invoke(new Action(() => jf.Show()));
+                    }
                 }
             }
             else
             {
                 this.Hide();
-
+                
                 DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
                 if (varr == DialogResult.OK)
                 {
@@ -519,9 +525,8 @@ namespace BTDToolbox
                     backgroundThread.Abort();
                 }
             }
-
-            /*this.Invoke(new Action(() => this.Close()));
-            backgroundThread.Abort();*/
+            this.Invoke(new Action(() => this.Close()));
+            backgroundThread.Abort();
         }
         //
         //Restore Backup
