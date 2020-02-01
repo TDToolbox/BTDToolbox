@@ -389,7 +389,7 @@ namespace BTDToolbox
 
         private void Editor_TextBox_MouseClick(object sender, MouseEventArgs e)
         {
-            SearchForPairs();
+            //SearchForPairs();
         }
         private void SearchForPairs()
         {
