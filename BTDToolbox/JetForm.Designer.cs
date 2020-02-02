@@ -37,7 +37,12 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Open_Proj_Dir = new System.Windows.Forms.ToolStripMenuItem();
             this.Save_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.retToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.makeBackupOfProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.revertToBackupToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.revertToBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.Find_Toolstrip = new System.Windows.Forms.ToolStripMenuItem();
             this.findPanel = new System.Windows.Forms.Panel();
             this.nextSearchResultButton = new System.Windows.Forms.Button();
             this.instanceCountLabel = new System.Windows.Forms.Label();
@@ -49,11 +54,10 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Find_Toolstrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.retToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.revertToBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.makeBackupOfProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.revertToBackupToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteProjectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -134,8 +138,12 @@
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.Save_ToolStrip,
+            this.toolStripSeparator1,
             this.retToolStripMenuItem,
-            this.revertToBackupToolStripMenuItem});
+            this.revertToBackupToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.deleteProjectToolStripMenuItem,
+            this.deleteProjectToolStripMenuItem1});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
@@ -164,6 +172,33 @@
             this.Save_ToolStrip.Text = "Save";
             this.Save_ToolStrip.Click += new System.EventHandler(this.Save_ToolStrip_Click);
             // 
+            // retToolStripMenuItem
+            // 
+            this.retToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.makeBackupOfProjectToolStripMenuItem,
+            this.revertToBackupToolStripMenuItem1});
+            this.retToolStripMenuItem.Name = "retToolStripMenuItem";
+            this.retToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.retToolStripMenuItem.Text = "Backup project";
+            // 
+            // makeBackupOfProjectToolStripMenuItem
+            // 
+            this.makeBackupOfProjectToolStripMenuItem.Name = "makeBackupOfProjectToolStripMenuItem";
+            this.makeBackupOfProjectToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.makeBackupOfProjectToolStripMenuItem.Text = "Make backup of project";
+            // 
+            // revertToBackupToolStripMenuItem1
+            // 
+            this.revertToBackupToolStripMenuItem1.Name = "revertToBackupToolStripMenuItem1";
+            this.revertToBackupToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
+            this.revertToBackupToolStripMenuItem1.Text = "Revert to backup";
+            // 
+            // revertToBackupToolStripMenuItem
+            // 
+            this.revertToBackupToolStripMenuItem.Name = "revertToBackupToolStripMenuItem";
+            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.revertToBackupToolStripMenuItem.Text = "Remake Project";
+            // 
             // toolStripDropDownButton2
             // 
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -174,6 +209,13 @@
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.Size = new System.Drawing.Size(40, 22);
             this.toolStripDropDownButton2.Text = "Edit";
+            // 
+            // Find_Toolstrip
+            // 
+            this.Find_Toolstrip.Name = "Find_Toolstrip";
+            this.Find_Toolstrip.Size = new System.Drawing.Size(180, 22);
+            this.Find_Toolstrip.Text = "Find";
+            this.Find_Toolstrip.Click += new System.EventHandler(this.Find_Toolstrip_Click);
             // 
             // findPanel
             // 
@@ -318,39 +360,27 @@
             this.name_column.Text = "Name";
             this.name_column.Width = 517;
             // 
-            // Find_Toolstrip
+            // deleteProjectToolStripMenuItem
             // 
-            this.Find_Toolstrip.Name = "Find_Toolstrip";
-            this.Find_Toolstrip.Size = new System.Drawing.Size(180, 22);
-            this.Find_Toolstrip.Text = "Find";
-            this.Find_Toolstrip.Click += new System.EventHandler(this.Find_Toolstrip_Click);
+            this.deleteProjectToolStripMenuItem.Name = "deleteProjectToolStripMenuItem";
+            this.deleteProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteProjectToolStripMenuItem.Text = "Rename Project";
             // 
-            // retToolStripMenuItem
+            // deleteProjectToolStripMenuItem1
             // 
-            this.retToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.makeBackupOfProjectToolStripMenuItem,
-            this.revertToBackupToolStripMenuItem1});
-            this.retToolStripMenuItem.Name = "retToolStripMenuItem";
-            this.retToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.retToolStripMenuItem.Text = "Backup project";
+            this.deleteProjectToolStripMenuItem1.Name = "deleteProjectToolStripMenuItem1";
+            this.deleteProjectToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.deleteProjectToolStripMenuItem1.Text = "Delete Project";
             // 
-            // revertToBackupToolStripMenuItem
+            // toolStripSeparator1
             // 
-            this.revertToBackupToolStripMenuItem.Name = "revertToBackupToolStripMenuItem";
-            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.revertToBackupToolStripMenuItem.Text = "Remake Project";
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
-            // makeBackupOfProjectToolStripMenuItem
+            // toolStripSeparator2
             // 
-            this.makeBackupOfProjectToolStripMenuItem.Name = "makeBackupOfProjectToolStripMenuItem";
-            this.makeBackupOfProjectToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.makeBackupOfProjectToolStripMenuItem.Text = "Make backup of project";
-            // 
-            // revertToBackupToolStripMenuItem1
-            // 
-            this.revertToBackupToolStripMenuItem1.Name = "revertToBackupToolStripMenuItem1";
-            this.revertToBackupToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
-            this.revertToBackupToolStripMenuItem1.Text = "Revert to backup";
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // JetForm
             // 
@@ -409,5 +439,9 @@
         private System.Windows.Forms.ToolStripMenuItem revertToBackupToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem revertToBackupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Find_Toolstrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem deleteProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteProjectToolStripMenuItem1;
     }
 }

@@ -16,25 +16,41 @@ namespace BTDToolbox
         public static bool setPassword;
         public static string compileOperation;
 
+
+        //new refactoring variables
+        public string projName { get; set; }
+        public bool isExtracting { get; set; }
+
         public Get_BTDB_Password()
         {
             InitializeComponent();
             this.AcceptButton = CreateProject_Button;
             
-            if (setPassword == true)
+        }
+        public void GetPass()
+        {
+            string password = Password_TextBox.Text.ToString();
+            if (password.Length < 3)
+                MessageBox.Show("The password you entered was too short...");
+            else
             {
-                if (ExtractingJet_Window.jetPassword != null)
+                var zip = new ExtractingJet_Window();
+                zip.jetFile_Game = "BTDB";
+                zip.password = password;
+                zip.projName = projName;                
+                zip.Show();
+                if (isExtracting == true)
                 {
-                    this.Close();
+                    zip.Extract();
                 }
                 else
                 {
-                    ExportingJet();
+
                 }
-                
+                this.Close();
             }
         }
-        private void ExportingJet()
+        private void ExportingJetSetup()
         {
             CreateProject_Button.Text = "Submit Password";
             this.Text = "Enter password to compile...";
@@ -42,7 +58,8 @@ namespace BTDToolbox
 
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
-            string password = Password_TextBox.Text.ToString();
+            GetPass();
+            /*string password = Password_TextBox.Text.ToString();
             if(password.Length < 3)
             {
                 MessageBox.Show("The password you entered was too short...");
@@ -70,7 +87,7 @@ namespace BTDToolbox
                 var extract = new ExtractingJet_Window();
 
                 this.Close();
-            }
+            }*/
         }
     }
 }

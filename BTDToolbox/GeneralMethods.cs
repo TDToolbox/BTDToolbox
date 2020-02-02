@@ -29,7 +29,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendLog("Error! Unable to delete file");
+                ConsoleHandler.appendLog("Error! Unable to delete the file:\r\n" + fileName);
             }
         }
         public static void DeleteDirectory(string path)
@@ -47,7 +47,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendLog("Directory not found. Unable to delete directory");
+                ConsoleHandler.appendLog("Directory not found. Unable to delete directory at:\r\n" + path);
             }
         }
         public static void CopyFile(string originalLocation, string newLocation)
@@ -59,21 +59,19 @@ namespace BTDToolbox
                     ConsoleHandler.appendLog("Copying file...");
                     File.Copy(originalLocation, newLocation);
                     ConsoleHandler.appendLog("File Copied!");
-                    File.Delete(originalLocation);
                 }
                 else
                 {
                     ConsoleHandler.appendLog("A file with that name already exists...");
-                    File.Delete(newLocation);
-                    ConsoleHandler.appendLog("Existing file deleted.\nCopying file..");
+                    DeleteFile(newLocation);
+                    ConsoleHandler.appendLog("Replacing existing file..");
                     File.Copy(originalLocation, newLocation);
                     ConsoleHandler.appendLog("File copied!");
-                    File.Delete(originalLocation);
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Failed to copy file because it was not found.");
+                ConsoleHandler.appendLog("Failed to copy file because it was not found at: \r\n" + originalLocation);
             }
         }
         public static void CopyDirectory(string originalLocation, string newLocation)
@@ -91,11 +89,6 @@ namespace BTDToolbox
             //ConsoleHandler.appendLog("Reading config file..");
             programData = Serializer.Deserialize_Config();
             return programData;
-        }
-        public static void SerializeConfig(Form fro, string formName, ConfigFile progData)
-        {
-            ConsoleHandler.appendLog("Updating config file..");
-            Serializer.SaveConfig(fro, formName, progData);
         }
 
         public static string BrowseForFile(string title, string defaultExt, string filter, string startDir)
@@ -181,7 +174,7 @@ namespace BTDToolbox
 
             if (gameDir == null || gameDir == "")
             {
-                ConsoleHandler.appendLog("Launch Directory not detected or is invalid...");
+                ConsoleHandler.appendLog("Invalid launch directory detected at: \r\n" + gameDir);
                 return false;
             }
             else
@@ -218,7 +211,7 @@ namespace BTDToolbox
             }
             
         }
-        public static void Validate_Backup(string gameName)
+        public static bool Validate_Backup(string gameName)
         {
             if (gameName != null && gameName != "")
             {
@@ -230,24 +223,21 @@ namespace BTDToolbox
                 {
                     if (File.Exists(backupDir + "\\" + backupName))
                     {
-                        ConsoleHandler.appendLog("Backup successfully validated.");
+                        return true;
                     }
                     else
                     {
-                        ConsoleHandler.appendLog("Jet backup not found for" + gameName);
-                        CreateBackup(gameName);
+                        return false;
                     }
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Backups directory does not exist. Creating directory...");
-                    Directory.CreateDirectory(backupDir);
-                    CreateBackup(gameName);
+                    return false;
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("There was an issue validating your backup. Reopen your project and try again. If the issue continutes, try reopening Toolbox.");
+                return false;
             }
         }
         public static string GetJetPath(string game)
@@ -260,12 +250,12 @@ namespace BTDToolbox
                 if (game == "BTD5")
                 {
                     jetName = "BTD5.jet";
-                    steamJetPath = DeserializeConfig().BTD5_Directory + jetName;
+                    steamJetPath = DeserializeConfig().BTD5_Directory + "\\Assets\\" + jetName;
                 }
                 else if (game == "BTDB")
                 {
                     jetName = "data.jet";
-                    steamJetPath = DeserializeConfig().BTDB_Directory + jetName;   
+                    steamJetPath = DeserializeConfig().BTDB_Directory + "\\Assets\\" + jetName;   
                 }
                 return steamJetPath;
             }
@@ -279,6 +269,9 @@ namespace BTDToolbox
         public static void CreateBackup(string game)
         {
             string backupDir = Environment.CurrentDirectory + "\\Backups";
+            string backupName = game + "_Original.jet";
+            string fullBackupPath = backupDir + "\\" + backupName;
+
             if (!Directory.Exists(backupDir))
             {
                 ConsoleHandler.appendLog("Backup directory does not exist. Creating directory...");
@@ -288,8 +281,11 @@ namespace BTDToolbox
             string steamJetPath = GetJetPath(game);
             if (steamJetPath != null)
             {
-                File.Copy(steamJetPath, backupDir + "\\");
-                ConsoleHandler.appendLog("Backup created!");
+                CopyFile(steamJetPath, fullBackupPath);
+                if (File.Exists(fullBackupPath))
+                    ConsoleHandler.appendLog("Backup created!");
+                else
+                    ConsoleHandler.appendLog("Backup failed...");
             }
             else
             {
@@ -368,7 +364,8 @@ namespace BTDToolbox
             }
             if (Directory.Exists(tempDir))
                 Directory.Delete(tempDir,true);
-            if (badJetPass)
+
+            if (badJetPass == true)
                 return true;
             else
                 return false;
@@ -392,15 +389,27 @@ namespace BTDToolbox
 
             return game;
         }
-        public static void CompileJet(string switchCase)
+        public static bool ValidateEXE(string game)
         {
-
+            if (isGamePathValid(game) == false)
+            {
+                ConsoleHandler.appendLog("Error identifying Game Directory or Backups. Please browse for your EXE again...\r\n");
+                browseForExe(game);
+                if (isGamePathValid(game) == false)
+                {
+                    MessageBox.Show("The EXE was not found... Please try again.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
         }
-        public static void ExitHandling(Form form)
-        {
-            
-        }
-
         public static void browseForExe(string game)
         {
             string exeName = Get_EXE_Name(game);
@@ -408,16 +417,22 @@ namespace BTDToolbox
             if (exeName != null && exeName != "")
             {
                 string exePath = BrowseForFile("Open game exe", "exe", "Exe files (*.exe)|*.exe|All files (*.*)|*.*", "");
-
                 if (exePath != null && exePath != "")
                 {
-                    string gameDir = exePath.Replace("\\" + exeName, "");
-                    if (game == "BTD5")
-                        TD_Toolbox_Window.BTD5_Dir = gameDir;
-                    else if (game == "BTDB")
-                        TD_Toolbox_Window.BTDB_Dir = gameDir;
+                    if (exePath.Contains(exeName))
+                    {
+                        string gameDir = exePath.Replace("\\" + exeName, "");
+                        if (game == "BTD5")
+                            TD_Toolbox_Window.BTD5_Dir = gameDir;
+                        else if (game == "BTDB")
+                            TD_Toolbox_Window.BTDB_Dir = gameDir;
 
-                    Serializer.SaveConfig(TD_Toolbox_Window.getInstance(), "directories", programData);
+                        Serializer.SaveConfig(TD_Toolbox_Window.getInstance(), "directories", programData);
+                    }
+                    else
+                    {
+                        ConsoleHandler.appendLog("You selected an Invalid .exe. Please browse for the exe for your game.");
+                    }
                 }
             }
         }

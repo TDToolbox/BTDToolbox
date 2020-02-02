@@ -23,15 +23,9 @@ namespace BTDToolbox
             InitializeComponent();
             programData = Serializer.Deserialize_Config();
             gameName = programData.CurrentGame;
-
-            ExtractingJet_Window.switchCase = "decompile";
             if (gameName == "BTDB")
             {
                 CreateProject_Button.Text = "Continue";
-                if (ExtractingJet_Window.customName.Length > 0)
-                {
-                    ProjectName_TextBox.Text = ExtractingJet_Window.customName;
-                }
             }
             else
                 CreateProject_Button.Text = "Create Project";
@@ -41,7 +35,21 @@ namespace BTDToolbox
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
-            if (!hasClickedRandomName)
+            if (CustomName_RadioButton.Checked)
+            {
+                if (ProjectName_TextBox.TextLength == 0)
+                {
+                    MessageBox.Show("Error! You didn't enter a project name!");
+                }
+                else
+                {
+                    SubmitModName();
+                }
+            }
+            else
+                SubmitModName();
+
+            /*if (!hasClickedRandomName)
             {
                 ExtractingJet_Window.hasCustomProjectName = true;
                 if (ProjectName_TextBox.TextLength == 0)
@@ -81,6 +89,25 @@ namespace BTDToolbox
                     var extractT = new ExtractingJet_Window();
                     this.Close();
                 }   
+            }*/
+        }
+        private void SubmitModName()
+        {
+            if (gameName == "BTDB")
+            {
+                var getPasss = new Get_BTDB_Password();
+                getPasss.isExtracting = true;
+                getPasss.projName = ProjectName_TextBox.Text;
+                getPasss.Show();
+                this.Close();
+            }
+            else
+            {
+                var extract = new ExtractingJet_Window();
+                extract.projName = ProjectName_TextBox.Text;
+                extract.Show();
+                extract.Extract();
+                this.Close();
             }
         }
 

@@ -191,7 +191,7 @@ namespace BTDToolbox
                 if (path.Contains(".jet"))
                 {
                     gameName = DetermineJet_Game(path);
-                    SerializeConfig(this, "game", programData);
+                    Serializer.SaveConfig(this, "game", programData);
                     var getName = new SetProjectName();
                     getName.Show();
                 }
@@ -453,30 +453,14 @@ namespace BTDToolbox
             NewProject();
         }
 
-        private void Backup_BTD5_Click(object sender, EventArgs e)
-        {
-            ExtractingJet_Window.BackupGame = "BTD5";
-            ExtractingJet_Window.switchCase = "backup";
-            var compile = new ExtractingJet_Window();
-        }
-
-        private void Backup_BTDB_Click(object sender, EventArgs e)
-        {
-            ExtractingJet_Window.BackupGame = "BTDB";
-            ExtractingJet_Window.switchCase = "backup";
-            var compile = new ExtractingJet_Window();
-        }
-
         private void Replace_BTDB_Backup_Click(object sender, EventArgs e)
         {
-            ExtractingJet_Window.BackupGame = "BTDB";
-            compileJet("clean backup");
+            CreateBackup("BTDB");
         }
 
         private void Replace_BTD5_Backup_Click(object sender, EventArgs e)
         {
-            ExtractingJet_Window.BackupGame = "BTD5";
-            compileJet("clean backup");
+            CreateBackup("BTD5");
         }
 
         private void TestForm_Click(object sender, EventArgs e)
@@ -511,20 +495,48 @@ namespace BTDToolbox
         }
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            browseForExe("BTD5");
+            string g = "BTD5";
+            ConsoleHandler.appendLog("Please browse for BTD5-Win.exe");
+            browseForExe(g);
+            if (isGamePathValid(g) == true)
+            {
+                ConsoleHandler.appendLog("Success! Selected exe at: " + DeserializeConfig().BTD5_Directory);
+            }
+            else
+                ConsoleHandler.appendLog("Invalid game directory selected.");
         }
         private void ResetBTDBattlesexeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            browseForExe("BTDB");
+            string g = "BTDB";
+            ConsoleHandler.appendLog("Please browse for Battles-win.exe");
+            browseForExe(g);
+            if (isGamePathValid(g) == true)
+            {
+                ConsoleHandler.appendLog("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
+            }
+            else
+                ConsoleHandler.appendLog("Invalid game directory selected.");
         }
         private void ResetUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ConsoleHandler.appendLog("Resetting user settings...");
             string settingsPath = livePath + "\\settings.json";
             if (File.Exists(settingsPath))
             {
                 File.Delete(settingsPath);
             }
             DeserializeConfig();
+            ConsoleHandler.appendLog("User settings have been reset.");
+        }
+
+        private void Backup_BTD5_Click_1(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup("BTD5");
+        }
+
+        private void Backup_BTDB_Click_1(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup("BTDB");
         }
     }
 }
