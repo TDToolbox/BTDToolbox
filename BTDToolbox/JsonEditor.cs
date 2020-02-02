@@ -36,6 +36,7 @@ namespace BTDToolbox
         //Congif variables
         //JsonEditor_Config jsonEditorConfig;
         ConfigFile programData;
+        public static bool jsonError;
         
         public static float jsonEditorFont;
         public string lastJsonFile;
@@ -46,7 +47,7 @@ namespace BTDToolbox
             Deserialize_Config();
             StartUp();
             this.Path = Path;
-            this.FormClosed += exitHandling;
+            this.FormClosing += exitHandling;
 
             FileInfo info = new FileInfo(Path);
             this.Text = info.Name;            
@@ -64,11 +65,13 @@ namespace BTDToolbox
                 formattedText = jt.ToString(Formatting.Indented);
                 Editor_TextBox.Text = formattedText;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                jsonError = false;
             }
             catch (Exception)
             {
                 Editor_TextBox.Text = unformattedText;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                jsonError = true;
             }
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
 
@@ -112,10 +115,12 @@ namespace BTDToolbox
             {
                 JObject.Parse(this.Editor_TextBox.Text);
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                jsonError = false;
             }
             catch (Exception)
             {
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                jsonError = true;
             }
             if (Editor_TextBox.Text == "")
             {
@@ -135,6 +140,14 @@ namespace BTDToolbox
         }
         private void exitHandling(object sender, EventArgs e)
         {
+            /*if (jsonError == true)
+            {
+                
+            }
+            else
+            {
+                
+            }*/
             Serializer.SaveConfig(this, "json editor", programData);
             JsonProps.decrement(this);
         }
@@ -503,6 +516,22 @@ namespace BTDToolbox
                         }
                     }
                 }
+            }
+        }
+
+        private void Close_button_Click(object sender, EventArgs e)
+        {
+            if (JsonEditor.jsonError == true)
+            {
+                DialogResult dialogResult = MessageBox.Show("ERROR!!! There is a JSON Error in this file!!!\n\nIf you leave the file now it will be corrupted and WILL break your mod. Do you still want to leave?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                this.Close();
             }
         }
     }

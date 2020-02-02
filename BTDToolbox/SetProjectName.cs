@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
@@ -15,10 +16,14 @@ namespace BTDToolbox
         public static string projectName;
         public static string gameName;
         public bool hasClickedRandomName;
+        ConfigFile programData;
 
         public SetProjectName()
         {
             InitializeComponent();
+            programData = Serializer.Deserialize_Config();
+            gameName = programData.CurrentGame;
+
             ExtractingJet_Window.switchCase = "decompile";
             if (gameName == "BTDB")
             {
@@ -30,9 +35,7 @@ namespace BTDToolbox
             }
             else
                 CreateProject_Button.Text = "Create Project";
-            
-            
-
+                
             this.AcceptButton = CreateProject_Button;
             this.Activate();
         }
@@ -40,6 +43,7 @@ namespace BTDToolbox
         {
             if (!hasClickedRandomName)
             {
+                ExtractingJet_Window.hasCustomProjectName = true;
                 if (ProjectName_TextBox.TextLength == 0)
                 {
                     MessageBox.Show("Error! You didn't enter a project name!");
@@ -55,25 +59,27 @@ namespace BTDToolbox
                     }
                     else
                     {
-                        ExtractingJet_Window.hasCustomProjectName = true;
-                        ExtractingJet_Window.customName = ProjectName_TextBox.Text;
-                        this.Close();
+                        ExtractingJet_Window.customName = ProjectName_TextBox.Text;                        
                         var extractT = new ExtractingJet_Window();
+                        this.Close();
                     }
                 }
             }
             else
             {
+                ExtractingJet_Window.hasCustomProjectName = false;
                 if (gameName == "BTDB")
                 {
-                    var getPass = new Get_BTDB_Password();
-                    getPass.Show();
+                    Get_BTDB_Password.projectName = "";
+                    var getPasss = new Get_BTDB_Password();
+                    getPasss.Show();
                     this.Close();
                 }
                 else
                 {
-                    this.Close();
+                    ExtractingJet_Window.customName = "";
                     var extractT = new ExtractingJet_Window();
+                    this.Close();
                 }   
             }
         }

@@ -56,7 +56,9 @@ namespace BTDToolbox
 
         public virtual void close_button_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (JsonEditor.jsonError != true)
+                this.Close();
+            
         }
 
         //resizing event methods

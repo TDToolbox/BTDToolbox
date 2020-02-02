@@ -51,6 +51,14 @@ namespace BTDToolbox
         public string exePath;
         public string steamJetPath;
 
+
+
+
+
+        //refactoring variables:
+        string jetFile_Game = "";
+
+
         //Threads
         Thread backgroundThread;
 
@@ -80,6 +88,7 @@ namespace BTDToolbox
             else
             {
                 Validate_Backup();
+                this.Show();
                 SwitchCase();
             }
         }
@@ -106,38 +115,35 @@ namespace BTDToolbox
         }
         private void SwitchCase()
         {
+            jetFile_Game = GeneralMethods.DetermineJet_Game(GeneralMethods.DeserializeConfig().LastProject);
+
             switch (switchCase)
             {
                 case "output":
                     this.Text = "Compiling....";
                     OutputJet();
                     break;
-                case "output BTDB":
-                    this.Text = "Compiling....";
-                    ExportBTDB();
-                    break;
                 case "compile":
                     this.Text = "Compiling....";
-                    compile_and_overwrite_Jet();
-                    break;
-                case "compile BTDB":
-                    this.Text = "Compiling....";
-                    ExportBTDB();
-                    break;
-                case "launch":
-                    this.Text = "Compiling....";
-                    launchProgram = true;
                     compile_and_overwrite_Jet();
                     break;
                 case "decompile":
                     this.Text = "Decompiling....";
                     Decompile_NEW2();
                     break;
-                case "decompile backup":
+                /*case "decompile backup":
                     this.Text = "Decompiling....";
                     SetProjectName.gameName = gameName;
                     var newProject = new SetProjectName();
                     newProject.Show();
+                    break;
+                case "compile BTDB":
+                    this.Text = "Compiling....";
+                    ExportBTDB();
+                    break;  
+                case "output BTDB":
+                    this.Text = "Compiling....";
+                    ExportBTDB();
                     break;
                 case "backup":
                     this.Text = "Restoring backup....";
@@ -147,6 +153,11 @@ namespace BTDToolbox
                     this.Text = "replacing backup....";
                     Clear_Backup();
                     break;
+                case "launch":
+                    this.Text = "Compiling....";
+                    launchProgram = true;
+                    compile_and_overwrite_Jet();
+                    break;*/
                 default:
                     MessageBox.Show("You did not enter a valid operation! There is an issue with the code");
                     break;
@@ -455,6 +466,7 @@ namespace BTDToolbox
 
         private void DecompileThread()
         {
+            //this.Show();
             ZipFile archive = new ZipFile(sourceJet);
             //ConsoleHandler.appendLog("Creating project files...");
 
@@ -467,8 +479,6 @@ namespace BTDToolbox
             //Extract and count progress
             DirectoryInfo dinfo = new DirectoryInfo(projectName);
 
-            this.Show();
-            this.Refresh();
             bool badPass = false;
             if (!dinfo.Exists)
             {
@@ -506,14 +516,15 @@ namespace BTDToolbox
             }
             else
             {
-                this.Hide();
+                //this.Hide();
                 
                 DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it, or choose a different project name?", "", MessageBoxButtons.OKCancel);
                 if (varr == DialogResult.OK)
                 {
                     MessageBox.Show("Overwriting existing project... Please close the current Jet Explorer window.");
-                    //Directory.Delete(projectName, true);
+                    ConsoleHandler.appendLog("Deleting existing project....");
                     DeleteDirectory(projectName);
+                    ConsoleHandler.appendLog("Project Deleted. Creating new project...");
                     DecompileThread();
                 }
                 if (varr == DialogResult.Cancel)

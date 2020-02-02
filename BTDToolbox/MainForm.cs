@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
+using static BTDToolbox.GeneralMethods;
+using System.Diagnostics;
 
 namespace BTDToolbox
 {
@@ -26,7 +28,7 @@ namespace BTDToolbox
         Thread backupThread;
 
         //Config variables
-        ConfigFile programData;
+        ConfigFile cfgFile;
         public static string gameName;
         bool firstUse = true;
         public bool loadLastProject;
@@ -37,6 +39,8 @@ namespace BTDToolbox
         private Bitmap bgImg;
         public string lastProject;
         float fontSize;
+        public static string BTD5_Dir;
+        public static string BTDB_Dir;
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
@@ -77,23 +81,23 @@ namespace BTDToolbox
         }
         private void Startup()
         {
-            Deserialize_Config();
-            bool existingUser = programData.ExistingUser;
+            cfgFile = DeserializeConfig();
+            bool existingUser = cfgFile.ExistingUser;
             if (existingUser == false)
             {
                 backupThread = new Thread(FirstTimeUse);
                 backupThread.Start();
             }
 
-            this.Size = new Size(programData.Main_SizeX, programData.Main_SizeY);
+            this.Size = new Size(cfgFile.Main_SizeX, cfgFile.Main_SizeY);
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(programData.Main_PosX, programData.Main_PosY);
-            this.Font = new Font("Microsoft Sans Serif", programData.Main_FontSize);
-            if (programData.Main_Fullscreen)
+            this.Location = new Point(cfgFile.Main_PosX, cfgFile.Main_PosY);
+            this.Font = new Font("Microsoft Sans Serif", cfgFile.Main_FontSize);
+            if (cfgFile.Main_Fullscreen)
                 this.WindowState = FormWindowState.Maximized;
 
-            enableConsole = programData.EnableConsole;
-            lastProject = programData.LastProject;
+            enableConsole = cfgFile.EnableConsole;
+            lastProject = cfgFile.LastProject;
 
             if (lastProject != null)
             {
@@ -110,7 +114,7 @@ namespace BTDToolbox
                 ConsoleHandler.console.Show();
             else
                 ConsoleHandler.console.Hide();
-            
+
             ConsoleHandler.appendLog("Program loaded!");
             ConsoleHandler.appendLog("Searching for existing projects...");
 
@@ -135,7 +139,7 @@ namespace BTDToolbox
                 DirectoryInfo dinfo = new DirectoryInfo(lastProject);
                 string[] split = dinfo.ToString().Split('\\');
                 string name = split[split.Length - 1];
-                projName = name;
+                //projName = name;
 
                 if (dinfo.Exists)
                 {
@@ -147,20 +151,10 @@ namespace BTDToolbox
                             return;
                         }
                     }
-                    JetForm jf = new JetForm(dinfo, this, projName);
+                    JetForm jf = new JetForm(dinfo, this, name);
                     jf.MdiParent = this;
                     jf.Show();
                     projName = dinfo.ToString();
-
-                    /*if (projName.Contains("BTD5"))
-                    {
-                        gameName = "BTD5";
-                    }
-                    else if (projName.Contains("BTDB"))
-                    {
-                        gameName = "BTDB";
-                    }
-                    Serializer.SaveConfig(this, "game", programData);*/
                 }
             }
         }
@@ -189,33 +183,17 @@ namespace BTDToolbox
         //
         //Open or Create Projects
         //
-        public void ImportNewJet_Click(object sender, EventArgs e)
+        private void AddNewJet()
         {
-            AddNewJet();
-        }
-        public static void AddNewJet()
-        {
-            OpenFileDialog fileDiag = new OpenFileDialog();
-
-            fileDiag.Title = "Open .jet";
-            fileDiag.DefaultExt = "jet";
-            fileDiag.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
-            fileDiag.Multiselect = false;
-            if (fileDiag.ShowDialog() == DialogResult.OK)
+            string path = BrowseForFile("Browse for an existing .jet file", "jet", "Jet files (*.jet)|*.jet|All files (*.*)|*.*", "");
+            if(path != null && path != "")
             {
-                file = fileDiag.FileName;
-                byte[] jetBytes = File.ReadAllBytes(file).Take(2).ToArray();
-                string bytes = "" + (char)jetBytes[0] + (char)jetBytes[1];
-
-                if (bytes == "PK")
+                if (path.Contains(".jet"))
                 {
-                    var setProjectName = new SetProjectName();
-                    //ExtractingJet_Window.file = file;     //come back to this. Otherwise it will open twice
-                    setProjectName.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Error!! Not a valid .Jet File. Please try again...");
+                    gameName = DetermineJet_Game(path);
+                    SerializeConfig(this, "game", programData);
+                    var getName = new SetProjectName();
+                    getName.Show();
                 }
             }
         }
@@ -223,39 +201,32 @@ namespace BTDToolbox
         {
             BrowseForExistingProjects();
         }
-        private void BrowseForExistingProjects()
+        private void BrowseForExistingProjects()    //check this if having issues with last project
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            dialog.Title = "Browse for an existing project";
-            dialog.Multiselect = false;
-            dialog.InitialDirectory = livePath;
-
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            string path = BrowseForDirectory("Browse for an existing project", livePath);
+            if (path != null && path != "")
             {
-                string selected = dialog.FileName;
-                DirectoryInfo dirInfo = new DirectoryInfo(selected);
-                string[] split = dialog.FileName.Split('\\');
+                string[] split = path.Split('\\');
                 string name = split[split.Length - 1];
                 if (!name.StartsWith("proj_"))
                 {
+                    ConsoleHandler.appendLog("Invalid project... Please browse for a folder that starts with    proj_");
                     MessageBox.Show("Error!! Not a valid project file. Please try again...");
                 }
                 else
                 {
-                    if (selected.Contains("BTD5"))
-                    {
+                    DirectoryInfo dirInfo = new DirectoryInfo(path);
+                    projName = path;
+                    if (path.Contains("BTD5"))
                         gameName = "BTD5";
-                    }
-                    else
-                    {
+                    else if (path.Contains("BTDB"))
                         gameName = "BTDB";
-                    }
-                    projName = dialog.FileName;
-                    Serializer.SaveConfig(this, "game", programData);
+
+                    Serializer.SaveConfig(this, "game", cfgFile);
                     JetForm jf = new JetForm(dirInfo, this, name);
                     jf.MdiParent = this;
                     jf.Show();
+                    Serializer.SaveConfig(this, "main", cfgFile);   //try changing this if having issues with last project
                 }
             }
         }
@@ -264,40 +235,83 @@ namespace BTDToolbox
         //
         private void compileJet(string switchCase)
         {
-            if (switchCase.Contains("BTDB"))
+            if (JsonEditor.jsonError != true)
             {
-                ExtractingJet_Window.currentProject = projName;
-            }
-            if (switchCase == "launch")
-            {
-                if (JetProps.get().Count == 1)
+                if (switchCase.Contains("BTDB"))
                 {
-                    ExtractingJet_Window.launchProgram = true;
-                    if (programData.CurrentGame == "BTDB")
-                        ExtractingJet_Window.switchCase = "compile BTDB";
+                    ExtractingJet_Window.currentProject = projName;
+                }
+                if (switchCase == "launch")
+                {
+                    if (JetProps.get().Count == 1)
+                    {
+                        ExtractingJet_Window.launchProgram = true;
+                        if (cfgFile.CurrentGame == "BTDB")
+                            ExtractingJet_Window.switchCase = "compile BTDB";
+                        else
+                            ExtractingJet_Window.switchCase = "compile";
+                        var compile = new ExtractingJet_Window();
+                    }
                     else
-                        ExtractingJet_Window.switchCase = "compile";
-                    var compile = new ExtractingJet_Window();
+                    {
+                        if (JetProps.get().Count < 1)
+                        {
+                            MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                        }
+                    }
                 }
                 else
                 {
-                    if (JetProps.get().Count < 1)
-                    {
-                        MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                    }
+                    ExtractingJet_Window.launchProgram = false;
+                    ExtractingJet_Window.switchCase = switchCase;
+                    var compile = new ExtractingJet_Window();
                 }
             }
             else
             {
-                ExtractingJet_Window.launchProgram = false;
-                ExtractingJet_Window.switchCase = switchCase;
-                var compile = new ExtractingJet_Window();
+                DialogResult dialogResult = MessageBox.Show("ERROR!!! There is a JSON Error in this file!!!\n\nIf you leave the file now it will be corrupted and WILL break your mod. Do you still want to leave?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if (switchCase.Contains("BTDB"))
+                    {
+                        ExtractingJet_Window.currentProject = projName;
+                    }
+                    if (switchCase == "launch")
+                    {
+                        if (JetProps.get().Count == 1)
+                        {
+                            ExtractingJet_Window.launchProgram = true;
+                            if (cfgFile.CurrentGame == "BTDB")
+                                ExtractingJet_Window.switchCase = "compile BTDB";
+                            else
+                                ExtractingJet_Window.switchCase = "compile";
+                            var compile = new ExtractingJet_Window();
+                        }
+                        else
+                        {
+                            if (JetProps.get().Count < 1)
+                            {
+                                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ExtractingJet_Window.launchProgram = false;
+                        ExtractingJet_Window.switchCase = switchCase;
+                        var compile = new ExtractingJet_Window();
+                    }
+                }
             }
-            
+
         }
         private void LaunchProgram_Click(object sender, EventArgs e)
         {
@@ -306,15 +320,9 @@ namespace BTDToolbox
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
             if (ConsoleHandler.console.Visible)
-            {
                 ConsoleHandler.console.Hide();
-                enableConsole = false;
-            }
             else
-            {
-                enableConsole = true;
                 ConsoleHandler.console.Show();
-            }
         }
         private void Find_Button_Click(object sender, EventArgs e)
         {
@@ -341,21 +349,14 @@ namespace BTDToolbox
         //
         //Config stuff
         //
-        private void Deserialize_Config()
-        {
-            programData = Serializer.Deserialize_Config();
-        }
         private void ExitHandling(object sender, EventArgs e)
         {
             if (ConsoleHandler.console.Visible)
-            {
                 enableConsole = true;
-            }
             else
-            {
                 enableConsole = false;
-            }
-            Serializer.SaveConfig(this, "main", programData);
+
+            Serializer.SaveConfig(this, "main", cfgFile);
         }
         //
         //Mdi Stuff
@@ -381,7 +382,8 @@ namespace BTDToolbox
             try
             {
                 OpenJetForm();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ConsoleHandler.appendLog(ex.StackTrace);
             }
@@ -394,7 +396,7 @@ namespace BTDToolbox
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (programData.CurrentGame != "BTDB")
+            if (cfgFile.CurrentGame != "BTDB")
                 compileJet("output");
             else
                 compileJet("output BTDB");
@@ -408,36 +410,47 @@ namespace BTDToolbox
 
         private void RemakeBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Open_Existing_JetFile_Click(object sender, EventArgs e)
         {
-
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Browse for an existing .jet file";
-            ofd.DefaultExt = "jet";
-            ofd.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            AddNewJet();
+        }
+        private void NewProject()
+        {
+            if (isGamePathValid(gameName) == false)
             {
-                ExtractingJet_Window.projectName = ofd.FileName;
-                compileJet("decompile");
+                browseForExe(gameName);
+                if (isGamePathValid(gameName) == false)
+                {
+                    ConsoleHandler.appendLog("Theres been an error identifying your game");
+                }
+                else
+                {
+                    Serializer.SaveConfig(this, "directories", cfgFile);
+                    var setProjName = new SetProjectName();
+                    setProjName.Show();
+                }
+            }
+            else
+            {
+                var setProjName = new SetProjectName();
+                setProjName.Show();
             }
         }
-
         private void New_BTD5_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTD5";
-            Serializer.SaveConfig(this, "game", programData);
-            compileJet("decompile backup");
+            Serializer.SaveConfig(this, "game", cfgFile);
+            NewProject();
         }
 
         private void New_BTDB_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTDB";
-            programData.CurrentGame = gameName;
-            Serializer.SaveConfig(this, "game", programData);
-            compileJet("decompile backup");
+            Serializer.SaveConfig(this, "game", cfgFile);
+            NewProject();
         }
 
         private void Backup_BTD5_Click(object sender, EventArgs e)
@@ -470,6 +483,48 @@ namespace BTDToolbox
         {
             var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
             editor.Show();
+        }
+        private void BTD5DirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isGamePathValid("BTD5"))
+            {
+                ConsoleHandler.appendLog("Opening BTD5 Directory");
+                Process.Start(DeserializeConfig().BTD5_Directory);
+            }
+            else
+                ConsoleHandler.appendLog("Could not find your BTD5 directory");
+        }
+        private void BTDBDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isGamePathValid("BTDB"))
+            {
+                ConsoleHandler.appendLog("Opening BTD Battles Directory");
+                Process.Start(DeserializeConfig().BTDB_Directory);
+            }
+            else
+                ConsoleHandler.appendLog("Could not find your BTDB directory");
+        }
+        private void ToolboxDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
+            Process.Start(Environment.CurrentDirectory);
+        }
+        private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            browseForExe("BTD5");
+        }
+        private void ResetBTDBattlesexeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            browseForExe("BTDB");
+        }
+        private void ResetUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string settingsPath = livePath + "\\settings.json";
+            if (File.Exists(settingsPath))
+            {
+                File.Delete(settingsPath);
+            }
+            DeserializeConfig();
         }
     }
 }

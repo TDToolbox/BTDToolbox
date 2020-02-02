@@ -81,6 +81,7 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            this.close_button.Click += new System.EventHandler(this.Close_button_Click);
             // 
             // Editor_TextBox
             // 
