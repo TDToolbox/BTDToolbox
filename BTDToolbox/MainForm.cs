@@ -17,36 +17,33 @@ namespace BTDToolbox
     public partial class TD_Toolbox_Window : Form
     {
         //Form variables
-        string livePath = Environment.CurrentDirectory;
-        public string projectDirPath;
-        private static TD_Toolbox_Window toolbox;
-
         string version = "Alpha 0.0.3";
+        private static TD_Toolbox_Window toolbox;
+        string livePath = Environment.CurrentDirectory;        
+
 
         //Project Variables
-        public DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory);
+        private Bitmap bgImg;
         Thread backupThread;
+
 
         //Config variables
         ConfigFile cfgFile;
-        public static string gameName;
         bool firstUse = true;
-        public bool loadLastProject;
-        public static string file;
-        public int mainFormFontSize;
-        public static bool enableConsole;
-        public static string projName;
-        private Bitmap bgImg;
         public string lastProject;
-        float fontSize;
+        public static string projName;
+        public static string gameName;
         public static string BTD5_Dir;
         public static string BTDB_Dir;
+        public static bool enableConsole;
+
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
         private const int WM_NCCALCSIZE = 0x83;
         [DllImport("user32.dll")]
         private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
+
 
         //
         //Initialize window
@@ -104,6 +101,19 @@ namespace BTDToolbox
 
             }
         }
+        private void FirstTimeUse()
+        {
+            MessageBox.Show("Welcome to BTD Toolbox! This is a place holder. IF you are using Toolbox version 0.0.4 or higher and seeing this message, please contact staff, cuz we need to add a welcome screen already :)");
+        }
+        private void ExitHandling(object sender, EventArgs e)
+        {
+            if (ConsoleHandler.console.Visible)
+                enableConsole = true;
+            else
+                enableConsole = false;
+
+            Serializer.SaveConfig(this, "main", cfgFile);
+        }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
 
@@ -124,14 +134,35 @@ namespace BTDToolbox
                 if (con is MdiClient)
                     mdiClient = con as MdiClient;
         }
-        private void FirstTimeUse()
+
+        private void mainResize(object sender, EventArgs e)
         {
-            MessageBox.Show("Welcome to BTD Toolbox! This is a place holder. IF you are using Toolbox version 0.0.4 or higher and seeing this message, please contact staff, cuz we need to add a welcome screen already :)");
+            this.BackgroundImage = bgImg;
+            this.BackgroundImageLayout = ImageLayout.Center;
         }
         public static TD_Toolbox_Window getInstance()
         {
             return toolbox;
         }
+        private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                CompileJet("launch");
+            }
+            if (e.Control && e.KeyCode == Keys.N)
+            {
+                AddNewJet();
+            }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                CompileJet("output");
+            }
+        }
+
+        //
+        //Open or Create Projects
+        //
         public void OpenJetForm()
         {
             if (lastProject != "" && lastProject != null)
@@ -158,31 +189,6 @@ namespace BTDToolbox
                 }
             }
         }
-        private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                compileJet("launch");
-            }
-            if (e.Control && e.KeyCode == Keys.N)
-            {
-                AddNewJet();
-            }
-        }
-        private void mainResize(object sender, EventArgs e)
-        {
-            this.BackgroundImage = bgImg;
-            this.BackgroundImageLayout = ImageLayout.Center;
-        }
-        private void Debug_ThemedForm_Click(object sender, EventArgs e)
-        {
-            ThemedForm tft = new ThemedForm();
-            tft.MdiParent = this;
-            tft.Show();
-        }
-        //
-        //Open or Create Projects
-        //
         private void AddNewJet()
         {
             string path = BrowseForFile("Browse for an existing .jet file", "jet", "Jet files (*.jet)|*.jet|All files (*.*)|*.*", "");
@@ -230,92 +236,48 @@ namespace BTDToolbox
                 }
             }
         }
+        
+        //
+        //Mdi Stuff
+        //
+        protected override void WndProc(ref Message m)
+        {
+            if (mdiClient != null)
+            {
+                try
+                {
+                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0 /*Hide the ScrollBars*/);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            base.WndProc(ref m);
+        }
+        MdiClient mdiClient = null;
+        private void TD_Toolbox_Window_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
+        }
+
+        //
         //
         //UI Buttons
         //
-        private void compileJet(string switchCase)
+        private void OpenJetExplorer_Click(object sender, EventArgs e)
         {
-            if (JsonEditor.jsonError != true)
+            try
             {
-                if (switchCase.Contains("BTDB"))
-                {
-                    ExtractingJet_Window.currentProject = projName;
-                }
-                if (switchCase == "launch")
-                {
-                    if (JetProps.get().Count == 1)
-                    {
-                        ExtractingJet_Window.launchProgram = true;
-                        if (cfgFile.CurrentGame == "BTDB")
-                            ExtractingJet_Window.switchCase = "compile BTDB";
-                        else
-                            ExtractingJet_Window.switchCase = "compile";
-                        var compile = new ExtractingJet_Window();
-                    }
-                    else
-                    {
-                        if (JetProps.get().Count < 1)
-                        {
-                            MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                        }
-                        else
-                        {
-                            MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                        }
-                    }
-                }
-                else
-                {
-                    ExtractingJet_Window.launchProgram = false;
-                    ExtractingJet_Window.switchCase = switchCase;
-                    var compile = new ExtractingJet_Window();
-                }
+                OpenJetForm();
             }
-            else
+            catch (Exception ex)
             {
-                DialogResult dialogResult = MessageBox.Show("ERROR!!! There is a JSON Error in this file!!!\n\nIf you leave the file now it will be corrupted and WILL break your mod. Do you still want to leave?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    if (switchCase.Contains("BTDB"))
-                    {
-                        ExtractingJet_Window.currentProject = projName;
-                    }
-                    if (switchCase == "launch")
-                    {
-                        if (JetProps.get().Count == 1)
-                        {
-                            ExtractingJet_Window.launchProgram = true;
-                            if (cfgFile.CurrentGame == "BTDB")
-                                ExtractingJet_Window.switchCase = "compile BTDB";
-                            else
-                                ExtractingJet_Window.switchCase = "compile";
-                            var compile = new ExtractingJet_Window();
-                        }
-                        else
-                        {
-                            if (JetProps.get().Count < 1)
-                            {
-                                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                            }
-                            else
-                            {
-                                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ExtractingJet_Window.launchProgram = false;
-                        ExtractingJet_Window.switchCase = switchCase;
-                        var compile = new ExtractingJet_Window();
-                    }
-                }
+                ConsoleHandler.appendLog(ex.StackTrace);
             }
-
         }
         private void LaunchProgram_Click(object sender, EventArgs e)
         {
-            compileJet("launch");
+            CompileJet("launch");
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
@@ -340,79 +302,22 @@ namespace BTDToolbox
             findForm.replace = true;
             findForm.find = false;
         }
+        private void Debug_ThemedForm_Click(object sender, EventArgs e)
+        {
+            ThemedForm tft = new ThemedForm();
+            tft.MdiParent = this;
+            tft.Show();
+        }
         private void OpenCredits_Click(object sender, EventArgs e)
         {
             CreditViewer cv = new CreditViewer();
             cv.MdiParent = this;
             cv.Show();
         }
-        //
-        //Config stuff
-        //
-        private void ExitHandling(object sender, EventArgs e)
-        {
-            if (ConsoleHandler.console.Visible)
-                enableConsole = true;
-            else
-                enableConsole = false;
-
-            Serializer.SaveConfig(this, "main", cfgFile);
-        }
-        //
-        //Mdi Stuff
-        //
-        protected override void WndProc(ref Message m)
-        {
-            if (mdiClient != null)
-            {
-                try
-                {
-                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0 /*Hide the ScrollBars*/);
-                }
-                catch (Exception)
-                {
-                }
-            }
-            base.WndProc(ref m);
-        }
-        MdiClient mdiClient = null;
-
-        private void OpenJetExplorer_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                OpenJetForm();
-            }
-            catch (Exception ex)
-            {
-                ConsoleHandler.appendLog(ex.StackTrace);
-            }
-        }
-
-        private void TD_Toolbox_Window_Resize(object sender, EventArgs e)
-        {
-            this.Refresh();
-        }
-
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (cfgFile.CurrentGame != "BTDB")
-                compileJet("output");
-            else
-                compileJet("output BTDB");
+            CompileJet("output");
         }
-
-        private void NewProject_From_Backup_Click(object sender, EventArgs e)
-        {
-
-            //compileJet("decompile backup");
-        }
-
-        private void RemakeBackupjetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Open_Existing_JetFile_Click(object sender, EventArgs e)
         {
             AddNewJet();
@@ -445,24 +350,20 @@ namespace BTDToolbox
             Serializer.SaveConfig(this, "game", cfgFile);
             NewProject();
         }
-
         private void New_BTDB_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTDB";
             Serializer.SaveConfig(this, "game", cfgFile);
             NewProject();
         }
-
         private void Replace_BTDB_Backup_Click(object sender, EventArgs e)
         {
             CreateBackup("BTDB");
         }
-
         private void Replace_BTD5_Backup_Click(object sender, EventArgs e)
         {
             CreateBackup("BTD5");
         }
-
         private void TestForm_Click(object sender, EventArgs e)
         {
             var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
@@ -528,12 +429,10 @@ namespace BTDToolbox
             DeserializeConfig();
             ConsoleHandler.appendLog("User settings have been reset.");
         }
-
         private void Backup_BTD5_Click_1(object sender, EventArgs e)
         {
             RestoreGame_ToBackup("BTD5");
         }
-
         private void Backup_BTDB_Click_1(object sender, EventArgs e)
         {
             RestoreGame_ToBackup("BTDB");

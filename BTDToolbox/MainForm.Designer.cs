@@ -139,7 +139,6 @@
             this.NewProject_From_Backup.Name = "NewProject_From_Backup";
             this.NewProject_From_Backup.Size = new System.Drawing.Size(180, 22);
             this.NewProject_From_Backup.Text = "Project from .jet";
-            this.NewProject_From_Backup.Click += new System.EventHandler(this.NewProject_From_Backup_Click);
             // 
             // btdpToolStripMenuItem
             // 

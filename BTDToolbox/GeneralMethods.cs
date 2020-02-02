@@ -21,7 +21,7 @@ namespace BTDToolbox
 
         public static void DeleteFile(string fileName)
         {
-            if(File.Exists(fileName))
+            if (File.Exists(fileName))
             {
                 ConsoleHandler.appendLog("Deleting file...");
                 File.Delete(fileName);
@@ -52,9 +52,9 @@ namespace BTDToolbox
         }
         public static void CopyFile(string originalLocation, string newLocation)
         {
-            if(File.Exists(originalLocation))
+            if (File.Exists(originalLocation))
             {
-                if(!File.Exists(newLocation))
+                if (!File.Exists(newLocation))
                 {
                     ConsoleHandler.appendLog("Copying file...");
                     File.Copy(originalLocation, newLocation);
@@ -99,7 +99,7 @@ namespace BTDToolbox
             fileDiag.Filter = filter;
             fileDiag.Multiselect = false;
             fileDiag.InitialDirectory = startDir;
-            
+
             if (fileDiag.ShowDialog() == DialogResult.OK)
             {
                 return fileDiag.FileName;
@@ -209,7 +209,7 @@ namespace BTDToolbox
             {
                 ConsoleHandler.appendLog("Unable to launch game... Game directory not detected...\r\n");
             }
-            
+
         }
         public static bool Validate_Backup(string gameName)
         {
@@ -255,7 +255,7 @@ namespace BTDToolbox
                 else if (game == "BTDB")
                 {
                     jetName = "data.jet";
-                    steamJetPath = DeserializeConfig().BTDB_Directory + "\\Assets\\" + jetName;   
+                    steamJetPath = DeserializeConfig().BTDB_Directory + "\\Assets\\" + jetName;
                 }
                 return steamJetPath;
             }
@@ -363,7 +363,7 @@ namespace BTDToolbox
                 badJetPass = true;
             }
             if (Directory.Exists(tempDir))
-                Directory.Delete(tempDir,true);
+                Directory.Delete(tempDir, true);
 
             if (badJetPass == true)
                 return true;
@@ -432,6 +432,74 @@ namespace BTDToolbox
                     else
                     {
                         ConsoleHandler.appendLog("You selected an Invalid .exe. Please browse for the exe for your game.");
+                    }
+                }
+            }
+        }
+        public static string OutputJet()
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Export .jet";
+            sfd.DefaultExt = "jet";
+            sfd.Filter = "Jet files (*.jet)|*.jet|All files (*.*)|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                return sfd.FileName;
+            }
+            else
+                return null;
+        }
+        public static void CompileJet(string switchCase)
+        {
+            if (JsonEditor.jsonError != true)
+            {
+                if (JetProps.get().Count == 1)
+                {
+                    string dest = "";
+                    bool isOutputting = false;
+
+                    var zip = new ExtractingJet_Window();
+
+                    if (switchCase.Contains("output"))
+                    {
+                        isOutputting = true;
+                        ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                        dest = OutputJet();
+                        zip.destPath = dest;
+                    }
+                    if (switchCase.Contains("launch"))
+                    {
+                        zip.launch = true;
+                    }
+                    if (isOutputting)
+                    {
+                        if (dest != null && dest != "")
+                        {
+                            zip.Show();
+                            zip.Compile();
+                        }
+                        else
+                        {
+                            ConsoleHandler.appendLog("Export cancelled...");
+                        }
+                    }
+                    else
+                    {
+                        zip.Show();
+                        zip.Compile();
+                    }
+                }
+                else
+                {
+                    if (JetProps.get().Count < 1)
+                    {
+                        MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                        ConsoleHandler.appendLog("You need to open a project to continue...");
+                    }
+                    else
+                    {
+                        MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                        ConsoleHandler.appendLog("You need to close projects to continue...");
                     }
                 }
             }

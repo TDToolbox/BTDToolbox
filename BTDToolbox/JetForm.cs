@@ -568,7 +568,7 @@ namespace BTDToolbox
         }
         private void saveJet()
         {
-            if (JsonEditor.jsonError != true)
+            /*if (JsonEditor.jsonError != true)
             {
                 if (JetProps.get().Count == 1)
                 {
@@ -593,7 +593,7 @@ namespace BTDToolbox
                         var compile = new ExtractingJet_Window();
                     }
                 }
-            }
+            }*/
             
         }
 

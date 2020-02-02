@@ -48,48 +48,6 @@ namespace BTDToolbox
             }
             else
                 SubmitModName();
-
-            /*if (!hasClickedRandomName)
-            {
-                ExtractingJet_Window.hasCustomProjectName = true;
-                if (ProjectName_TextBox.TextLength == 0)
-                {
-                    MessageBox.Show("Error! You didn't enter a project name!");
-                }
-                else
-                {
-                    if (gameName == "BTDB")
-                    {
-                        var getPass = new Get_BTDB_Password();
-                        Get_BTDB_Password.projectName = ProjectName_TextBox.Text;
-                        getPass.Show();
-                        this.Close();
-                    }
-                    else
-                    {
-                        ExtractingJet_Window.customName = ProjectName_TextBox.Text;                        
-                        var extractT = new ExtractingJet_Window();
-                        this.Close();
-                    }
-                }
-            }
-            else
-            {
-                ExtractingJet_Window.hasCustomProjectName = false;
-                if (gameName == "BTDB")
-                {
-                    Get_BTDB_Password.projectName = "";
-                    var getPasss = new Get_BTDB_Password();
-                    getPasss.Show();
-                    this.Close();
-                }
-                else
-                {
-                    ExtractingJet_Window.customName = "";
-                    var extractT = new ExtractingJet_Window();
-                    this.Close();
-                }   
-            }*/
         }
         private void SubmitModName()
         {

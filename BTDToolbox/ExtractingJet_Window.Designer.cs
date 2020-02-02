@@ -124,7 +124,6 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "ExtractingJet_Window";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtractingJet_Window_FormClosing);
             this.Load += new System.EventHandler(this.ExtractJet_Window_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
