@@ -20,7 +20,7 @@ namespace BTDToolbox
         string livePath = Environment.CurrentDirectory;
         public string Path;
         public string fileName;
-        
+
         //Find and replace variables
         public int numPhraseFound;
         public int startPosition;
@@ -31,10 +31,12 @@ namespace BTDToolbox
         public bool isReplacing;
         public bool isFinding;
         public bool findNextPhrase;
+        public static int maxLC = 1;
 
         //Congif variables
         //JsonEditor_Config jsonEditorConfig;
         ConfigFile programData;
+        public static bool jsonError;
         
         public static float jsonEditorFont;
         public string lastJsonFile;
@@ -45,7 +47,7 @@ namespace BTDToolbox
             Deserialize_Config();
             StartUp();
             this.Path = Path;
-            this.FormClosed += exitHandling;
+            this.FormClosing += exitHandling;
 
             FileInfo info = new FileInfo(Path);
             this.Text = info.Name;            
@@ -54,7 +56,6 @@ namespace BTDToolbox
             this.toolStripSeparator2.Visible = false;
             this.Replace_TextBox.Visible = false;
             this.ReplaceDropDown.Visible = false;
-
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
 
@@ -64,11 +65,13 @@ namespace BTDToolbox
                 formattedText = jt.ToString(Formatting.Indented);
                 Editor_TextBox.Text = formattedText;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                jsonError = false;
             }
             catch (Exception)
             {
                 Editor_TextBox.Text = unformattedText;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                jsonError = true;
             }
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
 
@@ -83,7 +86,9 @@ namespace BTDToolbox
             this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
 
             jsonEditorFont = programData.JSON_Editor_FontSize;
-            Editor_TextBox.Font = new Font("Consolas", jsonEditorFont);
+            Font newfont = new Font("Consolas", jsonEditorFont);
+            tB_line.Font = newfont;
+            Editor_TextBox.Font = newfont;
             FontSize_TextBox.Text = jsonEditorFont.ToString();
         }
         private void Deserialize_Config()
@@ -92,6 +97,10 @@ namespace BTDToolbox
         }
         private void EditorLoading(object sender, EventArgs e)
         {
+            tB_line.Font = Editor_TextBox.Font;
+            Editor_TextBox.Select();
+            AddLineNumbers();
+
             bool close = false;
             
             if(close)
@@ -106,10 +115,16 @@ namespace BTDToolbox
             {
                 JObject.Parse(this.Editor_TextBox.Text);
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                jsonError = false;
             }
             catch (Exception)
             {
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                jsonError = true;
+            }
+            if (Editor_TextBox.Text == "")
+            {
+                AddLineNumbers();
             }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
@@ -119,15 +134,9 @@ namespace BTDToolbox
             if (FontSize < 3)
                 FontSize = 3;
             jsonEditorFont = FontSize;
-            Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Regular);
-            /*try
-            {
-                Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Regular);
-            }
-            catch (Exception)
-            {
-                Editor_TextBox.Font = new Font(FontFamily.GenericSansSerif, 13f, FontStyle.Regular);
-            }*/
+            Font newfont = new Font("Consolas", jsonEditorFont);
+            Editor_TextBox.Font = newfont;
+            tB_line.Font = newfont;
         }
         private void exitHandling(object sender, EventArgs e)
         {
@@ -144,29 +153,7 @@ namespace BTDToolbox
             {
                 ShowReplaceMenu();
             }
-            if (e.KeyCode == Keys.F5)
-            {
-                launchGame();
-            }
         }
-
-        private void launchGame()
-        {
-            if (JetProps.get().Count == 1)
-            {
-                ExtractingJet_Window.switchCase = "launch";
-                var compile = new ExtractingJet_Window();
-            }
-            else if (JetProps.get().Count < 1)
-            {
-                MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-            }
-            else
-            {
-                MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-            }
-        }
-
         private void FindText()
         {
             if (Find_TextBox.Text.Length <= 0)
@@ -336,6 +323,208 @@ namespace BTDToolbox
         private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
         {
             ShowReplaceMenu();
+        }
+        public int getWidth()
+        {
+            int w = 25;
+            // get total lines of richTextBox1
+            int line = Editor_TextBox.Lines.Length;
+            if (line <= 99)
+            {
+                w = 20 + (int)Editor_TextBox.Font.Size;
+            }
+            else if (line <= 999)
+            {
+                w = 30 + (int)Editor_TextBox.Font.Size;
+            }
+            else
+            {
+                w = 50 + (int)Editor_TextBox.Font.Size;
+            }
+
+            return w;
+        }
+        public void AddLineNumbers()
+        {
+            Point pt = new Point(0, 0);
+            int First_Index = Editor_TextBox.GetCharIndexFromPosition(pt);
+            int First_Line = Editor_TextBox.GetLineFromCharIndex(First_Index);
+            pt.X = ClientRectangle.Width;
+            pt.Y = ClientRectangle.Height;
+
+            int Last_Index = Editor_TextBox.GetCharIndexFromPosition(pt);
+            int Last_Line = Editor_TextBox.GetLineFromCharIndex(Last_Index);
+            tB_line.SelectionAlignment = HorizontalAlignment.Center;
+            tB_line.Text = "";
+            tB_line.Width = getWidth();
+            for (int i = First_Line; i <= Last_Line + 2; i++)
+            {
+                tB_line.Text += i + 1 + "\n";   
+            }
+        }
+
+        private void Editor_TextBox_SelectionChanged(object sender, EventArgs e)
+        {
+            Point pt = Editor_TextBox.GetPositionFromCharIndex(Editor_TextBox.SelectionStart);
+            if (pt.X == 1)
+            {
+                AddLineNumbers();
+            }
+        }
+
+        private void Editor_TextBox_VScroll(object sender, EventArgs e)
+        {
+            tB_line.Text = "";
+            AddLineNumbers();
+            tB_line.Invalidate();
+        }
+
+        private void Editor_TextBox_FontChanged(object sender, EventArgs e)
+        {
+            tB_line.Font = Editor_TextBox.Font;
+            Editor_TextBox.Select();
+            AddLineNumbers();
+        }
+
+        private void TB_line_MouseDown(object sender, MouseEventArgs e)
+        {
+            Editor_TextBox.Select();
+            tB_line.DeselectAll();
+        }
+
+        private void Editor_TextBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            //SearchForPairs();
+        }
+        private void SearchForPairs()
+        {
+            int duplicate = -1;
+            string searchDirection = "";
+            string searchText = "";
+
+            int index = Editor_TextBox.SelectionStart;
+            char[] ch = Editor_TextBox.Text.ToCharArray();
+            char selectedText;
+            int duplicatesFound = 0;
+
+            endEditor = Editor_TextBox.Text.Length;
+            startPosition = Editor_TextBox.SelectionStart;
+
+            if (index - 1 < 0)
+                index = 0;
+            else if (index - 1 > Editor_TextBox.Text.Length)
+                index = Editor_TextBox.Text.Length;
+            selectedText = ch[index - 1];
+
+            switch (selectedText)
+            {
+                case '[':
+                    searchDirection = "down";
+                    searchText = "]";
+                    break;
+                case ']':
+                    searchDirection = "up";
+                    searchText = "[";
+                    break;
+                case '{':
+                    searchDirection = "down";
+                    searchText = "}";
+                    break;
+                case '}':
+                    searchDirection = "up";
+                    searchText = "{";
+                    break;
+                case '(':
+                    searchDirection = "down";
+                    searchText = ")";
+                    break;
+                case ')':
+                    searchDirection = "up";
+                    searchText = "(";
+                    break;
+            }
+
+            for (int i = 0; i < endEditor + 1; i = startPosition)
+            {
+                duplicate = -1;
+                if (startPosition >= endEditor + 1 || i == -1)
+                {
+                    break;
+                }
+                else
+                {
+                    if (searchDirection == "down")
+                    {
+                        startPosition = Editor_TextBox.Find(searchText, index, endEditor + 1, RichTextBoxFinds.None);
+                        if (startPosition >= 0)
+                        {
+                            //we found the character, lets make sure its the correct match to our pair
+                            duplicate = Editor_TextBox.Find(selectedText.ToString(), index, startPosition + 1, RichTextBoxFinds.NoHighlight);
+                            if (duplicate != -1)
+                            {
+                                duplicatesFound++;
+                                index = duplicate + 1;
+                            }
+                            else
+                            {
+                                if (duplicatesFound != 0)
+                                {
+                                    index = startPosition + 1;
+                                    duplicatesFound--;
+                                }
+                                else
+                                    break;
+                            }
+                        }
+                        else
+                            break;
+                    }
+                    else
+                    {
+                        startPosition = Editor_TextBox.Find(searchText, 0, index, RichTextBoxFinds.Reverse);
+                        if (startPosition >= 0)
+                        {
+                            //we found the character, lets make sure its the match
+                            duplicate = Editor_TextBox.Find(selectedText.ToString(), startPosition, index - 1, RichTextBoxFinds.Reverse | RichTextBoxFinds.NoHighlight);
+                            if (duplicate != -1)
+                            {
+                                duplicatesFound++;
+                                index = duplicate - 1;
+                            }
+                            else
+                            {
+                                if (duplicatesFound != 0)
+                                {
+                                    index = startPosition - 1;
+                                    duplicatesFound--;
+                                }
+                                else
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Close_button_Click(object sender, EventArgs e)
+        {
+            if (JsonEditor.jsonError == true)
+            {
+                DialogResult dialogResult = MessageBox.Show("ERROR!!! There is a JSON Error in this file!!!\n\nIf you leave the file now it will be corrupted and WILL break your mod. Do you still want to leave?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                this.Close();
+            }
         }
     }
 }

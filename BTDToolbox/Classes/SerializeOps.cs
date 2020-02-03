@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
-using static BTDToolbox.TD_Toolbox_Window;
+using static BTDToolbox.Main;
 using static BTDToolbox.JetForm;
-using static BTDToolbox.ExtractingJet_Window;
+//using static BTDToolbox.ZipForm;
 namespace BTDToolbox
 {
     public class Serializer
@@ -18,6 +18,11 @@ namespace BTDToolbox
         public static void SaveConfig(Form frm, string formName, ConfigFile serialize_config)
         {
             var cfg = Serializer.Deserialize_Config();
+
+            if (formName == "splash")
+            {
+                cfg.enableSplash = Program.enableSplash;
+            }
 
             if (formName == "game")
             {
@@ -103,6 +108,8 @@ namespace BTDToolbox
                 {
                     //create config
 
+                    programData.enableSplash = true;
+                    
                     programData.BTD5_Directory = "";
                     programData.BTDB_Directory = "";
                     programData.LastProject = null;

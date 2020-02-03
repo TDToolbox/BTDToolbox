@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using static System.Windows.Forms.ToolStripItem;
+using static BTDToolbox.GeneralMethods;
 
 namespace BTDToolbox
 {
@@ -19,7 +21,7 @@ namespace BTDToolbox
     {
         string livePath = Environment.CurrentDirectory;
         private DirectoryInfo dirInfo;
-        private TD_Toolbox_Window Form;
+        private Main Form;
         private string tempName;
         public string projName;
         private ContextMenuStrip selMenu;
@@ -32,33 +34,37 @@ namespace BTDToolbox
         public static int jetExplorer_SplitterWidth;
         public static string lastProject;
 
-        public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
+        public JetForm(DirectoryInfo dirInfo, Main Form, string projName)
         {
             InitializeComponent();
             StartUp();
 
             this.dirInfo = dirInfo;
             this.Form = Form;
-            this.projName = projName;            
+            this.projName = projName;
+            Main.projName = projName;
+
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
             
             if(projName.Contains("BTD5"))
             {
-                TD_Toolbox_Window.gameName = "BTD5";
+                Main.gameName = "BTD5";
             }
             else if (projName.Contains("BTDB"))
             {
-                TD_Toolbox_Window.gameName = "BTDB";
+                Main.gameName = "BTDB";
             }
-            ConsoleHandler.appendLog("Game: " + TD_Toolbox_Window.gameName);
+            ConsoleHandler.appendLog("Game: " + Main.gameName);
             ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
             Serializer.SaveConfig(this, "game", programData);
+            Serializer.SaveConfig(this, "jet explorer", programData);
         }
         private void Deserialize_Config()
         {
-            programData = Serializer.Deserialize_Config();
+            programData = DeserializeConfig();
+            //programData = Serializer.Deserialize_Config();
         }
         private void StartUp()
         {
@@ -111,6 +117,10 @@ namespace BTDToolbox
         {
             openDirWindow();
             JetProps.increment(this);
+        }
+        private void JetForm_Shown(object sender, EventArgs e)
+        {
+            Serializer.SaveConfig(this, "jet explorer", programData);
         }
         public void openDirWindow()
         {
@@ -562,13 +572,56 @@ namespace BTDToolbox
         }
         private void saveJet()
         {
-            if (JetProps.get().Count == 1)
+            /*if (JsonEditor.jsonError != true)
             {
-                ExtractingJet_Window.currentProject = projName;
-                ExtractingJet_Window.switchCase = "output";
-                if (programData.CurrentGame == "BTDB")
-                    ExtractingJet_Window.switchCase = "output BTDB";
-                var compile = new ExtractingJet_Window();
+                if (JetProps.get().Count == 1)
+                {
+                    ZipForm.currentProject = projName;
+                    ZipForm.switchCase = "output";
+                    if (programData.CurrentGame == "BTDB")
+                        ZipForm.switchCase = "output BTDB";
+                    var compile = new ZipForm();
+                }
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("ERROR!!! There is a JSON Error in this file!!!\n\nIf you leave the file now it will be corrupted and WILL break your mod. Do you still want to leave?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if (JetProps.get().Count == 1)
+                    {
+                        ZipForm.currentProject = projName;
+                        ZipForm.switchCase = "output";
+                        if (programData.CurrentGame == "BTDB")
+                            ZipForm.switchCase = "output BTDB";
+                        var compile = new ZipForm();
+                    }
+                }
+            }*/
+            
+        }
+
+        private void Open_Proj_Dir_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening project directory...");
+            Process.Start(DeserializeConfig().LastProject);
+        }
+
+        private void Save_ToolStrip_Click(object sender, EventArgs e)
+        {
+            saveJet();
+        }
+
+        private void Find_Toolstrip_Click(object sender, EventArgs e)
+        {
+            if (findPanel.Visible)
+            {
+                findPanel.Visible = false;
+            }
+            else
+            {
+                findPanel.Visible = true;
+                findBox.Select();
             }
         }
     }

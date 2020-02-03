@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,9 +36,15 @@ namespace BTDToolbox
         public ThemedForm()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
+            //this.Dock = DockStyle.Fill;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            //this.FormBorderStyle = FormBorderStyle.None;
 
-            this.FormBorderStyle = FormBorderStyle.None;
+            
 
+            TitleLabel.MouseMove += ToolbarDrag;
             titleSeperator.Panel1.MouseMove += ToolbarDrag;
             titleSeperator.Panel2.MouseMove += ToolbarDrag;
             titleSeperator.MouseMove += ToolbarDrag;
@@ -56,7 +63,9 @@ namespace BTDToolbox
 
         public virtual void close_button_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (JsonEditor.jsonError != true)
+                this.Close();
+            
         }
 
         //resizing event methods
@@ -70,41 +79,68 @@ namespace BTDToolbox
         }
         private void SizerMouseMove(object sender, MouseEventArgs e)
         {
-            if (mov == true)
+            if ((MousePosition.X - Mx + Sw) >= minWidth && (MousePosition.Y - My + Sh) >= minHeight)
+            {
+                if (mov == true)
+                {
+                    titleSeperator.SplitterDistance = 25;
+                    //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
+                    //titleSeperator.Dock = DockStyle.Fill;
+                    Width = MousePosition.X - Mx + Sw;
+                    Height = MousePosition.Y - My + Sh;
+                }
+            }
+            else if ((MousePosition.X - Mx + Sw) >= minWidth && (MousePosition.Y - My + Sh) < minHeight)
+            {
+                if (mov == true)
+                {
+                    titleSeperator.SplitterDistance = 25;
+                    Width = MousePosition.X - Mx + Sw;
+                    Height = minHeight;
+                }
+            }
+            else if ((MousePosition.X - Mx + Sw) < minWidth && (MousePosition.Y - My + Sh) >= minHeight)
+            {
+                if (mov == true)
+                {
+                    titleSeperator.SplitterDistance = 25;
+                    Height = MousePosition.Y - My + Sh;
+                    Width = minWidth;
+                }
+            }
+            else
             {
                 titleSeperator.SplitterDistance = 25;
-                //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
-                titleSeperator.Dock = DockStyle.Fill;
-                Width = MousePosition.X - Mx + Sw;
-                Height = MousePosition.Y - My + Sh;
+                Height = minHeight;
+                Width = minWidth;
             }
+        }
+        private bool CheckInBounds()
+        {
+            
+            return true;
         }
         private void SizerMouseUp(object sender, MouseEventArgs e)
         {
             mov = false;
-            if (Width < minWidth)
-            {
-                Width = minWidth;
-            }
-            if (Height < minHeight)
-            {
-                Height = minHeight;
-            }
         }
 
         //toolbar drag method
         private void ToolbarDrag(object sender, MouseEventArgs e)
         {
+
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
+            
+
         }
 
         private void ThemedForm_Resize(object sender, EventArgs e)
         {
-            TD_Toolbox_Window.getInstance().Refresh();
+            Main.getInstance().Refresh();
         }
     }
 }

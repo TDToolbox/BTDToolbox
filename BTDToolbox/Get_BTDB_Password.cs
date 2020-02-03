@@ -12,65 +12,51 @@ namespace BTDToolbox
 {
     public partial class Get_BTDB_Password : Form
     {
-        public static string projectName;
-        public static bool setPassword;
-        public static string compileOperation;
+        //new refactoring variables
+        public string projName { get; set; }
+        public string destPath { get; set; }
+        public bool isExtracting { get; set; }
+        public bool launch { get; set; }
 
         public Get_BTDB_Password()
         {
             InitializeComponent();
             this.AcceptButton = CreateProject_Button;
             
-            if (setPassword == true)
-            {
-                if (ExtractingJet_Window.jetPassword != null)
-                {
-                    this.Close();
-                }
-                else
-                {
-                    ExportingJet();
-                }
-                
-            }
         }
-        private void ExportingJet()
-        {
-            CreateProject_Button.Text = "Submit Password";
-            this.Text = "Enter password to compile...";
-        }
-
-        private void CreateProject_Button_Click(object sender, EventArgs e)
+        public void GetPass()
         {
             string password = Password_TextBox.Text.ToString();
-            if(password.Length < 3)
+            if (password.Length < 3)
             {
+                ConsoleHandler.appendLog("The password you entered was too short...");
                 MessageBox.Show("The password you entered was too short...");
             }
             else
             {
-                if (setPassword == true)
+                ConsoleHandler.appendLog("You entered the password:  " + password);
+                var zip = new ZipForm();
+                zip.jetFile_Game = "BTDB";
+                zip.password = password;
+                zip.projName = projName;                
+                zip.Show();
+                if (isExtracting == true)
                 {
-                    if (compileOperation.Contains("output"))
-                        ExtractingJet_Window.switchCase = "output";
-                    else if (compileOperation.Contains("compile"))
-                        ExtractingJet_Window.switchCase = "compile";
-                }
-                if (projectName != null || projectName != "")
-                {
-                    ExtractingJet_Window.hasCustomProjectName = true;
-                    ExtractingJet_Window.customName = projectName;
+                    zip.Extract();
                 }
                 else
                 {
-                    ExtractingJet_Window.hasCustomProjectName = false;
+                    zip.destPath = destPath;
+                    zip.launch = launch;
+                    zip.Compile();
                 }
-                ExtractingJet_Window.jetPassword = password;
-                var extract = new ExtractingJet_Window();
-
-                if (setPassword == true)
-                    this.Close();
+                this.Close();
             }
+        }
+
+        private void CreateProject_Button_Click(object sender, EventArgs e)
+        {
+            GetPass();
         }
     }
 }

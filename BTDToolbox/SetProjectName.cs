@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
@@ -15,25 +16,26 @@ namespace BTDToolbox
         public static string projectName;
         public static string gameName;
         public bool hasClickedRandomName;
+        ConfigFile programData;
 
         public SetProjectName()
         {
             InitializeComponent();
-            
+            programData = Serializer.Deserialize_Config();
+            gameName = programData.CurrentGame;
             if (gameName == "BTDB")
             {
                 CreateProject_Button.Text = "Continue";
             }
             else
                 CreateProject_Button.Text = "Create Project";
-
+                
             this.AcceptButton = CreateProject_Button;
             this.Activate();
-            ExtractingJet_Window.switchCase = "decompile";
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
-            if (!hasClickedRandomName)
+            if (CustomName_RadioButton.Checked)
             {
                 if (ProjectName_TextBox.TextLength == 0)
                 {
@@ -41,37 +43,30 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    if (gameName == "BTDB")
-                    {
-                        var getPass = new Get_BTDB_Password();
-                        Get_BTDB_Password.projectName = ProjectName_TextBox.Text;
-                        getPass.Show();
-                        this.Close();
-                    }
-                    else
-                    {
-                        ExtractingJet_Window.hasCustomProjectName = true;
-                        ExtractingJet_Window.customName = ProjectName_TextBox.Text;
-                        this.Close();
-                        var extractT = new ExtractingJet_Window();
-                    }
-                    
-
+                    SubmitModName();
                 }
             }
             else
+                SubmitModName();
+        }
+        private void SubmitModName()
+        {
+            ConsoleHandler.appendLog("You chose the project name: " + ProjectName_TextBox.Text);
+            if (gameName == "BTDB")
             {
-                if (gameName == "BTDB")
-                {
-                    var getPass = new Get_BTDB_Password();
-                    getPass.Show();
-                    this.Close();
-                }
-                else
-                {
-                    this.Close();
-                    var extractT = new ExtractingJet_Window();
-                }   
+                var getPasss = new Get_BTDB_Password();
+                getPasss.isExtracting = true;
+                getPasss.projName = ProjectName_TextBox.Text;
+                getPasss.Show();
+                this.Close();
+            }
+            else
+            {
+                var extract = new ZipForm();
+                extract.projName = ProjectName_TextBox.Text;
+                extract.Show();
+                extract.Extract();
+                this.Close();
             }
         }
 

@@ -60,6 +60,7 @@
             this.titleSeperator.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.titleSeperator.Panel2.Controls.Add(this.Sizer);
             this.titleSeperator.Panel2.Controls.Add(this.contentPanel);
+            this.titleSeperator.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.titleSeperator.Size = new System.Drawing.Size(800, 450);
             this.titleSeperator.SplitterDistance = 25;
             this.titleSeperator.TabIndex = 0;

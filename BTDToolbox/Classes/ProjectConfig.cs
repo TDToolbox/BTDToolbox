@@ -10,6 +10,10 @@ namespace BTDToolbox
     {
         public class ConfigFile
         {
+            //splash screen
+            public bool enableSplash { get; set; }
+
+
             //Project wide variables
             public string BTD5_Directory { get; set; }
             public string BTDB_Directory { get; set; }

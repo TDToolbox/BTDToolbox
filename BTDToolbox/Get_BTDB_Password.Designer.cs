@@ -52,7 +52,7 @@
             this.CreateProject_Button.Name = "CreateProject_Button";
             this.CreateProject_Button.Size = new System.Drawing.Size(133, 23);
             this.CreateProject_Button.TabIndex = 11;
-            this.CreateProject_Button.Text = "Create Project";
+            this.CreateProject_Button.Text = "Enter";
             this.CreateProject_Button.UseVisualStyleBackColor = true;
             this.CreateProject_Button.Click += new System.EventHandler(this.CreateProject_Button_Click);
             // 
@@ -104,7 +104,7 @@
             this.MinimizeBox = false;
             this.Name = "Get_BTDB_Password";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Get_BTDB_Password";
+            this.Text = "Enter password";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

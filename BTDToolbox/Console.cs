@@ -1,83 +1,83 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfigs;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
-    public partial class Console : Form
+    public partial class Console : ThemedForm
     {
+        //Config variables
+        ConfigFile programData;
         public static float consoleLogFont;
+        public string lastMessage;
         string livePath = Environment.CurrentDirectory;
+        float fontSize;
 
-        public Console()
+        private static Console console;
+
+        public Console() : base()
         {
             InitializeComponent();
-            /*
-            try
-            {
-                string json = File.ReadAllText(livePath + "\\config\\console_form.json");
-                Window deserializedConsoleForm = JsonConvert.DeserializeObject<Window>(json);
+            StartUp();
 
-                Size ConsoleFormSize = new Size(deserializedConsoleForm.SizeX, deserializedConsoleForm.SizeY);
-                this.Size = ConsoleFormSize;
-
-                this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(deserializedConsoleForm.PosX, deserializedConsoleForm.PosY);
-
-                consoleLogFont = deserializedConsoleForm.FontSize;
-                console_log.Font = new Font("Microsoft Sans Serif", consoleLogFont);
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                consoleForm = new Window("Console", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, 10);
-                consoleFormOutput = JsonConvert.SerializeObject(consoleForm);
-
-                StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\console_form.json", false);
-                writeConsoleForm.Write(consoleFormOutput);
-                writeConsoleForm.Close();
-            }
-            catch (System.ArgumentException)
-            {
-                console_log.Font = new Font("Microsoft Sans Serif", 10);
-            }
+            console = this;
             this.FormClosed += exitHandling;
-            */
         }
 
-        private void Console_Load(object sender, EventArgs e)
+        private void StartUp()
         {
+            Deserialize_Config();
+
+            this.Size = new Size(programData.Console_SizeX, programData.Console_SizeY);
+            this.Location = new Point(programData.Console_PosX, programData.Console_PosY);
+            fontSize = programData.Console_FontSize;
+            this.Font = new Font("Consolas", fontSize);
         }
-        private void Console_Close(object sender, FormClosingEventArgs e)
+
+        public override void close_button_Click(object sender, EventArgs e)
         {
-            if (ConsoleHandler.console.Visible)
-            {
-                ConsoleHandler.console.Hide();
-                e.Cancel = true;
-            }
-            else
-            {
-                ConsoleHandler.console.Show();
-            }
+            Serializer.SaveConfig(this, "console", programData);
+            this.Hide();
         }
 
         public void appendLog(String log)
         {
-            console_log.Items.Add(log);
+            if (log != lastMessage)
+            {
+                try
+                {
+                    console_log.Invoke(new Action(() => console_log.AppendText(">> " + log + "\r\n")));
+                    lastMessage = log;
+                }
+                catch(Exception)
+                {
+                    Environment.Exit(0);
+                }
+                
+            }
+
         }
-        /*
         private void exitHandling(object sender, EventArgs e)
         {
-            ConsoleHandler.console.Visible = false;
-
-            consoleForm = new Window("Console", this.Size.Width, this.Size.Height, this.Location.X, this.Location.Y, consoleLogFont);
-            consoleFormOutput = JsonConvert.SerializeObject(consoleForm);
-
-            StreamWriter writeConsoleForm = new StreamWriter(livePath + "\\config\\console_form.json", false);
-            writeConsoleForm.Write(consoleFormOutput);
-            writeConsoleForm.Close();
-        }*/
+            Serializer.SaveConfig(this, "console", programData);
+        }
+        private void Deserialize_Config()
+        {
+            programData = Serializer.Deserialize_Config();
+        }
+        public static Console getInstance()
+        {
+            return console;
+        }
     }
 }
