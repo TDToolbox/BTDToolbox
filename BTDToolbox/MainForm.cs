@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using static BTDToolbox.GeneralMethods;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace BTDToolbox
 {
@@ -45,12 +46,14 @@ namespace BTDToolbox
         private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
 
 
+
         //
         //Initialize window
         //
         public TD_Toolbox_Window()
         {
             InitializeComponent();
+
             toolbox = this;
             Startup();
 
@@ -107,12 +110,15 @@ namespace BTDToolbox
         }
         private void ExitHandling(object sender, EventArgs e)
         {
-            if (ConsoleHandler.console.Visible)
-                enableConsole = true;
-            else
-                enableConsole = false;
+            if (ConsoleHandler.validateConsole())
+            {
+                if (ConsoleHandler.console.Visible)
+                    enableConsole = true;
+                else
+                    enableConsole = false;
 
-            Serializer.SaveConfig(this, "main", cfgFile);
+                Serializer.SaveConfig(this, "main", cfgFile);
+            }
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
@@ -160,6 +166,7 @@ namespace BTDToolbox
             }
         }
 
+        //
         //
         //Open or Create Projects
         //
@@ -238,6 +245,7 @@ namespace BTDToolbox
         }
         
         //
+        //
         //Mdi Stuff
         //
         protected override void WndProc(ref Message m)
@@ -281,10 +289,13 @@ namespace BTDToolbox
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
-            if (ConsoleHandler.console.Visible)
-                ConsoleHandler.console.Hide();
-            else
-                ConsoleHandler.console.Show();
+            if(ConsoleHandler.validateConsole())
+            {
+                if (ConsoleHandler.console.Visible)
+                    ConsoleHandler.console.Hide();
+                else
+                    ConsoleHandler.console.Show();
+            }
         }
         private void Find_Button_Click(object sender, EventArgs e)
         {
@@ -366,8 +377,10 @@ namespace BTDToolbox
         }
         private void TestForm_Click(object sender, EventArgs e)
         {
-            var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
-            editor.Show();
+            var splash = new SplashScreen();
+            splash.Show();
+            /*var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
+            editor.Show();*/
         }
         private void BTD5DirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -436,6 +449,11 @@ namespace BTDToolbox
         private void Backup_BTDB_Click_1(object sender, EventArgs e)
         {
             RestoreGame_ToBackup("BTDB");
+        }
+
+        private void TD_Toolbox_Window_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

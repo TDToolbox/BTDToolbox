@@ -100,6 +100,12 @@
       <DependentUpon>Get_BTDB_Password.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonProps.cs" />
+    <Compile Include="PerPixelAlphaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PerPixelAlphaForm.Designer.cs">
+      <DependentUpon>PerPixelAlphaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProjectConfig.cs" />
     <Compile Include="SerializeOps.cs" />
     <Compile Include="SetProjectName.cs">
@@ -144,6 +150,12 @@
     <Compile Include="SettingsWindow.Designer.cs">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThemedForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Get_BTDB_Password.resx">
       <DependentUpon>Get_BTDB_Password.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerPixelAlphaForm.resx">
+      <DependentUpon>PerPixelAlphaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SetProjectName.resx">
       <DependentUpon>SetProjectName.cs</DependentUpon>
@@ -191,6 +206,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ThemedForm.resx">
       <DependentUpon>ThemedForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,6 +229,7 @@
   <ItemGroup>
     <Content Include="Resources\JSON invalid_2.png" />
     <Content Include="Resize_Icon.png" />
+    <None Include="Resources\Splash1.png" />
     <None Include="Resources\json-file_light.ico" />
     <None Include="Resources\json-file_dark.ico" />
     <None Include="Resources\ico3.ico" />

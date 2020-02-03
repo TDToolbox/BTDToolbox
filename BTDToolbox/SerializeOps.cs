@@ -19,6 +19,11 @@ namespace BTDToolbox
         {
             var cfg = Serializer.Deserialize_Config();
 
+            if (formName == "splash")
+            {
+                cfg.enableSplash = Program.enableSplash;
+            }
+
             if (formName == "game")
             {
                 cfg.CurrentGame = gameName;
@@ -103,6 +108,8 @@ namespace BTDToolbox
                 {
                     //create config
 
+                    programData.enableSplash = true;
+                    
                     programData.BTD5_Directory = "";
                     programData.BTDB_Directory = "";
                     programData.LastProject = null;

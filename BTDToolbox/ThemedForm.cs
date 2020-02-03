@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,12 +33,21 @@ namespace BTDToolbox
         int minWidth = 200;
         int minHeight = 100;
 
+        int x = TD_Toolbox_Window.getInstance().Width;
+        int y = TD_Toolbox_Window.getInstance().Height;
+
         public ThemedForm()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
+            //this.Dock = DockStyle.Fill;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            //this.FormBorderStyle = FormBorderStyle.None;
 
-            this.FormBorderStyle = FormBorderStyle.None;
+            
 
+            TitleLabel.MouseMove += ToolbarDrag;
             titleSeperator.Panel1.MouseMove += ToolbarDrag;
             titleSeperator.Panel2.MouseMove += ToolbarDrag;
             titleSeperator.MouseMove += ToolbarDrag;
@@ -72,36 +82,107 @@ namespace BTDToolbox
         }
         private void SizerMouseMove(object sender, MouseEventArgs e)
         {
-            if (mov == true)
+            if (((Mx + Sw) < x) && (My + Sh) < y)
             {
-                titleSeperator.SplitterDistance = 25;
-                //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
-                titleSeperator.Dock = DockStyle.Fill;
-                Width = MousePosition.X - Mx + Sw;
-                Height = MousePosition.Y - My + Sh;
+                if ((MousePosition.X - Mx + Sw) >= minWidth && (MousePosition.Y - My + Sh) >= minHeight)
+                {
+                    if (mov == true)
+                    {
+                        titleSeperator.SplitterDistance = 25;
+                        //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
+                        //titleSeperator.Dock = DockStyle.Fill;
+                        Width = MousePosition.X - Mx + Sw;
+                        Height = MousePosition.Y - My + Sh;
+                    }
+                }
+                else if ((MousePosition.X - Mx + Sw) >= minWidth && (MousePosition.Y - My + Sh) < minHeight)
+                {
+                    if (mov == true)
+                    {
+                        titleSeperator.SplitterDistance = 25;
+                        Width = MousePosition.X - Mx + Sw;
+                        Height = minHeight;
+                    }
+                }
+                else if ((MousePosition.X - Mx + Sw) < minWidth && (MousePosition.Y - My + Sh) >= minHeight)
+                {
+                    if (mov == true)
+                    {
+                        titleSeperator.SplitterDistance = 25;
+                        Height = MousePosition.Y - My + Sh;
+                        Width = minWidth;
+                    }
+                }
+                else
+                {
+                    titleSeperator.SplitterDistance = 25;
+                    Height = minHeight;
+                    Width = minWidth;
+                }
             }
+            else if (((Mx + Sw) < x) && (My + Sh) > y)
+            {
+                int locX = this.Location.X;
+                int locY = (y + Sh);
+                this.Location = new Point (locX, locY);
+
+            }
+        }
+        private bool CheckInBounds()
+        {
+            
+            return true;
         }
         private void SizerMouseUp(object sender, MouseEventArgs e)
         {
             mov = false;
-            if (Width < minWidth)
-            {
-                Width = minWidth;
-            }
-            if (Height < minHeight)
-            {
-                Height = minHeight;
-            }
         }
 
         //toolbar drag method
         private void ToolbarDrag(object sender, MouseEventArgs e)
         {
+            x = TD_Toolbox_Window.getInstance().Width;
+            y = TD_Toolbox_Window.getInstance().Height;
+            int locX = this.Location.X;
+            int locY = this.Location.Y;
+            //int locY = (y + Sh);
+
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
+
+            //this.Location = new Point(locX, locY);
+            //if (((Mx + Sw) < x) && (My + Sh) > y)
+            if (((locX + Sw) > x) || (locY + Sh) > y)
+            {
+                
+                this.Location = new Point(0, 0);
+                this.Refresh();
+            }
+            else
+            {
+
+            }
+            
+
+            /*if (this.Location.X < x && this.Location.Y < y)
+            {
+                if (MousePosition.X < x && MousePosition.Y < y)
+                {
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        ReleaseCapture();
+                        SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                    }
+                }
+            }
+            else
+            {
+
+            }*/
+
         }
 
         private void ThemedForm_Resize(object sender, EventArgs e)

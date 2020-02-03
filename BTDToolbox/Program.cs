@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BTDToolbox
 {
     static class Program
     {
+        public static bool enableSplash;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -13,7 +15,19 @@ namespace BTDToolbox
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TD_Toolbox_Window());
+
+            
+            if (Serializer.Deserialize_Config().enableSplash == true)
+            {
+                enableSplash = true;
+                Application.Run(new SplashScreen());
+            }
+                
+            else
+            {
+                enableSplash = false;
+                Application.Run(new TD_Toolbox_Window());
+            }
         }
     }
 }

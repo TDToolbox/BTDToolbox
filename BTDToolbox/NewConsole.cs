@@ -23,12 +23,14 @@ namespace BTDToolbox
         string livePath = Environment.CurrentDirectory;
         float fontSize;
 
+        private static NewConsole console;
 
         public NewConsole() : base()
         {
             InitializeComponent();
             StartUp();
 
+            console = this;
             this.FormClosed += exitHandling;
         }
 
@@ -64,6 +66,10 @@ namespace BTDToolbox
         private void Deserialize_Config()
         {
             programData = Serializer.Deserialize_Config();
+        }
+        public static NewConsole getInstance()
+        {
+            return console;
         }
     }
 }
