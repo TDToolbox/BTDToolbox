@@ -84,46 +84,50 @@ namespace BTDToolbox
         {
             if (sourcePath == null || sourcePath == "")
                 sourcePath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_Original.jet";
-
-            Random rand = new Random();
-
-            if (projName == null || projName == "")
+            if (File.Exists(sourcePath))
             {
-                int randName = rand.Next(1, 99999999);
-                projName = randName.ToString();
-            }
-            fullProjName = projectName_Identifier + projName;
+                Random rand = new Random();
 
-            //check password
-            if (File.Exists(sourcePath) && gameName == "BTDB")
-            {
-                this.Hide();
-                bool passRes = Bad_JetPass(sourcePath, password);
-                if (passRes == true)
+                if (projName == null || projName == "")
                 {
-                    DialogResult res = MessageBox.Show("You entered the wrong password. Would you like to try again?", "Wrong Password!", MessageBoxButtons.OKCancel);
-                    if (res == DialogResult.OK)
+                    int randName = rand.Next(1, 99999999);
+                    projName = randName.ToString();
+                }
+                fullProjName = projectName_Identifier + projName;
+
+                //check password
+                if (File.Exists(sourcePath) && gameName == "BTDB")
+                {
+                    this.Hide();
+                    bool passRes = Bad_JetPass(sourcePath, password);
+                    if (passRes == true)
                     {
-                        var getpas = new Get_BTDB_Password();
-                        getpas.projName = projName;
-                        getpas.isExtracting = true;
-                        getpas.Show();
+                        DialogResult res = MessageBox.Show("You entered the wrong password. Would you like to try again?", "Wrong Password!", MessageBoxButtons.OKCancel);
+                        if (res == DialogResult.OK)
+                        {
+                            var getpas = new Get_BTDB_Password();
+                            getpas.projName = projName;
+                            getpas.isExtracting = true;
+                            getpas.Show();
+                        }
+                        else
+                            this.Close();
                     }
                     else
-                        this.Close();
+                    {
+                        this.Show();
+                        backgroundThread = new Thread(Extract_OnThread);
+                        backgroundThread.Start();
+                    }
                 }
                 else
                 {
-                    this.Show();
                     backgroundThread = new Thread(Extract_OnThread);
                     backgroundThread.Start();
                 }
             }
             else
-            {
-                backgroundThread = new Thread(Extract_OnThread);
-                backgroundThread.Start();
-            }
+                ConsoleHandler.appendLog("Failed to find file to extract");
         }
         private void Extract_OnThread()
         {
@@ -131,27 +135,22 @@ namespace BTDToolbox
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
-                if (File.Exists(sourcePath))
-                {
-                    ConsoleHandler.appendLog("Creating project files...");
+                ConsoleHandler.appendLog("Creating project files...");
 
-                    ZipFile archive = new ZipFile(sourcePath);
-                    archive.Password = password;
-                    totalFiles = archive.Count();
-                    filesTransfered = 0;
-                    archive.ExtractProgress += ZipExtractProgress;
-                    archive.ExtractAll(destPath);
-                    archive.Dispose();
+                ZipFile archive = new ZipFile(sourcePath);
+                archive.Password = password;
+                totalFiles = archive.Count();
+                filesTransfered = 0;
+                archive.ExtractProgress += ZipExtractProgress;
+                archive.ExtractAll(destPath);
+                archive.Dispose();
 
-                    ConsoleHandler.appendLog("Project files created at: " + fullProjName);
-                    Invoke((MethodInvoker)delegate {
-                        jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
-                        jf.MdiParent = TD_Toolbox_Window.getInstance();
-                        jf.Show();
-                    });
-                }
-                else
-                    ConsoleHandler.appendLog("Failed to find file to extract");
+                ConsoleHandler.appendLog("Project files created at: " + fullProjName);
+                Invoke((MethodInvoker)delegate {
+                    jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
+                    jf.MdiParent = TD_Toolbox_Window.getInstance();
+                    jf.Show();
+                });
             }
             else
             {
@@ -219,6 +218,10 @@ namespace BTDToolbox
             else
                 dir = destPath;
 
+            if (DeserializeConfig().LastProject == null)
+            {
+                Serializer.SaveConfig(jf, "jet explorer", programData);
+            }
             DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
             if (Directory.Exists(projDir.ToString()))
             {

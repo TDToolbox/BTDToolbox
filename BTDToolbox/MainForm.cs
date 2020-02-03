@@ -18,8 +18,9 @@ namespace BTDToolbox
     public partial class TD_Toolbox_Window : Form
     {
         //Form variables
-        string version = "Alpha 0.0.3";
+        public static string version = "Alpha 0.0.3";
         private static TD_Toolbox_Window toolbox;
+        private static CheckForUpdates update;
         string livePath = Environment.CurrentDirectory;        
 
 
@@ -53,7 +54,10 @@ namespace BTDToolbox
         public TD_Toolbox_Window()
         {
             InitializeComponent();
-
+            
+            /*MessageBox.Show(checkForUpdates.downloadUpdater());
+            Environment.Exit(0);*/
+            
             toolbox = this;
             Startup();
 
@@ -110,6 +114,7 @@ namespace BTDToolbox
         }
         private void ExitHandling(object sender, EventArgs e)
         {
+            update.exitLoop = true;
             if (ConsoleHandler.validateConsole())
             {
                 if (ConsoleHandler.console.Visible)
@@ -122,23 +127,15 @@ namespace BTDToolbox
         }
         private void TD_Toolbox_Window_Load(object sender, EventArgs e)
         {
+            if (File.Exists(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe"))
+                File.Delete(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe");
+            if (File.Exists(Environment.CurrentDirectory + "\\BTDToolbox_Updater.zip"))
+                File.Delete(Environment.CurrentDirectory + "\\BTDToolbox_Updater.zip");
+            if (File.Exists(Environment.CurrentDirectory + "\\Update"))
+                File.Delete(Environment.CurrentDirectory + "\\Update");
 
             ConsoleHandler.console = new NewConsole();
             ConsoleHandler.console.MdiParent = this;
-
-            if (enableConsole == true)
-                ConsoleHandler.console.Show();
-            else
-                ConsoleHandler.console.Hide();
-
-            ConsoleHandler.appendLog("Program loaded!");
-            ConsoleHandler.appendLog("Searching for existing projects...");
-
-            OpenJetForm();
-
-            foreach (Control con in Controls)
-                if (con is MdiClient)
-                    mdiClient = con as MdiClient;
         }
 
         private void mainResize(object sender, EventArgs e)
@@ -333,7 +330,7 @@ namespace BTDToolbox
         {
             AddNewJet();
         }
-        private void NewProject()
+        private void NewProject(string gameName)
         {
             if (isGamePathValid(gameName) == false)
             {
@@ -344,6 +341,8 @@ namespace BTDToolbox
                 }
                 else
                 {
+                    if (!Validate_Backup(gameName))
+                        CreateBackup(gameName);
                     Serializer.SaveConfig(this, "directories", cfgFile);
                     var setProjName = new SetProjectName();
                     setProjName.Show();
@@ -359,13 +358,13 @@ namespace BTDToolbox
         {
             gameName = "BTD5";
             Serializer.SaveConfig(this, "game", cfgFile);
-            NewProject();
+            NewProject(gameName);
         }
         private void New_BTDB_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTDB";
             Serializer.SaveConfig(this, "game", cfgFile);
-            NewProject();
+            NewProject(gameName);
         }
         private void Replace_BTDB_Backup_Click(object sender, EventArgs e)
         {
@@ -454,6 +453,38 @@ namespace BTDToolbox
         private void TD_Toolbox_Window_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void TD_Toolbox_Window_Shown(object sender, EventArgs e)
+        {
+            
+            ConsoleHandler.appendLog("Program loaded!");
+
+            
+
+            if (enableConsole == true)
+                ConsoleHandler.console.Show();
+            else
+                ConsoleHandler.console.Hide();
+            ConsoleHandler.appendLog("Searching for existing projects...");
+            OpenJetForm();
+
+            string msg = "";
+            if (JetProps.getForm(0) == null)
+                ConsoleHandler.appendLog("No projects detected.");
+
+            foreach (Control con in Controls)
+                if (con is MdiClient)
+                    mdiClient = con as MdiClient;
+
+            update = new CheckForUpdates();
+            update.checkForUpdate();
+        }
+
+        private void BTDFontsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening BTD Font maker...");
+            Process.Start("https://fontmeme.com/bloons-td-battles-font/");
         }
     }
 }

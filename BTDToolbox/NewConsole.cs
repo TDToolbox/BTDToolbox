@@ -54,8 +54,16 @@ namespace BTDToolbox
         {
             if (log != lastMessage)
             {
-                console_log.Invoke(new Action(() => console_log.AppendText(">> " + log + "\r\n")));
-                lastMessage = log;
+                try
+                {
+                    console_log.Invoke(new Action(() => console_log.AppendText(">> " + log + "\r\n")));
+                    lastMessage = log;
+                }
+                catch(Exception)
+                {
+                    Environment.Exit(0);
+                }
+                
             }
 
         }
