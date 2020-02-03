@@ -42,8 +42,9 @@
             this.bTD5DirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bTDBDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolboxDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openRecentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainForm_SaveButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openRecentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Find_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Replace_Button = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +55,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTDFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteEditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,15 +74,14 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.contactUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Credits = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reinstallBTDToolboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.bTDFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.reinstallBTDToolboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.openBTDToolboxGithubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,33 +123,33 @@
             this.NewProject_From_Backup,
             this.btdpToolStripMenuItem});
             this.New_ToolStrip.Name = "New_ToolStrip";
-            this.New_ToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.New_ToolStrip.Size = new System.Drawing.Size(142, 22);
             this.New_ToolStrip.Text = "New";
             // 
             // New_BTD5_Proj
             // 
             this.New_BTD5_Proj.Name = "New_BTD5_Proj";
-            this.New_BTD5_Proj.Size = new System.Drawing.Size(180, 22);
+            this.New_BTD5_Proj.Size = new System.Drawing.Size(172, 22);
             this.New_BTD5_Proj.Text = "BTD5 Project";
             this.New_BTD5_Proj.Click += new System.EventHandler(this.New_BTD5_Proj_Click);
             // 
             // New_BTDB_Proj
             // 
             this.New_BTDB_Proj.Name = "New_BTDB_Proj";
-            this.New_BTDB_Proj.Size = new System.Drawing.Size(180, 22);
+            this.New_BTDB_Proj.Size = new System.Drawing.Size(172, 22);
             this.New_BTDB_Proj.Text = "BTD Battles Project";
             this.New_BTDB_Proj.Click += new System.EventHandler(this.New_BTDB_Proj_Click);
             // 
             // NewProject_From_Backup
             // 
             this.NewProject_From_Backup.Name = "NewProject_From_Backup";
-            this.NewProject_From_Backup.Size = new System.Drawing.Size(180, 22);
+            this.NewProject_From_Backup.Size = new System.Drawing.Size(172, 22);
             this.NewProject_From_Backup.Text = "Project from .jet";
             // 
             // btdpToolStripMenuItem
             // 
             this.btdpToolStripMenuItem.Name = "btdpToolStripMenuItem";
-            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
             // 
             // openToolStripMenuItem1
@@ -160,56 +161,62 @@
             this.bTDBDirectoryToolStripMenuItem,
             this.toolboxDirectoryToolStripMenuItem});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // Open_Existing_JetFile
             // 
             this.Open_Existing_JetFile.Name = "Open_Existing_JetFile";
-            this.Open_Existing_JetFile.Size = new System.Drawing.Size(180, 22);
+            this.Open_Existing_JetFile.Size = new System.Drawing.Size(167, 22);
             this.Open_Existing_JetFile.Text = "Existing .jet";
             this.Open_Existing_JetFile.Click += new System.EventHandler(this.Open_Existing_JetFile_Click);
             // 
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(180, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(167, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
             // 
             // bTD5DirectoryToolStripMenuItem
             // 
             this.bTD5DirectoryToolStripMenuItem.Name = "bTD5DirectoryToolStripMenuItem";
-            this.bTD5DirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bTD5DirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.bTD5DirectoryToolStripMenuItem.Text = "BTD5 Directory";
             this.bTD5DirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTD5DirectoryToolStripMenuItem_Click);
             // 
             // bTDBDirectoryToolStripMenuItem
             // 
             this.bTDBDirectoryToolStripMenuItem.Name = "bTDBDirectoryToolStripMenuItem";
-            this.bTDBDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bTDBDirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.bTDBDirectoryToolStripMenuItem.Text = "BTDB Directory";
             this.bTDBDirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTDBDirectoryToolStripMenuItem_Click);
             // 
             // toolboxDirectoryToolStripMenuItem
             // 
             this.toolboxDirectoryToolStripMenuItem.Name = "toolboxDirectoryToolStripMenuItem";
-            this.toolboxDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toolboxDirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.toolboxDirectoryToolStripMenuItem.Text = "Toolbox Directory";
             this.toolboxDirectoryToolStripMenuItem.Click += new System.EventHandler(this.ToolboxDirectoryToolStripMenuItem_Click);
-            // 
-            // openRecentToolStripMenuItem
-            // 
-            this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // MainForm_SaveButton
             // 
             this.MainForm_SaveButton.Name = "MainForm_SaveButton";
-            this.MainForm_SaveButton.Size = new System.Drawing.Size(180, 22);
+            this.MainForm_SaveButton.Size = new System.Drawing.Size(142, 22);
             this.MainForm_SaveButton.Text = "Save";
             this.MainForm_SaveButton.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(142, 22);
+            this.toolStripMenuItem4.Text = "Settings";
+            // 
+            // openRecentToolStripMenuItem
+            // 
+            this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // viewToolStripMenuItem
             // 
@@ -224,14 +231,14 @@
             // Find_Button
             // 
             this.Find_Button.Name = "Find_Button";
-            this.Find_Button.Size = new System.Drawing.Size(180, 22);
+            this.Find_Button.Size = new System.Drawing.Size(115, 22);
             this.Find_Button.Text = "Find";
             this.Find_Button.Click += new System.EventHandler(this.Find_Button_Click);
             // 
             // Replace_Button
             // 
             this.Replace_Button.Name = "Replace_Button";
-            this.Replace_Button.Size = new System.Drawing.Size(180, 22);
+            this.Replace_Button.Size = new System.Drawing.Size(115, 22);
             this.Replace_Button.Text = "Replace";
             this.Replace_Button.Click += new System.EventHandler(this.Replace_Button_Click);
             // 
@@ -256,14 +263,14 @@
             // ToggleConsole
             // 
             this.ToggleConsole.Name = "ToggleConsole";
-            this.ToggleConsole.Size = new System.Drawing.Size(180, 22);
+            this.ToggleConsole.Size = new System.Drawing.Size(134, 22);
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
             // 
             // OpenJetExplorer
             // 
             this.OpenJetExplorer.Name = "OpenJetExplorer";
-            this.OpenJetExplorer.Size = new System.Drawing.Size(180, 22);
+            this.OpenJetExplorer.Size = new System.Drawing.Size(134, 22);
             this.OpenJetExplorer.Text = "Jet Explorer";
             this.OpenJetExplorer.Click += new System.EventHandler(this.OpenJetExplorer_Click);
             // 
@@ -282,14 +289,21 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(144, 22);
             this.toolStripMenuItem2.Text = "Mod Loader";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(144, 22);
             this.toolStripMenuItem3.Text = "NKHook";
+            // 
+            // bTDFontsToolStripMenuItem
+            // 
+            this.bTDFontsToolStripMenuItem.Name = "bTDFontsToolStripMenuItem";
+            this.bTDFontsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.bTDFontsToolStripMenuItem.Text = "BTD Fonts";
+            this.bTDFontsToolStripMenuItem.Click += new System.EventHandler(this.BTDFontsToolStripMenuItem_Click);
             // 
             // spriteEditingToolStripMenuItem
             // 
@@ -297,7 +311,7 @@
             this.spriteSheetDecompilerToolStripMenuItem,
             this.spriteAnimationVisualizerToolStripMenuItem});
             this.spriteEditingToolStripMenuItem.Name = "spriteEditingToolStripMenuItem";
-            this.spriteEditingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spriteEditingToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.spriteEditingToolStripMenuItem.Text = "Sprite Editing";
             // 
             // spriteSheetDecompilerToolStripMenuItem
@@ -325,7 +339,8 @@
             this.Credits,
             this.toolStripSeparator3,
             this.checkForUpdatesToolStripMenuItem,
-            this.reinstallBTDToolboxToolStripMenuItem});
+            this.reinstallBTDToolboxToolStripMenuItem,
+            this.openBTDToolboxGithubToolStripMenuItem});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -337,7 +352,7 @@
             this.Backup_BTD5,
             this.Backup_BTDB});
             this.restorejetToBackupToolStripMenuItem.Name = "restorejetToBackupToolStripMenuItem";
-            this.restorejetToBackupToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.restorejetToBackupToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.restorejetToBackupToolStripMenuItem.Text = "Restore game\'s .jet";
             // 
             // Backup_BTD5
@@ -360,7 +375,7 @@
             this.Replace_BTD5_Backup,
             this.Replace_BTDB_Backup});
             this.remakeBackupjetToolStripMenuItem.Name = "remakeBackupjetToolStripMenuItem";
-            this.remakeBackupjetToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.remakeBackupjetToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.remakeBackupjetToolStripMenuItem.Text = "Get a new backup  .jet";
             // 
             // Replace_BTD5_Backup
@@ -380,7 +395,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
             // 
             // Reset_EXE
             // 
@@ -388,7 +403,7 @@
             this.resetBTD5exeToolStripMenuItem,
             this.resetBTDBattlesexeToolStripMenuItem});
             this.Reset_EXE.Name = "Reset_EXE";
-            this.Reset_EXE.Size = new System.Drawing.Size(190, 22);
+            this.Reset_EXE.Size = new System.Drawing.Size(210, 22);
             this.Reset_EXE.Text = "Reset game path";
             // 
             // resetBTD5exeToolStripMenuItem
@@ -408,27 +423,46 @@
             // resetUserSettingsToolStripMenuItem
             // 
             this.resetUserSettingsToolStripMenuItem.Name = "resetUserSettingsToolStripMenuItem";
-            this.resetUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.resetUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.resetUserSettingsToolStripMenuItem.Text = "Reset user settings";
             this.resetUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.ResetUserSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(187, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(207, 6);
             // 
             // contactUsToolStripMenuItem
             // 
             this.contactUsToolStripMenuItem.Name = "contactUsToolStripMenuItem";
-            this.contactUsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.contactUsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.contactUsToolStripMenuItem.Text = "Contact Us";
             // 
             // Credits
             // 
             this.Credits.Name = "Credits";
-            this.Credits.Size = new System.Drawing.Size(190, 22);
+            this.Credits.Size = new System.Drawing.Size(210, 22);
             this.Credits.Text = "Credits";
             this.Credits.Click += new System.EventHandler(this.OpenCredits_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(207, 6);
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdatesToolStripMenuItem_Click);
+            // 
+            // reinstallBTDToolboxToolStripMenuItem
+            // 
+            this.reinstallBTDToolboxToolStripMenuItem.Name = "reinstallBTDToolboxToolStripMenuItem";
+            this.reinstallBTDToolboxToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.reinstallBTDToolboxToolStripMenuItem.Text = "Reinstall BTD Toolbox";
+            this.reinstallBTDToolboxToolStripMenuItem.Click += new System.EventHandler(this.ReinstallBTDToolboxToolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem
             // 
@@ -467,37 +501,12 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // bTDFontsToolStripMenuItem
+            // openBTDToolboxGithubToolStripMenuItem
             // 
-            this.bTDFontsToolStripMenuItem.Name = "bTDFontsToolStripMenuItem";
-            this.bTDFontsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.bTDFontsToolStripMenuItem.Text = "BTD Fonts";
-            this.bTDFontsToolStripMenuItem.Click += new System.EventHandler(this.BTDFontsToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem4.Text = "Settings";
-            // 
-            // reinstallBTDToolboxToolStripMenuItem
-            // 
-            this.reinstallBTDToolboxToolStripMenuItem.Name = "reinstallBTDToolboxToolStripMenuItem";
-            this.reinstallBTDToolboxToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.reinstallBTDToolboxToolStripMenuItem.Text = "Reinstall BTD Toolbox";
-            this.reinstallBTDToolboxToolStripMenuItem.Click += new System.EventHandler(this.ReinstallBTDToolboxToolStripMenuItem_Click);
-            // 
-            // checkForUpdatesToolStripMenuItem
-            // 
-            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
-            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdatesToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(187, 6);
+            this.openBTDToolboxGithubToolStripMenuItem.Name = "openBTDToolboxGithubToolStripMenuItem";
+            this.openBTDToolboxGithubToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.openBTDToolboxGithubToolStripMenuItem.Text = "Open BTD Toolbox Github";
+            this.openBTDToolboxGithubToolStripMenuItem.Click += new System.EventHandler(this.OpenBTDToolboxGithubToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -581,6 +590,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reinstallBTDToolboxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openBTDToolboxGithubToolStripMenuItem;
     }
 }
 

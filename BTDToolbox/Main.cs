@@ -496,5 +496,11 @@ namespace BTDToolbox
             update.reinstall = true;
             update.checkForUpdate();
         }
+
+        private void OpenBTDToolboxGithubToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening BTD Toolbox Github page...");
+            Process.Start("https://github.com/TDToolbox/BTDToolbox-2019");
+        }
     }
 }
