@@ -140,14 +140,6 @@ namespace BTDToolbox
         }
         private void exitHandling(object sender, EventArgs e)
         {
-            /*if (jsonError == true)
-            {
-                
-            }
-            else
-            {
-                
-            }*/
             Serializer.SaveConfig(this, "json editor", programData);
             JsonProps.decrement(this);
         }

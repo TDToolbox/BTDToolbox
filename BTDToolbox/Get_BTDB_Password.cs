@@ -35,7 +35,7 @@ namespace BTDToolbox
             else
             {
                 ConsoleHandler.appendLog("You entered the password:  " + password);
-                var zip = new ExtractingJet_Window();
+                var zip = new ZipForm();
                 zip.jetFile_Game = "BTDB";
                 zip.password = password;
                 zip.projName = projName;                

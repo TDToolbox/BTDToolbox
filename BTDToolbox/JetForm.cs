@@ -576,11 +576,11 @@ namespace BTDToolbox
             {
                 if (JetProps.get().Count == 1)
                 {
-                    ExtractingJet_Window.currentProject = projName;
-                    ExtractingJet_Window.switchCase = "output";
+                    ZipForm.currentProject = projName;
+                    ZipForm.switchCase = "output";
                     if (programData.CurrentGame == "BTDB")
-                        ExtractingJet_Window.switchCase = "output BTDB";
-                    var compile = new ExtractingJet_Window();
+                        ZipForm.switchCase = "output BTDB";
+                    var compile = new ZipForm();
                 }
             }
             else
@@ -590,11 +590,11 @@ namespace BTDToolbox
                 {
                     if (JetProps.get().Count == 1)
                     {
-                        ExtractingJet_Window.currentProject = projName;
-                        ExtractingJet_Window.switchCase = "output";
+                        ZipForm.currentProject = projName;
+                        ZipForm.switchCase = "output";
                         if (programData.CurrentGame == "BTDB")
-                            ExtractingJet_Window.switchCase = "output BTDB";
-                        var compile = new ExtractingJet_Window();
+                            ZipForm.switchCase = "output BTDB";
+                        var compile = new ZipForm();
                     }
                 }
             }*/

@@ -460,7 +460,7 @@ namespace BTDToolbox
                     string dest = "";
                     bool isOutputting = false;
 
-                    var zip = new ExtractingJet_Window();
+                    var zip = new ZipForm();
 
                     if (switchCase.Contains("output"))
                     {

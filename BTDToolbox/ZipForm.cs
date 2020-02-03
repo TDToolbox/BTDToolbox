@@ -18,13 +18,13 @@ using static BTDToolbox.GeneralMethods;
 
 namespace BTDToolbox
 {
-    public partial class ExtractingJet_Window : Form
+    public partial class ZipForm : Form
     {
         //Project Variables
         JetForm jf;
 
         //zip variables
-        public static int totalFiles = 0;        
+        public static int totalFiles = 0;
         public int filesTransfered = 0;
 
         //Config variables
@@ -34,7 +34,7 @@ namespace BTDToolbox
         public string steamJetPath;
         public static string BTD5_Dir;
         public static string BTDB_Dir;
-        
+
 
         //other variables
         public string projectName_Identifier = "";
@@ -49,7 +49,7 @@ namespace BTDToolbox
         //Threads
         Thread backgroundThread;
 
-        public ExtractingJet_Window()
+        public ZipForm()
         {
             InitializeComponent();
             StartUp();
@@ -67,7 +67,7 @@ namespace BTDToolbox
             {
                 gameDir = DeserializeConfig().BTDB_Directory;
                 jetName = "data.jet";
-                
+
             }
             else
             {
@@ -154,7 +154,7 @@ namespace BTDToolbox
             }
             else
             {
-                 DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it?", "", MessageBoxButtons.OKCancel);
+                DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it?", "", MessageBoxButtons.OKCancel);
                 if (varr == DialogResult.OK)
                 {
                     MessageBox.Show("Overwriting existing project... Please close the current Jet Explorer window.");
@@ -188,9 +188,9 @@ namespace BTDToolbox
         }
         public void Compile()
         {
-            if(gameName == "BTDB")
+            if (gameName == "BTDB")
             {
-                if(password == null || password.Length <= 0)
+                if (password == null || password.Length <= 0)
                 {
                     var getpas = new Get_BTDB_Password();
                     getpas.launch = launch;
@@ -203,7 +203,7 @@ namespace BTDToolbox
                 {
                     backgroundThread = new Thread(Compile_OnThread);
                     backgroundThread.Start();
-                }                
+                }
             }
             else
             {
@@ -291,16 +291,16 @@ namespace BTDToolbox
         }
         private void ZipCompileProgress(object sender, AddProgressEventArgs e)
         {
-            
+
             if (e.EventType != ZipProgressEventType.Adding_AfterAddEntry)
                 return;
-            if (filesTransfered >= (totalFiles/100))
+            if (filesTransfered >= (totalFiles / 100))
             {
                 try
                 {
                     TotalProgress_ProgressBar.Invoke(new Action(() => TotalProgress_ProgressBar.Value = 100 * filesTransfered / totalFiles));
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     PrintError(ex.Message);
                 }

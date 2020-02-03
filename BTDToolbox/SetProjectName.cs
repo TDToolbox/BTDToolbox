@@ -62,7 +62,7 @@ namespace BTDToolbox
             }
             else
             {
-                var extract = new ExtractingJet_Window();
+                var extract = new ZipForm();
                 extract.projName = ProjectName_TextBox.Text;
                 extract.Show();
                 extract.Extract();
