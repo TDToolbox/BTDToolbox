@@ -1,27 +1,23 @@
-﻿
-using Microsoft.WindowsAPICodePack.Dialogs;
-using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 using static BTDToolbox.GeneralMethods;
-using System.Diagnostics;
-using System.Reflection;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
-    public partial class TD_Toolbox_Window : Form
+    public partial class Main : Form
     {
         //Form variables
         public static string version = "Alpha 0.0.3";
-        private static TD_Toolbox_Window toolbox;
+        private static Main toolbox;
         private static CheckForUpdates update;
-        string livePath = Environment.CurrentDirectory;        
+        string livePath = Environment.CurrentDirectory;
 
 
         //Project Variables
@@ -51,13 +47,13 @@ namespace BTDToolbox
         //
         //Initialize window
         //
-        public TD_Toolbox_Window()
+        public Main()
         {
             InitializeComponent();
-            
+
             /*MessageBox.Show(checkForUpdates.downloadUpdater());
             Environment.Exit(0);*/
-            
+
             toolbox = this;
             Startup();
 
@@ -125,7 +121,7 @@ namespace BTDToolbox
                 Serializer.SaveConfig(this, "main", cfgFile);
             }
         }
-        private void TD_Toolbox_Window_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
             if (File.Exists(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe"))
                 File.Delete(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe");
@@ -134,7 +130,7 @@ namespace BTDToolbox
             if (File.Exists(Environment.CurrentDirectory + "\\Update"))
                 File.Delete(Environment.CurrentDirectory + "\\Update");
 
-            ConsoleHandler.console = new NewConsole();
+            ConsoleHandler.console = new Console();
             ConsoleHandler.console.MdiParent = this;
         }
 
@@ -143,11 +139,11 @@ namespace BTDToolbox
             this.BackgroundImage = bgImg;
             this.BackgroundImageLayout = ImageLayout.Center;
         }
-        public static TD_Toolbox_Window getInstance()
+        public static Main getInstance()
         {
             return toolbox;
         }
-        private void TD_Toolbox_Window_KeyDown(object sender, KeyEventArgs e)
+        private void Main_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
             {
@@ -196,7 +192,7 @@ namespace BTDToolbox
         private void AddNewJet()
         {
             string path = BrowseForFile("Browse for an existing .jet file", "jet", "Jet files (*.jet)|*.jet|All files (*.*)|*.*", "");
-            if(path != null && path != "")
+            if (path != null && path != "")
             {
                 if (path.Contains(".jet"))
                 {
@@ -240,7 +236,7 @@ namespace BTDToolbox
                 }
             }
         }
-        
+
         //
         //
         //Mdi Stuff
@@ -260,7 +256,7 @@ namespace BTDToolbox
             base.WndProc(ref m);
         }
         MdiClient mdiClient = null;
-        private void TD_Toolbox_Window_Resize(object sender, EventArgs e)
+        private void Main_Resize(object sender, EventArgs e)
         {
             this.Refresh();
         }
@@ -286,7 +282,7 @@ namespace BTDToolbox
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
-            if(ConsoleHandler.validateConsole())
+            if (ConsoleHandler.validateConsole())
             {
                 if (ConsoleHandler.console.Visible)
                     ConsoleHandler.console.Hide();
@@ -334,6 +330,7 @@ namespace BTDToolbox
         {
             if (isGamePathValid(gameName) == false)
             {
+                ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
                 browseForExe(gameName);
                 if (isGamePathValid(gameName) == false)
                 {
@@ -450,17 +447,17 @@ namespace BTDToolbox
             RestoreGame_ToBackup("BTDB");
         }
 
-        private void TD_Toolbox_Window_FormClosed(object sender, FormClosedEventArgs e)
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
 
-        private void TD_Toolbox_Window_Shown(object sender, EventArgs e)
+        private void Main_Shown(object sender, EventArgs e)
         {
-            
+
             ConsoleHandler.appendLog("Program loaded!");
 
-            
+
 
             if (enableConsole == true)
                 ConsoleHandler.console.Show();
@@ -485,6 +482,19 @@ namespace BTDToolbox
         {
             ConsoleHandler.appendLog("Opening BTD Font maker...");
             Process.Start("https://fontmeme.com/bloons-td-battles-font/");
+        }
+
+        private void CheckForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            update = new CheckForUpdates();
+            update.checkForUpdate();
+        }
+
+        private void ReinstallBTDToolboxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            update = new CheckForUpdates();
+            update.reinstall = true;
+            update.checkForUpdate();
         }
     }
 }

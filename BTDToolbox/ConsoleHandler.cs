@@ -4,7 +4,7 @@ namespace BTDToolbox
 {
     class ConsoleHandler
     {
-        public static NewConsole console;
+        public static Console console;
 
         public static void appendLog(String log)
         {
@@ -14,7 +14,7 @@ namespace BTDToolbox
         }
         public static bool validateConsole()
         {
-            if (NewConsole.getInstance() == null)
+            if (Console.getInstance() == null)
             {
                 return false;
             }

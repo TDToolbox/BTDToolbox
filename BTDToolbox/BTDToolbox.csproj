@@ -67,12 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckForUpdates.cs" />
-    <Compile Include="Console.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Console.Designer.cs">
-      <DependentUpon>Console.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConsoleHandler.cs" />
     <Compile Include="CreditViewer.cs">
       <SubType>Form</SubType>
@@ -86,7 +80,6 @@
     <Compile Include="ExtractingJet_Window.Designer.cs">
       <DependentUpon>ExtractingJet_Window.cs</DependentUpon>
     </Compile>
-    <Compile Include="Find.cs" />
     <Compile Include="FindWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,7 +108,6 @@
     <Compile Include="SetProjectName.Designer.cs">
       <DependentUpon>SetProjectName.cs</DependentUpon>
     </Compile>
-    <Compile Include="JetCompiler.cs" />
     <Compile Include="JetProps.cs" />
     <Compile Include="JsonEditor.cs">
       <SubType>Form</SubType>
@@ -123,11 +115,11 @@
     <Compile Include="JsonEditor.Designer.cs">
       <DependentUpon>JsonEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="JetForm.cs">
       <SubType>Form</SubType>
@@ -135,11 +127,11 @@
     <Compile Include="JetForm.Designer.cs">
       <DependentUpon>JetForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewConsole.cs">
+    <Compile Include="Console.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewConsole.Designer.cs">
-      <DependentUpon>NewConsole.cs</DependentUpon>
+    <Compile Include="Console.Designer.cs">
+      <DependentUpon>Console.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectConfigs.cs" />
@@ -163,9 +155,6 @@
     <Compile Include="ThemedForm.Designer.cs">
       <DependentUpon>ThemedForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Console.resx">
-      <DependentUpon>Console.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CreditViewer.resx">
       <DependentUpon>CreditViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,15 +176,15 @@
     <EmbeddedResource Include="JsonEditor.resx">
       <DependentUpon>JsonEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JetForm.resx">
       <DependentUpon>JetForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewConsole.resx">
-      <DependentUpon>NewConsole.cs</DependentUpon>
+    <EmbeddedResource Include="Console.resx">
+      <DependentUpon>Console.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -135,7 +135,7 @@ namespace BTDToolbox
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
-                ConsoleHandler.appendLog("Creating project files...");
+                ConsoleHandler.appendLog("Creating project files for: " + fullProjName);
 
                 ZipFile archive = new ZipFile(sourcePath);
                 archive.Password = password;
@@ -147,8 +147,8 @@ namespace BTDToolbox
 
                 ConsoleHandler.appendLog("Project files created at: " + fullProjName);
                 Invoke((MethodInvoker)delegate {
-                    jf = new JetForm(dinfo, TD_Toolbox_Window.getInstance(), dinfo.Name);
-                    jf.MdiParent = TD_Toolbox_Window.getInstance();
+                    jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
+                    jf.MdiParent = Main.getInstance();
                     jf.Show();
                 });
             }
@@ -193,9 +193,10 @@ namespace BTDToolbox
                 if(password == null || password.Length <= 0)
                 {
                     var getpas = new Get_BTDB_Password();
+                    getpas.launch = launch;
                     getpas.projName = projName;
-                    getpas.Show();
                     getpas.destPath = destPath;
+                    getpas.Show();
                     this.Close();
                 }
                 else

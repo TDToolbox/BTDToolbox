@@ -21,7 +21,7 @@ namespace BTDToolbox
     {
         string livePath = Environment.CurrentDirectory;
         private DirectoryInfo dirInfo;
-        private TD_Toolbox_Window Form;
+        private Main Form;
         private string tempName;
         public string projName;
         private ContextMenuStrip selMenu;
@@ -34,7 +34,7 @@ namespace BTDToolbox
         public static int jetExplorer_SplitterWidth;
         public static string lastProject;
 
-        public JetForm(DirectoryInfo dirInfo, TD_Toolbox_Window Form, string projName)
+        public JetForm(DirectoryInfo dirInfo, Main Form, string projName)
         {
             InitializeComponent();
             StartUp();
@@ -42,24 +42,24 @@ namespace BTDToolbox
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
-            
+            Main.projName = projName;
+
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
             
             if(projName.Contains("BTD5"))
             {
-                TD_Toolbox_Window.gameName = "BTD5";
+                Main.gameName = "BTD5";
             }
             else if (projName.Contains("BTDB"))
             {
-                TD_Toolbox_Window.gameName = "BTDB";
+                Main.gameName = "BTDB";
             }
-            ConsoleHandler.appendLog("Game: " + TD_Toolbox_Window.gameName);
+            ConsoleHandler.appendLog("Game: " + Main.gameName);
             ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
             Serializer.SaveConfig(this, "game", programData);
-            
-            //Serializer.SaveConfig(this, "jet explorer", programData);
+            Serializer.SaveConfig(this, "jet explorer", programData);
         }
         private void Deserialize_Config()
         {
@@ -117,6 +117,10 @@ namespace BTDToolbox
         {
             openDirWindow();
             JetProps.increment(this);
+        }
+        private void JetForm_Shown(object sender, EventArgs e)
+        {
+            Serializer.SaveConfig(this, "jet explorer", programData);
         }
         public void openDirWindow()
         {

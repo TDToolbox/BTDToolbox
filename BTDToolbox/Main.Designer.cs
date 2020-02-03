@@ -1,6 +1,6 @@
 ﻿namespace BTDToolbox
 {
-    partial class TD_Toolbox_Window
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TD_Toolbox_Window));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.File_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.New_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +78,9 @@
             this.versionTag = new System.Windows.Forms.Label();
             this.bTDFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.reinstallBTDToolboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -163,35 +166,35 @@
             // Open_Existing_JetFile
             // 
             this.Open_Existing_JetFile.Name = "Open_Existing_JetFile";
-            this.Open_Existing_JetFile.Size = new System.Drawing.Size(167, 22);
+            this.Open_Existing_JetFile.Size = new System.Drawing.Size(180, 22);
             this.Open_Existing_JetFile.Text = "Existing .jet";
             this.Open_Existing_JetFile.Click += new System.EventHandler(this.Open_Existing_JetFile_Click);
             // 
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(167, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(180, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
             // 
             // bTD5DirectoryToolStripMenuItem
             // 
             this.bTD5DirectoryToolStripMenuItem.Name = "bTD5DirectoryToolStripMenuItem";
-            this.bTD5DirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.bTD5DirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bTD5DirectoryToolStripMenuItem.Text = "BTD5 Directory";
             this.bTD5DirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTD5DirectoryToolStripMenuItem_Click);
             // 
             // bTDBDirectoryToolStripMenuItem
             // 
             this.bTDBDirectoryToolStripMenuItem.Name = "bTDBDirectoryToolStripMenuItem";
-            this.bTDBDirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.bTDBDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bTDBDirectoryToolStripMenuItem.Text = "BTDB Directory";
             this.bTDBDirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTDBDirectoryToolStripMenuItem_Click);
             // 
             // toolboxDirectoryToolStripMenuItem
             // 
             this.toolboxDirectoryToolStripMenuItem.Name = "toolboxDirectoryToolStripMenuItem";
-            this.toolboxDirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.toolboxDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.toolboxDirectoryToolStripMenuItem.Text = "Toolbox Directory";
             this.toolboxDirectoryToolStripMenuItem.Click += new System.EventHandler(this.ToolboxDirectoryToolStripMenuItem_Click);
             // 
@@ -319,7 +322,10 @@
             this.resetUserSettingsToolStripMenuItem,
             this.toolStripSeparator2,
             this.contactUsToolStripMenuItem,
-            this.Credits});
+            this.Credits,
+            this.toolStripSeparator3,
+            this.checkForUpdatesToolStripMenuItem,
+            this.reinstallBTDToolboxToolStripMenuItem});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -474,7 +480,26 @@
             this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem4.Text = "Settings";
             // 
-            // TD_Toolbox_Window
+            // reinstallBTDToolboxToolStripMenuItem
+            // 
+            this.reinstallBTDToolboxToolStripMenuItem.Name = "reinstallBTDToolboxToolStripMenuItem";
+            this.reinstallBTDToolboxToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.reinstallBTDToolboxToolStripMenuItem.Text = "Reinstall BTD Toolbox";
+            this.reinstallBTDToolboxToolStripMenuItem.Click += new System.EventHandler(this.ReinstallBTDToolboxToolStripMenuItem_Click);
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdatesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(187, 6);
+            // 
+            // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
@@ -486,15 +511,15 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "TD_Toolbox_Window";
+            this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Toolbox - Made by DisabledMallis and Gurrenm3";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TD_Toolbox_Window_FormClosed);
-            this.Load += new System.EventHandler(this.TD_Toolbox_Window_Load);
-            this.Shown += new System.EventHandler(this.TD_Toolbox_Window_Shown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TD_Toolbox_Window_KeyDown);
-            this.Resize += new System.EventHandler(this.TD_Toolbox_Window_Resize);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
+            this.Load += new System.EventHandler(this.Main_Load);
+            this.Shown += new System.EventHandler(this.Main_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
+            this.Resize += new System.EventHandler(this.Main_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -553,6 +578,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem bTDFontsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reinstallBTDToolboxToolStripMenuItem;
     }
 }
 

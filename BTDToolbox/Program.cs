@@ -26,7 +26,7 @@ namespace BTDToolbox
             else
             {
                 enableSplash = false;
-                Application.Run(new TD_Toolbox_Window());
+                Application.Run(new Main());
             }
         }
     }

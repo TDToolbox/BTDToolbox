@@ -33,9 +33,6 @@ namespace BTDToolbox
         int minWidth = 200;
         int minHeight = 100;
 
-        int x = TD_Toolbox_Window.getInstance().Width;
-        int y = TD_Toolbox_Window.getInstance().Height;
-
         public ThemedForm()
         {
             InitializeComponent();
@@ -143,7 +140,7 @@ namespace BTDToolbox
 
         private void ThemedForm_Resize(object sender, EventArgs e)
         {
-            TD_Toolbox_Window.getInstance().Refresh();
+            Main.getInstance().Refresh();
         }
     }
 }

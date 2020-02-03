@@ -51,6 +51,7 @@ namespace BTDToolbox
         }
         private void SubmitModName()
         {
+            ConsoleHandler.appendLog("You chose the project name: " + ProjectName_TextBox.Text);
             if (gameName == "BTDB")
             {
                 var getPasss = new Get_BTDB_Password();

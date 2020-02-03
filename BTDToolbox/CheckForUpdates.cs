@@ -16,9 +16,14 @@ namespace BTDToolbox
     {
         WebClient client= new WebClient();
         public bool exitLoop { get; set; }
+        public bool reinstall { get; set; }
         public void checkForUpdate()
         {
-            ConsoleHandler.appendLog("Checking for updates...");
+
+            if (reinstall)
+                ConsoleHandler.appendLog("Reinstalling game...");
+            else
+                ConsoleHandler.appendLog("Checking for updates...");
             CheckURL();
         }
         private bool isNewUpdate(string url)
@@ -34,7 +39,7 @@ namespace BTDToolbox
 
                 string currentVersion = "";
                 int number;
-                foreach (char c in TD_Toolbox_Window.version)
+                foreach (char c in Main.version)
                 {
                     bool success = Int32.TryParse(c.ToString(), out number);
                     if (success == true)
@@ -130,7 +135,12 @@ namespace BTDToolbox
 
             if(success == true)
             {
-                if (isNewUpdate(downloadedString))
+                if (reinstall)
+                {
+                    downloadUpdater();
+                    UpdateToolbox();
+                }
+                else if (isNewUpdate(downloadedString))
                 {
                     ConsoleHandler.appendLog("There is a new update availible for BTD Toolbox! Do you want to download it?");
                     DialogResult result = MessageBox.Show("There is a new update availible for BTD Toolbox! Do you want to download it?", "Update BTD Toolbox?", MessageBoxButtons.YesNo);

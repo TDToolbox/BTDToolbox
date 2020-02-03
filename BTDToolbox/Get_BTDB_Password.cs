@@ -16,6 +16,7 @@ namespace BTDToolbox
         public string projName { get; set; }
         public string destPath { get; set; }
         public bool isExtracting { get; set; }
+        public bool launch { get; set; }
 
         public Get_BTDB_Password()
         {
@@ -27,9 +28,13 @@ namespace BTDToolbox
         {
             string password = Password_TextBox.Text.ToString();
             if (password.Length < 3)
+            {
+                ConsoleHandler.appendLog("The password you entered was too short...");
                 MessageBox.Show("The password you entered was too short...");
+            }
             else
             {
+                ConsoleHandler.appendLog("You entered the password:  " + password);
                 var zip = new ExtractingJet_Window();
                 zip.jetFile_Game = "BTDB";
                 zip.password = password;
@@ -42,6 +47,7 @@ namespace BTDToolbox
                 else
                 {
                     zip.destPath = destPath;
+                    zip.launch = launch;
                     zip.Compile();
                 }
                 this.Close();

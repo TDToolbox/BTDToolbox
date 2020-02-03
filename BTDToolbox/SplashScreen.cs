@@ -49,7 +49,7 @@ namespace BTDToolbox
         {
             tmr.Stop();
 
-            TD_Toolbox_Window mf = new TD_Toolbox_Window();
+            Main mf = new Main();
             mf.Show();
             this.Hide();
 

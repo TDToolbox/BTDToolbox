@@ -176,7 +176,7 @@ namespace BTDToolbox
 
             if (gameDir == null || gameDir == "")
             {
-                ConsoleHandler.appendLog("Invalid launch directory detected at: \r\n" + gameDir);
+                ConsoleHandler.appendLog("Unable to detect launch directory for " + game);
                 return false;
             }
             else
@@ -205,11 +205,11 @@ namespace BTDToolbox
                 exePath = gameDir + exeName;
                 ConsoleHandler.appendLog("Launching " + game + "...");
                 Process.Start(exePath);
-                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.\r\n");
+                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
             }
             else
             {
-                ConsoleHandler.appendLog("Unable to launch game... Game directory not detected...\r\n");
+                ConsoleHandler.appendLog("Unable to launch game... Game directory not detected...");
             }
 
         }
@@ -425,11 +425,11 @@ namespace BTDToolbox
                     {
                         string gameDir = exePath.Replace("\\" + exeName, "");
                         if (game == "BTD5")
-                            TD_Toolbox_Window.BTD5_Dir = gameDir;
+                            Main.BTD5_Dir = gameDir;
                         else if (game == "BTDB")
-                            TD_Toolbox_Window.BTDB_Dir = gameDir;
+                            Main.BTDB_Dir = gameDir;
 
-                        Serializer.SaveConfig(TD_Toolbox_Window.getInstance(), "directories", programData);
+                        Serializer.SaveConfig(Main.getInstance(), "directories", programData);
                     }
                     else
                     {
@@ -507,40 +507,5 @@ namespace BTDToolbox
             }
         }
 
-        //url stuff
-        public string URL { get; set; }
-        public static string GetURL(string url)
-        {
-            bool success = false;
-            WebClient client = new WebClient();
-            string downloadedString = "";
-            try
-            {
-                downloadedString = client.DownloadString(url);
-                success = true;
-            }
-            catch
-            {
-                if (success == false)
-                {
-                    for (int i = 0; i <= 100; i++)
-                    {
-                        Thread.Sleep(100);
-                        try
-                        { downloadedString = client.DownloadString(url);
-                            if (downloadedString != null && downloadedString != "")
-                            {
-                                return downloadedString;
-                            }
-                        }
-                        catch { }
-                        
-                    }
-                    return downloadedString;
-                }
-                return downloadedString;
-            }
-            return downloadedString;
-        }
     }
 }
