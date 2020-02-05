@@ -96,11 +96,11 @@
             this.invoke_textbox.Size = new System.Drawing.Size(560, 20);
             this.invoke_textbox.TabIndex = 3;
             // 
-            // NewConsole
+            // Console
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "NewConsole";
+            this.Name = "Console";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "NewConsole";
             this.titleSeperator.Panel1.ResumeLayout(false);

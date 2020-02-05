@@ -95,7 +95,7 @@
             this.Editor_TextBox.Location = new System.Drawing.Point(63, 28);
             this.Editor_TextBox.Name = "Editor_TextBox";
             this.Editor_TextBox.Size = new System.Drawing.Size(710, 375);
-            this.Editor_TextBox.TabIndex = 2;
+            this.Editor_TextBox.TabIndex = 1;
             this.Editor_TextBox.Text = "";
             this.Editor_TextBox.SelectionChanged += new System.EventHandler(this.Editor_TextBox_SelectionChanged);
             this.Editor_TextBox.VScroll += new System.EventHandler(this.Editor_TextBox_VScroll);
@@ -181,7 +181,6 @@
             // 
             // FontSize_TextBox
             // 
-            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -196,7 +195,6 @@
             // Replace_TextBox
             // 
             this.Replace_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Replace_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Replace_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Replace_TextBox.Name = "Replace_TextBox";
             this.Replace_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -243,7 +241,6 @@
             // Find_TextBox
             // 
             this.Find_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Find_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Find_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Find_TextBox.Name = "Find_TextBox";
             this.Find_TextBox.Size = new System.Drawing.Size(200, 25);

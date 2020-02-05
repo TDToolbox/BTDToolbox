@@ -1,4 +1,5 @@
-﻿using Ionic.Zip;
+﻿using BTDToolbox.Classes;
+using Ionic.Zip;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json.Linq;
 using System;
@@ -506,6 +507,15 @@ namespace BTDToolbox
                 }
             }
         }
-
+        public static void checkedForExit()
+        {
+            if (Main.exit)
+            {
+                try
+                { Environment.Exit(0); }
+                catch
+                { }
+            }
+        }
     }
 }

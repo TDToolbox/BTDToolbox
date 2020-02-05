@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTDToolbox.Classes;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -14,16 +15,16 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.3";
+        public static string version = "Alpha 0.0.4";
         private static Main toolbox;
-        private static CheckForUpdates update;
+        private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
 
 
         //Project Variables
         private Bitmap bgImg;
         Thread backupThread;
-
+        public static bool exit = false;
 
         //Config variables
         ConfigFile cfgFile;
@@ -34,7 +35,6 @@ namespace BTDToolbox
         public static string BTD5_Dir;
         public static string BTDB_Dir;
         public static bool enableConsole;
-
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
@@ -50,9 +50,6 @@ namespace BTDToolbox
         public Main()
         {
             InitializeComponent();
-
-            /*MessageBox.Show(checkForUpdates.downloadUpdater());
-            Environment.Exit(0);*/
 
             toolbox = this;
             Startup();
@@ -110,7 +107,7 @@ namespace BTDToolbox
         }
         private void ExitHandling(object sender, EventArgs e)
         {
-            update.exitLoop = true;
+            exit = true;
             if (ConsoleHandler.validateConsole())
             {
                 if (ConsoleHandler.console.Visible)
@@ -132,6 +129,15 @@ namespace BTDToolbox
 
             ConsoleHandler.console = new Console();
             ConsoleHandler.console.MdiParent = this;
+
+            if (enableConsole == true)
+                ConsoleHandler.console.Show();
+            else
+                ConsoleHandler.console.Hide();
+
+            ConsoleHandler.appendLog("Program loaded!");
+            var isUpdate = new UpdateHandler();
+            isUpdate.HandleUpdates();
         }
 
         private void mainResize(object sender, EventArgs e)
@@ -241,13 +247,17 @@ namespace BTDToolbox
         //
         //Mdi Stuff
         //
-        protected override void WndProc(ref Message m)
+
+        
+    
+         
+         protected override void WndProc(ref Message m)
         {
             if (mdiClient != null)
             {
                 try
                 {
-                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0 /*Hide the ScrollBars*/);
+                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0);// Hide the ScrollBars);
                 }
                 catch (Exception)
                 {
@@ -255,6 +265,7 @@ namespace BTDToolbox
             }
             base.WndProc(ref m);
         }
+
         MdiClient mdiClient = null;
         private void Main_Resize(object sender, EventArgs e)
         {
@@ -453,16 +464,7 @@ namespace BTDToolbox
         }
 
         private void Main_Shown(object sender, EventArgs e)
-        {
-
-            ConsoleHandler.appendLog("Program loaded!");
-
-
-
-            if (enableConsole == true)
-                ConsoleHandler.console.Show();
-            else
-                ConsoleHandler.console.Hide();
+        {            
             ConsoleHandler.appendLog("Searching for existing projects...");
             OpenJetForm();
 
@@ -473,9 +475,6 @@ namespace BTDToolbox
             foreach (Control con in Controls)
                 if (con is MdiClient)
                     mdiClient = con as MdiClient;
-
-            update = new CheckForUpdates();
-            update.checkForUpdate();
         }
 
         private void BTDFontsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -484,23 +483,53 @@ namespace BTDToolbox
             Process.Start("https://fontmeme.com/bloons-td-battles-font/");
         }
 
-        private void CheckForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UpdaterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            update = new CheckForUpdates();
-            update.checkForUpdate();
+            update = new UpdateHandler();
+            update.HandleUpdates();
         }
 
         private void ReinstallBTDToolboxToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            update = new CheckForUpdates();
+            update = new UpdateHandler();
             update.reinstall = true;
-            update.checkForUpdate();
+            update.HandleUpdates();
         }
 
         private void OpenBTDToolboxGithubToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening BTD Toolbox Github page...");
             Process.Start("https://github.com/TDToolbox/BTDToolbox-2019");
+        }
+
+        private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.Arguments = "-lineNumber:0 -url:https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Updater_launch%20parameters";
+            p.StartInfo.FileName = Environment.CurrentDirectory + "BTDToolbox_Updater.exe";
+            //p.StartInfo.FileName = @"E:\\Users\\Mrclone2\\Documents\\GitHub\\BTDToolbox 2019 Updater\\BTDToolbox-2019-Updater\\bin\\Debug\\BTDToolbox_Updater.exe";
+            //p.Start();
+            //p.WaitForExit();
+            /*string readURl = WaitFor_URL("https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Version");
+            ConsoleHandler.appendLog(readURl);*/
+        }
+
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            var tbox = new UpdateHandler();
+            tbox.HandleUpdates();
+            /*WebHandler reader = new WebHandler();
+            string readURl = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Version";
+
+            string processedUrl = reader.Return_ProcessedURL(reader.WaitFor_URL(readURl), "toolbox2019: ", 0);
+            string version = reader.Get_GitVersion(processedUrl);
+            ConsoleHandler.appendLog(version);
+            var mod = new ModLoader_Handling();
+            if(mod.ValidateManager())
+            {
+
+            }*/
+
         }
     }
 }
