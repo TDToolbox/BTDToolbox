@@ -15,6 +15,15 @@ namespace BTDToolbox.Extra_Forms
         public First_Time_Use()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.Manual;
+
+            int sizeX = 450;
+            int sizeY = 550;
+            this.Location = new Point(GeneralMethods.GetCenterScreen().X - sizeX/2 - 75, GeneralMethods.GetCenterScreen().Y - sizeY/ 2 - 125);
+            
+            this.Refresh();
+            this.Size = new Size(sizeX, sizeY);
+            
         }
     }
 }

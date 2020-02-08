@@ -646,12 +646,10 @@ namespace BTDToolbox
                 jf.MdiParent = Main.getInstance();
                 jf.Show();
 
-                int i = 0;
                 try
                 {
                     foreach (JetForm o in JetProps.get())
                     {
-                        i++;
                         if (o.projName == oldName)
                         {
                             o.Close();
@@ -664,6 +662,26 @@ namespace BTDToolbox
 
                 }
             }
+        }
+
+        private void DeleteProject_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (JetForm o in JetProps.get())
+                {
+                    if (o.projName == this.projName)
+                    {
+                        o.Close();
+                        DeleteDirectory(this.projName);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            
         }
     }
 }

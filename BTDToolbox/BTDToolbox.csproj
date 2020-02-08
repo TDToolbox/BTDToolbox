@@ -92,6 +92,9 @@
     <Compile Include="ZipForm.Designer.cs">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Extra Forms\First_Time_Use.resx">
+      <DependentUpon>First_Time_Use.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -234,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\JSON invalid_2.png" />
+    <None Include="Resources\Welcome label.png" />
     <None Include="Resources\Splash1.png" />
     <None Include="Resources\json-file_light.ico" />
     <None Include="Resources\json-file_dark.ico" />

@@ -29,7 +29,7 @@ namespace BTDToolbox
 
         //Config variables
         ConfigFile cfgFile;
-        bool firstUse = true;
+        bool existingUser = false;
         public string lastProject;
         public static string projName;
         public static string gameName;
@@ -85,11 +85,6 @@ namespace BTDToolbox
         {
             cfgFile = DeserializeConfig();
             bool existingUser = cfgFile.ExistingUser;
-            if (existingUser == false)
-            {
-                backupThread = new Thread(FirstTimeUse);
-                backupThread.Start();
-            }
 
             this.Size = new Size(cfgFile.Main_SizeX, cfgFile.Main_SizeY);
             this.StartPosition = FormStartPosition.Manual;
@@ -191,7 +186,13 @@ namespace BTDToolbox
 
         private void Main_Shown(object sender, EventArgs e)
         {
-            
+            FirstTimeUse();
+            if (existingUser == true)
+            {
+                backupThread = new Thread(FirstTimeUse);
+                backupThread.Start();
+            }
+
             ConsoleHandler.appendLog("Searching for existing projects...");
             OpenJetForm();
 

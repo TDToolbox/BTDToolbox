@@ -82,6 +82,8 @@ namespace BTDToolbox
         }
         public void Extract()
         {
+            bool rememberPass = Get_BTDB_Password.rememberPass;
+            
             if (sourcePath == null || sourcePath == "")
                 sourcePath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_Original.jet";
             if (File.Exists(sourcePath))
@@ -99,6 +101,11 @@ namespace BTDToolbox
                             var getpas = new Get_BTDB_Password();
                             getpas.projName = projName;
                             getpas.isExtracting = true;
+
+                            if (rememberPass == true)
+                                Get_BTDB_Password.rememberPass = true;
+                            else
+                                Get_BTDB_Password.rememberPass = false;
                             getpas.Show();
                         }
                         else
@@ -155,12 +162,10 @@ namespace BTDToolbox
         }
         private void Extract_OnThread()
         {
-            //destPath = Environment.CurrentDirectory + "\\" + fullProjName;
             destPath = Environment.CurrentDirectory + "\\" + projName;
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
-                //ConsoleHandler.appendLog("Creating project files for: " + fullProjName);
                 ConsoleHandler.appendLog("Creating project files for: " + projName);
 
                 ZipFile archive = new ZipFile(sourcePath);
@@ -171,7 +176,6 @@ namespace BTDToolbox
                 archive.ExtractAll(destPath);
                 archive.Dispose();
 
-                //ConsoleHandler.appendLog("Project files created at: " + fullProjName);
                 ConsoleHandler.appendLog("Project files created at: " + projName);
                 Invoke((MethodInvoker)delegate {
                     jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
@@ -184,7 +188,7 @@ namespace BTDToolbox
                 DialogResult varr = MessageBox.Show("A project with this name already exists. Do you want to replace it?", "", MessageBoxButtons.OKCancel);
                 if (varr == DialogResult.OK)
                 {
-                    MessageBox.Show("Overwriting existing project... Please close the current Jet Explorer window.");
+                    MessageBox.Show("Please close the Jet viewer for the old project...");
                     ConsoleHandler.appendLog("Deleting existing project....");
                     DeleteDirectory(dinfo.ToString());
                     ConsoleHandler.appendLog("Project Deleted. Creating new project...");

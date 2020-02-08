@@ -221,6 +221,7 @@
             this.DeleteProject_Button.Name = "DeleteProject_Button";
             this.DeleteProject_Button.Size = new System.Drawing.Size(180, 22);
             this.DeleteProject_Button.Text = "Delete Project";
+            this.DeleteProject_Button.Click += new System.EventHandler(this.DeleteProject_Button_Click);
             // 
             // toolStripDropDownButton2
             // 

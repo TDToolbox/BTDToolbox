@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -516,6 +517,15 @@ namespace BTDToolbox
                 catch
                 { }
             }
+        }
+        public static Point GetCenterScreen()
+        {
+            Rectangle resolution = Screen.PrimaryScreen.Bounds;
+            int x = resolution.Width / 2;
+            int y = resolution.Height / 2;
+
+            Point p = new Point(x, y);
+            return p;
         }
     }
 }

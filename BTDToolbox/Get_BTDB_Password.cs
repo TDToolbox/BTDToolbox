@@ -13,6 +13,7 @@ namespace BTDToolbox
     public partial class Get_BTDB_Password : Form
     {
         //new refactoring variables
+        public static bool rememberPass;
         public string projName { get; set; }
         public string destPath { get; set; }
         public bool isExtracting { get; set; }
@@ -22,7 +23,11 @@ namespace BTDToolbox
         {
             InitializeComponent();
             this.AcceptButton = CreateProject_Button;
-            
+            if (rememberPass == true)
+                Dont_Ask_Again_Checkbox.Checked = true;
+            else
+                Dont_Ask_Again_Checkbox.Checked = false;
+
         }
         public void GetPass()
         {
@@ -43,11 +48,13 @@ namespace BTDToolbox
 
                 if (Dont_Ask_Again_Checkbox.Checked)
                 {
+                    rememberPass = true;
                     ConsoleHandler.appendLog("Program will remember your password for the rest of this session.");
                     ZipForm.rememberedPassword = Password_TextBox.Text;
                 }
                 else
                 {
+                    rememberPass = false;
                     ZipForm.rememberedPassword = "";
                 }
                 if (isExtracting == true)
