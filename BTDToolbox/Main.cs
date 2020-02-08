@@ -148,7 +148,6 @@ namespace BTDToolbox
         {
             if (programData.recentUpdate == true)
             {
-                UpdateChangelog.recentUpdate = false;
                 var changelog = new UpdateChangelog();
                 changelog.MdiParent = this;
                 changelog.Show();
@@ -525,7 +524,7 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showUpdateChangelog();
+
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)

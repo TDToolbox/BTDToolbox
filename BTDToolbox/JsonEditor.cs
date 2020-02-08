@@ -67,7 +67,8 @@ namespace BTDToolbox
 
             try
             {
-                JToken jt = JToken.Parse(unformattedText);
+                JToken jt = JToken.Parse(unformattedText);    
+                
                 formattedText = jt.ToString(Formatting.Indented);
                 Editor_TextBox.Text = formattedText;
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
