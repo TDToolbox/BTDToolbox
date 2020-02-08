@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BTDToolbox.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,6 +45,16 @@ namespace BTDToolbox
             this.Font = new Font("Consolas", fontSize);
         }
 
+        public void GetAnnouncement()
+        {
+            WebHandler web = new WebHandler();
+            string url = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/toolbox%20announcements";
+            string answer = web.WaitOn_URL(url);
+            output_log.SelectionColor = Color.OrangeRed;
+
+            appendLog("Announcement: " + answer);
+        }
+
         public override void close_button_Click(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "console", programData);
@@ -56,12 +67,16 @@ namespace BTDToolbox
             {
                 try
                 {
-                    console_log.Invoke(new Action(() => console_log.AppendText(">> " + log + "\r\n")));
+                    Invoke((MethodInvoker)delegate {
+                        output_log.AppendText(">> " + log + "\r\n");
+                        output_log.ScrollToCaret();
+                    });
+
                     lastMessage = log;
                 }
                 catch(Exception)
                 {
-                    Environment.Exit(0);
+                   Environment.Exit(0);
                 }
                 
             }

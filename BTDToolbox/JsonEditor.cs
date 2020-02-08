@@ -56,6 +56,12 @@ namespace BTDToolbox
             this.toolStripSeparator2.Visible = false;
             this.Replace_TextBox.Visible = false;
             this.ReplaceDropDown.Visible = false;
+
+            //tabstops
+            this.tB_line.TabStop = false;
+            this.lintPanel.TabStop = false;
+            this.Find_TextBox.AcceptsTab = false;
+            this.Editor_TextBox.TabStop = true;
             string formattedText = "";
             string unformattedText = File.ReadAllText(Path);
 

@@ -43,6 +43,7 @@ namespace BTDToolbox
             this.Form = Form;
             this.projName = projName;
             Main.projName = projName;
+            this.DoubleBuffered = true;
 
             initMultiContextMenu();
             initSelContextMenu();

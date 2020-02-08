@@ -50,7 +50,7 @@ namespace BTDToolbox
         public Main()
         {
             InitializeComponent();
-
+            
             toolbox = this;
             Startup();
 
@@ -61,6 +61,10 @@ namespace BTDToolbox
 
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
+            this.DoubleBuffered = true;
+            
+
+
 
             Random rand = new Random();
             switch (rand.Next(0, 2))
@@ -136,6 +140,7 @@ namespace BTDToolbox
                 ConsoleHandler.console.Hide();
 
             ConsoleHandler.appendLog("Program loaded!");
+            ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
             isUpdate.HandleUpdates();
         }
@@ -504,32 +509,13 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.Arguments = "-lineNumber:0 -url:https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Updater_launch%20parameters";
-            p.StartInfo.FileName = Environment.CurrentDirectory + "BTDToolbox_Updater.exe";
-            //p.StartInfo.FileName = @"E:\\Users\\Mrclone2\\Documents\\GitHub\\BTDToolbox 2019 Updater\\BTDToolbox-2019-Updater\\bin\\Debug\\BTDToolbox_Updater.exe";
-            //p.Start();
-            //p.WaitForExit();
-            /*string readURl = WaitFor_URL("https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Version");
-            ConsoleHandler.appendLog(readURl);*/
+            
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            var tbox = new UpdateHandler();
-            tbox.HandleUpdates();
-            /*WebHandler reader = new WebHandler();
-            string readURl = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Version";
-
-            string processedUrl = reader.Return_ProcessedURL(reader.WaitFor_URL(readURl), "toolbox2019: ", 0);
-            string version = reader.Get_GitVersion(processedUrl);
-            ConsoleHandler.appendLog(version);
-            var mod = new ModLoader_Handling();
-            if(mod.ValidateManager())
-            {
-
-            }*/
-
+            var modMM = new ModLoader_Handling();
+            modMM.Handle_ModLoader();
         }
     }
 }

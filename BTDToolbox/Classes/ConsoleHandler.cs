@@ -10,8 +10,14 @@ namespace BTDToolbox
         {
             if (validateConsole())
                 console.appendLog(log);
-            
         }
+
+        public static void announcement()
+        {
+            if (validateConsole())
+                console.GetAnnouncement();
+        }
+
         public static bool validateConsole()
         {
             if (Console.getInstance() == null)
