@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Password_TextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.Dont_Ask_Again_Checkbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,12 +89,25 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "the version of your data.jet";
             // 
+            // Dont_Ask_Again_Checkbox
+            // 
+            this.Dont_Ask_Again_Checkbox.AutoSize = true;
+            this.Dont_Ask_Again_Checkbox.Font = new System.Drawing.Font("Yu Gothic UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dont_Ask_Again_Checkbox.ForeColor = System.Drawing.Color.Snow;
+            this.Dont_Ask_Again_Checkbox.Location = new System.Drawing.Point(97, 158);
+            this.Dont_Ask_Again_Checkbox.Name = "Dont_Ask_Again_Checkbox";
+            this.Dont_Ask_Again_Checkbox.Size = new System.Drawing.Size(139, 21);
+            this.Dont_Ask_Again_Checkbox.TabIndex = 13;
+            this.Dont_Ask_Again_Checkbox.Text = "Don\'t ask me again";
+            this.Dont_Ask_Again_Checkbox.UseVisualStyleBackColor = true;
+            // 
             // Get_BTDB_Password
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(409, 183);
+            this.ClientSize = new System.Drawing.Size(409, 191);
+            this.Controls.Add(this.Dont_Ask_Again_Checkbox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.CreateProject_Button);
             this.Controls.Add(this.label1);
@@ -118,5 +132,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox Password_TextBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox Dont_Ask_Again_Checkbox;
     }
 }

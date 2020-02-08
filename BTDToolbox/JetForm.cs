@@ -625,5 +625,45 @@ namespace BTDToolbox
                 findBox.Select();
             }
         }
+
+        private void RenameProject_Button_Click(object sender, EventArgs e)
+        {
+            var setName = new SetProjectName();
+            setName.isRenaming = true;
+            setName.Show();
+            setName.jetf = this;
+        }
+        public void RenameProject(string newProjName)    //Musts get name from SetProjectName Form first. It will call this func
+        {
+            if (!File.Exists(newProjName))
+            {
+                string oldName = projName;
+
+                CopyDirectory(oldName, newProjName);
+                DirectoryInfo dinfo = new DirectoryInfo(newProjName);
+
+                JetForm jf = new JetForm(dinfo, Main.getInstance(), newProjName);
+                jf.MdiParent = Main.getInstance();
+                jf.Show();
+
+                int i = 0;
+                try
+                {
+                    foreach (JetForm o in JetProps.get())
+                    {
+                        i++;
+                        if (o.projName == oldName)
+                        {
+                            o.Close();
+                            DeleteDirectory(oldName);
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+        }
     }
 }

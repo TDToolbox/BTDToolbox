@@ -23,7 +23,10 @@ namespace BTDToolbox
             {
                 cfg.recentUpdate = UpdateChangelog.recentUpdate;
             }
-
+            if (formName == "splash")
+            {
+                cfg.enableSplash = Program.enableSplash;
+            }
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
@@ -35,10 +38,7 @@ namespace BTDToolbox
         {
             var cfg = Serializer.Deserialize_Config();
 
-            if (formName == "splash")
-            {
-                cfg.enableSplash = Program.enableSplash;
-            }
+            
 
             if (formName == "game")
             {

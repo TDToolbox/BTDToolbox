@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Extra_Forms;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -107,7 +108,9 @@ namespace BTDToolbox
         }
         private void FirstTimeUse()
         {
-            MessageBox.Show("Welcome to BTD Toolbox! This is a place holder. IF you are using Toolbox version 0.0.4 or higher and seeing this message, please contact staff, cuz we need to add a welcome screen already :)");
+            var firstUser = new First_Time_Use();
+            firstUser.MdiParent = this;
+            firstUser.Show();
         }
         private void ExitHandling(object sender, EventArgs e)
         {
@@ -531,6 +534,13 @@ namespace BTDToolbox
         {
             var modMM = new ModLoader_Handling();
             modMM.Handle_ModLoader();
+        }
+
+        private void OpenSettings_Button_Click(object sender, EventArgs e)
+        {
+            var settings = new SettingsWindow();
+            settings.MdiParent = this;
+            settings.Show();
         }
     }
 }

@@ -40,6 +40,16 @@ namespace BTDToolbox
                 zip.password = password;
                 zip.projName = projName;                
                 zip.Show();
+
+                if (Dont_Ask_Again_Checkbox.Checked)
+                {
+                    ConsoleHandler.appendLog("Program will remember your password for the rest of this session.");
+                    ZipForm.rememberedPassword = Password_TextBox.Text;
+                }
+                else
+                {
+                    ZipForm.rememberedPassword = "";
+                }
                 if (isExtracting == true)
                 {
                     zip.Extract();

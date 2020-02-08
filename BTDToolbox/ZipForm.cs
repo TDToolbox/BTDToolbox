@@ -26,6 +26,7 @@ namespace BTDToolbox
         //zip variables
         public static int totalFiles = 0;
         public int filesTransfered = 0;
+        public static string rememberedPassword = "";
 
         //Config variables
         ConfigFile programData;
@@ -38,7 +39,7 @@ namespace BTDToolbox
 
         //other variables
         public string projectName_Identifier = "";
-        public string fullProjName = "";
+        //public string fullProjName = "";
         public string jetFile_Game { get; set; }
         public string sourcePath { get; set; }
         public string destPath { get; set; }
@@ -77,7 +78,6 @@ namespace BTDToolbox
             }
             gameName = std;
             steamJetPath = gameDir + "\\Assets\\" + jetName;
-            projectName_Identifier = "\\proj_" + gameName + "_";
             ValidateEXE(gameName);
         }
         public void Extract()
@@ -86,15 +86,6 @@ namespace BTDToolbox
                 sourcePath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_Original.jet";
             if (File.Exists(sourcePath))
             {
-                Random rand = new Random();
-
-                if (projName == null || projName == "")
-                {
-                    int randName = rand.Next(1, 99999999);
-                    projName = randName.ToString();
-                }
-                fullProjName = projectName_Identifier + projName;
-
                 //check password
                 if (File.Exists(sourcePath) && gameName == "BTDB")
                 {
@@ -111,11 +102,17 @@ namespace BTDToolbox
                             getpas.Show();
                         }
                         else
+                        {
                             this.Close();
+                        }
                     }
                     else
                     {
                         this.Show();
+                        if(rememberedPassword != null && rememberedPassword != "")
+                        {
+                            password = rememberedPassword;
+                        }
                         backgroundThread = new Thread(Extract_OnThread);
                         backgroundThread.Start();
                     }
@@ -127,15 +124,44 @@ namespace BTDToolbox
                 }
             }
             else
-                ConsoleHandler.appendLog("Failed to find file to extract");
+            {
+                ConsoleHandler.appendLog("ERROR!!! Failed to find file to extract");
+                if(isGamePathValid(gameName))
+                {
+                    ConsoleHandler.appendLog("Generating new backup...");
+                    CreateBackup(gameName);
+                    ConsoleHandler.appendLog("Creating project from backup...");
+                    backgroundThread = new Thread(Extract_OnThread);
+                    backgroundThread.Start();
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("ERROR!!! Failed to validate game path. Please browse for " + Get_EXE_Name(gameName));
+                    browseForExe(gameName);
+                    if(isGamePathValid(gameName))
+                    {
+                        this.Show();
+                        backgroundThread = new Thread(Extract_OnThread);
+                        backgroundThread.Start();
+                    }
+                    else
+                    {
+                        ConsoleHandler.appendLog("There was an issue... Please try again...");
+                        this.Close();
+                    }
+                }
+                
+            }
         }
         private void Extract_OnThread()
         {
-            destPath = Environment.CurrentDirectory + "\\" + fullProjName;
+            //destPath = Environment.CurrentDirectory + "\\" + fullProjName;
+            destPath = Environment.CurrentDirectory + "\\" + projName;
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
-                ConsoleHandler.appendLog("Creating project files for: " + fullProjName);
+                //ConsoleHandler.appendLog("Creating project files for: " + fullProjName);
+                ConsoleHandler.appendLog("Creating project files for: " + projName);
 
                 ZipFile archive = new ZipFile(sourcePath);
                 archive.Password = password;
@@ -145,7 +171,8 @@ namespace BTDToolbox
                 archive.ExtractAll(destPath);
                 archive.Dispose();
 
-                ConsoleHandler.appendLog("Project files created at: " + fullProjName);
+                //ConsoleHandler.appendLog("Project files created at: " + fullProjName);
+                ConsoleHandler.appendLog("Project files created at: " + projName);
                 Invoke((MethodInvoker)delegate {
                     jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
                     jf.MdiParent = Main.getInstance();
@@ -190,6 +217,11 @@ namespace BTDToolbox
         {
             if (gameName == "BTDB")
             {
+                if (rememberedPassword != null && rememberedPassword != "")
+                {
+                    password = rememberedPassword;
+                }
+
                 if (password == null || password.Length <= 0)
                 {
                     var getpas = new Get_BTDB_Password();
@@ -201,6 +233,7 @@ namespace BTDToolbox
                 }
                 else
                 {
+
                     backgroundThread = new Thread(Compile_OnThread);
                     backgroundThread.Start();
                 }
