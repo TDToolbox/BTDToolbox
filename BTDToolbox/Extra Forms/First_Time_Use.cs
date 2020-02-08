@@ -25,5 +25,10 @@ namespace BTDToolbox.Extra_Forms
             this.Size = new Size(sizeX, sizeY);
             
         }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
