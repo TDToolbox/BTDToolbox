@@ -12,6 +12,7 @@ namespace BTDToolbox
         {
             //splash screen
             public bool enableSplash { get; set; }
+            public bool recentUpdate { get; set; }
 
 
             //Project wide variables

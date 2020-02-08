@@ -10,6 +10,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BTDToolbox.ProjectConfig;
+using static BTDToolbox.GeneralMethods;
+
 
 namespace BTDToolbox
 {
@@ -17,7 +20,8 @@ namespace BTDToolbox
     {
         WebClient client= new WebClient();
         WebHandler reader;
-        
+        ConfigFile programData;
+
         public bool reinstall { get; set; }
         string toolbox_updater_zipName = "BTDToolbox_Updater.zip";
         string gitURL = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Version";
@@ -96,11 +100,19 @@ namespace BTDToolbox
         {
             ConsoleHandler.appendLog("Toolbox needs to close in order to update..");
             MessageBox.Show("Closing Toolbox to continue update...");
+
+            //save config real quick
+            UpdateChangelog.recentUpdate = true;
+            programData = DeserializeConfig();
+            Serializer.SaveSmallSettings("updater", programData);
+
             Process p = new Process();
             p.StartInfo.Arguments = "-lineNumber:0 -url:https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Updater_launch%20parameters";
             //p.StartInfo.Arguments = "-fileName:BTD_Toolbox -processName:BTDToolbox -exeName:BTDToolbox.exe -updateZip_Name:BTDToolbox_Updater.zip -ignoreFiles:BTDToolbox_Updater,Backups,DotNetZip,.json -deleteFiles:BTDToolbox_Updater.zip,Update -url:https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Version -replaceText:toolbox2019: -lineNumber:0";
             p.StartInfo.FileName = Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe";
             p.Start();
+
+            
         }
     }
 }

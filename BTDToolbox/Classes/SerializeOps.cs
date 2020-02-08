@@ -15,6 +15,22 @@ namespace BTDToolbox
 {
     public class Serializer
     {
+        public static void SaveSmallSettings(string formName, ConfigFile serialize_config)
+        {
+            var cfg = Serializer.Deserialize_Config();
+
+            if (formName == "updater")
+            {
+                cfg.recentUpdate = UpdateChangelog.recentUpdate;
+            }
+
+            string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
+
+            StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
+            serialize.Write(output_Cfg);
+            serialize.Close();
+        }
+
         public static void SaveConfig(Form frm, string formName, ConfigFile serialize_config)
         {
             var cfg = Serializer.Deserialize_Config();
@@ -87,6 +103,11 @@ namespace BTDToolbox
                 cfg.JSON_Editor_FontSize = JsonEditor.jsonEditorFont;//frm.Font.Size;
             }
 
+            if (formName == "updater")
+            {
+                cfg.recentUpdate = UpdateChangelog.recentUpdate;
+            }
+
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
@@ -109,6 +130,7 @@ namespace BTDToolbox
                     //create config
 
                     programData.enableSplash = true;
+                    programData.recentUpdate = false;
                     
                     programData.BTD5_Directory = "";
                     programData.BTDB_Directory = "";

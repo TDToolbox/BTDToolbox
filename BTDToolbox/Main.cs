@@ -142,7 +142,20 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("Program loaded!");
             ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();
+            isUpdate.HandleUpdates();            
+        }
+        private void showUpdateChangelog()
+        {
+            if (programData.recentUpdate == true)
+            {
+                UpdateChangelog.recentUpdate = false;
+                var changelog = new UpdateChangelog();
+                changelog.MdiParent = this;
+                changelog.Show();
+
+                UpdateChangelog.recentUpdate = false;
+                Serializer.SaveSmallSettings("updater", cfgFile);
+            }
         }
 
         private void mainResize(object sender, EventArgs e)
@@ -169,7 +182,27 @@ namespace BTDToolbox
                 CompileJet("output");
             }
         }
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
 
+        private void Main_Shown(object sender, EventArgs e)
+        {
+            
+            ConsoleHandler.appendLog("Searching for existing projects...");
+            OpenJetForm();
+
+            string msg = "";
+            if (JetProps.getForm(0) == null)
+                ConsoleHandler.appendLog("No projects detected.");
+
+            foreach (Control con in Controls)
+                if (con is MdiClient)
+                    mdiClient = con as MdiClient;
+
+            showUpdateChangelog();
+        }
         //
         //
         //Open or Create Projects
@@ -256,7 +289,7 @@ namespace BTDToolbox
         
     
          
-         protected override void WndProc(ref Message m)
+        protected override void WndProc(ref Message m)
         {
             if (mdiClient != null)
             {
@@ -463,24 +496,7 @@ namespace BTDToolbox
             RestoreGame_ToBackup("BTDB");
         }
 
-        private void Main_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void Main_Shown(object sender, EventArgs e)
-        {            
-            ConsoleHandler.appendLog("Searching for existing projects...");
-            OpenJetForm();
-
-            string msg = "";
-            if (JetProps.getForm(0) == null)
-                ConsoleHandler.appendLog("No projects detected.");
-
-            foreach (Control con in Controls)
-                if (con is MdiClient)
-                    mdiClient = con as MdiClient;
-        }
+        
 
         private void BTDFontsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -509,7 +525,7 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            showUpdateChangelog();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)

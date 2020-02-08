@@ -74,12 +74,21 @@
     <Compile Include="Extra Forms\CreditViewer.Designer.cs">
       <DependentUpon>CreditViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extra Forms\UpdateChangelog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\UpdateChangelog.Designer.cs">
+      <DependentUpon>UpdateChangelog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ZipForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ZipForm.Designer.cs">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Extra Forms\UpdateChangelog.resx">
+      <DependentUpon>UpdateChangelog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ZipForm.resx">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </EmbeddedResource>
