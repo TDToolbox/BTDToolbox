@@ -16,7 +16,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.4";
+        public static string version = "Alpha 0.0.5";
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
@@ -204,8 +204,6 @@ namespace BTDToolbox
             if (existingUser == false)
             {
                 FirstTimeUse();
-                /*backupThread = new Thread(FirstTimeUse);
-                backupThread.Start();*/
             }
         }
         //

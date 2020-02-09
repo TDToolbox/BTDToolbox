@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BTDToolbox.Classes
 {
@@ -22,17 +23,26 @@ namespace BTDToolbox.Classes
             {
                 if (File.Exists(file))
                 {
-                    modLoader_Path = file;
-                    return true;                    
+                    if (file.Contains(".zip"))
+                    {
+                        File.Delete(file);
+                    }
+                    else if (file.Contains(".exe"))
+                    {
+                        loaderExists = true;
+                        modLoader_Path = file;
+                    }      
                 }
             }
 
             if (loaderExists == false)
             {
                 return false;
-                
             }
-            return false;
+            else
+            {
+                return true;
+            }
         }
 
         public void DeleteManager()
