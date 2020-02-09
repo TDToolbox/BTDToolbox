@@ -39,8 +39,25 @@ namespace BTDToolbox
         {
             Deserialize_Config();
 
-            this.Size = new Size(programData.Console_SizeX, programData.Console_SizeY);
-            this.Location = new Point(programData.Console_PosX, programData.Console_PosY);
+            int i = 0;
+            if (programData.ExistingUser == false)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                Rectangle resolution = Screen.PrimaryScreen.Bounds;
+
+                int x = resolution.Width;
+                int y = resolution.Height;
+                int sizeX = x / 2;
+                int sizeY = y / 5;
+
+                this.Size = new Size(sizeX, sizeY);
+                this.Location = new Point(x - sizeX, y - this.Height - 90);
+            }
+            else
+            {
+                this.Size = new Size(programData.Console_SizeX, programData.Console_SizeY);
+                this.Location = new Point(programData.Console_PosX, programData.Console_PosY);
+            }
             fontSize = programData.Console_FontSize;
             this.Font = new Font("Consolas", fontSize);
         }

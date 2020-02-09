@@ -7,11 +7,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace BTDToolbox.Classes
 {
-    class ModLoader_Handling
+    class NKHook_Handling
     {
         string modloader_zipName = "BTDMod Loader.zip";
         string modLoader_Path = "";
@@ -31,7 +30,7 @@ namespace BTDToolbox.Classes
                     {
                         loaderExists = true;
                         modLoader_Path = file;
-                    }      
+                    }
                 }
             }
 
@@ -46,7 +45,7 @@ namespace BTDToolbox.Classes
         }
         public void Handle_ModLoader()
         {
-            if(ValidateManager())
+            if (ValidateManager())
             {
                 ConsoleHandler.appendLog("Launching mod loader...");
                 Process.Start(modLoader_Path);
@@ -56,7 +55,7 @@ namespace BTDToolbox.Classes
                 ConsoleHandler.appendLog("Mod loader not found! Downloading mod loader...");
                 Download_ModLoader();
                 Extract_ModLoader();
-                if(ValidateManager())
+                if (ValidateManager())
                 {
                     ConsoleHandler.appendLog("Launching mod loader...");
                     Process.Start(modLoader_Path);
@@ -68,8 +67,8 @@ namespace BTDToolbox.Classes
             WebHandler web = new WebHandler();
             WebClient client = new WebClient();
             string url = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Version";
-            
-            
+
+
             string gitText = web.WaitOn_URL(url);
             string downloadURL = web.processGit_Text(gitText, "modloader: ", 2);
             client.DownloadFile(downloadURL, "Update");

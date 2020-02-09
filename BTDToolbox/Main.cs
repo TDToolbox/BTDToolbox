@@ -543,5 +543,10 @@ namespace BTDToolbox
             settings.MdiParent = this;
             settings.Show();
         }
+
+        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

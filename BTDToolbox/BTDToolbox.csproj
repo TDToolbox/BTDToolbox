@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Classes\Announcements.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
+    <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
     <Compile Include="Classes\WebHandler.cs" />
