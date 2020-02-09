@@ -378,6 +378,7 @@ namespace BTDToolbox.Extra_Forms
                 unformattedText = InputScript_Textbox.Text;
                 formattedText = FormatText(unformattedText);
                 Editor_TextBox.Text = formattedText;
+                NumOfRounds_Label.Text = "Num of rounds: " + Count("new RoundDef()", Editor_TextBox.Text);
             }
         }
         private string FormatText(string unformattedText)
