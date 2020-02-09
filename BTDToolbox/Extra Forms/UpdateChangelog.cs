@@ -18,10 +18,14 @@ namespace BTDToolbox
         public UpdateChangelog()
         {
             InitializeComponent();
-
+            
             WebClient client = new WebClient();
             string credText = client.DownloadString("https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/toolbox%20update%20changelog");
             string[] split = credText.Split('\n');
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(GeneralMethods.GetCenterScreen().X - (this.Width / 2), GeneralMethods.GetCenterScreen().Y - (this.Height / 2) - 145);
+
 
             int y = -10;
             foreach (string line in split)

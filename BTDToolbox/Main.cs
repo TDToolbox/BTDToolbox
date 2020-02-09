@@ -138,9 +138,12 @@ namespace BTDToolbox
                 ConsoleHandler.console.Hide();
 
             ConsoleHandler.appendLog("Program loaded!");
+            if (programData.recentUpdate == true)
+                ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
+
             ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();            
+            isUpdate.HandleUpdates();   
         }
         private void showUpdateChangelog()
         {
@@ -186,12 +189,9 @@ namespace BTDToolbox
 
         private void Main_Shown(object sender, EventArgs e)
         {
-            
-
             ConsoleHandler.appendLog("Searching for existing projects...");
             OpenJetForm();
 
-            string msg = "";
             if (JetProps.getForm(0) == null)
                 ConsoleHandler.appendLog("No projects detected.");
 
@@ -199,12 +199,11 @@ namespace BTDToolbox
                 if (con is MdiClient)
                     mdiClient = con as MdiClient;
 
-            
-            showUpdateChangelog();
             if (existingUser == false)
             {
                 FirstTimeUse();
             }
+            showUpdateChangelog();
         }
         //
         //
