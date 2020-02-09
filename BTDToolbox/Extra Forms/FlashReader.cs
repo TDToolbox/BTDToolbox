@@ -482,5 +482,50 @@ namespace BTDToolbox.Extra_Forms
 
             return unformattedText;
         }
+
+        private void CompileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (unformattedText.Length == 0)
+                ConsoleHandler.appendLog("You need to input code before you can compile it...");
+            else
+            {
+                unformattedText = CompileText(Editor_TextBox.Text);
+                Clipboard.SetText(unformattedText);
+                ConsoleHandler.appendLog("Copied code to clipboard");
+            }
+        }
+
+        private void Calc_NumOfRounds_button_Click(object sender, EventArgs e)
+        {
+            if (Editor_TextBox.TextLength > 0)
+            {
+                NumOfRounds_Label.Text = "Num of rounds: " + Count("new RoundDef()", Editor_TextBox.Text);
+            }
+            else
+                ConsoleHandler.appendLog("You need to input code before you can calculate the number of rounds...");
+        }
+
+        private int Count(string searchTerm, string inputText)
+        {
+            string[] a = inputText.Split('.');
+
+            // search for pattern in string 
+            int count = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if(a[i].Contains(searchTerm))
+                    count++;
+            }
+            return count;
+        }
+
+        private void BloonTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Console.getInstance().Visible == false)
+            {
+                Console.getInstance().Visible = true;
+            }
+            ConsoleHandler.appendLog("BLOON TYPES:\n>> Red:  0\n>> Blue:  1\n>> Green:  2\n>> Yellow:  3\n>> Pink:  4\n>> Black:  5\n>> White:  6\n>> Lead:  7\n>> Zebra:  8\n>> Rainbow:  9\n>> Ceramic:  10\n>> MOAB:  11\n>> BFB:  12\n>> ZOMG:  13");
+        }
     }
 }
