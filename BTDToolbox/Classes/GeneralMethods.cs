@@ -420,6 +420,8 @@ namespace BTDToolbox
 
             if (exeName != null && exeName != "")
             {
+                MessageBox.Show("Please browse for " + exeName + ".\n\nMake sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup");
+                ConsoleHandler.appendLog("Make sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup..");
                 string exePath = BrowseForFile("Open game exe", "exe", "Exe files (*.exe)|*.exe|All files (*.*)|*.*", "");
                 if (exePath != null && exePath != "")
                 {
