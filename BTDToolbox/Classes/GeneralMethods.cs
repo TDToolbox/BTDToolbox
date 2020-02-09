@@ -529,5 +529,14 @@ namespace BTDToolbox
             Point p = new Point(x, y);
             return p;
         }
+        public static string GetOS_Type()   //x64 or x32?
+        {
+            bool is64Bit = Environment.Is64BitOperatingSystem;
+
+            if (is64Bit == true)
+                return "64";
+            else
+                return "32";
+        }
     }
 }

@@ -429,31 +429,6 @@ namespace BTDToolbox
             /*var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
             editor.Show();*/
         }
-        private void BTD5DirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (isGamePathValid("BTD5"))
-            {
-                ConsoleHandler.appendLog("Opening BTD5 Directory");
-                Process.Start(DeserializeConfig().BTD5_Directory);
-            }
-            else
-                ConsoleHandler.appendLog("Could not find your BTD5 directory");
-        }
-        private void BTDBDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (isGamePathValid("BTDB"))
-            {
-                ConsoleHandler.appendLog("Opening BTD Battles Directory");
-                Process.Start(DeserializeConfig().BTDB_Directory);
-            }
-            else
-                ConsoleHandler.appendLog("Could not find your BTDB directory");
-        }
-        private void ToolboxDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
-            Process.Start(Environment.CurrentDirectory);
-        }
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string g = "BTD5";
@@ -553,6 +528,67 @@ namespace BTDToolbox
             var flashReader = new FlashReader();
             flashReader.MdiParent = this;
             flashReader.Show();
+        }
+
+        private void GetBTDBPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+            var getPass = new CrackBTDB_Pass();
+            getPass.Get_BTDB_Password();
+            //getPass.DownloadTools();
+        }
+
+        private void BTD5DirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (isGamePathValid("BTD5"))
+            {
+                ConsoleHandler.appendLog("Opening BTD5 Directory");
+                Process.Start(DeserializeConfig().BTD5_Directory);
+            }
+            else
+            {
+                ConsoleHandler.appendLog("Could not find your BTD5 directory");
+                browseForExe("BTD5");
+                if(isGamePathValid("BTD5"))
+                {
+                    ConsoleHandler.appendLog("Opening BTD5 Directory");
+                    Process.Start(DeserializeConfig().BTD5_Directory);
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Something went wrong...");
+                }
+            }
+        }
+
+        private void BTDBDirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (isGamePathValid("BTDB"))
+            {
+                ConsoleHandler.appendLog("Opening BTD Battles Directory");
+                Process.Start(DeserializeConfig().BTDB_Directory);
+            }
+            else
+            {
+                ConsoleHandler.appendLog("Could not find your BTDB directory");
+                browseForExe("BTDB");
+                if (isGamePathValid("BTDB"))
+                {
+                    ConsoleHandler.appendLog("Opening BTDB Directory");
+                    Process.Start(DeserializeConfig().BTDB_Directory);
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Something went wrong...");
+                }
+            }
+        }
+
+        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
+            Process.Start(Environment.CurrentDirectory);
         }
     }
 }
