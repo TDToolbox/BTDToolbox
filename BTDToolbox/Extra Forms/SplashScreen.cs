@@ -48,11 +48,9 @@ namespace BTDToolbox
 
         {
             tmr.Stop();
-
+            this.Hide();
             Main mf = new Main();
             mf.Show();
-            this.Hide();
-
         }
         protected override void WndProc(ref Message m)
         {

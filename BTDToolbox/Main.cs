@@ -547,5 +547,12 @@ namespace BTDToolbox
         {
 
         }
+
+        private void FlashReader_Click(object sender, EventArgs e)
+        {
+            var flashReader = new FlashReader();
+            flashReader.MdiParent = this;
+            flashReader.Show();
+        }
     }
 }
