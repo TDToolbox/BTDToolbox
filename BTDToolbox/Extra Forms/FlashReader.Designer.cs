@@ -207,8 +207,8 @@
             // Calc_NumOfRounds_button
             // 
             this.Calc_NumOfRounds_button.Name = "Calc_NumOfRounds_button";
-            this.Calc_NumOfRounds_button.Size = new System.Drawing.Size(180, 22);
-            this.Calc_NumOfRounds_button.Text = "Recalculate rounds";
+            this.Calc_NumOfRounds_button.Size = new System.Drawing.Size(202, 22);
+            this.Calc_NumOfRounds_button.Text = "Recalculate round nums";
             this.Calc_NumOfRounds_button.Click += new System.EventHandler(this.Calc_NumOfRounds_button_Click);
             // 
             // Edit_DropDown
