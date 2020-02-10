@@ -1,9 +1,11 @@
-﻿using Ionic.Zip;
+﻿using BTDToolbox.Classes;
+using Ionic.Zip;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -418,6 +420,8 @@ namespace BTDToolbox
 
             if (exeName != null && exeName != "")
             {
+                MessageBox.Show("Please browse for " + exeName + ".\n\nMake sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup");
+                ConsoleHandler.appendLog("Make sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup..");
                 string exePath = BrowseForFile("Open game exe", "exe", "Exe files (*.exe)|*.exe|All files (*.*)|*.*", "");
                 if (exePath != null && exePath != "")
                 {
@@ -506,6 +510,33 @@ namespace BTDToolbox
                 }
             }
         }
+        public static void checkedForExit()
+        {
+            if (Main.exit)
+            {
+                try
+                { Environment.Exit(0); }
+                catch
+                { }
+            }
+        }
+        public static Point GetCenterScreen()
+        {
+            Rectangle resolution = Screen.PrimaryScreen.Bounds;
+            int x = resolution.Width / 2;
+            int y = resolution.Height / 2;
 
+            Point p = new Point(x, y);
+            return p;
+        }
+        public static string GetOS_Type()   //x64 or x32?
+        {
+            bool is64Bit = Environment.Is64BitOperatingSystem;
+
+            if (is64Bit == true)
+                return "64";
+            else
+                return "32";
+        }
     }
 }

@@ -36,12 +36,9 @@
     <Reference Include="DotNetZip, Version=1.13.5.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.13.5\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=1.2.0.246, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
@@ -66,13 +63,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\CheckForUpdates.cs" />
+    <Compile Include="Classes\Announcements.cs" />
+    <Compile Include="Classes\CrackBTDB_Pass.cs" />
+    <Compile Include="Classes\ModLoader_Handling.cs" />
+    <Compile Include="Classes\NKHook_Handling.cs" />
+    <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
+    <Compile Include="Classes\WebHandler.cs" />
     <Compile Include="Extra Forms\CreditViewer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Extra Forms\CreditViewer.Designer.cs">
       <DependentUpon>CreditViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra Forms\First_Time_Use.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\First_Time_Use.Designer.cs">
+      <DependentUpon>First_Time_Use.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra Forms\FlashReader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\FlashReader.Designer.cs">
+      <DependentUpon>FlashReader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra Forms\UpdateChangelog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\UpdateChangelog.Designer.cs">
+      <DependentUpon>UpdateChangelog.cs</DependentUpon>
     </Compile>
     <Compile Include="ZipForm.cs">
       <SubType>Form</SubType>
@@ -80,6 +100,18 @@
     <Compile Include="ZipForm.Designer.cs">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Extra Forms\First_Time_Use.resx">
+      <DependentUpon>First_Time_Use.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\FlashReader.resx">
+      <DependentUpon>FlashReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\SettingsWindow.resx">
+      <DependentUpon>SettingsWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\UpdateChangelog.resx">
+      <DependentUpon>UpdateChangelog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ZipForm.resx">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\JSON invalid_2.png" />
+    <None Include="Resources\Welcome label.png" />
     <None Include="Resources\Splash1.png" />
     <None Include="Resources\json-file_light.ico" />
     <None Include="Resources\json-file_dark.ico" />

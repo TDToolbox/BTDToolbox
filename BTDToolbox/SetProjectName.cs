@@ -16,7 +16,9 @@ namespace BTDToolbox
         public static string projectName;
         public static string gameName;
         public bool hasClickedRandomName;
+        public bool isRenaming = false;
         ConfigFile programData;
+        public JetForm jetf;
 
         public SetProjectName()
         {
@@ -49,21 +51,53 @@ namespace BTDToolbox
             else
                 SubmitModName();
         }
+        public string ReturnName(string projName, string gameName)
+        {
+            Random rand = new Random();
+            string projectName_Identifier = "\\proj_" + gameName + "_";
+
+            if (projName == null || projName == "")
+            {
+                int randName = rand.Next(1, 99999999);
+                projName = randName.ToString();
+            }
+
+            return projectName_Identifier + projName;
+        }
         private void SubmitModName()
         {
-            ConsoleHandler.appendLog("You chose the project name: " + ProjectName_TextBox.Text);
-            if (gameName == "BTDB")
+            if (CustomName_RadioButton.Checked)
+                ConsoleHandler.appendLog("You chose the project name: " + ProjectName_TextBox.Text);
+            else
+                ConsoleHandler.appendLog("You chose a random project name");
+            if (isRenaming == true)
+            {
+                string temp = gameName;
+                jetf.RenameProject(ReturnName(ProjectName_TextBox.Text, gameName));
+                gameName = temp;
+                this.Close();
+            }
+            else if (gameName == "BTDB")
             {
                 var getPasss = new Get_BTDB_Password();
                 getPasss.isExtracting = true;
-                getPasss.projName = ProjectName_TextBox.Text;
+                //getPasss.projName = ProjectName_TextBox.Text;
+
+                string temp = gameName;
+                getPasss.projName = ReturnName(ProjectName_TextBox.Text, gameName);
+                gameName = temp;
                 getPasss.Show();
                 this.Close();
             }
             else
             {
                 var extract = new ZipForm();
-                extract.projName = ProjectName_TextBox.Text;
+                //extract.projName = ProjectName_TextBox.Text;
+
+                string temp = gameName;
+                extract.projName = ReturnName(ProjectName_TextBox.Text, gameName);
+                gameName = temp;
+                
                 extract.Show();
                 extract.Extract();
                 this.Close();

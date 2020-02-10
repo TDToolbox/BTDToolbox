@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 
-namespace BTDToolbox
+namespace BTDToolbox.Extra_Forms
 {
-    public partial class JsonEditor : ThemedForm
+    public partial class FlashReader : ThemedForm
     {
         //Project variables
         string livePath = Environment.CurrentDirectory;
@@ -37,62 +37,37 @@ namespace BTDToolbox
         //JsonEditor_Config jsonEditorConfig;
         ConfigFile programData;
         public static bool jsonError;
-        
+
         public static float jsonEditorFont;
         public string lastJsonFile;
+        string formattedText = "";
+        string unformattedText = "";
+        int num_space_in_tab = 5;
+        int num_of_tabs = 0;
 
-        public JsonEditor(string Path)
+        public FlashReader()
         {
             InitializeComponent();
-            Deserialize_Config();
-            StartUp();
-            this.Path = Path;
             this.FormClosing += exitHandling;
 
-            FileInfo info = new FileInfo(Path);
-            this.Text = info.Name;            
             this.Find_TextBox.Visible = false;
             this.FindNext_Button.Visible = false;
             this.toolStripSeparator2.Visible = false;
             this.Replace_TextBox.Visible = false;
             this.ReplaceDropDown.Visible = false;
+            
 
             //tabstops
             this.tB_line.TabStop = false;
-            this.lintPanel.TabStop = false;
             this.Find_TextBox.AcceptsTab = false;
             this.Editor_TextBox.TabStop = true;
-            string formattedText = "";
-            string unformattedText = File.ReadAllText(Path);
-
-            try
-            {
-                JToken jt = JToken.Parse(unformattedText);    
-                
-                formattedText = jt.ToString(Formatting.Indented);
-                Editor_TextBox.Text = formattedText;
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                jsonError = false;
-            }
-            catch (Exception)
-            {
-                Editor_TextBox.Text = unformattedText;
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                jsonError = true;
-            }
-            this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
-
-            JsonProps.increment(this);
-
+            
+            StartUp();
             this.Load += EditorLoading;
         }
         private void StartUp()
         {
-
-            this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
-            this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
-
-            jsonEditorFont = programData.JSON_Editor_FontSize;
+            jsonEditorFont = 13;
             Font newfont = new Font("Consolas", jsonEditorFont);
             tB_line.Font = newfont;
             Editor_TextBox.Font = newfont;
@@ -109,26 +84,14 @@ namespace BTDToolbox
             AddLineNumbers();
 
             bool close = false;
-            
-            if(close)
+
+            if (close)
             {
                 this.Close();
             }
         }
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
-            File.WriteAllText(Path, Editor_TextBox.Text);
-            try
-            {
-                JObject.Parse(this.Editor_TextBox.Text);
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                jsonError = false;
-            }
-            catch (Exception)
-            {
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                jsonError = true;
-            }
             if (Editor_TextBox.Text == "")
             {
                 AddLineNumbers();
@@ -148,7 +111,6 @@ namespace BTDToolbox
         private void exitHandling(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "json editor", programData);
-            JsonProps.decrement(this);
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -210,7 +172,7 @@ namespace BTDToolbox
                     }
                 }
             }
-            
+
         }
         private void ShowFindMenu()
         {
@@ -366,7 +328,7 @@ namespace BTDToolbox
             tB_line.Width = getWidth();
             for (int i = First_Line; i <= Last_Line + 2; i++)
             {
-                tB_line.Text += i + 1 + "\n";   
+                tB_line.Text += i + 1 + "\n";
             }
         }
 
@@ -403,135 +365,168 @@ namespace BTDToolbox
         {
             //SearchForPairs();
         }
-        private void SearchForPairs()
+
+        private void InputScript_Textbox_TextChanged(object sender, EventArgs e)
         {
-            int duplicate = -1;
-            string searchDirection = "";
-            string searchText = "";
-
-            int index = Editor_TextBox.SelectionStart;
-            char[] ch = Editor_TextBox.Text.ToCharArray();
-            char selectedText;
-            int duplicatesFound = 0;
-
-            endEditor = Editor_TextBox.Text.Length;
-            startPosition = Editor_TextBox.SelectionStart;
-
-            if (index - 1 < 0)
-                index = 0;
-            else if (index - 1 > Editor_TextBox.Text.Length)
-                index = Editor_TextBox.Text.Length;
-            selectedText = ch[index - 1];
-
-            switch (selectedText)
+            if(InputScript_Textbox.TextLength >= 3276799)
             {
-                case '[':
-                    searchDirection = "down";
-                    searchText = "]";
-                    break;
-                case ']':
-                    searchDirection = "up";
-                    searchText = "[";
-                    break;
-                case '{':
-                    searchDirection = "down";
-                    searchText = "}";
-                    break;
-                case '}':
-                    searchDirection = "up";
-                    searchText = "{";
-                    break;
-                case '(':
-                    searchDirection = "down";
-                    searchText = ")";
-                    break;
-                case ')':
-                    searchDirection = "up";
-                    searchText = "(";
-                    break;
-            }
-
-            for (int i = 0; i < endEditor + 1; i = startPosition)
-            {
-                duplicate = -1;
-                if (startPosition >= endEditor + 1 || i == -1)
-                {
-                    break;
-                }
-                else
-                {
-                    if (searchDirection == "down")
-                    {
-                        startPosition = Editor_TextBox.Find(searchText, index, endEditor + 1, RichTextBoxFinds.None);
-                        if (startPosition >= 0)
-                        {
-                            //we found the character, lets make sure its the correct match to our pair
-                            duplicate = Editor_TextBox.Find(selectedText.ToString(), index, startPosition + 1, RichTextBoxFinds.NoHighlight);
-                            if (duplicate != -1)
-                            {
-                                duplicatesFound++;
-                                index = duplicate + 1;
-                            }
-                            else
-                            {
-                                if (duplicatesFound != 0)
-                                {
-                                    index = startPosition + 1;
-                                    duplicatesFound--;
-                                }
-                                else
-                                    break;
-                            }
-                        }
-                        else
-                            break;
-                    }
-                    else
-                    {
-                        startPosition = Editor_TextBox.Find(searchText, 0, index, RichTextBoxFinds.Reverse);
-                        if (startPosition >= 0)
-                        {
-                            //we found the character, lets make sure its the match
-                            duplicate = Editor_TextBox.Find(selectedText.ToString(), startPosition, index - 1, RichTextBoxFinds.Reverse | RichTextBoxFinds.NoHighlight);
-                            if (duplicate != -1)
-                            {
-                                duplicatesFound++;
-                                index = duplicate - 1;
-                            }
-                            else
-                            {
-                                if (duplicatesFound != 0)
-                                {
-                                    index = startPosition - 1;
-                                    duplicatesFound--;
-                                }
-                                else
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void Close_button_Click(object sender, EventArgs e)
-        {
-            if (JsonEditor.jsonError == true)
-            {
-                DialogResult dialogResult = MessageBox.Show("ERROR!!! There is a JSON Error in this file!!!\n\nIf you leave the file now it will be corrupted and WILL break your mod. Do you still want to leave?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    this.Close();
-                }
+                MessageBox.Show("The text you entered was TOO LONG!!!");
+                ConsoleHandler.appendLog("You entered a text string that was too long");
             }
             else
             {
-                this.Close();
+                unformattedText = InputScript_Textbox.Text;
+                formattedText = FormatText(unformattedText);
+                Editor_TextBox.Text = formattedText;
+                NumOfRounds_Label.Text = "Num of rounds: " + Count("new RoundDef()", Editor_TextBox.Text);
             }
+        }
+        private string FormatText(string unformattedText)
+        {
+            ConsoleHandler.appendLog("Processing text...");
+            string formattedText = "";
+            num_of_tabs = 0;
+
+            foreach (char c in unformattedText)
+            {
+                formattedText = formattedText + c;
+                if (c == '{')
+                {
+                    num_of_tabs++;
+                    formattedText = formattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                }
+                else if (c == '[')
+                {
+                    num_of_tabs++;
+                    formattedText = formattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                }
+                else if (c == '}')
+                {
+                    num_of_tabs--;
+                    formattedText = formattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                }
+                else if (c == ']')
+                {
+                    num_of_tabs--;
+                    formattedText = formattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                }
+                else if (c == ')')
+                {
+                    formattedText = formattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                }
+            }
+            ConsoleHandler.appendLog("Finished Processing");
+            return formattedText;
+        }
+
+        private void Compile_Button_Click(object sender, EventArgs e)
+        {
+            if (unformattedText.Length == 0)
+                ConsoleHandler.appendLog("You need to input code before you can compile it...");
+            else
+            {
+                unformattedText = CompileText(Editor_TextBox.Text);
+                Clipboard.SetText(unformattedText);
+                ConsoleHandler.appendLog("Copied code to clipboard");
+            }
+        }
+
+        private string CompileText(string formattedText)
+        {
+            ConsoleHandler.appendLog("Compiling text...");
+            string unformattedText = "";
+            int skip = 0;
+            num_of_tabs = 0;
+
+            foreach (char c in formattedText)
+            {
+                if (skip > 0)
+                {
+                    skip--;
+                }
+                else
+                {
+                    unformattedText = unformattedText + c;
+                    if (c == '{')
+                    {
+                        num_of_tabs++;
+                        skip = (num_of_tabs * num_space_in_tab + 1);
+                        //unformattedText = unformattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                    }
+                    else if (c == '[')
+                    {
+                        num_of_tabs++;
+                        skip = (num_of_tabs * num_space_in_tab + 1);
+                        //unformattedText = unformattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                    }
+                    else if (c == '}')
+                    {
+                        num_of_tabs--;
+                        skip = (num_of_tabs * num_space_in_tab + 1);
+                        //unformattedText = unformattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                    }
+                    else if (c == ']')
+                    {
+                        num_of_tabs--;
+                        skip = (num_of_tabs * num_space_in_tab + 1);
+                        //unformattedText = unformattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                    }
+                    else if (c == ')')
+                    {
+                        skip = (num_of_tabs * num_space_in_tab + 1);
+                        //unformattedText = unformattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+                    }
+                }
+            }
+            ConsoleHandler.appendLog("Finished compiling");
+
+
+            return unformattedText;
+        }
+
+        private void CompileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (unformattedText.Length == 0)
+                ConsoleHandler.appendLog("You need to input code before you can compile it...");
+            else
+            {
+                unformattedText = CompileText(Editor_TextBox.Text);
+                Clipboard.SetText(unformattedText);
+                ConsoleHandler.appendLog("Copied code to clipboard");
+            }
+        }
+
+        private void Calc_NumOfRounds_button_Click(object sender, EventArgs e)
+        {
+            if (Editor_TextBox.TextLength > 0)
+            {
+                NumOfRounds_Label.Text = "Num of rounds: " + Count("new RoundDef()", Editor_TextBox.Text);
+            }
+            else
+                ConsoleHandler.appendLog("You need to input code before you can calculate the number of rounds...");
+        }
+
+        private int Count(string searchTerm, string inputText)
+        {
+            string[] a = inputText.Split('.');
+
+            // search for pattern in string 
+            int count = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if(a[i].Contains(searchTerm))
+                    count++;
+            }
+            return count;
+        }
+
+        private void BloonTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Console.getInstance().Visible == false)
+            {
+                Console.getInstance().Visible = true;
+            }
+            ConsoleHandler.appendLog("BLOON TYPES:\n>> Red:  0\n>> Blue:  1\n>> Green:  2\n>> Yellow:  3\n>> Pink:  4\n>> Black:  5\n>> White:  6\n>> Lead:  7\n>> Zebra:  8\n>> Rainbow:  9\n>> Ceramic:  10\n>> MOAB:  11\n>> BFB:  12\n>> ZOMG:  13");
         }
     }
 }

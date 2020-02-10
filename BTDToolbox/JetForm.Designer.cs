@@ -37,10 +37,14 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Open_Proj_Dir = new System.Windows.Forms.ToolStripMenuItem();
             this.Save_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.retToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.makeBackupOfProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revertToBackupToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.revertToBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.RenameProject_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteProject_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.Find_Toolstrip = new System.Windows.Forms.ToolStripMenuItem();
             this.findPanel = new System.Windows.Forms.Panel();
@@ -54,10 +58,6 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.deleteProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteProjectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -142,8 +142,8 @@
             this.retToolStripMenuItem,
             this.revertToBackupToolStripMenuItem,
             this.toolStripSeparator2,
-            this.deleteProjectToolStripMenuItem,
-            this.deleteProjectToolStripMenuItem1});
+            this.RenameProject_Button,
+            this.DeleteProject_Button});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
@@ -172,6 +172,11 @@
             this.Save_ToolStrip.Text = "Save";
             this.Save_ToolStrip.Click += new System.EventHandler(this.Save_ToolStrip_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
             // retToolStripMenuItem
             // 
             this.retToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -199,6 +204,25 @@
             this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.revertToBackupToolStripMenuItem.Text = "Remake Project";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // RenameProject_Button
+            // 
+            this.RenameProject_Button.Name = "RenameProject_Button";
+            this.RenameProject_Button.Size = new System.Drawing.Size(180, 22);
+            this.RenameProject_Button.Text = "Rename Project";
+            this.RenameProject_Button.Click += new System.EventHandler(this.RenameProject_Button_Click);
+            // 
+            // DeleteProject_Button
+            // 
+            this.DeleteProject_Button.Name = "DeleteProject_Button";
+            this.DeleteProject_Button.Size = new System.Drawing.Size(180, 22);
+            this.DeleteProject_Button.Text = "Delete Project";
+            this.DeleteProject_Button.Click += new System.EventHandler(this.DeleteProject_Button_Click);
+            // 
             // toolStripDropDownButton2
             // 
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -213,7 +237,7 @@
             // Find_Toolstrip
             // 
             this.Find_Toolstrip.Name = "Find_Toolstrip";
-            this.Find_Toolstrip.Size = new System.Drawing.Size(180, 22);
+            this.Find_Toolstrip.Size = new System.Drawing.Size(97, 22);
             this.Find_Toolstrip.Text = "Find";
             this.Find_Toolstrip.Click += new System.EventHandler(this.Find_Toolstrip_Click);
             // 
@@ -360,28 +384,6 @@
             this.name_column.Text = "Name";
             this.name_column.Width = 517;
             // 
-            // deleteProjectToolStripMenuItem
-            // 
-            this.deleteProjectToolStripMenuItem.Name = "deleteProjectToolStripMenuItem";
-            this.deleteProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteProjectToolStripMenuItem.Text = "Rename Project";
-            // 
-            // deleteProjectToolStripMenuItem1
-            // 
-            this.deleteProjectToolStripMenuItem1.Name = "deleteProjectToolStripMenuItem1";
-            this.deleteProjectToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.deleteProjectToolStripMenuItem1.Text = "Delete Project";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
-            // 
             // JetForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -442,7 +444,7 @@
         private System.Windows.Forms.ToolStripMenuItem Find_Toolstrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem deleteProjectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteProjectToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem RenameProject_Button;
+        private System.Windows.Forms.ToolStripMenuItem DeleteProject_Button;
     }
 }

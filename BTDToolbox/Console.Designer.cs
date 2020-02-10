@@ -28,9 +28,9 @@
         /// </summary>
         private new void InitializeComponent()
         {
-            this.console_log = new System.Windows.Forms.TextBox();
             this.invoke_button = new System.Windows.Forms.Button();
             this.invoke_textbox = new System.Windows.Forms.TextBox();
+            this.output_log = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -48,7 +48,7 @@
             // 
             // contentPanel
             // 
-            this.contentPanel.Controls.Add(this.console_log);
+            this.contentPanel.Controls.Add(this.output_log);
             this.contentPanel.Controls.Add(this.invoke_button);
             this.contentPanel.Controls.Add(this.invoke_textbox);
             // 
@@ -58,21 +58,6 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            // 
-            // console_log
-            // 
-            this.console_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.console_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.console_log.ForeColor = System.Drawing.Color.White;
-            this.console_log.Location = new System.Drawing.Point(3, 3);
-            this.console_log.Multiline = true;
-            this.console_log.Name = "console_log";
-            this.console_log.ReadOnly = true;
-            this.console_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.console_log.Size = new System.Drawing.Size(769, 371);
-            this.console_log.TabIndex = 5;
             // 
             // invoke_button
             // 
@@ -96,11 +81,28 @@
             this.invoke_textbox.Size = new System.Drawing.Size(560, 20);
             this.invoke_textbox.TabIndex = 3;
             // 
-            // NewConsole
+            // output_log
+            // 
+            this.output_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.output_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.output_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.output_log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.output_log.ForeColor = System.Drawing.Color.White;
+            this.output_log.Location = new System.Drawing.Point(3, 3);
+            this.output_log.Name = "output_log";
+            this.output_log.ReadOnly = true;
+            this.output_log.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.output_log.Size = new System.Drawing.Size(770, 371);
+            this.output_log.TabIndex = 6;
+            this.output_log.Text = "";
+            // 
+            // Console
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "NewConsole";
+            this.Name = "Console";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "NewConsole";
             this.titleSeperator.Panel1.ResumeLayout(false);
@@ -118,6 +120,7 @@
 
         private System.Windows.Forms.Button invoke_button;
         private System.Windows.Forms.TextBox invoke_textbox;
-        private System.Windows.Forms.TextBox console_log;
+        public System.Windows.Forms.TextBox console_log;
+        public System.Windows.Forms.RichTextBox output_log;
     }
 }

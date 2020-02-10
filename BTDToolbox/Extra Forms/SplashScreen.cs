@@ -26,13 +26,13 @@ namespace BTDToolbox
             var splashImg = Properties.Resources.Splash1;
             this.SelectBitmap(splashImg);
 
-            Rectangle resolution = Screen.PrimaryScreen.Bounds;
             int splash_centerX = splashImg.Width/2;
             int splash_centerY = splashImg.Height/2;
 
+            
 
-            this.Top = (resolution.Height / 2) - splash_centerY - 55;
-            this.Left = (resolution.Width / 2) - splash_centerX;
+            this.Top = (GeneralMethods.GetCenterScreen().Y) - splash_centerY - 55;
+            this.Left = (GeneralMethods.GetCenterScreen().X) - splash_centerX;
 
 
         }
@@ -48,11 +48,9 @@ namespace BTDToolbox
 
         {
             tmr.Stop();
-
+            this.Hide();
             Main mf = new Main();
             mf.Show();
-            this.Hide();
-
         }
         protected override void WndProc(ref Message m)
         {

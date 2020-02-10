@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BTDToolbox.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,10 +39,37 @@ namespace BTDToolbox
         {
             Deserialize_Config();
 
-            this.Size = new Size(programData.Console_SizeX, programData.Console_SizeY);
-            this.Location = new Point(programData.Console_PosX, programData.Console_PosY);
+            int i = 0;
+            if (programData.ExistingUser == false)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                Rectangle resolution = Screen.PrimaryScreen.Bounds;
+
+                int x = resolution.Width;
+                int y = resolution.Height;
+                int sizeX = x / 2;
+                int sizeY = y / 5;
+
+                this.Size = new Size(sizeX, sizeY);
+                this.Location = new Point(x - sizeX, y - this.Height - 90);
+            }
+            else
+            {
+                this.Size = new Size(programData.Console_SizeX, programData.Console_SizeY);
+                this.Location = new Point(programData.Console_PosX, programData.Console_PosY);
+            }
             fontSize = programData.Console_FontSize;
             this.Font = new Font("Consolas", fontSize);
+        }
+
+        public void GetAnnouncement()
+        {
+            WebHandler web = new WebHandler();
+            string url = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/toolbox%20announcements";
+            string answer = web.WaitOn_URL(url);
+            output_log.SelectionColor = Color.OrangeRed;
+
+            appendLog("Announcement: " + answer);
         }
 
         public override void close_button_Click(object sender, EventArgs e)
@@ -56,16 +84,31 @@ namespace BTDToolbox
             {
                 try
                 {
-                    console_log.Invoke(new Action(() => console_log.AppendText(">> " + log + "\r\n")));
+                    Invoke((MethodInvoker)delegate {
+                        output_log.AppendText(">> " + log + "\r\n");
+                        output_log.ScrollToCaret();
+                    });
+
                     lastMessage = log;
                 }
                 catch(Exception)
                 {
-                    Environment.Exit(0);
+                   Environment.Exit(0);
                 }
                 
             }
 
+        }
+
+        public void force_appendLog(String log)
+        {
+            Invoke((MethodInvoker)delegate {
+                if (this.Visible == false)
+                    this.Visible = true;
+                this.BringToFront();
+
+                appendLog(log);
+            });
         }
         private void exitHandling(object sender, EventArgs e)
         {

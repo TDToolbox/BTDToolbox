@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BTDToolbox.Classes;
+using BTDToolbox.Extra_Forms;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -14,27 +16,26 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.3";
+        public static string version = "Alpha 0.0.5";
         private static Main toolbox;
-        private static CheckForUpdates update;
+        private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
 
 
         //Project Variables
         private Bitmap bgImg;
         Thread backupThread;
-
+        public static bool exit = false;
 
         //Config variables
         ConfigFile cfgFile;
-        bool firstUse = true;
+        bool existingUser = true;
         public string lastProject;
         public static string projName;
         public static string gameName;
         public static string BTD5_Dir;
         public static string BTDB_Dir;
         public static bool enableConsole;
-
 
         //Scroll bar variables
         private const int SB_BOTH = 3;
@@ -50,10 +51,7 @@ namespace BTDToolbox
         public Main()
         {
             InitializeComponent();
-
-            /*MessageBox.Show(checkForUpdates.downloadUpdater());
-            Environment.Exit(0);*/
-
+            
             toolbox = this;
             Startup();
 
@@ -64,6 +62,10 @@ namespace BTDToolbox
 
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
+            this.DoubleBuffered = true;
+            
+
+
 
             Random rand = new Random();
             switch (rand.Next(0, 2))
@@ -82,12 +84,7 @@ namespace BTDToolbox
         private void Startup()
         {
             cfgFile = DeserializeConfig();
-            bool existingUser = cfgFile.ExistingUser;
-            if (existingUser == false)
-            {
-                backupThread = new Thread(FirstTimeUse);
-                backupThread.Start();
-            }
+            existingUser = cfgFile.ExistingUser;
 
             this.Size = new Size(cfgFile.Main_SizeX, cfgFile.Main_SizeY);
             this.StartPosition = FormStartPosition.Manual;
@@ -106,11 +103,13 @@ namespace BTDToolbox
         }
         private void FirstTimeUse()
         {
-            MessageBox.Show("Welcome to BTD Toolbox! This is a place holder. IF you are using Toolbox version 0.0.4 or higher and seeing this message, please contact staff, cuz we need to add a welcome screen already :)");
+            var firstUser = new First_Time_Use();
+            firstUser.MdiParent = this;
+            firstUser.Show();
         }
         private void ExitHandling(object sender, EventArgs e)
         {
-            update.exitLoop = true;
+            exit = true;
             if (ConsoleHandler.validateConsole())
             {
                 if (ConsoleHandler.console.Visible)
@@ -132,6 +131,31 @@ namespace BTDToolbox
 
             ConsoleHandler.console = new Console();
             ConsoleHandler.console.MdiParent = this;
+
+            if (enableConsole == true)
+                ConsoleHandler.console.Show();
+            else
+                ConsoleHandler.console.Hide();
+
+            ConsoleHandler.appendLog("Program loaded!");
+            if (programData.recentUpdate == true)
+                ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
+
+            ConsoleHandler.announcement();
+            var isUpdate = new UpdateHandler();
+            isUpdate.HandleUpdates();   
+        }
+        private void showUpdateChangelog()
+        {
+            if (programData.recentUpdate == true)
+            {
+                var changelog = new UpdateChangelog();
+                changelog.MdiParent = this;
+                changelog.Show();
+
+                UpdateChangelog.recentUpdate = false;
+                Serializer.SaveSmallSettings("updater", cfgFile);
+            }
         }
 
         private void mainResize(object sender, EventArgs e)
@@ -158,7 +182,29 @@ namespace BTDToolbox
                 CompileJet("output");
             }
         }
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
 
+        private void Main_Shown(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Searching for existing projects...");
+            OpenJetForm();
+
+            if (JetProps.getForm(0) == null)
+                ConsoleHandler.appendLog("No projects detected.");
+
+            foreach (Control con in Controls)
+                if (con is MdiClient)
+                    mdiClient = con as MdiClient;
+
+            if (existingUser == false)
+            {
+                FirstTimeUse();
+            }
+            showUpdateChangelog();
+        }
         //
         //
         //Open or Create Projects
@@ -241,13 +287,17 @@ namespace BTDToolbox
         //
         //Mdi Stuff
         //
+
+        
+    
+         
         protected override void WndProc(ref Message m)
         {
             if (mdiClient != null)
             {
                 try
                 {
-                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0 /*Hide the ScrollBars*/);
+                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0);// Hide the ScrollBars);
                 }
                 catch (Exception)
                 {
@@ -255,6 +305,7 @@ namespace BTDToolbox
             }
             base.WndProc(ref m);
         }
+
         MdiClient mdiClient = null;
         private void Main_Resize(object sender, EventArgs e)
         {
@@ -378,31 +429,6 @@ namespace BTDToolbox
             /*var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
             editor.Show();*/
         }
-        private void BTD5DirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (isGamePathValid("BTD5"))
-            {
-                ConsoleHandler.appendLog("Opening BTD5 Directory");
-                Process.Start(DeserializeConfig().BTD5_Directory);
-            }
-            else
-                ConsoleHandler.appendLog("Could not find your BTD5 directory");
-        }
-        private void BTDBDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (isGamePathValid("BTDB"))
-            {
-                ConsoleHandler.appendLog("Opening BTD Battles Directory");
-                Process.Start(DeserializeConfig().BTDB_Directory);
-            }
-            else
-                ConsoleHandler.appendLog("Could not find your BTDB directory");
-        }
-        private void ToolboxDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
-            Process.Start(Environment.CurrentDirectory);
-        }
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string g = "BTD5";
@@ -447,36 +473,7 @@ namespace BTDToolbox
             RestoreGame_ToBackup("BTDB");
         }
 
-        private void Main_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void Main_Shown(object sender, EventArgs e)
-        {
-
-            ConsoleHandler.appendLog("Program loaded!");
-
-
-
-            if (enableConsole == true)
-                ConsoleHandler.console.Show();
-            else
-                ConsoleHandler.console.Hide();
-            ConsoleHandler.appendLog("Searching for existing projects...");
-            OpenJetForm();
-
-            string msg = "";
-            if (JetProps.getForm(0) == null)
-                ConsoleHandler.appendLog("No projects detected.");
-
-            foreach (Control con in Controls)
-                if (con is MdiClient)
-                    mdiClient = con as MdiClient;
-
-            update = new CheckForUpdates();
-            update.checkForUpdate();
-        }
+        
 
         private void BTDFontsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -484,23 +481,114 @@ namespace BTDToolbox
             Process.Start("https://fontmeme.com/bloons-td-battles-font/");
         }
 
-        private void CheckForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UpdaterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            update = new CheckForUpdates();
-            update.checkForUpdate();
+            update = new UpdateHandler();
+            update.HandleUpdates();
         }
 
         private void ReinstallBTDToolboxToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            update = new CheckForUpdates();
+            update = new UpdateHandler();
             update.reinstall = true;
-            update.checkForUpdate();
+            update.HandleUpdates();
         }
 
         private void OpenBTDToolboxGithubToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening BTD Toolbox Github page...");
             Process.Start("https://github.com/TDToolbox/BTDToolbox-2019");
+        }
+
+        private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            var modMM = new ModLoader_Handling();
+            modMM.Handle_ModLoader();
+        }
+
+        private void OpenSettings_Button_Click(object sender, EventArgs e)
+        {
+            var settings = new SettingsWindow();
+            settings.MdiParent = this;
+            settings.Show();
+        }
+
+        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FlashReader_Click(object sender, EventArgs e)
+        {
+            var flashReader = new FlashReader();
+            flashReader.MdiParent = this;
+            flashReader.Show();
+        }
+
+        private void GetBTDBPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+            var getPass = new CrackBTDB_Pass();
+            getPass.Get_BTDB_Password();
+            //getPass.DownloadTools();
+        }
+
+        private void BTD5DirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (isGamePathValid("BTD5"))
+            {
+                ConsoleHandler.appendLog("Opening BTD5 Directory");
+                Process.Start(DeserializeConfig().BTD5_Directory);
+            }
+            else
+            {
+                ConsoleHandler.appendLog("Could not find your BTD5 directory");
+                browseForExe("BTD5");
+                if(isGamePathValid("BTD5"))
+                {
+                    ConsoleHandler.appendLog("Opening BTD5 Directory");
+                    Process.Start(DeserializeConfig().BTD5_Directory);
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Something went wrong...");
+                }
+            }
+        }
+
+        private void BTDBDirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (isGamePathValid("BTDB"))
+            {
+                ConsoleHandler.appendLog("Opening BTD Battles Directory");
+                Process.Start(DeserializeConfig().BTDB_Directory);
+            }
+            else
+            {
+                ConsoleHandler.appendLog("Could not find your BTDB directory");
+                browseForExe("BTDB");
+                if (isGamePathValid("BTDB"))
+                {
+                    ConsoleHandler.appendLog("Opening BTDB Directory");
+                    Process.Start(DeserializeConfig().BTDB_Directory);
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Something went wrong...");
+                }
+            }
+        }
+
+        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
+            Process.Start(Environment.CurrentDirectory);
         }
     }
 }
