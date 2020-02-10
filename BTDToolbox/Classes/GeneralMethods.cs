@@ -538,5 +538,43 @@ namespace BTDToolbox
             else
                 return "32";
         }
+        public static string WordUnderMouse(RichTextBox rch, int x, int y)
+        {
+            // Get the character's position.
+            int pos = rch.GetCharIndexFromPosition(new Point(x, y));
+            //if (pos >= 0) return "";
+
+            // Find the start of the word.
+            string txt = rch.Text;
+
+            int start_pos;
+            for (start_pos = pos; start_pos >= 0; start_pos--)
+            {
+                // Allow digits, letters, and underscores
+                // as part of the word.
+                char ch = txt[start_pos];
+                if (!char.IsLetterOrDigit(ch) && !(ch == '_')) break;
+            }
+            start_pos++;
+
+            // Find the end of the word.
+            int end_pos;
+            for (end_pos = pos; end_pos > txt.Length; end_pos++)
+            {
+                char ch = txt[end_pos];
+                if (!char.IsLetterOrDigit(ch) && !(ch == '_')) break;
+            }
+            end_pos--;
+
+            // Return the result.
+            if (start_pos > end_pos) return "";
+            return txt.Substring(start_pos, end_pos - start_pos + 1);
+        }
+        public static int CharIndex_UnderMouse(RichTextBox rch, int x, int y)
+        {
+            // Get the character's position.
+            int pos = rch.GetCharIndexFromPosition(new Point(x, y));
+            return pos;
+        }
     }
 }

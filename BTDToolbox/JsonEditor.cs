@@ -10,8 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
+
 
 namespace BTDToolbox
 {
@@ -42,6 +44,7 @@ namespace BTDToolbox
         
         public static float jsonEditorFont;
         public string lastJsonFile;
+        int CharIndex_UnderMouse = 0;
 
         public JsonEditor(string Path)
         {
@@ -128,7 +131,7 @@ namespace BTDToolbox
         }
         private void CheckJSON (string text)
         {
-            if (ValidateJSON.IsValidJson(text) == true)
+            if (JSON_Reader.IsValidJson(text) == true)
             {
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
                 jsonError = false;
@@ -541,6 +544,8 @@ namespace BTDToolbox
         private void initSelContextMenu()
         {
             selMenu = new ContextMenuStrip();
+            selMenu.Items.Add("Copy");
+            selMenu.Items.Add("Paste");
             selMenu.Items.Add("Find");
             selMenu.Items.Add("Replace");
             selMenu.Items.Add("Get subtask number");
@@ -550,19 +555,32 @@ namespace BTDToolbox
         {
             if (e.Button == MouseButtons.Right)
             {
+                CharIndex_UnderMouse = GeneralMethods.CharIndex_UnderMouse(Editor_TextBox, e.X, e.Y);
                 selMenu.Show(Editor_TextBox, e.Location);
             }
-            /*try
-            {
-                
-            }
-            catch
-            {
-
-            }*/
         }
         private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            if (e.ClickedItem.Text == "Copy")
+            {
+                try
+                {
+                    //func here
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    //func here
+                }
+                catch (Exception)
+                {
+                }
+            }
             if (e.ClickedItem.Text == "Find")
             {
                 try
@@ -585,13 +603,33 @@ namespace BTDToolbox
             }
             if (e.ClickedItem.Text == "Get subtask number")
             {
-                try
+                if(jsonError == false)
                 {
-                    //func here
+                    try
+                    {
+                        //func here
+                        GetSubtaskNum();
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
-                catch (Exception)
+                else
                 {
+                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
                 }
+            }
+        }
+        private void GetSubtaskNum()
+        {
+            string subtaskNum = JSON_Reader.GetSubtaskNum(CharIndex_UnderMouse, Editor_TextBox.Text);
+            if (subtaskNum != "" && subtaskNum != " " && subtaskNum != null)
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("Subtask:  [" + subtaskNum + " ]");
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("Unable to detect subtask. Please try clicking somewhere else...");
             }
         }
     }

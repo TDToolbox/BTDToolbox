@@ -70,7 +70,7 @@
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
-    <Compile Include="Classes\ValidateJSON.cs" />
+    <Compile Include="Classes\JSON_Reader.cs" />
     <Compile Include="Classes\WebHandler.cs" />
     <Compile Include="Extra Forms\CreditViewer.cs">
       <SubType>Form</SubType>

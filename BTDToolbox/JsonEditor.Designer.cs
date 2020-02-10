@@ -50,6 +50,7 @@
             this.lintPanel = new System.Windows.Forms.Panel();
             this.tB_line = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -109,6 +110,7 @@
             this.JsonToolstrip.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.JsonToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Edit_DropDown,
+            this.Help_DropDown,
             this.toolStripSeparator1,
             this.Replace_TextBox,
             this.ReplaceDropDown,
@@ -181,6 +183,7 @@
             // 
             // FontSize_TextBox
             // 
+            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -195,6 +198,7 @@
             // Replace_TextBox
             // 
             this.Replace_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Replace_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Replace_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Replace_TextBox.Name = "Replace_TextBox";
             this.Replace_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -241,6 +245,7 @@
             // Find_TextBox
             // 
             this.Find_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Find_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Find_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Find_TextBox.Name = "Find_TextBox";
             this.Find_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -264,7 +269,7 @@
             this.lintPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lintPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.lintPanel.ForeColor = System.Drawing.Color.Black;
-            this.lintPanel.Location = new System.Drawing.Point(63, 0);
+            this.lintPanel.Location = new System.Drawing.Point(106, 0);
             this.lintPanel.Name = "lintPanel";
             this.lintPanel.Size = new System.Drawing.Size(60, 24);
             this.lintPanel.TabIndex = 3;
@@ -298,6 +303,18 @@
             this.pictureBox1.Size = new System.Drawing.Size(100, 387);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
+            // 
+            // Help_DropDown
+            // 
+            this.Help_DropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Help_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Help_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Help_DropDown.ForeColor = System.Drawing.Color.White;
+            this.Help_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Help_DropDown.Image")));
+            this.Help_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Help_DropDown.Name = "Help_DropDown";
+            this.Help_DropDown.Size = new System.Drawing.Size(45, 22);
+            this.Help_DropDown.Text = "Help";
             // 
             // JsonEditor
             // 
@@ -346,5 +363,6 @@
         private System.Windows.Forms.Panel lintPanel;
         private System.Windows.Forms.RichTextBox tB_line;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripDropDownButton Help_DropDown;
     }
 }
