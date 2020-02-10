@@ -37,6 +37,7 @@ namespace BTDToolbox
         //Congif variables
         //JsonEditor_Config jsonEditorConfig;
         ConfigFile programData;
+        private ContextMenuStrip selMenu;
         public static bool jsonError;
         
         public static float jsonEditorFont;
@@ -48,6 +49,7 @@ namespace BTDToolbox
             Deserialize_Config();
             StartUp();
 
+            initSelContextMenu();
             this.Path = Path;
             this.FormClosing += exitHandling;
             Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
@@ -548,18 +550,47 @@ namespace BTDToolbox
         {
             if (e.Button == MouseButtons.Right)
             {
-                if (Selected.Count == 1)
-                {
-                    selMenu.Show(listView1, e.Location);
-                }
-                else if (Selected.Count == 0 || Selected == null)
-                {
+                selMenu.Show(Editor_TextBox, e.Location);
+            }
+            /*try
+            {
+                
+            }
+            catch
+            {
 
-                    empMenu.Show(listView1, e.Location);
-                }
-                else if (Selected.Count > 1)
+            }*/
+        }
+        private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Find")
+            {
+                try
                 {
-                    multiSelMenu.Show(listView1, e.Location);
+                    //func here
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Replace")
+            {
+                try
+                {
+                    //func here
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Get subtask number")
+            {
+                try
+                {
+                    //func here
+                }
+                catch (Exception)
+                {
                 }
             }
         }
