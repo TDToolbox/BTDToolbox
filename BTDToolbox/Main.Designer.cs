@@ -88,6 +88,8 @@
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
             this.combineModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTD5FlashMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modUpdaterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -294,10 +296,12 @@
             this.toolStripMenuItem3,
             this.bTDFontsToolStripMenuItem,
             this.combineModsToolStripMenuItem,
+            this.modUpdaterToolStripMenuItem,
             this.spriteEditingToolStripMenuItem,
+            this.getBTDBPasswordToolStripMenuItem,
             this.toolStripSeparator4,
             this.FlashReader,
-            this.getBTDBPasswordToolStripMenuItem});
+            this.bTD5FlashMapEditorToolStripMenuItem});
             this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 20);
@@ -306,21 +310,21 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(191, 22);
             this.toolStripMenuItem2.Text = "Mod Loader";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(191, 22);
             this.toolStripMenuItem3.Text = "NKHook";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
             // bTDFontsToolStripMenuItem
             // 
             this.bTDFontsToolStripMenuItem.Name = "bTDFontsToolStripMenuItem";
-            this.bTDFontsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bTDFontsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.bTDFontsToolStripMenuItem.Text = "BTD Fonts";
             this.bTDFontsToolStripMenuItem.Click += new System.EventHandler(this.BTDFontsToolStripMenuItem_Click);
             // 
@@ -330,7 +334,7 @@
             this.spriteSheetDecompilerToolStripMenuItem,
             this.spriteAnimationVisualizerToolStripMenuItem});
             this.spriteEditingToolStripMenuItem.Name = "spriteEditingToolStripMenuItem";
-            this.spriteEditingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spriteEditingToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.spriteEditingToolStripMenuItem.Text = "Sprite Editing";
             // 
             // spriteSheetDecompilerToolStripMenuItem
@@ -348,19 +352,19 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(188, 6);
             // 
             // FlashReader
             // 
             this.FlashReader.Name = "FlashReader";
-            this.FlashReader.Size = new System.Drawing.Size(180, 22);
+            this.FlashReader.Size = new System.Drawing.Size(191, 22);
             this.FlashReader.Text = "BTD5 Flash Reader";
             this.FlashReader.Click += new System.EventHandler(this.FlashReader_Click);
             // 
             // getBTDBPasswordToolStripMenuItem
             // 
             this.getBTDBPasswordToolStripMenuItem.Name = "getBTDBPasswordToolStripMenuItem";
-            this.getBTDBPasswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.getBTDBPasswordToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.getBTDBPasswordToolStripMenuItem.Text = "Get BTDB Password";
             this.getBTDBPasswordToolStripMenuItem.Click += new System.EventHandler(this.GetBTDBPasswordToolStripMenuItem_Click);
             // 
@@ -557,8 +561,20 @@
             // combineModsToolStripMenuItem
             // 
             this.combineModsToolStripMenuItem.Name = "combineModsToolStripMenuItem";
-            this.combineModsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.combineModsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.combineModsToolStripMenuItem.Text = "Mod Fusion";
+            // 
+            // bTD5FlashMapEditorToolStripMenuItem
+            // 
+            this.bTD5FlashMapEditorToolStripMenuItem.Name = "bTD5FlashMapEditorToolStripMenuItem";
+            this.bTD5FlashMapEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.bTD5FlashMapEditorToolStripMenuItem.Text = "BTD5 Flash Map Editor";
+            // 
+            // modUpdaterToolStripMenuItem
+            // 
+            this.modUpdaterToolStripMenuItem.Name = "modUpdaterToolStripMenuItem";
+            this.modUpdaterToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.modUpdaterToolStripMenuItem.Text = "Mod Updater";
             // 
             // Main
             // 
@@ -650,6 +666,8 @@
         private System.Windows.Forms.ToolStripMenuItem bTD5DirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bTDBDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem combineModsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modUpdaterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bTD5FlashMapEditorToolStripMenuItem;
     }
 }
 
