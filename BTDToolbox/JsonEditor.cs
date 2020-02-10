@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BTDToolbox.Classes;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -46,9 +47,10 @@ namespace BTDToolbox
             InitializeComponent();
             Deserialize_Config();
             StartUp();
+
             this.Path = Path;
             this.FormClosing += exitHandling;
-
+            
             FileInfo info = new FileInfo(Path);
             this.Text = info.Name;            
             this.Find_TextBox.Visible = false;
@@ -63,32 +65,28 @@ namespace BTDToolbox
             this.Find_TextBox.AcceptsTab = false;
             this.Editor_TextBox.TabStop = true;
             string formattedText = "";
-            string unformattedText = File.ReadAllText(Path);
 
+            string unformattedText = File.ReadAllText(Path);
+            
             try
             {
-                JToken jt = JToken.Parse(unformattedText);    
-                
+                JToken jt = JToken.Parse(unformattedText);
                 formattedText = jt.ToString(Formatting.Indented);
                 Editor_TextBox.Text = formattedText;
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                jsonError = false;
             }
             catch (Exception)
             {
                 Editor_TextBox.Text = unformattedText;
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                jsonError = true;
             }
+            CheckJSON(this.Editor_TextBox.Text);
+
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
 
             JsonProps.increment(this);
-
             this.Load += EditorLoading;
         }
         private void StartUp()
         {
-
             this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
             this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
 
@@ -118,20 +116,24 @@ namespace BTDToolbox
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Path, Editor_TextBox.Text);
-            try
-            {
-                JObject.Parse(this.Editor_TextBox.Text);
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                jsonError = false;
-            }
-            catch (Exception)
-            {
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                jsonError = true;
-            }
+            CheckJSON(this.Editor_TextBox.Text);
+
             if (Editor_TextBox.Text == "")
             {
                 AddLineNumbers();
+            }
+        }
+        private void CheckJSON (string text)
+        {
+            if (ValidateJSON.IsValidJson(text) == true)
+            {
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                jsonError = false;
+            }
+            else
+            {
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                jsonError = true;
             }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)

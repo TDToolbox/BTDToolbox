@@ -390,8 +390,7 @@
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "FlashReader";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "JsonEditor";
-            this.Load += new System.EventHandler(this.JsonEditor_Load);
+            this.Text = "FlashReader";
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();
             this.titleSeperator.Panel2.ResumeLayout(false);

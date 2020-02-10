@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox.Extra_Forms
 {
@@ -34,8 +33,6 @@ namespace BTDToolbox.Extra_Forms
         public static int maxLC = 1;
 
         //Congif variables
-        //JsonEditor_Config jsonEditorConfig;
-        ConfigFile programData;
         public static bool jsonError;
 
         public static float jsonEditorFont;
@@ -48,7 +45,6 @@ namespace BTDToolbox.Extra_Forms
         public FlashReader()
         {
             InitializeComponent();
-            this.FormClosing += exitHandling;
 
             this.Find_TextBox.Visible = false;
             this.FindNext_Button.Visible = false;
@@ -72,10 +68,6 @@ namespace BTDToolbox.Extra_Forms
             tB_line.Font = newfont;
             Editor_TextBox.Font = newfont;
             FontSize_TextBox.Text = jsonEditorFont.ToString();
-        }
-        private void Deserialize_Config()
-        {
-            programData = Serializer.Deserialize_Config();
         }
         private void EditorLoading(object sender, EventArgs e)
         {
@@ -107,10 +99,6 @@ namespace BTDToolbox.Extra_Forms
             Font newfont = new Font("Consolas", jsonEditorFont);
             Editor_TextBox.Font = newfont;
             tB_line.Font = newfont;
-        }
-        private void exitHandling(object sender, EventArgs e)
-        {
-            Serializer.SaveConfig(this, "json editor", programData);
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -283,10 +271,6 @@ namespace BTDToolbox.Extra_Forms
         private void FindNext_Button_Click(object sender, EventArgs e)
         {
             FindText();
-        }
-        private void JsonEditor_Load(object sender, EventArgs e)
-        {
-            Serializer.SaveConfig(this, "json editor", programData);
         }
 
         private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
