@@ -13,7 +13,7 @@ namespace BTDToolbox.Classes
 {
     class ValidateJSON
     {
-        public static bool IsValidJson2(string input)
+        public static bool IsValidJson2(string input)   //This method won't be used, but it shows how to get the line number of the error
         {
             input = input.Trim();
             if ((input.StartsWith("{") && input.EndsWith("}")) || //For object
