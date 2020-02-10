@@ -50,7 +50,8 @@ namespace BTDToolbox
 
             this.Path = Path;
             this.FormClosing += exitHandling;
-            
+            Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
+
             FileInfo info = new FileInfo(Path);
             this.Text = info.Name;            
             this.Find_TextBox.Visible = false;
@@ -533,6 +534,33 @@ namespace BTDToolbox
             else
             {
                 this.Close();
+            }
+        }
+        private void initSelContextMenu()
+        {
+            selMenu = new ContextMenuStrip();
+            selMenu.Items.Add("Find");
+            selMenu.Items.Add("Replace");
+            selMenu.Items.Add("Get subtask number");
+            selMenu.ItemClicked += jsonContextClicked;
+        }
+        private void Editor_TextBox_RightClicked(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (Selected.Count == 1)
+                {
+                    selMenu.Show(listView1, e.Location);
+                }
+                else if (Selected.Count == 0 || Selected == null)
+                {
+
+                    empMenu.Show(listView1, e.Location);
+                }
+                else if (Selected.Count > 1)
+                {
+                    multiSelMenu.Show(listView1, e.Location);
+                }
             }
         }
     }
