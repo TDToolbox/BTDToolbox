@@ -99,6 +99,17 @@ namespace BTDToolbox
             }
 
         }
+
+        public void force_appendLog(String log)
+        {
+            Invoke((MethodInvoker)delegate {
+                if (this.Visible == false)
+                    this.Visible = true;
+                this.BringToFront();
+
+                appendLog(log);
+            });
+        }
         private void exitHandling(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "console", programData);

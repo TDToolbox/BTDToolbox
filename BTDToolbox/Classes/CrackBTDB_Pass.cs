@@ -68,6 +68,8 @@ namespace BTDToolbox.Classes
             RunDirectoryPropmts();
             RunStrings2();
             RunJohntr();
+            string password = ReadPass();
+            ConsoleHandler.force_appendLog("The password for your data.jet is:  " + password);
         }
         public bool CheckForDependencies()
         {
@@ -240,7 +242,7 @@ namespace BTDToolbox.Classes
             p.Start();
 
             p.StandardInput.WriteLine("strings2 -pid " + pid + " > strings.txt");
-            Thread.Sleep(6000);
+            Thread.Sleep(4500);
             p.Close();
             KillProcess("Battles-Win");
             KillProcess("cmd");
@@ -291,8 +293,35 @@ namespace BTDToolbox.Classes
 
             p.StandardInput.WriteLine("zip2john data.jet > data.hash");
 
-            Thread.Sleep(10000);
+            Thread.Sleep(2000);
             p.StandardInput.WriteLine("john --wordlist=strings.txt data.hash");
+            Thread.Sleep(2000);
+            KillProcess("cmd");
+        }
+        private string ReadPass()
+        {
+            string johnPotPath = "";
+            string text = "";
+            string password = "";
+            if (GetOS_Type() == "64")
+            {
+                johnPotPath = johntr_RunDir_64bit + "\\john.pot";
+            }
+            else
+            {
+                johnPotPath = johntr_RunDir_32bit + "\\john.pot";
+            }
+            if(File.Exists(johnPotPath))
+            {
+                text = File.ReadAllText(johnPotPath);
+                string[] split = text.Split(':');
+                password = split[split.Length - 1];
+            }
+            else
+            {
+                ConsoleHandler.appendLog("An error occured.. The file \"John.pot\" could not be found");
+            }
+            return password;
         }
     }
 }

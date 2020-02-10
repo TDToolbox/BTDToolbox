@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace BTDToolbox
 {
@@ -10,6 +11,11 @@ namespace BTDToolbox
         {
             if (validateConsole())
                 console.appendLog(log);
+        }
+        public static void force_appendLog(String log)
+        {
+            if (validateConsole())
+                console.force_appendLog(log);            
         }
 
         public static void announcement()
