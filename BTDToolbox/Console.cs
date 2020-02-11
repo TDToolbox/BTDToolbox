@@ -77,15 +77,17 @@ namespace BTDToolbox
         }
         public void appendNotice(string notice)
         {
-            output_log.SelectionColor = Color.Yellow;
-
-            appendLog("Notice: " + notice);
+            Invoke((MethodInvoker)delegate {
+                output_log.SelectionColor = Color.Yellow;
+                appendLog("Notice: " + notice);
+            });   
         }
         public void force_appendNotice(string notice)
         {
-            output_log.SelectionColor = Color.Yellow;
-
-            force_appendLog("Notice: " + notice);
+                Invoke((MethodInvoker)delegate {
+                    output_log.SelectionColor = Color.Yellow;
+                    force_appendLog("Notice: " + notice);
+                });               
         }
         public override void close_button_Click(object sender, EventArgs e)
         {

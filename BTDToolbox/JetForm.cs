@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using static System.Windows.Forms.ToolStripItem;
 using static BTDToolbox.GeneralMethods;
+using BTDToolbox.Classes;
 
 namespace BTDToolbox
 {
@@ -732,6 +733,12 @@ namespace BTDToolbox
 
             }
             
+        }
+
+        private void ValidateAllFiles_Click(object sender, EventArgs e)
+        {
+            Thread bg = new Thread(JSON_Reader.ValidateAllJsonFiles);
+            bg.Start();
         }
     }
 }

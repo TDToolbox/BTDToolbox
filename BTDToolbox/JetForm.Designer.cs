@@ -58,6 +58,8 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ValidateAllFiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -139,6 +141,8 @@
             this.openToolStripMenuItem,
             this.Save_ToolStrip,
             this.toolStripSeparator1,
+            this.ValidateAllFiles,
+            this.toolStripSeparator3,
             this.retToolStripMenuItem,
             this.revertToBackupToolStripMenuItem,
             this.toolStripSeparator2,
@@ -384,6 +388,18 @@
             this.name_column.Text = "Name";
             this.name_column.Width = 517;
             // 
+            // ValidateAllFiles
+            // 
+            this.ValidateAllFiles.Name = "ValidateAllFiles";
+            this.ValidateAllFiles.Size = new System.Drawing.Size(180, 22);
+            this.ValidateAllFiles.Text = "Validate All Files";
+            this.ValidateAllFiles.Click += new System.EventHandler(this.ValidateAllFiles_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            // 
             // JetForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -446,5 +462,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem RenameProject_Button;
         private System.Windows.Forms.ToolStripMenuItem DeleteProject_Button;
+        private System.Windows.Forms.ToolStripMenuItem ValidateAllFiles;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
