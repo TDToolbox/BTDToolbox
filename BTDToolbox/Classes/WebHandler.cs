@@ -77,6 +77,8 @@ namespace BTDToolbox.Classes
                     break;
                 }
             }
+            if (get.readURL == null)
+                get.readURL = "";
             return get.readURL;
         }      
         public string processGit_Text(string url, string deleteText, int lineNumber)    //call this one read git text and return the url we want. Delete text is the starting word, for example "toolbox2019: "

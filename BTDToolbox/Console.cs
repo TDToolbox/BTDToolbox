@@ -70,7 +70,7 @@ namespace BTDToolbox
             string answer = web.WaitOn_URL(url);
             output_log.SelectionColor = Color.OrangeRed;
 
-            if (answer.Length > 0)
+            if (answer.Length > 0 && answer != null)
                 appendLog("Announcement: " + answer);
             else
                 appendLog("Failed to read announcement...");

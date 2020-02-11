@@ -66,7 +66,7 @@
             this.invoke_button.ForeColor = System.Drawing.Color.White;
             this.invoke_button.Location = new System.Drawing.Point(570, 379);
             this.invoke_button.Name = "invoke_button";
-            this.invoke_button.Size = new System.Drawing.Size(203, 23);
+            this.invoke_button.Size = new System.Drawing.Size(203, 27);
             this.invoke_button.TabIndex = 4;
             this.invoke_button.Text = "Invoke";
             this.invoke_button.UseVisualStyleBackColor = false;
@@ -76,9 +76,11 @@
             this.invoke_textbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.invoke_textbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.invoke_textbox.Location = new System.Drawing.Point(4, 380);
+            this.invoke_textbox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.invoke_textbox.ForeColor = System.Drawing.Color.White;
+            this.invoke_textbox.Location = new System.Drawing.Point(4, 381);
             this.invoke_textbox.Name = "invoke_textbox";
-            this.invoke_textbox.Size = new System.Drawing.Size(560, 20);
+            this.invoke_textbox.Size = new System.Drawing.Size(560, 23);
             this.invoke_textbox.TabIndex = 3;
             // 
             // output_log

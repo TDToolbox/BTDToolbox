@@ -39,7 +39,7 @@ namespace BTDToolbox
         {
             InitializeComponent();
             StartUp();
-
+            goUpButton.Font = new Font("Microsoft Sans Serif", 9);
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
