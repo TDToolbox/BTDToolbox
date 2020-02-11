@@ -40,6 +40,7 @@ namespace BTDToolbox
         //JsonEditor_Config jsonEditorConfig;
         ConfigFile programData;
         private ContextMenuStrip selMenu;
+        private ContextMenuStrip highlightMenu;
         public static bool jsonError;
         
         public static float jsonEditorFont;
@@ -54,6 +55,7 @@ namespace BTDToolbox
             StartUp();
 
             initSelContextMenu();
+            initHighlightContextMenu();
             this.Path = Path;
             this.FormClosing += exitHandling;
             Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
@@ -563,28 +565,76 @@ namespace BTDToolbox
         private void initSelContextMenu()
         {
             selMenu = new ContextMenuStrip();
-            selMenu.Items.Add("Copy");
             selMenu.Items.Add("Paste");
-            selMenu.Items.Add("Find");
-            selMenu.Items.Add("Replace");
             selMenu.Items.Add("Get subtask number");
             selMenu.ItemClicked += jsonContextClicked;
+        }
+        private void initHighlightContextMenu()
+        {
+            highlightMenu = new ContextMenuStrip();
+            highlightMenu.Items.Add("Copy");
+            highlightMenu.Items.Add("Paste");
+            highlightMenu.Items.Add("Find");
+            highlightMenu.Items.Add("Replace");
+            highlightMenu.Items.Add("Get subtask number");
+            highlightMenu.ItemClicked += highlightContextClicked;
         }
         private void Editor_TextBox_RightClicked(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 CharIndex_UnderMouse = GeneralMethods.CharIndex_UnderMouse(Editor_TextBox, e.X, e.Y);
-                selMenu.Show(Editor_TextBox, e.Location);
+
+                if (Editor_TextBox.SelectedText.Length > 0)
+                {
+                    highlightMenu.Show(Editor_TextBox, e.Location);
+                }
+                else if (Editor_TextBox.SelectedText.Length == 0)
+                {
+                    selMenu.Show(Editor_TextBox, e.Location);
+                }
             }
         }
         private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    Editor_TextBox.SelectionStart = CharIndex_UnderMouse;
+                    Editor_TextBox.Paste();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Get subtask number")
+            {
+                if(jsonError == false)
+                {
+                    try
+                    {
+                        //func here
+                        GetSubtaskNum();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                }
+            }
+        }
+        private void highlightContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == "Copy")
             {
                 try
                 {
-                    //func here
+                    Clipboard.SetText(Editor_TextBox.SelectedText);
                 }
                 catch (Exception)
                 {
@@ -594,7 +644,7 @@ namespace BTDToolbox
             {
                 try
                 {
-                    //func here
+                    Editor_TextBox.Paste();
                 }
                 catch (Exception)
                 {
@@ -622,7 +672,7 @@ namespace BTDToolbox
             }
             if (e.ClickedItem.Text == "Get subtask number")
             {
-                if(jsonError == false)
+                if (jsonError == false)
                 {
                     try
                     {
