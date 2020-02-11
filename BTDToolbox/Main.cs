@@ -607,5 +607,10 @@ namespace BTDToolbox
                 ConsoleHandler.force_appendLog("You don't have a battles password saved... Next time you make a new project, make sure to check \"Remember Password\"");
             }
         }
+
+        private void EraseConsoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.ClearConsole();
+        }
     }
 }

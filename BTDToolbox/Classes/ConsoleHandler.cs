@@ -46,6 +46,16 @@ namespace BTDToolbox
             if (validateConsole())
                 console.GetAnnouncement();
         }
+        public static void ClearConsole()
+        {
+            if (validateConsole())
+                console.Close();
+
+            console = new Console();
+            console.MdiParent = Main.getInstance();
+            console.Show();
+            console.BringToFront();
+        }
 
         public static bool validateConsole()
         {

@@ -93,6 +93,7 @@
             this.ShowBTD5_Pass = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ShowLastBattlesPass = new System.Windows.Forms.ToolStripMenuItem();
+            this.eraseConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -219,14 +220,14 @@
             // Find_Button
             // 
             this.Find_Button.Name = "Find_Button";
-            this.Find_Button.Size = new System.Drawing.Size(115, 22);
+            this.Find_Button.Size = new System.Drawing.Size(180, 22);
             this.Find_Button.Text = "Find";
             this.Find_Button.Click += new System.EventHandler(this.Find_Button_Click);
             // 
             // Replace_Button
             // 
             this.Replace_Button.Name = "Replace_Button";
-            this.Replace_Button.Size = new System.Drawing.Size(115, 22);
+            this.Replace_Button.Size = new System.Drawing.Size(180, 22);
             this.Replace_Button.Text = "Replace";
             this.Replace_Button.Click += new System.EventHandler(this.Replace_Button_Click);
             // 
@@ -400,6 +401,7 @@
             this.toolStripSeparator1,
             this.Reset_EXE,
             this.resetUserSettingsToolStripMenuItem,
+            this.eraseConsoleToolStripMenuItem,
             this.toolStripSeparator2,
             this.contactUsToolStripMenuItem,
             this.Credits,
@@ -601,6 +603,13 @@
             this.ShowLastBattlesPass.Text = "BTDB Password";
             this.ShowLastBattlesPass.Click += new System.EventHandler(this.ShowLastBattlesPass_Click);
             // 
+            // eraseConsoleToolStripMenuItem
+            // 
+            this.eraseConsoleToolStripMenuItem.Name = "eraseConsoleToolStripMenuItem";
+            this.eraseConsoleToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.eraseConsoleToolStripMenuItem.Text = "Clear console history";
+            this.eraseConsoleToolStripMenuItem.Click += new System.EventHandler(this.EraseConsoleToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -696,6 +705,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem ShowBTD5_Pass;
         private System.Windows.Forms.ToolStripMenuItem ShowLastBattlesPass;
+        private System.Windows.Forms.ToolStripMenuItem eraseConsoleToolStripMenuItem;
     }
 }
 
