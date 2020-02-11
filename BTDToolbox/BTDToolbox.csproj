@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Classes\Announcements.cs" />
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
+    <Compile Include="Classes\CreateDesktopShortcut.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
@@ -262,6 +263,17 @@
     <None Include="Resources\BTD_icon_2_512x512.png" />
     <None Include="Resources\PossibleBTD5MODIcon.png" />
     <None Include="Resources\PossibleBTD5MODIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

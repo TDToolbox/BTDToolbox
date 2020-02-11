@@ -63,7 +63,7 @@ namespace BTDToolbox
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
             this.DoubleBuffered = true;
-            
+            CreateDesktopShortcut.CreateShortcut();
 
 
 
