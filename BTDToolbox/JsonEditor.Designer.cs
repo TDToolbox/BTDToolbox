@@ -51,6 +51,7 @@
             this.tB_line = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.FindSubtask_Button = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -132,6 +133,7 @@
             this.Redo_Button,
             this.ShowFindMenu_Button,
             this.ShowReplaceMenu_Button,
+            this.FindSubtask_Button,
             this.toolStripSeparator3,
             this.ChangeFontSize_MenuItem});
             this.Edit_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -316,6 +318,13 @@
             this.Help_DropDown.Size = new System.Drawing.Size(45, 22);
             this.Help_DropDown.Text = "Help";
             // 
+            // FindSubtask_Button
+            // 
+            this.FindSubtask_Button.Name = "FindSubtask_Button";
+            this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
+            this.FindSubtask_Button.Text = "Find Subtask";
+            this.FindSubtask_Button.Click += new System.EventHandler(this.FindSubtask_Button_Click);
+            // 
             // JsonEditor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -364,5 +373,6 @@
         private System.Windows.Forms.RichTextBox tB_line;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripDropDownButton Help_DropDown;
+        private System.Windows.Forms.ToolStripMenuItem FindSubtask_Button;
     }
 }

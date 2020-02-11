@@ -45,6 +45,7 @@ namespace BTDToolbox
         public static float jsonEditorFont;
         public string lastJsonFile;
         int CharIndex_UnderMouse = 0;
+        bool searchSubtask = false;
 
         public JsonEditor(string Path)
         {
@@ -162,6 +163,7 @@ namespace BTDToolbox
         {
             if (e.Control && e.KeyCode == Keys.F)
             {
+                searchSubtask = false;
                 ShowFindMenu();
             }
             if (e.Control && e.KeyCode == Keys.H)
@@ -220,6 +222,19 @@ namespace BTDToolbox
             }
             
         }
+        private void HideFindButton()
+        {
+            isFinding = false;
+            this.Find_TextBox.Visible = false;
+            this.FindNext_Button.Visible = false;
+        }
+        private void HideReplaceButton()
+        {
+            isReplacing = false;
+            this.Replace_TextBox.Visible = false;
+            this.ReplaceDropDown.Visible = false;
+            this.toolStripSeparator2.Visible = false;
+        }
         private void ShowFindMenu()
         {
             isFinding = !isFinding;
@@ -227,18 +242,14 @@ namespace BTDToolbox
             this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
             if (isReplacing)
             {
-                isFinding = false;
-                isReplacing = false;
-                this.Find_TextBox.Visible = false;
-                this.FindNext_Button.Visible = false;
-                this.toolStripSeparator2.Visible = false;
-                this.Replace_TextBox.Visible = false;
-                this.ReplaceDropDown.Visible = false;
+                HideFindButton();
+                HideReplaceButton();
             }
         }
         private void ShowReplaceMenu()
         {
             isReplacing = !isReplacing;
+            searchSubtask = false;
             this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
             this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
             this.toolStripSeparator2.Visible = !this.toolStripSeparator2.Visible;
@@ -257,6 +268,7 @@ namespace BTDToolbox
         }
         private void ShowFindMenu_Button_Click_1(object sender, EventArgs e)
         {
+            searchSubtask = false;
             ShowFindMenu();
         }
         private void ReplaceButton_Click(object sender, EventArgs e)
@@ -328,7 +340,14 @@ namespace BTDToolbox
         }
         private void FindNext_Button_Click(object sender, EventArgs e)
         {
-            FindText();
+            if(!searchSubtask)
+            {
+                FindText();
+            }
+            else
+            {
+                SearchForSubtask();
+            }
         }
         private void JsonEditor_Load(object sender, EventArgs e)
         {
@@ -631,6 +650,41 @@ namespace BTDToolbox
             {
                 ConsoleHandler.force_appendLog("Unable to detect subtask. Please try clicking somewhere else...");
             }
+        }
+        private void SearchForSubtask()
+        {
+            int i = 0;
+            bool found = false;
+            foreach(char c in Editor_TextBox.Text)
+            {
+                if (c == ':')
+                {
+                    string subtaskNum = JSON_Reader.GetSubtaskNum(i, Editor_TextBox.Text);
+                    if(subtaskNum.Replace(" ", "").Replace(",","") == Find_TextBox.Text.Replace(" ", "").Replace(",", ""))
+                    {
+                        found = true;
+
+                        int startHighlighht = Editor_TextBox.Text.LastIndexOf("\"", i - 2);
+                        Editor_TextBox.SelectionStart = i;
+                        Editor_TextBox.Select(i, - (i - startHighlighht));
+                        Editor_TextBox.ScrollToCaret();
+                        HideFindButton();
+                        searchSubtask = false;
+                        break;
+                    }
+                }
+                i++;
+            }
+            if (!found)
+            {
+                ConsoleHandler.force_appendLog("That subtask was not found");
+            }
+        }
+
+        private void FindSubtask_Button_Click(object sender, EventArgs e)
+        {
+            searchSubtask = true;
+            ShowFindMenu();
         }
     }
 }
