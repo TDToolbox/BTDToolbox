@@ -452,9 +452,24 @@ namespace BTDToolbox
             foreach (string name in files)
             {
                 FileInfo info = new FileInfo(name);
-                File.Copy(name, targetDir + "\\" + info.Name);
+                string dest = targetDir + "\\" + info.Name;
+                if (File.Exists(targetDir + "\\" + info.Name))
+                {
+                    int i = 1;
+                    string[] split = dest.Split('.');
+                    string noExtention = dest.Replace("." + split[split.Length - 1],"");
+                    string copyName = noExtention + "_Copy ";
+                    
+                    while (File.Exists(dest))
+                    {
+                        dest = copyName + i + "." + split[split.Length-1];
+                        i++;
+                    }
+                }
+                File.Copy(name, dest);
 
-                ListViewItem item = new ListViewItem(info.Name, 1);
+                string[] filename = dest.Split('\\');
+                ListViewItem item = new ListViewItem(filename[filename.Length-1], 1);
                 ListViewItem.ListViewSubItem[] subItems = new ListViewItem.ListViewSubItem[]
                     {
                         new ListViewItem.ListViewSubItem(item, "File"),
