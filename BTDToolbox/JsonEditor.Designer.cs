@@ -36,9 +36,11 @@
             this.Redo_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowFindMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowReplaceMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.FindSubtask_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ChangeFontSize_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontSize_TextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Replace_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.ReplaceDropDown = new System.Windows.Forms.ToolStripDropDownButton();
@@ -50,8 +52,6 @@
             this.lintPanel = new System.Windows.Forms.Panel();
             this.tB_line = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
-            this.FindSubtask_Button = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -95,6 +95,7 @@
             // 
             // Editor_TextBox
             // 
+            this.Editor_TextBox.AcceptsTab = true;
             this.Editor_TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -178,6 +179,12 @@
             this.ShowReplaceMenu_Button.Text = "Replace            (Ctrl + H)";
             this.ShowReplaceMenu_Button.Click += new System.EventHandler(this.ShowReplaceMenu_Button_Click);
             // 
+            // FindSubtask_Button
+            // 
+            this.FindSubtask_Button.Name = "FindSubtask_Button";
+            this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
+            this.FindSubtask_Button.Text = "Find Subtask";
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -197,6 +204,18 @@
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Help_DropDown
+            // 
+            this.Help_DropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Help_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Help_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Help_DropDown.ForeColor = System.Drawing.Color.White;
+            this.Help_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Help_DropDown.Image")));
+            this.Help_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Help_DropDown.Name = "Help_DropDown";
+            this.Help_DropDown.Size = new System.Drawing.Size(45, 22);
+            this.Help_DropDown.Text = "Help";
             // 
             // toolStripSeparator1
             // 
@@ -314,24 +333,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(100, 387);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
-            // 
-            // Help_DropDown
-            // 
-            this.Help_DropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.Help_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.Help_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Help_DropDown.ForeColor = System.Drawing.Color.White;
-            this.Help_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Help_DropDown.Image")));
-            this.Help_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Help_DropDown.Name = "Help_DropDown";
-            this.Help_DropDown.Size = new System.Drawing.Size(45, 22);
-            this.Help_DropDown.Text = "Help";
-            // 
-            // FindSubtask_Button
-            // 
-            this.FindSubtask_Button.Name = "FindSubtask_Button";
-            this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
-            this.FindSubtask_Button.Text = "Find Subtask";
             // 
             // JsonEditor
             // 

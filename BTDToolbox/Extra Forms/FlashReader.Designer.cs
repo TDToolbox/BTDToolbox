@@ -93,6 +93,7 @@
             // 
             // Editor_TextBox
             // 
+            this.Editor_TextBox.AcceptsTab = true;
             this.Editor_TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -195,14 +196,14 @@
             // compileToolStripMenuItem
             // 
             this.compileToolStripMenuItem.Name = "compileToolStripMenuItem";
-            this.compileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.compileToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.compileToolStripMenuItem.Text = "Compile";
             this.compileToolStripMenuItem.Click += new System.EventHandler(this.CompileToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(207, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(199, 6);
             // 
             // Calc_NumOfRounds_button
             // 
@@ -302,14 +303,14 @@
             // ReplaceButton
             // 
             this.ReplaceButton.Name = "ReplaceButton";
-            this.ReplaceButton.Size = new System.Drawing.Size(180, 22);
+            this.ReplaceButton.Size = new System.Drawing.Size(132, 22);
             this.ReplaceButton.Text = "Replace";
             this.ReplaceButton.Click += new System.EventHandler(this.ReplaceButton_Click);
             // 
             // ReplaceAllButton_DropDown
             // 
             this.ReplaceAllButton_DropDown.Name = "ReplaceAllButton_DropDown";
-            this.ReplaceAllButton_DropDown.Size = new System.Drawing.Size(180, 22);
+            this.ReplaceAllButton_DropDown.Size = new System.Drawing.Size(132, 22);
             this.ReplaceAllButton_DropDown.Text = "Replace All";
             this.ReplaceAllButton_DropDown.Click += new System.EventHandler(this.ReplaceAllButton_DropDown_Click_1);
             // 
@@ -371,13 +372,13 @@
             this.Help_Button.Image = ((System.Drawing.Image)(resources.GetObject("Help_Button.Image")));
             this.Help_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Help_Button.Name = "Help_Button";
-            this.Help_Button.Size = new System.Drawing.Size(45, 19);
+            this.Help_Button.Size = new System.Drawing.Size(45, 22);
             this.Help_Button.Text = "Help";
             // 
             // bloonTypesToolStripMenuItem
             // 
             this.bloonTypesToolStripMenuItem.Name = "bloonTypesToolStripMenuItem";
-            this.bloonTypesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bloonTypesToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.bloonTypesToolStripMenuItem.Text = "Bloon Types";
             this.bloonTypesToolStripMenuItem.Click += new System.EventHandler(this.BloonTypesToolStripMenuItem_Click);
             // 
