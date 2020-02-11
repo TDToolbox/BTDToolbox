@@ -48,9 +48,8 @@ namespace BTDToolbox
         public string lastJsonFile;
         int CharIndex_UnderMouse = 0;
         bool searchSubtask = false;
-        int num_of_tabs = 1;
-        int num_space_in_tab = 5;
-
+        bool tabLine = false;
+        string tab;
         public JsonEditor(string Path)
         {
             InitializeComponent();
@@ -129,11 +128,17 @@ namespace BTDToolbox
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Path, Editor_TextBox.Text);
+            //Editor_TextBox.SelectionIndent = 100;
             CheckJSON(this.Editor_TextBox.Text);
 
             if (Editor_TextBox.Text == "")
             {
                 AddLineNumbers();
+            }
+            if(tabLine)
+            {
+                Editor_TextBox.SelectedText = tab;
+                tabLine = false;
             }
         }
         private void CheckJSON (string text)
@@ -167,6 +172,7 @@ namespace BTDToolbox
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            
             if (e.Control && e.KeyCode == Keys.F)
             {
                 searchSubtask = false;
@@ -175,6 +181,11 @@ namespace BTDToolbox
             if (e.Control && e.KeyCode == Keys.H)
             {
                 ShowReplaceMenu();
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
+                tabLine = true;
             }
         }
         private void FindText()
@@ -434,6 +445,7 @@ namespace BTDToolbox
 
         private void Editor_TextBox_MouseClick(object sender, MouseEventArgs e)
         {
+            
             //SearchForPairs();
         }
         private void SearchForPairs()
@@ -767,13 +779,8 @@ namespace BTDToolbox
         }
         private void InsertTab()
         {
-            string tab = string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
-
-            //Editor_TextBox.Text.Insert(Editor_TextBox.SelectionStart, tab);
-            Editor_TextBox.SelectionStart = Editor_TextBox.SelectionStart;
-            Editor_TextBox.SelectionLength = 0;
-            Editor_TextBox.SelectedText = "aaa";
-            //Editor_TextBox.SelectedText = tab;
+            //string tab = string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
+            
 
         }
         private void FindSubtask_Button_Click(object sender, EventArgs e)
@@ -781,6 +788,22 @@ namespace BTDToolbox
             ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
             searchSubtask = true;
             ShowFindMenu();
+        }
+        private int IndentNewLines()
+        {
+            int index = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            string text = Editor_TextBox.Text.Remove(0, index);
+
+            int numSpace = 0;
+            foreach(char c in text)
+            {
+                if (c != ' ')
+                    break;
+                else
+                    numSpace++;
+            }
+            return numSpace;
+            //ConsoleHandler.appendLog_CanRepeat("number of spaces before text on this line is: " + numSpace.ToString());
         }
     }
 }
