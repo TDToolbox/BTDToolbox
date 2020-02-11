@@ -76,12 +76,12 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.Editor_TextBox);
             this.contentPanel.Controls.Add(this.NumOfRounds_Label);
             this.contentPanel.Controls.Add(this.label1);
             this.contentPanel.Controls.Add(this.InputScript_Textbox);
             this.contentPanel.Controls.Add(this.tB_line);
             this.contentPanel.Controls.Add(this.JsonToolstrip);
-            this.contentPanel.Controls.Add(this.Editor_TextBox);
             this.contentPanel.Controls.Add(this.pictureBox1);
             // 
             // close_button

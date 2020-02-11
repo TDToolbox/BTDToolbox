@@ -173,6 +173,8 @@ namespace BTDToolbox
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             
+
+
             if (e.Control && e.KeyCode == Keys.F)
             {
                 searchSubtask = false;
@@ -186,6 +188,10 @@ namespace BTDToolbox
             {
                 tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
                 tabLine = true;
+            }
+            if (e.KeyCode == Keys.Back)
+            {
+                RemoveEmptySpaces();
             }
         }
         private void FindText()
@@ -445,7 +451,6 @@ namespace BTDToolbox
 
         private void Editor_TextBox_MouseClick(object sender, MouseEventArgs e)
         {
-            
             //SearchForPairs();
         }
         private void SearchForPairs()
@@ -803,7 +808,22 @@ namespace BTDToolbox
                     numSpace++;
             }
             return numSpace;
-            //ConsoleHandler.appendLog_CanRepeat("number of spaces before text on this line is: " + numSpace.ToString());
+        }
+        private void RemoveEmptySpaces()
+        {
+            int numSpaces = IndentNewLines();
+            int startIndex = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            int currentIndex = Editor_TextBox.SelectionStart;
+
+            if(currentIndex <= (startIndex + numSpaces))
+            {
+                if (numSpaces > 1)
+                {
+                    Editor_TextBox.SelectionLength = numSpaces;
+                    Editor_TextBox.SelectionStart = startIndex;
+                    Editor_TextBox.SelectedText = "";
+                }
+            }
         }
     }
 }

@@ -39,8 +39,14 @@ namespace BTDToolbox.Extra_Forms
         public string lastJsonFile;
         string formattedText = "";
         string unformattedText = "";
+
+        //tab variables for formatting brackets
         int num_space_in_tab = 5;
         int num_of_tabs = 0;
+
+        //tab variables for new lines
+        string tab;
+        bool tabLine;
 
         public FlashReader()
         {
@@ -88,6 +94,11 @@ namespace BTDToolbox.Extra_Forms
             {
                 AddLineNumbers();
             }
+            if (tabLine)
+            {
+                Editor_TextBox.SelectedText = tab;
+                tabLine = false;
+            }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -109,6 +120,11 @@ namespace BTDToolbox.Extra_Forms
             if (e.Control && e.KeyCode == Keys.H)
             {
                 ShowReplaceMenu();
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
+                tabLine = true;
             }
         }
         private void FindText()
@@ -511,6 +527,21 @@ namespace BTDToolbox.Extra_Forms
                 Console.getInstance().Visible = true;
             }
             ConsoleHandler.appendLog("BLOON TYPES:\n>> Red:  0\n>> Blue:  1\n>> Green:  2\n>> Yellow:  3\n>> Pink:  4\n>> Black:  5\n>> White:  6\n>> Lead:  7\n>> Zebra:  8\n>> Rainbow:  9\n>> Ceramic:  10\n>> MOAB:  11\n>> BFB:  12\n>> ZOMG:  13");
+        }
+        private int IndentNewLines()
+        {
+            int index = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            string text = Editor_TextBox.Text.Remove(0, index);
+
+            int numSpace = 0;
+            foreach (char c in text)
+            {
+                if (c != ' ')
+                    break;
+                else
+                    numSpace++;
+            }
+            return numSpace;
         }
     }
 }
