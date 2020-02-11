@@ -408,12 +408,19 @@ namespace BTDToolbox
                 string currentPath = this.Text;
                 string newName = Microsoft.VisualBasic.Interaction.InputBox("Input new file name", "Rename file", select, posX, posY);
 
-                string source = currentPath + "\\" + select;
-                string dest = currentPath + "\\" + newName;
+                if(newName.Length > 0)
+                {
+                    string source = currentPath + "\\" + select;
+                    string dest = currentPath + "\\" + newName;
 
-                File.Move(source, dest);
+                    File.Move(source, dest);
 
-                Selected[0].Text = newName;
+                    Selected[0].Text = newName;
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("You didn't enter a name");
+                }
             }
         }
         private void delete()
@@ -495,6 +502,34 @@ namespace BTDToolbox
             if (e.Control && e.KeyCode == Keys.S)
             {
                 saveJet();
+            }
+            if (e.KeyCode == Keys.Delete)
+            {
+                ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+                if (Selected.Count > 0)
+                {
+                    delete();
+                }
+            }
+            if (e.KeyCode == Keys.F2)
+            {
+                ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+                if (Selected.Count == 1)
+                {
+                    rename();
+                }
+            }
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+                if (Selected.Count > 0)
+                {
+                    copy();
+                }
+            }
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                paste();
             }
         }
 
