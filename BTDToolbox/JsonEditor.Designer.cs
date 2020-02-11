@@ -36,9 +36,11 @@
             this.Redo_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowFindMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowReplaceMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.FindSubtask_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ChangeFontSize_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontSize_TextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Replace_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.ReplaceDropDown = new System.Windows.Forms.ToolStripDropDownButton();
@@ -61,19 +63,22 @@
             // 
             // titleSeperator
             // 
+            this.titleSeperator.TabStop = false;
             // 
             // TitleLabel
             // 
             this.TitleLabel.Size = new System.Drawing.Size(72, 16);
+            this.TitleLabel.TabIndex = 15;
             this.TitleLabel.Text = "JsonEditor";
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.Editor_TextBox);
             this.contentPanel.Controls.Add(this.tB_line);
             this.contentPanel.Controls.Add(this.lintPanel);
             this.contentPanel.Controls.Add(this.JsonToolstrip);
-            this.contentPanel.Controls.Add(this.Editor_TextBox);
             this.contentPanel.Controls.Add(this.pictureBox1);
+            this.contentPanel.TabIndex = 17;
             // 
             // close_button
             // 
@@ -81,10 +86,16 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            this.close_button.TabStop = false;
             this.close_button.Click += new System.EventHandler(this.Close_button_Click);
+            // 
+            // Sizer
+            // 
+            this.Sizer.TabIndex = 16;
             // 
             // Editor_TextBox
             // 
+            this.Editor_TextBox.AcceptsTab = true;
             this.Editor_TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -95,7 +106,7 @@
             this.Editor_TextBox.Location = new System.Drawing.Point(63, 28);
             this.Editor_TextBox.Name = "Editor_TextBox";
             this.Editor_TextBox.Size = new System.Drawing.Size(710, 375);
-            this.Editor_TextBox.TabIndex = 1;
+            this.Editor_TextBox.TabIndex = 0;
             this.Editor_TextBox.Text = "";
             this.Editor_TextBox.SelectionChanged += new System.EventHandler(this.Editor_TextBox_SelectionChanged);
             this.Editor_TextBox.VScroll += new System.EventHandler(this.Editor_TextBox_VScroll);
@@ -109,6 +120,7 @@
             this.JsonToolstrip.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.JsonToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Edit_DropDown,
+            this.Help_DropDown,
             this.toolStripSeparator1,
             this.Replace_TextBox,
             this.ReplaceDropDown,
@@ -118,7 +130,7 @@
             this.JsonToolstrip.Location = new System.Drawing.Point(0, 0);
             this.JsonToolstrip.Name = "JsonToolstrip";
             this.JsonToolstrip.Size = new System.Drawing.Size(776, 25);
-            this.JsonToolstrip.TabIndex = 2;
+            this.JsonToolstrip.TabIndex = 21;
             this.JsonToolstrip.Text = "toolStrip1";
             // 
             // Edit_DropDown
@@ -130,6 +142,7 @@
             this.Redo_Button,
             this.ShowFindMenu_Button,
             this.ShowReplaceMenu_Button,
+            this.FindSubtask_Button,
             this.toolStripSeparator3,
             this.ChangeFontSize_MenuItem});
             this.Edit_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -166,6 +179,12 @@
             this.ShowReplaceMenu_Button.Text = "Replace            (Ctrl + H)";
             this.ShowReplaceMenu_Button.Click += new System.EventHandler(this.ShowReplaceMenu_Button_Click);
             // 
+            // FindSubtask_Button
+            // 
+            this.FindSubtask_Button.Name = "FindSubtask_Button";
+            this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
+            this.FindSubtask_Button.Text = "Find Subtask";
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -181,9 +200,22 @@
             // 
             // FontSize_TextBox
             // 
+            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Help_DropDown
+            // 
+            this.Help_DropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Help_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Help_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Help_DropDown.ForeColor = System.Drawing.Color.White;
+            this.Help_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Help_DropDown.Image")));
+            this.Help_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Help_DropDown.Name = "Help_DropDown";
+            this.Help_DropDown.Size = new System.Drawing.Size(45, 22);
+            this.Help_DropDown.Text = "Help";
             // 
             // toolStripSeparator1
             // 
@@ -195,6 +227,7 @@
             // Replace_TextBox
             // 
             this.Replace_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Replace_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Replace_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Replace_TextBox.Name = "Replace_TextBox";
             this.Replace_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -241,6 +274,7 @@
             // Find_TextBox
             // 
             this.Find_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Find_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Find_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Find_TextBox.Name = "Find_TextBox";
             this.Find_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -264,10 +298,10 @@
             this.lintPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lintPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.lintPanel.ForeColor = System.Drawing.Color.Black;
-            this.lintPanel.Location = new System.Drawing.Point(63, 0);
+            this.lintPanel.Location = new System.Drawing.Point(106, 0);
             this.lintPanel.Name = "lintPanel";
             this.lintPanel.Size = new System.Drawing.Size(60, 24);
-            this.lintPanel.TabIndex = 3;
+            this.lintPanel.TabIndex = 20;
             // 
             // tB_line
             // 
@@ -282,7 +316,8 @@
             this.tB_line.ReadOnly = true;
             this.tB_line.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.tB_line.Size = new System.Drawing.Size(53, 374);
-            this.tB_line.TabIndex = 5;
+            this.tB_line.TabIndex = 19;
+            this.tB_line.TabStop = false;
             this.tB_line.Text = "";
             this.tB_line.WordWrap = false;
             this.tB_line.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TB_line_MouseDown);
@@ -346,5 +381,7 @@
         private System.Windows.Forms.Panel lintPanel;
         private System.Windows.Forms.RichTextBox tB_line;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripDropDownButton Help_DropDown;
+        private System.Windows.Forms.ToolStripMenuItem FindSubtask_Button;
     }
 }

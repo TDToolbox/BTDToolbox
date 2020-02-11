@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox.Extra_Forms
 {
@@ -34,21 +33,24 @@ namespace BTDToolbox.Extra_Forms
         public static int maxLC = 1;
 
         //Congif variables
-        //JsonEditor_Config jsonEditorConfig;
-        ConfigFile programData;
         public static bool jsonError;
 
         public static float jsonEditorFont;
         public string lastJsonFile;
         string formattedText = "";
         string unformattedText = "";
+
+        //tab variables for formatting brackets
         int num_space_in_tab = 5;
         int num_of_tabs = 0;
+
+        //tab variables for new lines
+        string tab;
+        bool tabLine;
 
         public FlashReader()
         {
             InitializeComponent();
-            this.FormClosing += exitHandling;
 
             this.Find_TextBox.Visible = false;
             this.FindNext_Button.Visible = false;
@@ -73,10 +75,6 @@ namespace BTDToolbox.Extra_Forms
             Editor_TextBox.Font = newfont;
             FontSize_TextBox.Text = jsonEditorFont.ToString();
         }
-        private void Deserialize_Config()
-        {
-            programData = Serializer.Deserialize_Config();
-        }
         private void EditorLoading(object sender, EventArgs e)
         {
             tB_line.Font = Editor_TextBox.Font;
@@ -96,6 +94,11 @@ namespace BTDToolbox.Extra_Forms
             {
                 AddLineNumbers();
             }
+            if (tabLine)
+            {
+                Editor_TextBox.SelectedText = tab;
+                tabLine = false;
+            }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -108,10 +111,6 @@ namespace BTDToolbox.Extra_Forms
             Editor_TextBox.Font = newfont;
             tB_line.Font = newfont;
         }
-        private void exitHandling(object sender, EventArgs e)
-        {
-            Serializer.SaveConfig(this, "json editor", programData);
-        }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.F)
@@ -122,7 +121,17 @@ namespace BTDToolbox.Extra_Forms
             {
                 ShowReplaceMenu();
             }
+            if (e.KeyCode == Keys.Enter)
+            {
+                tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
+                tabLine = true;
+            }
+            if (e.KeyCode == Keys.Back)
+            {
+                RemoveEmptySpaces();
+            }
         }
+
         private void FindText()
         {
             if (Find_TextBox.Text.Length <= 0)
@@ -283,10 +292,6 @@ namespace BTDToolbox.Extra_Forms
         private void FindNext_Button_Click(object sender, EventArgs e)
         {
             FindText();
-        }
-        private void JsonEditor_Load(object sender, EventArgs e)
-        {
-            Serializer.SaveConfig(this, "json editor", programData);
         }
 
         private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
@@ -527,6 +532,38 @@ namespace BTDToolbox.Extra_Forms
                 Console.getInstance().Visible = true;
             }
             ConsoleHandler.appendLog("BLOON TYPES:\n>> Red:  0\n>> Blue:  1\n>> Green:  2\n>> Yellow:  3\n>> Pink:  4\n>> Black:  5\n>> White:  6\n>> Lead:  7\n>> Zebra:  8\n>> Rainbow:  9\n>> Ceramic:  10\n>> MOAB:  11\n>> BFB:  12\n>> ZOMG:  13");
+        }
+        private int IndentNewLines()
+        {
+            int index = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            string text = Editor_TextBox.Text.Remove(0, index);
+
+            int numSpace = 0;
+            foreach (char c in text)
+            {
+                if (c != ' ')
+                    break;
+                else
+                    numSpace++;
+            }
+            return numSpace;
+        }
+        private void RemoveEmptySpaces()
+        {
+            int numSpaces = IndentNewLines();
+            int startIndex = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            int currentIndex = Editor_TextBox.SelectionStart;
+
+            //if(currentIndex <= (startIndex + numSpaces))
+            if (currentIndex <= (startIndex + numSpaces))
+            {
+                if (numSpaces > 5)
+                {
+                    Editor_TextBox.SelectionLength = 5;
+                    Editor_TextBox.SelectionStart = currentIndex - 5;
+                    Editor_TextBox.SelectedText = "";
+                }
+            }
         }
     }
 }

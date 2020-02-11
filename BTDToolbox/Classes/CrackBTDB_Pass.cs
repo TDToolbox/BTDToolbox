@@ -242,7 +242,7 @@ namespace BTDToolbox.Classes
             p.Start();
 
             p.StandardInput.WriteLine("strings2 -pid " + pid + " > strings.txt");
-            Thread.Sleep(4500);
+            Thread.Sleep(7500);
             p.Close();
             KillProcess("Battles-Win");
             KillProcess("cmd");
@@ -293,9 +293,9 @@ namespace BTDToolbox.Classes
 
             p.StandardInput.WriteLine("zip2john data.jet > data.hash");
 
-            Thread.Sleep(2000);
+            Thread.Sleep(7500);
             p.StandardInput.WriteLine("john --wordlist=strings.txt data.hash");
-            Thread.Sleep(2000);
+            Thread.Sleep(10000);
             KillProcess("cmd");
         }
         private string ReadPass()
@@ -319,7 +319,7 @@ namespace BTDToolbox.Classes
             }
             else
             {
-                ConsoleHandler.appendLog("An error occured.. The file \"John.pot\" could not be found");
+                ConsoleHandler.appendLog("An error occured.. The file \"john.pot\" could not be found");
             }
             return password;
         }

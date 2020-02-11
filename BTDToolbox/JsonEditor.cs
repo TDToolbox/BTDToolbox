@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BTDToolbox.Classes;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
+
 
 namespace BTDToolbox
 {
@@ -36,18 +40,27 @@ namespace BTDToolbox
         //Congif variables
         //JsonEditor_Config jsonEditorConfig;
         ConfigFile programData;
+        private ContextMenuStrip selMenu;
+        private ContextMenuStrip highlightMenu;
         public static bool jsonError;
         
         public static float jsonEditorFont;
         public string lastJsonFile;
-
+        int CharIndex_UnderMouse = 0;
+        bool searchSubtask = false;
+        bool tabLine = false;
+        string tab;
         public JsonEditor(string Path)
         {
             InitializeComponent();
             Deserialize_Config();
             StartUp();
+
+            initSelContextMenu();
+            initHighlightContextMenu();
             this.Path = Path;
             this.FormClosing += exitHandling;
+            Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
 
             FileInfo info = new FileInfo(Path);
             this.Text = info.Name;            
@@ -56,39 +69,36 @@ namespace BTDToolbox
             this.toolStripSeparator2.Visible = false;
             this.Replace_TextBox.Visible = false;
             this.ReplaceDropDown.Visible = false;
+            
 
             //tabstops
             this.tB_line.TabStop = false;
             this.lintPanel.TabStop = false;
             this.Find_TextBox.AcceptsTab = false;
-            this.Editor_TextBox.TabStop = true;
+            this.Editor_TextBox.TabStop = false;
             string formattedText = "";
-            string unformattedText = File.ReadAllText(Path);
 
+            string unformattedText = File.ReadAllText(Path);
+            
             try
             {
-                JToken jt = JToken.Parse(unformattedText);    
-                
+                JToken jt = JToken.Parse(unformattedText);
                 formattedText = jt.ToString(Formatting.Indented);
                 Editor_TextBox.Text = formattedText;
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                jsonError = false;
             }
             catch (Exception)
             {
                 Editor_TextBox.Text = unformattedText;
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                jsonError = true;
             }
+            CheckJSON(this.Editor_TextBox.Text);
+
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
 
             JsonProps.increment(this);
-
             this.Load += EditorLoading;
         }
         private void StartUp()
         {
-
             this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
             this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
 
@@ -118,20 +128,30 @@ namespace BTDToolbox
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Path, Editor_TextBox.Text);
-            try
-            {
-                JObject.Parse(this.Editor_TextBox.Text);
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                jsonError = false;
-            }
-            catch (Exception)
-            {
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                jsonError = true;
-            }
+            //Editor_TextBox.SelectionIndent = 100;
+            CheckJSON(this.Editor_TextBox.Text);
+
             if (Editor_TextBox.Text == "")
             {
                 AddLineNumbers();
+            }
+            if(tabLine)
+            {
+                Editor_TextBox.SelectedText = tab;
+                tabLine = false;
+            }
+        }
+        private void CheckJSON (string text)
+        {
+            if (JSON_Reader.IsValidJson(text) == true)
+            {
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                jsonError = false;
+            }
+            else
+            {
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                jsonError = true;
             }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
@@ -152,13 +172,26 @@ namespace BTDToolbox
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            
+
+
             if (e.Control && e.KeyCode == Keys.F)
             {
+                searchSubtask = false;
                 ShowFindMenu();
             }
             if (e.Control && e.KeyCode == Keys.H)
             {
                 ShowReplaceMenu();
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
+                tabLine = true;
+            }
+            if (e.KeyCode == Keys.Back)
+            {
+                RemoveEmptySpaces();
             }
         }
         private void FindText()
@@ -212,6 +245,19 @@ namespace BTDToolbox
             }
             
         }
+        private void HideFindButton()
+        {
+            isFinding = false;
+            this.Find_TextBox.Visible = false;
+            this.FindNext_Button.Visible = false;
+        }
+        private void HideReplaceButton()
+        {
+            isReplacing = false;
+            this.Replace_TextBox.Visible = false;
+            this.ReplaceDropDown.Visible = false;
+            this.toolStripSeparator2.Visible = false;
+        }
         private void ShowFindMenu()
         {
             isFinding = !isFinding;
@@ -219,18 +265,14 @@ namespace BTDToolbox
             this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
             if (isReplacing)
             {
-                isFinding = false;
-                isReplacing = false;
-                this.Find_TextBox.Visible = false;
-                this.FindNext_Button.Visible = false;
-                this.toolStripSeparator2.Visible = false;
-                this.Replace_TextBox.Visible = false;
-                this.ReplaceDropDown.Visible = false;
+                HideFindButton();
+                HideReplaceButton();
             }
         }
         private void ShowReplaceMenu()
         {
             isReplacing = !isReplacing;
+            searchSubtask = false;
             this.Find_TextBox.Visible = !this.Find_TextBox.Visible;
             this.FindNext_Button.Visible = !this.FindNext_Button.Visible;
             this.toolStripSeparator2.Visible = !this.toolStripSeparator2.Visible;
@@ -249,6 +291,7 @@ namespace BTDToolbox
         }
         private void ShowFindMenu_Button_Click_1(object sender, EventArgs e)
         {
+            searchSubtask = false;
             ShowFindMenu();
         }
         private void ReplaceButton_Click(object sender, EventArgs e)
@@ -320,7 +363,14 @@ namespace BTDToolbox
         }
         private void FindNext_Button_Click(object sender, EventArgs e)
         {
-            FindText();
+            if(!searchSubtask)
+            {
+                FindText();
+            }
+            else
+            {
+                SearchForSubtask();
+            }
         }
         private void JsonEditor_Load(object sender, EventArgs e)
         {
@@ -531,6 +581,243 @@ namespace BTDToolbox
             else
             {
                 this.Close();
+            }
+        }
+        private void initSelContextMenu()
+        {
+            selMenu = new ContextMenuStrip();
+            selMenu.Items.Add("Paste");
+            selMenu.Items.Add("Find subtask");
+            selMenu.Items.Add("Get current subtask number");
+            selMenu.ItemClicked += jsonContextClicked;
+        }
+        private void initHighlightContextMenu()
+        {
+            highlightMenu = new ContextMenuStrip();
+            highlightMenu.Items.Add("Copy");
+            highlightMenu.Items.Add("Paste");
+            highlightMenu.Items.Add("Find");
+            highlightMenu.Items.Add("Replace");
+            highlightMenu.Items.Add("Find subtask");
+            highlightMenu.Items.Add("Get current subtask number");
+            highlightMenu.ItemClicked += highlightContextClicked;
+        }
+        private void Editor_TextBox_RightClicked(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                CharIndex_UnderMouse = GeneralMethods.CharIndex_UnderMouse(Editor_TextBox, e.X, e.Y);
+
+                if (Editor_TextBox.SelectedText.Length > 0)
+                {
+                    highlightMenu.Show(Editor_TextBox, e.Location);
+                }
+                else if (Editor_TextBox.SelectedText.Length == 0)
+                {
+                    selMenu.Show(Editor_TextBox, e.Location);
+                }
+            }
+        }
+        private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    Editor_TextBox.SelectionStart = CharIndex_UnderMouse;
+                    Editor_TextBox.Paste();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Find subtask")
+            {
+                try
+                {
+                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+                    searchSubtask = true;
+                    ShowFindMenu();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Get current subtask number")
+            {
+                if(jsonError == false)
+                {
+                    try
+                    {
+                        //func here
+                        GetSubtaskNum();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                }
+            }
+        }
+        private void highlightContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Copy")
+            {
+                try
+                {
+                    Clipboard.SetText(Editor_TextBox.SelectedText);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    Editor_TextBox.Paste();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Find")
+            {
+                try
+                {
+                    Find_TextBox.Text = Editor_TextBox.SelectedText;
+                    ShowFindMenu();
+                    FindText();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Replace")
+            {
+                try
+                {
+                    Find_TextBox.Text = Editor_TextBox.SelectedText;
+                    ShowReplaceMenu();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Find subtask")
+            {
+                try
+                {
+                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+                    searchSubtask = true;
+                    ShowFindMenu();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Get current subtask number")
+            {
+                if (jsonError == false)
+                {
+                    try
+                    {
+                        //func here
+                        GetSubtaskNum();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                }
+            }
+        }
+        private void GetSubtaskNum()
+        {
+            string subtaskNum = JSON_Reader.GetSubtaskNum(CharIndex_UnderMouse, Editor_TextBox.Text);
+            if (subtaskNum != "" && subtaskNum != " " && subtaskNum != null)
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("Subtask:  [" + subtaskNum + " ]");
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("Unable to detect subtask. Please try clicking somewhere else...");
+            }
+        }
+        private void SearchForSubtask()
+        {
+            int i = 0;
+            bool found = false;
+            foreach(char c in Editor_TextBox.Text)
+            {
+                if (c == ':')
+                {
+                    string subtaskNum = JSON_Reader.GetSubtaskNum(i, Editor_TextBox.Text);
+                    if(subtaskNum.Replace(" ", "").Replace(",","") == Find_TextBox.Text.Replace(" ", "").Replace(",", ""))
+                    {
+                        found = true;
+
+                        int startHighlighht = Editor_TextBox.Text.LastIndexOf("\"", i - 2);
+                        Editor_TextBox.SelectionStart = i;
+                        Editor_TextBox.Select(i, - (i - startHighlighht));
+                        Editor_TextBox.ScrollToCaret();
+                        HideFindButton();
+                        searchSubtask = false;
+                        break;
+                    }
+                }
+                i++;
+            }
+            if (!found)
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("That subtask was not found");
+            }
+        }
+        private void FindSubtask_Button_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+            searchSubtask = true;
+            ShowFindMenu();
+        }
+        private int IndentNewLines()
+        {
+            int index = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            string text = Editor_TextBox.Text.Remove(0, index);
+
+            int numSpace = 0;
+            foreach(char c in text)
+            {
+                if (c != ' ')
+                    break;
+                else
+                    numSpace++;
+            }
+            return numSpace;
+        }
+        private void RemoveEmptySpaces()
+        {
+            int numSpaces = IndentNewLines();
+            int startIndex = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            int currentIndex = Editor_TextBox.SelectionStart;
+
+            //if(currentIndex <= (startIndex + numSpaces))
+            if(currentIndex <= (startIndex + numSpaces))
+            {
+                if (numSpaces > 5)
+                {
+                    Editor_TextBox.SelectionLength = 5;
+                    Editor_TextBox.SelectionStart = currentIndex-5;
+                    Editor_TextBox.SelectedText = "";
+                }
             }
         }
     }

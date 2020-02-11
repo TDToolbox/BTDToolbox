@@ -23,6 +23,7 @@ namespace BTDToolbox
         public string lastMessage;
         string livePath = Environment.CurrentDirectory;
         float fontSize;
+        public bool CanRepeat = false;
 
         private static Console console;
 
@@ -69,9 +70,23 @@ namespace BTDToolbox
             string answer = web.WaitOn_URL(url);
             output_log.SelectionColor = Color.OrangeRed;
 
-            appendLog("Announcement: " + answer);
+            if (answer.Length > 0)
+                appendLog("Announcement: " + answer);
+            else
+                appendLog("Failed to read announcement...");
         }
+        public void appendNotice(string notice)
+        {
+            output_log.SelectionColor = Color.Yellow;
 
+            appendLog("Notice: " + notice);
+        }
+        public void force_appendNotice(string notice)
+        {
+            output_log.SelectionColor = Color.Yellow;
+
+            force_appendLog("Notice: " + notice);
+        }
         public override void close_button_Click(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "console", programData);
@@ -80,7 +95,26 @@ namespace BTDToolbox
 
         public void appendLog(String log)
         {
-            if (log != lastMessage)
+            if (!CanRepeat)
+            {
+                if (log != lastMessage)
+                {
+                    try
+                    {
+                        Invoke((MethodInvoker)delegate {
+                            output_log.AppendText(">> " + log + "\r\n");
+                            output_log.ScrollToCaret();
+                        });
+
+                        lastMessage = log;
+                    }
+                    catch (Exception)
+                    {
+                        Environment.Exit(0);
+                    }
+                }
+            }
+            else
             {
                 try
                 {
@@ -91,13 +125,11 @@ namespace BTDToolbox
 
                     lastMessage = log;
                 }
-                catch(Exception)
+                catch (Exception)
                 {
-                   Environment.Exit(0);
+                    Environment.Exit(0);
                 }
-                
             }
-
         }
 
         public void force_appendLog(String log)
