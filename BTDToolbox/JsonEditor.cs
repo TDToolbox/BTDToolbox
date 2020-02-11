@@ -566,7 +566,8 @@ namespace BTDToolbox
         {
             selMenu = new ContextMenuStrip();
             selMenu.Items.Add("Paste");
-            selMenu.Items.Add("Get subtask number");
+            selMenu.Items.Add("Find subtask");
+            selMenu.Items.Add("Get current subtask number");
             selMenu.ItemClicked += jsonContextClicked;
         }
         private void initHighlightContextMenu()
@@ -576,7 +577,8 @@ namespace BTDToolbox
             highlightMenu.Items.Add("Paste");
             highlightMenu.Items.Add("Find");
             highlightMenu.Items.Add("Replace");
-            highlightMenu.Items.Add("Get subtask number");
+            highlightMenu.Items.Add("Find subtask");
+            highlightMenu.Items.Add("Get current subtask number");
             highlightMenu.ItemClicked += highlightContextClicked;
         }
         private void Editor_TextBox_RightClicked(object sender, MouseEventArgs e)
@@ -609,7 +611,20 @@ namespace BTDToolbox
                 {
                 }
             }
-            if (e.ClickedItem.Text == "Get subtask number")
+            if (e.ClickedItem.Text == "Find subtask")
+            {
+                try
+                {
+                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+                    searchSubtask = true;
+                    ShowFindMenu();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Get current subtask number")
             {
                 if(jsonError == false)
                 {
@@ -654,7 +669,9 @@ namespace BTDToolbox
             {
                 try
                 {
-                    //func here
+                    Find_TextBox.Text = Editor_TextBox.SelectedText;
+                    ShowFindMenu();
+                    FindText();
                 }
                 catch (Exception)
                 {
@@ -664,13 +681,27 @@ namespace BTDToolbox
             {
                 try
                 {
-                    //func here
+                    Find_TextBox.Text = Editor_TextBox.SelectedText;
+                    ShowReplaceMenu();
                 }
                 catch (Exception)
                 {
                 }
             }
-            if (e.ClickedItem.Text == "Get subtask number")
+            if (e.ClickedItem.Text == "Find subtask")
+            {
+                try
+                {
+                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+                    searchSubtask = true;
+                    ShowFindMenu();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Get current subtask number")
             {
                 if (jsonError == false)
                 {
@@ -733,6 +764,7 @@ namespace BTDToolbox
 
         private void FindSubtask_Button_Click(object sender, EventArgs e)
         {
+            ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
             searchSubtask = true;
             ShowFindMenu();
         }
