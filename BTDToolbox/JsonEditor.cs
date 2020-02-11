@@ -782,12 +782,6 @@ namespace BTDToolbox
                 ConsoleHandler.force_appendLog_CanRepeat("That subtask was not found");
             }
         }
-        private void InsertTab()
-        {
-            //string tab = string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
-            
-
-        }
         private void FindSubtask_Button_Click(object sender, EventArgs e)
         {
             ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
@@ -815,12 +809,13 @@ namespace BTDToolbox
             int startIndex = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
             int currentIndex = Editor_TextBox.SelectionStart;
 
+            //if(currentIndex <= (startIndex + numSpaces))
             if(currentIndex <= (startIndex + numSpaces))
             {
-                if (numSpaces > 1)
+                if (numSpaces > 5)
                 {
-                    Editor_TextBox.SelectionLength = numSpaces;
-                    Editor_TextBox.SelectionStart = startIndex;
+                    Editor_TextBox.SelectionLength = 5;
+                    Editor_TextBox.SelectionStart = currentIndex-5;
                     Editor_TextBox.SelectedText = "";
                 }
             }

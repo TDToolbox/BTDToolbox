@@ -126,7 +126,12 @@ namespace BTDToolbox.Extra_Forms
                 tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
                 tabLine = true;
             }
+            if (e.KeyCode == Keys.Back)
+            {
+                RemoveEmptySpaces();
+            }
         }
+
         private void FindText()
         {
             if (Find_TextBox.Text.Length <= 0)
@@ -542,6 +547,23 @@ namespace BTDToolbox.Extra_Forms
                     numSpace++;
             }
             return numSpace;
+        }
+        private void RemoveEmptySpaces()
+        {
+            int numSpaces = IndentNewLines();
+            int startIndex = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            int currentIndex = Editor_TextBox.SelectionStart;
+
+            //if(currentIndex <= (startIndex + numSpaces))
+            if (currentIndex <= (startIndex + numSpaces))
+            {
+                if (numSpaces > 5)
+                {
+                    Editor_TextBox.SelectionLength = 5;
+                    Editor_TextBox.SelectionStart = currentIndex - 5;
+                    Editor_TextBox.SelectedText = "";
+                }
+            }
         }
     }
 }
