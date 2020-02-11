@@ -68,7 +68,6 @@ namespace BTDToolbox
             {
                 gameDir = DeserializeConfig().BTDB_Directory;
                 jetName = "data.jet";
-
             }
             else
             {
@@ -119,6 +118,7 @@ namespace BTDToolbox
                         if(rememberedPassword != null && rememberedPassword != "")
                         {
                             password = rememberedPassword;
+                            Serializer.SaveSmallSettings("battlesPass", programData);
                         }
                         backgroundThread = new Thread(Extract_OnThread);
                         backgroundThread.Start();

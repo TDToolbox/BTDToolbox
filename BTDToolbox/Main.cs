@@ -590,5 +590,22 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
             Process.Start(Environment.CurrentDirectory);
         }
+
+        private void ShowBTD5_Pass_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendLog("The password for BTD5.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
+        }
+
+        private void ShowLastBattlesPass_Click(object sender, EventArgs e)
+        {
+            if(Serializer.Deserialize_Config().battlesPass != null && Serializer.Deserialize_Config().battlesPass != "")
+            {
+                ConsoleHandler.force_appendLog("The last password you used for BTDB is:   " + Serializer.Deserialize_Config().battlesPass);
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("You don't have a battles password saved... Next time you make a new project, make sure to check \"Remember Password\"");
+            }
+        }
     }
 }

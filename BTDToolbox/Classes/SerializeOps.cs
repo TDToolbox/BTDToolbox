@@ -27,6 +27,10 @@ namespace BTDToolbox
             {
                 cfg.enableSplash = Program.enableSplash;
             }
+            if (formName == "battlesPass")
+            {
+                cfg.battlesPass = ZipForm.rememberedPassword;
+            }
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
