@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 
@@ -47,6 +48,8 @@ namespace BTDToolbox
         public string lastJsonFile;
         int CharIndex_UnderMouse = 0;
         bool searchSubtask = false;
+        int num_of_tabs = 1;
+        int num_space_in_tab = 5;
 
         public JsonEditor(string Path)
         {
@@ -67,12 +70,14 @@ namespace BTDToolbox
             this.toolStripSeparator2.Visible = false;
             this.Replace_TextBox.Visible = false;
             this.ReplaceDropDown.Visible = false;
+            Editor_TextBox.AcceptsTab = true;
+
 
             //tabstops
             this.tB_line.TabStop = false;
             this.lintPanel.TabStop = false;
             this.Find_TextBox.AcceptsTab = false;
-            this.Editor_TextBox.TabStop = true;
+            this.Editor_TextBox.TabStop = false;
             string formattedText = "";
 
             string unformattedText = File.ReadAllText(Path);
@@ -758,10 +763,20 @@ namespace BTDToolbox
             }
             if (!found)
             {
-                ConsoleHandler.force_appendLog("That subtask was not found");
+                ConsoleHandler.force_appendLog_CanRepeat("That subtask was not found");
             }
         }
+        private void InsertTab()
+        {
+            string tab = string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
 
+            //Editor_TextBox.Text.Insert(Editor_TextBox.SelectionStart, tab);
+            Editor_TextBox.SelectionStart = Editor_TextBox.SelectionStart;
+            Editor_TextBox.SelectionLength = 0;
+            Editor_TextBox.SelectedText = "aaa";
+            //Editor_TextBox.SelectedText = tab;
+
+        }
         private void FindSubtask_Button_Click(object sender, EventArgs e)
         {
             ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");

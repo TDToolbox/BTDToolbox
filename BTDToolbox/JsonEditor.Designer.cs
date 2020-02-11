@@ -63,19 +63,22 @@
             // 
             // titleSeperator
             // 
+            this.titleSeperator.TabStop = false;
             // 
             // TitleLabel
             // 
             this.TitleLabel.Size = new System.Drawing.Size(72, 16);
+            this.TitleLabel.TabIndex = 15;
             this.TitleLabel.Text = "JsonEditor";
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.Editor_TextBox);
             this.contentPanel.Controls.Add(this.tB_line);
             this.contentPanel.Controls.Add(this.lintPanel);
             this.contentPanel.Controls.Add(this.JsonToolstrip);
-            this.contentPanel.Controls.Add(this.Editor_TextBox);
             this.contentPanel.Controls.Add(this.pictureBox1);
+            this.contentPanel.TabIndex = 17;
             // 
             // close_button
             // 
@@ -83,7 +86,12 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            this.close_button.TabStop = false;
             this.close_button.Click += new System.EventHandler(this.Close_button_Click);
+            // 
+            // Sizer
+            // 
+            this.Sizer.TabIndex = 16;
             // 
             // Editor_TextBox
             // 
@@ -97,7 +105,7 @@
             this.Editor_TextBox.Location = new System.Drawing.Point(63, 28);
             this.Editor_TextBox.Name = "Editor_TextBox";
             this.Editor_TextBox.Size = new System.Drawing.Size(710, 375);
-            this.Editor_TextBox.TabIndex = 1;
+            this.Editor_TextBox.TabIndex = 0;
             this.Editor_TextBox.Text = "";
             this.Editor_TextBox.SelectionChanged += new System.EventHandler(this.Editor_TextBox_SelectionChanged);
             this.Editor_TextBox.VScroll += new System.EventHandler(this.Editor_TextBox_VScroll);
@@ -121,7 +129,7 @@
             this.JsonToolstrip.Location = new System.Drawing.Point(0, 0);
             this.JsonToolstrip.Name = "JsonToolstrip";
             this.JsonToolstrip.Size = new System.Drawing.Size(776, 25);
-            this.JsonToolstrip.TabIndex = 2;
+            this.JsonToolstrip.TabIndex = 21;
             this.JsonToolstrip.Text = "toolStrip1";
             // 
             // Edit_DropDown
@@ -274,7 +282,7 @@
             this.lintPanel.Location = new System.Drawing.Point(106, 0);
             this.lintPanel.Name = "lintPanel";
             this.lintPanel.Size = new System.Drawing.Size(60, 24);
-            this.lintPanel.TabIndex = 3;
+            this.lintPanel.TabIndex = 20;
             // 
             // tB_line
             // 
@@ -289,7 +297,8 @@
             this.tB_line.ReadOnly = true;
             this.tB_line.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.tB_line.Size = new System.Drawing.Size(53, 374);
-            this.tB_line.TabIndex = 5;
+            this.tB_line.TabIndex = 19;
+            this.tB_line.TabStop = false;
             this.tB_line.Text = "";
             this.tB_line.WordWrap = false;
             this.tB_line.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TB_line_MouseDown);
@@ -323,7 +332,6 @@
             this.FindSubtask_Button.Name = "FindSubtask_Button";
             this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
             this.FindSubtask_Button.Text = "Find Subtask";
-            this.FindSubtask_Button.Click += new System.EventHandler(this.FindSubtask_Button_Click);
             // 
             // JsonEditor
             // 
