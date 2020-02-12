@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonEditor));
             this.Editor_TextBox = new System.Windows.Forms.RichTextBox();
             this.JsonToolstrip = new System.Windows.Forms.ToolStrip();
-            this.Edit_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.File_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.Undo_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Redo_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowFindMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +40,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ChangeFontSize_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontSize_TextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.EasyTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Replace_TextBox = new System.Windows.Forms.ToolStripTextBox();
@@ -119,7 +120,7 @@
             // 
             this.JsonToolstrip.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.JsonToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Edit_DropDown,
+            this.File_DropDown,
             this.Help_DropDown,
             this.toolStripSeparator1,
             this.Replace_TextBox,
@@ -133,25 +134,26 @@
             this.JsonToolstrip.TabIndex = 21;
             this.JsonToolstrip.Text = "toolStrip1";
             // 
-            // Edit_DropDown
+            // File_DropDown
             // 
-            this.Edit_DropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.Edit_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.Edit_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.File_DropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.File_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.File_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Undo_Button,
             this.Redo_Button,
             this.ShowFindMenu_Button,
             this.ShowReplaceMenu_Button,
             this.FindSubtask_Button,
             this.toolStripSeparator3,
-            this.ChangeFontSize_MenuItem});
-            this.Edit_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Edit_DropDown.ForeColor = System.Drawing.Color.White;
-            this.Edit_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Edit_DropDown.Image")));
-            this.Edit_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Edit_DropDown.Name = "Edit_DropDown";
-            this.Edit_DropDown.Size = new System.Drawing.Size(40, 22);
-            this.Edit_DropDown.Text = "Edit";
+            this.ChangeFontSize_MenuItem,
+            this.EasyTowerEditor_Button});
+            this.File_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.File_DropDown.ForeColor = System.Drawing.Color.White;
+            this.File_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("File_DropDown.Image")));
+            this.File_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.File_DropDown.Name = "File_DropDown";
+            this.File_DropDown.Size = new System.Drawing.Size(38, 22);
+            this.File_DropDown.Text = "File";
             // 
             // Undo_Button
             // 
@@ -204,6 +206,13 @@
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // EasyTowerEditor_Button
+            // 
+            this.EasyTowerEditor_Button.Name = "EasyTowerEditor_Button";
+            this.EasyTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
+            this.EasyTowerEditor_Button.Text = "Easy Tower Editor";
+            this.EasyTowerEditor_Button.Visible = false;
             // 
             // Help_DropDown
             // 
@@ -362,7 +371,7 @@
         #endregion
         private System.Windows.Forms.RichTextBox Editor_TextBox;
         private System.Windows.Forms.ToolStrip JsonToolstrip;
-        private System.Windows.Forms.ToolStripDropDownButton Edit_DropDown;
+        private System.Windows.Forms.ToolStripDropDownButton File_DropDown;
         private System.Windows.Forms.ToolStripMenuItem Undo_Button;
         private System.Windows.Forms.ToolStripMenuItem Redo_Button;
         private System.Windows.Forms.ToolStripMenuItem ShowFindMenu_Button;
@@ -383,5 +392,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripDropDownButton Help_DropDown;
         private System.Windows.Forms.ToolStripMenuItem FindSubtask_Button;
+        private System.Windows.Forms.ToolStripMenuItem EasyTowerEditor_Button;
     }
 }

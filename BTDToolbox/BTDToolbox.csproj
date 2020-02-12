@@ -84,6 +84,12 @@
     <Compile Include="Extra Forms\CreditViewer.Designer.cs">
       <DependentUpon>CreditViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extra Forms\EasyTowerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\EasyTowerEditor.Designer.cs">
+      <DependentUpon>EasyTowerEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extra Forms\First_Time_Use.cs">
       <SubType>Form</SubType>
     </Compile>

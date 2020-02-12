@@ -55,6 +55,7 @@ namespace BTDToolbox
             InitializeComponent();
             Deserialize_Config();
             StartUp();
+            
 
             initSelContextMenu();
             initHighlightContextMenu();
@@ -96,6 +97,8 @@ namespace BTDToolbox
 
             JsonProps.increment(this);
             this.Load += EditorLoading;
+
+            HandleTools();
         }
         private void StartUp()
         {
@@ -107,6 +110,17 @@ namespace BTDToolbox
             tB_line.Font = newfont;
             Editor_TextBox.Font = newfont;
             FontSize_TextBox.Text = jsonEditorFont.ToString();
+        }
+        private void HandleTools()
+        {
+            if (Path.EndsWith("tower"))
+            {
+                EasyTowerEditor_Button.Visible = true;
+            }
+            else
+            {
+                EasyTowerEditor_Button.Visible = false;
+            }
         }
         private void Deserialize_Config()
         {
