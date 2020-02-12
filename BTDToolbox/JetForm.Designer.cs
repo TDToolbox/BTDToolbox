@@ -125,6 +125,8 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.toolStripDropDownButton2});
@@ -353,6 +355,8 @@
             // 
             // goUpButton
             // 
+            this.goUpButton.Font = new System.Drawing.Font("Microsoft New Tai Lue", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.goUpButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.goUpButton.Location = new System.Drawing.Point(2, 0);
             this.goUpButton.Name = "goUpButton";
             this.goUpButton.Size = new System.Drawing.Size(75, 25);

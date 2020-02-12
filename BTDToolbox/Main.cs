@@ -23,7 +23,7 @@ namespace BTDToolbox
 
 
         //Project Variables
-        private Bitmap bgImg;
+        
         Thread backupThread;
         public static bool exit = false;
 
@@ -66,18 +66,8 @@ namespace BTDToolbox
 
 
 
-            Random rand = new Random();
-            switch (rand.Next(0, 2))
-            {
-                case 0:
-                    bgImg = Properties.Resources.Logo1;
-                    break;
-                case 1:
-                    bgImg = Properties.Resources.Logo2;
-                    break;
-            }
+            
 
-            this.BackgroundImage = bgImg;
             this.FormClosed += ExitHandling;
         }
         private void Startup()
@@ -121,6 +111,12 @@ namespace BTDToolbox
         }
         private void Main_Load(object sender, EventArgs e)
         {
+            var bg = new BGForm();
+            bg.MdiParent = this;
+            bg.MouseClick += Bg_MouseClick;
+            bg.Show();
+
+
             if (File.Exists(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe"))
                 File.Delete(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe");
             if (File.Exists(Environment.CurrentDirectory + "\\BTDToolbox_Updater.zip"))
@@ -144,6 +140,12 @@ namespace BTDToolbox
             var isUpdate = new UpdateHandler();
             isUpdate.HandleUpdates();   
         }
+
+        private void Bg_MouseClick(object sender, MouseEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
         private void showUpdateChangelog()
         {
             if (programData.recentUpdate == true)
@@ -159,8 +161,7 @@ namespace BTDToolbox
 
         private void mainResize(object sender, EventArgs e)
         {
-            this.BackgroundImage = bgImg;
-            this.BackgroundImageLayout = ImageLayout.Center;
+
         }
         public static Main getInstance()
         {

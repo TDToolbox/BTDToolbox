@@ -66,13 +66,18 @@
   <ItemGroup>
     <Compile Include="Classes\Announcements.cs" />
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
-    <Compile Include="Classes\CreateDesktopShortcut.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
     <Compile Include="Classes\JSON_Reader.cs" />
     <Compile Include="Classes\WebHandler.cs" />
+    <Compile Include="Extra Forms\BGForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\BGForm.Designer.cs">
+      <DependentUpon>BGForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extra Forms\CreditViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +108,9 @@
     <Compile Include="ZipForm.Designer.cs">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Extra Forms\BGForm.resx">
+      <DependentUpon>BGForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\First_Time_Use.resx">
       <DependentUpon>First_Time_Use.cs</DependentUpon>
     </EmbeddedResource>

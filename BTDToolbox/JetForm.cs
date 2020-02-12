@@ -532,15 +532,11 @@ namespace BTDToolbox
             {
                 paste();
             }
-        }
-
-        private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
-        {
             if (e.Control && e.KeyCode == Keys.F)
             {
                 if (findPanel.Visible)
                 {
-                    findPanel.Visible = false;
+                    findPanel.Hide();
                 }
                 else
                 {
@@ -548,6 +544,11 @@ namespace BTDToolbox
                     findBox.Select();
                 }
             }
+        }
+
+        private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
+        {
+
         }
 
 

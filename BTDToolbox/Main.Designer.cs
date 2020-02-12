@@ -49,6 +49,9 @@
             this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenJetExplorer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.ShowBTD5_Pass = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowLastBattlesPass = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.bTD5DirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bTDBDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +81,7 @@
             this.resetBTD5exeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetBTDBattlesexeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eraseConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.contactUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Credits = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,10 +94,6 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.ShowBTD5_Pass = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.ShowLastBattlesPass = new System.Windows.Forms.ToolStripMenuItem();
-            this.eraseConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -220,14 +220,14 @@
             // Find_Button
             // 
             this.Find_Button.Name = "Find_Button";
-            this.Find_Button.Size = new System.Drawing.Size(180, 22);
+            this.Find_Button.Size = new System.Drawing.Size(115, 22);
             this.Find_Button.Text = "Find";
             this.Find_Button.Click += new System.EventHandler(this.Find_Button_Click);
             // 
             // Replace_Button
             // 
             this.Replace_Button.Name = "Replace_Button";
-            this.Replace_Button.Size = new System.Drawing.Size(180, 22);
+            this.Replace_Button.Size = new System.Drawing.Size(115, 22);
             this.Replace_Button.Text = "Replace";
             this.Replace_Button.Click += new System.EventHandler(this.Replace_Button_Click);
             // 
@@ -259,40 +259,59 @@
             // ToggleConsole
             // 
             this.ToggleConsole.Name = "ToggleConsole";
-            this.ToggleConsole.Size = new System.Drawing.Size(180, 22);
+            this.ToggleConsole.Size = new System.Drawing.Size(167, 22);
             this.ToggleConsole.Text = "Console";
             this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
             // 
             // OpenJetExplorer
             // 
             this.OpenJetExplorer.Name = "OpenJetExplorer";
-            this.OpenJetExplorer.Size = new System.Drawing.Size(180, 22);
+            this.OpenJetExplorer.Size = new System.Drawing.Size(167, 22);
             this.OpenJetExplorer.Text = "Jet Explorer";
             this.OpenJetExplorer.Click += new System.EventHandler(this.OpenJetExplorer_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(164, 6);
+            // 
+            // ShowBTD5_Pass
+            // 
+            this.ShowBTD5_Pass.Name = "ShowBTD5_Pass";
+            this.ShowBTD5_Pass.Size = new System.Drawing.Size(167, 22);
+            this.ShowBTD5_Pass.Text = "BTD5 Password";
+            this.ShowBTD5_Pass.Click += new System.EventHandler(this.ShowBTD5_Pass_Click);
+            // 
+            // ShowLastBattlesPass
+            // 
+            this.ShowLastBattlesPass.Name = "ShowLastBattlesPass";
+            this.ShowLastBattlesPass.Size = new System.Drawing.Size(167, 22);
+            this.ShowLastBattlesPass.Text = "BTDB Password";
+            this.ShowLastBattlesPass.Click += new System.EventHandler(this.ShowLastBattlesPass_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(164, 6);
             // 
             // bTD5DirectoryToolStripMenuItem
             // 
             this.bTD5DirectoryToolStripMenuItem.Name = "bTD5DirectoryToolStripMenuItem";
-            this.bTD5DirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bTD5DirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.bTD5DirectoryToolStripMenuItem.Text = "BTD5 Directory";
             this.bTD5DirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTD5DirectoryToolStripMenuItem_Click_1);
             // 
             // bTDBDirectoryToolStripMenuItem
             // 
             this.bTDBDirectoryToolStripMenuItem.Name = "bTDBDirectoryToolStripMenuItem";
-            this.bTDBDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bTDBDirectoryToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.bTDBDirectoryToolStripMenuItem.Text = "BTDB Directory";
             this.bTDBDirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTDBDirectoryToolStripMenuItem_Click_1);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(167, 22);
             this.toolStripMenuItem4.Text = "Toolbox Directory";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
             // 
@@ -495,6 +514,13 @@
             this.resetUserSettingsToolStripMenuItem.Text = "Reset user settings";
             this.resetUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.ResetUserSettingsToolStripMenuItem_Click);
             // 
+            // eraseConsoleToolStripMenuItem
+            // 
+            this.eraseConsoleToolStripMenuItem.Name = "eraseConsoleToolStripMenuItem";
+            this.eraseConsoleToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.eraseConsoleToolStripMenuItem.Text = "Clear console history";
+            this.eraseConsoleToolStripMenuItem.Click += new System.EventHandler(this.EraseConsoleToolStripMenuItem_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -584,37 +610,12 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // ShowBTD5_Pass
-            // 
-            this.ShowBTD5_Pass.Name = "ShowBTD5_Pass";
-            this.ShowBTD5_Pass.Size = new System.Drawing.Size(180, 22);
-            this.ShowBTD5_Pass.Text = "BTD5 Password";
-            this.ShowBTD5_Pass.Click += new System.EventHandler(this.ShowBTD5_Pass_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
-            // 
-            // ShowLastBattlesPass
-            // 
-            this.ShowLastBattlesPass.Name = "ShowLastBattlesPass";
-            this.ShowLastBattlesPass.Size = new System.Drawing.Size(180, 22);
-            this.ShowLastBattlesPass.Text = "BTDB Password";
-            this.ShowLastBattlesPass.Click += new System.EventHandler(this.ShowLastBattlesPass_Click);
-            // 
-            // eraseConsoleToolStripMenuItem
-            // 
-            this.eraseConsoleToolStripMenuItem.Name = "eraseConsoleToolStripMenuItem";
-            this.eraseConsoleToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.eraseConsoleToolStripMenuItem.Text = "Clear console history";
-            this.eraseConsoleToolStripMenuItem.Click += new System.EventHandler(this.EraseConsoleToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1483, 741);
             this.Controls.Add(this.versionTag);
             this.Controls.Add(this.menuStrip1);
