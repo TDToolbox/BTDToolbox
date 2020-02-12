@@ -32,6 +32,7 @@ namespace BTDToolbox
         //Resize defaults
         int minWidth = 200;
         int minHeight = 100;
+        Rectangle resolution = Screen.PrimaryScreen.Bounds;
 
         public ThemedForm()
         {
@@ -41,8 +42,6 @@ namespace BTDToolbox
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //this.FormBorderStyle = FormBorderStyle.None;
-
-            
 
             TitleLabel.MouseMove += ToolbarDrag;
             titleSeperator.Panel1.MouseMove += ToolbarDrag;
@@ -60,12 +59,37 @@ namespace BTDToolbox
         {
             titleSeperator.SplitterDistance = 25;
         }
+        private void CheckInBounds()
+        {
+            //Top left corner
+            if (this.Location.X < 0)
+            {
+                this.Location = new Point(0, this.Location.Y);
+            }   
+            if (this.Location.Y < 0)
+            {
+                this.Location = new Point(this.Location.X, 0);
+            }
+            
 
+            //Bottom right corner
+            if (this.Location.X + this.Size.Width > resolution.Width - 10)
+            {
+                this.Location = new Point(resolution.Width - this.Width - 4, this.Location.Y);
+            }
+            if (this.Location.Y + this.Size.Height > resolution.Height-105)
+            {
+                this.Location = new Point(this.Location.X, resolution.Height - this.Height - 91);
+            }
+            if ((this.Location.X + this.Size.Width > resolution.Width - 10) && (this.Location.Y + this.Size.Height > resolution.Height - 95))
+            { 
+                this.Location = new Point(resolution.Width - this.Width - 4, resolution.Height - this.Height - 91);
+            }
+        }
         public virtual void close_button_Click(object sender, EventArgs e)
         {
             if (JsonEditor.jsonError != true)
                 this.Close();
-            
         }
 
         //resizing event methods
@@ -84,8 +108,6 @@ namespace BTDToolbox
                 if (mov == true)
                 {
                     titleSeperator.SplitterDistance = 25;
-                    //splitContainer1.Anchor = (AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Bottom|AnchorStyles.Right);
-                    //titleSeperator.Dock = DockStyle.Fill;
                     Width = MousePosition.X - Mx + Sw;
                     Height = MousePosition.Y - My + Sh;
                 }
@@ -115,25 +137,53 @@ namespace BTDToolbox
                 Width = minWidth;
             }
         }
-        private bool CheckInBounds()
-        {
-            
-            return true;
-        }
         private void SizerMouseUp(object sender, MouseEventArgs e)
         {
             mov = false;
+
+            //Top left corner
+            if (this.Location.X < 0)
+            {
+                int width = resolution.Width - this.Width;
+                this.Width = resolution.Width - width;
+            }
+            if (this.Location.Y < 0)
+            {
+                int hegiht = resolution.Height - this.Height;
+                this.Height = resolution.Height - hegiht;
+            }
+
+            //Bottom right corner
+            if (this.Location.X + this.Size.Width > resolution.Width - 10)
+            {
+                int width = resolution.Width - this.Width;
+                this.Width = resolution.Width - width - 10;
+            }
+            if (this.Location.Y + this.Size.Height > resolution.Height - 95)
+            {
+                int hegiht = resolution.Height - this.Height;
+                this.Height = resolution.Height - hegiht - 55;
+            }
+
+            if ((this.Location.X + this.Size.Width > resolution.Width - 10) && (this.Location.Y + this.Size.Height > resolution.Height - 95))
+            {
+                int width = resolution.Width - this.Width;
+                this.Width = resolution.Width - width - 10;
+                int hegiht = resolution.Height - this.Height;
+                this.Height = resolution.Height - hegiht - 55;
+            }
         }
 
         //toolbar drag method
         private void ToolbarDrag(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Left)
             {
+                
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
+            CheckInBounds();
         }
 
         private void ThemedForm_Resize(object sender, EventArgs e)
