@@ -134,8 +134,6 @@ namespace BTDToolbox
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
-            
-
         }
 
         private void ThemedForm_Resize(object sender, EventArgs e)
@@ -144,7 +142,6 @@ namespace BTDToolbox
                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
             else
                 Main.getInstance().Refresh();
-
         }
     }
 }

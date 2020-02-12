@@ -37,11 +37,21 @@ namespace BTDToolbox
         public static string BTDB_Dir;
         public static bool enableConsole;
 
-        //Scroll bar variables
+        // Win32 Constants
+        private const int SB_HORZ = 0;
+        private const int SB_VERT = 1;
+        private const int SB_CTL = 2;
         private const int SB_BOTH = 3;
-        private const int WM_NCCALCSIZE = 0x83;
+
+        // Win32 Functions
         [DllImport("user32.dll")]
         private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
+        private const int WM_NCCALCSIZE = 0x83;
+
+        /*//private const int SB_BOTH = 3;
+        private const int WM_NCCALCSIZE = 0x83;
+        [DllImport("user32.dll")]
+        private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);*/
 
 
 
@@ -63,11 +73,6 @@ namespace BTDToolbox
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
             this.DoubleBuffered = true;
-
-
-
-            
-
             this.FormClosed += ExitHandling;
         }
         private void Startup()
@@ -138,7 +143,11 @@ namespace BTDToolbox
 
             ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();   
+            isUpdate.HandleUpdates();
+
+            foreach (Control con in Controls)
+                if (con is MdiClient)
+                    mdiClient = con as MdiClient;
         }
 
         private void Bg_MouseClick(object sender, MouseEventArgs e)
@@ -194,11 +203,7 @@ namespace BTDToolbox
 
             if (JetProps.getForm(0) == null)
                 ConsoleHandler.appendLog("No projects detected.");
-
-            foreach (Control con in Controls)
-                if (con is MdiClient)
-                    mdiClient = con as MdiClient;
-
+            //taken from here
             if (existingUser == false)
             {
                 FirstTimeUse();
@@ -288,16 +293,31 @@ namespace BTDToolbox
         //Mdi Stuff
         //
 
-        
-    
-         
+        /*protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                //
+                // ...
+                //
+
+                case WM_NCCALCSIZE:
+                    ShowScrollBar(m.HWnd, SB_BOTH, 0 *//*false*//*);
+                    break;
+            }
+
+            base.WndProc(ref m);
+        }*/
+
+        //Old WndProc (Mallis's)
         protected override void WndProc(ref Message m)
         {
             if (mdiClient != null)
             {
                 try
                 {
-                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0);// Hide the ScrollBars);
+                    //ShowScrollBar(mdiClient.Handle, SB_BOTH, 0);// Hide the ScrollBars);
+                    ShowScrollBar(m.HWnd, SB_BOTH, 0);// Hide the ScrollBars);
                 }
                 catch (Exception)
                 {
