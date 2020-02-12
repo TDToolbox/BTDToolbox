@@ -117,6 +117,9 @@
     <EmbeddedResource Include="Extra Forms\BGForm.resx">
       <DependentUpon>BGForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\EasyTowerEditor.resx">
+      <DependentUpon>EasyTowerEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\First_Time_Use.resx">
       <DependentUpon>First_Time_Use.cs</DependentUpon>
     </EmbeddedResource>

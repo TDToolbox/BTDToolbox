@@ -522,7 +522,8 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var easyTower = new EasyTowerEditor();
+            easyTower.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
