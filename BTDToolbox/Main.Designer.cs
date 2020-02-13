@@ -65,6 +65,8 @@
             this.spriteEditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.easyTowerEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getBTDBPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.FlashReader = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,8 +99,12 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.easyTowerEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.bTD5ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTDBattlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewLOCFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreBTD5LocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreBTDBattlesLOCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -394,6 +400,18 @@
             this.spriteAnimationVisualizerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.spriteAnimationVisualizerToolStripMenuItem.Text = "Sprite/Animation Visualizer";
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(188, 6);
+            // 
+            // easyTowerEditorToolStripMenuItem
+            // 
+            this.easyTowerEditorToolStripMenuItem.Name = "easyTowerEditorToolStripMenuItem";
+            this.easyTowerEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.easyTowerEditorToolStripMenuItem.Text = "Easy Tower Editor";
+            this.easyTowerEditorToolStripMenuItem.Click += new System.EventHandler(this.EasyTowerEditorToolStripMenuItem_Click);
+            // 
             // getBTDBPasswordToolStripMenuItem
             // 
             this.getBTDBPasswordToolStripMenuItem.Name = "getBTDBPasswordToolStripMenuItem";
@@ -423,7 +441,9 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.restorejetToBackupToolStripMenuItem,
+            this.toolStripMenuItem5,
             this.remakeBackupjetToolStripMenuItem,
+            this.createNewLOCFileToolStripMenuItem,
             this.toolStripSeparator1,
             this.Reset_EXE,
             this.resetUserSettingsToolStripMenuItem,
@@ -453,14 +473,14 @@
             // Backup_BTD5
             // 
             this.Backup_BTD5.Name = "Backup_BTD5";
-            this.Backup_BTD5.Size = new System.Drawing.Size(158, 22);
+            this.Backup_BTD5.Size = new System.Drawing.Size(180, 22);
             this.Backup_BTD5.Text = "Restore BTD5.jet";
             this.Backup_BTD5.Click += new System.EventHandler(this.Backup_BTD5_Click_1);
             // 
             // Backup_BTDB
             // 
             this.Backup_BTDB.Name = "Backup_BTDB";
-            this.Backup_BTDB.Size = new System.Drawing.Size(158, 22);
+            this.Backup_BTDB.Size = new System.Drawing.Size(180, 22);
             this.Backup_BTDB.Text = "Restore data.jet";
             this.Backup_BTDB.Click += new System.EventHandler(this.Backup_BTDB_Click_1);
             // 
@@ -476,14 +496,14 @@
             // Replace_BTD5_Backup
             // 
             this.Replace_BTD5_Backup.Name = "Replace_BTD5_Backup";
-            this.Replace_BTD5_Backup.Size = new System.Drawing.Size(150, 22);
+            this.Replace_BTD5_Backup.Size = new System.Drawing.Size(180, 22);
             this.Replace_BTD5_Backup.Text = "for BTD5";
             this.Replace_BTD5_Backup.Click += new System.EventHandler(this.Replace_BTD5_Backup_Click);
             // 
             // Replace_BTDB_Backup
             // 
             this.Replace_BTDB_Backup.Name = "Replace_BTDB_Backup";
-            this.Replace_BTDB_Backup.Size = new System.Drawing.Size(150, 22);
+            this.Replace_BTDB_Backup.Size = new System.Drawing.Size(180, 22);
             this.Replace_BTDB_Backup.Text = "for BTD Battles";
             this.Replace_BTDB_Backup.Click += new System.EventHandler(this.Replace_BTDB_Backup_Click);
             // 
@@ -608,21 +628,21 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // TestForm
             // 
             this.TestForm.Name = "TestForm";
-            this.TestForm.Size = new System.Drawing.Size(180, 22);
+            this.TestForm.Size = new System.Drawing.Size(148, 22);
             this.TestForm.Text = "JSON Editor";
             this.TestForm.Click += new System.EventHandler(this.TestForm_Click);
             // 
             // testingToolStripMenuItem
             // 
             this.testingToolStripMenuItem.Name = "testingToolStripMenuItem";
-            this.testingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.testingToolStripMenuItem.Text = "Testing";
             this.testingToolStripMenuItem.Click += new System.EventHandler(this.TestingToolStripMenuItem_Click);
             // 
@@ -639,17 +659,51 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // easyTowerEditorToolStripMenuItem
+            // bTD5ToolStripMenuItem1
             // 
-            this.easyTowerEditorToolStripMenuItem.Name = "easyTowerEditorToolStripMenuItem";
-            this.easyTowerEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.easyTowerEditorToolStripMenuItem.Text = "Easy Tower Editor";
-            this.easyTowerEditorToolStripMenuItem.Click += new System.EventHandler(this.EasyTowerEditorToolStripMenuItem_Click);
+            this.bTD5ToolStripMenuItem1.Name = "bTD5ToolStripMenuItem1";
+            this.bTD5ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.bTD5ToolStripMenuItem1.Text = "for BTD5";
+            this.bTD5ToolStripMenuItem1.Click += new System.EventHandler(this.BTD5ToolStripMenuItem1_Click);
             // 
-            // toolStripSeparator7
+            // bTDBattlesToolStripMenuItem
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(188, 6);
+            this.bTDBattlesToolStripMenuItem.Name = "bTDBattlesToolStripMenuItem";
+            this.bTDBattlesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bTDBattlesToolStripMenuItem.Text = "for BTD Battles";
+            this.bTDBattlesToolStripMenuItem.Click += new System.EventHandler(this.BTDBattlesToolStripMenuItem_Click);
+            // 
+            // createNewLOCFileToolStripMenuItem
+            // 
+            this.createNewLOCFileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bTD5ToolStripMenuItem1,
+            this.bTDBattlesToolStripMenuItem});
+            this.createNewLOCFileToolStripMenuItem.Name = "createNewLOCFileToolStripMenuItem";
+            this.createNewLOCFileToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.createNewLOCFileToolStripMenuItem.Text = "Create new LOC file";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.restoreBTD5LocToolStripMenuItem,
+            this.restoreBTDBattlesLOCToolStripMenuItem});
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(210, 22);
+            this.toolStripMenuItem5.Text = "Restore game\'s LOC file";
+            // 
+            // restoreBTD5LocToolStripMenuItem
+            // 
+            this.restoreBTD5LocToolStripMenuItem.Name = "restoreBTD5LocToolStripMenuItem";
+            this.restoreBTD5LocToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.restoreBTD5LocToolStripMenuItem.Text = "Restore BTD5 Loc";
+            this.restoreBTD5LocToolStripMenuItem.Click += new System.EventHandler(this.RestoreBTD5LocToolStripMenuItem_Click);
+            // 
+            // restoreBTDBattlesLOCToolStripMenuItem
+            // 
+            this.restoreBTDBattlesLOCToolStripMenuItem.Name = "restoreBTDBattlesLOCToolStripMenuItem";
+            this.restoreBTDBattlesLOCToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.restoreBTDBattlesLOCToolStripMenuItem.Text = "Restore BTD Battles LOC";
+            this.restoreBTDBattlesLOCToolStripMenuItem.Click += new System.EventHandler(this.RestoreBTDBattlesLOCToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -753,6 +807,12 @@
         private System.Windows.Forms.ToolStripMenuItem bTDBToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem easyTowerEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createNewLOCFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bTD5ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem bTDBattlesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem restoreBTD5LocToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restoreBTDBattlesLOCToolStripMenuItem;
     }
 }
 

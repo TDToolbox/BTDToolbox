@@ -221,18 +221,28 @@ namespace BTDToolbox
             {
                 string backupName = gameName + "_Original.jet";
                 string backupDir = Environment.CurrentDirectory + "\\Backups";
+                string backupLocName = gameName + "_Original_LOC.xml";
 
                 ConsoleHandler.appendLog("Attempting to validate backup...");
                 if (Directory.Exists(backupDir))
                 {
                     if (File.Exists(backupDir + "\\" + backupName))
                     {
-                        return true;
+                       
                     }
                     else
                     {
                         return false;
                     }
+                    if (File.Exists(backupDir + "\\" + backupLocName))
+                    {
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    return true;
                 }
                 else
                 {
@@ -274,6 +284,7 @@ namespace BTDToolbox
         {
             string backupDir = Environment.CurrentDirectory + "\\Backups";
             string backupName = game + "_Original.jet";
+            string backupLocName = game + "_Original_LOC.xml";
             string fullBackupPath = backupDir + "\\" + backupName;
 
             if (!Directory.Exists(backupDir))
@@ -282,10 +293,24 @@ namespace BTDToolbox
                 Directory.CreateDirectory(backupDir);
             }
 
+            string gameDir = "";
+            if(game == "BTD5")
+            {
+                gameDir = DeserializeConfig().BTD5_Directory;
+            }
+            else
+            {
+                gameDir = DeserializeConfig().BTDB_Directory;
+            }
+
             string steamJetPath = GetJetPath(game);
             if (steamJetPath != null)
             {
-                CopyFile(steamJetPath, fullBackupPath);
+                if(!File.Exists(backupDir + "\\" + backupLocName))
+                    CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
+
+                if (!File.Exists(fullBackupPath))
+                    CopyFile(steamJetPath, fullBackupPath);
                 if (File.Exists(fullBackupPath))
                     ConsoleHandler.appendLog("Backup created!");
                 else
@@ -333,6 +358,43 @@ namespace BTDToolbox
             else
             {
                 ConsoleHandler.appendLog("Unable to restore " + jetName + ". Game directory not detected..");
+            }
+        }
+        public static void RestoreGame_ToBackup_LOC(string game)
+        {
+            string gameDir = "";
+            string backupJetLoc = Environment.CurrentDirectory + "\\Backups\\" + game + "_Original_LOC.xml";
+            string locName = "English.xml";
+
+            if (isGamePathValid(game) == true)
+            {
+                if (game == "BTD5")
+                {
+                    gameDir = DeserializeConfig().BTD5_Directory;
+                }
+                else if (game == "BTDB")
+                {
+                    gameDir = DeserializeConfig().BTDB_Directory;
+                }
+                string locPath = gameDir + "\\Assets\\Loc\\" + locName;
+
+                if (!File.Exists(backupJetLoc))
+                {
+                    ConsoleHandler.appendLog("Unable to restore " + locName + ". Backup file doesn't exist..");
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Replacing " + locName + " with the backup " + locName);
+                    if (File.Exists(locPath))
+                        File.Delete(locPath);
+
+                    File.Copy(backupJetLoc, locPath);
+                    ConsoleHandler.appendLog(locName + " successfully restored!");
+                }
+            }
+            else
+            {
+                ConsoleHandler.appendLog("Unable to restore " + locName + ". Game directory not detected..");
             }
         }
         public static bool IsJSON_Valid(string text)

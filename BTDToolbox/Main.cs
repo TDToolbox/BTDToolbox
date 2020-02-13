@@ -640,5 +640,25 @@ namespace BTDToolbox
         {
 
         }
+
+        private void BTD5ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CreateBackup("BTD5");
+        }
+
+        private void BTDBattlesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateBackup("BTDB");
+        }
+
+        private void RestoreBTD5LocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup_LOC("BTD5");
+        }
+
+        private void RestoreBTDBattlesLOCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup_LOC("BTDB");
+        }
     }
 }

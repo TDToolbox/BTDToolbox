@@ -89,7 +89,6 @@
             this.Upgrades_ListBox.Size = new System.Drawing.Size(375, 209);
             this.Upgrades_ListBox.TabIndex = 0;
             this.Upgrades_ListBox.SelectedIndexChanged += new System.EventHandler(this.Upgrades_ListBox_SelectedIndexChanged);
-            this.Upgrades_ListBox.SelectedValueChanged += new System.EventHandler(this.Upgrades_ListBox_SelectedValueChanged);
             // 
             // TowerName_TextBox
             // 
@@ -102,6 +101,7 @@
             this.TowerName_TextBox.Size = new System.Drawing.Size(250, 24);
             this.TowerName_TextBox.TabIndex = 1;
             this.TowerName_TextBox.Text = "";
+            this.TowerName_TextBox.TextChanged += new System.EventHandler(this.TowerName_TextBox_TextChanged);
             // 
             // TowerType_Label
             // 
@@ -295,6 +295,7 @@
             this.TowerDesc_TextBox.Size = new System.Drawing.Size(375, 105);
             this.TowerDesc_TextBox.TabIndex = 19;
             this.TowerDesc_TextBox.Text = "";
+            this.TowerDesc_TextBox.TextChanged += new System.EventHandler(this.TowerDesc_TextBox_TextChanged);
             // 
             // label8
             // 
@@ -344,6 +345,7 @@
             this.UpgradeDesc_TextBox.Size = new System.Drawing.Size(379, 87);
             this.UpgradeDesc_TextBox.TabIndex = 23;
             this.UpgradeDesc_TextBox.Text = "";
+            this.UpgradeDesc_TextBox.TextChanged += new System.EventHandler(this.UpgradeDesc_TextBox_TextChanged);
             // 
             // TargetsManually_CheckBox
             // 
@@ -392,6 +394,7 @@
             this.UpgradePrice_TextBox.Size = new System.Drawing.Size(209, 24);
             this.UpgradePrice_TextBox.TabIndex = 27;
             this.UpgradePrice_TextBox.Text = "";
+            this.UpgradePrice_TextBox.TextChanged += new System.EventHandler(this.UpgradePrice_TextBox_TextChanged);
             // 
             // label11
             // 
@@ -416,6 +419,7 @@
             this.RankToUnlockUpgrade_TextBox.Size = new System.Drawing.Size(209, 24);
             this.RankToUnlockUpgrade_TextBox.TabIndex = 29;
             this.RankToUnlockUpgrade_TextBox.Text = "";
+            this.RankToUnlockUpgrade_TextBox.TextChanged += new System.EventHandler(this.RankToUnlockUpgrade_TextBox_TextChanged);
             // 
             // label12
             // 
@@ -440,6 +444,7 @@
             this.XpToUnlockUpgrade_TextBox.Size = new System.Drawing.Size(209, 24);
             this.XpToUnlockUpgrade_TextBox.TabIndex = 31;
             this.XpToUnlockUpgrade_TextBox.Text = "";
+            this.XpToUnlockUpgrade_TextBox.TextChanged += new System.EventHandler(this.XpToUnlockUpgrade_TextBox_TextChanged);
             // 
             // label13
             // 
@@ -464,6 +469,7 @@
             this.UpgradeIcon_TextBox.Size = new System.Drawing.Size(603, 24);
             this.UpgradeIcon_TextBox.TabIndex = 33;
             this.UpgradeIcon_TextBox.Text = "";
+            this.UpgradeIcon_TextBox.TextChanged += new System.EventHandler(this.UpgradeIcon_TextBox_TextChanged);
             // 
             // label14
             // 
@@ -488,6 +494,7 @@
             this.UpgradeAvatar_TextBox.Size = new System.Drawing.Size(603, 24);
             this.UpgradeAvatar_TextBox.TabIndex = 35;
             this.UpgradeAvatar_TextBox.Text = "";
+            this.UpgradeAvatar_TextBox.TextChanged += new System.EventHandler(this.UpgradeAvatar_TextBox_TextChanged);
             // 
             // label15
             // 
@@ -616,6 +623,7 @@
             this.Save_Button.TabIndex = 47;
             this.Save_Button.Text = "Save";
             this.Save_Button.UseVisualStyleBackColor = false;
+            this.Save_Button.Click += new System.EventHandler(this.Save_Button_Click);
             // 
             // AllTowerFiles_ComboBox
             // 
