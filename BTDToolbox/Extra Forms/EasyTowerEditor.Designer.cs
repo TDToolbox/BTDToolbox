@@ -292,7 +292,7 @@
             this.TowerDesc_TextBox.ForeColor = System.Drawing.Color.White;
             this.TowerDesc_TextBox.Location = new System.Drawing.Point(20, 337);
             this.TowerDesc_TextBox.Name = "TowerDesc_TextBox";
-            this.TowerDesc_TextBox.Size = new System.Drawing.Size(375, 60);
+            this.TowerDesc_TextBox.Size = new System.Drawing.Size(375, 105);
             this.TowerDesc_TextBox.TabIndex = 19;
             this.TowerDesc_TextBox.Text = "";
             // 
@@ -586,7 +586,7 @@
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(760, 275);
+            this.label19.Location = new System.Drawing.Point(760, 270);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(141, 20);
             this.label19.TabIndex = 46;
@@ -598,7 +598,7 @@
             this.PlacementRadius_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlacementRadius_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PlacementRadius_TextBox.ForeColor = System.Drawing.Color.White;
-            this.PlacementRadius_TextBox.Location = new System.Drawing.Point(758, 296);
+            this.PlacementRadius_TextBox.Location = new System.Drawing.Point(758, 291);
             this.PlacementRadius_TextBox.Name = "PlacementRadius_TextBox";
             this.PlacementRadius_TextBox.Size = new System.Drawing.Size(250, 24);
             this.PlacementRadius_TextBox.TabIndex = 45;

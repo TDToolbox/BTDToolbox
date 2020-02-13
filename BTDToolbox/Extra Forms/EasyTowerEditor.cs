@@ -24,6 +24,18 @@ namespace BTDToolbox.Extra_Forms
         string[] upgradeIcons = new string[] { };
         string[] upgradeAvatars = new string[] { };
         string[] upgradePrices = new string[] { };
+        string[] upgradeRanks = new string[] { };
+        string[] upgradeXPs = new string[] { };
+        
+        string[] loc_upgradeNames = new string[] { };
+        string[] loc_upgradeDescs = new string[] { };
+
+
+        
+
+        string loc_Path = "";
+        string loc_towerName = "";
+        string loc_towerDesc = "";
         public EasyTowerEditor()
         {
             InitializeComponent();
@@ -111,12 +123,14 @@ namespace BTDToolbox.Extra_Forms
             upgradeIcons = new string[] { };
             upgradeAvatars = new string[] { };
             upgradePrices = new string[] { };
+            upgradeRanks = new string[] { };
+            upgradeXPs = new string[] { };
 
             upgradenames = CreateStringArray(upgradenames, artist.Upgrades);
             upgradeIcons = CreateStringArray(upgradeIcons, artist.UpgradeIcons);            
             upgradeAvatars = CreateStringArray(upgradeAvatars, artist.UpgradeAvatars);
 
-            if(artist.UpgradePrices != null)
+            if (artist.UpgradePrices != null)
             {
                 foreach (long[] a in artist.UpgradePrices)
                 {
@@ -136,6 +150,24 @@ namespace BTDToolbox.Extra_Forms
                 Upgrades_ListBox.Refresh();
             }
 
+            var g = artist.UpgradeGateway;
+            if (g != null)
+            {
+                foreach (var a in g)
+                {
+                    foreach (var b in a)
+                    {
+                        Array.Resize(ref upgradeRanks, upgradeRanks.Length + 1);
+                        upgradeRanks[upgradeRanks.Length - 1] = b.Rank.ToString();
+
+                        Array.Resize(ref upgradeXPs, upgradeXPs.Length + 1);
+                        upgradeXPs[upgradeXPs.Length - 1] = b.Xp.ToString();
+                    }
+                }
+            }
+            
+            ReadLoc();
+            
             if (upgradenames != null)
             {
                 for (int i = 0; i < upgradenames.Length; i++)
@@ -147,8 +179,7 @@ namespace BTDToolbox.Extra_Forms
                     Upgrades_ListBox.SelectedIndex = 0;
                     PopulateUpgrades();
                 }
-
-            }
+            }            
         }
         private string[] CreateStringArray(string[] outputArray, string[][] deserializedArray)
         {
@@ -178,10 +209,15 @@ namespace BTDToolbox.Extra_Forms
             if (Upgrades_ListBox.Items.Count > 0)
             {
                 UpgradeName_TextBox.Text = upgradenames[Upgrades_ListBox.SelectedIndex].ToString();
-
                 UpgradePrice_TextBox.Text = upgradePrices[Upgrades_ListBox.SelectedIndex].ToString();
                 UpgradeIcon_TextBox.Text = upgradeIcons[Upgrades_ListBox.SelectedIndex].ToString();
                 UpgradeAvatar_TextBox.Text = upgradeAvatars[Upgrades_ListBox.SelectedIndex].ToString();
+
+                RankToUnlockUpgrade_TextBox.Text = upgradeRanks[Upgrades_ListBox.SelectedIndex].ToString();
+                XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
+
+                //XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
+                UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
             }
         }
         private void ResetUI()
@@ -216,9 +252,19 @@ namespace BTDToolbox.Extra_Forms
         }
         private void EasyTowerEditor_Load(object sender, EventArgs e)
         {
-            CreateTowerObject(path);
+            string gameDir = "";
+            if (Serializer.Deserialize_Config().CurrentGame == "BTD5")
+            {
+                gameDir = Serializer.Deserialize_Config().BTD5_Directory;
+            }
+            else
+            {
+                gameDir = Serializer.Deserialize_Config().BTDB_Directory;
+            }
+            loc_Path = gameDir + "\\Assets\\Loc\\English.xml";
 
-            
+
+            CreateTowerObject(path);
             try
             {
                 string[] split = path.Split('\\');
@@ -242,10 +288,9 @@ namespace BTDToolbox.Extra_Forms
         }
         private void AllTowerFiles_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /*PopulateUI();
-            this.Refresh();*/
+            PopulateUI();
+            this.Refresh();
         }
-
         private void Upgrades_ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!UpgradeName_TextBox.Focused)
@@ -253,7 +298,6 @@ namespace BTDToolbox.Extra_Forms
                 PopulateUpgrades();
             }
         }
-
         private void UpgradeName_TextBox_TextChanged(object sender, EventArgs e)
         {
             if (finishedLoading)
@@ -274,15 +318,78 @@ namespace BTDToolbox.Extra_Forms
             }
 
         }
-
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
             finishedLoading = true;
         }
-
         private void Upgrades_ListBox_SelectedValueChanged(object sender, EventArgs e)
         {
             
+        }
+        private void ReadLoc()
+        {
+            string[] loc = File.ReadAllLines(loc_Path);
+            string towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
+            string towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
+            string towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+            string towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+
+            //Upgrade Names
+            string towerUpgrade_A1 = "LOC_UPGRADE_A1_" + TowerType_Label.Text;
+            string towerUpgrade_A2 = "LOC_UPGRADE_A2_" + TowerType_Label.Text;
+            string towerUpgrade_A3 = "LOC_UPGRADE_A3_" + TowerType_Label.Text;
+            string towerUpgrade_A4 = "LOC_UPGRADE_A4_" + TowerType_Label.Text;
+
+            string towerUpgrade_B1 = "LOC_UPGRADE_B1_" + TowerType_Label.Text;
+            string towerUpgrade_B2 = "LOC_UPGRADE_B2_" + TowerType_Label.Text;
+            string towerUpgrade_B3 = "LOC_UPGRADE_B3_" + TowerType_Label.Text;
+            string towerUpgrade_B4 = "LOC_UPGRADE_B4_" + TowerType_Label.Text;
+
+
+            //Upgrade Descriptions
+            string towerUpgradeDesc_A1 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_A1";
+            string towerUpgradeDesc_A2 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_A2";
+            string towerUpgradeDesc_A3 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_A3";
+            string towerUpgradeDesc_A4 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_A4";
+
+            string towerUpgradeDesc_B1 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_B1";
+            string towerUpgradeDesc_B2 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_B2";
+            string towerUpgradeDesc_B3 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_B3";
+            string towerUpgradeDesc_B4 = "LOC_" + TowerType_Label.Text + "_UPGRADE_DESC_B4";
+
+            
+            //Get tower name
+            foreach (string name in loc)
+            {
+                if ((name.Contains(towerName)) && (!name.Contains("PLURAL")) && (!name.Contains("CAPS")))
+                {
+                    string[] split = name.Split('>');
+                    loc_towerName = split[split.Length - 2].Replace("</T", "");
+                    TowerName_TextBox.Text = split[split.Length - 2].Replace("</T", "");
+                }
+                else if (name.Contains(towerDesc))
+                {
+                    string[] split = name.Split('>');
+                    loc_towerDesc = split[split.Length - 2].Replace("</T", "");
+                    TowerDesc_TextBox.Text = loc_towerDesc;
+                }
+                else if (name.Contains(towerUpgrade_A1) || name.Contains(towerUpgrade_A2) || name.Contains(towerUpgrade_A3) || name.Contains(towerUpgrade_A4) || name.Contains(towerUpgrade_B1) || name.Contains(towerUpgrade_B2) || name.Contains(towerUpgrade_B3) || name.Contains(towerUpgrade_B4))
+                {
+                    string[] split = name.Split('>');
+                    string upgradeName = split[split.Length - 2].Replace("</T", "");
+
+                    Array.Resize(ref loc_upgradeNames, loc_upgradeNames.Length + 1);
+                    loc_upgradeNames[loc_upgradeNames.Length - 1] = upgradeName;
+                }
+                else if (name.Contains(towerUpgradeDesc_A1) || name.Contains(towerUpgradeDesc_A2) || name.Contains(towerUpgradeDesc_A3) || name.Contains(towerUpgradeDesc_A4) || name.Contains(towerUpgradeDesc_B1) || name.Contains(towerUpgradeDesc_B2) || name.Contains(towerUpgradeDesc_B3) || name.Contains(towerUpgradeDesc_B4))
+                {
+                    string[] split = name.Split('>');
+                    string upgradeDesc = split[split.Length - 2].Replace("</T", "");
+
+                    Array.Resize(ref loc_upgradeDescs, loc_upgradeDescs.Length + 1);
+                    loc_upgradeDescs[loc_upgradeDescs.Length - 1] = upgradeDesc;
+                }
+            }
         }
     }
 }
