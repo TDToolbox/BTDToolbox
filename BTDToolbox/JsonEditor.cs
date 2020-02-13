@@ -114,15 +114,14 @@ namespace BTDToolbox
         }
         private void HandleTools()
         {
-            EasyTowerEditor_Button.Visible = true;
-            /*if (Path.EndsWith("tower"))
+            if (Path.EndsWith("tower"))
             {
                 EasyTowerEditor_Button.Visible = true;
             }
             else
             {
                 EasyTowerEditor_Button.Visible = false;
-            }*/
+            }
         }
         private void Deserialize_Config()
         {
