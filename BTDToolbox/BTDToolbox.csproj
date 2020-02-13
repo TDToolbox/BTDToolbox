@@ -68,6 +68,8 @@
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
+    <Compile Include="Classes\QuickType.cs" />
+    <Compile Include="Classes\Tower_Class.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
     <Compile Include="Classes\JSON_Reader.cs" />

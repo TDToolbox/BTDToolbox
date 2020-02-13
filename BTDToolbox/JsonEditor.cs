@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Extra_Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -113,14 +114,15 @@ namespace BTDToolbox
         }
         private void HandleTools()
         {
-            if (Path.EndsWith("tower"))
+            EasyTowerEditor_Button.Visible = true;
+            /*if (Path.EndsWith("tower"))
             {
                 EasyTowerEditor_Button.Visible = true;
             }
             else
             {
                 EasyTowerEditor_Button.Visible = false;
-            }
+            }*/
         }
         private void Deserialize_Config()
         {
@@ -833,6 +835,13 @@ namespace BTDToolbox
                     Editor_TextBox.SelectedText = "";
                 }
             }
+        }
+        private void EasyTowerEditor_Button_Click(object sender, EventArgs e)
+        {
+            var easyTower = new EasyTowerEditor();
+            string path = Path;
+            easyTower.path = path;
+            easyTower.Show();
         }
     }
 }

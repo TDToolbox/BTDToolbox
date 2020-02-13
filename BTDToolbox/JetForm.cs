@@ -34,6 +34,7 @@ namespace BTDToolbox
         public static float jetExplorer_FontSize;
         public static int jetExplorer_SplitterWidth;
         public static string lastProject;
+        public static bool useExternalEditor;
 
         public JetForm(DirectoryInfo dirInfo, Main Form, string projName)
         {
@@ -79,6 +80,7 @@ namespace BTDToolbox
             lastProject = programData.LastProject;
             jetExplorer_SplitterWidth = programData.JetExplorer_SplitterWidth;
             fileViewContainer.SplitterDistance = jetExplorer_SplitterWidth;
+            useExternalEditor = programData.useExternalEditor;
             
             //other setup
             this.KeyPreview = true;
@@ -136,6 +138,7 @@ namespace BTDToolbox
         {
             JetProps.decrement(this);
             Serializer.SaveConfig(this, "jet explorer", programData);
+            Serializer.SaveSmallSettings("external editor", programData);
         }
 
         private void PopulateTreeView()
@@ -230,32 +233,48 @@ namespace BTDToolbox
             ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
             if (Selected.Count == 1)
             {
-                try
-                {
-                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
-                    JsonWindow.MdiParent = Form;
-                    JsonWindow.Show();
-                }
-                catch (Exception)
+                if (useExternalEditor == false)
                 {
                     try
                     {
-                        if (!Selected[0].Text.Contains("."))
-                        {
-                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
-                            {
-                                if (node.Text == Selected[0].Text)
-                                {
-                                    node.Expand();
-                                    treeView1.SelectedNode = node;
-                                }
-                            }
-                        }
+                        JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                        JsonWindow.MdiParent = Form;
+                        JsonWindow.Show();
                     }
                     catch (Exception)
                     {
+                        try
+                        {
+                            if (!Selected[0].Text.Contains("."))
+                            {
+                                foreach (TreeNode node in treeView1.SelectedNode.Nodes)
+                                {
+                                    if (node.Text == Selected[0].Text)
+                                    {
+                                        node.Expand();
+                                        treeView1.SelectedNode = node;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
+                else
+                {
+                    try
+                    {
+                        string selectedFile = this.Text + "\\" + Selected[0].Text;
+                        Process.Start(selectedFile);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                
             }
         }
 

@@ -27,6 +27,10 @@ namespace BTDToolbox
             {
                 cfg.enableSplash = Program.enableSplash;
             }
+            if (formName == "external editor")
+            {
+                cfg.useExternalEditor = JetForm.useExternalEditor;
+            }
             if (formName == "battlesPass")
             {
                 cfg.battlesPass = ZipForm.rememberedPassword;
@@ -135,7 +139,9 @@ namespace BTDToolbox
 
                     programData.enableSplash = true;
                     programData.recentUpdate = false;
-                    
+                    programData.useExternalEditor = false;
+
+
                     programData.BTD5_Directory = "";
                     programData.BTDB_Directory = "";
                     programData.LastProject = null;

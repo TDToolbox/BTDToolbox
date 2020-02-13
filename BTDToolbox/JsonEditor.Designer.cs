@@ -213,6 +213,7 @@
             this.EasyTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
             this.EasyTowerEditor_Button.Text = "Easy Tower Editor";
             this.EasyTowerEditor_Button.Visible = false;
+            this.EasyTowerEditor_Button.Click += new System.EventHandler(this.EasyTowerEditor_Button_Click);
             // 
             // Help_DropDown
             // 

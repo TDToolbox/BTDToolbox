@@ -30,6 +30,7 @@
         {
             this.EnableSplash = new System.Windows.Forms.CheckBox();
             this.Save_Button = new System.Windows.Forms.Button();
+            this.useExternalEditor = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -47,6 +48,7 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.useExternalEditor);
             this.contentPanel.Controls.Add(this.Save_Button);
             this.contentPanel.Controls.Add(this.EnableSplash);
             // 
@@ -80,6 +82,18 @@
             this.Save_Button.UseVisualStyleBackColor = true;
             this.Save_Button.Click += new System.EventHandler(this.Save_Button_Click);
             // 
+            // useExternalEditor
+            // 
+            this.useExternalEditor.AutoSize = true;
+            this.useExternalEditor.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.useExternalEditor.ForeColor = System.Drawing.Color.White;
+            this.useExternalEditor.Location = new System.Drawing.Point(15, 52);
+            this.useExternalEditor.Name = "useExternalEditor";
+            this.useExternalEditor.Size = new System.Drawing.Size(201, 24);
+            this.useExternalEditor.TabIndex = 3;
+            this.useExternalEditor.Text = "Use External Text Editor";
+            this.useExternalEditor.UseVisualStyleBackColor = true;
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -102,5 +116,6 @@
 
         private System.Windows.Forms.CheckBox EnableSplash;
         private System.Windows.Forms.Button Save_Button;
+        private System.Windows.Forms.CheckBox useExternalEditor;
     }
 }

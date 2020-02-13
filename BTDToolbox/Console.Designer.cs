@@ -30,12 +30,19 @@
         {
             this.invoke_button = new System.Windows.Forms.Button();
             this.invoke_textbox = new System.Windows.Forms.TextBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.consoe_tab = new System.Windows.Forms.TabPage();
+            this.error_tab = new System.Windows.Forms.TabPage();
+            this.ErrorLog = new System.Windows.Forms.RichTextBox();
             this.output_log = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.consoe_tab.SuspendLayout();
+            this.error_tab.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleSeperator
@@ -43,14 +50,19 @@
             // 
             // TitleLabel
             // 
+            this.TitleLabel.Location = new System.Drawing.Point(12, 5);
             this.TitleLabel.Size = new System.Drawing.Size(58, 16);
             this.TitleLabel.Text = "Console";
+            this.TitleLabel.Visible = false;
             // 
             // contentPanel
             // 
-            this.contentPanel.Controls.Add(this.output_log);
+            this.contentPanel.BackColor = System.Drawing.Color.Black;
+            this.contentPanel.Controls.Add(this.tabControl1);
             this.contentPanel.Controls.Add(this.invoke_button);
             this.contentPanel.Controls.Add(this.invoke_textbox);
+            this.contentPanel.Location = new System.Drawing.Point(3, -29);
+            this.contentPanel.Size = new System.Drawing.Size(794, 438);
             // 
             // close_button
             // 
@@ -58,13 +70,14 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            this.close_button.Location = new System.Drawing.Point(748, 0);
             // 
             // invoke_button
             // 
             this.invoke_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.invoke_button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.invoke_button.ForeColor = System.Drawing.Color.White;
-            this.invoke_button.Location = new System.Drawing.Point(570, 379);
+            this.invoke_button.Location = new System.Drawing.Point(588, 411);
             this.invoke_button.Name = "invoke_button";
             this.invoke_button.Size = new System.Drawing.Size(203, 27);
             this.invoke_button.TabIndex = 4;
@@ -78,10 +91,62 @@
             this.invoke_textbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.invoke_textbox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.invoke_textbox.ForeColor = System.Drawing.Color.White;
-            this.invoke_textbox.Location = new System.Drawing.Point(4, 381);
+            this.invoke_textbox.Location = new System.Drawing.Point(4, 413);
             this.invoke_textbox.Name = "invoke_textbox";
-            this.invoke_textbox.Size = new System.Drawing.Size(560, 23);
+            this.invoke_textbox.Size = new System.Drawing.Size(578, 23);
             this.invoke_textbox.TabIndex = 3;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.consoe_tab);
+            this.tabControl1.Controls.Add(this.error_tab);
+            this.tabControl1.Location = new System.Drawing.Point(9, 30);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(772, 375);
+            this.tabControl1.TabIndex = 7;
+            // 
+            // consoe_tab
+            // 
+            this.consoe_tab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.consoe_tab.Controls.Add(this.output_log);
+            this.consoe_tab.Location = new System.Drawing.Point(4, 22);
+            this.consoe_tab.Name = "consoe_tab";
+            this.consoe_tab.Padding = new System.Windows.Forms.Padding(3);
+            this.consoe_tab.Size = new System.Drawing.Size(764, 349);
+            this.consoe_tab.TabIndex = 0;
+            this.consoe_tab.Text = "Console";
+            // 
+            // error_tab
+            // 
+            this.error_tab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.error_tab.Controls.Add(this.ErrorLog);
+            this.error_tab.Location = new System.Drawing.Point(4, 22);
+            this.error_tab.Name = "error_tab";
+            this.error_tab.Padding = new System.Windows.Forms.Padding(3);
+            this.error_tab.Size = new System.Drawing.Size(764, 349);
+            this.error_tab.TabIndex = 1;
+            this.error_tab.Text = "Error log  (0)";
+            // 
+            // ErrorLog
+            // 
+            this.ErrorLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ErrorLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.ErrorLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ErrorLog.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ErrorLog.ForeColor = System.Drawing.Color.White;
+            this.ErrorLog.Location = new System.Drawing.Point(0, 0);
+            this.ErrorLog.Name = "ErrorLog";
+            this.ErrorLog.ReadOnly = true;
+            this.ErrorLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.ErrorLog.Size = new System.Drawing.Size(770, 371);
+            this.ErrorLog.TabIndex = 7;
+            this.ErrorLog.Text = "";
             // 
             // output_log
             // 
@@ -92,12 +157,12 @@
             this.output_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.output_log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.output_log.ForeColor = System.Drawing.Color.White;
-            this.output_log.Location = new System.Drawing.Point(3, 3);
+            this.output_log.Location = new System.Drawing.Point(1, 0);
             this.output_log.Name = "output_log";
             this.output_log.ReadOnly = true;
             this.output_log.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.output_log.Size = new System.Drawing.Size(770, 371);
-            this.output_log.TabIndex = 6;
+            this.output_log.Size = new System.Drawing.Size(763, 349);
+            this.output_log.TabIndex = 7;
             this.output_log.Text = "";
             // 
             // Console
@@ -114,6 +179,9 @@
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.consoe_tab.ResumeLayout(false);
+            this.error_tab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -123,6 +191,10 @@
         private System.Windows.Forms.Button invoke_button;
         private System.Windows.Forms.TextBox invoke_textbox;
         public System.Windows.Forms.TextBox console_log;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage consoe_tab;
         public System.Windows.Forms.RichTextBox output_log;
+        private System.Windows.Forms.TabPage error_tab;
+        public System.Windows.Forms.RichTextBox ErrorLog;
     }
 }

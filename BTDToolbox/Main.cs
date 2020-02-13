@@ -523,6 +523,8 @@ namespace BTDToolbox
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var easyTower = new EasyTowerEditor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            easyTower.path = path;
             easyTower.Show();
         }
 
@@ -632,6 +634,11 @@ namespace BTDToolbox
         private void EraseConsoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.ClearConsole();
+        }
+
+        private void EasyTowerEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
