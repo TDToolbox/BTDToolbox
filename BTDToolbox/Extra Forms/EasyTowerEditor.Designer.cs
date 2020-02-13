@@ -74,6 +74,11 @@
             this.PlacementRadius_TextBox = new System.Windows.Forms.RichTextBox();
             this.Save_Button = new System.Windows.Forms.Button();
             this.AllTowerFiles_ComboBox = new System.Windows.Forms.ComboBox();
+            this.TowerPanel = new System.Windows.Forms.Panel();
+            this.UpgradesPanel = new System.Windows.Forms.Panel();
+            this.SwitchPanel = new System.Windows.Forms.Button();
+            this.TowerPanel.SuspendLayout();
+            this.UpgradesPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Upgrades_ListBox
@@ -84,7 +89,7 @@
             this.Upgrades_ListBox.ForeColor = System.Drawing.Color.White;
             this.Upgrades_ListBox.FormattingEnabled = true;
             this.Upgrades_ListBox.ItemHeight = 19;
-            this.Upgrades_ListBox.Location = new System.Drawing.Point(20, 542);
+            this.Upgrades_ListBox.Location = new System.Drawing.Point(8, 84);
             this.Upgrades_ListBox.Name = "Upgrades_ListBox";
             this.Upgrades_ListBox.Size = new System.Drawing.Size(375, 209);
             this.Upgrades_ListBox.TabIndex = 0;
@@ -96,7 +101,7 @@
             this.TowerName_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TowerName_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TowerName_TextBox.ForeColor = System.Drawing.Color.White;
-            this.TowerName_TextBox.Location = new System.Drawing.Point(20, 138);
+            this.TowerName_TextBox.Location = new System.Drawing.Point(56, 98);
             this.TowerName_TextBox.Name = "TowerName_TextBox";
             this.TowerName_TextBox.Size = new System.Drawing.Size(250, 24);
             this.TowerName_TextBox.TabIndex = 1;
@@ -120,7 +125,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(20, 115);
+            this.label2.Location = new System.Drawing.Point(56, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(103, 20);
             this.label2.TabIndex = 4;
@@ -132,7 +137,7 @@
             this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(20, 519);
+            this.label3.Location = new System.Drawing.Point(8, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 20);
             this.label3.TabIndex = 6;
@@ -143,7 +148,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(20, 165);
+            this.label4.Location = new System.Drawing.Point(56, 125);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(81, 20);
             this.label4.TabIndex = 8;
@@ -155,7 +160,7 @@
             this.BaseCost_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.BaseCost_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BaseCost_TextBox.ForeColor = System.Drawing.Color.White;
-            this.BaseCost_TextBox.Location = new System.Drawing.Point(20, 188);
+            this.BaseCost_TextBox.Location = new System.Drawing.Point(56, 148);
             this.BaseCost_TextBox.Name = "BaseCost_TextBox";
             this.BaseCost_TextBox.Size = new System.Drawing.Size(250, 24);
             this.BaseCost_TextBox.TabIndex = 7;
@@ -166,7 +171,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(20, 214);
+            this.label5.Location = new System.Drawing.Point(56, 174);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(120, 20);
             this.label5.TabIndex = 10;
@@ -178,7 +183,7 @@
             this.RankToUnlock_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RankToUnlock_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RankToUnlock_TextBox.ForeColor = System.Drawing.Color.White;
-            this.RankToUnlock_TextBox.Location = new System.Drawing.Point(20, 237);
+            this.RankToUnlock_TextBox.Location = new System.Drawing.Point(56, 197);
             this.RankToUnlock_TextBox.Name = "RankToUnlock_TextBox";
             this.RankToUnlock_TextBox.Size = new System.Drawing.Size(250, 24);
             this.RankToUnlock_TextBox.TabIndex = 9;
@@ -190,7 +195,7 @@
             this.CanTargetCamo_CheckBox.FlatAppearance.BorderSize = 2;
             this.CanTargetCamo_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.CanTargetCamo_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.CanTargetCamo_CheckBox.Location = new System.Drawing.Point(508, 125);
+            this.CanTargetCamo_CheckBox.Location = new System.Drawing.Point(544, 85);
             this.CanTargetCamo_CheckBox.Name = "CanTargetCamo_CheckBox";
             this.CanTargetCamo_CheckBox.Size = new System.Drawing.Size(153, 24);
             this.CanTargetCamo_CheckBox.TabIndex = 11;
@@ -202,7 +207,7 @@
             this.CanBePlacedInWater_CheckBox.AutoSize = true;
             this.CanBePlacedInWater_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.CanBePlacedInWater_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.CanBePlacedInWater_CheckBox.Location = new System.Drawing.Point(507, 298);
+            this.CanBePlacedInWater_CheckBox.Location = new System.Drawing.Point(543, 258);
             this.CanBePlacedInWater_CheckBox.Name = "CanBePlacedInWater_CheckBox";
             this.CanBePlacedInWater_CheckBox.Size = new System.Drawing.Size(194, 24);
             this.CanBePlacedInWater_CheckBox.TabIndex = 12;
@@ -214,7 +219,7 @@
             this.CanBePlacedOnLand_CheckBox.AutoSize = true;
             this.CanBePlacedOnLand_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.CanBePlacedOnLand_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.CanBePlacedOnLand_CheckBox.Location = new System.Drawing.Point(508, 328);
+            this.CanBePlacedOnLand_CheckBox.Location = new System.Drawing.Point(544, 288);
             this.CanBePlacedOnLand_CheckBox.Name = "CanBePlacedOnLand_CheckBox";
             this.CanBePlacedOnLand_CheckBox.Size = new System.Drawing.Size(193, 24);
             this.CanBePlacedOnLand_CheckBox.TabIndex = 13;
@@ -226,7 +231,7 @@
             this.CanBePlacedOnPath_CheckBox.AutoSize = true;
             this.CanBePlacedOnPath_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.CanBePlacedOnPath_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.CanBePlacedOnPath_CheckBox.Location = new System.Drawing.Point(508, 358);
+            this.CanBePlacedOnPath_CheckBox.Location = new System.Drawing.Point(544, 318);
             this.CanBePlacedOnPath_CheckBox.Name = "CanBePlacedOnPath_CheckBox";
             this.CanBePlacedOnPath_CheckBox.Size = new System.Drawing.Size(190, 24);
             this.CanBePlacedOnPath_CheckBox.TabIndex = 14;
@@ -238,7 +243,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(675, 42);
+            this.label6.Location = new System.Drawing.Point(693, 29);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 20);
             this.label6.TabIndex = 16;
@@ -256,7 +261,7 @@
             "Last",
             "Close",
             "Strong"});
-            this.TargetingMode_ComboBox.Location = new System.Drawing.Point(609, 65);
+            this.TargetingMode_ComboBox.Location = new System.Drawing.Point(627, 52);
             this.TargetingMode_ComboBox.Name = "TargetingMode_ComboBox";
             this.TargetingMode_ComboBox.Size = new System.Drawing.Size(288, 27);
             this.TargetingMode_ComboBox.TabIndex = 17;
@@ -266,7 +271,7 @@
             this.RotateToTarget_CheckBox.AutoSize = true;
             this.RotateToTarget_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.RotateToTarget_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.RotateToTarget_CheckBox.Location = new System.Drawing.Point(508, 179);
+            this.RotateToTarget_CheckBox.Location = new System.Drawing.Point(544, 139);
             this.RotateToTarget_CheckBox.Name = "RotateToTarget_CheckBox";
             this.RotateToTarget_CheckBox.Size = new System.Drawing.Size(153, 24);
             this.RotateToTarget_CheckBox.TabIndex = 18;
@@ -278,7 +283,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(20, 314);
+            this.label7.Location = new System.Drawing.Point(56, 274);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(146, 20);
             this.label7.TabIndex = 20;
@@ -290,7 +295,7 @@
             this.TowerDesc_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TowerDesc_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TowerDesc_TextBox.ForeColor = System.Drawing.Color.White;
-            this.TowerDesc_TextBox.Location = new System.Drawing.Point(20, 337);
+            this.TowerDesc_TextBox.Location = new System.Drawing.Point(56, 297);
             this.TowerDesc_TextBox.Name = "TowerDesc_TextBox";
             this.TowerDesc_TextBox.Size = new System.Drawing.Size(375, 105);
             this.TowerDesc_TextBox.TabIndex = 19;
@@ -303,7 +308,7 @@
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label8.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(428, 469);
+            this.label8.Location = new System.Drawing.Point(416, 11);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(121, 20);
             this.label8.TabIndex = 22;
@@ -315,7 +320,7 @@
             this.UpgradeName_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UpgradeName_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpgradeName_TextBox.ForeColor = System.Drawing.Color.White;
-            this.UpgradeName_TextBox.Location = new System.Drawing.Point(428, 492);
+            this.UpgradeName_TextBox.Location = new System.Drawing.Point(416, 34);
             this.UpgradeName_TextBox.Name = "UpgradeName_TextBox";
             this.UpgradeName_TextBox.Size = new System.Drawing.Size(379, 24);
             this.UpgradeName_TextBox.TabIndex = 21;
@@ -328,7 +333,7 @@
             this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label9.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(428, 528);
+            this.label9.Location = new System.Drawing.Point(416, 70);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(164, 20);
             this.label9.TabIndex = 24;
@@ -340,7 +345,7 @@
             this.UpgradeDesc_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UpgradeDesc_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpgradeDesc_TextBox.ForeColor = System.Drawing.Color.White;
-            this.UpgradeDesc_TextBox.Location = new System.Drawing.Point(428, 551);
+            this.UpgradeDesc_TextBox.Location = new System.Drawing.Point(416, 93);
             this.UpgradeDesc_TextBox.Name = "UpgradeDesc_TextBox";
             this.UpgradeDesc_TextBox.Size = new System.Drawing.Size(379, 87);
             this.UpgradeDesc_TextBox.TabIndex = 23;
@@ -352,7 +357,7 @@
             this.TargetsManually_CheckBox.AutoSize = true;
             this.TargetsManually_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.TargetsManually_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.TargetsManually_CheckBox.Location = new System.Drawing.Point(507, 209);
+            this.TargetsManually_CheckBox.Location = new System.Drawing.Point(543, 169);
             this.TargetsManually_CheckBox.Name = "TargetsManually_CheckBox";
             this.TargetsManually_CheckBox.Size = new System.Drawing.Size(152, 24);
             this.TargetsManually_CheckBox.TabIndex = 25;
@@ -364,7 +369,7 @@
             this.TargetIsWeaponOrigin_CheckBox.AutoSize = true;
             this.TargetIsWeaponOrigin_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.TargetIsWeaponOrigin_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.TargetIsWeaponOrigin_CheckBox.Location = new System.Drawing.Point(507, 239);
+            this.TargetIsWeaponOrigin_CheckBox.Location = new System.Drawing.Point(543, 199);
             this.TargetIsWeaponOrigin_CheckBox.Name = "TargetIsWeaponOrigin_CheckBox";
             this.TargetIsWeaponOrigin_CheckBox.Size = new System.Drawing.Size(205, 24);
             this.TargetIsWeaponOrigin_CheckBox.TabIndex = 26;
@@ -377,7 +382,7 @@
             this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label10.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(822, 492);
+            this.label10.Location = new System.Drawing.Point(810, 34);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(118, 20);
             this.label10.TabIndex = 28;
@@ -389,7 +394,7 @@
             this.UpgradePrice_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UpgradePrice_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpgradePrice_TextBox.ForeColor = System.Drawing.Color.White;
-            this.UpgradePrice_TextBox.Location = new System.Drawing.Point(822, 515);
+            this.UpgradePrice_TextBox.Location = new System.Drawing.Point(810, 57);
             this.UpgradePrice_TextBox.Name = "UpgradePrice_TextBox";
             this.UpgradePrice_TextBox.Size = new System.Drawing.Size(209, 24);
             this.UpgradePrice_TextBox.TabIndex = 27;
@@ -402,7 +407,7 @@
             this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label11.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(822, 588);
+            this.label11.Location = new System.Drawing.Point(810, 130);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(186, 20);
             this.label11.TabIndex = 30;
@@ -414,7 +419,7 @@
             this.RankToUnlockUpgrade_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RankToUnlockUpgrade_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RankToUnlockUpgrade_TextBox.ForeColor = System.Drawing.Color.White;
-            this.RankToUnlockUpgrade_TextBox.Location = new System.Drawing.Point(822, 611);
+            this.RankToUnlockUpgrade_TextBox.Location = new System.Drawing.Point(810, 153);
             this.RankToUnlockUpgrade_TextBox.Name = "RankToUnlockUpgrade_TextBox";
             this.RankToUnlockUpgrade_TextBox.Size = new System.Drawing.Size(209, 24);
             this.RankToUnlockUpgrade_TextBox.TabIndex = 29;
@@ -427,7 +432,7 @@
             this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label12.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(822, 539);
+            this.label12.Location = new System.Drawing.Point(810, 81);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(170, 20);
             this.label12.TabIndex = 32;
@@ -439,7 +444,7 @@
             this.XpToUnlockUpgrade_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.XpToUnlockUpgrade_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.XpToUnlockUpgrade_TextBox.ForeColor = System.Drawing.Color.White;
-            this.XpToUnlockUpgrade_TextBox.Location = new System.Drawing.Point(822, 562);
+            this.XpToUnlockUpgrade_TextBox.Location = new System.Drawing.Point(810, 104);
             this.XpToUnlockUpgrade_TextBox.Name = "XpToUnlockUpgrade_TextBox";
             this.XpToUnlockUpgrade_TextBox.Size = new System.Drawing.Size(209, 24);
             this.XpToUnlockUpgrade_TextBox.TabIndex = 31;
@@ -452,7 +457,7 @@
             this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label13.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(428, 654);
+            this.label13.Location = new System.Drawing.Point(416, 196);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(112, 20);
             this.label13.TabIndex = 34;
@@ -464,7 +469,7 @@
             this.UpgradeIcon_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UpgradeIcon_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpgradeIcon_TextBox.ForeColor = System.Drawing.Color.White;
-            this.UpgradeIcon_TextBox.Location = new System.Drawing.Point(428, 677);
+            this.UpgradeIcon_TextBox.Location = new System.Drawing.Point(416, 219);
             this.UpgradeIcon_TextBox.Name = "UpgradeIcon_TextBox";
             this.UpgradeIcon_TextBox.Size = new System.Drawing.Size(603, 24);
             this.UpgradeIcon_TextBox.TabIndex = 33;
@@ -477,7 +482,7 @@
             this.label14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label14.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(428, 703);
+            this.label14.Location = new System.Drawing.Point(416, 245);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(128, 20);
             this.label14.TabIndex = 36;
@@ -489,7 +494,7 @@
             this.UpgradeAvatar_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UpgradeAvatar_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpgradeAvatar_TextBox.ForeColor = System.Drawing.Color.White;
-            this.UpgradeAvatar_TextBox.Location = new System.Drawing.Point(428, 726);
+            this.UpgradeAvatar_TextBox.Location = new System.Drawing.Point(416, 268);
             this.UpgradeAvatar_TextBox.Name = "UpgradeAvatar_TextBox";
             this.UpgradeAvatar_TextBox.Size = new System.Drawing.Size(603, 24);
             this.UpgradeAvatar_TextBox.TabIndex = 35;
@@ -501,7 +506,7 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(20, 463);
+            this.label15.Location = new System.Drawing.Point(8, 5);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(200, 20);
             this.label15.TabIndex = 38;
@@ -513,7 +518,7 @@
             this.SpriteUpgradeDef_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.SpriteUpgradeDef_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SpriteUpgradeDef_TextBox.ForeColor = System.Drawing.Color.White;
-            this.SpriteUpgradeDef_TextBox.Location = new System.Drawing.Point(20, 486);
+            this.SpriteUpgradeDef_TextBox.Location = new System.Drawing.Point(8, 28);
             this.SpriteUpgradeDef_TextBox.Name = "SpriteUpgradeDef_TextBox";
             this.SpriteUpgradeDef_TextBox.Size = new System.Drawing.Size(250, 24);
             this.SpriteUpgradeDef_TextBox.TabIndex = 37;
@@ -524,7 +529,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(20, 264);
+            this.label16.Location = new System.Drawing.Point(56, 224);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(44, 20);
             this.label16.TabIndex = 40;
@@ -536,9 +541,9 @@
             this.Icon_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Icon_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon_TextBox.ForeColor = System.Drawing.Color.White;
-            this.Icon_TextBox.Location = new System.Drawing.Point(20, 285);
+            this.Icon_TextBox.Location = new System.Drawing.Point(56, 245);
             this.Icon_TextBox.Name = "Icon_TextBox";
-            this.Icon_TextBox.Size = new System.Drawing.Size(250, 24);
+            this.Icon_TextBox.Size = new System.Drawing.Size(375, 24);
             this.Icon_TextBox.TabIndex = 39;
             this.Icon_TextBox.Text = "";
             // 
@@ -547,7 +552,7 @@
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(758, 178);
+            this.label17.Location = new System.Drawing.Point(794, 138);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(143, 20);
             this.label17.TabIndex = 42;
@@ -559,7 +564,7 @@
             this.PlacementH_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlacementH_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PlacementH_TextBox.ForeColor = System.Drawing.Color.White;
-            this.PlacementH_TextBox.Location = new System.Drawing.Point(758, 199);
+            this.PlacementH_TextBox.Location = new System.Drawing.Point(794, 159);
             this.PlacementH_TextBox.Name = "PlacementH_TextBox";
             this.PlacementH_TextBox.Size = new System.Drawing.Size(250, 24);
             this.PlacementH_TextBox.TabIndex = 41;
@@ -570,7 +575,7 @@
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(758, 222);
+            this.label18.Location = new System.Drawing.Point(794, 182);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(137, 20);
             this.label18.TabIndex = 44;
@@ -582,7 +587,7 @@
             this.PlacementW_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlacementW_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PlacementW_TextBox.ForeColor = System.Drawing.Color.White;
-            this.PlacementW_TextBox.Location = new System.Drawing.Point(758, 243);
+            this.PlacementW_TextBox.Location = new System.Drawing.Point(794, 203);
             this.PlacementW_TextBox.Name = "PlacementW_TextBox";
             this.PlacementW_TextBox.Size = new System.Drawing.Size(250, 24);
             this.PlacementW_TextBox.TabIndex = 43;
@@ -593,7 +598,7 @@
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(760, 270);
+            this.label19.Location = new System.Drawing.Point(796, 230);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(141, 20);
             this.label19.TabIndex = 46;
@@ -605,7 +610,7 @@
             this.PlacementRadius_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlacementRadius_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PlacementRadius_TextBox.ForeColor = System.Drawing.Color.White;
-            this.PlacementRadius_TextBox.Location = new System.Drawing.Point(758, 291);
+            this.PlacementRadius_TextBox.Location = new System.Drawing.Point(794, 251);
             this.PlacementRadius_TextBox.Name = "PlacementRadius_TextBox";
             this.PlacementRadius_TextBox.Size = new System.Drawing.Size(250, 24);
             this.PlacementRadius_TextBox.TabIndex = 45;
@@ -617,7 +622,7 @@
             this.Save_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Save_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.Save_Button.ForeColor = System.Drawing.Color.White;
-            this.Save_Button.Location = new System.Drawing.Point(867, 774);
+            this.Save_Button.Location = new System.Drawing.Point(765, 469);
             this.Save_Button.Name = "Save_Button";
             this.Save_Button.Size = new System.Drawing.Size(164, 58);
             this.Save_Button.TabIndex = 47;
@@ -637,66 +642,105 @@
             this.AllTowerFiles_ComboBox.Name = "AllTowerFiles_ComboBox";
             this.AllTowerFiles_ComboBox.Size = new System.Drawing.Size(398, 27);
             this.AllTowerFiles_ComboBox.TabIndex = 48;
-            this.AllTowerFiles_ComboBox.SelectedIndexChanged += new System.EventHandler(this.AllTowerFiles_ComboBox_SelectedIndexChanged);
             this.AllTowerFiles_ComboBox.SelectedValueChanged += new System.EventHandler(this.AllTowerFiles_ComboBox_SelectedValueChanged);
+            // 
+            // TowerPanel
+            // 
+            this.TowerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TowerPanel.Controls.Add(this.label2);
+            this.TowerPanel.Controls.Add(this.TowerName_TextBox);
+            this.TowerPanel.Controls.Add(this.BaseCost_TextBox);
+            this.TowerPanel.Controls.Add(this.label19);
+            this.TowerPanel.Controls.Add(this.label4);
+            this.TowerPanel.Controls.Add(this.PlacementRadius_TextBox);
+            this.TowerPanel.Controls.Add(this.RankToUnlock_TextBox);
+            this.TowerPanel.Controls.Add(this.label18);
+            this.TowerPanel.Controls.Add(this.label5);
+            this.TowerPanel.Controls.Add(this.PlacementW_TextBox);
+            this.TowerPanel.Controls.Add(this.CanTargetCamo_CheckBox);
+            this.TowerPanel.Controls.Add(this.label17);
+            this.TowerPanel.Controls.Add(this.CanBePlacedInWater_CheckBox);
+            this.TowerPanel.Controls.Add(this.PlacementH_TextBox);
+            this.TowerPanel.Controls.Add(this.CanBePlacedOnLand_CheckBox);
+            this.TowerPanel.Controls.Add(this.label16);
+            this.TowerPanel.Controls.Add(this.CanBePlacedOnPath_CheckBox);
+            this.TowerPanel.Controls.Add(this.Icon_TextBox);
+            this.TowerPanel.Controls.Add(this.label6);
+            this.TowerPanel.Controls.Add(this.TargetingMode_ComboBox);
+            this.TowerPanel.Controls.Add(this.RotateToTarget_CheckBox);
+            this.TowerPanel.Controls.Add(this.TowerDesc_TextBox);
+            this.TowerPanel.Controls.Add(this.label7);
+            this.TowerPanel.Controls.Add(this.TargetsManually_CheckBox);
+            this.TowerPanel.Controls.Add(this.TargetIsWeaponOrigin_CheckBox);
+            this.TowerPanel.Location = new System.Drawing.Point(2, 50);
+            this.TowerPanel.Name = "TowerPanel";
+            this.TowerPanel.Size = new System.Drawing.Size(1071, 413);
+            this.TowerPanel.TabIndex = 49;
+            // 
+            // UpgradesPanel
+            // 
+            this.UpgradesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UpgradesPanel.Controls.Add(this.Upgrades_ListBox);
+            this.UpgradesPanel.Controls.Add(this.label3);
+            this.UpgradesPanel.Controls.Add(this.UpgradeName_TextBox);
+            this.UpgradesPanel.Controls.Add(this.label8);
+            this.UpgradesPanel.Controls.Add(this.label15);
+            this.UpgradesPanel.Controls.Add(this.UpgradeDesc_TextBox);
+            this.UpgradesPanel.Controls.Add(this.SpriteUpgradeDef_TextBox);
+            this.UpgradesPanel.Controls.Add(this.label9);
+            this.UpgradesPanel.Controls.Add(this.label14);
+            this.UpgradesPanel.Controls.Add(this.UpgradePrice_TextBox);
+            this.UpgradesPanel.Controls.Add(this.UpgradeAvatar_TextBox);
+            this.UpgradesPanel.Controls.Add(this.label10);
+            this.UpgradesPanel.Controls.Add(this.label13);
+            this.UpgradesPanel.Controls.Add(this.RankToUnlockUpgrade_TextBox);
+            this.UpgradesPanel.Controls.Add(this.UpgradeIcon_TextBox);
+            this.UpgradesPanel.Controls.Add(this.label11);
+            this.UpgradesPanel.Controls.Add(this.label12);
+            this.UpgradesPanel.Controls.Add(this.XpToUnlockUpgrade_TextBox);
+            this.UpgradesPanel.Location = new System.Drawing.Point(5, 130);
+            this.UpgradesPanel.Name = "UpgradesPanel";
+            this.UpgradesPanel.Size = new System.Drawing.Size(1071, 317);
+            this.UpgradesPanel.TabIndex = 50;
+            this.UpgradesPanel.Visible = false;
+            // 
+            // SwitchPanel
+            // 
+            this.SwitchPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.SwitchPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SwitchPanel.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.SwitchPanel.ForeColor = System.Drawing.Color.White;
+            this.SwitchPanel.Location = new System.Drawing.Point(556, 469);
+            this.SwitchPanel.Name = "SwitchPanel";
+            this.SwitchPanel.Size = new System.Drawing.Size(164, 58);
+            this.SwitchPanel.TabIndex = 51;
+            this.SwitchPanel.Text = "Upgrades";
+            this.SwitchPanel.UseVisualStyleBackColor = false;
+            this.SwitchPanel.Click += new System.EventHandler(this.SwitchPanel_Click);
             // 
             // EasyTowerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(1066, 853);
+            this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.SwitchPanel);
+            this.Controls.Add(this.UpgradesPanel);
             this.Controls.Add(this.AllTowerFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
-            this.Controls.Add(this.label19);
-            this.Controls.Add(this.PlacementRadius_TextBox);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.PlacementW_TextBox);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.PlacementH_TextBox);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.Icon_TextBox);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.SpriteUpgradeDef_TextBox);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.UpgradeAvatar_TextBox);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.UpgradeIcon_TextBox);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.XpToUnlockUpgrade_TextBox);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.RankToUnlockUpgrade_TextBox);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.UpgradePrice_TextBox);
-            this.Controls.Add(this.TargetIsWeaponOrigin_CheckBox);
-            this.Controls.Add(this.TargetsManually_CheckBox);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.UpgradeDesc_TextBox);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.UpgradeName_TextBox);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.TowerDesc_TextBox);
-            this.Controls.Add(this.RotateToTarget_CheckBox);
-            this.Controls.Add(this.TargetingMode_ComboBox);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.CanBePlacedOnPath_CheckBox);
-            this.Controls.Add(this.CanBePlacedOnLand_CheckBox);
-            this.Controls.Add(this.CanBePlacedInWater_CheckBox);
-            this.Controls.Add(this.CanTargetCamo_CheckBox);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.RankToUnlock_TextBox);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.BaseCost_TextBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.TowerType_Label);
-            this.Controls.Add(this.TowerName_TextBox);
-            this.Controls.Add(this.Upgrades_ListBox);
+            this.Controls.Add(this.TowerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";
             this.Load += new System.EventHandler(this.EasyTowerEditor_Load);
             this.Shown += new System.EventHandler(this.EasyTowerEditor_Shown);
+            this.TowerPanel.ResumeLayout(false);
+            this.TowerPanel.PerformLayout();
+            this.UpgradesPanel.ResumeLayout(false);
+            this.UpgradesPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -750,5 +794,8 @@
         private System.Windows.Forms.RichTextBox PlacementRadius_TextBox;
         private System.Windows.Forms.Button Save_Button;
         private System.Windows.Forms.ComboBox AllTowerFiles_ComboBox;
+        private System.Windows.Forms.Panel TowerPanel;
+        private System.Windows.Forms.Panel UpgradesPanel;
+        private System.Windows.Forms.Button SwitchPanel;
     }
 }

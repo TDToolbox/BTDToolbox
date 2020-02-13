@@ -123,6 +123,8 @@ namespace BTDToolbox.Extra_Forms
             upgradePrices = new string[] { };
             upgradeRanks = new string[] { };
             upgradeXPs = new string[] { };
+            loc_upgradeNames = new string[] { };
+            loc_upgradeDescs = new string[] { };
 
             upgradenames = CreateStringArray(upgradenames, artist.Upgrades);
             upgradeIcons = CreateStringArray(upgradeIcons, artist.UpgradeIcons);            
@@ -423,13 +425,8 @@ namespace BTDToolbox.Extra_Forms
         {
             ResetUI();
 
-            string towersPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions";
-            CreateTowerObject(towersPath + "\\" + AllTowerFiles_ComboBox.SelectedItem);
-            PopulateUI();
-            this.Refresh();
-        }
-        private void AllTowerFiles_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + AllTowerFiles_ComboBox.SelectedItem;
+            CreateTowerObject(path);
             PopulateUI();
             this.Refresh();
         }
@@ -754,6 +751,22 @@ namespace BTDToolbox.Extra_Forms
             if (TowerDesc_TextBox.Focused)
             {
                 loc_towerDesc = TowerDesc_TextBox.Text;
+            }
+        }
+
+        private void SwitchPanel_Click(object sender, EventArgs e)
+        {
+            if(TowerPanel.Visible && !UpgradesPanel.Visible)
+            {
+                TowerPanel.Visible = false;
+                UpgradesPanel.Visible = true;
+                SwitchPanel.Text = "Tower";
+            }
+            else if (!TowerPanel.Visible && UpgradesPanel.Visible)
+            {
+                TowerPanel.Visible = true;
+                UpgradesPanel.Visible = false;
+                SwitchPanel.Text = "Upgrades";
             }
         }
     }
