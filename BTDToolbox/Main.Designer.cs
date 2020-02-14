@@ -519,7 +519,9 @@
             this.resetBTDBattlesexeToolStripMenuItem});
             this.Reset_EXE.Name = "Reset_EXE";
             this.Reset_EXE.Size = new System.Drawing.Size(210, 22);
-            this.Reset_EXE.Text = "Reset game path";
+            this.Reset_EXE.Text = "Browse for game";
+            this.Reset_EXE.Click += new System.EventHandler(this.Reset_EXE_Click);
+            this.Reset_EXE.MouseHover += new System.EventHandler(this.Reset_EXE_MouseHover);
             // 
             // resetBTD5exeToolStripMenuItem
             // 

@@ -47,7 +47,6 @@ namespace BTDToolbox.Extra_Forms
             string json = File.ReadAllText(towerPath);
             artist = Tower_Class.Artist.FromJson(json);
 
-
             PopulateUI();
         }
         private void PopulateUI()
@@ -136,11 +135,8 @@ namespace BTDToolbox.Extra_Forms
                 {
                     foreach (long b in a)
                     {
-                        if (!upgradePrices.Contains(b.ToString()))
-                        {
-                            Array.Resize(ref upgradePrices, upgradePrices.Length + 1);
-                            upgradePrices[upgradePrices.Length - 1] = b.ToString();
-                        }
+                        Array.Resize(ref upgradePrices, upgradePrices.Length + 1);
+                        upgradePrices[upgradePrices.Length - 1] = b.ToString();
                     }
                 }
             }
@@ -214,30 +210,12 @@ namespace BTDToolbox.Extra_Forms
 
             //
             //BUGS BE HERE IF ADDING NEW UPGRADE TIERS
-//            int upgradeCount = upgradenames.Length/2;
-
-            /*string[] leftPath = new string[] { };
-            string[] rightPath = new string[] { };
-            
-            for (int i = 0; i < upgradeCount; i++)
-            {
-                Array.Resize(ref leftPath, leftPath.Length + 1);
-                leftPath[leftPath.Length - 1] = upgradenames[i];
-            }
-            for (int i = upgradeCount; i < upgradeCount*2; i++)
-            {
-                Array.Resize(ref rightPath, rightPath.Length + 1);
-                rightPath[rightPath.Length - 1] = upgradenames[i];
-            }
-            string[][] upgrades = new string[][] { leftPath, rightPath };*/
             artist.Upgrades = CreateDoubleArray_String(upgradenames);
             artist.UpgradeIcons = CreateDoubleArray_String(upgradeIcons);
             artist.UpgradeAvatars = CreateDoubleArray_String(upgradeAvatars);
             artist.UpgradePrices = CreateDoubleArray_Long(upgradePrices);
             artist.UpgradeGateway = CreateDoubleArray_UpgradeGateway(CreateArray_Long(upgradeRanks), CreateArray_Long(upgradeXPs));
 
-            /*try { artist.RankToUnlock = Int32.Parse(RankToUnlock_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Rank To Unlock is not a valid number..."); }*/
 
             var y = Tower_Class.Serialize.ToJson(artist);
             File.WriteAllText(path, y);
@@ -273,6 +251,7 @@ namespace BTDToolbox.Extra_Forms
         private string[][] CreateDoubleArray_String(string[] inputArray)
         {
             int upgradeCount = inputArray.Length / 2;
+            
             string[] leftPath = new string[] { };
             string[] rightPath = new string[] { };
 
@@ -314,14 +293,14 @@ namespace BTDToolbox.Extra_Forms
             {
                 Array.Resize(ref leftPath, leftPath.Length + 1);
                 try { leftPath[leftPath.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the left path..."); }
                 
             }
-            for (int i = upgradeCount; i < upgradeCount * 2; i++)
+            for (int i = 0; i < upgradeCount; i++)
             {
                 Array.Resize(ref rightPath, rightPath.Length + 1);
                 try { rightPath[rightPath.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) {  }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the right path..."); }
             }
             long[][] upgrades = new long[][] { leftPath, rightPath };
 
@@ -396,30 +375,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void EasyTowerEditor_Load(object sender, EventArgs e)
         {
-            string gameDir = "";
-            if (Serializer.Deserialize_Config().CurrentGame == "BTD5")
-            {
-                gameDir = Serializer.Deserialize_Config().BTD5_Directory;
-            }
-            else
-            {
-                gameDir = Serializer.Deserialize_Config().BTDB_Directory;
-            }
-            loc_Path = gameDir + "\\Assets\\Loc\\English.xml";
-
-
-            CreateTowerObject(path);
-            try
-            {
-                string[] split = path.Split('\\');
-                string filename = split[split.Length - 1].Replace("\\", "");
-                AllTowerFiles_ComboBox.SelectedItem = filename;
-            }
-            catch
-            {
-                throw;
-                //Environment.Exit(0);
-            }
+            
         }
         private void AllTowerFiles_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -461,6 +417,38 @@ namespace BTDToolbox.Extra_Forms
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
             finishedLoading = true;
+
+            string gameDir = "";
+            if (Serializer.Deserialize_Config().CurrentGame == "BTD5")
+            {
+                gameDir = Serializer.Deserialize_Config().BTD5_Directory;
+            }
+            else
+            {
+                gameDir = Serializer.Deserialize_Config().BTDB_Directory;
+            }
+
+            if (gameDir != null && gameDir != "")
+            {
+                loc_Path = gameDir + "\\Assets\\Loc\\English.xml";
+
+                CreateTowerObject(path);
+                try
+                {
+                    string[] split = path.Split('\\');
+                    string filename = split[split.Length - 1].Replace("\\", "");
+                    AllTowerFiles_ComboBox.SelectedItem = filename;
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("You're game directory has not been set! You need to set your game Dir before continuing. You can do this by clicking the \"Help\" tab at the top, then clicking on \"Browse for game\"");
+                this.Close();
+            }
         }
         private void SaveLoc()
         {

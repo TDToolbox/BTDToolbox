@@ -555,11 +555,16 @@ namespace BTDToolbox
 
         private void GetBTDBPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
-            var getPass = new CrackBTDB_Pass();
-            getPass.Get_BTDB_Password();
-            //getPass.DownloadTools();
+            DialogResult diag = MessageBox.Show("You are trying to open the \"Get BTDB Password\" tool. It will take a couple of minutes to get the password. Do you wish to continue?", "Continue?", MessageBoxButtons.YesNo);
+            if(diag == DialogResult.Yes)
+            {
+                var getPass = new CrackBTDB_Pass();
+                getPass.Get_BTDB_Password();
+            }
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("User cancelled password tool...");
+            }
         }
 
         private void BTD5DirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -662,6 +667,16 @@ namespace BTDToolbox
         private void RestoreBTDBattlesLOCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RestoreGame_ToBackup_LOC("BTDB");
+        }
+
+        private void Reset_EXE_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendNotice("This will reset your game path...");
+        }
+
+        private void Reset_EXE_MouseHover(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendNotice("This will reset your game path...");
         }
     }
 }
