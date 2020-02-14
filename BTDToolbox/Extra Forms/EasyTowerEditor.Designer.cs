@@ -735,7 +735,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";
-            this.Load += new System.EventHandler(this.EasyTowerEditor_Load);
             this.Shown += new System.EventHandler(this.EasyTowerEditor_Shown);
             this.TowerPanel.ResumeLayout(false);
             this.TowerPanel.PerformLayout();

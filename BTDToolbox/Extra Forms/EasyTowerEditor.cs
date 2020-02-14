@@ -278,7 +278,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 Array.Resize(ref array, array.Length + 1);
                 try { array[array.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the right path..."); }
 
             }
             return array;
@@ -314,11 +314,8 @@ namespace BTDToolbox.Extra_Forms
                 {
                     foreach (string b in a)
                     {
-                        if (!outputArray.Contains(b))
-                        {
-                            Array.Resize(ref outputArray, outputArray.Length + 1);
-                            outputArray[outputArray.Length - 1] = b;
-                        }
+                        Array.Resize(ref outputArray, outputArray.Length + 1);
+                        outputArray[outputArray.Length - 1] = b;
                     }
                 }
                 return outputArray;
@@ -372,10 +369,6 @@ namespace BTDToolbox.Extra_Forms
             RankToUnlockUpgrade_TextBox.Text = "";
             UpgradeIcon_TextBox.Text = "";
             UpgradeAvatar_TextBox.Text = "";
-        }
-        private void EasyTowerEditor_Load(object sender, EventArgs e)
-        {
-            
         }
         private void AllTowerFiles_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
