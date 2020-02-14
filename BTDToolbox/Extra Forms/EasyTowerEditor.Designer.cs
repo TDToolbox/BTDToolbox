@@ -213,6 +213,7 @@
             this.CanBePlacedInWater_CheckBox.TabIndex = 12;
             this.CanBePlacedInWater_CheckBox.Text = "Can Be Placed In Water";
             this.CanBePlacedInWater_CheckBox.UseVisualStyleBackColor = true;
+            this.CanBePlacedInWater_CheckBox.CheckedChanged += new System.EventHandler(this.CanBePlacedInWater_CheckBox_CheckedChanged);
             // 
             // CanBePlacedOnLand_CheckBox
             // 
@@ -225,6 +226,7 @@
             this.CanBePlacedOnLand_CheckBox.TabIndex = 13;
             this.CanBePlacedOnLand_CheckBox.Text = "Can Be Placed On Land";
             this.CanBePlacedOnLand_CheckBox.UseVisualStyleBackColor = true;
+            this.CanBePlacedOnLand_CheckBox.CheckedChanged += new System.EventHandler(this.CanBePlacedOnLand_CheckBox_CheckedChanged);
             // 
             // CanBePlacedOnPath_CheckBox
             // 
@@ -237,6 +239,7 @@
             this.CanBePlacedOnPath_CheckBox.TabIndex = 14;
             this.CanBePlacedOnPath_CheckBox.Text = "Can Be Placed On Path";
             this.CanBePlacedOnPath_CheckBox.UseVisualStyleBackColor = true;
+            this.CanBePlacedOnPath_CheckBox.CheckedChanged += new System.EventHandler(this.CanBePlacedOnPath_CheckBox_CheckedChanged);
             // 
             // label6
             // 
@@ -727,11 +730,11 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
             this.Controls.Add(this.SwitchPanel);
-            this.Controls.Add(this.UpgradesPanel);
             this.Controls.Add(this.AllTowerFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.TowerType_Label);
             this.Controls.Add(this.TowerPanel);
+            this.Controls.Add(this.UpgradesPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";

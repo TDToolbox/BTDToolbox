@@ -16,7 +16,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.5";
+        public static string version = "Alpha 0.0.6";
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;

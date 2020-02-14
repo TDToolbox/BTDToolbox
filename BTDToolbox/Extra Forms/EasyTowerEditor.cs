@@ -750,5 +750,30 @@ namespace BTDToolbox.Extra_Forms
                 SwitchPanel.Text = "Upgrades";
             }
         }
+
+        private void CanBePlacedOnPath_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CanBePlacedOnPath_CheckBox.Checked)
+            {
+                CanBePlacedOnLand_CheckBox.Checked = false;
+                CanBePlacedInWater_CheckBox.Checked = false;
+            }
+        }
+
+        private void CanBePlacedOnLand_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CanBePlacedOnLand_CheckBox.Checked)
+            {
+                CanBePlacedOnPath_CheckBox.Checked = false;
+            }
+        }
+
+        private void CanBePlacedInWater_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CanBePlacedInWater_CheckBox.Checked)
+            {
+                CanBePlacedOnPath_CheckBox.Checked = false;
+            }
+        }
     }
 }
