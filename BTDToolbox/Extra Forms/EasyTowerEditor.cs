@@ -105,6 +105,11 @@ namespace BTDToolbox.Extra_Forms
             else
                 CanBePlacedOnPath_CheckBox.Checked = artist.CanBePlacedOnPath.Value;
 
+            if (artist.UseRadiusPlacement == null)
+                UsePlacementRadius_Checkbox.Checked = false;
+            else
+                UsePlacementRadius_Checkbox.Checked = artist.UseRadiusPlacement.Value;
+
             PlacementH_TextBox.Text = artist.PlacementH.ToString();
             PlacementW_TextBox.Text = artist.PlacementW.ToString();
             PlacementRadius_TextBox.Text = artist.PlacementRadius.ToString();
@@ -194,15 +199,28 @@ namespace BTDToolbox.Extra_Forms
             artist.CanBePlacedInWater = CanBePlacedInWater_CheckBox.Checked;
             artist.CanBePlacedOnLand = CanBePlacedOnLand_CheckBox.Checked;
             artist.CanBePlacedOnPath = CanBePlacedOnPath_CheckBox.Checked;
+            artist.UseRadiusPlacement = UsePlacementRadius_Checkbox.Checked;
 
-            try { artist.PlacementH = Int32.Parse(PlacementH_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Height is not a valid number..."); }
+            if(UsePlacementRadius_Checkbox.Checked == false)
+            {
+                try { artist.PlacementH = Int32.Parse(PlacementH_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Height is not a valid number..."); }
 
-            try { artist.PlacementW = Int32.Parse(PlacementW_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Width is not a valid number..."); }
+                try { artist.PlacementW = Int32.Parse(PlacementW_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Width is not a valid number..."); }
 
-            try { artist.PlacementRadius = Int32.Parse(PlacementRadius_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Radius is not a valid number..."); }
+                artist.PlacementRadius = 0;
+            }
+            else
+            {
+                try { artist.PlacementRadius = Int32.Parse(PlacementRadius_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Radius is not a valid number..."); }
+
+                artist.PlacementH = 0;
+                artist.PlacementW = 0;
+            }
+
+            
 
 
             //Upgrade stuff
@@ -757,6 +775,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 CanBePlacedOnLand_CheckBox.Checked = false;
                 CanBePlacedInWater_CheckBox.Checked = false;
+                ConsoleHandler.appendNotice("CanBePlacedOnPath  overrides CanBePlacedOnLand and CanBePlacedInWater");
             }
         }
 
@@ -773,6 +792,36 @@ namespace BTDToolbox.Extra_Forms
             if (CanBePlacedInWater_CheckBox.Checked)
             {
                 CanBePlacedOnPath_CheckBox.Checked = false;
+            }
+        }
+
+        private void UsePlacementRadius_Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if(finishedLoading == true)
+            {
+                if (UsePlacementRadius_Checkbox.Checked)
+                {
+                    label17.Hide();
+                    label18.Hide();
+                    label19.Show();
+                    PlacementH_TextBox.Hide();
+                    PlacementW_TextBox.Hide();
+                    PlacementRadius_TextBox.Show();
+                    PlacementH_TextBox.Text = "0";
+                    PlacementW_TextBox.Text = "0";
+                    ConsoleHandler.appendNotice("Using placement radius overrides PlcementH and PlacementW");
+                }
+                if (!UsePlacementRadius_Checkbox.Checked)
+                {
+                    label17.Show();
+                    label18.Show();
+                    label19.Hide();
+
+                    PlacementRadius_TextBox.Text = "0";
+                    PlacementRadius_TextBox.Hide();
+                    PlacementH_TextBox.Show();
+                    PlacementW_TextBox.Show();
+                }
             }
         }
     }
