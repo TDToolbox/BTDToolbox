@@ -419,7 +419,7 @@ namespace BTDToolbox.Extra_Forms
                         loc_upgradeNames[item] = UpgradeName_TextBox.Text;
 
                         Upgrades_ListBox.SelectedIndex = item;
-                        UpgradeName_TextBox.SelectionStart = UpgradeName_TextBox.Text.Length;
+                        //UpgradeName_TextBox.SelectionStart = UpgradeName_TextBox.Text.Length;
                     }
                 }
             }

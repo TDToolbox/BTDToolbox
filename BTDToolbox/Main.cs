@@ -522,10 +522,10 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var easyTower = new EasyTowerEditor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
-            easyTower.path = path;
-            easyTower.Show();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
+            var spriteVisualizer = new SpriteVisualizer();
+            spriteVisualizer.path = path;
+            spriteVisualizer.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)

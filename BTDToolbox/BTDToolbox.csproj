@@ -69,6 +69,7 @@
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\QuickType.cs" />
+    <Compile Include="Classes\Sprite_Class.cs" />
     <Compile Include="Classes\Tower_Class.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
@@ -104,6 +105,12 @@
     <Compile Include="Extra Forms\FlashReader.Designer.cs">
       <DependentUpon>FlashReader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extra Forms\SpriteVisualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\SpriteVisualizer.Designer.cs">
+      <DependentUpon>SpriteVisualizer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extra Forms\UpdateChangelog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\SpriteVisualizer.resx">
+      <DependentUpon>SpriteVisualizer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\UpdateChangelog.resx">
       <DependentUpon>UpdateChangelog.cs</DependentUpon>
