@@ -678,5 +678,15 @@ namespace BTDToolbox
         {
             ConsoleHandler.force_appendNotice("This will reset your game path...");
         }
+
+        private void ValidateBTD5_Click(object sender, EventArgs e)
+        {
+            Process.Start("steam://validate/306020");
+        }
+
+        private void ValidateBTDB_Click(object sender, EventArgs e)
+        {
+            Process.Start("steam://validate/444640");
+        }
     }
 }
