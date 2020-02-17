@@ -306,11 +306,8 @@ namespace BTDToolbox
             string steamJetPath = GetJetPath(game);
             if (steamJetPath != null)
             {
-                if(!File.Exists(backupDir + "\\" + backupLocName))
-                    CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
-
-                if (!File.Exists(fullBackupPath))
-                    CopyFile(steamJetPath, fullBackupPath);
+                CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
+                CopyFile(steamJetPath, fullBackupPath);                    
                 if (File.Exists(fullBackupPath))
                     ConsoleHandler.appendLog("Backup created!");
                 else
