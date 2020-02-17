@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Extra_Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -50,7 +51,8 @@ namespace BTDToolbox
         bool searchSubtask = false;
         bool tabLine = false;
         string tab;
-        public JsonEditor(string Path)
+        bool deletingWhiteSpace = false;
+    public JsonEditor(string Path)
         {
             InitializeComponent();
             Deserialize_Config();
@@ -96,6 +98,8 @@ namespace BTDToolbox
 
             JsonProps.increment(this);
             this.Load += EditorLoading;
+
+            HandleTools();
         }
         private void StartUp()
         {
@@ -107,6 +111,17 @@ namespace BTDToolbox
             tB_line.Font = newfont;
             Editor_TextBox.Font = newfont;
             FontSize_TextBox.Text = jsonEditorFont.ToString();
+        }
+        private void HandleTools()
+        {
+            if (Path.EndsWith("tower"))
+            {
+                EasyTowerEditor_Button.Visible = true;
+            }
+            else
+            {
+                EasyTowerEditor_Button.Visible = false;
+            }
         }
         private void Deserialize_Config()
         {
@@ -184,6 +199,11 @@ namespace BTDToolbox
             {
                 ShowReplaceMenu();
             }
+
+            if (e.Control && e.KeyCode == Keys.D)
+            {
+                MessageBox.Show("Insert Ctrl + D hotkey here...");
+            }
             if (e.KeyCode == Keys.Enter)
             {
                 tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
@@ -191,7 +211,10 @@ namespace BTDToolbox
             }
             if (e.KeyCode == Keys.Back)
             {
-                RemoveEmptySpaces();
+                if (Editor_TextBox.SelectedText.Length == 0)
+                {
+                    RemoveEmptySpaces();
+                }
             }
         }
         private void FindText()

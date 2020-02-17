@@ -66,17 +66,33 @@
   <ItemGroup>
     <Compile Include="Classes\Announcements.cs" />
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
+    <Compile Include="Classes\ImageProcessing.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
+    <Compile Include="Classes\QuickType.cs" />
+    <Compile Include="Classes\Sprite_Class.cs" />
+    <Compile Include="Classes\Tower_Class.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
     <Compile Include="Classes\JSON_Reader.cs" />
     <Compile Include="Classes\WebHandler.cs" />
+    <Compile Include="Extra Forms\BGForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\BGForm.Designer.cs">
+      <DependentUpon>BGForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extra Forms\CreditViewer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Extra Forms\CreditViewer.Designer.cs">
       <DependentUpon>CreditViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra Forms\EasyTowerEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\EasyTowerEditor.Designer.cs">
+      <DependentUpon>EasyTowerEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Extra Forms\First_Time_Use.cs">
       <SubType>Form</SubType>
@@ -90,6 +106,12 @@
     <Compile Include="Extra Forms\FlashReader.Designer.cs">
       <DependentUpon>FlashReader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extra Forms\SpriteVisualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\SpriteVisualizer.Designer.cs">
+      <DependentUpon>SpriteVisualizer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extra Forms\UpdateChangelog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +124,12 @@
     <Compile Include="ZipForm.Designer.cs">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Extra Forms\BGForm.resx">
+      <DependentUpon>BGForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\EasyTowerEditor.resx">
+      <DependentUpon>EasyTowerEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\First_Time_Use.resx">
       <DependentUpon>First_Time_Use.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\SpriteVisualizer.resx">
+      <DependentUpon>SpriteVisualizer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\UpdateChangelog.resx">
       <DependentUpon>UpdateChangelog.cs</DependentUpon>
@@ -262,6 +293,17 @@
     <None Include="Resources\BTD_icon_2_512x512.png" />
     <None Include="Resources\PossibleBTD5MODIcon.png" />
     <None Include="Resources\PossibleBTD5MODIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

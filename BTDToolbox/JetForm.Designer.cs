@@ -38,6 +38,8 @@
             this.Open_Proj_Dir = new System.Windows.Forms.ToolStripMenuItem();
             this.Save_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ValidateAllFiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.retToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.makeBackupOfProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revertToBackupToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,6 +125,8 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.toolStripDropDownButton2});
@@ -139,6 +143,8 @@
             this.openToolStripMenuItem,
             this.Save_ToolStrip,
             this.toolStripSeparator1,
+            this.ValidateAllFiles,
+            this.toolStripSeparator3,
             this.retToolStripMenuItem,
             this.revertToBackupToolStripMenuItem,
             this.toolStripSeparator2,
@@ -155,7 +161,7 @@
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Open_Proj_Dir});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // Open_Proj_Dir
@@ -168,14 +174,26 @@
             // Save_ToolStrip
             // 
             this.Save_ToolStrip.Name = "Save_ToolStrip";
-            this.Save_ToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.Save_ToolStrip.Size = new System.Drawing.Size(158, 22);
             this.Save_ToolStrip.Text = "Save";
             this.Save_ToolStrip.Click += new System.EventHandler(this.Save_ToolStrip_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
+            // 
+            // ValidateAllFiles
+            // 
+            this.ValidateAllFiles.Name = "ValidateAllFiles";
+            this.ValidateAllFiles.Size = new System.Drawing.Size(158, 22);
+            this.ValidateAllFiles.Text = "Validate All Files";
+            this.ValidateAllFiles.Click += new System.EventHandler(this.ValidateAllFiles_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
             // 
             // retToolStripMenuItem
             // 
@@ -183,7 +201,7 @@
             this.makeBackupOfProjectToolStripMenuItem,
             this.revertToBackupToolStripMenuItem1});
             this.retToolStripMenuItem.Name = "retToolStripMenuItem";
-            this.retToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.retToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.retToolStripMenuItem.Text = "Backup project";
             // 
             // makeBackupOfProjectToolStripMenuItem
@@ -201,25 +219,25 @@
             // revertToBackupToolStripMenuItem
             // 
             this.revertToBackupToolStripMenuItem.Name = "revertToBackupToolStripMenuItem";
-            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.revertToBackupToolStripMenuItem.Text = "Remake Project";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
             // 
             // RenameProject_Button
             // 
             this.RenameProject_Button.Name = "RenameProject_Button";
-            this.RenameProject_Button.Size = new System.Drawing.Size(180, 22);
+            this.RenameProject_Button.Size = new System.Drawing.Size(158, 22);
             this.RenameProject_Button.Text = "Rename Project";
             this.RenameProject_Button.Click += new System.EventHandler(this.RenameProject_Button_Click);
             // 
             // DeleteProject_Button
             // 
             this.DeleteProject_Button.Name = "DeleteProject_Button";
-            this.DeleteProject_Button.Size = new System.Drawing.Size(180, 22);
+            this.DeleteProject_Button.Size = new System.Drawing.Size(158, 22);
             this.DeleteProject_Button.Text = "Delete Project";
             this.DeleteProject_Button.Click += new System.EventHandler(this.DeleteProject_Button_Click);
             // 
@@ -337,9 +355,11 @@
             // 
             // goUpButton
             // 
-            this.goUpButton.Location = new System.Drawing.Point(2, 3);
+            this.goUpButton.Font = new System.Drawing.Font("Microsoft New Tai Lue", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.goUpButton.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.goUpButton.Location = new System.Drawing.Point(2, 0);
             this.goUpButton.Name = "goUpButton";
-            this.goUpButton.Size = new System.Drawing.Size(75, 23);
+            this.goUpButton.Size = new System.Drawing.Size(75, 25);
             this.goUpButton.TabIndex = 2;
             this.goUpButton.Text = "Up";
             this.goUpButton.UseVisualStyleBackColor = true;
@@ -446,5 +466,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem RenameProject_Button;
         private System.Windows.Forms.ToolStripMenuItem DeleteProject_Button;
+        private System.Windows.Forms.ToolStripMenuItem ValidateAllFiles;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

@@ -13,6 +13,8 @@ namespace BTDToolbox
             //splash screen
             public bool enableSplash { get; set; }
             public bool recentUpdate { get; set; }
+            public bool useExternalEditor { get; set; }
+            public string battlesPass { get; set; }
 
 
             //Project wide variables

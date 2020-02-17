@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using static System.Windows.Forms.ToolStripItem;
 using static BTDToolbox.GeneralMethods;
+using BTDToolbox.Classes;
 
 namespace BTDToolbox
 {
@@ -33,12 +34,13 @@ namespace BTDToolbox
         public static float jetExplorer_FontSize;
         public static int jetExplorer_SplitterWidth;
         public static string lastProject;
+        public static bool useExternalEditor;
 
         public JetForm(DirectoryInfo dirInfo, Main Form, string projName)
         {
             InitializeComponent();
             StartUp();
-
+            goUpButton.Font = new Font("Microsoft Sans Serif", 9);
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
@@ -78,6 +80,7 @@ namespace BTDToolbox
             lastProject = programData.LastProject;
             jetExplorer_SplitterWidth = programData.JetExplorer_SplitterWidth;
             fileViewContainer.SplitterDistance = jetExplorer_SplitterWidth;
+            useExternalEditor = programData.useExternalEditor;
             
             //other setup
             this.KeyPreview = true;
@@ -135,6 +138,7 @@ namespace BTDToolbox
         {
             JetProps.decrement(this);
             Serializer.SaveConfig(this, "jet explorer", programData);
+            Serializer.SaveSmallSettings("external editor", programData);
         }
 
         private void PopulateTreeView()
@@ -229,32 +233,48 @@ namespace BTDToolbox
             ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
             if (Selected.Count == 1)
             {
-                try
-                {
-                    JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
-                    JsonWindow.MdiParent = Form;
-                    JsonWindow.Show();
-                }
-                catch (Exception)
+                if (useExternalEditor == false)
                 {
                     try
                     {
-                        if (!Selected[0].Text.Contains("."))
-                        {
-                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
-                            {
-                                if (node.Text == Selected[0].Text)
-                                {
-                                    node.Expand();
-                                    treeView1.SelectedNode = node;
-                                }
-                            }
-                        }
+                        JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                        JsonWindow.MdiParent = Form;
+                        JsonWindow.Show();
                     }
                     catch (Exception)
                     {
+                        try
+                        {
+                            if (!Selected[0].Text.Contains("."))
+                            {
+                                foreach (TreeNode node in treeView1.SelectedNode.Nodes)
+                                {
+                                    if (node.Text == Selected[0].Text)
+                                    {
+                                        node.Expand();
+                                        treeView1.SelectedNode = node;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
+                else
+                {
+                    try
+                    {
+                        string selectedFile = this.Text + "\\" + Selected[0].Text;
+                        Process.Start(selectedFile);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                
             }
         }
 
@@ -408,12 +428,19 @@ namespace BTDToolbox
                 string currentPath = this.Text;
                 string newName = Microsoft.VisualBasic.Interaction.InputBox("Input new file name", "Rename file", select, posX, posY);
 
-                string source = currentPath + "\\" + select;
-                string dest = currentPath + "\\" + newName;
+                if(newName.Length > 0)
+                {
+                    string source = currentPath + "\\" + select;
+                    string dest = currentPath + "\\" + newName;
 
-                File.Move(source, dest);
+                    File.Move(source, dest);
 
-                Selected[0].Text = newName;
+                    Selected[0].Text = newName;
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("You didn't enter a name");
+                }
             }
         }
         private void delete()
@@ -452,9 +479,24 @@ namespace BTDToolbox
             foreach (string name in files)
             {
                 FileInfo info = new FileInfo(name);
-                File.Copy(name, targetDir + "\\" + info.Name);
+                string dest = targetDir + "\\" + info.Name;
+                if (File.Exists(targetDir + "\\" + info.Name))
+                {
+                    int i = 1;
+                    string[] split = dest.Split('.');
+                    string noExtention = dest.Replace("." + split[split.Length - 1],"");
+                    string copyName = noExtention + "_Copy ";
+                    
+                    while (File.Exists(dest))
+                    {
+                        dest = copyName + i + "." + split[split.Length-1];
+                        i++;
+                    }
+                }
+                File.Copy(name, dest);
 
-                ListViewItem item = new ListViewItem(info.Name, 1);
+                string[] filename = dest.Split('\\');
+                ListViewItem item = new ListViewItem(filename[filename.Length-1], 1);
                 ListViewItem.ListViewSubItem[] subItems = new ListViewItem.ListViewSubItem[]
                     {
                         new ListViewItem.ListViewSubItem(item, "File"),
@@ -481,15 +523,39 @@ namespace BTDToolbox
             {
                 saveJet();
             }
-        }
-
-        private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
-        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+                if (Selected.Count > 0)
+                {
+                    delete();
+                }
+            }
+            if (e.KeyCode == Keys.F2)
+            {
+                ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+                if (Selected.Count == 1)
+                {
+                    rename();
+                }
+            }
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+                if (Selected.Count > 0)
+                {
+                    copy();
+                }
+            }
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                paste();
+            }
             if (e.Control && e.KeyCode == Keys.F)
             {
                 if (findPanel.Visible)
                 {
-                    findPanel.Visible = false;
+                    findPanel.Hide();
                 }
                 else
                 {
@@ -497,6 +563,11 @@ namespace BTDToolbox
                     findBox.Select();
                 }
             }
+        }
+
+        private void TreeView_CheckHotkey(object sender, KeyEventArgs e)
+        {
+
         }
 
 
@@ -682,6 +753,12 @@ namespace BTDToolbox
 
             }
             
+        }
+
+        private void ValidateAllFiles_Click(object sender, EventArgs e)
+        {
+            Thread bg = new Thread(JSON_Reader.ValidateAllJsonFiles);
+            bg.Start();
         }
     }
 }

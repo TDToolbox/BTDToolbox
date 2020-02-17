@@ -77,6 +77,8 @@ namespace BTDToolbox.Classes
                     break;
                 }
             }
+            if (get.readURL == null)
+                get.readURL = "";
             return get.readURL;
         }      
         public string processGit_Text(string url, string deleteText, int lineNumber)    //call this one read git text and return the url we want. Delete text is the starting word, for example "toolbox2019: "
@@ -93,8 +95,16 @@ namespace BTDToolbox.Classes
         }
         public string Get_GitVersion(string url)    // will read processed git url and return a git version number
         {
-            string[] version = url.Split('/');
-            return (version[version.Length - 2]).Replace(".", "");
+            if(url != null)
+            {
+
+                string[] version = url.Split('/');
+                return (version[version.Length - 2]).Replace(".", "");
+            }
+            else
+            {
+                return "";
+            }
         }
         public  bool CheckForUpdate(string url, string deleteText, int lineNumber, string currentVersion) //Use this to check for updates
         {
@@ -109,10 +119,18 @@ namespace BTDToolbox.Classes
                 if (Int32.TryParse(c.ToString(), out number))
                     toolboxVersion = toolboxVersion + c;
             }
-            if (Int32.Parse(toolboxVersion) < Int32.Parse(gitVersion))
-                return true;
+            if(gitVersion != null && gitVersion != "")
+            {
+                if (Int32.Parse(toolboxVersion) < Int32.Parse(gitVersion))
+                    return true;
+                else
+                    return false;
+            }
             else
+            {
+                ConsoleHandler.appendLog("Unable to determine latest version of BTD Toolbox");
                 return false;
+            }
         }
     }
 }

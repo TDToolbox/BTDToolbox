@@ -1,20 +1,13 @@
 ﻿using Ionic.Zip;
 using Ionic.Zlib;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 using static BTDToolbox.GeneralMethods;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
@@ -68,7 +61,6 @@ namespace BTDToolbox
             {
                 gameDir = DeserializeConfig().BTDB_Directory;
                 jetName = "data.jet";
-
             }
             else
             {
@@ -119,6 +111,7 @@ namespace BTDToolbox
                         if(rememberedPassword != null && rememberedPassword != "")
                         {
                             password = rememberedPassword;
+                            Serializer.SaveSmallSettings("battlesPass", programData);
                         }
                         backgroundThread = new Thread(Extract_OnThread);
                         backgroundThread.Start();
@@ -250,51 +243,62 @@ namespace BTDToolbox
         }
         private void Compile_OnThread()
         {
-            string dir = "";
-            if (destPath == null || destPath == "")
-                dir = steamJetPath;
-            else
-                dir = destPath;
-
-            if (DeserializeConfig().LastProject == null)
+            if (gameDir != null && gameDir != "")
             {
-                Serializer.SaveConfig(jf, "jet explorer", programData);
+                string dir = "";
+                if (destPath == null || destPath == "")
+                    dir = steamJetPath;
+                else
+                    dir = destPath;
+
+                if (DeserializeConfig().LastProject == null)
+                {
+                    Serializer.SaveConfig(jf, "jet explorer", programData);
+                }
+                DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
+                if (Directory.Exists(projDir.ToString()))
+                {
+
+                    ConsoleHandler.appendLog("Compiling jet...");
+                    int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
+                    int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
+                    totalFiles = numFiles + numFolders;
+                    filesTransfered = 0;
+
+                    ZipFile toExport = new ZipFile();
+
+                    toExport.Password = password;
+                    toExport.AddProgress += ZipCompileProgress;
+                    toExport.AddDirectory(projDir.FullName);
+                    toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
+                    toExport.Name = dir;
+                    toExport.CompressionLevel = CompressionLevel.Level6;
+                    toExport.Save();
+                    toExport.Dispose();
+                    ConsoleHandler.appendLog("Jet was successfully exported to: " + projDir.FullName);
+
+                    if (launch == true)
+                    {
+                        LaunchGame(gameName);
+                    }
+                    try
+                    {
+                        this.Invoke(new Action(() => this.Close()));
+                    }
+                    catch (Exception ex)
+                    {
+                        PrintError(ex.Message);
+                    }
+                    backgroundThread.Abort();
+                }
             }
-            DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
-            if (Directory.Exists(projDir.ToString()))
+            else
             {
-                ConsoleHandler.appendLog("Compiling jet...");
-                int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
-                int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
-                totalFiles = numFiles + numFolders;
-                filesTransfered = 0;
-
-                ZipFile toExport = new ZipFile();
-
-                toExport.Password = password;
-                toExport.AddProgress += ZipCompileProgress;
-                toExport.AddDirectory(projDir.FullName);
-                toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
-                toExport.Name = dir;
-                toExport.CompressionLevel = CompressionLevel.Level6;
-                toExport.Save();
-                toExport.Dispose();
-                ConsoleHandler.appendLog("Jet was successfully exported to: " + projDir.FullName);
-
-                if (launch == true)
-                {
-                    LaunchGame(gameName);
-                }
-                try
-                {
-                    this.Invoke(new Action(() => this.Close()));
-                }
-                catch (Exception ex)
-                {
-                    PrintError(ex.Message);
-                }
+                this.Invoke(new Action(() => this.Close()));
+                ConsoleHandler.appendLog("There was an issue reading your game directory. Go to the \"Help\" tab at the top, browse for your game again, and then try again...");
                 backgroundThread.Abort();
             }
+            
         }
         private void ExtractJet_Window_Load(object sender, EventArgs e)
         {

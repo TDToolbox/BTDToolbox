@@ -26,9 +26,20 @@ namespace BTDToolbox
         {
             if (projectData.enableSplash == true)
                 EnableSplash.CheckState = CheckState.Checked;
+            if (projectData.useExternalEditor == true)
+                useExternalEditor.CheckState = CheckState.Checked;
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
+            if (useExternalEditor.Checked)
+            {
+                JetForm.useExternalEditor = true;
+            }
+            else
+            {
+                JetForm.useExternalEditor = false;
+            }
+
             if (EnableSplash.Checked)
             {
                 Program.enableSplash = true;
@@ -38,6 +49,7 @@ namespace BTDToolbox
                 Program.enableSplash = false;
             }
             Serializer.SaveSmallSettings("splash", projectData);
+            Serializer.SaveSmallSettings("external editor", projectData);
 
 
             ConsoleHandler.appendLog("Settings saved!!!");

@@ -75,11 +75,11 @@
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
             this.close_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.close_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.close_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.close_button.ForeColor = System.Drawing.Color.White;
-            this.close_button.Location = new System.Drawing.Point(735, -2);
+            this.close_button.Location = new System.Drawing.Point(745, 0);
             this.close_button.Name = "close_button";
-            this.close_button.Size = new System.Drawing.Size(65, 27);
+            this.close_button.Size = new System.Drawing.Size(52, 26);
             this.close_button.TabIndex = 2;
             this.close_button.Text = "X";
             this.close_button.UseVisualStyleBackColor = false;

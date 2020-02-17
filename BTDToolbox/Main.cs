@@ -16,14 +16,14 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.5";
+        public static string version = "Alpha 0.0.6";
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
 
 
         //Project Variables
-        private Bitmap bgImg;
+        
         Thread backupThread;
         public static bool exit = false;
 
@@ -37,11 +37,21 @@ namespace BTDToolbox
         public static string BTDB_Dir;
         public static bool enableConsole;
 
-        //Scroll bar variables
+        // Win32 Constants
+        private const int SB_HORZ = 0;
+        private const int SB_VERT = 1;
+        private const int SB_CTL = 2;
         private const int SB_BOTH = 3;
-        private const int WM_NCCALCSIZE = 0x83;
+
+        // Win32 Functions
         [DllImport("user32.dll")]
         private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
+        private const int WM_NCCALCSIZE = 0x83;
+
+        /*//private const int SB_BOTH = 3;
+        private const int WM_NCCALCSIZE = 0x83;
+        [DllImport("user32.dll")]
+        private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);*/
 
 
 
@@ -63,22 +73,6 @@ namespace BTDToolbox
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
             this.DoubleBuffered = true;
-            
-
-
-
-            Random rand = new Random();
-            switch (rand.Next(0, 2))
-            {
-                case 0:
-                    bgImg = Properties.Resources.Logo1;
-                    break;
-                case 1:
-                    bgImg = Properties.Resources.Logo2;
-                    break;
-            }
-
-            this.BackgroundImage = bgImg;
             this.FormClosed += ExitHandling;
         }
         private void Startup()
@@ -122,6 +116,12 @@ namespace BTDToolbox
         }
         private void Main_Load(object sender, EventArgs e)
         {
+            var bg = new BGForm();
+            bg.MdiParent = this;
+            bg.MouseClick += Bg_MouseClick;
+            bg.Show();
+
+
             if (File.Exists(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe"))
                 File.Delete(Environment.CurrentDirectory + "\\BTDToolbox_Updater.exe");
             if (File.Exists(Environment.CurrentDirectory + "\\BTDToolbox_Updater.zip"))
@@ -143,8 +143,18 @@ namespace BTDToolbox
 
             ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();   
+            isUpdate.HandleUpdates();
+
+            foreach (Control con in Controls)
+                if (con is MdiClient)
+                    mdiClient = con as MdiClient;
         }
+
+        private void Bg_MouseClick(object sender, MouseEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
         private void showUpdateChangelog()
         {
             if (programData.recentUpdate == true)
@@ -160,8 +170,7 @@ namespace BTDToolbox
 
         private void mainResize(object sender, EventArgs e)
         {
-            this.BackgroundImage = bgImg;
-            this.BackgroundImageLayout = ImageLayout.Center;
+
         }
         public static Main getInstance()
         {
@@ -194,11 +203,7 @@ namespace BTDToolbox
 
             if (JetProps.getForm(0) == null)
                 ConsoleHandler.appendLog("No projects detected.");
-
-            foreach (Control con in Controls)
-                if (con is MdiClient)
-                    mdiClient = con as MdiClient;
-
+            //taken from here
             if (existingUser == false)
             {
                 FirstTimeUse();
@@ -288,16 +293,31 @@ namespace BTDToolbox
         //Mdi Stuff
         //
 
-        
-    
-         
+        /*protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                //
+                // ...
+                //
+
+                case WM_NCCALCSIZE:
+                    ShowScrollBar(m.HWnd, SB_BOTH, 0 *//*false*//*);
+                    break;
+            }
+
+            base.WndProc(ref m);
+        }*/
+
+        //Old WndProc (Mallis's)
         protected override void WndProc(ref Message m)
         {
             if (mdiClient != null)
             {
                 try
                 {
-                    ShowScrollBar(mdiClient.Handle, SB_BOTH, 0);// Hide the ScrollBars);
+                    //ShowScrollBar(mdiClient.Handle, SB_BOTH, 0);// Hide the ScrollBars);
+                    ShowScrollBar(m.HWnd, SB_BOTH, 0);// Hide the ScrollBars);
                 }
                 catch (Exception)
                 {
@@ -502,7 +522,10 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
+            var spriteVisualizer = new SpriteVisualizer();
+            spriteVisualizer.path = path;
+            spriteVisualizer.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -532,11 +555,16 @@ namespace BTDToolbox
 
         private void GetBTDBPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
-            var getPass = new CrackBTDB_Pass();
-            getPass.Get_BTDB_Password();
-            //getPass.DownloadTools();
+            DialogResult diag = MessageBox.Show("You are trying to open the \"Get BTDB Password\" tool. It will take a couple of minutes to get the password. Do you wish to continue?", "Continue?", MessageBoxButtons.YesNo);
+            if(diag == DialogResult.Yes)
+            {
+                var getPass = new CrackBTDB_Pass();
+                getPass.Get_BTDB_Password();
+            }
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("User cancelled password tool...");
+            }
         }
 
         private void BTD5DirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -589,6 +617,76 @@ namespace BTDToolbox
         {
             ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
             Process.Start(Environment.CurrentDirectory);
+        }
+
+        private void ShowBTD5_Pass_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendLog("The password for BTD5.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
+        }
+
+        private void ShowLastBattlesPass_Click(object sender, EventArgs e)
+        {
+            if(Serializer.Deserialize_Config().battlesPass != null && Serializer.Deserialize_Config().battlesPass != "")
+            {
+                ConsoleHandler.force_appendLog("The last password you used for BTDB is:   " + Serializer.Deserialize_Config().battlesPass);
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("You don't have a battles password saved... Next time you make a new project, make sure to check \"Remember Password\"");
+            }
+        }
+
+        private void EraseConsoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.ClearConsole();
+        }
+
+        private void EasyTowerEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var easyTower = new EasyTowerEditor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            easyTower.path = path;
+            easyTower.Show();
+        }
+
+        private void BTD5ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CreateBackup("BTD5");
+        }
+
+        private void BTDBattlesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateBackup("BTDB");
+        }
+
+        private void RestoreBTD5LocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup_LOC("BTD5");
+        }
+
+        private void RestoreBTDBattlesLOCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup_LOC("BTDB");
+        }
+
+        private void Reset_EXE_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendNotice("This will reset your game path...");
+        }
+
+        private void Reset_EXE_MouseHover(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendNotice("This will reset your game path...");
+        }
+
+        private void ValidateBTD5_Click(object sender, EventArgs e)
+        {
+            Process.Start("steam://validate/306020");
+        }
+
+        private void ValidateBTDB_Click(object sender, EventArgs e)
+        {
+            Process.Start("steam://validate/444640");
         }
     }
 }

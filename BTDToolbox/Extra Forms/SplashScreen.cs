@@ -29,12 +29,8 @@ namespace BTDToolbox
             int splash_centerX = splashImg.Width/2;
             int splash_centerY = splashImg.Height/2;
 
-            
-
             this.Top = (GeneralMethods.GetCenterScreen().Y) - splash_centerY - 55;
             this.Left = (GeneralMethods.GetCenterScreen().X) - splash_centerX;
-
-
         }
         private void SplashScreen_Shown(object sender, EventArgs e)
         {
