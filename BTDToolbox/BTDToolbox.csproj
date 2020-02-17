@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Classes\Announcements.cs" />
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
+    <Compile Include="Classes\ImageProcessing.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\QuickType.cs" />

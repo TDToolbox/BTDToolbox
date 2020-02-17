@@ -51,7 +51,8 @@ namespace BTDToolbox
         bool searchSubtask = false;
         bool tabLine = false;
         string tab;
-        public JsonEditor(string Path)
+        bool deletingWhiteSpace = false;
+    public JsonEditor(string Path)
         {
             InitializeComponent();
             Deserialize_Config();
@@ -187,9 +188,6 @@ namespace BTDToolbox
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            
-
-
             if (e.Control && e.KeyCode == Keys.F)
             {
                 searchSubtask = false;
@@ -199,6 +197,10 @@ namespace BTDToolbox
             {
                 ShowReplaceMenu();
             }
+            if (e.Control && e.KeyCode == Keys.D)
+            {
+                MessageBox.Show("Insert Ctrl + D hotkey here...");
+            }
             if (e.KeyCode == Keys.Enter)
             {
                 tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
@@ -206,7 +208,10 @@ namespace BTDToolbox
             }
             if (e.KeyCode == Keys.Back)
             {
-                RemoveEmptySpaces();
+                if (Editor_TextBox.SelectedText.Length == 0)
+                {
+                    RemoveEmptySpaces();
+                }
             }
         }
         private void FindText()
@@ -820,20 +825,7 @@ namespace BTDToolbox
         }
         private void RemoveEmptySpaces()
         {
-            int numSpaces = IndentNewLines();
-            int startIndex = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
-            int currentIndex = Editor_TextBox.SelectionStart;
 
-            //if(currentIndex <= (startIndex + numSpaces))
-            if(currentIndex <= (startIndex + numSpaces))
-            {
-                if (numSpaces > 5)
-                {
-                    Editor_TextBox.SelectionLength = 5;
-                    Editor_TextBox.SelectionStart = currentIndex-5;
-                    Editor_TextBox.SelectedText = "";
-                }
-            }
         }
         private void EasyTowerEditor_Button_Click(object sender, EventArgs e)
         {
