@@ -492,13 +492,11 @@ namespace BTDToolbox
         {
             RestoreGame_ToBackup("BTDB");
         }
-
         
 
         private void BTDFontsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening BTD Font maker...");
-            Process.Start("https://fontmeme.com/bloons-td-battles-font/");
+            
         }
 
         private void UpdaterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -541,9 +539,10 @@ namespace BTDToolbox
             settings.Show();
         }
 
-        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        private void NKHook_Github_Click(object sender, EventArgs e)
         {
-
+            ConsoleHandler.appendLog("Opening NKHook Github page...");
+            Process.Start("https://github.com/DisabledMallis/NKHook5-Dep");
         }
 
         private void FlashReader_Click(object sender, EventArgs e)
@@ -687,6 +686,18 @@ namespace BTDToolbox
         private void ValidateBTDB_Click(object sender, EventArgs e)
         {
             Process.Start("steam://validate/444640");
+        }
+
+        private void FontForPCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening download for BTD Font for PC");
+            Process.Start("https://www.dropbox.com/s/k7y2utz42b5eg06/Oetztype.TTF?dl=1");
+        }
+
+        private void OnlineFontGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening Online BTD Font Generator...");
+            Process.Start("https://fontmeme.com/bloons-td-battles-font/");
         }
     }
 }

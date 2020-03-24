@@ -24,7 +24,7 @@ namespace BTDToolbox
         string livePath = Environment.CurrentDirectory;
         float fontSize;
         public bool CanRepeat = false;
-
+        int errorCount = 0;
         private static Console console;
 
         public Console() : base()
@@ -34,6 +34,7 @@ namespace BTDToolbox
 
             console = this;
             this.FormClosed += exitHandling;
+            tabControl1.TabPages[1].Text = "Errors (" + errorCount + ")";
         }
 
         private void StartUp()

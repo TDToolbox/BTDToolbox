@@ -46,6 +46,9 @@ namespace Tower_Class
         [JsonProperty("Icon", NullValueHandling = NullValueHandling.Ignore)]
         public string Icon { get; set; }
 
+        [JsonProperty("Description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
+
         [JsonProperty("PlacementH", NullValueHandling = NullValueHandling.Ignore)]
         public long? PlacementH { get; set; }
 
@@ -75,6 +78,12 @@ namespace Tower_Class
 
         [JsonProperty("Upgrades", NullValueHandling = NullValueHandling.Ignore)]
         public string[][] Upgrades { get; set; }
+
+        [JsonProperty("UpgradeDescriptions", NullValueHandling = NullValueHandling.Ignore)]
+        public string[][] UpgradeDescriptions { get; set; }
+
+        [JsonProperty("ShortUpgradeDescriptions", NullValueHandling = NullValueHandling.Ignore)]
+        public string[][] ShortUpgradeDescriptions { get; set; }
 
         [JsonProperty("UpgradeGateway", NullValueHandling = NullValueHandling.Ignore)]
         public UpgradeGateway[][] UpgradeGateway { get; set; }
