@@ -57,6 +57,7 @@
             this.JsonToolstrip = new System.Windows.Forms.ToolStrip();
             this.Help_Button = new System.Windows.Forms.ToolStripDropDownButton();
             this.bloonTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -76,6 +77,7 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.label2);
             this.contentPanel.Controls.Add(this.Editor_TextBox);
             this.contentPanel.Controls.Add(this.NumOfRounds_Label);
             this.contentPanel.Controls.Add(this.label1);
@@ -146,7 +148,7 @@
             // InputScript_Textbox
             // 
             this.InputScript_Textbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.InputScript_Textbox.Location = new System.Drawing.Point(484, 383);
+            this.InputScript_Textbox.Location = new System.Drawing.Point(506, 341);
             this.InputScript_Textbox.MaxLength = 3276799;
             this.InputScript_Textbox.Name = "InputScript_Textbox";
             this.InputScript_Textbox.Size = new System.Drawing.Size(267, 20);
@@ -160,7 +162,7 @@
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.label1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(158)))), ((int)(((byte)(0)))));
-            this.label1.Location = new System.Drawing.Point(145, 383);
+            this.label1.Location = new System.Drawing.Point(167, 341);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(333, 19);
             this.label1.TabIndex = 9;
@@ -172,7 +174,7 @@
             this.NumOfRounds_Label.AutoSize = true;
             this.NumOfRounds_Label.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NumOfRounds_Label.ForeColor = System.Drawing.Color.White;
-            this.NumOfRounds_Label.Location = new System.Drawing.Point(59, 347);
+            this.NumOfRounds_Label.Location = new System.Drawing.Point(3, 338);
             this.NumOfRounds_Label.Name = "NumOfRounds_Label";
             this.NumOfRounds_Label.Size = new System.Drawing.Size(153, 19);
             this.NumOfRounds_Label.TabIndex = 10;
@@ -271,7 +273,6 @@
             // 
             // FontSize_TextBox
             // 
-            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -280,7 +281,6 @@
             // Replace_TextBox
             // 
             this.Replace_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Replace_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Replace_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Replace_TextBox.Name = "Replace_TextBox";
             this.Replace_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -326,7 +326,6 @@
             // Find_TextBox
             // 
             this.Find_TextBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Find_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Find_TextBox.Margin = new System.Windows.Forms.Padding(1, 0, 25, 0);
             this.Find_TextBox.Name = "Find_TextBox";
             this.Find_TextBox.Size = new System.Drawing.Size(200, 25);
@@ -382,6 +381,19 @@
             this.bloonTypesToolStripMenuItem.Text = "Bloon Types";
             this.bloonTypesToolStripMenuItem.Click += new System.EventHandler(this.BloonTypesToolStripMenuItem_Click);
             // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.label2.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(158)))), ((int)(((byte)(0)))));
+            this.label2.Location = new System.Drawing.Point(311, 373);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(450, 19);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "When you\'re done, recompile the code under \"File\"";
+            // 
             // FlashReader
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -435,5 +447,6 @@
         private System.Windows.Forms.ToolStripButton FindNext_Button;
         private System.Windows.Forms.ToolStripDropDownButton Help_Button;
         private System.Windows.Forms.ToolStripMenuItem bloonTypesToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
     }
 }

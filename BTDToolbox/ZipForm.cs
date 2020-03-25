@@ -20,6 +20,7 @@ namespace BTDToolbox
         public static int totalFiles = 0;
         public int filesTransfered = 0;
         public static string rememberedPassword = "";
+        public static string existingJetFile = "";
 
         //Config variables
         ConfigFile programData;
@@ -75,9 +76,16 @@ namespace BTDToolbox
         public void Extract()
         {
             bool rememberPass = Get_BTDB_Password.rememberPass;
-            
-            if (sourcePath == null || sourcePath == "")
-                sourcePath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_Original.jet";
+            this.Text = "Extracting..";
+            if (existingJetFile == "")
+            {
+                if (sourcePath == null || sourcePath == "")
+                    sourcePath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_Original.jet";
+            }
+            else
+            {
+                sourcePath = existingJetFile;
+            }
             if (File.Exists(sourcePath))
             {
                 //check password
@@ -212,6 +220,7 @@ namespace BTDToolbox
         }
         public void Compile()
         {
+            this.Text = "Compiling..";
             if (gameName == "BTDB")
             {
                 if (rememberedPassword != null && rememberedPassword != "")

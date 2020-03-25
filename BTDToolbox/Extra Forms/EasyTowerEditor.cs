@@ -41,157 +41,176 @@ namespace BTDToolbox.Extra_Forms
         public EasyTowerEditor()
         {
             InitializeComponent();
+            if (game == "BTDB")
+            {
+                label2.Hide();
+                TowerName_TextBox.Hide();
+            }
+            else
+            {
+                label2.Show();
+                TowerName_TextBox.Show();
+            }
         }
         public void CreateTowerObject(string towerPath)
         {
             string json = File.ReadAllText(towerPath);
-            artist = Tower_Class.Artist.FromJson(json);
+            if (JSON_Reader.IsValidJson(json))
+            {
+                artist = Tower_Class.Artist.FromJson(json);
+                PopulateUI();
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
+            }
 
-            PopulateUI();
         }
         private void PopulateUI()
         {
-            ResetUI();
-            TowerType_Label.Text = artist.TypeName;
-
-            TowerName_TextBox.Text = artist.Name;
-            BaseCost_TextBox.Text = artist.BaseCost.ToString();
-            RankToUnlock_TextBox.Text = artist.RankToUnlock.ToString();
-            Icon_TextBox.Text = artist.Icon;
-            SpriteUpgradeDef_TextBox.Text = artist.SpriteUpgradeDefinition;
-
-            if (artist.CanTargetCamo == null)
-                CanTargetCamo_CheckBox.Checked = false;
-            else
-                CanTargetCamo_CheckBox.Checked = artist.CanTargetCamo.Value;
-
-            if (artist.RotatesToTarget == null)
-                RotateToTarget_CheckBox.Checked = false;
-            else
-                RotateToTarget_CheckBox.Checked = artist.RotatesToTarget.Value;
-
-            if (artist.TargetsManually == null)
-                TargetsManually_CheckBox.Checked = false;
-            else
-                TargetsManually_CheckBox.Checked = artist.TargetsManually.Value;
-
-            if (artist.TargetIsWeaponOrigin == null)
-                TargetIsWeaponOrigin_CheckBox.Checked = false;
-            else
-                TargetIsWeaponOrigin_CheckBox.Checked = artist.TargetIsWeaponOrigin.Value;
-
-            if (artist.CanBePlacedInWater == null)
-                CanBePlacedInWater_CheckBox.Checked = false;
-            else
-                CanBePlacedInWater_CheckBox.Checked = artist.CanBePlacedInWater.Value;
-
-            if (artist.CanBePlacedOnLand == null)
-                CanBePlacedOnLand_CheckBox.Checked = false;
-            else
-                CanBePlacedOnLand_CheckBox.Checked = artist.CanBePlacedOnLand.Value;
-
-            if (artist.CanBePlacedOnPath == null)
-                CanBePlacedOnPath_CheckBox.Checked = false;
-            else
-                CanBePlacedOnPath_CheckBox.Checked = artist.CanBePlacedOnPath.Value;
-
-            if (artist.UseRadiusPlacement == null)
-                UsePlacementRadius_Checkbox.Checked = false;
-            else
-                UsePlacementRadius_Checkbox.Checked = artist.UseRadiusPlacement.Value;
-
-            PlacementH_TextBox.Text = artist.PlacementH.ToString();
-            PlacementW_TextBox.Text = artist.PlacementW.ToString();
-            PlacementRadius_TextBox.Text = artist.PlacementRadius.ToString();
-
-            if (artist.TargetingMode == null)
-                TargetingMode_ComboBox.SelectedItem = TargetingMode_ComboBox.Items[0];
-            else
-                TargetingMode_ComboBox.SelectedItem = artist.TargetingMode;
-
-
-            //Upgrade stuff
-            upgradenames = new string[] { };
-            upgradeIcons = new string[] { };
-            upgradeAvatars = new string[] { };
-            upgradePrices = new string[] { };
-            upgradeRanks = new string[] { };
-            upgradeXPs = new string[] { };
-            loc_upgradeNames = new string[] { };
-            loc_upgradeDescs = new string[] { };
-
-            upgradenames = CreateStringArray(upgradenames, artist.Upgrades);
-            upgradeIcons = CreateStringArray(upgradeIcons, artist.UpgradeIcons);            
-            upgradeAvatars = CreateStringArray(upgradeAvatars, artist.UpgradeAvatars);
-
-            if (artist.UpgradePrices != null)
+            if (artist != null)
             {
-                foreach (long[] a in artist.UpgradePrices)
+                ResetUI();
+                TowerType_Label.Text = artist.TypeName;
+
+                TowerName_TextBox.Text = artist.Name;
+                BaseCost_TextBox.Text = artist.BaseCost.ToString();
+                RankToUnlock_TextBox.Text = artist.RankToUnlock.ToString();
+                Icon_TextBox.Text = artist.Icon;
+                SpriteUpgradeDef_TextBox.Text = artist.SpriteUpgradeDefinition;
+
+                if (artist.CanTargetCamo == null)
+                    CanTargetCamo_CheckBox.Checked = false;
+                else
+                    CanTargetCamo_CheckBox.Checked = artist.CanTargetCamo.Value;
+
+                if (artist.RotatesToTarget == null)
+                    RotateToTarget_CheckBox.Checked = false;
+                else
+                    RotateToTarget_CheckBox.Checked = artist.RotatesToTarget.Value;
+
+                if (artist.TargetsManually == null)
+                    TargetsManually_CheckBox.Checked = false;
+                else
+                    TargetsManually_CheckBox.Checked = artist.TargetsManually.Value;
+
+                if (artist.TargetIsWeaponOrigin == null)
+                    TargetIsWeaponOrigin_CheckBox.Checked = false;
+                else
+                    TargetIsWeaponOrigin_CheckBox.Checked = artist.TargetIsWeaponOrigin.Value;
+
+                if (artist.CanBePlacedInWater == null)
+                    CanBePlacedInWater_CheckBox.Checked = false;
+                else
+                    CanBePlacedInWater_CheckBox.Checked = artist.CanBePlacedInWater.Value;
+
+                if (artist.CanBePlacedOnLand == null)
+                    CanBePlacedOnLand_CheckBox.Checked = false;
+                else
+                    CanBePlacedOnLand_CheckBox.Checked = artist.CanBePlacedOnLand.Value;
+
+                if (artist.CanBePlacedOnPath == null)
+                    CanBePlacedOnPath_CheckBox.Checked = false;
+                else
+                    CanBePlacedOnPath_CheckBox.Checked = artist.CanBePlacedOnPath.Value;
+
+                if (artist.UseRadiusPlacement == null)
+                    UsePlacementRadius_Checkbox.Checked = false;
+                else
+                    UsePlacementRadius_Checkbox.Checked = artist.UseRadiusPlacement.Value;
+
+                PlacementH_TextBox.Text = artist.PlacementH.ToString();
+                PlacementW_TextBox.Text = artist.PlacementW.ToString();
+                PlacementRadius_TextBox.Text = artist.PlacementRadius.ToString();
+
+                if (artist.TargetingMode == null)
+                    TargetingMode_ComboBox.SelectedItem = TargetingMode_ComboBox.Items[0];
+                else
+                    TargetingMode_ComboBox.SelectedItem = artist.TargetingMode;
+
+
+                //Upgrade stuff
+                upgradenames = new string[] { };
+                upgradeIcons = new string[] { };
+                upgradeAvatars = new string[] { };
+                upgradePrices = new string[] { };
+                upgradeRanks = new string[] { };
+                upgradeXPs = new string[] { };
+                loc_upgradeNames = new string[] { };
+                loc_upgradeDescs = new string[] { };
+
+                upgradenames = CreateStringArray(upgradenames, artist.Upgrades);
+                upgradeIcons = CreateStringArray(upgradeIcons, artist.UpgradeIcons);
+                upgradeAvatars = CreateStringArray(upgradeAvatars, artist.UpgradeAvatars);
+
+                if (artist.UpgradePrices != null)
                 {
-                    foreach (long b in a)
+                    foreach (long[] a in artist.UpgradePrices)
                     {
-                        Array.Resize(ref upgradePrices, upgradePrices.Length + 1);
-                        upgradePrices[upgradePrices.Length - 1] = b.ToString();
-                    }
-                }
-            }
-            else
-            {
-                Upgrades_ListBox.Items.Clear();
-                Upgrades_ListBox.Refresh();
-            }
-
-            var g = artist.UpgradeGateway;
-            if (g != null)
-            {
-                foreach (var a in g)
-                {
-                    foreach (var b in a)
-                    {
-                        Array.Resize(ref upgradeRanks, upgradeRanks.Length + 1);
-                        upgradeRanks[upgradeRanks.Length - 1] = b.Rank.ToString();
-
-                        Array.Resize(ref upgradeXPs, upgradeXPs.Length + 1);
-                        upgradeXPs[upgradeXPs.Length - 1] = b.Xp.ToString();
-                    }
-                }
-            }
-
-            if (game == "BTDB")
-            {
-                if (artist.UpgradeDescriptions != null)
-                {
-                    foreach (string[] a in artist.UpgradeDescriptions)
-                    {
-                        foreach (string b in a)
+                        foreach (long b in a)
                         {
-                            ConsoleHandler.appendLog_CanRepeat(b);
-                            Array.Resize(ref loc_upgradeDescs, loc_upgradeDescs.Length + 1);
-                            loc_upgradeDescs[loc_upgradeDescs.Length - 1] = b;
+                            Array.Resize(ref upgradePrices, upgradePrices.Length + 1);
+                            upgradePrices[upgradePrices.Length - 1] = b.ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    Upgrades_ListBox.Items.Clear();
+                    Upgrades_ListBox.Refresh();
+                }
+
+                var g = artist.UpgradeGateway;
+                if (g != null)
+                {
+                    foreach (var a in g)
+                    {
+                        foreach (var b in a)
+                        {
+                            Array.Resize(ref upgradeRanks, upgradeRanks.Length + 1);
+                            upgradeRanks[upgradeRanks.Length - 1] = b.Rank.ToString();
+
+                            Array.Resize(ref upgradeXPs, upgradeXPs.Length + 1);
+                            upgradeXPs[upgradeXPs.Length - 1] = b.Xp.ToString();
                         }
                     }
                 }
 
-                if (artist.Description != null)
+                if (game == "BTDB")
                 {
-                    loc_towerDesc = artist.Description;
-                    TowerDesc_TextBox.Text = loc_towerDesc;
+                    if (artist.UpgradeDescriptions != null)
+                    {
+                        foreach (string[] a in artist.UpgradeDescriptions)
+                        {
+                            foreach (string b in a)
+                            {
+                                Array.Resize(ref loc_upgradeDescs, loc_upgradeDescs.Length + 1);
+                                loc_upgradeDescs[loc_upgradeDescs.Length - 1] = b;
+                            }
+                        }
+                    }
+
+                    if (artist.Description != null)
+                    {
+                        loc_towerDesc = artist.Description;
+                        TowerDesc_TextBox.Text = loc_towerDesc;
+                    }
                 }
-            }
-            ReadLoc();
-            
-            if (upgradenames != null)
-            {
-                for (int i = 0; i < upgradenames.Length; i++)
+                ReadLoc();
+
+                if (upgradenames != null)
                 {
-                    Upgrades_ListBox.Items.Add(upgradenames[i]);
+                    for (int i = 0; i < upgradenames.Length; i++)
+                    {
+                        Upgrades_ListBox.Items.Add(upgradenames[i]);
+                    }
+                    if (Upgrades_ListBox.Items.Count != 0)
+                    {
+                        Upgrades_ListBox.SelectedIndex = 0;
+                        PopulateUpgrades();
+                    }
                 }
-                if (Upgrades_ListBox.Items.Count != 0)
-                {
-                    Upgrades_ListBox.SelectedIndex = 0;
-                    PopulateUpgrades();
-                }
-            }            
+            }        
         }
         private void SaveFile()
         {
@@ -387,7 +406,8 @@ namespace BTDToolbox.Extra_Forms
             PlacementH_TextBox.Text = "";
             PlacementW_TextBox.Text = "";
             PlacementRadius_TextBox.Text = "";
-            TargetingMode_ComboBox.SelectedItem = artist.TargetingMode;
+            //TargetingMode_ComboBox.SelectedItem = artist.TargetingMode;
+            TargetingMode_ComboBox.SelectedItem = TargetingMode_ComboBox.Items[0];
 
             //upgrade stuff
             Upgrades_ListBox.Items.Clear();
@@ -659,7 +679,6 @@ namespace BTDToolbox.Extra_Forms
 
                 path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + AllTowerFiles_ComboBox.SelectedItem;
                 CreateTowerObject(path);
-                PopulateUI();
                 this.Refresh();
             }
 

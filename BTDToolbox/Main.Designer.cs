@@ -60,6 +60,8 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.NKHook_Github = new System.Windows.Forms.ToolStripMenuItem();
             this.bTDFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fontForPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.onlineFontGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.combineModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modUpdaterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteEditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,8 +107,7 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.fontForPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.onlineFontGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eZBloonEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -170,6 +171,7 @@
             this.NewProject_From_Backup.Name = "NewProject_From_Backup";
             this.NewProject_From_Backup.Size = new System.Drawing.Size(172, 22);
             this.NewProject_From_Backup.Text = "Project from .jet";
+            this.NewProject_From_Backup.Click += new System.EventHandler(this.NewProject_From_Backup_Click);
             // 
             // btdpToolStripMenuItem
             // 
@@ -341,6 +343,7 @@
             this.spriteEditingToolStripMenuItem,
             this.toolStripSeparator7,
             this.easyTowerEditorToolStripMenuItem,
+            this.eZBloonEditorToolStripMenuItem,
             this.getBTDBPasswordToolStripMenuItem,
             this.toolStripSeparator4,
             this.FlashReader,
@@ -374,6 +377,20 @@
             this.bTDFontsToolStripMenuItem.Text = "BTD Fonts";
             this.bTDFontsToolStripMenuItem.Click += new System.EventHandler(this.BTDFontsToolStripMenuItem_Click);
             // 
+            // fontForPCToolStripMenuItem
+            // 
+            this.fontForPCToolStripMenuItem.Name = "fontForPCToolStripMenuItem";
+            this.fontForPCToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.fontForPCToolStripMenuItem.Text = "Font for PC";
+            this.fontForPCToolStripMenuItem.Click += new System.EventHandler(this.FontForPCToolStripMenuItem_Click);
+            // 
+            // onlineFontGeneratorToolStripMenuItem
+            // 
+            this.onlineFontGeneratorToolStripMenuItem.Name = "onlineFontGeneratorToolStripMenuItem";
+            this.onlineFontGeneratorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.onlineFontGeneratorToolStripMenuItem.Text = "Online Font Generator";
+            this.onlineFontGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OnlineFontGeneratorToolStripMenuItem_Click);
+            // 
             // combineModsToolStripMenuItem
             // 
             this.combineModsToolStripMenuItem.Name = "combineModsToolStripMenuItem";
@@ -402,6 +419,7 @@
             this.spriteSheetDecompilerToolStripMenuItem.Name = "spriteSheetDecompilerToolStripMenuItem";
             this.spriteSheetDecompilerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.spriteSheetDecompilerToolStripMenuItem.Text = "Sprite Sheet Decompiler";
+            this.spriteSheetDecompilerToolStripMenuItem.Click += new System.EventHandler(this.SpriteSheetDecompilerToolStripMenuItem_Click);
             // 
             // spriteAnimationVisualizerToolStripMenuItem
             // 
@@ -419,7 +437,7 @@
             // 
             this.easyTowerEditorToolStripMenuItem.Name = "easyTowerEditorToolStripMenuItem";
             this.easyTowerEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.easyTowerEditorToolStripMenuItem.Text = "Easy Tower Editor";
+            this.easyTowerEditorToolStripMenuItem.Text = "EZ Tower Editor";
             this.easyTowerEditorToolStripMenuItem.Click += new System.EventHandler(this.EasyTowerEditorToolStripMenuItem_Click);
             // 
             // getBTDBPasswordToolStripMenuItem
@@ -720,19 +738,12 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // fontForPCToolStripMenuItem
+            // eZBloonEditorToolStripMenuItem
             // 
-            this.fontForPCToolStripMenuItem.Name = "fontForPCToolStripMenuItem";
-            this.fontForPCToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.fontForPCToolStripMenuItem.Text = "Font for PC";
-            this.fontForPCToolStripMenuItem.Click += new System.EventHandler(this.FontForPCToolStripMenuItem_Click);
-            // 
-            // onlineFontGeneratorToolStripMenuItem
-            // 
-            this.onlineFontGeneratorToolStripMenuItem.Name = "onlineFontGeneratorToolStripMenuItem";
-            this.onlineFontGeneratorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.onlineFontGeneratorToolStripMenuItem.Text = "Online Font Generator";
-            this.onlineFontGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OnlineFontGeneratorToolStripMenuItem_Click);
+            this.eZBloonEditorToolStripMenuItem.Name = "eZBloonEditorToolStripMenuItem";
+            this.eZBloonEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.eZBloonEditorToolStripMenuItem.Text = "EZ Bloon Editor";
+            this.eZBloonEditorToolStripMenuItem.Click += new System.EventHandler(this.EZBloonEditorToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -844,6 +855,7 @@
         private System.Windows.Forms.ToolStripMenuItem restoreBTDBattlesLOCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fontForPCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem onlineFontGeneratorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eZBloonEditorToolStripMenuItem;
     }
 }
 

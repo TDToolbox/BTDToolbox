@@ -14,6 +14,7 @@ namespace Tower_Class
     using System.Collections.Generic;
 
     using System.Globalization;
+    using BTDToolbox.Classes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 

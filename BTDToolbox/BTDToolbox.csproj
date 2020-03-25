@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Announcements.cs" />
+    <Compile Include="Classes\Bloon_Class.cs" />
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
     <Compile Include="Classes\ImageProcessing.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
@@ -87,6 +88,12 @@
     </Compile>
     <Compile Include="Extra Forms\CreditViewer.Designer.cs">
       <DependentUpon>CreditViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extra Forms\EZBloon_Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\EZBloon_Editor.Designer.cs">
+      <DependentUpon>EZBloon_Editor.cs</DependentUpon>
     </Compile>
     <Compile Include="Extra Forms\EasyTowerEditor.cs">
       <SubType>Form</SubType>
@@ -126,6 +133,9 @@
     </Compile>
     <EmbeddedResource Include="Extra Forms\BGForm.resx">
       <DependentUpon>BGForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\EZBloon_Editor.resx">
+      <DependentUpon>EZBloon_Editor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\EasyTowerEditor.resx">
       <DependentUpon>EasyTowerEditor.cs</DependentUpon>

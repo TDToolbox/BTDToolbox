@@ -141,9 +141,9 @@ namespace BTDToolbox
             if (programData.recentUpdate == true)
                 ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
 
-            ConsoleHandler.announcement();
+            /*ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();
+            isUpdate.HandleUpdates();*/
 
             foreach (Control con in Controls)
                 if (con is MdiClient)
@@ -242,12 +242,14 @@ namespace BTDToolbox
         }
         private void AddNewJet()
         {
+            ZipForm.existingJetFile = "";
             string path = BrowseForFile("Browse for an existing .jet file", "jet", "Jet files (*.jet)|*.jet|All files (*.*)|*.*", "");
             if (path != null && path != "")
             {
                 if (path.Contains(".jet"))
                 {
                     gameName = DetermineJet_Game(path);
+                    ZipForm.existingJetFile = path;
                     Serializer.SaveConfig(this, "game", programData);
                     var getName = new SetProjectName();
                     getName.Show();
@@ -292,23 +294,6 @@ namespace BTDToolbox
         //
         //Mdi Stuff
         //
-
-        /*protected override void WndProc(ref Message m)
-        {
-            switch (m.Msg)
-            {
-                //
-                // ...
-                //
-
-                case WM_NCCALCSIZE:
-                    ShowScrollBar(m.HWnd, SB_BOTH, 0 *//*false*//*);
-                    break;
-            }
-
-            base.WndProc(ref m);
-        }*/
-
         //Old WndProc (Mallis's)
         protected override void WndProc(ref Message m)
         {
@@ -520,10 +505,16 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
+            /*string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
             var spriteVisualizer = new SpriteVisualizer();
             spriteVisualizer.path = path;
-            spriteVisualizer.Show();
+            spriteVisualizer.Show();*/
+
+            var ezBloon = new EZBloon_Editor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
+            ezBloon.path = path;
+            ezBloon.Show();
+
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -698,6 +689,25 @@ namespace BTDToolbox
         {
             ConsoleHandler.appendLog("Opening Online BTD Font Generator...");
             Process.Start("https://fontmeme.com/bloons-td-battles-font/");
+        }
+
+        private void SpriteSheetDecompilerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening Sprite Decompiler github link...");
+            Process.Start("https://github.com/TheSubtleKiller/SpriteSheetRebuilder");
+        }
+
+        private void NewProject_From_Backup_Click(object sender, EventArgs e)
+        {
+            AddNewJet();
+        }
+
+        private void EZBloonEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ezBloon = new EZBloon_Editor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
+            ezBloon.path = path;
+            ezBloon.Show();
         }
     }
 }
