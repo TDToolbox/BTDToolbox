@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Forms;
-using Tower_Class;
 
 namespace BTDToolbox.Extra_Forms
 {
@@ -20,7 +19,8 @@ namespace BTDToolbox.Extra_Forms
         public string path { get; set; }
 
         Bloon bloon;
-        Tower_Class.Artist artist;
+        Bloon newBloon;
+        
         bool finishedLoading = false;
         bool firstLoad = false;
         bool advancedView = false;
@@ -54,6 +54,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (bloonPath.EndsWith(".bloon"))
             {
+                path = bloonPath;
                 string json = File.ReadAllText(bloonPath);
                 if (JSON_Reader.IsValidJson(json))
                 {
@@ -94,7 +95,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (bloon != null)
             {
-                //ResetUI();
+                ResetUI();
                 BloonType_Label.Text = bloon.Type + " bloon";
                 BloonName_TextBox.Text = bloon.Type;
                 InitialHealth_TextBox.Text = bloon.InitialHealth.ToString();
@@ -112,222 +113,158 @@ namespace BTDToolbox.Extra_Forms
                 ChildEffectScale_TextBox.Text = bloon.ChildEffectScale.ToString();
 
                 PopulateChildBloons();
+                
+                //StatusImmunity checked listbox
                 StatusImmunity_CheckedListBox = Handle_CheckedListbox(StatusImmunity_CheckedListBox, bloon.StatusImmunity);
+                //DamageImmunity checked listbox
                 DamageImmunity_CheckedListBox = Handle_CheckedListbox(DamageImmunity_CheckedListBox, bloon.DamageImmunity);
+                //BloonAbility checked listbox
                 BloonAbility_CheckedListBox = Handle_CheckedListbox(BloonAbility_CheckedListBox, bloon.BloonAbility);
-
-
+                //ApplyStatus checked listbox
+                ApplyStatus_CheckedListBox = Handle_CheckedListbox(ApplyStatus_CheckedListBox, bloon.ApplyStatus);
 
                 //Can go underground checkbox
-                if (canGoUnderground)
-                {
-                    CanGoUnderground_CheckBox.Visible = true;
-                    if (bloon.CanGoUnderground == true)
-                        CanGoUnderground_CheckBox.Checked = true;
-                    else
-                        CanGoUnderground_CheckBox.Checked = false;
-                }
-                else
-                {
-                    if (!advancedView)
-                        CanGoUnderground_CheckBox.Visible = false;
-                }
-
+                HandleCheckBox(canGoUnderground, CanGoUnderground_CheckBox, bloon.CanGoUnderground);
                 //Rotate To Path checkbox
-                if (canRotateToPath)
-                {
-                    RotateToPathDirection_Checkbox.Visible = true;
-                    if (bloon.RotateToPathDirection == true)
-                        RotateToPathDirection_Checkbox.Checked = true;
-                    else
-                        RotateToPathDirection_Checkbox.Checked = false;
-                }
-                else
-                {
-                    if (!advancedView)
-                        RotateToPathDirection_Checkbox.Visible = false;
-                }
-
+                HandleCheckBox(canRotateToPath, RotateToPathDirection_Checkbox, bloon.RotateToPathDirection);
                 //Draw layer textbox
-                if (canDrawLayer)
-                {
-                    DrawLayer_TextBox.Visible = true;
-                    DrawLayer_Label.Visible = true;
-                    DrawLayer_TextBox.Text = bloon.DrawLayer;
-                }
-                else
-                {
-                    if (!advancedView)
-                    {
-                        DrawLayer_TextBox.Visible = false;
-                        DrawLayer_Label.Visible = false;
-                    }                        
-                }
-
+                HandleTextBox(canDrawLayer, DrawLayer_TextBox, DrawLayer_Label, bloon.DrawLayer);
                 //Hit addon textbox
-                if (canHitAddon)
-                {
-                    HitAddon_TextBox.Visible = true;
-                    HitAddon_Label.Visible = true;
-                    HitAddon_TextBox.Text = bloon.HitAddon.ToString();
-                }
-                else
-                {
-                    if (!advancedView)
-                    {
-                        HitAddon_TextBox.Visible = false;
-                        HitAddon_Label.Visible = false;
-                    }
-                }
+                HandleTextBox(canHitAddon, HitAddon_TextBox, HitAddon_Label, bloon.HitAddon.ToString());
             }        
         }
-        private void SaveFile()
+        private CheckBox HandleCheckBox(bool allowCheckbox, CheckBox checkbox, bool bloonValue)
         {
-            try { artist.BaseCost = Int32.Parse(InitialHealth_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your base cost is not a valid number..."); }
-
-            try { artist.RankToUnlock = Int32.Parse(BaseSpeed_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Rank To Unlock is not a valid number..."); }
-
-            /*artist.Icon = Icon_TextBox.Text;
-            artist.TargetingMode = TargetingMode_ComboBox.SelectedItem.ToString();
-            artist.CanTargetCamo = CanTargetCamo_CheckBox.Checked;
-            artist.RotatesToTarget = RotateToTarget_CheckBox.Checked;
-            artist.TargetsManually = TargetsManually_CheckBox.Checked;
-            artist.TargetIsWeaponOrigin = TargetIsWeaponOrigin_CheckBox.Checked;
-            artist.CanBePlacedInWater = CanBePlacedInWater_CheckBox.Checked;
-            artist.CanBePlacedOnLand = CanBePlacedOnLand_CheckBox.Checked;
-            artist.CanBePlacedOnPath = CanBePlacedOnPath_CheckBox.Checked;
-            artist.UseRadiusPlacement = UsePlacementRadius_Checkbox.Checked;
-*/
-            
-
-           
-
-            //
-            //BUGS BE HERE IF ADDING NEW UPGRADE TIERS
-            artist.Upgrades = CreateDoubleArray_String(upgradenames);
-            artist.UpgradeIcons = CreateDoubleArray_String(upgradeIcons);
-            artist.UpgradeAvatars = CreateDoubleArray_String(upgradeAvatars);
-            artist.UpgradePrices = CreateDoubleArray_Long(upgradePrices);
-            artist.UpgradeGateway = CreateDoubleArray_UpgradeGateway(CreateArray_Long(upgradeRanks), CreateArray_Long(upgradeXPs));
-
-
-            var y = Tower_Class.Serialize.ToJson(artist);
-            File.WriteAllText(path, y);
-        }
-        private Tower_Class.UpgradeGateway[][] CreateDoubleArray_UpgradeGateway(long[] rankArray, long[] XpArray)
-        {
-            int upgradeCount = upgradenames.Length / 2;
-            var leftPath = new Tower_Class.UpgradeGateway[] { };
-            var rightPath = new Tower_Class.UpgradeGateway[] { };
-            
-
-            for (int i = 0; i < upgradeCount; i++)
+            if (allowCheckbox)
             {
-                Array.Resize(ref leftPath, leftPath.Length + 1);
-
-                var upgradeG = new Tower_Class.UpgradeGateway();
-                upgradeG.Rank = rankArray[i];
-                upgradeG.Xp = XpArray[i];
-                leftPath[leftPath.Length - 1] = upgradeG;
-            }
-            for (int i = upgradeCount; i < upgradeCount * 2; i++)
-            {
-                Array.Resize(ref rightPath, rightPath.Length + 1);
-
-                var upgradeG = new Tower_Class.UpgradeGateway();
-                upgradeG.Rank = rankArray[i];
-                upgradeG.Xp = XpArray[i];
-                rightPath[rightPath.Length - 1] = upgradeG;
-            }
-            Tower_Class.UpgradeGateway[][] upgrades = new Tower_Class.UpgradeGateway[][] { leftPath, rightPath };
-            return upgrades;
-        }
-        private string[][] CreateDoubleArray_String(string[] inputArray)
-        {
-            int upgradeCount = inputArray.Length / 2;
-            
-            string[] leftPath = new string[] { };
-            string[] rightPath = new string[] { };
-
-            for (int i = 0; i < upgradeCount; i++)
-            {
-                Array.Resize(ref leftPath, leftPath.Length + 1);
-                leftPath[leftPath.Length - 1] = inputArray[i];
-            }
-            for (int i = upgradeCount; i < upgradeCount * 2; i++)
-            {
-                Array.Resize(ref rightPath, rightPath.Length + 1);
-                rightPath[rightPath.Length - 1] = inputArray[i];
-            }
-            string[][] upgrades = new string[][] { leftPath, rightPath };
-
-            return upgrades;
-        }
-        private long[] CreateArray_Long(string[] inputArray)
-        {
-            int upgradeCount = inputArray.Length;
-            long[] array = new long[] { };
-
-            for (int i = 0; i < upgradeCount; i++)
-            {
-                Array.Resize(ref array, array.Length + 1);
-                try { array[array.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the right path..."); }
-
-            }
-            return array;
-        }
-        private long[][] CreateDoubleArray_Long(string[] inputArray)
-        {
-            int upgradeCount = inputArray.Length / 2;
-            long[] leftPath = new long[] { };
-            long[] rightPath = new long[] { };
-
-            for (int i = 0; i < upgradeCount; i++)
-            {
-                Array.Resize(ref leftPath, leftPath.Length + 1);
-                try { leftPath[leftPath.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the left path..."); }
-                
-            }
-            for (int i = 0; i < upgradeCount; i++)
-            {
-                Array.Resize(ref rightPath, rightPath.Length + 1);
-                try { rightPath[rightPath.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the right path..."); }
-            }
-            long[][] upgrades = new long[][] { leftPath, rightPath };
-
-            return upgrades;
-        }
-        private string[] CreateStringArray(string[] outputArray, string[][] deserializedArray)
-        {
-            if(deserializedArray != null)
-            {
-                foreach (string[] a in deserializedArray)
-                {
-                    foreach (string b in a)
-                    {
-                        Array.Resize(ref outputArray, outputArray.Length + 1);
-                        outputArray[outputArray.Length - 1] = b;
-                    }
-                }
-                return outputArray;
+                checkbox.Visible = true;
+                if (bloonValue == true)
+                    checkbox.Checked = true;
+                else
+                    checkbox.Checked = false;
             }
             else
             {
-                return null;
+                if (!advancedView)
+                    checkbox.Visible = false;
             }
+            return checkbox;
+        }
+        private object HandleTextBox(bool allowCheckbox, RichTextBox rtb, Label label, string bloonValue)
+        {
+            if (allowCheckbox)
+            {
+                rtb.Visible = true;
+                label.Visible = true;
+                rtb.Text = bloonValue;
+            }
+            else
+            {
+                if (!advancedView)
+                {
+                    rtb.Visible = false;
+                    label.Visible = false;
+                }
+            }
+            return rtb;
+        }
+        private void SaveFile()
+        {
+            newBloon = new Bloon();
+            newBloon = bloon;
+            newBloon.SpriteFile = SpriteFile_TextBox.Text;
+            
+
+            if (InitialHealth_TextBox.Text.Length > 0)
+            {
+                long initialHealth = 0;
+                try
+                {
+                    initialHealth = Int64.Parse(InitialHealth_TextBox.Text);
+                    if (initialHealth <= 0)
+                    {
+                        ConsoleHandler.force_appendNotice("Inital Health must be at least 1, automatically setting it to 1");
+                        initialHealth = 1;
+                    }
+                    newBloon.InitialHealth = initialHealth;
+                }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your initial health is not a valid number..."); }
+            }
+
+            try { newBloon.BaseSpeed = Int64.Parse(BaseSpeed_TextBox.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your base speed is not a valid number..."); }
+
+            try { newBloon.SpeedMultiplier = Int64.Parse(SpeedMultiplier_TextBox.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your speed multiplier is not a valid number..."); }
+
+            try { newBloon.Rbe = Int64.Parse(RBE_TextBox.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your RBE is not a valid number..."); }
+
+            if(Radius_TextBox.Text.Length > 0)
+            {
+                try { newBloon.Radius = Int64.Parse(Radius_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your radius is not a valid number..."); }
+            }
+
+            if (SpeedMultiplier_TextBox.Text.Length > 0)
+            {
+                try { newBloon.Scale = Int64.Parse(SpeedMultiplier_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your speed multiplier is not a valid number..."); }
+            }
+
+            if (ChildEffectScale_TextBox.Text.Length > 0)
+            {
+                try { newBloon.ChildEffectScale = Int64.Parse(ChildEffectScale_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your child effect scale is not a valid number..."); }
+            }
+
+            if (HitAddon_TextBox.Visible == true)
+            {
+                if (HitAddon_TextBox.Text.Length > 0)
+                {
+                    try { newBloon.HitAddon = Int64.Parse(HitAddon_TextBox.Text); }
+                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your hit addon is not a valid number..."); }
+                }
+            }            
+
+            if (DrawLayer_TextBox.Visible == true)
+            {
+                if (DrawLayer_TextBox.Text.Length > 0)
+                    newBloon.DrawLayer = DrawLayer_TextBox.Text;
+            }
+            
+            if(CanGoUnderground_CheckBox.Visible == true)
+                newBloon.CanGoUnderground = CanGoUnderground_CheckBox.Checked;
+
+            if (RotateToPathDirection_Checkbox.Visible == true)
+                newBloon.RotateToPathDirection = RotateToPathDirection_Checkbox.Checked;
+
+            newBloon.StatusImmunity = CreateStringArray_FromCheckedLB(StatusImmunity_CheckedListBox);
+            newBloon.DamageImmunity = CreateStringArray_FromCheckedLB(DamageImmunity_CheckedListBox);
+            newBloon.BloonAbility = CreateStringArray_FromCheckedLB(BloonAbility_CheckedListBox);
+            newBloon.ApplyStatus = CreateStringArray_FromCheckedLB(ApplyStatus_CheckedListBox);
+
+
+            var saveFile = SerializeBloon.ToJson(newBloon);
+            File.WriteAllText(path, saveFile);
+        }
+        private string[] CreateStringArray_FromCheckedLB(CheckedListBox listbox)
+        {
+            string[] output = new string[0];
+            foreach(var item in listbox.CheckedItems)
+            {
+                Array.Resize(ref output, output.Length + 1);
+                output[output.Length - 1] = item.ToString();
+            }
+            return output;
         }
         private void PopulateChildBloons()
         {
             if (bloon != null)
             {
                 CheckedListBox newList = new CheckedListBox();
-                path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions";
-                var bloonFiles = Directory.GetFiles(path);
+                string bloonDir = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions";
+                var bloonFiles = Directory.GetFiles(bloonDir);
 
                 foreach (string file in bloonFiles)
                 {
@@ -433,53 +370,6 @@ namespace BTDToolbox.Extra_Forms
             Radius_TextBox.Text = "";
             Scale_TextBox.Text = "";
             ChildEffectScale_TextBox.Text = "";
-
-            /*ResetListBox(ChildBloons_CheckedListBox);
-            ResetListBox(StatusImmunity_CheckedListBox);
-            ResetListBox(DamageImmunity_CheckedListBox);
-            
-            if (bloon.BloonAbility != null)
-            {
-                if (bloon.BloonAbility != null)
-                    ResetListBox(BloonAbility_CheckedListBox);
-            }*/
-            /*int i = 0;
-            CheckedListBox list = new CheckedListBox();
-            foreach (var item in ChildBloons_CheckedListBox.Items)
-            {
-                list.Items.Add(item, false);
-            }
-            ChildBloons_CheckedListBox.Items.Clear();
-            foreach (var item in list.Items)
-            {
-                ChildBloons_CheckedListBox.Items.Add(item, false);
-            }
-
-            i = 0;
-            list = new CheckedListBox();
-            foreach (var item in StatusImmunity_CheckedListBox.Items)
-            {
-                list.Items.Add(item, false);
-            }
-            StatusImmunity_CheckedListBox.Items.Clear();
-            foreach (var item in list.Items)
-            {
-                StatusImmunity_CheckedListBox.Items.Add(item, false);
-            }
-
-
-            i = 0;
-            list = new CheckedListBox();
-            foreach (var item in DamageImmunity_CheckedListBox.Items)
-            {
-                list.Items.Add(item, false);
-            }
-            DamageImmunity_CheckedListBox.Items.Clear();
-            foreach (var item in list.Items)
-            {
-                DamageImmunity_CheckedListBox.Items.Add(item, false);
-            }*/
-
 
             //reset advanced stuff
             CanGoUnderground_CheckBox.Checked = false;
@@ -590,6 +480,9 @@ namespace BTDToolbox.Extra_Forms
                 DrawLayer_Label.Visible = true;
                 HitAddon_Label.Visible = true;
                 HitAddon_TextBox.Visible = true;
+
+                label2.Text = "Bloon type:";
+                BloonName_TextBox.ReadOnly = false;
             }
             else
             {
@@ -601,6 +494,9 @@ namespace BTDToolbox.Extra_Forms
                     DrawLayer_Label.Visible = false;
                     HitAddon_Label.Visible = false;
                     HitAddon_TextBox.Visible = false;
+
+                    label2.Text = "Bloon type (cant edit):";
+                    BloonName_TextBox.ReadOnly = true;
                 }
             }
         }
@@ -621,11 +517,6 @@ namespace BTDToolbox.Extra_Forms
                 //ChildBloons_CheckedListBox.SetItemCheckState(ChildBloons_CheckedListBox.SelectedIndex, CheckState.Unchecked);
                 ChildBloons_CheckedListBox.SetItemCheckState(ChildBloons_CheckedListBox.SelectedIndex, CheckState.Indeterminate);
             }
-        }
-
-        private void ChildBloons_CheckedListBox_MouseClick(object sender, MouseEventArgs e)
-        {
-            
         }
     }
 }

@@ -27,22 +27,22 @@ namespace BTDToolbox.Classes
         public string SpriteFile { get; set; }
 
         [JsonProperty("InitialHealth")]
-        public long InitialHealth { get; set; }
+        public double InitialHealth { get; set; }
 
         [JsonProperty("Scale")]
-        public long Scale { get; set; }
+        public double Scale { get; set; }
 
         [JsonProperty("SpriteFilesAtDamageLevels")]
         public SpriteFilesAtDamageLevel[][] SpriteFilesAtDamageLevels { get; set; }
 
         [JsonProperty("BaseSpeed")]
-        public long BaseSpeed { get; set; }
+        public double BaseSpeed { get; set; }
 
         [JsonProperty("SpeedMultiplier")]
         public double SpeedMultiplier { get; set; }
 
         [JsonProperty("RBE")]
-        public long Rbe { get; set; }
+        public double Rbe { get; set; }
 
         [JsonProperty("ChildBloons")]
         public object[] ChildBloons { get; set; }
@@ -63,10 +63,10 @@ namespace BTDToolbox.Classes
         public bool RotateToPathDirection { get; set; }
 
         [JsonProperty("Radius")]
-        public long Radius { get; set; }
+        public double Radius { get; set; }
 
         [JsonProperty("HitAddon")]
-        public long HitAddon { get; set; }
+        public double HitAddon { get; set; }
 
         [JsonProperty("ChildEffectScale")]
         public long ChildEffectScale { get; set; }
@@ -89,7 +89,7 @@ namespace BTDToolbox.Classes
         public static Bloon FromJson(string json) => JsonConvert.DeserializeObject<Bloon>(json, BTDToolbox.Classes.Converter.Settings);
     }
 
-    public static class Serialize
+    public static class SerializeBloon
     {
         public static string ToJson(this Bloon self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.Converter.Settings);
     }

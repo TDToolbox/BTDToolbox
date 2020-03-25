@@ -60,15 +60,15 @@
             this.SpeedMultiplier_TextBox = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Panel2 = new System.Windows.Forms.Panel();
-            this.SwitchPanel = new System.Windows.Forms.Button();
-            this.AdvancedView_Checkbox = new System.Windows.Forms.CheckBox();
-            this.DamageImmunity_CheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.StatusImmunity_CheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.BloonAbility_CheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.ApplyStatus_CheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.BloonAbility_CheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.StatusImmunity_CheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.DamageImmunity_CheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.SwitchPanel = new System.Windows.Forms.Button();
+            this.AdvancedView_Checkbox = new System.Windows.Forms.CheckBox();
             this.Panel1.SuspendLayout();
             this.Panel2.SuspendLayout();
             this.SuspendLayout();
@@ -316,7 +316,6 @@
             this.ChildBloons_CheckedListBox.Name = "ChildBloons_CheckedListBox";
             this.ChildBloons_CheckedListBox.Size = new System.Drawing.Size(321, 374);
             this.ChildBloons_CheckedListBox.TabIndex = 62;
-            this.ChildBloons_CheckedListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChildBloons_CheckedListBox_MouseClick);
             this.ChildBloons_CheckedListBox.SelectedIndexChanged += new System.EventHandler(this.ChildBloons_CheckedListBox_SelectedIndexChanged);
             this.ChildBloons_CheckedListBox.SelectedValueChanged += new System.EventHandler(this.ChildBloons_CheckedListBox_SelectedValueChanged);
             // 
@@ -499,56 +498,63 @@
             this.Panel2.TabIndex = 50;
             this.Panel2.Visible = false;
             // 
-            // SwitchPanel
+            // ApplyStatus_CheckedListBox
             // 
-            this.SwitchPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.SwitchPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SwitchPanel.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.SwitchPanel.ForeColor = System.Drawing.Color.White;
-            this.SwitchPanel.Location = new System.Drawing.Point(711, 484);
-            this.SwitchPanel.Name = "SwitchPanel";
-            this.SwitchPanel.Size = new System.Drawing.Size(164, 58);
-            this.SwitchPanel.TabIndex = 51;
-            this.SwitchPanel.Text = "Page 2";
-            this.SwitchPanel.UseVisualStyleBackColor = false;
-            this.SwitchPanel.Click += new System.EventHandler(this.SwitchPanel_Click);
+            this.ApplyStatus_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.ApplyStatus_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ApplyStatus_CheckedListBox.CheckOnClick = true;
+            this.ApplyStatus_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.ApplyStatus_CheckedListBox.ForeColor = System.Drawing.Color.White;
+            this.ApplyStatus_CheckedListBox.FormattingEnabled = true;
+            this.ApplyStatus_CheckedListBox.Items.AddRange(new object[] {
+            "Camo",
+            "Regen"});
+            this.ApplyStatus_CheckedListBox.Location = new System.Drawing.Point(813, 31);
+            this.ApplyStatus_CheckedListBox.Name = "ApplyStatus_CheckedListBox";
+            this.ApplyStatus_CheckedListBox.Size = new System.Drawing.Size(183, 352);
+            this.ApplyStatus_CheckedListBox.TabIndex = 69;
             // 
-            // AdvancedView_Checkbox
+            // label10
             // 
-            this.AdvancedView_Checkbox.AutoSize = true;
-            this.AdvancedView_Checkbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.AdvancedView_Checkbox.ForeColor = System.Drawing.Color.White;
-            this.AdvancedView_Checkbox.Location = new System.Drawing.Point(916, 20);
-            this.AdvancedView_Checkbox.Name = "AdvancedView_Checkbox";
-            this.AdvancedView_Checkbox.Size = new System.Drawing.Size(138, 24);
-            this.AdvancedView_Checkbox.TabIndex = 60;
-            this.AdvancedView_Checkbox.Text = "Advanced view";
-            this.AdvancedView_Checkbox.UseVisualStyleBackColor = true;
-            this.AdvancedView_Checkbox.CheckedChanged += new System.EventHandler(this.AdvancedView_Checkbox_CheckedChanged);
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label10.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(831, 8);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(103, 20);
+            this.label10.TabIndex = 68;
+            this.label10.Text = "Apply status:";
             // 
-            // DamageImmunity_CheckedListBox
+            // BloonAbility_CheckedListBox
             // 
-            this.DamageImmunity_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.DamageImmunity_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DamageImmunity_CheckedListBox.CheckOnClick = true;
-            this.DamageImmunity_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.DamageImmunity_CheckedListBox.ForeColor = System.Drawing.Color.White;
-            this.DamageImmunity_CheckedListBox.FormattingEnabled = true;
-            this.DamageImmunity_CheckedListBox.Items.AddRange(new object[] {
-            "Ice",
-            "Fire",
-            "Plasma",
-            "Piercing",
-            "Explosive",
-            "Foam",
-            "Juggernaut",
-            "ShredBloon",
-            "MOABMauler",
-            "DamageOverTime"});
-            this.DamageImmunity_CheckedListBox.Location = new System.Drawing.Point(320, 31);
-            this.DamageImmunity_CheckedListBox.Name = "DamageImmunity_CheckedListBox";
-            this.DamageImmunity_CheckedListBox.Size = new System.Drawing.Size(183, 352);
-            this.DamageImmunity_CheckedListBox.TabIndex = 63;
+            this.BloonAbility_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.BloonAbility_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.BloonAbility_CheckedListBox.CheckOnClick = true;
+            this.BloonAbility_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.BloonAbility_CheckedListBox.ForeColor = System.Drawing.Color.White;
+            this.BloonAbility_CheckedListBox.FormattingEnabled = true;
+            this.BloonAbility_CheckedListBox.Items.AddRange(new object[] {
+            "StunTowersAbility",
+            "BloonariusAbility",
+            "ShieldAbility",
+            "SlowTowersAbility"});
+            this.BloonAbility_CheckedListBox.Location = new System.Drawing.Point(565, 31);
+            this.BloonAbility_CheckedListBox.Name = "BloonAbility_CheckedListBox";
+            this.BloonAbility_CheckedListBox.Size = new System.Drawing.Size(183, 352);
+            this.BloonAbility_CheckedListBox.TabIndex = 67;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label9.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(583, 8);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(99, 20);
+            this.label9.TabIndex = 66;
+            this.label9.Text = "Bloon ability";
             // 
             // StatusImmunity_CheckedListBox
             // 
@@ -594,63 +600,56 @@
             this.label8.TabIndex = 64;
             this.label8.Text = "Status immunity";
             // 
-            // BloonAbility_CheckedListBox
+            // DamageImmunity_CheckedListBox
             // 
-            this.BloonAbility_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.BloonAbility_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.BloonAbility_CheckedListBox.CheckOnClick = true;
-            this.BloonAbility_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.BloonAbility_CheckedListBox.ForeColor = System.Drawing.Color.White;
-            this.BloonAbility_CheckedListBox.FormattingEnabled = true;
-            this.BloonAbility_CheckedListBox.Items.AddRange(new object[] {
-            "StunTowersAbility",
-            "BloonariusAbility",
-            "ShieldAbility",
-            "SlowTowersAbility"});
-            this.BloonAbility_CheckedListBox.Location = new System.Drawing.Point(565, 31);
-            this.BloonAbility_CheckedListBox.Name = "BloonAbility_CheckedListBox";
-            this.BloonAbility_CheckedListBox.Size = new System.Drawing.Size(183, 352);
-            this.BloonAbility_CheckedListBox.TabIndex = 67;
+            this.DamageImmunity_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
+            this.DamageImmunity_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DamageImmunity_CheckedListBox.CheckOnClick = true;
+            this.DamageImmunity_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.DamageImmunity_CheckedListBox.ForeColor = System.Drawing.Color.White;
+            this.DamageImmunity_CheckedListBox.FormattingEnabled = true;
+            this.DamageImmunity_CheckedListBox.Items.AddRange(new object[] {
+            "Ice",
+            "Fire",
+            "Plasma",
+            "Piercing",
+            "Explosive",
+            "Foam",
+            "Juggernaut",
+            "ShredBloon",
+            "MOABMauler",
+            "DamageOverTime"});
+            this.DamageImmunity_CheckedListBox.Location = new System.Drawing.Point(320, 31);
+            this.DamageImmunity_CheckedListBox.Name = "DamageImmunity_CheckedListBox";
+            this.DamageImmunity_CheckedListBox.Size = new System.Drawing.Size(183, 352);
+            this.DamageImmunity_CheckedListBox.TabIndex = 63;
             // 
-            // label9
+            // SwitchPanel
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label9.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(583, 8);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(99, 20);
-            this.label9.TabIndex = 66;
-            this.label9.Text = "Bloon ability";
+            this.SwitchPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.SwitchPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SwitchPanel.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.SwitchPanel.ForeColor = System.Drawing.Color.White;
+            this.SwitchPanel.Location = new System.Drawing.Point(711, 484);
+            this.SwitchPanel.Name = "SwitchPanel";
+            this.SwitchPanel.Size = new System.Drawing.Size(164, 58);
+            this.SwitchPanel.TabIndex = 51;
+            this.SwitchPanel.Text = "Page 2";
+            this.SwitchPanel.UseVisualStyleBackColor = false;
+            this.SwitchPanel.Click += new System.EventHandler(this.SwitchPanel_Click);
             // 
-            // ApplyStatus_CheckedListBox
+            // AdvancedView_Checkbox
             // 
-            this.ApplyStatus_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.ApplyStatus_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ApplyStatus_CheckedListBox.CheckOnClick = true;
-            this.ApplyStatus_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.ApplyStatus_CheckedListBox.ForeColor = System.Drawing.Color.White;
-            this.ApplyStatus_CheckedListBox.FormattingEnabled = true;
-            this.ApplyStatus_CheckedListBox.Items.AddRange(new object[] {
-            "Camo",
-            "Regen"});
-            this.ApplyStatus_CheckedListBox.Location = new System.Drawing.Point(813, 31);
-            this.ApplyStatus_CheckedListBox.Name = "ApplyStatus_CheckedListBox";
-            this.ApplyStatus_CheckedListBox.Size = new System.Drawing.Size(183, 352);
-            this.ApplyStatus_CheckedListBox.TabIndex = 69;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label10.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(831, 8);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(103, 20);
-            this.label10.TabIndex = 68;
-            this.label10.Text = "Apply status:";
+            this.AdvancedView_Checkbox.AutoSize = true;
+            this.AdvancedView_Checkbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.AdvancedView_Checkbox.ForeColor = System.Drawing.Color.White;
+            this.AdvancedView_Checkbox.Location = new System.Drawing.Point(911, 20);
+            this.AdvancedView_Checkbox.Name = "AdvancedView_Checkbox";
+            this.AdvancedView_Checkbox.Size = new System.Drawing.Size(143, 24);
+            this.AdvancedView_Checkbox.TabIndex = 60;
+            this.AdvancedView_Checkbox.Text = "Advanced users";
+            this.AdvancedView_Checkbox.UseVisualStyleBackColor = true;
+            this.AdvancedView_Checkbox.CheckedChanged += new System.EventHandler(this.AdvancedView_Checkbox_CheckedChanged);
             // 
             // EZBloon_Editor
             // 
@@ -663,8 +662,8 @@
             this.Controls.Add(this.BloonFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.BloonType_Label);
-            this.Controls.Add(this.Panel2);
             this.Controls.Add(this.Panel1);
+            this.Controls.Add(this.Panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EZBloon_Editor";
             this.Text = "EZBloon_Editor";
