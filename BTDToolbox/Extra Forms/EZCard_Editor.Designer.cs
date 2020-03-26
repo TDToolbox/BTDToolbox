@@ -35,12 +35,13 @@
             this.CardSet_TB = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BaseSpeed_TextBox = new System.Windows.Forms.RichTextBox();
-            this.CanGoUnderground_CheckBox = new System.Windows.Forms.CheckBox();
+            this.StartingCard = new System.Windows.Forms.CheckBox();
             this.label16 = new System.Windows.Forms.Label();
             this.SpriteFile_TextBox = new System.Windows.Forms.RichTextBox();
             this.Save_Button = new System.Windows.Forms.Button();
             this.CardFiles_ComboBox = new System.Windows.Forms.ComboBox();
             this.TowerPanel = new System.Windows.Forms.Panel();
+            this.SeeStartingCards_Button = new System.Windows.Forms.Button();
             this.Game_Label = new System.Windows.Forms.Label();
             this.DrawLayer_LB = new System.Windows.Forms.ListBox();
             this.HitAddon_TextBox = new System.Windows.Forms.RichTextBox();
@@ -61,7 +62,14 @@
             this.OpenText_Button = new System.Windows.Forms.Button();
             this.TotalStartingCards_Label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.StarterCards_Panel = new System.Windows.Forms.Panel();
+            this.StartingCard_OpenText_Button = new System.Windows.Forms.Button();
+            this.OpenInEZCard_Button = new System.Windows.Forms.Button();
+            this.StartingCards_LB = new System.Windows.Forms.ListBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.RefreshList_Button = new System.Windows.Forms.Button();
             this.TowerPanel.SuspendLayout();
+            this.StarterCards_Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // CardName_TB
@@ -146,17 +154,17 @@
             this.BaseSpeed_TextBox.TabIndex = 9;
             this.BaseSpeed_TextBox.Text = "";
             // 
-            // CanGoUnderground_CheckBox
+            // StartingCard
             // 
-            this.CanGoUnderground_CheckBox.AutoSize = true;
-            this.CanGoUnderground_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.CanGoUnderground_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.CanGoUnderground_CheckBox.Location = new System.Drawing.Point(414, 279);
-            this.CanGoUnderground_CheckBox.Name = "CanGoUnderground_CheckBox";
-            this.CanGoUnderground_CheckBox.Size = new System.Drawing.Size(122, 24);
-            this.CanGoUnderground_CheckBox.TabIndex = 12;
-            this.CanGoUnderground_CheckBox.Text = "Starting card";
-            this.CanGoUnderground_CheckBox.UseVisualStyleBackColor = true;
+            this.StartingCard.AutoSize = true;
+            this.StartingCard.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.StartingCard.ForeColor = System.Drawing.Color.White;
+            this.StartingCard.Location = new System.Drawing.Point(440, 274);
+            this.StartingCard.Name = "StartingCard";
+            this.StartingCard.Size = new System.Drawing.Size(122, 24);
+            this.StartingCard.TabIndex = 12;
+            this.StartingCard.Text = "Starting card";
+            this.StartingCard.UseVisualStyleBackColor = true;
             // 
             // label16
             // 
@@ -213,6 +221,7 @@
             // 
             this.TowerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TowerPanel.Controls.Add(this.SeeStartingCards_Button);
             this.TowerPanel.Controls.Add(this.Game_Label);
             this.TowerPanel.Controls.Add(this.DrawLayer_LB);
             this.TowerPanel.Controls.Add(this.HitAddon_TextBox);
@@ -236,11 +245,25 @@
             this.TowerPanel.Controls.Add(this.label4);
             this.TowerPanel.Controls.Add(this.BaseSpeed_TextBox);
             this.TowerPanel.Controls.Add(this.label5);
-            this.TowerPanel.Controls.Add(this.CanGoUnderground_CheckBox);
+            this.TowerPanel.Controls.Add(this.StartingCard);
             this.TowerPanel.Location = new System.Drawing.Point(2, 50);
             this.TowerPanel.Name = "TowerPanel";
             this.TowerPanel.Size = new System.Drawing.Size(1071, 425);
             this.TowerPanel.TabIndex = 49;
+            // 
+            // SeeStartingCards_Button
+            // 
+            this.SeeStartingCards_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.SeeStartingCards_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SeeStartingCards_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.SeeStartingCards_Button.ForeColor = System.Drawing.Color.White;
+            this.SeeStartingCards_Button.Location = new System.Drawing.Point(422, 304);
+            this.SeeStartingCards_Button.Name = "SeeStartingCards_Button";
+            this.SeeStartingCards_Button.Size = new System.Drawing.Size(154, 32);
+            this.SeeStartingCards_Button.TabIndex = 69;
+            this.SeeStartingCards_Button.Text = "See starting cards";
+            this.SeeStartingCards_Button.UseVisualStyleBackColor = false;
+            this.SeeStartingCards_Button.Click += new System.EventHandler(this.SeeStartingCards_Button_Click);
             // 
             // Game_Label
             // 
@@ -481,12 +504,94 @@
             this.label3.TabIndex = 68;
             this.label3.Text = "(Need at least 15)";
             // 
+            // StarterCards_Panel
+            // 
+            this.StarterCards_Panel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.StarterCards_Panel.Controls.Add(this.RefreshList_Button);
+            this.StarterCards_Panel.Controls.Add(this.StartingCard_OpenText_Button);
+            this.StarterCards_Panel.Controls.Add(this.OpenInEZCard_Button);
+            this.StarterCards_Panel.Controls.Add(this.StartingCards_LB);
+            this.StarterCards_Panel.Controls.Add(this.label10);
+            this.StarterCards_Panel.Location = new System.Drawing.Point(2, 50);
+            this.StarterCards_Panel.Name = "StarterCards_Panel";
+            this.StarterCards_Panel.Size = new System.Drawing.Size(1071, 425);
+            this.StarterCards_Panel.TabIndex = 70;
+            this.StarterCards_Panel.Visible = false;
+            // 
+            // StartingCard_OpenText_Button
+            // 
+            this.StartingCard_OpenText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.StartingCard_OpenText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StartingCard_OpenText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.StartingCard_OpenText_Button.ForeColor = System.Drawing.Color.White;
+            this.StartingCard_OpenText_Button.Location = new System.Drawing.Point(412, 295);
+            this.StartingCard_OpenText_Button.Name = "StartingCard_OpenText_Button";
+            this.StartingCard_OpenText_Button.Size = new System.Drawing.Size(164, 43);
+            this.StartingCard_OpenText_Button.TabIndex = 72;
+            this.StartingCard_OpenText_Button.Text = "Open in Text";
+            this.StartingCard_OpenText_Button.UseVisualStyleBackColor = false;
+            this.StartingCard_OpenText_Button.Click += new System.EventHandler(this.StartingCard_OpenText_Button_Click);
+            // 
+            // OpenInEZCard_Button
+            // 
+            this.OpenInEZCard_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenInEZCard_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenInEZCard_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenInEZCard_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenInEZCard_Button.Location = new System.Drawing.Point(412, 345);
+            this.OpenInEZCard_Button.Name = "OpenInEZCard_Button";
+            this.OpenInEZCard_Button.Size = new System.Drawing.Size(164, 43);
+            this.OpenInEZCard_Button.TabIndex = 71;
+            this.OpenInEZCard_Button.Text = "Open in EZ Card";
+            this.OpenInEZCard_Button.UseVisualStyleBackColor = false;
+            this.OpenInEZCard_Button.Click += new System.EventHandler(this.OpenInEZCard_Button_Click);
+            // 
+            // StartingCards_LB
+            // 
+            this.StartingCards_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.StartingCards_LB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.StartingCards_LB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StartingCards_LB.ForeColor = System.Drawing.Color.White;
+            this.StartingCards_LB.FormattingEnabled = true;
+            this.StartingCards_LB.ItemHeight = 20;
+            this.StartingCards_LB.Location = new System.Drawing.Point(121, 39);
+            this.StartingCards_LB.Name = "StartingCards_LB";
+            this.StartingCards_LB.Size = new System.Drawing.Size(250, 360);
+            this.StartingCards_LB.TabIndex = 64;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(178, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(114, 20);
+            this.label10.TabIndex = 59;
+            this.label10.Text = "Starting cards:";
+            // 
+            // RefreshList_Button
+            // 
+            this.RefreshList_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.RefreshList_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RefreshList_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.RefreshList_Button.ForeColor = System.Drawing.Color.White;
+            this.RefreshList_Button.Location = new System.Drawing.Point(412, 246);
+            this.RefreshList_Button.Name = "RefreshList_Button";
+            this.RefreshList_Button.Size = new System.Drawing.Size(164, 43);
+            this.RefreshList_Button.TabIndex = 73;
+            this.RefreshList_Button.Text = "Refresh list";
+            this.RefreshList_Button.UseVisualStyleBackColor = false;
+            this.RefreshList_Button.Click += new System.EventHandler(this.RefreshList_Button_Click);
+            // 
             // EZCard_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.StarterCards_Panel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.TotalStartingCards_Label);
             this.Controls.Add(this.OpenText_Button);
@@ -506,6 +611,8 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EZBloon_Editor_KeyDown);
             this.TowerPanel.ResumeLayout(false);
             this.TowerPanel.PerformLayout();
+            this.StarterCards_Panel.ResumeLayout(false);
+            this.StarterCards_Panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -519,7 +626,7 @@
         private System.Windows.Forms.RichTextBox CardSet_TB;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox BaseSpeed_TextBox;
-        private System.Windows.Forms.CheckBox CanGoUnderground_CheckBox;
+        private System.Windows.Forms.CheckBox StartingCard;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.RichTextBox SpriteFile_TextBox;
         private System.Windows.Forms.Button Save_Button;
@@ -545,5 +652,12 @@
         private System.Windows.Forms.Label Game_Label;
         private System.Windows.Forms.Label TotalStartingCards_Label;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button SeeStartingCards_Button;
+        private System.Windows.Forms.Panel StarterCards_Panel;
+        private System.Windows.Forms.ListBox StartingCards_LB;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button StartingCard_OpenText_Button;
+        private System.Windows.Forms.Button OpenInEZCard_Button;
+        private System.Windows.Forms.Button RefreshList_Button;
     }
 }

@@ -22,7 +22,7 @@ namespace BTDToolbox.Extra_Forms
         Card card;
         Card newCard;
         public static bool EZCard_Opened = false;
-
+        public string[] startingCards_array = new string[0];
         string game = Serializer.Deserialize_Config().CurrentGame;
 
         public EZCard_Editor()
@@ -72,7 +72,9 @@ namespace BTDToolbox.Extra_Forms
             int numStartingCards = 0;
             string cardPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions";
             var cardFiles = Directory.GetFiles(cardPath);
-            
+            string[] cards_length2 = new string[0];
+            string[] cards_length3 = new string[0];
+
             foreach (var item in cardFiles)
             {
                 if(!item.Contains("CacheList"))
@@ -83,7 +85,27 @@ namespace BTDToolbox.Extra_Forms
                         newCard = new Card();
                         newCard = Card.FromJson(json);
                         if (newCard.StartingCard)
+                        {
                             numStartingCards++;
+                            string[] split = item.Split('\\');
+                            string filename = split[split.Length - 1].Replace("\\", "");
+
+                            if (filename.Replace(".json", "").Length == 1)
+                            {
+                                Array.Resize(ref startingCards_array, startingCards_array.Length + 1);
+                                startingCards_array[startingCards_array.Length - 1] = filename;
+                            }
+                            else if (filename.Replace(".json", "").Length == 2)
+                            {
+                                Array.Resize(ref cards_length2, cards_length2.Length + 1);
+                                cards_length2[cards_length2.Length - 1] = filename;
+                            }
+                            else if (filename.Replace(".json", "").Length == 3)
+                            {
+                                Array.Resize(ref cards_length3, cards_length3.Length + 1);
+                                cards_length3[cards_length3.Length - 1] = filename;
+                            }
+                        }
                     }
                     else
                     {
@@ -91,6 +113,12 @@ namespace BTDToolbox.Extra_Forms
                     }
                 }
             }
+            //organize cards in numeric order
+            int startingCards_arraySize = startingCards_array.Length;
+            Array.Resize(ref startingCards_array, startingCards_array.Length + cards_length2.Length + cards_length3.Length);
+            Array.Copy(cards_length2, 0, startingCards_array, startingCards_arraySize, cards_length2.Length);
+            Array.Copy(cards_length3, 0, startingCards_array, startingCards_arraySize + cards_length2.Length, cards_length3.Length);
+
             TotalStartingCards_Label.Text = "Total starting cards : " + numStartingCards;
             return numStartingCards;
         }
@@ -196,9 +224,22 @@ namespace BTDToolbox.Extra_Forms
 
         private void OpenText_Button_Click(object sender, EventArgs e)
         {
+            OpenInText();
+        }
+        private void OpenInText()
+        {
             if (Serializer.Deserialize_Config().useExternalEditor == false)
             {
-                JsonEditor JsonWindow = new JsonEditor(path);
+                string selectedCard = "";
+                if (StarterCards_Panel.Visible == true)
+                {
+                    selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
+                }
+                else
+                {
+                    selectedCard = path;
+                }
+                JsonEditor JsonWindow = new JsonEditor(selectedCard);
                 JsonWindow.MdiParent = Main.getInstance();
                 JsonWindow.Show();
                 this.Focus();
@@ -209,10 +250,61 @@ namespace BTDToolbox.Extra_Forms
                 Process.Start(selectedFile);
             }
         }
-
         private void EZBloon_Editor_FormClosed(object sender, FormClosedEventArgs e)
         {
             EZCard_Opened = false;
+        }
+
+        private void SeeStartingCards_Button_Click(object sender, EventArgs e)
+        {
+            startingCards_array = new string[0];
+            CountStartingCards();
+            StartingCards_LB.Items.Clear();
+            StartingCards_LB.Items.AddRange(startingCards_array);
+
+            StarterCards_Panel.Visible = true;
+            TowerPanel.Visible = false;
+        }
+
+        private void StartingCard_OpenText_Button_Click(object sender, EventArgs e)
+        {
+            if (StartingCards_LB.SelectedIndices.Count == 1)
+            {
+                OpenInText();
+            }
+            else if (StartingCards_LB.SelectedIndices.Count > 1)
+            {
+                ConsoleHandler.force_appendNotice("Please select only ONE file to continue");
+            }
+            else if (StartingCards_LB.SelectedIndices.Count == 0)
+            {
+                ConsoleHandler.force_appendNotice("You need to have at least one file selected to contiune...");
+            }
+        }
+
+        private void OpenInEZCard_Button_Click(object sender, EventArgs e)
+        {
+            if (StartingCards_LB.SelectedIndices.Count == 1)
+            {
+                string selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
+                CreateCardObject(selectedCard);
+            }
+            else if (StartingCards_LB.SelectedIndices.Count > 1)
+            {
+                ConsoleHandler.force_appendNotice("Please select only ONE file to continue");
+            }
+            else if (StartingCards_LB.SelectedIndices.Count == 0)
+            {
+                ConsoleHandler.force_appendNotice("You need to have at least one file selected to contiune...");
+            }
+        }
+
+        private void RefreshList_Button_Click(object sender, EventArgs e)
+        {
+            startingCards_array = new string[0];
+            CountStartingCards();
+            StartingCards_LB.Items.Clear();
+            StartingCards_LB.Items.AddRange(startingCards_array);
         }
     }
 }
