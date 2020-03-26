@@ -28,21 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.BloonName_TextBox = new System.Windows.Forms.RichTextBox();
-            this.BloonType_Label = new System.Windows.Forms.Label();
+            this.CardName_TB = new System.Windows.Forms.RichTextBox();
+            this.Card_Label = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.InitialHealth_TextBox = new System.Windows.Forms.RichTextBox();
+            this.CardSet_TB = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BaseSpeed_TextBox = new System.Windows.Forms.RichTextBox();
             this.CanGoUnderground_CheckBox = new System.Windows.Forms.CheckBox();
-            this.RotateToPathDirection_Checkbox = new System.Windows.Forms.CheckBox();
             this.label16 = new System.Windows.Forms.Label();
             this.SpriteFile_TextBox = new System.Windows.Forms.RichTextBox();
             this.Save_Button = new System.Windows.Forms.Button();
-            this.BloonFiles_ComboBox = new System.Windows.Forms.ComboBox();
-            this.Panel1 = new System.Windows.Forms.Panel();
+            this.CardFiles_ComboBox = new System.Windows.Forms.ComboBox();
+            this.TowerPanel = new System.Windows.Forms.Panel();
+            this.Game_Label = new System.Windows.Forms.Label();
             this.DrawLayer_LB = new System.Windows.Forms.ListBox();
             this.HitAddon_TextBox = new System.Windows.Forms.RichTextBox();
             this.HitAddon_Label = new System.Windows.Forms.Label();
@@ -57,55 +56,38 @@
             this.label7 = new System.Windows.Forms.Label();
             this.SpeedMultiplier_TextBox = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.Panel2 = new System.Windows.Forms.Panel();
-            this.ApplyStatus_CheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.ApplyStatus_Label = new System.Windows.Forms.Label();
-            this.BloonAbility_CheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.StatusImmunity_CheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.DamageImmunity_CheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.SwitchPanel = new System.Windows.Forms.Button();
             this.AdvancedView_Checkbox = new System.Windows.Forms.CheckBox();
-            this.ChildBloons_Button = new System.Windows.Forms.Button();
-            this.Panel3 = new System.Windows.Forms.Panel();
-            this.RemoveChild_Button = new System.Windows.Forms.Button();
-            this.AddChild_Button = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.AvailibleChildBloons_LB = new System.Windows.Forms.ListBox();
-            this.CurrentChildBloon_ListBox = new System.Windows.Forms.ListBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.OpenText_Button = new System.Windows.Forms.Button();
-            this.Game_Label = new System.Windows.Forms.Label();
-            this.Panel1.SuspendLayout();
-            this.Panel2.SuspendLayout();
-            this.Panel3.SuspendLayout();
+            this.TotalStartingCards_Label = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TowerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // BloonName_TextBox
+            // CardName_TB
             // 
-            this.BloonName_TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.BloonName_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.BloonName_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BloonName_TextBox.ForeColor = System.Drawing.Color.White;
-            this.BloonName_TextBox.Location = new System.Drawing.Point(78, 73);
-            this.BloonName_TextBox.Name = "BloonName_TextBox";
-            this.BloonName_TextBox.ReadOnly = true;
-            this.BloonName_TextBox.Size = new System.Drawing.Size(250, 24);
-            this.BloonName_TextBox.TabIndex = 1;
-            this.BloonName_TextBox.Text = "";
+            this.CardName_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.CardName_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CardName_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardName_TB.ForeColor = System.Drawing.Color.White;
+            this.CardName_TB.Location = new System.Drawing.Point(78, 73);
+            this.CardName_TB.Name = "CardName_TB";
+            this.CardName_TB.ReadOnly = true;
+            this.CardName_TB.Size = new System.Drawing.Size(250, 24);
+            this.CardName_TB.TabIndex = 1;
+            this.CardName_TB.Text = "";
             // 
-            // BloonType_Label
+            // Card_Label
             // 
-            this.BloonType_Label.AutoSize = true;
-            this.BloonType_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.BloonType_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BloonType_Label.ForeColor = System.Drawing.Color.White;
-            this.BloonType_Label.Location = new System.Drawing.Point(14, 18);
-            this.BloonType_Label.Name = "BloonType_Label";
-            this.BloonType_Label.Size = new System.Drawing.Size(159, 35);
-            this.BloonType_Label.TabIndex = 3;
-            this.BloonType_Label.Text = "Bloon Type";
+            this.Card_Label.AutoSize = true;
+            this.Card_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Card_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Card_Label.ForeColor = System.Drawing.Color.White;
+            this.Card_Label.Location = new System.Drawing.Point(14, 18);
+            this.Card_Label.Name = "Card_Label";
+            this.Card_Label.Size = new System.Drawing.Size(184, 35);
+            this.Card_Label.TabIndex = 3;
+            this.Card_Label.Text = "Card number";
             // 
             // label2
             // 
@@ -114,21 +96,9 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(78, 50);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(174, 20);
+            this.label2.Size = new System.Drawing.Size(91, 20);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Bloon type  (cant edit):";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(326, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(145, 20);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Damage immunity:";
+            this.label2.Text = "Card name:";
             // 
             // label4
             // 
@@ -137,21 +107,21 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(78, 100);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(101, 20);
+            this.label4.Size = new System.Drawing.Size(73, 20);
             this.label4.TabIndex = 8;
-            this.label4.Text = "Initial health:";
+            this.label4.Text = "Card set:";
             // 
-            // InitialHealth_TextBox
+            // CardSet_TB
             // 
-            this.InitialHealth_TextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.InitialHealth_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.InitialHealth_TextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InitialHealth_TextBox.ForeColor = System.Drawing.Color.White;
-            this.InitialHealth_TextBox.Location = new System.Drawing.Point(78, 123);
-            this.InitialHealth_TextBox.Name = "InitialHealth_TextBox";
-            this.InitialHealth_TextBox.Size = new System.Drawing.Size(250, 24);
-            this.InitialHealth_TextBox.TabIndex = 7;
-            this.InitialHealth_TextBox.Text = "";
+            this.CardSet_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.CardSet_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CardSet_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardSet_TB.ForeColor = System.Drawing.Color.White;
+            this.CardSet_TB.Location = new System.Drawing.Point(78, 123);
+            this.CardSet_TB.Name = "CardSet_TB";
+            this.CardSet_TB.Size = new System.Drawing.Size(250, 24);
+            this.CardSet_TB.TabIndex = 7;
+            this.CardSet_TB.Text = "";
             // 
             // label5
             // 
@@ -160,9 +130,9 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(78, 149);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 20);
+            this.label5.Size = new System.Drawing.Size(93, 20);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Base speed:";
+            this.label5.Text = "Card sprite:";
             // 
             // BaseSpeed_TextBox
             // 
@@ -183,22 +153,10 @@
             this.CanGoUnderground_CheckBox.ForeColor = System.Drawing.Color.White;
             this.CanGoUnderground_CheckBox.Location = new System.Drawing.Point(414, 279);
             this.CanGoUnderground_CheckBox.Name = "CanGoUnderground_CheckBox";
-            this.CanGoUnderground_CheckBox.Size = new System.Drawing.Size(180, 24);
+            this.CanGoUnderground_CheckBox.Size = new System.Drawing.Size(122, 24);
             this.CanGoUnderground_CheckBox.TabIndex = 12;
-            this.CanGoUnderground_CheckBox.Text = "Can go underground";
+            this.CanGoUnderground_CheckBox.Text = "Starting card";
             this.CanGoUnderground_CheckBox.UseVisualStyleBackColor = true;
-            // 
-            // RotateToPathDirection_Checkbox
-            // 
-            this.RotateToPathDirection_Checkbox.AutoSize = true;
-            this.RotateToPathDirection_Checkbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.RotateToPathDirection_Checkbox.ForeColor = System.Drawing.Color.White;
-            this.RotateToPathDirection_Checkbox.Location = new System.Drawing.Point(414, 299);
-            this.RotateToPathDirection_Checkbox.Name = "RotateToPathDirection_Checkbox";
-            this.RotateToPathDirection_Checkbox.Size = new System.Drawing.Size(204, 24);
-            this.RotateToPathDirection_Checkbox.TabIndex = 13;
-            this.RotateToPathDirection_Checkbox.Text = "Rotate to path direction";
-            this.RotateToPathDirection_Checkbox.UseVisualStyleBackColor = true;
             // 
             // label16
             // 
@@ -209,7 +167,7 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(83, 20);
             this.label16.TabIndex = 40;
-            this.label16.Text = "Sprite file:";
+            this.label16.Text = "Old name:";
             // 
             // SpriteFile_TextBox
             // 
@@ -237,53 +195,64 @@
             this.Save_Button.UseVisualStyleBackColor = false;
             this.Save_Button.Click += new System.EventHandler(this.Save_Button_Click);
             // 
-            // BloonFiles_ComboBox
+            // CardFiles_ComboBox
             // 
-            this.BloonFiles_ComboBox.DropDownHeight = 500;
-            this.BloonFiles_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.BloonFiles_ComboBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BloonFiles_ComboBox.FormattingEnabled = true;
-            this.BloonFiles_ComboBox.IntegralHeight = false;
-            this.BloonFiles_ComboBox.ItemHeight = 19;
-            this.BloonFiles_ComboBox.Location = new System.Drawing.Point(24, 56);
-            this.BloonFiles_ComboBox.Name = "BloonFiles_ComboBox";
-            this.BloonFiles_ComboBox.Size = new System.Drawing.Size(398, 27);
-            this.BloonFiles_ComboBox.TabIndex = 48;
-            this.BloonFiles_ComboBox.SelectedValueChanged += new System.EventHandler(this.BloonFiles_ComboBox_SelectedValueChanged);
+            this.CardFiles_ComboBox.DropDownHeight = 500;
+            this.CardFiles_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CardFiles_ComboBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardFiles_ComboBox.FormattingEnabled = true;
+            this.CardFiles_ComboBox.IntegralHeight = false;
+            this.CardFiles_ComboBox.ItemHeight = 19;
+            this.CardFiles_ComboBox.Location = new System.Drawing.Point(24, 56);
+            this.CardFiles_ComboBox.Name = "CardFiles_ComboBox";
+            this.CardFiles_ComboBox.Size = new System.Drawing.Size(398, 27);
+            this.CardFiles_ComboBox.TabIndex = 48;
+            this.CardFiles_ComboBox.SelectedValueChanged += new System.EventHandler(this.CardFiles_ComboBox_SelectedValueChanged);
             // 
-            // Panel1
+            // TowerPanel
             // 
-            this.Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TowerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panel1.Controls.Add(this.Game_Label);
-            this.Panel1.Controls.Add(this.DrawLayer_LB);
-            this.Panel1.Controls.Add(this.HitAddon_TextBox);
-            this.Panel1.Controls.Add(this.HitAddon_Label);
-            this.Panel1.Controls.Add(this.DrawLayer_Label);
-            this.Panel1.Controls.Add(this.ChildEffectScale_TextBox);
-            this.Panel1.Controls.Add(this.label21);
-            this.Panel1.Controls.Add(this.Radius_TextBox);
-            this.Panel1.Controls.Add(this.label6);
-            this.Panel1.Controls.Add(this.SpriteFile_TextBox);
-            this.Panel1.Controls.Add(this.label16);
-            this.Panel1.Controls.Add(this.Scale_TextBox);
-            this.Panel1.Controls.Add(this.label20);
-            this.Panel1.Controls.Add(this.RBE_TextBox);
-            this.Panel1.Controls.Add(this.label7);
-            this.Panel1.Controls.Add(this.SpeedMultiplier_TextBox);
-            this.Panel1.Controls.Add(this.label1);
-            this.Panel1.Controls.Add(this.label2);
-            this.Panel1.Controls.Add(this.BloonName_TextBox);
-            this.Panel1.Controls.Add(this.InitialHealth_TextBox);
-            this.Panel1.Controls.Add(this.label4);
-            this.Panel1.Controls.Add(this.BaseSpeed_TextBox);
-            this.Panel1.Controls.Add(this.label5);
-            this.Panel1.Controls.Add(this.CanGoUnderground_CheckBox);
-            this.Panel1.Controls.Add(this.RotateToPathDirection_Checkbox);
-            this.Panel1.Location = new System.Drawing.Point(2, 50);
-            this.Panel1.Name = "Panel1";
-            this.Panel1.Size = new System.Drawing.Size(1071, 425);
-            this.Panel1.TabIndex = 49;
+            this.TowerPanel.Controls.Add(this.Game_Label);
+            this.TowerPanel.Controls.Add(this.DrawLayer_LB);
+            this.TowerPanel.Controls.Add(this.HitAddon_TextBox);
+            this.TowerPanel.Controls.Add(this.HitAddon_Label);
+            this.TowerPanel.Controls.Add(this.DrawLayer_Label);
+            this.TowerPanel.Controls.Add(this.ChildEffectScale_TextBox);
+            this.TowerPanel.Controls.Add(this.label21);
+            this.TowerPanel.Controls.Add(this.Radius_TextBox);
+            this.TowerPanel.Controls.Add(this.label6);
+            this.TowerPanel.Controls.Add(this.SpriteFile_TextBox);
+            this.TowerPanel.Controls.Add(this.label16);
+            this.TowerPanel.Controls.Add(this.Scale_TextBox);
+            this.TowerPanel.Controls.Add(this.label20);
+            this.TowerPanel.Controls.Add(this.RBE_TextBox);
+            this.TowerPanel.Controls.Add(this.label7);
+            this.TowerPanel.Controls.Add(this.SpeedMultiplier_TextBox);
+            this.TowerPanel.Controls.Add(this.label1);
+            this.TowerPanel.Controls.Add(this.label2);
+            this.TowerPanel.Controls.Add(this.CardName_TB);
+            this.TowerPanel.Controls.Add(this.CardSet_TB);
+            this.TowerPanel.Controls.Add(this.label4);
+            this.TowerPanel.Controls.Add(this.BaseSpeed_TextBox);
+            this.TowerPanel.Controls.Add(this.label5);
+            this.TowerPanel.Controls.Add(this.CanGoUnderground_CheckBox);
+            this.TowerPanel.Location = new System.Drawing.Point(2, 50);
+            this.TowerPanel.Name = "TowerPanel";
+            this.TowerPanel.Size = new System.Drawing.Size(1071, 425);
+            this.TowerPanel.TabIndex = 49;
+            // 
+            // Game_Label
+            // 
+            this.Game_Label.AutoSize = true;
+            this.Game_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Game_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Game_Label.ForeColor = System.Drawing.Color.White;
+            this.Game_Label.Location = new System.Drawing.Point(945, 0);
+            this.Game_Label.Name = "Game_Label";
+            this.Game_Label.Size = new System.Drawing.Size(90, 35);
+            this.Game_Label.TabIndex = 66;
+            this.Game_Label.Text = "Game";
             // 
             // DrawLayer_LB
             // 
@@ -446,153 +415,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(78, 201);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 20);
+            this.label1.Size = new System.Drawing.Size(102, 20);
             this.label1.TabIndex = 49;
-            this.label1.Text = "Speed multiplier:";
-            // 
-            // Panel2
-            // 
-            this.Panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panel2.Controls.Add(this.ApplyStatus_CheckedListBox);
-            this.Panel2.Controls.Add(this.ApplyStatus_Label);
-            this.Panel2.Controls.Add(this.BloonAbility_CheckedListBox);
-            this.Panel2.Controls.Add(this.label9);
-            this.Panel2.Controls.Add(this.StatusImmunity_CheckedListBox);
-            this.Panel2.Controls.Add(this.label8);
-            this.Panel2.Controls.Add(this.DamageImmunity_CheckedListBox);
-            this.Panel2.Controls.Add(this.label3);
-            this.Panel2.Location = new System.Drawing.Point(5, 89);
-            this.Panel2.Name = "Panel2";
-            this.Panel2.Size = new System.Drawing.Size(1071, 389);
-            this.Panel2.TabIndex = 50;
-            this.Panel2.Visible = false;
-            // 
-            // ApplyStatus_CheckedListBox
-            // 
-            this.ApplyStatus_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.ApplyStatus_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ApplyStatus_CheckedListBox.CheckOnClick = true;
-            this.ApplyStatus_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.ApplyStatus_CheckedListBox.ForeColor = System.Drawing.Color.White;
-            this.ApplyStatus_CheckedListBox.FormattingEnabled = true;
-            this.ApplyStatus_CheckedListBox.Items.AddRange(new object[] {
-            "Camo",
-            "Regen"});
-            this.ApplyStatus_CheckedListBox.Location = new System.Drawing.Point(813, 31);
-            this.ApplyStatus_CheckedListBox.Name = "ApplyStatus_CheckedListBox";
-            this.ApplyStatus_CheckedListBox.Size = new System.Drawing.Size(204, 352);
-            this.ApplyStatus_CheckedListBox.TabIndex = 69;
-            // 
-            // ApplyStatus_Label
-            // 
-            this.ApplyStatus_Label.AutoSize = true;
-            this.ApplyStatus_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ApplyStatus_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ApplyStatus_Label.ForeColor = System.Drawing.Color.White;
-            this.ApplyStatus_Label.Location = new System.Drawing.Point(856, 8);
-            this.ApplyStatus_Label.Name = "ApplyStatus_Label";
-            this.ApplyStatus_Label.Size = new System.Drawing.Size(103, 20);
-            this.ApplyStatus_Label.TabIndex = 68;
-            this.ApplyStatus_Label.Text = "Apply status:";
-            // 
-            // BloonAbility_CheckedListBox
-            // 
-            this.BloonAbility_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.BloonAbility_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.BloonAbility_CheckedListBox.CheckOnClick = true;
-            this.BloonAbility_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.BloonAbility_CheckedListBox.ForeColor = System.Drawing.Color.White;
-            this.BloonAbility_CheckedListBox.FormattingEnabled = true;
-            this.BloonAbility_CheckedListBox.Items.AddRange(new object[] {
-            "StunTowersAbility",
-            "BloonariusAbility",
-            "ShieldAbility",
-            "SlowTowersAbility"});
-            this.BloonAbility_CheckedListBox.Location = new System.Drawing.Point(539, 31);
-            this.BloonAbility_CheckedListBox.Name = "BloonAbility_CheckedListBox";
-            this.BloonAbility_CheckedListBox.Size = new System.Drawing.Size(243, 352);
-            this.BloonAbility_CheckedListBox.TabIndex = 67;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label9.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(607, 8);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(99, 20);
-            this.label9.TabIndex = 66;
-            this.label9.Text = "Bloon ability";
-            // 
-            // StatusImmunity_CheckedListBox
-            // 
-            this.StatusImmunity_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.StatusImmunity_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.StatusImmunity_CheckedListBox.CheckOnClick = true;
-            this.StatusImmunity_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.StatusImmunity_CheckedListBox.ForeColor = System.Drawing.Color.White;
-            this.StatusImmunity_CheckedListBox.FormattingEnabled = true;
-            this.StatusImmunity_CheckedListBox.Items.AddRange(new object[] {
-            "Ice",
-            "Glue",
-            "Slow",
-            "Stun",
-            "Camo",
-            "Regen",
-            "Napalm",
-            "BeeSting",
-            "IceShards",
-            "VacStatus",
-            "ViralFrost",
-            "Permafrost",
-            "MoveToPath",
-            "AbsoluteZero",
-            "CrippleMOAB",
-            "DazeEffect",
-            "MoveOnCurve",
-            "BloonChipperSuck"});
-            this.StatusImmunity_CheckedListBox.Location = new System.Drawing.Point(35, 31);
-            this.StatusImmunity_CheckedListBox.Name = "StatusImmunity_CheckedListBox";
-            this.StatusImmunity_CheckedListBox.Size = new System.Drawing.Size(215, 352);
-            this.StatusImmunity_CheckedListBox.TabIndex = 65;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label8.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(71, 8);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(126, 20);
-            this.label8.TabIndex = 64;
-            this.label8.Text = "Status immunity";
-            // 
-            // DamageImmunity_CheckedListBox
-            // 
-            this.DamageImmunity_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.DamageImmunity_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DamageImmunity_CheckedListBox.CheckOnClick = true;
-            this.DamageImmunity_CheckedListBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.DamageImmunity_CheckedListBox.ForeColor = System.Drawing.Color.White;
-            this.DamageImmunity_CheckedListBox.FormattingEnabled = true;
-            this.DamageImmunity_CheckedListBox.Items.AddRange(new object[] {
-            "Ice",
-            "Fire",
-            "Plasma",
-            "Piercing",
-            "Explosive",
-            "Foam",
-            "Juggernaut",
-            "ShredBloon",
-            "MOABMauler",
-            "DamageOverTime"});
-            this.DamageImmunity_CheckedListBox.Location = new System.Drawing.Point(285, 31);
-            this.DamageImmunity_CheckedListBox.Name = "DamageImmunity_CheckedListBox";
-            this.DamageImmunity_CheckedListBox.Size = new System.Drawing.Size(227, 352);
-            this.DamageImmunity_CheckedListBox.TabIndex = 63;
+            this.label1.Text = "Discard cost:";
             // 
             // SwitchPanel
             // 
@@ -619,122 +444,6 @@
             this.AdvancedView_Checkbox.TabIndex = 60;
             this.AdvancedView_Checkbox.Text = "Advanced users";
             this.AdvancedView_Checkbox.UseVisualStyleBackColor = true;
-            this.AdvancedView_Checkbox.CheckedChanged += new System.EventHandler(this.AdvancedView_Checkbox_CheckedChanged);
-            // 
-            // ChildBloons_Button
-            // 
-            this.ChildBloons_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.ChildBloons_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ChildBloons_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.ChildBloons_Button.ForeColor = System.Drawing.Color.White;
-            this.ChildBloons_Button.Location = new System.Drawing.Point(12, 484);
-            this.ChildBloons_Button.Name = "ChildBloons_Button";
-            this.ChildBloons_Button.Size = new System.Drawing.Size(164, 58);
-            this.ChildBloons_Button.TabIndex = 61;
-            this.ChildBloons_Button.Text = "Child bloons";
-            this.ChildBloons_Button.UseVisualStyleBackColor = false;
-            this.ChildBloons_Button.Click += new System.EventHandler(this.ChildBloons_Button_Click);
-            // 
-            // Panel3
-            // 
-            this.Panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panel3.Controls.Add(this.RemoveChild_Button);
-            this.Panel3.Controls.Add(this.AddChild_Button);
-            this.Panel3.Controls.Add(this.label12);
-            this.Panel3.Controls.Add(this.AvailibleChildBloons_LB);
-            this.Panel3.Controls.Add(this.CurrentChildBloon_ListBox);
-            this.Panel3.Controls.Add(this.label11);
-            this.Panel3.Location = new System.Drawing.Point(2, 47);
-            this.Panel3.Name = "Panel3";
-            this.Panel3.Size = new System.Drawing.Size(1071, 425);
-            this.Panel3.TabIndex = 64;
-            this.Panel3.Visible = false;
-            // 
-            // RemoveChild_Button
-            // 
-            this.RemoveChild_Button.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RemoveChild_Button.Location = new System.Drawing.Point(568, 152);
-            this.RemoveChild_Button.Name = "RemoveChild_Button";
-            this.RemoveChild_Button.Size = new System.Drawing.Size(75, 30);
-            this.RemoveChild_Button.TabIndex = 10;
-            this.RemoveChild_Button.Text = ">>";
-            this.RemoveChild_Button.UseVisualStyleBackColor = true;
-            this.RemoveChild_Button.Click += new System.EventHandler(this.RemoveChild_Button_Click);
-            // 
-            // AddChild_Button
-            // 
-            this.AddChild_Button.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddChild_Button.Location = new System.Drawing.Point(421, 152);
-            this.AddChild_Button.Name = "AddChild_Button";
-            this.AddChild_Button.Size = new System.Drawing.Size(75, 30);
-            this.AddChild_Button.TabIndex = 9;
-            this.AddChild_Button.Text = "<<";
-            this.AddChild_Button.UseVisualStyleBackColor = true;
-            this.AddChild_Button.Click += new System.EventHandler(this.AddChild_Button_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(749, 50);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(154, 20);
-            this.label12.TabIndex = 8;
-            this.label12.Text = "Bloons you can add:";
-            // 
-            // AvailibleChildBloons_LB
-            // 
-            this.AvailibleChildBloons_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.AvailibleChildBloons_LB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.AvailibleChildBloons_LB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AvailibleChildBloons_LB.ForeColor = System.Drawing.Color.White;
-            this.AvailibleChildBloons_LB.FormattingEnabled = true;
-            this.AvailibleChildBloons_LB.ItemHeight = 20;
-            this.AvailibleChildBloons_LB.Items.AddRange(new object[] {
-            "Red",
-            "Blue",
-            "Green",
-            "Yellow",
-            "Pink",
-            "Black",
-            "White",
-            "Lead",
-            "Zebra",
-            "Rainbow",
-            "Ceramic",
-            "MOAB",
-            "BFB",
-            "ZOMG"});
-            this.AvailibleChildBloons_LB.Location = new System.Drawing.Point(695, 76);
-            this.AvailibleChildBloons_LB.Name = "AvailibleChildBloons_LB";
-            this.AvailibleChildBloons_LB.Size = new System.Drawing.Size(278, 320);
-            this.AvailibleChildBloons_LB.TabIndex = 7;
-            // 
-            // CurrentChildBloon_ListBox
-            // 
-            this.CurrentChildBloon_ListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(65)))), ((int)(((byte)(65)))));
-            this.CurrentChildBloon_ListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CurrentChildBloon_ListBox.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CurrentChildBloon_ListBox.ForeColor = System.Drawing.Color.White;
-            this.CurrentChildBloon_ListBox.FormattingEnabled = true;
-            this.CurrentChildBloon_ListBox.ItemHeight = 20;
-            this.CurrentChildBloon_ListBox.Location = new System.Drawing.Point(86, 76);
-            this.CurrentChildBloon_ListBox.Name = "CurrentChildBloon_ListBox";
-            this.CurrentChildBloon_ListBox.Size = new System.Drawing.Size(278, 320);
-            this.CurrentChildBloon_ListBox.TabIndex = 6;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(169, 53);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(104, 20);
-            this.label11.TabIndex = 5;
-            this.label11.Text = "Child bloons:";
             // 
             // OpenText_Button
             // 
@@ -750,70 +459,72 @@
             this.OpenText_Button.UseVisualStyleBackColor = false;
             this.OpenText_Button.Click += new System.EventHandler(this.OpenText_Button_Click);
             // 
-            // Game_Label
+            // TotalStartingCards_Label
             // 
-            this.Game_Label.AutoSize = true;
-            this.Game_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.Game_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Game_Label.ForeColor = System.Drawing.Color.White;
-            this.Game_Label.Location = new System.Drawing.Point(945, 0);
-            this.Game_Label.Name = "Game_Label";
-            this.Game_Label.Size = new System.Drawing.Size(90, 35);
-            this.Game_Label.TabIndex = 66;
-            this.Game_Label.Text = "Game";
+            this.TotalStartingCards_Label.AutoSize = true;
+            this.TotalStartingCards_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TotalStartingCards_Label.ForeColor = System.Drawing.Color.White;
+            this.TotalStartingCards_Label.Location = new System.Drawing.Point(20, 503);
+            this.TotalStartingCards_Label.Name = "TotalStartingCards_Label";
+            this.TotalStartingCards_Label.Size = new System.Drawing.Size(157, 20);
+            this.TotalStartingCards_Label.TabIndex = 67;
+            this.TotalStartingCards_Label.Text = "Total starting cards :";
             // 
-            // EZBloon_Editor
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(20, 522);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(137, 20);
+            this.label3.TabIndex = 68;
+            this.label3.Text = "(Need at least 15)";
+            // 
+            // EZCard_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.TotalStartingCards_Label);
             this.Controls.Add(this.OpenText_Button);
-            this.Controls.Add(this.ChildBloons_Button);
             this.Controls.Add(this.AdvancedView_Checkbox);
             this.Controls.Add(this.SwitchPanel);
-            this.Controls.Add(this.BloonFiles_ComboBox);
+            this.Controls.Add(this.CardFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
-            this.Controls.Add(this.BloonType_Label);
-            this.Controls.Add(this.Panel2);
-            this.Controls.Add(this.Panel3);
-            this.Controls.Add(this.Panel1);
+            this.Controls.Add(this.Card_Label);
+            this.Controls.Add(this.TowerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
-            this.Name = "EZBloon_Editor";
-            this.Text = "EZ Bloon Editor";
+            this.Name = "EZCard_Editor";
+            this.Text = "EZ Card Editor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EZBloon_Editor_FormClosed);
             this.Shown += new System.EventHandler(this.EasyTowerEditor_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EZBloon_Editor_KeyDown);
-            this.Panel1.ResumeLayout(false);
-            this.Panel1.PerformLayout();
-            this.Panel2.ResumeLayout(false);
-            this.Panel2.PerformLayout();
-            this.Panel3.ResumeLayout(false);
-            this.Panel3.PerformLayout();
+            this.TowerPanel.ResumeLayout(false);
+            this.TowerPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox BloonName_TextBox;
-        private System.Windows.Forms.Label BloonType_Label;
+        private System.Windows.Forms.RichTextBox CardName_TB;
+        private System.Windows.Forms.Label Card_Label;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RichTextBox InitialHealth_TextBox;
+        private System.Windows.Forms.RichTextBox CardSet_TB;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox BaseSpeed_TextBox;
         private System.Windows.Forms.CheckBox CanGoUnderground_CheckBox;
-        private System.Windows.Forms.CheckBox RotateToPathDirection_Checkbox;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.RichTextBox SpriteFile_TextBox;
         private System.Windows.Forms.Button Save_Button;
-        private System.Windows.Forms.ComboBox BloonFiles_ComboBox;
-        private System.Windows.Forms.Panel Panel1;
-        private System.Windows.Forms.Panel Panel2;
+        private System.Windows.Forms.ComboBox CardFiles_ComboBox;
+        private System.Windows.Forms.Panel TowerPanel;
         private System.Windows.Forms.RichTextBox SpeedMultiplier_TextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox Radius_TextBox;
@@ -829,23 +540,10 @@
         private System.Windows.Forms.CheckBox AdvancedView_Checkbox;
         private System.Windows.Forms.RichTextBox HitAddon_TextBox;
         private System.Windows.Forms.Label HitAddon_Label;
-        private System.Windows.Forms.CheckedListBox DamageImmunity_CheckedListBox;
-        private System.Windows.Forms.CheckedListBox StatusImmunity_CheckedListBox;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckedListBox ApplyStatus_CheckedListBox;
-        private System.Windows.Forms.Label ApplyStatus_Label;
-        private System.Windows.Forms.CheckedListBox BloonAbility_CheckedListBox;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button ChildBloons_Button;
-        private System.Windows.Forms.Panel Panel3;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ListBox AvailibleChildBloons_LB;
-        private System.Windows.Forms.ListBox CurrentChildBloon_ListBox;
-        private System.Windows.Forms.Button RemoveChild_Button;
-        private System.Windows.Forms.Button AddChild_Button;
         private System.Windows.Forms.ListBox DrawLayer_LB;
         private System.Windows.Forms.Button OpenText_Button;
         private System.Windows.Forms.Label Game_Label;
+        private System.Windows.Forms.Label TotalStartingCards_Label;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -73,6 +73,9 @@ namespace BTDToolbox
 
             if (EasyTowerEditor.EZTower_Opened == true)
                 ConsoleHandler.force_appendNotice("The EZ Tower tool is currently opened for a different project. Please close it to avoid errors...");
+
+            if (EZCard_Editor.EZCard_Opened == true)
+                ConsoleHandler.force_appendNotice("The EZ Card tool is currently opened for a different project. Please close it to avoid errors...");
         }
         private void Deserialize_Config()
         {

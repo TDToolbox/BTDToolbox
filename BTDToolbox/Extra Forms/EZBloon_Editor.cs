@@ -298,9 +298,11 @@ namespace BTDToolbox.Extra_Forms
 
             newBloon.StatusImmunity = CreateStringArray_FromCheckedLB(StatusImmunity_CheckedListBox);
             newBloon.DamageImmunity = CreateStringArray_FromCheckedLB(DamageImmunity_CheckedListBox);
-            newBloon.ApplyStatus = CreateStringArray_FromCheckedLB(ApplyStatus_CheckedListBox);
             if(game == "BTD5")
+            {
                 newBloon.BloonAbility = CreateStringArray_FromCheckedLB(BloonAbility_CheckedListBox);
+                newBloon.ApplyStatus = CreateStringArray_FromCheckedLB(ApplyStatus_CheckedListBox);
+            }
 
             if (!error)
             {
@@ -379,12 +381,12 @@ namespace BTDToolbox.Extra_Forms
             //reset checkboxes
             resetCheckedListBox(StatusImmunity_CheckedListBox);
             resetCheckedListBox(DamageImmunity_CheckedListBox);
-            resetCheckedListBox(ApplyStatus_CheckedListBox);
 
             //BTD5 stuff
             if (game == "BTD5")
             {
                 resetCheckedListBox(BloonAbility_CheckedListBox);
+                resetCheckedListBox(ApplyStatus_CheckedListBox);
             }
         }
         private CheckedListBox resetCheckedListBox(CheckedListBox checkedListBox)

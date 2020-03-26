@@ -43,6 +43,7 @@
             this.Save_Button = new System.Windows.Forms.Button();
             this.BloonFiles_ComboBox = new System.Windows.Forms.ComboBox();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.Game_Label = new System.Windows.Forms.Label();
             this.DrawLayer_LB = new System.Windows.Forms.ListBox();
             this.HitAddon_TextBox = new System.Windows.Forms.RichTextBox();
             this.HitAddon_Label = new System.Windows.Forms.Label();
@@ -76,7 +77,6 @@
             this.CurrentChildBloon_ListBox = new System.Windows.Forms.ListBox();
             this.label11 = new System.Windows.Forms.Label();
             this.OpenText_Button = new System.Windows.Forms.Button();
-            this.Game_Label = new System.Windows.Forms.Label();
             this.Panel1.SuspendLayout();
             this.Panel2.SuspendLayout();
             this.Panel3.SuspendLayout();
@@ -284,6 +284,18 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1071, 425);
             this.Panel1.TabIndex = 49;
+            // 
+            // Game_Label
+            // 
+            this.Game_Label.AutoSize = true;
+            this.Game_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Game_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Game_Label.ForeColor = System.Drawing.Color.White;
+            this.Game_Label.Location = new System.Drawing.Point(945, 0);
+            this.Game_Label.Name = "Game_Label";
+            this.Game_Label.Size = new System.Drawing.Size(90, 35);
+            this.Game_Label.TabIndex = 66;
+            this.Game_Label.Text = "Game";
             // 
             // DrawLayer_LB
             // 
@@ -750,18 +762,6 @@
             this.OpenText_Button.UseVisualStyleBackColor = false;
             this.OpenText_Button.Click += new System.EventHandler(this.OpenText_Button_Click);
             // 
-            // Game_Label
-            // 
-            this.Game_Label.AutoSize = true;
-            this.Game_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.Game_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Game_Label.ForeColor = System.Drawing.Color.White;
-            this.Game_Label.Location = new System.Drawing.Point(945, 0);
-            this.Game_Label.Name = "Game_Label";
-            this.Game_Label.Size = new System.Drawing.Size(90, 35);
-            this.Game_Label.TabIndex = 66;
-            this.Game_Label.Text = "Game";
-            // 
             // EZBloon_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -775,9 +775,9 @@
             this.Controls.Add(this.BloonFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.BloonType_Label);
+            this.Controls.Add(this.Panel1);
             this.Controls.Add(this.Panel2);
             this.Controls.Add(this.Panel3);
-            this.Controls.Add(this.Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;

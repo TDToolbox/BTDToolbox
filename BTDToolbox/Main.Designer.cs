@@ -75,6 +75,7 @@
             this.EZ_Tools = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_TowerEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_BloonEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZCard_Editor = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restorejetToBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Backup_BTD5 = new System.Windows.Forms.ToolStripMenuItem();
@@ -463,7 +464,8 @@
             // 
             this.EZ_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.EZ_TowerEditor,
-            this.EZ_BloonEditor});
+            this.EZ_BloonEditor,
+            this.EZCard_Editor});
             this.EZ_Tools.ForeColor = System.Drawing.Color.White;
             this.EZ_Tools.Name = "EZ_Tools";
             this.EZ_Tools.Size = new System.Drawing.Size(62, 20);
@@ -472,16 +474,23 @@
             // EZ_TowerEditor
             // 
             this.EZ_TowerEditor.Name = "EZ_TowerEditor";
-            this.EZ_TowerEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_TowerEditor.Size = new System.Drawing.Size(180, 22);
             this.EZ_TowerEditor.Text = "EZ Tower editor";
             this.EZ_TowerEditor.Click += new System.EventHandler(this.EZ_TowerEditor_Click);
             // 
             // EZ_BloonEditor
             // 
             this.EZ_BloonEditor.Name = "EZ_BloonEditor";
-            this.EZ_BloonEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_BloonEditor.Size = new System.Drawing.Size(180, 22);
             this.EZ_BloonEditor.Text = "EZ Bloon editor";
             this.EZ_BloonEditor.Click += new System.EventHandler(this.EZ_BloonEditor_Click);
+            // 
+            // EZCard_Editor
+            // 
+            this.EZCard_Editor.Name = "EZCard_Editor";
+            this.EZCard_Editor.Size = new System.Drawing.Size(180, 22);
+            this.EZCard_Editor.Text = "EZ Card editor";
+            this.EZCard_Editor.Click += new System.EventHandler(this.EZCard_Editor_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -867,6 +876,7 @@
         private System.Windows.Forms.ToolStripMenuItem EZ_Tools;
         private System.Windows.Forms.ToolStripMenuItem EZ_TowerEditor;
         private System.Windows.Forms.ToolStripMenuItem EZ_BloonEditor;
+        private System.Windows.Forms.ToolStripMenuItem EZCard_Editor;
     }
 }
 
