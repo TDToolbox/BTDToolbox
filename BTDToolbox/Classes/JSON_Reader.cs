@@ -97,7 +97,7 @@ namespace BTDToolbox.Classes
 
             return null;
         }
-        public static bool IsValidJson(string json)
+        public static bool IsValidJson(string json)     //This method is being used to check json
         {
             try
             {

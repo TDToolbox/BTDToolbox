@@ -15,6 +15,7 @@ using static BTDToolbox.ProjectConfig;
 using static System.Windows.Forms.ToolStripItem;
 using static BTDToolbox.GeneralMethods;
 using BTDToolbox.Classes;
+using BTDToolbox.Extra_Forms;
 
 namespace BTDToolbox
 {
@@ -25,6 +26,7 @@ namespace BTDToolbox
         private Main Form;
         private string tempName;
         public string projName;
+        private ContextMenuStrip treeMenu;
         private ContextMenuStrip selMenu;
         private ContextMenuStrip empMenu;
         private ContextMenuStrip multiSelMenu;
@@ -50,8 +52,10 @@ namespace BTDToolbox
             initMultiContextMenu();
             initSelContextMenu();
             initEmpContextMenu();
-            
-            if(projName.Contains("BTD5"))
+            initTreeMenu();
+
+
+            if (projName.Contains("BTD5"))
             {
                 Main.gameName = "BTD5";
             }
@@ -89,6 +93,7 @@ namespace BTDToolbox
             this.DoubleBuffered = true;
             listView1.DoubleClick += ListView1_DoubleClicked;
             listView1.MouseUp += ListView1_RightClicked;
+            treeView1.MouseUp += TreeView_RightClicked;
             this.treeView1.AfterSelect += treeView1_AfterSelect;
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
@@ -100,8 +105,10 @@ namespace BTDToolbox
             selMenu.Items.Add("Delete");
             selMenu.Items.Add("Copy");
             selMenu.Items.Add("Restore original");
+            
             selMenu.ItemClicked += jsonContextClicked;
         }
+
         private void initMultiContextMenu()
         {
             multiSelMenu = new ContextMenuStrip();
@@ -115,6 +122,12 @@ namespace BTDToolbox
             empMenu.Items.Add("Add");
             empMenu.Items.Add("Paste");
             empMenu.ItemClicked += listContextClicked;
+        }
+        private void initTreeMenu()
+        {
+            treeMenu = new ContextMenuStrip();
+            treeMenu.Items.Add("Open in File Explorer");
+            treeMenu.ItemClicked += treeContextClicked;
         }
 
         private void JetForm_Load(object sender, EventArgs e)
@@ -171,7 +184,6 @@ namespace BTDToolbox
                 nodeToAddTo.Nodes.Add(aNode);
             }
         }
-
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode newSelected = e.Node;
@@ -213,7 +225,6 @@ namespace BTDToolbox
                 this.Close();
             }
         }
-
         private void goUpButton_Click(object sender, EventArgs e)
         {
             TreeNode current = treeView1.SelectedNode;
@@ -289,10 +300,79 @@ namespace BTDToolbox
                     if (Selected.Count == 1)
                     {
                         selMenu.Show(listView1, e.Location);
+
+                        string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
+                        if (filename.Contains(".bloon"))
+                        {
+                            int i = 0;
+                            bool ezBloonExists = false;
+                            foreach(var item in selMenu.Items)
+                            {
+                                if (item.ToString() == "Open with EZ Bloon Tool")
+                                {
+                                    ezBloonExists = true;
+                                    if (selMenu.Items[i].Visible == false)
+                                    {
+                                        selMenu.Items[i].Visible = true;
+                                    }
+                                }
+                                i++;
+                            }
+                            if(!ezBloonExists)
+                            {
+                                selMenu.Items.Add("Open with EZ Bloon Tool");
+                            }
+                        }
+                        else
+                        {
+                            int i = 0;
+                            foreach(var item in selMenu.Items)
+                            {
+                                if (item.ToString() == "Open with EZ Bloon Tool")
+                                {
+                                    selMenu.Items[i].Visible = false;
+                                }
+                                i++;
+                            }
+                        }
+
+                        //Handle towers
+                        if (filename.Contains(".tower"))
+                        {
+                            int i = 0;
+                            bool ezTowerExists = false;
+                            foreach (var item in selMenu.Items)
+                            {
+                                if (item.ToString() == "Open with EZ Tower Tool")
+                                {
+                                    ezTowerExists = true;
+                                    if (selMenu.Items[i].Visible == false)
+                                    {
+                                        selMenu.Items[i].Visible = true;
+                                    }
+                                }
+                                i++;
+                            }
+                            if (!ezTowerExists)
+                            {
+                                selMenu.Items.Add("Open with EZ Tower Tool");
+                            }
+                        }
+                        else
+                        {
+                            int i = 0;
+                            foreach (var item in selMenu.Items)
+                            {
+                                if (item.ToString() == "Open with EZ Tower Tool")
+                                {
+                                    selMenu.Items[i].Visible = false;
+                                }
+                                i++;
+                            }
+                        }
                     }
                     else if (Selected.Count == 0 || Selected == null)
                     {
-
                         empMenu.Show(listView1, e.Location);
                     }
                     else if (Selected.Count > 1)
@@ -304,6 +384,21 @@ namespace BTDToolbox
             catch (Exception)
             {
             }
+        }
+        private void TreeView_RightClicked(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    treeMenu.Show(treeView1, e.Location);
+                }
+            }
+            catch
+            {
+
+            }
+            
         }
 
         //Context caller
@@ -338,6 +433,41 @@ namespace BTDToolbox
                 catch (Exception)
                 {
                 }
+            }
+            if (e.ClickedItem.Text == "Open with EZ Bloon Tool")
+            {
+                try
+                {
+                    Open_EZBloon();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Open with EZ Tower Tool")
+            {
+                try
+                {
+                    Open_EZTower();
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+        private void treeContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            try
+            {
+                if (e.ClickedItem.Text == "Open in File Explorer")
+                {
+                    ConsoleHandler.appendLog("Opening folder in File Explorer..");
+                    Process.Start(this.Text);
+                }
+            }
+            catch
+            {
+
             }
         }
         private void listContextClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -506,7 +636,22 @@ namespace BTDToolbox
                 listView1.Items.Add(item);
             }
         }
-
+        private void Open_EZBloon()
+        {
+            string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
+            var ezBloon = new EZBloon_Editor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + filename;
+            ezBloon.path = path;
+            ezBloon.Show();
+        }
+        private void Open_EZTower()
+        {
+            string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
+            var ezTower = new EasyTowerEditor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + filename;
+            ezTower.path = path;
+            ezTower.Show();
+        }
         private void SplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
             jetExplorer_SplitterWidth = fileViewContainer.SplitterDistance;

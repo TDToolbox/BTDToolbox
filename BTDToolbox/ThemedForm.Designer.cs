@@ -102,6 +102,7 @@
             this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
+            this.Sizer.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
             this.Sizer.Location = new System.Drawing.Point(788, 409);
             this.Sizer.Name = "Sizer";
             this.Sizer.Size = new System.Drawing.Size(12, 12);

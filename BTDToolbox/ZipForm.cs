@@ -20,6 +20,7 @@ namespace BTDToolbox
         public static int totalFiles = 0;
         public int filesTransfered = 0;
         public static string rememberedPassword = "";
+        public static string existingJetFile = "";
 
         //Config variables
         ConfigFile programData;
@@ -75,9 +76,16 @@ namespace BTDToolbox
         public void Extract()
         {
             bool rememberPass = Get_BTDB_Password.rememberPass;
-            
-            if (sourcePath == null || sourcePath == "")
-                sourcePath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_Original.jet";
+            this.Text = "Extracting..";
+            if (existingJetFile == "")
+            {
+                if (sourcePath == null || sourcePath == "")
+                    sourcePath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_Original.jet";
+            }
+            else
+            {
+                sourcePath = existingJetFile;
+            }
             if (File.Exists(sourcePath))
             {
                 //check password
@@ -212,33 +220,42 @@ namespace BTDToolbox
         }
         public void Compile()
         {
-            if (gameName == "BTDB")
+            if (!IsGameRunning(gameName))
             {
-                if (rememberedPassword != null && rememberedPassword != "")
+                this.Text = "Compiling..";
+                if (gameName == "BTDB")
                 {
-                    password = rememberedPassword;
-                }
+                    if (rememberedPassword != null && rememberedPassword != "")
+                    {
+                        password = rememberedPassword;
+                    }
 
-                if (password == null || password.Length <= 0)
-                {
-                    var getpas = new Get_BTDB_Password();
-                    getpas.launch = launch;
-                    getpas.projName = projName;
-                    getpas.destPath = destPath;
-                    getpas.Show();
-                    this.Close();
+                    if (password == null || password.Length <= 0)
+                    {
+                        var getpas = new Get_BTDB_Password();
+                        getpas.launch = launch;
+                        getpas.projName = projName;
+                        getpas.destPath = destPath;
+                        getpas.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+
+                        backgroundThread = new Thread(Compile_OnThread);
+                        backgroundThread.Start();
+                    }
                 }
                 else
                 {
-
                     backgroundThread = new Thread(Compile_OnThread);
                     backgroundThread.Start();
                 }
             }
             else
             {
-                backgroundThread = new Thread(Compile_OnThread);
-                backgroundThread.Start();
+                ConsoleHandler.force_appendNotice("Game is currently running. Please close the game and try again...");
+                this.Close();
             }
         }
         private void Compile_OnThread()

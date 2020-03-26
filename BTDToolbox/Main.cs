@@ -16,7 +16,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.6";
+        public static string version = "Alpha 0.0.7";
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
@@ -242,12 +242,14 @@ namespace BTDToolbox
         }
         private void AddNewJet()
         {
+            ZipForm.existingJetFile = "";
             string path = BrowseForFile("Browse for an existing .jet file", "jet", "Jet files (*.jet)|*.jet|All files (*.*)|*.*", "");
             if (path != null && path != "")
             {
                 if (path.Contains(".jet"))
                 {
                     gameName = DetermineJet_Game(path);
+                    ZipForm.existingJetFile = path;
                     Serializer.SaveConfig(this, "game", programData);
                     var getName = new SetProjectName();
                     getName.Show();
@@ -292,23 +294,6 @@ namespace BTDToolbox
         //
         //Mdi Stuff
         //
-
-        /*protected override void WndProc(ref Message m)
-        {
-            switch (m.Msg)
-            {
-                //
-                // ...
-                //
-
-                case WM_NCCALCSIZE:
-                    ShowScrollBar(m.HWnd, SB_BOTH, 0 *//*false*//*);
-                    break;
-            }
-
-            base.WndProc(ref m);
-        }*/
-
         //Old WndProc (Mallis's)
         protected override void WndProc(ref Message m)
         {
@@ -492,13 +477,11 @@ namespace BTDToolbox
         {
             RestoreGame_ToBackup("BTDB");
         }
-
         
 
         private void BTDFontsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening BTD Font maker...");
-            Process.Start("https://fontmeme.com/bloons-td-battles-font/");
+            
         }
 
         private void UpdaterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -522,10 +505,16 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
+            /*string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
             var spriteVisualizer = new SpriteVisualizer();
             spriteVisualizer.path = path;
-            spriteVisualizer.Show();
+            spriteVisualizer.Show();*/
+
+            var ezBloon = new EZBloon_Editor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
+            ezBloon.path = path;
+            ezBloon.Show();
+
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -541,9 +530,10 @@ namespace BTDToolbox
             settings.Show();
         }
 
-        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        private void NKHook_Github_Click(object sender, EventArgs e)
         {
-
+            ConsoleHandler.appendLog("Opening NKHook Github page...");
+            Process.Start("https://github.com/DisabledMallis/NKHook5-Dep");
         }
 
         private void FlashReader_Click(object sender, EventArgs e)
@@ -687,6 +677,44 @@ namespace BTDToolbox
         private void ValidateBTDB_Click(object sender, EventArgs e)
         {
             Process.Start("steam://validate/444640");
+        }
+
+        private void FontForPCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening download for BTD Font for PC");
+            Process.Start("https://www.dropbox.com/s/k7y2utz42b5eg06/Oetztype.TTF?dl=1");
+        }
+
+        private void OnlineFontGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening Online BTD Font Generator...");
+            Process.Start("https://fontmeme.com/bloons-td-battles-font/");
+        }
+
+        private void SpriteSheetDecompilerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening Sprite Decompiler github link...");
+            Process.Start("https://github.com/TheSubtleKiller/SpriteSheetRebuilder");
+        }
+
+        private void NewProject_From_Backup_Click(object sender, EventArgs e)
+        {
+            AddNewJet();
+        }
+        private void EZ_TowerEditor_Click(object sender, EventArgs e)
+        {
+            var ezTower = new EasyTowerEditor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            ezTower.path = path;
+            ezTower.Show();
+        }
+
+        private void EZ_BloonEditor_Click(object sender, EventArgs e)
+        {
+            var ezBloon = new EZBloon_Editor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
+            ezBloon.path = path;
+            ezBloon.Show();
         }
     }
 }
