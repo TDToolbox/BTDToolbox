@@ -1,6 +1,6 @@
 ﻿namespace BTDToolbox.Extra_Forms
 {
-    partial class EZBloon_Editor
+    partial class EZCard_Editor
     {
         /// <summary>
         /// Required designer variable.

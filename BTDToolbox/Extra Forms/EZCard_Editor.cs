@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace BTDToolbox.Extra_Forms
 {
-    public partial class EZBloon_Editor : Form
+    public partial class EZCard_Editor : Form
     {
         public string json { get; set; }
         public string path { get; set; }
@@ -28,7 +28,7 @@ namespace BTDToolbox.Extra_Forms
 
         string game = Serializer.Deserialize_Config().CurrentGame;
 
-        public EZBloon_Editor()
+        public EZCard_Editor()
         {
             InitializeComponent();
             EZBloon_Opened = true;
