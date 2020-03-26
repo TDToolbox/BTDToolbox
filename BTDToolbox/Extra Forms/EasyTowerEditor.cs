@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -863,6 +864,22 @@ namespace BTDToolbox.Extra_Forms
                     PlacementH_TextBox.Show();
                     PlacementW_TextBox.Show();
                 }
+            }
+        }
+
+        private void OpenText_Button_Click(object sender, EventArgs e)
+        {
+            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            {
+                JsonEditor JsonWindow = new JsonEditor(path);
+                JsonWindow.MdiParent = Main.getInstance();
+                JsonWindow.Show();
+                this.Focus();
+            }
+            else
+            {
+                string selectedFile = path;
+                Process.Start(selectedFile);
             }
         }
     }

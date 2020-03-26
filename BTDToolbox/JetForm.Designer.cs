@@ -161,39 +161,39 @@
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Open_Proj_Dir});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // Open_Proj_Dir
             // 
             this.Open_Proj_Dir.Name = "Open_Proj_Dir";
-            this.Open_Proj_Dir.Size = new System.Drawing.Size(162, 22);
+            this.Open_Proj_Dir.Size = new System.Drawing.Size(180, 22);
             this.Open_Proj_Dir.Text = "Project Directory";
             this.Open_Proj_Dir.Click += new System.EventHandler(this.Open_Proj_Dir_Click);
             // 
             // Save_ToolStrip
             // 
             this.Save_ToolStrip.Name = "Save_ToolStrip";
-            this.Save_ToolStrip.Size = new System.Drawing.Size(158, 22);
+            this.Save_ToolStrip.Size = new System.Drawing.Size(180, 22);
             this.Save_ToolStrip.Text = "Save";
             this.Save_ToolStrip.Click += new System.EventHandler(this.Save_ToolStrip_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // ValidateAllFiles
             // 
             this.ValidateAllFiles.Name = "ValidateAllFiles";
-            this.ValidateAllFiles.Size = new System.Drawing.Size(158, 22);
+            this.ValidateAllFiles.Size = new System.Drawing.Size(180, 22);
             this.ValidateAllFiles.Text = "Validate All Files";
             this.ValidateAllFiles.Click += new System.EventHandler(this.ValidateAllFiles_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // retToolStripMenuItem
             // 
@@ -201,8 +201,9 @@
             this.makeBackupOfProjectToolStripMenuItem,
             this.revertToBackupToolStripMenuItem1});
             this.retToolStripMenuItem.Name = "retToolStripMenuItem";
-            this.retToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.retToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.retToolStripMenuItem.Text = "Backup project";
+            this.retToolStripMenuItem.Visible = false;
             // 
             // makeBackupOfProjectToolStripMenuItem
             // 
@@ -219,25 +220,26 @@
             // revertToBackupToolStripMenuItem
             // 
             this.revertToBackupToolStripMenuItem.Name = "revertToBackupToolStripMenuItem";
-            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.revertToBackupToolStripMenuItem.Text = "Remake Project";
+            this.revertToBackupToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // RenameProject_Button
             // 
             this.RenameProject_Button.Name = "RenameProject_Button";
-            this.RenameProject_Button.Size = new System.Drawing.Size(158, 22);
+            this.RenameProject_Button.Size = new System.Drawing.Size(180, 22);
             this.RenameProject_Button.Text = "Rename Project";
             this.RenameProject_Button.Click += new System.EventHandler(this.RenameProject_Button_Click);
             // 
             // DeleteProject_Button
             // 
             this.DeleteProject_Button.Name = "DeleteProject_Button";
-            this.DeleteProject_Button.Size = new System.Drawing.Size(158, 22);
+            this.DeleteProject_Button.Size = new System.Drawing.Size(180, 22);
             this.DeleteProject_Button.Text = "Delete Project";
             this.DeleteProject_Button.Click += new System.EventHandler(this.DeleteProject_Button_Click);
             // 

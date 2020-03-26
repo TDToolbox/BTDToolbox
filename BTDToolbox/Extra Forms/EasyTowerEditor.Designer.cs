@@ -75,9 +75,10 @@
             this.Save_Button = new System.Windows.Forms.Button();
             this.AllTowerFiles_ComboBox = new System.Windows.Forms.ComboBox();
             this.TowerPanel = new System.Windows.Forms.Panel();
+            this.UsePlacementRadius_Checkbox = new System.Windows.Forms.CheckBox();
             this.UpgradesPanel = new System.Windows.Forms.Panel();
             this.SwitchPanel = new System.Windows.Forms.Button();
-            this.UsePlacementRadius_Checkbox = new System.Windows.Forms.CheckBox();
+            this.OpenText_Button = new System.Windows.Forms.Button();
             this.TowerPanel.SuspendLayout();
             this.UpgradesPanel.SuspendLayout();
             this.SuspendLayout();
@@ -683,6 +684,19 @@
             this.TowerPanel.Size = new System.Drawing.Size(1071, 413);
             this.TowerPanel.TabIndex = 49;
             // 
+            // UsePlacementRadius_Checkbox
+            // 
+            this.UsePlacementRadius_Checkbox.AutoSize = true;
+            this.UsePlacementRadius_Checkbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.UsePlacementRadius_Checkbox.ForeColor = System.Drawing.Color.White;
+            this.UsePlacementRadius_Checkbox.Location = new System.Drawing.Point(543, 370);
+            this.UsePlacementRadius_Checkbox.Name = "UsePlacementRadius_Checkbox";
+            this.UsePlacementRadius_Checkbox.Size = new System.Drawing.Size(187, 24);
+            this.UsePlacementRadius_Checkbox.TabIndex = 47;
+            this.UsePlacementRadius_Checkbox.Text = "Use Placement Radius";
+            this.UsePlacementRadius_Checkbox.UseVisualStyleBackColor = true;
+            this.UsePlacementRadius_Checkbox.CheckedChanged += new System.EventHandler(this.UsePlacementRadius_Checkbox_CheckedChanged);
+            // 
             // UpgradesPanel
             // 
             this.UpgradesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -725,18 +739,19 @@
             this.SwitchPanel.UseVisualStyleBackColor = false;
             this.SwitchPanel.Click += new System.EventHandler(this.SwitchPanel_Click);
             // 
-            // UsePlacementRadius_Checkbox
+            // OpenText_Button
             // 
-            this.UsePlacementRadius_Checkbox.AutoSize = true;
-            this.UsePlacementRadius_Checkbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.UsePlacementRadius_Checkbox.ForeColor = System.Drawing.Color.White;
-            this.UsePlacementRadius_Checkbox.Location = new System.Drawing.Point(543, 370);
-            this.UsePlacementRadius_Checkbox.Name = "UsePlacementRadius_Checkbox";
-            this.UsePlacementRadius_Checkbox.Size = new System.Drawing.Size(187, 24);
-            this.UsePlacementRadius_Checkbox.TabIndex = 47;
-            this.UsePlacementRadius_Checkbox.Text = "Use Placement Radius";
-            this.UsePlacementRadius_Checkbox.UseVisualStyleBackColor = true;
-            this.UsePlacementRadius_Checkbox.CheckedChanged += new System.EventHandler(this.UsePlacementRadius_Checkbox_CheckedChanged);
+            this.OpenText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenText_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenText_Button.Location = new System.Drawing.Point(440, 54);
+            this.OpenText_Button.Name = "OpenText_Button";
+            this.OpenText_Button.Size = new System.Drawing.Size(117, 32);
+            this.OpenText_Button.TabIndex = 66;
+            this.OpenText_Button.Text = "Open in text editor";
+            this.OpenText_Button.UseVisualStyleBackColor = false;
+            this.OpenText_Button.Click += new System.EventHandler(this.OpenText_Button_Click);
             // 
             // EasyTowerEditor
             // 
@@ -744,6 +759,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.OpenText_Button);
             this.Controls.Add(this.SwitchPanel);
             this.Controls.Add(this.AllTowerFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
@@ -815,5 +831,6 @@
         private System.Windows.Forms.Panel UpgradesPanel;
         private System.Windows.Forms.Button SwitchPanel;
         private System.Windows.Forms.CheckBox UsePlacementRadius_Checkbox;
+        private System.Windows.Forms.Button OpenText_Button;
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -20,8 +21,7 @@ namespace BTDToolbox.Extra_Forms
 
         Bloon bloon;
         Bloon newBloon;
-        
-        bool firstLoad = false;
+
         bool advancedView = false;
         bool forceAdvancedView = false;
 
@@ -402,7 +402,6 @@ namespace BTDToolbox.Extra_Forms
         //
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
-            firstLoad = true;
             string gameDir = "";
             if (game == "BTD5")
                 gameDir = Serializer.Deserialize_Config().BTD5_Directory;
@@ -430,6 +429,22 @@ namespace BTDToolbox.Extra_Forms
                             BloonFiles_ComboBox.SelectedItem = BloonFiles_ComboBox.Items[BloonFiles_ComboBox.Items.Count - 1];
                     }
                 }
+
+                if(game == "BTD5")
+                {
+                    string abilityPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonAbilities";
+                    var abilityFiles = Directory.GetFiles(abilityPath);
+                    foreach (var file in abilityFiles)
+                    {
+                        string[] split = file.Split('\\');
+                        string filename = split[split.Length - 1].Replace("\\", "");
+                        if (!BloonAbility_CheckedListBox.Items.Contains(filename.Replace(".json","")))
+                        {
+                            BloonAbility_CheckedListBox.Items.Add(filename.Replace(".json", ""), false);
+                        }
+                    }
+                }
+
                 CreateBloonObject(path);
             }
             else
@@ -565,6 +580,22 @@ namespace BTDToolbox.Extra_Forms
                 ConsoleHandler.appendLog_CanRepeat("Saved " + BloonFiles_ComboBox.SelectedItem.ToString());
                 GeneralMethods.CompileJet("launch");
                 ConsoleHandler.appendLog_CanRepeat("Launching " + game);
+            }
+        }
+
+        private void OpenText_Button_Click(object sender, EventArgs e)
+        {
+            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            {
+                JsonEditor JsonWindow = new JsonEditor(path);
+                JsonWindow.MdiParent = Main.getInstance();
+                JsonWindow.Show();
+                this.Focus();
+            }
+            else
+            {
+                string selectedFile = path;
+                Process.Start(selectedFile);
             }
         }
     }

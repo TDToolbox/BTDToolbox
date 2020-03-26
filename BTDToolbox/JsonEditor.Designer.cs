@@ -53,6 +53,7 @@
             this.lintPanel = new System.Windows.Forms.Panel();
             this.tB_line = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -146,7 +147,8 @@
             this.FindSubtask_Button,
             this.toolStripSeparator3,
             this.ChangeFontSize_MenuItem,
-            this.EasyTowerEditor_Button});
+            this.EasyTowerEditor_Button,
+            this.EZBoon_Button});
             this.File_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.File_DropDown.ForeColor = System.Drawing.Color.White;
             this.File_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("File_DropDown.Image")));
@@ -211,7 +213,7 @@
             // 
             this.EasyTowerEditor_Button.Name = "EasyTowerEditor_Button";
             this.EasyTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
-            this.EasyTowerEditor_Button.Text = "Easy Tower Editor";
+            this.EasyTowerEditor_Button.Text = "EZ Tower tool";
             this.EasyTowerEditor_Button.Visible = false;
             this.EasyTowerEditor_Button.Click += new System.EventHandler(this.EasyTowerEditor_Button_Click);
             // 
@@ -344,6 +346,13 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // EZBoon_Button
+            // 
+            this.EZBoon_Button.Name = "EZBoon_Button";
+            this.EZBoon_Button.Size = new System.Drawing.Size(201, 22);
+            this.EZBoon_Button.Text = "EZ Bloon tool";
+            this.EZBoon_Button.Click += new System.EventHandler(this.EZBoon_Button_Click);
+            // 
             // JsonEditor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -394,5 +403,6 @@
         private System.Windows.Forms.ToolStripDropDownButton Help_DropDown;
         private System.Windows.Forms.ToolStripMenuItem FindSubtask_Button;
         private System.Windows.Forms.ToolStripMenuItem EasyTowerEditor_Button;
+        private System.Windows.Forms.ToolStripMenuItem EZBoon_Button;
     }
 }

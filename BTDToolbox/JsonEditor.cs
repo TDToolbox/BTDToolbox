@@ -116,13 +116,14 @@ namespace BTDToolbox
         private void HandleTools()
         {
             if (Path.EndsWith("tower"))
-            {
                 EasyTowerEditor_Button.Visible = true;
-            }
             else
-            {
                 EasyTowerEditor_Button.Visible = false;
-            }
+
+            if (Path.EndsWith("bloon"))
+                EZBoon_Button.Visible = true;
+            else
+                EZBoon_Button.Visible = false;
         }
         private void Deserialize_Config()
         {
@@ -833,6 +834,14 @@ namespace BTDToolbox
             string path = Path;
             easyTower.path = path;
             easyTower.Show();
+        }
+
+        private void EZBoon_Button_Click(object sender, EventArgs e)
+        {
+            var ezBloon = new EZBloon_Editor();
+            string path = Path;
+            ezBloon.path = path;
+            ezBloon.Show();
         }
     }
 }

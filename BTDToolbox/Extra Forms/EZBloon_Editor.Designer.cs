@@ -75,6 +75,7 @@
             this.AvailibleChildBloons_LB = new System.Windows.Forms.ListBox();
             this.CurrentChildBloon_ListBox = new System.Windows.Forms.ListBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.OpenText_Button = new System.Windows.Forms.Button();
             this.Panel1.SuspendLayout();
             this.Panel2.SuspendLayout();
             this.Panel3.SuspendLayout();
@@ -122,7 +123,7 @@
             this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(338, 8);
+            this.label3.Location = new System.Drawing.Point(326, 8);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(145, 20);
             this.label3.TabIndex = 6;
@@ -478,7 +479,7 @@
             "Regen"});
             this.ApplyStatus_CheckedListBox.Location = new System.Drawing.Point(813, 31);
             this.ApplyStatus_CheckedListBox.Name = "ApplyStatus_CheckedListBox";
-            this.ApplyStatus_CheckedListBox.Size = new System.Drawing.Size(183, 352);
+            this.ApplyStatus_CheckedListBox.Size = new System.Drawing.Size(204, 352);
             this.ApplyStatus_CheckedListBox.TabIndex = 69;
             // 
             // label10
@@ -487,7 +488,7 @@
             this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label10.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(831, 8);
+            this.label10.Location = new System.Drawing.Point(856, 8);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(103, 20);
             this.label10.TabIndex = 68;
@@ -506,9 +507,9 @@
             "BloonariusAbility",
             "ShieldAbility",
             "SlowTowersAbility"});
-            this.BloonAbility_CheckedListBox.Location = new System.Drawing.Point(565, 31);
+            this.BloonAbility_CheckedListBox.Location = new System.Drawing.Point(539, 31);
             this.BloonAbility_CheckedListBox.Name = "BloonAbility_CheckedListBox";
-            this.BloonAbility_CheckedListBox.Size = new System.Drawing.Size(183, 352);
+            this.BloonAbility_CheckedListBox.Size = new System.Drawing.Size(243, 352);
             this.BloonAbility_CheckedListBox.TabIndex = 67;
             // 
             // label9
@@ -517,7 +518,7 @@
             this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label9.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(583, 8);
+            this.label9.Location = new System.Drawing.Point(607, 8);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(99, 20);
             this.label9.TabIndex = 66;
@@ -550,9 +551,9 @@
             "DazeEffect",
             "MoveOnCurve",
             "BloonChipperSuck"});
-            this.StatusImmunity_CheckedListBox.Location = new System.Drawing.Point(53, 31);
+            this.StatusImmunity_CheckedListBox.Location = new System.Drawing.Point(35, 31);
             this.StatusImmunity_CheckedListBox.Name = "StatusImmunity_CheckedListBox";
-            this.StatusImmunity_CheckedListBox.Size = new System.Drawing.Size(197, 352);
+            this.StatusImmunity_CheckedListBox.Size = new System.Drawing.Size(215, 352);
             this.StatusImmunity_CheckedListBox.TabIndex = 65;
             // 
             // label8
@@ -586,9 +587,9 @@
             "ShredBloon",
             "MOABMauler",
             "DamageOverTime"});
-            this.DamageImmunity_CheckedListBox.Location = new System.Drawing.Point(320, 31);
+            this.DamageImmunity_CheckedListBox.Location = new System.Drawing.Point(285, 31);
             this.DamageImmunity_CheckedListBox.Name = "DamageImmunity_CheckedListBox";
-            this.DamageImmunity_CheckedListBox.Size = new System.Drawing.Size(183, 352);
+            this.DamageImmunity_CheckedListBox.Size = new System.Drawing.Size(227, 352);
             this.DamageImmunity_CheckedListBox.TabIndex = 63;
             // 
             // SwitchPanel
@@ -733,12 +734,27 @@
             this.label11.TabIndex = 5;
             this.label11.Text = "Child bloons:";
             // 
+            // OpenText_Button
+            // 
+            this.OpenText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenText_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenText_Button.Location = new System.Drawing.Point(440, 54);
+            this.OpenText_Button.Name = "OpenText_Button";
+            this.OpenText_Button.Size = new System.Drawing.Size(117, 32);
+            this.OpenText_Button.TabIndex = 65;
+            this.OpenText_Button.Text = "Open in text editor";
+            this.OpenText_Button.UseVisualStyleBackColor = false;
+            this.OpenText_Button.Click += new System.EventHandler(this.OpenText_Button_Click);
+            // 
             // EZBloon_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.OpenText_Button);
             this.Controls.Add(this.ChildBloons_Button);
             this.Controls.Add(this.AdvancedView_Checkbox);
             this.Controls.Add(this.SwitchPanel);
@@ -814,5 +830,6 @@
         private System.Windows.Forms.Button RemoveChild_Button;
         private System.Windows.Forms.Button AddChild_Button;
         private System.Windows.Forms.ListBox DrawLayer_LB;
+        private System.Windows.Forms.Button OpenText_Button;
     }
 }
