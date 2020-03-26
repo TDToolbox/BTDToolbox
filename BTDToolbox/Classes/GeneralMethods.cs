@@ -579,6 +579,33 @@ namespace BTDToolbox
                 { }
             }
         }
+        public static bool IsGameRunning(string game)
+        {
+            string exename = "";
+            if (game == "BTD5")
+                exename = "BTD5-Win";
+            else
+                exename = "Battles-Win";
+
+            Process[] pname = Process.GetProcessesByName(exename);
+            if (pname.Length == 0)
+                return false;
+            else
+                return true;
+        }
+        public static void TerminateGame(string game)
+        {
+            string exename = "";
+            if (game == "BTD5")
+                exename = "BTD5-Win";
+            else
+                exename = "Battles-Win";
+
+            foreach (var process in Process.GetProcessesByName(exename))
+            {
+                process.Kill();
+            }
+        }
         public static Point GetCenterScreen()
         {
             Rectangle resolution = Screen.PrimaryScreen.Bounds;

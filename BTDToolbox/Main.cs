@@ -701,8 +701,15 @@ namespace BTDToolbox
         {
             AddNewJet();
         }
+        private void EZ_TowerEditor_Click(object sender, EventArgs e)
+        {
+            var ezTower = new EasyTowerEditor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            ezTower.path = path;
+            ezTower.Show();
+        }
 
-        private void EZBloonEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EZ_BloonEditor_Click(object sender, EventArgs e)
         {
             var ezBloon = new EZBloon_Editor();
             string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";

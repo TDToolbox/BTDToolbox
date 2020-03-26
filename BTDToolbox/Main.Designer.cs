@@ -68,11 +68,13 @@
             this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.easyTowerEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getBTDBPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.FlashReader = new System.Windows.Forms.ToolStripMenuItem();
             this.bTD5FlashMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZ_Tools = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZ_TowerEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZ_BloonEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restorejetToBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Backup_BTD5 = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +109,6 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.eZBloonEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -120,6 +121,7 @@
             this.Launch_Program_ToolStrip,
             this.viewToolStripMenuItem1,
             this.toolStripMenuItem1,
+            this.EZ_Tools,
             this.helpToolStripMenuItem,
             this.debugToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -342,8 +344,6 @@
             this.modUpdaterToolStripMenuItem,
             this.spriteEditingToolStripMenuItem,
             this.toolStripSeparator7,
-            this.easyTowerEditorToolStripMenuItem,
-            this.eZBloonEditorToolStripMenuItem,
             this.getBTDBPasswordToolStripMenuItem,
             this.toolStripSeparator4,
             this.FlashReader,
@@ -433,13 +433,6 @@
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(188, 6);
             // 
-            // easyTowerEditorToolStripMenuItem
-            // 
-            this.easyTowerEditorToolStripMenuItem.Name = "easyTowerEditorToolStripMenuItem";
-            this.easyTowerEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.easyTowerEditorToolStripMenuItem.Text = "EZ Tower Editor";
-            this.easyTowerEditorToolStripMenuItem.Click += new System.EventHandler(this.EasyTowerEditorToolStripMenuItem_Click);
-            // 
             // getBTDBPasswordToolStripMenuItem
             // 
             this.getBTDBPasswordToolStripMenuItem.Name = "getBTDBPasswordToolStripMenuItem";
@@ -465,6 +458,30 @@
             this.bTD5FlashMapEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.bTD5FlashMapEditorToolStripMenuItem.Text = "BTD5 Flash Map Editor";
             this.bTD5FlashMapEditorToolStripMenuItem.Visible = false;
+            // 
+            // EZ_Tools
+            // 
+            this.EZ_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EZ_TowerEditor,
+            this.EZ_BloonEditor});
+            this.EZ_Tools.ForeColor = System.Drawing.Color.White;
+            this.EZ_Tools.Name = "EZ_Tools";
+            this.EZ_Tools.Size = new System.Drawing.Size(62, 20);
+            this.EZ_Tools.Text = "EZ Tools";
+            // 
+            // EZ_TowerEditor
+            // 
+            this.EZ_TowerEditor.Name = "EZ_TowerEditor";
+            this.EZ_TowerEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_TowerEditor.Text = "EZ Tower editor";
+            this.EZ_TowerEditor.Click += new System.EventHandler(this.EZ_TowerEditor_Click);
+            // 
+            // EZ_BloonEditor
+            // 
+            this.EZ_BloonEditor.Name = "EZ_BloonEditor";
+            this.EZ_BloonEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_BloonEditor.Text = "EZ Bloon editor";
+            this.EZ_BloonEditor.Click += new System.EventHandler(this.EZ_BloonEditor_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -738,13 +755,6 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // eZBloonEditorToolStripMenuItem
-            // 
-            this.eZBloonEditorToolStripMenuItem.Name = "eZBloonEditorToolStripMenuItem";
-            this.eZBloonEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.eZBloonEditorToolStripMenuItem.Text = "EZ Bloon Editor";
-            this.eZBloonEditorToolStripMenuItem.Click += new System.EventHandler(this.EZBloonEditorToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -846,7 +856,6 @@
         private System.Windows.Forms.ToolStripMenuItem ValidateBTD5;
         private System.Windows.Forms.ToolStripMenuItem ValidateBTDB;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripMenuItem easyTowerEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createNewLOCFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bTD5ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem bTDBattlesToolStripMenuItem;
@@ -855,7 +864,9 @@
         private System.Windows.Forms.ToolStripMenuItem restoreBTDBattlesLOCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fontForPCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem onlineFontGeneratorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem eZBloonEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EZ_Tools;
+        private System.Windows.Forms.ToolStripMenuItem EZ_TowerEditor;
+        private System.Windows.Forms.ToolStripMenuItem EZ_BloonEditor;
     }
 }
 

@@ -21,31 +21,12 @@ namespace BTDToolbox.Extra_Forms
         Bloon bloon;
         Bloon newBloon;
         
-        bool finishedLoading = false;
         bool firstLoad = false;
         bool advancedView = false;
         bool forceAdvancedView = false;
-        bool canGoUnderground = false;
-        bool canRotateToPath = false;
-        bool canDrawLayer = false;
-        bool canHitAddon = false;
-
-        string[] upgradenames = new string[] { };
-        string[] upgradeIcons = new string[] { };
-        string[] upgradeAvatars = new string[] { };
-        string[] upgradePrices = new string[] { };
-        string[] upgradeRanks = new string[] { };
-        string[] upgradeXPs = new string[] { };
-        
-        string[] loc_upgradeNames = new string[] { };
-        string[] loc_upgradeDescs = new string[] { };
 
         string game = Serializer.Deserialize_Config().CurrentGame;
 
-        string[] loc_Text = new string[] { };
-        string loc_Path = "";
-        string loc_towerName = "";
-        string loc_towerDesc = "";
         public EZBloon_Editor()
         {
             InitializeComponent();
@@ -55,47 +36,24 @@ namespace BTDToolbox.Extra_Forms
             if (bloonPath.EndsWith(".bloon"))
             {
                 path = bloonPath;
-                string json = File.ReadAllText(bloonPath);
+                json = File.ReadAllText(bloonPath);
                 if (JSON_Reader.IsValidJson(json))
                 {
                     bloon = Bloon.FromJson(json);
-
-                    canGoUnderground = false;
-                    canRotateToPath = false;
-                    canDrawLayer = false;
-                    canHitAddon = false;
-
-                    if (json.Contains("DrawLayer") || json.Contains("CanGoUnderground") || json.Contains("RotateToPathDirection") || json.Contains("HitAddon"))
-                        forceAdvancedView = true;
-                    else
-                        forceAdvancedView = false;
-
-                    if (json.Contains("CanGoUnderground"))
-                        canGoUnderground = true;
-                    if (json.Contains("RotateToPathDirection"))
-                        canRotateToPath = true;
-                    if (json.Contains("DrawLayer"))
-                        canDrawLayer = true;
-                    if (json.Contains("HitAddon"))
-                        canHitAddon = true;
-
                     PopulateUI();
                 }
                 else
-                {
                     ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
-                }
             }
             else
-            {
                 ConsoleHandler.appendLog_CanRepeat("Error! Thats not a valid bloon file");
-            }
         }
         private void PopulateUI()
         {
             if (bloon != null)
             {
                 ResetUI();
+                
                 BloonType_Label.Text = bloon.Type + " bloon";
                 BloonName_TextBox.Text = bloon.Type;
                 InitialHealth_TextBox.Text = bloon.InitialHealth.ToString();
@@ -118,62 +76,142 @@ namespace BTDToolbox.Extra_Forms
                 StatusImmunity_CheckedListBox = Handle_CheckedListbox(StatusImmunity_CheckedListBox, bloon.StatusImmunity);
                 //DamageImmunity checked listbox
                 DamageImmunity_CheckedListBox = Handle_CheckedListbox(DamageImmunity_CheckedListBox, bloon.DamageImmunity);
-                //BloonAbility checked listbox
-                BloonAbility_CheckedListBox = Handle_CheckedListbox(BloonAbility_CheckedListBox, bloon.BloonAbility);
                 //ApplyStatus checked listbox
                 ApplyStatus_CheckedListBox = Handle_CheckedListbox(ApplyStatus_CheckedListBox, bloon.ApplyStatus);
-
-                //Can go underground checkbox
-                HandleCheckBox(canGoUnderground, CanGoUnderground_CheckBox, bloon.CanGoUnderground);
-                //Rotate To Path checkbox
-                HandleCheckBox(canRotateToPath, RotateToPathDirection_Checkbox, bloon.RotateToPathDirection);
-                //Draw layer textbox
-                HandleTextBox(canDrawLayer, DrawLayer_TextBox, DrawLayer_Label, bloon.DrawLayer);
-                //Hit addon textbox
-                HandleTextBox(canHitAddon, HitAddon_TextBox, HitAddon_Label, bloon.HitAddon.ToString());
-            }        
-        }
-        private CheckBox HandleCheckBox(bool allowCheckbox, CheckBox checkbox, bool bloonValue)
-        {
-            if (allowCheckbox)
-            {
-                checkbox.Visible = true;
-                if (bloonValue == true)
-                    checkbox.Checked = true;
+                //BloonAbility checked listbox
+                if (game == "BTD5")
+                    BloonAbility_CheckedListBox = Handle_CheckedListbox(BloonAbility_CheckedListBox, bloon.BloonAbility);
                 else
-                    checkbox.Checked = false;
-            }
-            else
-            {
-                if (!advancedView)
-                    checkbox.Visible = false;
-            }
-            return checkbox;
-        }
-        private object HandleTextBox(bool allowCheckbox, RichTextBox rtb, Label label, string bloonValue)
-        {
-            if (allowCheckbox)
-            {
-                rtb.Visible = true;
-                label.Visible = true;
-                rtb.Text = bloonValue;
-            }
-            else
-            {
-                if (!advancedView)
                 {
-                    rtb.Visible = false;
-                    label.Visible = false;
+                    BloonAbility_CheckedListBox.Visible = false;
+                    label9.Visible = false;
+                }
+                HandleAdvancedView();
+            }
+        }
+        private void HandleAdvancedView()
+        {
+            if (forceAdvancedView == true || AdvancedView_Checkbox.Checked == true)
+            {
+                CanGoUnderground_CheckBox.Visible = true;
+                CanGoUnderground_CheckBox.Checked = bloon.CanGoUnderground;
+
+                RotateToPathDirection_Checkbox.Visible = true;
+                RotateToPathDirection_Checkbox.Checked = bloon.RotateToPathDirection;
+
+                DrawLayer_Label.Visible = true;
+                DrawLayer_LB.Visible = true;
+                DrawLayer_LB.SelectedItem = bloon.DrawLayer;
+
+                HitAddon_Label.Visible = true;
+                HitAddon_TextBox.Visible = true;
+                HitAddon_TextBox.Text = bloon.HitAddon.ToString();
+            }
+            else
+            {
+                if(json.Contains("RotateToPathDirection"))
+                {
+                    if (bloon.RotateToPathDirection == true)
+                    {
+                        RotateToPathDirection_Checkbox.Visible = true;
+                        RotateToPathDirection_Checkbox.Checked = true;
+                    }
+                    else
+                    {
+                        RotateToPathDirection_Checkbox.Visible = false;
+                        RotateToPathDirection_Checkbox.Checked = false;
+                    }
+                }
+                else
+                {
+                    bloon.RotateToPathDirection = false;
+                    RotateToPathDirection_Checkbox.Visible = false;
+                    RotateToPathDirection_Checkbox.Checked = false;
+                }
+
+                if (json.Contains("CanGoUnderground"))
+                {
+                    if (bloon.CanGoUnderground == true)
+                    {
+                        CanGoUnderground_CheckBox.Visible = false;
+                        CanGoUnderground_CheckBox.Checked = true;
+                    }
+                    else
+                    {
+                        CanGoUnderground_CheckBox.Visible = true;
+                        CanGoUnderground_CheckBox.Checked = false;
+                    }
+                }
+                else
+                {
+                    bloon.CanGoUnderground = true;
+                    CanGoUnderground_CheckBox.Visible = false;
+                    CanGoUnderground_CheckBox.Checked = true;
+                }
+
+                if (json.Contains("HitAddon"))
+                {
+                    if (bloon.HitAddon > 0)
+                    {
+                        HitAddon_Label.Visible = true;
+                        HitAddon_TextBox.Visible = true;
+                        HitAddon_TextBox.Text = bloon.HitAddon.ToString();
+                    }
+                    else
+                    {
+                        HitAddon_Label.Visible = false;
+                        HitAddon_TextBox.Visible = false;
+                        HitAddon_TextBox.Text = "";
+                    }
+                }
+                else
+                {
+                    bloon.HitAddon = 0;
+                    HitAddon_Label.Visible = false;
+                    HitAddon_TextBox.Visible = false;
+                    HitAddon_TextBox.Text = "";
+                }
+
+
+                if (json.Contains("DrawLayer"))
+                {
+                    if (bloon.DrawLayer != null)
+                    {
+                        if(bloon.DrawLayer.Length > 0)
+                        {
+                            DrawLayer_Label.Visible = true;
+                            DrawLayer_LB.Visible = true;
+                            DrawLayer_LB.SelectedItem = bloon.DrawLayer;
+                        }
+                        else
+                        {
+                            DrawLayer_Label.Visible = false;
+                            DrawLayer_LB.Visible = false;
+                            DrawLayer_LB.SelectedItem = "";
+                        }
+                    }
+                    else
+                    {
+                        DrawLayer_Label.Visible = false;
+                        DrawLayer_LB.Visible = false;
+                        DrawLayer_LB.SelectedItem = "";
+                    }
+                }
+                else
+                {
+                    bloon.DrawLayer = "";
+                    DrawLayer_Label.Visible = false;
+                    DrawLayer_LB.Visible = false;
+                    DrawLayer_LB.SelectedItem = "";
                 }
             }
-            return rtb;
         }
         private void SaveFile()
         {
+            bool error = false;
             newBloon = new Bloon();
             newBloon = bloon;
             newBloon.SpriteFile = SpriteFile_TextBox.Text;
-            
 
             if (InitialHealth_TextBox.Text.Length > 0)
             {
@@ -188,65 +226,85 @@ namespace BTDToolbox.Extra_Forms
                     }
                     newBloon.InitialHealth = initialHealth;
                 }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your initial health is not a valid number..."); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your initial health is not a valid number..."); error = true; }
             }
 
-            try { newBloon.BaseSpeed = Int64.Parse(BaseSpeed_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your base speed is not a valid number..."); }
+            try { newBloon.BaseSpeed = Double.Parse(BaseSpeed_TextBox.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your base speed is not a valid number..."); error = true; }
 
-            try { newBloon.SpeedMultiplier = Int64.Parse(SpeedMultiplier_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your speed multiplier is not a valid number..."); }
+            try { newBloon.SpeedMultiplier = Double.Parse(SpeedMultiplier_TextBox.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your speed multiplier is not a valid number..."); error = true; }
 
             try { newBloon.Rbe = Int64.Parse(RBE_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your RBE is not a valid number..."); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your RBE is not a valid number..."); error = true; }
 
             if(Radius_TextBox.Text.Length > 0)
             {
-                try { newBloon.Radius = Int64.Parse(Radius_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your radius is not a valid number..."); }
+                try { newBloon.Radius = Double.Parse(Radius_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your radius is not a valid number..."); error = true; }
             }
 
-            if (SpeedMultiplier_TextBox.Text.Length > 0)
+            if (Scale_TextBox.Text.Length > 0)
             {
-                try { newBloon.Scale = Int64.Parse(SpeedMultiplier_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your speed multiplier is not a valid number..."); }
+                try { newBloon.Scale = Double.Parse(Scale_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your scale is not a valid number..."); error = true; }
             }
 
             if (ChildEffectScale_TextBox.Text.Length > 0)
             {
-                try { newBloon.ChildEffectScale = Int64.Parse(ChildEffectScale_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your child effect scale is not a valid number..."); }
+                try { newBloon.ChildEffectScale = Double.Parse(ChildEffectScale_TextBox.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your child effect scale is not a valid number..."); error = true; }
             }
 
             if (HitAddon_TextBox.Visible == true)
             {
                 if (HitAddon_TextBox.Text.Length > 0)
                 {
-                    try { newBloon.HitAddon = Int64.Parse(HitAddon_TextBox.Text); }
-                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your hit addon is not a valid number..."); }
+                    try { newBloon.HitAddon = Double.Parse(HitAddon_TextBox.Text); }
+                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your hit addon is not a valid number..."); error = true; }
                 }
-            }            
-
-            if (DrawLayer_TextBox.Visible == true)
-            {
-                if (DrawLayer_TextBox.Text.Length > 0)
-                    newBloon.DrawLayer = DrawLayer_TextBox.Text;
             }
-            
-            if(CanGoUnderground_CheckBox.Visible == true)
-                newBloon.CanGoUnderground = CanGoUnderground_CheckBox.Checked;
+
+            if (DrawLayer_LB.Visible == true)
+            {
+                if (DrawLayer_LB.Text.Length > 0)
+                    newBloon.DrawLayer = DrawLayer_LB.SelectedItem.ToString();
+            }
+
+            if (!AdvancedView_Checkbox.Checked || forceAdvancedView == false)
+            {
+                newBloon.CanGoUnderground = true;
+            }
+            //if(CanGoUnderground_CheckBox.Visible == true)
 
             if (RotateToPathDirection_Checkbox.Visible == true)
                 newBloon.RotateToPathDirection = RotateToPathDirection_Checkbox.Checked;
 
+            //Save child bloons
+            object[] children = new object[0];
+            foreach (var item in CurrentChildBloon_ListBox.Items)
+            {
+                Array.Resize(ref children, children.Length + 1);
+                string childName = item.ToString();
+
+                if (!item.ToString().EndsWith(".bloon"))
+                    childName = childName + ".bloon";
+
+                children[children.Length-1] = childName;
+            }
+            newBloon.ChildBloons = children;
+
             newBloon.StatusImmunity = CreateStringArray_FromCheckedLB(StatusImmunity_CheckedListBox);
             newBloon.DamageImmunity = CreateStringArray_FromCheckedLB(DamageImmunity_CheckedListBox);
-            newBloon.BloonAbility = CreateStringArray_FromCheckedLB(BloonAbility_CheckedListBox);
             newBloon.ApplyStatus = CreateStringArray_FromCheckedLB(ApplyStatus_CheckedListBox);
+            if(game == "BTD5")
+                newBloon.BloonAbility = CreateStringArray_FromCheckedLB(BloonAbility_CheckedListBox);
 
-
-            var saveFile = SerializeBloon.ToJson(newBloon);
-            File.WriteAllText(path, saveFile);
+            if (!error)
+            {
+                var saveFile = SerializeBloon.ToJson(newBloon);
+                File.WriteAllText(path, saveFile);
+            }
         }
         private string[] CreateStringArray_FromCheckedLB(CheckedListBox listbox)
         {
@@ -260,52 +318,9 @@ namespace BTDToolbox.Extra_Forms
         }
         private void PopulateChildBloons()
         {
-            if (bloon != null)
+            foreach (var cbloon in bloon.ChildBloons)
             {
-                CheckedListBox newList = new CheckedListBox();
-                string bloonDir = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions";
-                var bloonFiles = Directory.GetFiles(bloonDir);
-
-                foreach (string file in bloonFiles)
-                {
-                    string[] split = file.Split('\\');
-                    string filename = split[split.Length - 1].Replace("\\", "");
-
-                    if (filename.EndsWith(".bloon"))
-                    {
-                        if (!ChildBloons_CheckedListBox.Items.Contains(filename.Replace(".bloon","")))
-                            ChildBloons_CheckedListBox.Items.Add(filename.Replace(".bloon", ""));
-                    }
-                }
-
-                int i = 0;
-                if (bloon.ChildBloons.Length > 0)
-                {
-                    foreach (var cbloon in bloon.ChildBloons)
-                    {
-                        foreach (object item in ChildBloons_CheckedListBox.Items)
-                        {
-                            if (cbloon.ToString().ToLower() == (item.ToString() + ".bloon").ToLower())
-                            {
-                                newList.Items.Add(item, true);
-                            }
-                            else
-                            {
-                                newList.Items.Add(item, CheckState.Unchecked);
-                            }
-                            i++;
-                        }
-                    }
-
-                    i = 0;
-                    ChildBloons_CheckedListBox.Items.Clear();
-                    foreach(var item in newList.Items)
-                    {
-                        if(!ChildBloons_CheckedListBox.Items.Contains(item))
-                            ChildBloons_CheckedListBox.Items.Add(item, newList.GetItemChecked(i));
-                        i++;
-                    }
-                }
+                CurrentChildBloon_ListBox.Items.Add(cbloon.ToString().Replace(".bloon", ""));
             }
         }
         private CheckedListBox Handle_CheckedListbox(CheckedListBox originalList, string[] values)
@@ -339,25 +354,6 @@ namespace BTDToolbox.Extra_Forms
             }
             return originalList;
         }
-        private CheckedListBox ResetListBox(CheckedListBox originalList)
-        {
-            if (originalList != null)
-            {
-                int i = 0;
-                CheckedListBox list = new CheckedListBox();
-                foreach (var item in originalList.Items)
-                {
-                    list.Items.Add(item, false);
-                }
-                originalList.Items.Clear();
-                foreach (var item in list.Items)
-                {
-                    originalList.Items.Add(item, false);
-                }
-                return originalList;
-            }
-            return null;
-        }
         private void ResetUI()
         {
             BloonType_Label.Text = "";
@@ -370,27 +366,48 @@ namespace BTDToolbox.Extra_Forms
             Radius_TextBox.Text = "";
             Scale_TextBox.Text = "";
             ChildEffectScale_TextBox.Text = "";
+            CurrentChildBloon_ListBox.Items.Clear();
 
             //reset advanced stuff
             CanGoUnderground_CheckBox.Checked = false;
             RotateToPathDirection_Checkbox.Checked = false;
-            DrawLayer_TextBox.Text = "";
+            DrawLayer_LB.SelectedItem = "";
             HitAddon_TextBox.Text = "";
+
+            //reset checkboxes
+            resetCheckedListBox(StatusImmunity_CheckedListBox);
+            resetCheckedListBox(DamageImmunity_CheckedListBox);
+            resetCheckedListBox(ApplyStatus_CheckedListBox);
+
+            //BTD5 stuff
+            if (game == "BTD5")
+            {
+                resetCheckedListBox(BloonAbility_CheckedListBox);
+            }
         }
+        private CheckedListBox resetCheckedListBox(CheckedListBox checkedListBox)
+        {
+            string[] temp = new string[checkedListBox.Items.Count];
+            checkedListBox.Items.CopyTo(temp, 0);
+            checkedListBox.Items.Clear();
+
+            foreach (var item in temp)
+            {
+                checkedListBox.Items.Add(item, false);
+            }
+            return checkedListBox;
+        }
+        //
+        // Handling UI changes
+        //
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
-            finishedLoading = true;
             firstLoad = true;
             string gameDir = "";
             if (game == "BTD5")
-            {
                 gameDir = Serializer.Deserialize_Config().BTD5_Directory;
-                loc_Path = gameDir + "\\Assets\\Loc\\English.xml";
-            }
             else
-            {
                 gameDir = Serializer.Deserialize_Config().BTDB_Directory;
-            }
 
             if (gameDir != null && gameDir != "")
             {
@@ -400,16 +417,17 @@ namespace BTDToolbox.Extra_Forms
                 {
                     string[] split = file.Split('\\');
                     string filename = split[split.Length - 1].Replace("\\", "");
-                    
-                    if(filename.EndsWith(".bloon"))
+
+                    if (filename.EndsWith(".bloon"))
                     {
                         if (!BloonFiles_ComboBox.Items.Contains(filename))
                             BloonFiles_ComboBox.Items.Add(filename);
 
+                        if (!AvailibleChildBloons_LB.Items.Contains(filename.Replace(".bloon","")))
+                            AvailibleChildBloons_LB.Items.Add(filename.Replace(".bloon", ""));
+
                         if (file == path)
-                        {
                             BloonFiles_ComboBox.SelectedItem = BloonFiles_ComboBox.Items[BloonFiles_ComboBox.Items.Count - 1];
-                        }
                     }
                 }
                 CreateBloonObject(path);
@@ -420,54 +438,33 @@ namespace BTDToolbox.Extra_Forms
                 this.Close();
             }
         }
-        //
-        // Handling UI changes
-        //
-        private void AllTowerFiles_ComboBox_SelectedValueChanged(object sender, EventArgs e)
+        private void BloonFiles_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (firstLoad)
-            {
-                firstLoad = false;
-            }
-            else
-            {
-                ResetUI();
-
-                path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + BloonFiles_ComboBox.SelectedItem;
-                CreateBloonObject(path);
-                this.Refresh();
-            }
-
+            path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + BloonFiles_ComboBox.SelectedItem;
+            CreateBloonObject(path);
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
             SaveFile();
             ConsoleHandler.appendLog_CanRepeat("Saved " + BloonFiles_ComboBox.SelectedItem.ToString());
         }
-        private void TowerName_TextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (BloonName_TextBox.Focused)
-            {
-                loc_towerName = BloonName_TextBox.Text;
-            }
-            
-        }
         private void SwitchPanel_Click(object sender, EventArgs e)
         {
-            if (Panel1.Visible && !Panel2.Visible)
+            Panel3.Hide();
+            ChildBloons_Button.Text = "Child bloons";
+            if (SwitchPanel.Text == "Page 2")
             {
                 Panel1.Visible = false;
                 Panel2.Visible = true;
                 SwitchPanel.Text = "Page 1";
             }
-            else if (!Panel1.Visible && Panel2.Visible)
+            else if (SwitchPanel.Text == "Page 1")
             {
                 Panel1.Visible = true;
                 Panel2.Visible = false;
                 SwitchPanel.Text = "Page 2";
             }
         }
-
         private void AdvancedView_Checkbox_CheckedChanged(object sender, EventArgs e)
         {
             advancedView = !advancedView;
@@ -476,7 +473,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 CanGoUnderground_CheckBox.Visible = true;
                 RotateToPathDirection_Checkbox.Visible = true;
-                DrawLayer_TextBox.Visible = true;
+                DrawLayer_LB.Visible = true;
                 DrawLayer_Label.Visible = true;
                 HitAddon_Label.Visible = true;
                 HitAddon_TextBox.Visible = true;
@@ -490,7 +487,7 @@ namespace BTDToolbox.Extra_Forms
                 {
                     CanGoUnderground_CheckBox.Visible = false;
                     RotateToPathDirection_Checkbox.Visible = false;
-                    DrawLayer_TextBox.Visible = false;
+                    DrawLayer_LB.Visible = false;
                     DrawLayer_Label.Visible = false;
                     HitAddon_Label.Visible = false;
                     HitAddon_TextBox.Visible = false;
@@ -500,22 +497,74 @@ namespace BTDToolbox.Extra_Forms
                 }
             }
         }
-
-        private void ChildBloons_CheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ChildBloons_Button_Click(object sender, EventArgs e)
         {
-            if (ChildBloons_CheckedListBox.SelectedItem.ToString() == bloon.Type)
+            if (Panel3.Visible == true)
             {
-                //ChildBloons_CheckedListBox.SetItemCheckState(ChildBloons_CheckedListBox.SelectedIndex, CheckState.Unchecked);
-                ChildBloons_CheckedListBox.SetItemCheckState(ChildBloons_CheckedListBox.SelectedIndex, CheckState.Indeterminate);
+                Panel3.Hide();
+                if (SwitchPanel.Text == "Page 2")
+                    Panel1.Show();
+                else if (SwitchPanel.Text == "Page 1")
+                    Panel2.Show();
+
+                ChildBloons_Button.Text = "Child Bloons";
+            }
+            else
+            {
+                Panel1.Hide();
+                Panel2.Hide();
+                Panel3.Show();
+
+                if (SwitchPanel.Text == "Page 2")
+                    ChildBloons_Button.Text = "Page 1";
+                else if (SwitchPanel.Text == "Page 1")
+                    ChildBloons_Button.Text = "Page 2";
+            }   
+        }
+        private void AddChild_Button_Click(object sender, EventArgs e)
+        {
+            if (AvailibleChildBloons_LB.SelectedItem != null)
+            {
+                if (AvailibleChildBloons_LB.SelectedItem.ToString() != bloon.Type)
+                {
+                    CurrentChildBloon_ListBox.Items.Add(AvailibleChildBloons_LB.SelectedItem.ToString());
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog_CanRepeat("This tool does not allow adding the current selected bloon as a child bloon...");
+                }
+            }
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("You didn't select a bloon to add");
+            }
+        }
+        private void RemoveChild_Button_Click(object sender, EventArgs e)
+        {
+            int selected = CurrentChildBloon_ListBox.SelectedIndex;
+            int max = CurrentChildBloon_ListBox.Items.Count;
+            if(CurrentChildBloon_ListBox.SelectedItem != null)
+            {
+                CurrentChildBloon_ListBox.Items.RemoveAt(CurrentChildBloon_ListBox.SelectedIndex);
+                if (selected + 1 < max)
+                    CurrentChildBloon_ListBox.SelectedIndex = selected;
+                else
+                    CurrentChildBloon_ListBox.SelectedIndex = selected - 1;
+            }
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("You didn't select a bloon to remove");
             }
         }
 
-        private void ChildBloons_CheckedListBox_SelectedValueChanged(object sender, EventArgs e)
+        private void EZBloon_Editor_KeyDown(object sender, KeyEventArgs e)
         {
-            if (ChildBloons_CheckedListBox.SelectedItem.ToString() == bloon.Type)
+            if (e.KeyCode == Keys.F5)
             {
-                //ChildBloons_CheckedListBox.SetItemCheckState(ChildBloons_CheckedListBox.SelectedIndex, CheckState.Unchecked);
-                ChildBloons_CheckedListBox.SetItemCheckState(ChildBloons_CheckedListBox.SelectedIndex, CheckState.Indeterminate);
+                SaveFile();
+                ConsoleHandler.appendLog_CanRepeat("Saved " + BloonFiles_ComboBox.SelectedItem.ToString());
+                GeneralMethods.CompileJet("launch");
+                ConsoleHandler.appendLog_CanRepeat("Launching " + game);
             }
         }
     }

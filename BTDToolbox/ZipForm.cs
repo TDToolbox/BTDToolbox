@@ -220,34 +220,42 @@ namespace BTDToolbox
         }
         public void Compile()
         {
-            this.Text = "Compiling..";
-            if (gameName == "BTDB")
+            if (!IsGameRunning(gameName))
             {
-                if (rememberedPassword != null && rememberedPassword != "")
+                this.Text = "Compiling..";
+                if (gameName == "BTDB")
                 {
-                    password = rememberedPassword;
-                }
+                    if (rememberedPassword != null && rememberedPassword != "")
+                    {
+                        password = rememberedPassword;
+                    }
 
-                if (password == null || password.Length <= 0)
-                {
-                    var getpas = new Get_BTDB_Password();
-                    getpas.launch = launch;
-                    getpas.projName = projName;
-                    getpas.destPath = destPath;
-                    getpas.Show();
-                    this.Close();
+                    if (password == null || password.Length <= 0)
+                    {
+                        var getpas = new Get_BTDB_Password();
+                        getpas.launch = launch;
+                        getpas.projName = projName;
+                        getpas.destPath = destPath;
+                        getpas.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+
+                        backgroundThread = new Thread(Compile_OnThread);
+                        backgroundThread.Start();
+                    }
                 }
                 else
                 {
-
                     backgroundThread = new Thread(Compile_OnThread);
                     backgroundThread.Start();
                 }
             }
             else
             {
-                backgroundThread = new Thread(Compile_OnThread);
-                backgroundThread.Start();
+                ConsoleHandler.force_appendNotice("Game is currently running. Please close the game and try again...");
+                this.Close();
             }
         }
         private void Compile_OnThread()

@@ -27,7 +27,7 @@ namespace BTDToolbox.Classes
         public string SpriteFile { get; set; }
 
         [JsonProperty("InitialHealth")]
-        public double InitialHealth { get; set; }
+        public long InitialHealth { get; set; }
 
         [JsonProperty("Scale")]
         public double Scale { get; set; }
@@ -42,7 +42,7 @@ namespace BTDToolbox.Classes
         public double SpeedMultiplier { get; set; }
 
         [JsonProperty("RBE")]
-        public double Rbe { get; set; }
+        public long Rbe { get; set; }
 
         [JsonProperty("ChildBloons")]
         public object[] ChildBloons { get; set; }
@@ -69,7 +69,7 @@ namespace BTDToolbox.Classes
         public double HitAddon { get; set; }
 
         [JsonProperty("ChildEffectScale")]
-        public long ChildEffectScale { get; set; }
+        public double ChildEffectScale { get; set; }
 
         [JsonProperty("BloonAbility")]
         public string[] BloonAbility { get; set; }
