@@ -144,6 +144,12 @@
     <Compile Include="Extra Forms\UpdateChangelog.Designer.cs">
       <DependentUpon>UpdateChangelog.cs</DependentUpon>
     </Compile>
+    <Compile Include="JsonEditor_UserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JsonEditor_UserControl.Designer.cs">
+      <DependentUpon>JsonEditor_UserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="New_JsonEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\UpdateChangelog.resx">
       <DependentUpon>UpdateChangelog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JsonEditor_UserControl.resx">
+      <DependentUpon>JsonEditor_UserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="New_JsonEditor.resx">
       <DependentUpon>New_JsonEditor.cs</DependentUpon>
