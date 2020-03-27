@@ -348,6 +348,15 @@ namespace BTDToolbox.Extra_Forms
                 GeneralMethods.CompileJet("launch");
                 ConsoleHandler.appendLog_CanRepeat("Launching " + game);
             }
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (GoToCard_TB.Text.Length>0)
+                {
+                    GoToFile();
+                    GoToCard_TB.Text = "";
+                    
+                }
+            }
         }
         private void OpenText_Button_Click(object sender, EventArgs e)
         {
@@ -600,6 +609,54 @@ namespace BTDToolbox.Extra_Forms
             else
             {
                 ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+            }
+        }
+        private void GoToCard_Button_Click(object sender, EventArgs e)
+        {
+            GoToFile();
+        }
+        private void GoToFile()
+        {
+            if (GoToCard_TB.Text.Length > 0)
+            {
+                if (CardFiles_ComboBox != null)
+                {
+                    string searchText = GoToCard_TB.Text.Trim().Replace(" ","").Replace("\n", "");
+                    if (!searchText.Contains("Card"))
+                        searchText = "Card " + GoToCard_TB.Text;
+
+                    if (CardFiles_ComboBox.Items.Contains(searchText))
+                    {
+                        CardFiles_ComboBox.SelectedItem = searchText;
+                    }
+                    if (!CardFiles_ComboBox.Items.Contains(searchText))
+                    {
+                        if (CardFiles_ComboBox.Items.Contains(searchText.Replace(".json", "")))
+                        {
+                            CardFiles_ComboBox.SelectedItem = searchText;
+                        }
+                        else if (CardFiles_ComboBox.Items.Contains(searchText.Replace("Card ", "")))
+                        {
+                            CardFiles_ComboBox.SelectedItem = searchText;
+                        }
+                        else
+                        {
+                            ConsoleHandler.force_appendLog_CanRepeat("Could not find that card...");
+                            this.Focus();
+                        }
+                    }
+                    GoToCard_TB.Text = "";
+/*                    GoToCard_TB.Text.Remove(0, GoToCard_TB.Text.Length);
+                    GoToCard_TB.SelectionStart = GoToCard_TB.Text[0];
+                    GoToCard_TB.SelectAll();
+                    GoToCard_TB.SelectedText = "";
+                    GoToCard_TB.Refresh();*/
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("You didn't enter a card name to search...");
+                this.Focus();
             }
         }
     }

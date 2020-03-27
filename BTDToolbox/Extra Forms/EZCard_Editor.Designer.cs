@@ -95,6 +95,8 @@
             this.BloonBGSprite_TB = new System.Windows.Forms.RichTextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.BloonType_TB = new System.Windows.Forms.RichTextBox();
+            this.GoToCard_TB = new System.Windows.Forms.RichTextBox();
+            this.GoToCard_Button = new System.Windows.Forms.Button();
             this.TowerPanel.SuspendLayout();
             this.Open_Panel.SuspendLayout();
             this.Tower_Bloon_Panel.SuspendLayout();
@@ -111,7 +113,6 @@
             this.CardName_TB.ForeColor = System.Drawing.Color.White;
             this.CardName_TB.Location = new System.Drawing.Point(42, 95);
             this.CardName_TB.Name = "CardName_TB";
-            this.CardName_TB.ReadOnly = true;
             this.CardName_TB.Size = new System.Drawing.Size(250, 24);
             this.CardName_TB.TabIndex = 1;
             this.CardName_TB.Text = "";
@@ -689,7 +690,6 @@
             this.Upgrades2_TB.ForeColor = System.Drawing.Color.White;
             this.Upgrades2_TB.Location = new System.Drawing.Point(381, 231);
             this.Upgrades2_TB.Name = "Upgrades2_TB";
-            this.Upgrades2_TB.ReadOnly = true;
             this.Upgrades2_TB.Size = new System.Drawing.Size(74, 24);
             this.Upgrades2_TB.TabIndex = 107;
             this.Upgrades2_TB.Text = "";
@@ -713,7 +713,6 @@
             this.Upgrades1_TB.ForeColor = System.Drawing.Color.White;
             this.Upgrades1_TB.Location = new System.Drawing.Point(301, 231);
             this.Upgrades1_TB.Name = "Upgrades1_TB";
-            this.Upgrades1_TB.ReadOnly = true;
             this.Upgrades1_TB.Size = new System.Drawing.Size(74, 24);
             this.Upgrades1_TB.TabIndex = 105;
             this.Upgrades1_TB.Text = "";
@@ -737,7 +736,6 @@
             this.UnlockRound_TB.ForeColor = System.Drawing.Color.White;
             this.UnlockRound_TB.Location = new System.Drawing.Point(592, 211);
             this.UnlockRound_TB.Name = "UnlockRound_TB";
-            this.UnlockRound_TB.ReadOnly = true;
             this.UnlockRound_TB.Size = new System.Drawing.Size(171, 24);
             this.UnlockRound_TB.TabIndex = 84;
             this.UnlockRound_TB.Text = "";
@@ -761,7 +759,6 @@
             this.TowerBGSprite_TB.ForeColor = System.Drawing.Color.White;
             this.TowerBGSprite_TB.Location = new System.Drawing.Point(62, 141);
             this.TowerBGSprite_TB.Name = "TowerBGSprite_TB";
-            this.TowerBGSprite_TB.ReadOnly = true;
             this.TowerBGSprite_TB.Size = new System.Drawing.Size(415, 24);
             this.TowerBGSprite_TB.TabIndex = 103;
             this.TowerBGSprite_TB.Text = "";
@@ -785,7 +782,6 @@
             this.TowerCost_TB.ForeColor = System.Drawing.Color.White;
             this.TowerCost_TB.Location = new System.Drawing.Point(301, 281);
             this.TowerCost_TB.Name = "TowerCost_TB";
-            this.TowerCost_TB.ReadOnly = true;
             this.TowerCost_TB.Size = new System.Drawing.Size(156, 24);
             this.TowerCost_TB.TabIndex = 101;
             this.TowerCost_TB.Text = "";
@@ -809,7 +805,6 @@
             this.TowerType_TB.ForeColor = System.Drawing.Color.White;
             this.TowerType_TB.Location = new System.Drawing.Point(62, 88);
             this.TowerType_TB.Name = "TowerType_TB";
-            this.TowerType_TB.ReadOnly = true;
             this.TowerType_TB.Size = new System.Drawing.Size(222, 24);
             this.TowerType_TB.TabIndex = 99;
             this.TowerType_TB.Text = "";
@@ -833,7 +828,6 @@
             this.Interval_TB.ForeColor = System.Drawing.Color.White;
             this.Interval_TB.Location = new System.Drawing.Point(836, 307);
             this.Interval_TB.Name = "Interval_TB";
-            this.Interval_TB.ReadOnly = true;
             this.Interval_TB.Size = new System.Drawing.Size(171, 24);
             this.Interval_TB.TabIndex = 97;
             this.Interval_TB.Text = "";
@@ -857,7 +851,6 @@
             this.NumBloons_TB.ForeColor = System.Drawing.Color.White;
             this.NumBloons_TB.Location = new System.Drawing.Point(836, 355);
             this.NumBloons_TB.Name = "NumBloons_TB";
-            this.NumBloons_TB.ReadOnly = true;
             this.NumBloons_TB.Size = new System.Drawing.Size(171, 24);
             this.NumBloons_TB.TabIndex = 95;
             this.NumBloons_TB.Text = "";
@@ -881,7 +874,6 @@
             this.BloonCost_TB.ForeColor = System.Drawing.Color.White;
             this.BloonCost_TB.Location = new System.Drawing.Point(836, 211);
             this.BloonCost_TB.Name = "BloonCost_TB";
-            this.BloonCost_TB.ReadOnly = true;
             this.BloonCost_TB.Size = new System.Drawing.Size(171, 24);
             this.BloonCost_TB.TabIndex = 93;
             this.BloonCost_TB.Text = "";
@@ -935,7 +927,6 @@
             this.IncomeChange_TB.ForeColor = System.Drawing.Color.White;
             this.IncomeChange_TB.Location = new System.Drawing.Point(836, 259);
             this.IncomeChange_TB.Name = "IncomeChange_TB";
-            this.IncomeChange_TB.ReadOnly = true;
             this.IncomeChange_TB.Size = new System.Drawing.Size(171, 24);
             this.IncomeChange_TB.TabIndex = 88;
             this.IncomeChange_TB.Text = "";
@@ -959,7 +950,6 @@
             this.BloonBGSprite_TB.ForeColor = System.Drawing.Color.White;
             this.BloonBGSprite_TB.Location = new System.Drawing.Point(592, 142);
             this.BloonBGSprite_TB.Name = "BloonBGSprite_TB";
-            this.BloonBGSprite_TB.ReadOnly = true;
             this.BloonBGSprite_TB.Size = new System.Drawing.Size(415, 24);
             this.BloonBGSprite_TB.TabIndex = 86;
             this.BloonBGSprite_TB.Text = "";
@@ -983,10 +973,37 @@
             this.BloonType_TB.ForeColor = System.Drawing.Color.White;
             this.BloonType_TB.Location = new System.Drawing.Point(592, 89);
             this.BloonType_TB.Name = "BloonType_TB";
-            this.BloonType_TB.ReadOnly = true;
             this.BloonType_TB.Size = new System.Drawing.Size(222, 24);
             this.BloonType_TB.TabIndex = 82;
             this.BloonType_TB.Text = "";
+            // 
+            // GoToCard_TB
+            // 
+            this.GoToCard_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.GoToCard_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.GoToCard_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GoToCard_TB.ForeColor = System.Drawing.Color.White;
+            this.GoToCard_TB.Location = new System.Drawing.Point(739, 15);
+            this.GoToCard_TB.Multiline = false;
+            this.GoToCard_TB.Name = "GoToCard_TB";
+            this.GoToCard_TB.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.GoToCard_TB.Size = new System.Drawing.Size(201, 24);
+            this.GoToCard_TB.TabIndex = 115;
+            this.GoToCard_TB.Text = "";
+            // 
+            // GoToCard_Button
+            // 
+            this.GoToCard_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.GoToCard_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GoToCard_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.GoToCard_Button.ForeColor = System.Drawing.Color.White;
+            this.GoToCard_Button.Location = new System.Drawing.Point(946, 10);
+            this.GoToCard_Button.Name = "GoToCard_Button";
+            this.GoToCard_Button.Size = new System.Drawing.Size(117, 32);
+            this.GoToCard_Button.TabIndex = 116;
+            this.GoToCard_Button.Text = "GoTo  Card";
+            this.GoToCard_Button.UseVisualStyleBackColor = false;
+            this.GoToCard_Button.Click += new System.EventHandler(this.GoToCard_Button_Click);
             // 
             // EZCard_Editor
             // 
@@ -994,6 +1011,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.GoToCard_Button);
+            this.Controls.Add(this.GoToCard_TB);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.TotalStartingCards_Label);
             this.Controls.Add(this.OpenText_Button);
@@ -1001,8 +1020,8 @@
             this.Controls.Add(this.CardFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.Card_Label);
-            this.Controls.Add(this.Tower_Bloon_Panel);
             this.Controls.Add(this.TowerPanel);
+            this.Controls.Add(this.Tower_Bloon_Panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -1092,5 +1111,7 @@
         private System.Windows.Forms.Button OpenBloonText_Button;
         private System.Windows.Forms.Button OpenEZBloon_Button;
         private System.Windows.Forms.Button OpenBloon_Button;
+        private System.Windows.Forms.RichTextBox GoToCard_TB;
+        private System.Windows.Forms.Button GoToCard_Button;
     }
 }
