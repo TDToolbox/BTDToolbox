@@ -21,14 +21,19 @@ namespace BTDToolbox.Extra_Forms
 
         Card card;
         Card newCard;
+        PowerCard powerCard;
         EasyTowerEditor ezTower;
         EZBloon_Editor ezBloon;
 
         bool openStarterCard = false;
         bool openTower = false;
         bool openBloon = false;
+        bool mouseHolding = false;
+        int numStarterCards = 0;
+        System.Threading.Thread thread;
         public static bool EZCard_Opened = false;
         public string[] startingCards_array = new string[0];
+
         string game = Serializer.Deserialize_Config().CurrentGame;
 
         public EZCard_Editor()
@@ -45,18 +50,69 @@ namespace BTDToolbox.Extra_Forms
             if (JSON_Reader.IsValidJson(json))
             {
                 card = Card.FromJson(json);
-                PopulateUI();
+
+                if (card.CardSet == "Power")
+                {
+                    powerCard = PowerCard.FromJson(json);
+                    PopulateUI_Power();
+                }
+                else
+                {
+                    PopulateUI_Cards();
+                }
             }
             else
                 ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
         }
-        private void PopulateUI()
+        private void PopulateUI_Power()
+        {
+            ResetUI();
+            RefreshStartCards_LB();
+            Tower_Bloon_Panel.Visible = false;
+            TowerPanel.Visible = true;
+            SwitchPanel.Visible = false;
+            Desc_label.Visible = true;
+            Description_TB.Visible = true;
+            label1.Visible = true;
+            PlatformProduectID_TB.Visible = true;
+            ProductID_Label.Visible = true;
+            ProductID_TB.Visible = true;
+            OldName_TB.Size = new Size(213, 24);
+            OldName_Label.Location = new Point(280, 202);
+            OldName_TB.Location = new Point(280, 223);
+
+            Card_Label.Text = "Card " + powerCard.Name;
+            CardName_TB.Text = powerCard.Name;
+            CardSet_TB.Text = powerCard.CardSet;
+            CardSprite_TB.Text = powerCard.CardSprite;
+            DiscardCost_TB.Text = powerCard.DiscardCost.ToString();
+            OldName_TB.Text = powerCard.NameOld;
+            ProductID_TB.Text = powerCard.ProductId;
+            Description_TB.Text = powerCard.Description;
+            PlatformProduectID_TB.Text = powerCard.PlatformProductId;
+            UnlockMethod_LB.SelectedItem = powerCard.UnlockMethod;
+            UnlockWinCount_TB.Text = powerCard.UnlockWin.Count.ToString();
+            UnlockWinType_TB.Text = powerCard.UnlockWin.Type.ToString();
+            SpotlightCount_TB.Text = powerCard.UnlockWin.SpotlightCount.ToString();
+        }
+        private void PopulateUI_Cards()
         {
             if (card != null)
             {
                 ResetUI();
                 RefreshStartCards_LB();
+                SwitchPanel.Text = "Page 2";
+                SwitchPanel.Visible = true;
+                Desc_label.Visible = false;
+                Description_TB.Visible = false;
+                label1.Visible = false;
+                PlatformProduectID_TB.Visible = false;
+                ProductID_Label.Visible = false;
+                ProductID_TB.Visible = false;
 
+                OldName_TB.Size = new Size(451, 24);
+                OldName_Label.Location = new Point(42, 251);
+                OldName_TB.Location = new Point(42, 272);
                 //Panel1 stuff
                 Card_Label.Text = "Card " + card.Name;
                 CardName_TB.Text = card.Name;
@@ -86,9 +142,12 @@ namespace BTDToolbox.Extra_Forms
                 Upgrades1_TB.Text = card.Tower.Upgrades[0].ToString();
                 Upgrades2_TB.Text = card.Tower.Upgrades[1].ToString();
                 TowerCost_TB.Text = card.Tower.Cost.ToString();
-                foreach (var cardfeats in card.Tower.Features)
+                if (card.Tower.Features != null)
                 {
-                    TowerFeatures_LB.SelectedItem = cardfeats;
+                    foreach (var cardfeats in card.Tower.Features)
+                    {
+                        TowerFeatures_LB.SelectedItem = cardfeats;
+                    }
                 }
 
 
@@ -164,10 +223,12 @@ namespace BTDToolbox.Extra_Forms
                 var saveFile = SerializeCard.ToJson(newCard);
                 File.WriteAllText(path, saveFile);
             }
+
+            RefreshStartCards_LB();
         }
         private int CountStartingCards()
         {
-            int numStartingCards = 0;
+            numStarterCards = 0;
             string cardPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions";
             var cardFiles = Directory.GetFiles(cardPath);
             string[] cards_length2 = new string[0];
@@ -184,7 +245,7 @@ namespace BTDToolbox.Extra_Forms
                         newCard = Card.FromJson(json);
                         if (newCard.StartingCard)
                         {
-                            numStartingCards++;
+                            numStarterCards++;
                             string[] split = item.Split('\\');
                             string filename = split[split.Length - 1].Replace("\\", "");
 
@@ -217,8 +278,8 @@ namespace BTDToolbox.Extra_Forms
             Array.Copy(cards_length2, 0, startingCards_array, startingCards_arraySize, cards_length2.Length);
             Array.Copy(cards_length3, 0, startingCards_array, startingCards_arraySize + cards_length2.Length, cards_length3.Length);
 
-            TotalStartingCards_Label.Text = "Total starting cards : " + numStartingCards;
-            return numStartingCards;
+            TotalStartingCards_Label.Text = "Total starting cards : " + numStarterCards;
+            return numStarterCards;
         }
         private void ResetUI()
         {
@@ -251,6 +312,11 @@ namespace BTDToolbox.Extra_Forms
             NumBloons_TB.Text = "";
             Interval_TB.Text = "";
             BloonFeatures_LB.SelectedIndex = -1;
+
+            //Power stuff
+            UnlockWinCount_TB.Text = "";
+            UnlockWinType_TB.Text = "";
+            SpotlightCount_TB.Text = "";
         }
         //
         // Handling UI changes
@@ -462,7 +528,11 @@ namespace BTDToolbox.Extra_Forms
         private void RefreshStartCards_LB()
         {
             startingCards_array = new string[0];
-            CountStartingCards();
+            if(CountStartingCards() < 15)
+            {
+                ConsoleHandler.force_appendNotice("ERROR! You need at least 15 starter cards or the game will crash!");
+                this.Focus();
+            }
             StartingCards_LB.Items.Clear();
             StartingCards_LB.Items.AddRange(startingCards_array);
         }
@@ -484,13 +554,13 @@ namespace BTDToolbox.Extra_Forms
             Card_Label.MouseClick += Close_OpenPanel;
             UnlockMethod_Label.MouseClick += Close_OpenPanel;
             TotalStartingCards_Label.MouseClick += Close_OpenPanel;
-            label1.MouseClick += Close_OpenPanel;
-            label2.MouseClick += Close_OpenPanel;
+            DiscardCost_Label.MouseClick += Close_OpenPanel;
+            CardName_Label.MouseClick += Close_OpenPanel;
             label3.MouseClick += Close_OpenPanel;
-            label4.MouseClick += Close_OpenPanel;
-            label5.MouseClick += Close_OpenPanel;
-            label6.MouseClick += Close_OpenPanel;
-            label16.MouseClick += Close_OpenPanel;
+            CardSet_Label.MouseClick += Close_OpenPanel;
+            CardSprite_Label.MouseClick += Close_OpenPanel;
+            StartingCards_Label.MouseClick += Close_OpenPanel;
+            OldName_Label.MouseClick += Close_OpenPanel;
             Game_Label.MouseClick += Close_OpenPanel;
 
             Tower_Bloon_Panel.MouseClick += Close_OpenPanel;
@@ -541,6 +611,13 @@ namespace BTDToolbox.Extra_Forms
             SwitchPanel.MouseClick += Close_OpenPanel;
             OpenEZTower_Button.MouseClick += Close_OpenPanel;
             OpenEZBloon_Button.MouseClick += Close_OpenPanel;
+
+            GoToCard_Button.MouseClick += Close_OpenPanel;
+            GoToCard_TB.MouseClick += Close_OpenPanel;
+            PlatformProduectID_TB.MouseClick += Close_OpenPanel;
+            label1.MouseClick += Close_OpenPanel;
+            ProductID_Label.MouseClick += Close_OpenPanel;
+            ProductID_TB.MouseClick += Close_OpenPanel;
         }
         private void Close_OpenPanel(object sender, EventArgs e)
         {
@@ -550,6 +627,8 @@ namespace BTDToolbox.Extra_Forms
                 OpenTower_Panel.Visible = false;
             if (OpenBloon_Panel.Visible == true)
                 OpenBloon_Panel.Visible = false;
+            if (UnlockWin_Panel.Visible == true)
+                UnlockWin_Panel.Visible = false;
         }
         private void OpenTower_Button_Click(object sender, EventArgs e)
         {
@@ -646,11 +725,6 @@ namespace BTDToolbox.Extra_Forms
                         }
                     }
                     GoToCard_TB.Text = "";
-/*                    GoToCard_TB.Text.Remove(0, GoToCard_TB.Text.Length);
-                    GoToCard_TB.SelectionStart = GoToCard_TB.Text[0];
-                    GoToCard_TB.SelectAll();
-                    GoToCard_TB.SelectedText = "";
-                    GoToCard_TB.Refresh();*/
                 }
             }
             else
@@ -658,6 +732,78 @@ namespace BTDToolbox.Extra_Forms
                 ConsoleHandler.force_appendNotice("You didn't enter a card name to search...");
                 this.Focus();
             }
+        }
+        private void EZCard_Editor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (numStarterCards < 15)
+            {
+                MessageBox.Show("ERROR! You don't have at least 15 Starter Cards! The game will crash if you don't have at least 15 starter cards");
+            }
+        }
+
+        private void UnlockMethod_LB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(UnlockMethod_LB.SelectedIndex == 2)
+            {
+                UnlockWin_Button.Visible = true;
+            }
+            else
+            {
+                UnlockWin_Button.Visible = false;
+            }
+        }
+
+        private void UnlockWin_Button_Click(object sender, EventArgs e)
+        {
+            UnlockWin_Panel.Visible = !UnlockWin_Panel.Visible;
+        }
+        private void PrevCard_Button_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseHolding = true;
+            thread = new System.Threading.Thread(delegate () { CardAutoScroll("back"); });
+            thread.Start();
+        }
+        private void CardAutoScroll(string direction)
+        {
+            Invoke((MethodInvoker)delegate {
+                if (direction == "back")
+                {
+                    if (CardFiles_ComboBox.SelectedIndex - 1 >= 0)
+                    {
+                        CardFiles_ComboBox.SelectedIndex = CardFiles_ComboBox.SelectedIndex - 1;
+                    }
+                }
+                else
+                {
+                    if (CardFiles_ComboBox.SelectedIndex + 1 <= CardFiles_ComboBox.Items.Count - 1)
+                    {
+                        CardFiles_ComboBox.SelectedIndex = CardFiles_ComboBox.SelectedIndex + 1;
+                    }
+                }
+                
+            });
+            System.Threading.Thread.Sleep(125);
+
+            if (mouseHolding == true)
+            {
+                CardAutoScroll(direction);
+            }
+        }
+        private void PrevCard_Button_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseHolding = false;
+            thread.Abort();
+        }
+        private void NextCard_Button_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseHolding = true;
+            thread = new System.Threading.Thread(delegate () { CardAutoScroll("forward"); });
+            thread.Start();
+        }
+        private void NextCard_Button_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseHolding = false;
+            thread.Abort();
         }
     }
 }

@@ -30,30 +30,43 @@
         {
             this.CardName_TB = new System.Windows.Forms.RichTextBox();
             this.Card_Label = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.CardName_Label = new System.Windows.Forms.Label();
+            this.CardSet_Label = new System.Windows.Forms.Label();
             this.CardSet_TB = new System.Windows.Forms.RichTextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.CardSprite_Label = new System.Windows.Forms.Label();
             this.CardSprite_TB = new System.Windows.Forms.RichTextBox();
             this.StartingCard_CheckBox = new System.Windows.Forms.CheckBox();
-            this.label16 = new System.Windows.Forms.Label();
+            this.OldName_Label = new System.Windows.Forms.Label();
             this.OldName_TB = new System.Windows.Forms.RichTextBox();
             this.Save_Button = new System.Windows.Forms.Button();
             this.CardFiles_ComboBox = new System.Windows.Forms.ComboBox();
             this.TowerPanel = new System.Windows.Forms.Panel();
+            this.UnlockWin_Panel = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.UnlockWinType_TB = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.SpotlightCount_TB = new System.Windows.Forms.RichTextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.UnlockWinCount_TB = new System.Windows.Forms.RichTextBox();
+            this.UnlockWin_Button = new System.Windows.Forms.Button();
+            this.PlatformProduectID_TB = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Desc_label = new System.Windows.Forms.Label();
+            this.Description_TB = new System.Windows.Forms.RichTextBox();
             this.Open_Panel = new System.Windows.Forms.Panel();
             this.StartingCard_OpenText_Button = new System.Windows.Forms.Button();
             this.OpenInEZCard_Button = new System.Windows.Forms.Button();
             this.Open_Button = new System.Windows.Forms.Button();
             this.RefreshList_Button = new System.Windows.Forms.Button();
             this.StartingCards_LB = new System.Windows.Forms.ListBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.StartingCards_Label = new System.Windows.Forms.Label();
             this.Visible_CheckBox = new System.Windows.Forms.CheckBox();
             this.Game_Label = new System.Windows.Forms.Label();
             this.UnlockMethod_LB = new System.Windows.Forms.ListBox();
             this.UnlockMethod_Label = new System.Windows.Forms.Label();
             this.DiscardCost_TB = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.DiscardCost_Label = new System.Windows.Forms.Label();
             this.SwitchPanel = new System.Windows.Forms.Button();
             this.OpenText_Button = new System.Windows.Forms.Button();
             this.TotalStartingCards_Label = new System.Windows.Forms.Label();
@@ -97,7 +110,12 @@
             this.BloonType_TB = new System.Windows.Forms.RichTextBox();
             this.GoToCard_TB = new System.Windows.Forms.RichTextBox();
             this.GoToCard_Button = new System.Windows.Forms.Button();
+            this.ProductID_TB = new System.Windows.Forms.RichTextBox();
+            this.ProductID_Label = new System.Windows.Forms.Label();
+            this.NextCard_Button = new System.Windows.Forms.Button();
+            this.PrevCard_Button = new System.Windows.Forms.Button();
             this.TowerPanel.SuspendLayout();
+            this.UnlockWin_Panel.SuspendLayout();
             this.Open_Panel.SuspendLayout();
             this.Tower_Bloon_Panel.SuspendLayout();
             this.OpenBloon_Panel.SuspendLayout();
@@ -111,9 +129,9 @@
             this.CardName_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CardName_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CardName_TB.ForeColor = System.Drawing.Color.White;
-            this.CardName_TB.Location = new System.Drawing.Point(42, 95);
+            this.CardName_TB.Location = new System.Drawing.Point(42, 72);
             this.CardName_TB.Name = "CardName_TB";
-            this.CardName_TB.Size = new System.Drawing.Size(250, 24);
+            this.CardName_TB.Size = new System.Drawing.Size(213, 24);
             this.CardName_TB.TabIndex = 1;
             this.CardName_TB.Text = "";
             // 
@@ -129,27 +147,27 @@
             this.Card_Label.TabIndex = 3;
             this.Card_Label.Text = "Card number";
             // 
-            // label2
+            // CardName_Label
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(42, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 20);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Card name:";
+            this.CardName_Label.AutoSize = true;
+            this.CardName_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardName_Label.ForeColor = System.Drawing.Color.White;
+            this.CardName_Label.Location = new System.Drawing.Point(42, 49);
+            this.CardName_Label.Name = "CardName_Label";
+            this.CardName_Label.Size = new System.Drawing.Size(91, 20);
+            this.CardName_Label.TabIndex = 4;
+            this.CardName_Label.Text = "Card name:";
             // 
-            // label4
+            // CardSet_Label
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(42, 122);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 20);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Card set:";
+            this.CardSet_Label.AutoSize = true;
+            this.CardSet_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardSet_Label.ForeColor = System.Drawing.Color.White;
+            this.CardSet_Label.Location = new System.Drawing.Point(42, 99);
+            this.CardSet_Label.Name = "CardSet_Label";
+            this.CardSet_Label.Size = new System.Drawing.Size(73, 20);
+            this.CardSet_Label.TabIndex = 8;
+            this.CardSet_Label.Text = "Card set:";
             // 
             // CardSet_TB
             // 
@@ -157,22 +175,22 @@
             this.CardSet_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CardSet_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CardSet_TB.ForeColor = System.Drawing.Color.White;
-            this.CardSet_TB.Location = new System.Drawing.Point(42, 145);
+            this.CardSet_TB.Location = new System.Drawing.Point(42, 122);
             this.CardSet_TB.Name = "CardSet_TB";
-            this.CardSet_TB.Size = new System.Drawing.Size(250, 24);
+            this.CardSet_TB.Size = new System.Drawing.Size(213, 24);
             this.CardSet_TB.TabIndex = 7;
             this.CardSet_TB.Text = "";
             // 
-            // label5
+            // CardSprite_Label
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(42, 171);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(93, 20);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Card sprite:";
+            this.CardSprite_Label.AutoSize = true;
+            this.CardSprite_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardSprite_Label.ForeColor = System.Drawing.Color.White;
+            this.CardSprite_Label.Location = new System.Drawing.Point(42, 148);
+            this.CardSprite_Label.Name = "CardSprite_Label";
+            this.CardSprite_Label.Size = new System.Drawing.Size(93, 20);
+            this.CardSprite_Label.TabIndex = 10;
+            this.CardSprite_Label.Text = "Card sprite:";
             // 
             // CardSprite_TB
             // 
@@ -180,9 +198,9 @@
             this.CardSprite_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CardSprite_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CardSprite_TB.ForeColor = System.Drawing.Color.White;
-            this.CardSprite_TB.Location = new System.Drawing.Point(42, 194);
+            this.CardSprite_TB.Location = new System.Drawing.Point(42, 171);
             this.CardSprite_TB.Name = "CardSprite_TB";
-            this.CardSprite_TB.Size = new System.Drawing.Size(250, 24);
+            this.CardSprite_TB.Size = new System.Drawing.Size(213, 24);
             this.CardSprite_TB.TabIndex = 9;
             this.CardSprite_TB.Text = "";
             // 
@@ -191,23 +209,23 @@
             this.StartingCard_CheckBox.AutoSize = true;
             this.StartingCard_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.StartingCard_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.StartingCard_CheckBox.Location = new System.Drawing.Point(320, 219);
+            this.StartingCard_CheckBox.Location = new System.Drawing.Point(280, 59);
             this.StartingCard_CheckBox.Name = "StartingCard_CheckBox";
             this.StartingCard_CheckBox.Size = new System.Drawing.Size(122, 24);
             this.StartingCard_CheckBox.TabIndex = 12;
             this.StartingCard_CheckBox.Text = "Starting card";
             this.StartingCard_CheckBox.UseVisualStyleBackColor = true;
             // 
-            // label16
+            // OldName_Label
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(42, 274);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(83, 20);
-            this.label16.TabIndex = 40;
-            this.label16.Text = "Old name:";
+            this.OldName_Label.AutoSize = true;
+            this.OldName_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OldName_Label.ForeColor = System.Drawing.Color.White;
+            this.OldName_Label.Location = new System.Drawing.Point(42, 251);
+            this.OldName_Label.Name = "OldName_Label";
+            this.OldName_Label.Size = new System.Drawing.Size(83, 20);
+            this.OldName_Label.TabIndex = 40;
+            this.OldName_Label.Text = "Old name:";
             // 
             // OldName_TB
             // 
@@ -215,9 +233,9 @@
             this.OldName_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.OldName_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OldName_TB.ForeColor = System.Drawing.Color.White;
-            this.OldName_TB.Location = new System.Drawing.Point(42, 295);
+            this.OldName_TB.Location = new System.Drawing.Point(42, 272);
             this.OldName_TB.Name = "OldName_TB";
-            this.OldName_TB.Size = new System.Drawing.Size(498, 24);
+            this.OldName_TB.Size = new System.Drawing.Size(451, 24);
             this.OldName_TB.TabIndex = 39;
             this.OldName_TB.Text = "";
             // 
@@ -227,7 +245,7 @@
             this.Save_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Save_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.Save_Button.ForeColor = System.Drawing.Color.White;
-            this.Save_Button.Location = new System.Drawing.Point(890, 484);
+            this.Save_Button.Location = new System.Drawing.Point(829, 484);
             this.Save_Button.Name = "Save_Button";
             this.Save_Button.Size = new System.Drawing.Size(164, 58);
             this.Save_Button.TabIndex = 47;
@@ -253,30 +271,196 @@
             // 
             this.TowerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TowerPanel.Controls.Add(this.UnlockWin_Panel);
+            this.TowerPanel.Controls.Add(this.UnlockWin_Button);
+            this.TowerPanel.Controls.Add(this.PlatformProduectID_TB);
+            this.TowerPanel.Controls.Add(this.label1);
+            this.TowerPanel.Controls.Add(this.Desc_label);
+            this.TowerPanel.Controls.Add(this.Description_TB);
             this.TowerPanel.Controls.Add(this.Open_Panel);
             this.TowerPanel.Controls.Add(this.Open_Button);
             this.TowerPanel.Controls.Add(this.RefreshList_Button);
             this.TowerPanel.Controls.Add(this.StartingCards_LB);
-            this.TowerPanel.Controls.Add(this.label6);
+            this.TowerPanel.Controls.Add(this.StartingCards_Label);
             this.TowerPanel.Controls.Add(this.Visible_CheckBox);
             this.TowerPanel.Controls.Add(this.Game_Label);
             this.TowerPanel.Controls.Add(this.UnlockMethod_LB);
             this.TowerPanel.Controls.Add(this.UnlockMethod_Label);
             this.TowerPanel.Controls.Add(this.OldName_TB);
-            this.TowerPanel.Controls.Add(this.label16);
+            this.TowerPanel.Controls.Add(this.OldName_Label);
             this.TowerPanel.Controls.Add(this.DiscardCost_TB);
-            this.TowerPanel.Controls.Add(this.label1);
-            this.TowerPanel.Controls.Add(this.label2);
+            this.TowerPanel.Controls.Add(this.DiscardCost_Label);
+            this.TowerPanel.Controls.Add(this.CardName_Label);
             this.TowerPanel.Controls.Add(this.CardName_TB);
             this.TowerPanel.Controls.Add(this.CardSet_TB);
-            this.TowerPanel.Controls.Add(this.label4);
+            this.TowerPanel.Controls.Add(this.CardSet_Label);
             this.TowerPanel.Controls.Add(this.CardSprite_TB);
-            this.TowerPanel.Controls.Add(this.label5);
+            this.TowerPanel.Controls.Add(this.CardSprite_Label);
             this.TowerPanel.Controls.Add(this.StartingCard_CheckBox);
             this.TowerPanel.Location = new System.Drawing.Point(2, 50);
             this.TowerPanel.Name = "TowerPanel";
             this.TowerPanel.Size = new System.Drawing.Size(1071, 425);
             this.TowerPanel.TabIndex = 49;
+            // 
+            // UnlockWin_Panel
+            // 
+            this.UnlockWin_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UnlockWin_Panel.Controls.Add(this.label6);
+            this.UnlockWin_Panel.Controls.Add(this.UnlockWinType_TB);
+            this.UnlockWin_Panel.Controls.Add(this.label5);
+            this.UnlockWin_Panel.Controls.Add(this.SpotlightCount_TB);
+            this.UnlockWin_Panel.Controls.Add(this.label4);
+            this.UnlockWin_Panel.Controls.Add(this.label2);
+            this.UnlockWin_Panel.Controls.Add(this.UnlockWinCount_TB);
+            this.UnlockWin_Panel.Location = new System.Drawing.Point(560, 81);
+            this.UnlockWin_Panel.Name = "UnlockWin_Panel";
+            this.UnlockWin_Panel.Size = new System.Drawing.Size(230, 197);
+            this.UnlockWin_Panel.TabIndex = 118;
+            this.UnlockWin_Panel.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(4, 140);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 20);
+            this.label6.TabIndex = 125;
+            this.label6.Text = "Type:";
+            // 
+            // UnlockWinType_TB
+            // 
+            this.UnlockWinType_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.UnlockWinType_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UnlockWinType_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UnlockWinType_TB.ForeColor = System.Drawing.Color.White;
+            this.UnlockWinType_TB.Location = new System.Drawing.Point(8, 162);
+            this.UnlockWinType_TB.Name = "UnlockWinType_TB";
+            this.UnlockWinType_TB.Size = new System.Drawing.Size(213, 24);
+            this.UnlockWinType_TB.TabIndex = 124;
+            this.UnlockWinType_TB.Text = "";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(4, 91);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(127, 20);
+            this.label5.TabIndex = 123;
+            this.label5.Text = "Spotlight count:";
+            // 
+            // SpotlightCount_TB
+            // 
+            this.SpotlightCount_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.SpotlightCount_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.SpotlightCount_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SpotlightCount_TB.ForeColor = System.Drawing.Color.White;
+            this.SpotlightCount_TB.Location = new System.Drawing.Point(8, 113);
+            this.SpotlightCount_TB.Name = "SpotlightCount_TB";
+            this.SpotlightCount_TB.Size = new System.Drawing.Size(213, 24);
+            this.SpotlightCount_TB.TabIndex = 122;
+            this.SpotlightCount_TB.Text = "";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(4, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 20);
+            this.label4.TabIndex = 121;
+            this.label4.Text = "Count:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(70, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 20);
+            this.label2.TabIndex = 120;
+            this.label2.Text = "UnlockWin";
+            // 
+            // UnlockWinCount_TB
+            // 
+            this.UnlockWinCount_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.UnlockWinCount_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UnlockWinCount_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UnlockWinCount_TB.ForeColor = System.Drawing.Color.White;
+            this.UnlockWinCount_TB.Location = new System.Drawing.Point(8, 63);
+            this.UnlockWinCount_TB.Name = "UnlockWinCount_TB";
+            this.UnlockWinCount_TB.Size = new System.Drawing.Size(213, 24);
+            this.UnlockWinCount_TB.TabIndex = 119;
+            this.UnlockWinCount_TB.Text = "";
+            // 
+            // UnlockWin_Button
+            // 
+            this.UnlockWin_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.UnlockWin_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UnlockWin_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UnlockWin_Button.ForeColor = System.Drawing.Color.White;
+            this.UnlockWin_Button.Location = new System.Drawing.Point(499, 144);
+            this.UnlockWin_Button.Name = "UnlockWin_Button";
+            this.UnlockWin_Button.Size = new System.Drawing.Size(55, 28);
+            this.UnlockWin_Button.TabIndex = 117;
+            this.UnlockWin_Button.Text = ">>";
+            this.UnlockWin_Button.UseVisualStyleBackColor = false;
+            this.UnlockWin_Button.Click += new System.EventHandler(this.UnlockWin_Button_Click);
+            // 
+            // PlatformProduectID_TB
+            // 
+            this.PlatformProduectID_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.PlatformProduectID_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PlatformProduectID_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PlatformProduectID_TB.ForeColor = System.Drawing.Color.White;
+            this.PlatformProduectID_TB.Location = new System.Drawing.Point(42, 272);
+            this.PlatformProduectID_TB.Name = "PlatformProduectID_TB";
+            this.PlatformProduectID_TB.Size = new System.Drawing.Size(451, 24);
+            this.PlatformProduectID_TB.TabIndex = 83;
+            this.PlatformProduectID_TB.Text = "";
+            this.PlatformProduectID_TB.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(38, 249);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(156, 20);
+            this.label1.TabIndex = 84;
+            this.label1.Text = "Platform Product ID:";
+            this.label1.Visible = false;
+            // 
+            // Desc_label
+            // 
+            this.Desc_label.AutoSize = true;
+            this.Desc_label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Desc_label.ForeColor = System.Drawing.Color.White;
+            this.Desc_label.Location = new System.Drawing.Point(42, 299);
+            this.Desc_label.Name = "Desc_label";
+            this.Desc_label.Size = new System.Drawing.Size(97, 20);
+            this.Desc_label.TabIndex = 82;
+            this.Desc_label.Text = "Description:";
+            this.Desc_label.Visible = false;
+            // 
+            // Description_TB
+            // 
+            this.Description_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.Description_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Description_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Description_TB.ForeColor = System.Drawing.Color.White;
+            this.Description_TB.Location = new System.Drawing.Point(42, 322);
+            this.Description_TB.Name = "Description_TB";
+            this.Description_TB.Size = new System.Drawing.Size(451, 87);
+            this.Description_TB.TabIndex = 81;
+            this.Description_TB.Text = "";
+            this.Description_TB.Visible = false;
             // 
             // Open_Panel
             // 
@@ -357,23 +541,23 @@
             this.StartingCards_LB.Size = new System.Drawing.Size(288, 320);
             this.StartingCards_LB.TabIndex = 75;
             // 
-            // label6
+            // StartingCards_Label
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(667, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(114, 20);
-            this.label6.TabIndex = 74;
-            this.label6.Text = "Starting cards:";
+            this.StartingCards_Label.AutoSize = true;
+            this.StartingCards_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StartingCards_Label.ForeColor = System.Drawing.Color.White;
+            this.StartingCards_Label.Location = new System.Drawing.Point(667, 26);
+            this.StartingCards_Label.Name = "StartingCards_Label";
+            this.StartingCards_Label.Size = new System.Drawing.Size(114, 20);
+            this.StartingCards_Label.TabIndex = 74;
+            this.StartingCards_Label.Text = "Starting cards:";
             // 
             // Visible_CheckBox
             // 
             this.Visible_CheckBox.AutoSize = true;
             this.Visible_CheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.Visible_CheckBox.ForeColor = System.Drawing.Color.White;
-            this.Visible_CheckBox.Location = new System.Drawing.Point(461, 219);
+            this.Visible_CheckBox.Location = new System.Drawing.Point(409, 59);
             this.Visible_CheckBox.Name = "Visible_CheckBox";
             this.Visible_CheckBox.Size = new System.Drawing.Size(76, 24);
             this.Visible_CheckBox.TabIndex = 70;
@@ -404,17 +588,18 @@
             "Unlocked",
             "Tower",
             "Win"});
-            this.UnlockMethod_LB.Location = new System.Drawing.Point(332, 95);
+            this.UnlockMethod_LB.Location = new System.Drawing.Point(280, 108);
             this.UnlockMethod_LB.Name = "UnlockMethod_LB";
-            this.UnlockMethod_LB.Size = new System.Drawing.Size(208, 100);
+            this.UnlockMethod_LB.Size = new System.Drawing.Size(213, 60);
             this.UnlockMethod_LB.TabIndex = 64;
+            this.UnlockMethod_LB.SelectedIndexChanged += new System.EventHandler(this.UnlockMethod_LB_SelectedIndexChanged);
             // 
             // UnlockMethod_Label
             // 
             this.UnlockMethod_Label.AutoSize = true;
             this.UnlockMethod_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UnlockMethod_Label.ForeColor = System.Drawing.Color.White;
-            this.UnlockMethod_Label.Location = new System.Drawing.Point(332, 73);
+            this.UnlockMethod_Label.Location = new System.Drawing.Point(280, 86);
             this.UnlockMethod_Label.Name = "UnlockMethod_Label";
             this.UnlockMethod_Label.Size = new System.Drawing.Size(125, 20);
             this.UnlockMethod_Label.TabIndex = 59;
@@ -426,22 +611,22 @@
             this.DiscardCost_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DiscardCost_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DiscardCost_TB.ForeColor = System.Drawing.Color.White;
-            this.DiscardCost_TB.Location = new System.Drawing.Point(42, 246);
+            this.DiscardCost_TB.Location = new System.Drawing.Point(42, 223);
             this.DiscardCost_TB.Name = "DiscardCost_TB";
-            this.DiscardCost_TB.Size = new System.Drawing.Size(250, 24);
+            this.DiscardCost_TB.Size = new System.Drawing.Size(213, 24);
             this.DiscardCost_TB.TabIndex = 48;
             this.DiscardCost_TB.Text = "";
             // 
-            // label1
+            // DiscardCost_Label
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(42, 223);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 20);
-            this.label1.TabIndex = 49;
-            this.label1.Text = "Discard cost:";
+            this.DiscardCost_Label.AutoSize = true;
+            this.DiscardCost_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DiscardCost_Label.ForeColor = System.Drawing.Color.White;
+            this.DiscardCost_Label.Location = new System.Drawing.Point(42, 200);
+            this.DiscardCost_Label.Name = "DiscardCost_Label";
+            this.DiscardCost_Label.Size = new System.Drawing.Size(102, 20);
+            this.DiscardCost_Label.TabIndex = 49;
+            this.DiscardCost_Label.Text = "Discard cost:";
             // 
             // SwitchPanel
             // 
@@ -449,7 +634,7 @@
             this.SwitchPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SwitchPanel.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.SwitchPanel.ForeColor = System.Drawing.Color.White;
-            this.SwitchPanel.Location = new System.Drawing.Point(711, 484);
+            this.SwitchPanel.Location = new System.Drawing.Point(650, 484);
             this.SwitchPanel.Name = "SwitchPanel";
             this.SwitchPanel.Size = new System.Drawing.Size(164, 58);
             this.SwitchPanel.TabIndex = 51;
@@ -1005,12 +1190,72 @@
             this.GoToCard_Button.UseVisualStyleBackColor = false;
             this.GoToCard_Button.Click += new System.EventHandler(this.GoToCard_Button_Click);
             // 
+            // ProductID_TB
+            // 
+            this.ProductID_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.ProductID_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ProductID_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProductID_TB.ForeColor = System.Drawing.Color.White;
+            this.ProductID_TB.Location = new System.Drawing.Point(247, 490);
+            this.ProductID_TB.Name = "ProductID_TB";
+            this.ProductID_TB.Size = new System.Drawing.Size(244, 24);
+            this.ProductID_TB.TabIndex = 118;
+            this.ProductID_TB.Text = "";
+            this.ProductID_TB.Visible = false;
+            // 
+            // ProductID_Label
+            // 
+            this.ProductID_Label.AutoSize = true;
+            this.ProductID_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProductID_Label.ForeColor = System.Drawing.Color.White;
+            this.ProductID_Label.Location = new System.Drawing.Point(243, 467);
+            this.ProductID_Label.Name = "ProductID_Label";
+            this.ProductID_Label.Size = new System.Drawing.Size(90, 20);
+            this.ProductID_Label.TabIndex = 119;
+            this.ProductID_Label.Text = "Product ID:";
+            this.ProductID_Label.Visible = false;
+            // 
+            // NextCard_Button
+            // 
+            this.NextCard_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.NextCard_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NextCard_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NextCard_Button.ForeColor = System.Drawing.Color.White;
+            this.NextCard_Button.Location = new System.Drawing.Point(367, 25);
+            this.NextCard_Button.Name = "NextCard_Button";
+            this.NextCard_Button.Size = new System.Drawing.Size(55, 28);
+            this.NextCard_Button.TabIndex = 119;
+            this.NextCard_Button.Text = ">>";
+            this.NextCard_Button.UseVisualStyleBackColor = false;
+            this.NextCard_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NextCard_Button_MouseClick);
+            this.NextCard_Button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NextCard_Button_MouseDown);
+            this.NextCard_Button.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NextCard_Button_MouseUp);
+            // 
+            // PrevCard_Button
+            // 
+            this.PrevCard_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.PrevCard_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PrevCard_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PrevCard_Button.ForeColor = System.Drawing.Color.White;
+            this.PrevCard_Button.Location = new System.Drawing.Point(306, 25);
+            this.PrevCard_Button.Name = "PrevCard_Button";
+            this.PrevCard_Button.Size = new System.Drawing.Size(55, 28);
+            this.PrevCard_Button.TabIndex = 120;
+            this.PrevCard_Button.Text = "<<";
+            this.PrevCard_Button.UseVisualStyleBackColor = false;
+            this.PrevCard_Button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PrevCard_Button_MouseDown);
+            this.PrevCard_Button.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PrevCard_Button_MouseUp);
+            // 
             // EZCard_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.PrevCard_Button);
+            this.Controls.Add(this.NextCard_Button);
+            this.Controls.Add(this.ProductID_TB);
+            this.Controls.Add(this.ProductID_Label);
             this.Controls.Add(this.GoToCard_Button);
             this.Controls.Add(this.GoToCard_TB);
             this.Controls.Add(this.label3);
@@ -1027,11 +1272,14 @@
             this.MaximizeBox = false;
             this.Name = "EZCard_Editor";
             this.Text = "EZ Card Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EZCard_Editor_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EZBloon_Editor_FormClosed);
             this.Shown += new System.EventHandler(this.EasyTowerEditor_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EZBloon_Editor_KeyDown);
             this.TowerPanel.ResumeLayout(false);
             this.TowerPanel.PerformLayout();
+            this.UnlockWin_Panel.ResumeLayout(false);
+            this.UnlockWin_Panel.PerformLayout();
             this.Open_Panel.ResumeLayout(false);
             this.Tower_Bloon_Panel.ResumeLayout(false);
             this.Tower_Bloon_Panel.PerformLayout();
@@ -1046,19 +1294,19 @@
         #endregion
         private System.Windows.Forms.RichTextBox CardName_TB;
         private System.Windows.Forms.Label Card_Label;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label CardName_Label;
+        private System.Windows.Forms.Label CardSet_Label;
         private System.Windows.Forms.RichTextBox CardSet_TB;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label CardSprite_Label;
         private System.Windows.Forms.RichTextBox CardSprite_TB;
         private System.Windows.Forms.CheckBox StartingCard_CheckBox;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label OldName_Label;
         private System.Windows.Forms.RichTextBox OldName_TB;
         private System.Windows.Forms.Button Save_Button;
         private System.Windows.Forms.ComboBox CardFiles_ComboBox;
         private System.Windows.Forms.Panel TowerPanel;
         private System.Windows.Forms.RichTextBox DiscardCost_TB;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label DiscardCost_Label;
         private System.Windows.Forms.Button SwitchPanel;
         private System.Windows.Forms.Label UnlockMethod_Label;
         private System.Windows.Forms.ListBox UnlockMethod_LB;
@@ -1100,7 +1348,7 @@
         private System.Windows.Forms.Button StartingCard_OpenText_Button;
         private System.Windows.Forms.Button OpenInEZCard_Button;
         private System.Windows.Forms.ListBox StartingCards_LB;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label StartingCards_Label;
         private System.Windows.Forms.Panel Open_Panel;
         private System.Windows.Forms.Button Open_Button;
         private System.Windows.Forms.Panel OpenTower_Panel;
@@ -1113,5 +1361,22 @@
         private System.Windows.Forms.Button OpenBloon_Button;
         private System.Windows.Forms.RichTextBox GoToCard_TB;
         private System.Windows.Forms.Button GoToCard_Button;
+        private System.Windows.Forms.Label Desc_label;
+        private System.Windows.Forms.RichTextBox Description_TB;
+        private System.Windows.Forms.RichTextBox PlatformProduectID_TB;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button UnlockWin_Button;
+        private System.Windows.Forms.RichTextBox ProductID_TB;
+        private System.Windows.Forms.Label ProductID_Label;
+        private System.Windows.Forms.Panel UnlockWin_Panel;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RichTextBox UnlockWinCount_TB;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RichTextBox UnlockWinType_TB;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RichTextBox SpotlightCount_TB;
+        private System.Windows.Forms.Button NextCard_Button;
+        private System.Windows.Forms.Button PrevCard_Button;
     }
 }

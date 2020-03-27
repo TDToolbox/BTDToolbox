@@ -102,7 +102,83 @@ namespace BTDToolbox.Classes
     {
         public static string ToJson(this Card self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.Converter.Settings);
     }
+    public partial class PowerCard
+    {
+        [JsonProperty("CardSet")]
+        public string CardSet { get; set; }
 
+        [JsonProperty("CardSprite")]
+        public string CardSprite { get; set; }
+
+        [JsonProperty("Description")]
+        public string Description { get; set; }
+
+        [JsonProperty("DiscardCost")]
+        public long DiscardCost { get; set; }
+
+        [JsonProperty("Name")]
+        public string Name { get; set; }
+
+        [JsonProperty("NameOld")]
+        public string NameOld { get; set; }
+
+        [JsonProperty("PlatformProductID")]
+        public string PlatformProductId { get; set; }
+
+        [JsonProperty("Power")]
+        public Power Power { get; set; }
+
+        [JsonProperty("ProductID")]
+        public string ProductId { get; set; }
+
+        [JsonProperty("StartingCard")]
+        public bool StartingCard { get; set; }
+
+        [JsonProperty("UnlockMethod")]
+        public string UnlockMethod { get; set; }
+
+        [JsonProperty("UnlockWin")]
+        public UnlockWin UnlockWin { get; set; }
+
+        [JsonProperty("Visible")]
+        public bool Visible { get; set; }
+    }
+
+    public partial class Power
+    {
+        [JsonProperty("BackgroundSprite")]
+        public string BackgroundSprite { get; set; }
+
+        [JsonProperty("Cost")]
+        public long Cost { get; set; }
+
+        [JsonProperty("Features")]
+        public string[] Features { get; set; }
+
+        [JsonProperty("Type")]
+        public string Type { get; set; }
+    }
+
+    public partial class UnlockWin
+    {
+        [JsonProperty("Count")]
+        public long Count { get; set; }
+
+        [JsonProperty("SpotlightCount")]
+        public long SpotlightCount { get; set; }
+
+        [JsonProperty("Type")]
+        public string Type { get; set; }
+    }
+
+    public partial class PowerCard
+    {
+        public static PowerCard FromJson(string json) => JsonConvert.DeserializeObject<PowerCard>(json, BTDToolbox.Classes.Converter.Settings);
+    }
+    public static class SerializePower
+    {
+        public static string ToJson(this PowerCard self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.Converter.Settings);
+    }
     internal class ParseStringConverter : JsonConverter
     {
         public override bool CanConvert(Type t) => t == typeof(long) || t == typeof(long?);
