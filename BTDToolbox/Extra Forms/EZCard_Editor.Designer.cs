@@ -41,6 +41,11 @@
             this.Save_Button = new System.Windows.Forms.Button();
             this.CardFiles_ComboBox = new System.Windows.Forms.ComboBox();
             this.TowerPanel = new System.Windows.Forms.Panel();
+            this.Game_Label = new System.Windows.Forms.Label();
+            this.CardSets_Panel = new System.Windows.Forms.Panel();
+            this.CardSet_LB = new System.Windows.Forms.ListBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.CardSets_Button = new System.Windows.Forms.Button();
             this.CardSprites_Panel = new System.Windows.Forms.Panel();
             this.CardSprites_LB = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -66,7 +71,6 @@
             this.StartingCards_LB = new System.Windows.Forms.ListBox();
             this.StartingCards_Label = new System.Windows.Forms.Label();
             this.Visible_CheckBox = new System.Windows.Forms.CheckBox();
-            this.Game_Label = new System.Windows.Forms.Label();
             this.UnlockMethod_LB = new System.Windows.Forms.ListBox();
             this.UnlockMethod_Label = new System.Windows.Forms.Label();
             this.DiscardCost_TB = new System.Windows.Forms.RichTextBox();
@@ -76,13 +80,13 @@
             this.TotalStartingCards_Label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.Tower_Bloon_Panel = new System.Windows.Forms.Panel();
-            this.OpenBloon_Panel = new System.Windows.Forms.Panel();
-            this.OpenBloonText_Button = new System.Windows.Forms.Button();
-            this.OpenEZBloon_Button = new System.Windows.Forms.Button();
-            this.OpenBloon_Button = new System.Windows.Forms.Button();
             this.OpenTower_Panel = new System.Windows.Forms.Panel();
             this.OpenTowerText_Button = new System.Windows.Forms.Button();
             this.OpenEZTower_Button = new System.Windows.Forms.Button();
+            this.OpenBloon_Panel = new System.Windows.Forms.Panel();
+            this.OpenEZBloon_Button = new System.Windows.Forms.Button();
+            this.OpenBloonText_Button = new System.Windows.Forms.Button();
+            this.OpenBloon_Button = new System.Windows.Forms.Button();
             this.OpenTower_Button = new System.Windows.Forms.Button();
             this.Seperator_PB = new System.Windows.Forms.PictureBox();
             this.TowerFeatures_LB = new System.Windows.Forms.ListBox();
@@ -118,29 +122,25 @@
             this.ProductID_Label = new System.Windows.Forms.Label();
             this.NextCard_Button = new System.Windows.Forms.Button();
             this.PrevCard_Button = new System.Windows.Forms.Button();
-            this.CardSets_Panel = new System.Windows.Forms.Panel();
-            this.CardSet_LB = new System.Windows.Forms.ListBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.CardSets_Button = new System.Windows.Forms.Button();
             this.Power_Panel = new System.Windows.Forms.Panel();
+            this.PowerFeatures_LB = new System.Windows.Forms.ListBox();
+            this.label26 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.PowerBGSprite_TB = new System.Windows.Forms.RichTextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.PowerType_TB = new System.Windows.Forms.RichTextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.PowerCost_TB = new System.Windows.Forms.RichTextBox();
-            this.PowerFeatures_LB = new System.Windows.Forms.ListBox();
-            this.label26 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TowerPanel.SuspendLayout();
+            this.CardSets_Panel.SuspendLayout();
             this.CardSprites_Panel.SuspendLayout();
             this.UnlockWin_Panel.SuspendLayout();
             this.Open_Panel.SuspendLayout();
             this.Tower_Bloon_Panel.SuspendLayout();
-            this.OpenBloon_Panel.SuspendLayout();
             this.OpenTower_Panel.SuspendLayout();
+            this.OpenBloon_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Seperator_PB)).BeginInit();
-            this.CardSets_Panel.SuspendLayout();
             this.Power_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -328,6 +328,72 @@
             this.TowerPanel.Name = "TowerPanel";
             this.TowerPanel.Size = new System.Drawing.Size(1071, 425);
             this.TowerPanel.TabIndex = 49;
+            // 
+            // Game_Label
+            // 
+            this.Game_Label.AutoSize = true;
+            this.Game_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Game_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Game_Label.ForeColor = System.Drawing.Color.White;
+            this.Game_Label.Location = new System.Drawing.Point(945, 0);
+            this.Game_Label.Name = "Game_Label";
+            this.Game_Label.Size = new System.Drawing.Size(90, 35);
+            this.Game_Label.TabIndex = 66;
+            this.Game_Label.Text = "Game";
+            // 
+            // CardSets_Panel
+            // 
+            this.CardSets_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CardSets_Panel.Controls.Add(this.CardSet_LB);
+            this.CardSets_Panel.Controls.Add(this.label7);
+            this.CardSets_Panel.Location = new System.Drawing.Point(317, 74);
+            this.CardSets_Panel.Name = "CardSets_Panel";
+            this.CardSets_Panel.Size = new System.Drawing.Size(114, 92);
+            this.CardSets_Panel.TabIndex = 122;
+            this.CardSets_Panel.Visible = false;
+            // 
+            // CardSet_LB
+            // 
+            this.CardSet_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.CardSet_LB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CardSet_LB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardSet_LB.ForeColor = System.Drawing.Color.White;
+            this.CardSet_LB.FormattingEnabled = true;
+            this.CardSet_LB.ItemHeight = 20;
+            this.CardSet_LB.Items.AddRange(new object[] {
+            "Basic",
+            "Veteran",
+            "Power"});
+            this.CardSet_LB.Location = new System.Drawing.Point(10, 27);
+            this.CardSet_LB.Name = "CardSet_LB";
+            this.CardSet_LB.Size = new System.Drawing.Size(90, 60);
+            this.CardSet_LB.TabIndex = 121;
+            this.CardSet_LB.SelectedValueChanged += new System.EventHandler(this.CardSet_LB_SelectedValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(12, 4);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(80, 20);
+            this.label7.TabIndex = 120;
+            this.label7.Text = "Card sets:";
+            // 
+            // CardSets_Button
+            // 
+            this.CardSets_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.CardSets_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CardSets_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CardSets_Button.ForeColor = System.Drawing.Color.White;
+            this.CardSets_Button.Location = new System.Drawing.Point(261, 121);
+            this.CardSets_Button.Name = "CardSets_Button";
+            this.CardSets_Button.Size = new System.Drawing.Size(55, 28);
+            this.CardSets_Button.TabIndex = 121;
+            this.CardSets_Button.Text = ">>";
+            this.CardSets_Button.UseVisualStyleBackColor = false;
+            this.CardSets_Button.Click += new System.EventHandler(this.CardSets_Button_Click);
             // 
             // CardSprites_Panel
             // 
@@ -647,18 +713,6 @@
             this.Visible_CheckBox.Text = "Visible";
             this.Visible_CheckBox.UseVisualStyleBackColor = true;
             // 
-            // Game_Label
-            // 
-            this.Game_Label.AutoSize = true;
-            this.Game_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.Game_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Game_Label.ForeColor = System.Drawing.Color.White;
-            this.Game_Label.Location = new System.Drawing.Point(945, 0);
-            this.Game_Label.Name = "Game_Label";
-            this.Game_Label.Size = new System.Drawing.Size(90, 35);
-            this.Game_Label.TabIndex = 66;
-            this.Game_Label.Text = "Game";
-            // 
             // UnlockMethod_LB
             // 
             this.UnlockMethod_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
@@ -804,58 +858,6 @@
             this.Tower_Bloon_Panel.TabIndex = 74;
             this.Tower_Bloon_Panel.Visible = false;
             // 
-            // OpenBloon_Panel
-            // 
-            this.OpenBloon_Panel.Controls.Add(this.OpenEZBloon_Button);
-            this.OpenBloon_Panel.Controls.Add(this.OpenBloonText_Button);
-            this.OpenBloon_Panel.Location = new System.Drawing.Point(872, 115);
-            this.OpenBloon_Panel.Name = "OpenBloon_Panel";
-            this.OpenBloon_Panel.Size = new System.Drawing.Size(168, 70);
-            this.OpenBloon_Panel.TabIndex = 114;
-            this.OpenBloon_Panel.Visible = false;
-            // 
-            // OpenBloonText_Button
-            // 
-            this.OpenBloonText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.OpenBloonText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenBloonText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.OpenBloonText_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenBloonText_Button.Location = new System.Drawing.Point(3, 0);
-            this.OpenBloonText_Button.Name = "OpenBloonText_Button";
-            this.OpenBloonText_Button.Size = new System.Drawing.Size(164, 34);
-            this.OpenBloonText_Button.TabIndex = 77;
-            this.OpenBloonText_Button.Text = "Open in Text";
-            this.OpenBloonText_Button.UseVisualStyleBackColor = false;
-            this.OpenBloonText_Button.Click += new System.EventHandler(this.OpenBloonText_Button_Click);
-            // 
-            // OpenEZBloon_Button
-            // 
-            this.OpenEZBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.OpenEZBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenEZBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.OpenEZBloon_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenEZBloon_Button.Location = new System.Drawing.Point(3, 35);
-            this.OpenEZBloon_Button.Name = "OpenEZBloon_Button";
-            this.OpenEZBloon_Button.Size = new System.Drawing.Size(164, 35);
-            this.OpenEZBloon_Button.TabIndex = 76;
-            this.OpenEZBloon_Button.Text = "Open in EZ Bloon";
-            this.OpenEZBloon_Button.UseVisualStyleBackColor = false;
-            this.OpenEZBloon_Button.Click += new System.EventHandler(this.OpenEZBloon_Button_Click);
-            // 
-            // OpenBloon_Button
-            // 
-            this.OpenBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.OpenBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.OpenBloon_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenBloon_Button.Location = new System.Drawing.Point(820, 85);
-            this.OpenBloon_Button.Name = "OpenBloon_Button";
-            this.OpenBloon_Button.Size = new System.Drawing.Size(141, 34);
-            this.OpenBloon_Button.TabIndex = 113;
-            this.OpenBloon_Button.Text = "Open";
-            this.OpenBloon_Button.UseVisualStyleBackColor = false;
-            this.OpenBloon_Button.Click += new System.EventHandler(this.OpenBloon_Button_Click);
-            // 
             // OpenTower_Panel
             // 
             this.OpenTower_Panel.Controls.Add(this.OpenTowerText_Button);
@@ -893,6 +895,58 @@
             this.OpenEZTower_Button.Text = "Open in EZ Tower";
             this.OpenEZTower_Button.UseVisualStyleBackColor = false;
             this.OpenEZTower_Button.Click += new System.EventHandler(this.OpenEZTower_Button_Click);
+            // 
+            // OpenBloon_Panel
+            // 
+            this.OpenBloon_Panel.Controls.Add(this.OpenEZBloon_Button);
+            this.OpenBloon_Panel.Controls.Add(this.OpenBloonText_Button);
+            this.OpenBloon_Panel.Location = new System.Drawing.Point(872, 115);
+            this.OpenBloon_Panel.Name = "OpenBloon_Panel";
+            this.OpenBloon_Panel.Size = new System.Drawing.Size(168, 70);
+            this.OpenBloon_Panel.TabIndex = 114;
+            this.OpenBloon_Panel.Visible = false;
+            // 
+            // OpenEZBloon_Button
+            // 
+            this.OpenEZBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenEZBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenEZBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenEZBloon_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenEZBloon_Button.Location = new System.Drawing.Point(3, 35);
+            this.OpenEZBloon_Button.Name = "OpenEZBloon_Button";
+            this.OpenEZBloon_Button.Size = new System.Drawing.Size(164, 35);
+            this.OpenEZBloon_Button.TabIndex = 76;
+            this.OpenEZBloon_Button.Text = "Open in EZ Bloon";
+            this.OpenEZBloon_Button.UseVisualStyleBackColor = false;
+            this.OpenEZBloon_Button.Click += new System.EventHandler(this.OpenEZBloon_Button_Click);
+            // 
+            // OpenBloonText_Button
+            // 
+            this.OpenBloonText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenBloonText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenBloonText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenBloonText_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenBloonText_Button.Location = new System.Drawing.Point(3, 0);
+            this.OpenBloonText_Button.Name = "OpenBloonText_Button";
+            this.OpenBloonText_Button.Size = new System.Drawing.Size(164, 34);
+            this.OpenBloonText_Button.TabIndex = 77;
+            this.OpenBloonText_Button.Text = "Open in Text";
+            this.OpenBloonText_Button.UseVisualStyleBackColor = false;
+            this.OpenBloonText_Button.Click += new System.EventHandler(this.OpenBloonText_Button_Click);
+            // 
+            // OpenBloon_Button
+            // 
+            this.OpenBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenBloon_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenBloon_Button.Location = new System.Drawing.Point(820, 85);
+            this.OpenBloon_Button.Name = "OpenBloon_Button";
+            this.OpenBloon_Button.Size = new System.Drawing.Size(141, 34);
+            this.OpenBloon_Button.TabIndex = 113;
+            this.OpenBloon_Button.Text = "Open";
+            this.OpenBloon_Button.UseVisualStyleBackColor = false;
+            this.OpenBloon_Button.Click += new System.EventHandler(this.OpenBloon_Button_Click);
             // 
             // OpenTower_Button
             // 
@@ -1329,60 +1383,6 @@
             this.PrevCard_Button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PrevCard_Button_MouseDown);
             this.PrevCard_Button.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PrevCard_Button_MouseUp);
             // 
-            // CardSets_Panel
-            // 
-            this.CardSets_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CardSets_Panel.Controls.Add(this.CardSet_LB);
-            this.CardSets_Panel.Controls.Add(this.label7);
-            this.CardSets_Panel.Location = new System.Drawing.Point(317, 74);
-            this.CardSets_Panel.Name = "CardSets_Panel";
-            this.CardSets_Panel.Size = new System.Drawing.Size(114, 92);
-            this.CardSets_Panel.TabIndex = 122;
-            this.CardSets_Panel.Visible = false;
-            // 
-            // CardSet_LB
-            // 
-            this.CardSet_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.CardSet_LB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CardSet_LB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CardSet_LB.ForeColor = System.Drawing.Color.White;
-            this.CardSet_LB.FormattingEnabled = true;
-            this.CardSet_LB.ItemHeight = 20;
-            this.CardSet_LB.Items.AddRange(new object[] {
-            "Basic",
-            "Tower",
-            "Power"});
-            this.CardSet_LB.Location = new System.Drawing.Point(10, 27);
-            this.CardSet_LB.Name = "CardSet_LB";
-            this.CardSet_LB.Size = new System.Drawing.Size(90, 60);
-            this.CardSet_LB.TabIndex = 121;
-            this.CardSet_LB.SelectedValueChanged += new System.EventHandler(this.CardSet_LB_SelectedValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(12, 4);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(80, 20);
-            this.label7.TabIndex = 120;
-            this.label7.Text = "Card sets:";
-            // 
-            // CardSets_Button
-            // 
-            this.CardSets_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.CardSets_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CardSets_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CardSets_Button.ForeColor = System.Drawing.Color.White;
-            this.CardSets_Button.Location = new System.Drawing.Point(261, 121);
-            this.CardSets_Button.Name = "CardSets_Button";
-            this.CardSets_Button.Size = new System.Drawing.Size(55, 28);
-            this.CardSets_Button.TabIndex = 121;
-            this.CardSets_Button.Text = ">>";
-            this.CardSets_Button.UseVisualStyleBackColor = false;
-            this.CardSets_Button.Click += new System.EventHandler(this.CardSets_Button_Click);
-            // 
             // Power_Panel
             // 
             this.Power_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
@@ -1400,6 +1400,40 @@
             this.Power_Panel.Size = new System.Drawing.Size(437, 239);
             this.Power_Panel.TabIndex = 123;
             this.Power_Panel.Visible = false;
+            // 
+            // PowerFeatures_LB
+            // 
+            this.PowerFeatures_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.PowerFeatures_LB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PowerFeatures_LB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PowerFeatures_LB.ForeColor = System.Drawing.Color.White;
+            this.PowerFeatures_LB.FormattingEnabled = true;
+            this.PowerFeatures_LB.ItemHeight = 20;
+            this.PowerFeatures_LB.Items.AddRange(new object[] {
+            "Water",
+            "PopCamo",
+            "PopRegen",
+            "PopWhite",
+            "PopBlack",
+            "PopLead",
+            "PopFrozen",
+            "PopMOAB"});
+            this.PowerFeatures_LB.Location = new System.Drawing.Point(207, 27);
+            this.PowerFeatures_LB.Name = "PowerFeatures_LB";
+            this.PowerFeatures_LB.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.PowerFeatures_LB.Size = new System.Drawing.Size(208, 160);
+            this.PowerFeatures_LB.TabIndex = 127;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.ForeColor = System.Drawing.Color.White;
+            this.label26.Location = new System.Drawing.Point(207, 5);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(75, 20);
+            this.label26.TabIndex = 126;
+            this.label26.Text = "Features:";
             // 
             // label8
             // 
@@ -1470,40 +1504,6 @@
             this.PowerCost_TB.TabIndex = 119;
             this.PowerCost_TB.Text = "";
             // 
-            // PowerFeatures_LB
-            // 
-            this.PowerFeatures_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.PowerFeatures_LB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PowerFeatures_LB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PowerFeatures_LB.ForeColor = System.Drawing.Color.White;
-            this.PowerFeatures_LB.FormattingEnabled = true;
-            this.PowerFeatures_LB.ItemHeight = 20;
-            this.PowerFeatures_LB.Items.AddRange(new object[] {
-            "Water",
-            "PopCamo",
-            "PopRegen",
-            "PopWhite",
-            "PopBlack",
-            "PopLead",
-            "PopFrozen",
-            "PopMOAB"});
-            this.PowerFeatures_LB.Location = new System.Drawing.Point(207, 27);
-            this.PowerFeatures_LB.Name = "PowerFeatures_LB";
-            this.PowerFeatures_LB.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.PowerFeatures_LB.Size = new System.Drawing.Size(208, 160);
-            this.PowerFeatures_LB.TabIndex = 127;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.ForeColor = System.Drawing.Color.White;
-            this.label26.Location = new System.Drawing.Point(207, 5);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(75, 20);
-            this.label26.TabIndex = 126;
-            this.label26.Text = "Features:";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
@@ -1547,6 +1547,8 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EZBloon_Editor_KeyDown);
             this.TowerPanel.ResumeLayout(false);
             this.TowerPanel.PerformLayout();
+            this.CardSets_Panel.ResumeLayout(false);
+            this.CardSets_Panel.PerformLayout();
             this.CardSprites_Panel.ResumeLayout(false);
             this.CardSprites_Panel.PerformLayout();
             this.UnlockWin_Panel.ResumeLayout(false);
@@ -1554,11 +1556,9 @@
             this.Open_Panel.ResumeLayout(false);
             this.Tower_Bloon_Panel.ResumeLayout(false);
             this.Tower_Bloon_Panel.PerformLayout();
-            this.OpenBloon_Panel.ResumeLayout(false);
             this.OpenTower_Panel.ResumeLayout(false);
+            this.OpenBloon_Panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Seperator_PB)).EndInit();
-            this.CardSets_Panel.ResumeLayout(false);
-            this.CardSets_Panel.PerformLayout();
             this.Power_Panel.ResumeLayout(false);
             this.Power_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
