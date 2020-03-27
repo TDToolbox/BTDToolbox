@@ -1227,7 +1227,6 @@
             this.NextCard_Button.TabIndex = 119;
             this.NextCard_Button.Text = ">>";
             this.NextCard_Button.UseVisualStyleBackColor = false;
-            this.NextCard_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NextCard_Button_MouseClick);
             this.NextCard_Button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NextCard_Button_MouseDown);
             this.NextCard_Button.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NextCard_Button_MouseUp);
             // 

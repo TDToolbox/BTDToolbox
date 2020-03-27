@@ -30,6 +30,7 @@ namespace BTDToolbox.Extra_Forms
         bool openBloon = false;
         bool mouseHolding = false;
         int numStarterCards = 0;
+        int autoscrollcount = 0;
         System.Threading.Thread thread;
         public static bool EZCard_Opened = false;
         public string[] startingCards_array = new string[0];
@@ -763,6 +764,7 @@ namespace BTDToolbox.Extra_Forms
             thread = new System.Threading.Thread(delegate () { CardAutoScroll("back"); });
             thread.Start();
         }
+        
         private void CardAutoScroll(string direction)
         {
             Invoke((MethodInvoker)delegate {
@@ -782,16 +784,27 @@ namespace BTDToolbox.Extra_Forms
                 }
                 
             });
-            System.Threading.Thread.Sleep(125);
+            int sleeptime = 125;
+            if (autoscrollcount > 3 && autoscrollcount < 8)
+                sleeptime = 90;
+            else if (autoscrollcount > 8 && autoscrollcount < 15)
+                sleeptime = 75;
+            else if (autoscrollcount > 15 && autoscrollcount < 22)
+                sleeptime = 50;
+            else if (autoscrollcount > 22)
+                sleeptime = 30;
 
+            System.Threading.Thread.Sleep(sleeptime);
             if (mouseHolding == true)
             {
+                autoscrollcount++;
                 CardAutoScroll(direction);
             }
         }
         private void PrevCard_Button_MouseUp(object sender, MouseEventArgs e)
         {
             mouseHolding = false;
+            autoscrollcount = 0;
             thread.Abort();
         }
         private void NextCard_Button_MouseDown(object sender, MouseEventArgs e)
@@ -803,6 +816,7 @@ namespace BTDToolbox.Extra_Forms
         private void NextCard_Button_MouseUp(object sender, MouseEventArgs e)
         {
             mouseHolding = false;
+            autoscrollcount = 0;
             thread.Abort();
         }
     }
