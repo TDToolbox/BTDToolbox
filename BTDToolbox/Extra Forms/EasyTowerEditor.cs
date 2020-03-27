@@ -76,6 +76,14 @@ namespace BTDToolbox.Extra_Forms
                 ResetUI();
                 TowerType_Label.Text = artist.TypeName;
 
+                /*if (AllTowerFiles_ComboBox.SelectedItem != null)
+                {
+                    if (TowerType_Label.Text + ".tower" != AllTowerFiles_ComboBox.SelectedItem.ToString())
+                    {
+                        AllTowerFiles_ComboBox.SelectedItem = TowerType_Label.Text + ".tower";
+                    }
+                }*/
+
                 TowerName_TextBox.Text = artist.Name;
                 BaseCost_TextBox.Text = artist.BaseCost.ToString();
                 RankToUnlock_TextBox.Text = artist.RankToUnlock.ToString();
@@ -211,6 +219,14 @@ namespace BTDToolbox.Extra_Forms
                     {
                         Upgrades_ListBox.SelectedIndex = 0;
                         PopulateUpgrades();
+                    }
+                }
+
+                if (AllTowerFiles_ComboBox.SelectedItem != null)
+                {
+                    if (TowerType_Label.Text + ".tower" != AllTowerFiles_ComboBox.SelectedItem.ToString())
+                    {
+                        AllTowerFiles_ComboBox.SelectedItem = TowerType_Label.Text + ".tower";
                     }
                 }
             }        

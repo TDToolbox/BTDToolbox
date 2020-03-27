@@ -21,8 +21,9 @@ namespace BTDToolbox.Extra_Forms
 
         Card card;
         Card newCard;
-
+        EasyTowerEditor ezTower;
         bool openStarterCard = false;
+        bool openTower = false;
         public static bool EZCard_Opened = false;
         public string[] startingCards_array = new string[0];
         string game = Serializer.Deserialize_Config().CurrentGame;
@@ -31,7 +32,7 @@ namespace BTDToolbox.Extra_Forms
         {
             InitializeComponent();
             EZCard_Opened = true;
-
+            
             Set_ClickEvents();
         }
         public void CreateCardObject(string cardPath)
@@ -208,13 +209,13 @@ namespace BTDToolbox.Extra_Forms
             if (SwitchPanel.Text == "Page 2")
             {
                 TowerPanel.Visible = false;
-                Bloon_Panel.Visible = true;
+                Tower_Bloon_Panel.Visible = true;
                 SwitchPanel.Text = "Page 1";
             }
             else if (SwitchPanel.Text == "Page 1")
             {
                 TowerPanel.Visible = true;
-                Bloon_Panel.Visible = false;
+                Tower_Bloon_Panel.Visible = false;
                 SwitchPanel.Text = "Page 2";
             }
         }
@@ -241,6 +242,17 @@ namespace BTDToolbox.Extra_Forms
                 if (openStarterCard == true)
                 {
                     selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
+                }
+                else if (openTower == true)
+                {
+                    if(card.Tower.TowerType != null)
+                    {
+                        selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
+                    }
+                    else
+                    {
+                        ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+                    }
                 }
                 else
                 {
@@ -346,6 +358,37 @@ namespace BTDToolbox.Extra_Forms
             label16.MouseClick += Close_OpenPanel;
             Game_Label.MouseClick += Close_OpenPanel;
 
+            Tower_Bloon_Panel.MouseClick += Close_OpenPanel;
+            label12.MouseClick += Close_OpenPanel;
+            label13.MouseClick += Close_OpenPanel;
+            label14.MouseClick += Close_OpenPanel;
+            label15.MouseClick += Close_OpenPanel;
+            label17.MouseClick += Close_OpenPanel;
+            label18.MouseClick += Close_OpenPanel;
+            label19.MouseClick += Close_OpenPanel;
+            label20.MouseClick += Close_OpenPanel;
+            label21.MouseClick += Close_OpenPanel;
+            label22.MouseClick += Close_OpenPanel;
+            label23.MouseClick += Close_OpenPanel;
+            label24.MouseClick += Close_OpenPanel;
+            label25.MouseClick += Close_OpenPanel;
+
+            TowerType_TB.MouseClick += Close_OpenPanel;
+            TowerBGSprite_TB.MouseClick += Close_OpenPanel;
+            TowerFeatures_LB.MouseClick += Close_OpenPanel;
+            Upgrades1_TB.MouseClick += Close_OpenPanel;
+            Upgrades2_TB.MouseClick += Close_OpenPanel;
+            TowerCost_TB.MouseClick += Close_OpenPanel;
+            BloonType_TB.MouseClick += Close_OpenPanel;
+            UnlockRound_TB.MouseClick += Close_OpenPanel;
+            BloonBGSprite_TB.MouseClick += Close_OpenPanel;
+            BloonFeatures_LB.MouseClick += Close_OpenPanel;
+            BloonCost_TB.MouseClick += Close_OpenPanel;
+            IncomeChange_TB.MouseClick += Close_OpenPanel;
+            NumBloons_TB.MouseClick += Close_OpenPanel;
+            Interval_TB.MouseClick += Close_OpenPanel;
+            Seperator_PB.MouseClick += Close_OpenPanel;
+
             CardFiles_ComboBox.MouseClick += Close_OpenPanel;
             OpenText_Button.MouseClick += Close_OpenPanel;
             CardName_TB.MouseClick += Close_OpenPanel;
@@ -366,6 +409,41 @@ namespace BTDToolbox.Extra_Forms
         {
             if (Open_Panel.Visible == true)
                 Open_Panel.Visible = false;
+            if (OpenTower_Panel.Visible == true)
+                OpenTower_Panel.Visible = false;
+        }
+
+        private void OpenTower_Button_Click(object sender, EventArgs e)
+        {
+            OpenTower_Panel.Visible = !OpenTower_Panel.Visible;
+        }
+
+        private void OpenEZTower_Button_Click(object sender, EventArgs e)
+        {
+            OpenTower_Panel.Visible = false;
+            if (card.Tower.TowerType != null)
+            {
+                if(ezTower == null)
+                {
+                     ezTower = new EasyTowerEditor();
+                }
+                string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
+                ezTower.path = path;
+                ezTower.Show();
+                ezTower.CreateTowerObject(path);
+            }
+            else
+            {
+                ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+            }
+        }
+
+        private void OpenTowerText_Button_Click(object sender, EventArgs e)
+        {
+            OpenTower_Panel.Visible = false;
+            openTower = true;
+            OpenInText();
+            openTower = false;
         }
     }
 }

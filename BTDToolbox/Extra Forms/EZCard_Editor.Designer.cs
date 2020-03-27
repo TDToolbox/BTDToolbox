@@ -60,25 +60,25 @@
             this.OpenText_Button = new System.Windows.Forms.Button();
             this.TotalStartingCards_Label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.Bloon_Panel = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.Tower_Bloon_Panel = new System.Windows.Forms.Panel();
+            this.Seperator_PB = new System.Windows.Forms.PictureBox();
+            this.TowerFeatures_LB = new System.Windows.Forms.ListBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.Upgrades2_TB = new System.Windows.Forms.RichTextBox();
             this.label22 = new System.Windows.Forms.Label();
-            this.richTextBox4 = new System.Windows.Forms.RichTextBox();
+            this.Upgrades1_TB = new System.Windows.Forms.RichTextBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.richTextBox5 = new System.Windows.Forms.RichTextBox();
+            this.TowerBGSprite_TB = new System.Windows.Forms.RichTextBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.richTextBox6 = new System.Windows.Forms.RichTextBox();
+            this.TowerCost_TB = new System.Windows.Forms.RichTextBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.richTextBox7 = new System.Windows.Forms.RichTextBox();
+            this.TowerType_TB = new System.Windows.Forms.RichTextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.Interval_TB = new System.Windows.Forms.RichTextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.NumBloons_TB = new System.Windows.Forms.RichTextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.Cost_TB = new System.Windows.Forms.RichTextBox();
+            this.BloonCost_TB = new System.Windows.Forms.RichTextBox();
             this.BloonFeatures_LB = new System.Windows.Forms.ListBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -89,10 +89,15 @@
             this.UnlockRound_TB = new System.Windows.Forms.RichTextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.BloonType_TB = new System.Windows.Forms.RichTextBox();
+            this.OpenTower_Panel = new System.Windows.Forms.Panel();
+            this.OpenTowerText_Button = new System.Windows.Forms.Button();
+            this.OpenEZTower_Button = new System.Windows.Forms.Button();
+            this.OpenTower_Button = new System.Windows.Forms.Button();
             this.TowerPanel.SuspendLayout();
             this.Open_Panel.SuspendLayout();
-            this.Bloon_Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Tower_Bloon_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Seperator_PB)).BeginInit();
+            this.OpenTower_Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // CardName_TB
@@ -512,62 +517,64 @@
             this.label3.TabIndex = 68;
             this.label3.Text = "(Need at least 15)";
             // 
-            // Bloon_Panel
+            // Tower_Bloon_Panel
             // 
-            this.Bloon_Panel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Tower_Bloon_Panel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Bloon_Panel.Controls.Add(this.pictureBox1);
-            this.Bloon_Panel.Controls.Add(this.listBox1);
-            this.Bloon_Panel.Controls.Add(this.label21);
-            this.Bloon_Panel.Controls.Add(this.richTextBox3);
-            this.Bloon_Panel.Controls.Add(this.label22);
-            this.Bloon_Panel.Controls.Add(this.richTextBox4);
-            this.Bloon_Panel.Controls.Add(this.label23);
-            this.Bloon_Panel.Controls.Add(this.richTextBox5);
-            this.Bloon_Panel.Controls.Add(this.label24);
-            this.Bloon_Panel.Controls.Add(this.richTextBox6);
-            this.Bloon_Panel.Controls.Add(this.label25);
-            this.Bloon_Panel.Controls.Add(this.richTextBox7);
-            this.Bloon_Panel.Controls.Add(this.label20);
-            this.Bloon_Panel.Controls.Add(this.Interval_TB);
-            this.Bloon_Panel.Controls.Add(this.label19);
-            this.Bloon_Panel.Controls.Add(this.NumBloons_TB);
-            this.Bloon_Panel.Controls.Add(this.label18);
-            this.Bloon_Panel.Controls.Add(this.Cost_TB);
-            this.Bloon_Panel.Controls.Add(this.BloonFeatures_LB);
-            this.Bloon_Panel.Controls.Add(this.label12);
-            this.Bloon_Panel.Controls.Add(this.label13);
-            this.Bloon_Panel.Controls.Add(this.IncomeChange_TB);
-            this.Bloon_Panel.Controls.Add(this.label14);
-            this.Bloon_Panel.Controls.Add(this.BloonBGSprite_TB);
-            this.Bloon_Panel.Controls.Add(this.label15);
-            this.Bloon_Panel.Controls.Add(this.UnlockRound_TB);
-            this.Bloon_Panel.Controls.Add(this.label17);
-            this.Bloon_Panel.Controls.Add(this.BloonType_TB);
-            this.Bloon_Panel.Location = new System.Drawing.Point(2, 50);
-            this.Bloon_Panel.Name = "Bloon_Panel";
-            this.Bloon_Panel.Size = new System.Drawing.Size(1071, 425);
-            this.Bloon_Panel.TabIndex = 74;
-            this.Bloon_Panel.Visible = false;
+            this.Tower_Bloon_Panel.Controls.Add(this.OpenTower_Panel);
+            this.Tower_Bloon_Panel.Controls.Add(this.OpenTower_Button);
+            this.Tower_Bloon_Panel.Controls.Add(this.Seperator_PB);
+            this.Tower_Bloon_Panel.Controls.Add(this.TowerFeatures_LB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label21);
+            this.Tower_Bloon_Panel.Controls.Add(this.Upgrades2_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label22);
+            this.Tower_Bloon_Panel.Controls.Add(this.Upgrades1_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label23);
+            this.Tower_Bloon_Panel.Controls.Add(this.TowerBGSprite_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label24);
+            this.Tower_Bloon_Panel.Controls.Add(this.TowerCost_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label25);
+            this.Tower_Bloon_Panel.Controls.Add(this.TowerType_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label20);
+            this.Tower_Bloon_Panel.Controls.Add(this.Interval_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label19);
+            this.Tower_Bloon_Panel.Controls.Add(this.NumBloons_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label18);
+            this.Tower_Bloon_Panel.Controls.Add(this.BloonCost_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.BloonFeatures_LB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label12);
+            this.Tower_Bloon_Panel.Controls.Add(this.label13);
+            this.Tower_Bloon_Panel.Controls.Add(this.IncomeChange_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label14);
+            this.Tower_Bloon_Panel.Controls.Add(this.BloonBGSprite_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label15);
+            this.Tower_Bloon_Panel.Controls.Add(this.UnlockRound_TB);
+            this.Tower_Bloon_Panel.Controls.Add(this.label17);
+            this.Tower_Bloon_Panel.Controls.Add(this.BloonType_TB);
+            this.Tower_Bloon_Panel.Location = new System.Drawing.Point(2, 50);
+            this.Tower_Bloon_Panel.Name = "Tower_Bloon_Panel";
+            this.Tower_Bloon_Panel.Size = new System.Drawing.Size(1071, 425);
+            this.Tower_Bloon_Panel.TabIndex = 74;
+            this.Tower_Bloon_Panel.Visible = false;
             // 
-            // pictureBox1
+            // Seperator_PB
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.pictureBox1.Location = new System.Drawing.Point(530, 66);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(10, 310);
-            this.pictureBox1.TabIndex = 110;
-            this.pictureBox1.TabStop = false;
+            this.Seperator_PB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.Seperator_PB.Location = new System.Drawing.Point(530, 66);
+            this.Seperator_PB.Name = "Seperator_PB";
+            this.Seperator_PB.Size = new System.Drawing.Size(10, 310);
+            this.Seperator_PB.TabIndex = 110;
+            this.Seperator_PB.TabStop = false;
             // 
-            // listBox1
+            // TowerFeatures_LB
             // 
-            this.listBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox1.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox1.ForeColor = System.Drawing.Color.White;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Items.AddRange(new object[] {
+            this.TowerFeatures_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.TowerFeatures_LB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TowerFeatures_LB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TowerFeatures_LB.ForeColor = System.Drawing.Color.White;
+            this.TowerFeatures_LB.FormattingEnabled = true;
+            this.TowerFeatures_LB.ItemHeight = 20;
+            this.TowerFeatures_LB.Items.AddRange(new object[] {
             "Water",
             "PopCamo",
             "PopRegen",
@@ -576,11 +583,11 @@
             "PopLead",
             "PopFrozen",
             "PopMOAB"});
-            this.listBox1.Location = new System.Drawing.Point(62, 194);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBox1.Size = new System.Drawing.Size(208, 160);
-            this.listBox1.TabIndex = 109;
+            this.TowerFeatures_LB.Location = new System.Drawing.Point(62, 194);
+            this.TowerFeatures_LB.Name = "TowerFeatures_LB";
+            this.TowerFeatures_LB.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.TowerFeatures_LB.Size = new System.Drawing.Size(208, 160);
+            this.TowerFeatures_LB.TabIndex = 109;
             // 
             // label21
             // 
@@ -593,18 +600,18 @@
             this.label21.TabIndex = 108;
             this.label21.Text = "Features:";
             // 
-            // richTextBox3
+            // Upgrades2_TB
             // 
-            this.richTextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox3.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox3.ForeColor = System.Drawing.Color.White;
-            this.richTextBox3.Location = new System.Drawing.Point(381, 231);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.ReadOnly = true;
-            this.richTextBox3.Size = new System.Drawing.Size(74, 24);
-            this.richTextBox3.TabIndex = 107;
-            this.richTextBox3.Text = "";
+            this.Upgrades2_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.Upgrades2_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Upgrades2_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Upgrades2_TB.ForeColor = System.Drawing.Color.White;
+            this.Upgrades2_TB.Location = new System.Drawing.Point(381, 231);
+            this.Upgrades2_TB.Name = "Upgrades2_TB";
+            this.Upgrades2_TB.ReadOnly = true;
+            this.Upgrades2_TB.Size = new System.Drawing.Size(74, 24);
+            this.Upgrades2_TB.TabIndex = 107;
+            this.Upgrades2_TB.Text = "";
             // 
             // label22
             // 
@@ -617,18 +624,18 @@
             this.label22.TabIndex = 106;
             this.label22.Text = "Upgrades";
             // 
-            // richTextBox4
+            // Upgrades1_TB
             // 
-            this.richTextBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.richTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox4.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox4.ForeColor = System.Drawing.Color.White;
-            this.richTextBox4.Location = new System.Drawing.Point(301, 231);
-            this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.ReadOnly = true;
-            this.richTextBox4.Size = new System.Drawing.Size(74, 24);
-            this.richTextBox4.TabIndex = 105;
-            this.richTextBox4.Text = "";
+            this.Upgrades1_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.Upgrades1_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Upgrades1_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Upgrades1_TB.ForeColor = System.Drawing.Color.White;
+            this.Upgrades1_TB.Location = new System.Drawing.Point(301, 231);
+            this.Upgrades1_TB.Name = "Upgrades1_TB";
+            this.Upgrades1_TB.ReadOnly = true;
+            this.Upgrades1_TB.Size = new System.Drawing.Size(74, 24);
+            this.Upgrades1_TB.TabIndex = 105;
+            this.Upgrades1_TB.Text = "";
             // 
             // label23
             // 
@@ -641,18 +648,18 @@
             this.label23.TabIndex = 104;
             this.label23.Text = "Background sprite:";
             // 
-            // richTextBox5
+            // TowerBGSprite_TB
             // 
-            this.richTextBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.richTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox5.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox5.ForeColor = System.Drawing.Color.White;
-            this.richTextBox5.Location = new System.Drawing.Point(62, 141);
-            this.richTextBox5.Name = "richTextBox5";
-            this.richTextBox5.ReadOnly = true;
-            this.richTextBox5.Size = new System.Drawing.Size(415, 24);
-            this.richTextBox5.TabIndex = 103;
-            this.richTextBox5.Text = "";
+            this.TowerBGSprite_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.TowerBGSprite_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TowerBGSprite_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TowerBGSprite_TB.ForeColor = System.Drawing.Color.White;
+            this.TowerBGSprite_TB.Location = new System.Drawing.Point(62, 141);
+            this.TowerBGSprite_TB.Name = "TowerBGSprite_TB";
+            this.TowerBGSprite_TB.ReadOnly = true;
+            this.TowerBGSprite_TB.Size = new System.Drawing.Size(415, 24);
+            this.TowerBGSprite_TB.TabIndex = 103;
+            this.TowerBGSprite_TB.Text = "";
             // 
             // label24
             // 
@@ -665,18 +672,18 @@
             this.label24.TabIndex = 102;
             this.label24.Text = "Cost:";
             // 
-            // richTextBox6
+            // TowerCost_TB
             // 
-            this.richTextBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.richTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox6.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox6.ForeColor = System.Drawing.Color.White;
-            this.richTextBox6.Location = new System.Drawing.Point(301, 281);
-            this.richTextBox6.Name = "richTextBox6";
-            this.richTextBox6.ReadOnly = true;
-            this.richTextBox6.Size = new System.Drawing.Size(152, 24);
-            this.richTextBox6.TabIndex = 101;
-            this.richTextBox6.Text = "";
+            this.TowerCost_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.TowerCost_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TowerCost_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TowerCost_TB.ForeColor = System.Drawing.Color.White;
+            this.TowerCost_TB.Location = new System.Drawing.Point(301, 281);
+            this.TowerCost_TB.Name = "TowerCost_TB";
+            this.TowerCost_TB.ReadOnly = true;
+            this.TowerCost_TB.Size = new System.Drawing.Size(156, 24);
+            this.TowerCost_TB.TabIndex = 101;
+            this.TowerCost_TB.Text = "";
             // 
             // label25
             // 
@@ -689,18 +696,18 @@
             this.label25.TabIndex = 100;
             this.label25.Text = "Tower type:";
             // 
-            // richTextBox7
+            // TowerType_TB
             // 
-            this.richTextBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.richTextBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox7.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox7.ForeColor = System.Drawing.Color.White;
-            this.richTextBox7.Location = new System.Drawing.Point(62, 88);
-            this.richTextBox7.Name = "richTextBox7";
-            this.richTextBox7.ReadOnly = true;
-            this.richTextBox7.Size = new System.Drawing.Size(222, 24);
-            this.richTextBox7.TabIndex = 99;
-            this.richTextBox7.Text = "";
+            this.TowerType_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.TowerType_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TowerType_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TowerType_TB.ForeColor = System.Drawing.Color.White;
+            this.TowerType_TB.Location = new System.Drawing.Point(62, 88);
+            this.TowerType_TB.Name = "TowerType_TB";
+            this.TowerType_TB.ReadOnly = true;
+            this.TowerType_TB.Size = new System.Drawing.Size(222, 24);
+            this.TowerType_TB.TabIndex = 99;
+            this.TowerType_TB.Text = "";
             // 
             // label20
             // 
@@ -761,18 +768,18 @@
             this.label18.TabIndex = 94;
             this.label18.Text = "Cost:";
             // 
-            // Cost_TB
+            // BloonCost_TB
             // 
-            this.Cost_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.Cost_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Cost_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Cost_TB.ForeColor = System.Drawing.Color.White;
-            this.Cost_TB.Location = new System.Drawing.Point(836, 211);
-            this.Cost_TB.Name = "Cost_TB";
-            this.Cost_TB.ReadOnly = true;
-            this.Cost_TB.Size = new System.Drawing.Size(171, 24);
-            this.Cost_TB.TabIndex = 93;
-            this.Cost_TB.Text = "";
+            this.BloonCost_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.BloonCost_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.BloonCost_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BloonCost_TB.ForeColor = System.Drawing.Color.White;
+            this.BloonCost_TB.Location = new System.Drawing.Point(836, 211);
+            this.BloonCost_TB.Name = "BloonCost_TB";
+            this.BloonCost_TB.ReadOnly = true;
+            this.BloonCost_TB.Size = new System.Drawing.Size(171, 24);
+            this.BloonCost_TB.TabIndex = 93;
+            this.BloonCost_TB.Text = "";
             // 
             // BloonFeatures_LB
             // 
@@ -900,6 +907,58 @@
             this.BloonType_TB.TabIndex = 82;
             this.BloonType_TB.Text = "";
             // 
+            // OpenTower_Panel
+            // 
+            this.OpenTower_Panel.Controls.Add(this.OpenTowerText_Button);
+            this.OpenTower_Panel.Controls.Add(this.OpenEZTower_Button);
+            this.OpenTower_Panel.Location = new System.Drawing.Point(438, 65);
+            this.OpenTower_Panel.Name = "OpenTower_Panel";
+            this.OpenTower_Panel.Size = new System.Drawing.Size(168, 70);
+            this.OpenTower_Panel.TabIndex = 112;
+            this.OpenTower_Panel.Visible = false;
+            // 
+            // OpenTowerText_Button
+            // 
+            this.OpenTowerText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenTowerText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenTowerText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenTowerText_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenTowerText_Button.Location = new System.Drawing.Point(3, 0);
+            this.OpenTowerText_Button.Name = "OpenTowerText_Button";
+            this.OpenTowerText_Button.Size = new System.Drawing.Size(164, 34);
+            this.OpenTowerText_Button.TabIndex = 77;
+            this.OpenTowerText_Button.Text = "Open in Text";
+            this.OpenTowerText_Button.UseVisualStyleBackColor = false;
+            this.OpenTowerText_Button.Click += new System.EventHandler(this.OpenTowerText_Button_Click);
+            // 
+            // OpenEZTower_Button
+            // 
+            this.OpenEZTower_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenEZTower_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenEZTower_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenEZTower_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenEZTower_Button.Location = new System.Drawing.Point(3, 35);
+            this.OpenEZTower_Button.Name = "OpenEZTower_Button";
+            this.OpenEZTower_Button.Size = new System.Drawing.Size(164, 35);
+            this.OpenEZTower_Button.TabIndex = 76;
+            this.OpenEZTower_Button.Text = "Open in EZ Tower";
+            this.OpenEZTower_Button.UseVisualStyleBackColor = false;
+            this.OpenEZTower_Button.Click += new System.EventHandler(this.OpenEZTower_Button_Click);
+            // 
+            // OpenTower_Button
+            // 
+            this.OpenTower_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenTower_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenTower_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenTower_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenTower_Button.Location = new System.Drawing.Point(301, 81);
+            this.OpenTower_Button.Name = "OpenTower_Button";
+            this.OpenTower_Button.Size = new System.Drawing.Size(141, 34);
+            this.OpenTower_Button.TabIndex = 111;
+            this.OpenTower_Button.Text = "Open";
+            this.OpenTower_Button.UseVisualStyleBackColor = false;
+            this.OpenTower_Button.Click += new System.EventHandler(this.OpenTower_Button_Click);
+            // 
             // EZCard_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -915,7 +974,7 @@
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.Card_Label);
             this.Controls.Add(this.TowerPanel);
-            this.Controls.Add(this.Bloon_Panel);
+            this.Controls.Add(this.Tower_Bloon_Panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -927,9 +986,10 @@
             this.TowerPanel.ResumeLayout(false);
             this.TowerPanel.PerformLayout();
             this.Open_Panel.ResumeLayout(false);
-            this.Bloon_Panel.ResumeLayout(false);
-            this.Bloon_Panel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Tower_Bloon_Panel.ResumeLayout(false);
+            this.Tower_Bloon_Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Seperator_PB)).EndInit();
+            this.OpenTower_Panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -961,7 +1021,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button SeeStartingCards_Button;
         private System.Windows.Forms.CheckBox Visible_CheckBox;
-        private System.Windows.Forms.Panel Bloon_Panel;
+        private System.Windows.Forms.Panel Tower_Bloon_Panel;
         private System.Windows.Forms.ListBox BloonFeatures_LB;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
@@ -973,23 +1033,23 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.RichTextBox BloonType_TB;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.RichTextBox Cost_TB;
+        private System.Windows.Forms.RichTextBox BloonCost_TB;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.RichTextBox Interval_TB;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.RichTextBox NumBloons_TB;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox TowerFeatures_LB;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.RichTextBox richTextBox3;
+        private System.Windows.Forms.RichTextBox Upgrades2_TB;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.RichTextBox richTextBox4;
+        private System.Windows.Forms.RichTextBox Upgrades1_TB;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.RichTextBox richTextBox5;
+        private System.Windows.Forms.RichTextBox TowerBGSprite_TB;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.RichTextBox richTextBox6;
+        private System.Windows.Forms.RichTextBox TowerCost_TB;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.RichTextBox richTextBox7;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.RichTextBox TowerType_TB;
+        private System.Windows.Forms.PictureBox Seperator_PB;
         private System.Windows.Forms.Button RefreshList_Button;
         private System.Windows.Forms.Button StartingCard_OpenText_Button;
         private System.Windows.Forms.Button OpenInEZCard_Button;
@@ -997,5 +1057,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel Open_Panel;
         private System.Windows.Forms.Button Open_Button;
+        private System.Windows.Forms.Panel OpenTower_Panel;
+        private System.Windows.Forms.Button OpenTowerText_Button;
+        private System.Windows.Forms.Button OpenEZTower_Button;
+        private System.Windows.Forms.Button OpenTower_Button;
     }
 }
