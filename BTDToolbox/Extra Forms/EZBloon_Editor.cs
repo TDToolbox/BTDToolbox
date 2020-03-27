@@ -89,6 +89,14 @@ namespace BTDToolbox.Extra_Forms
                     label9.Visible = false;
                 }
                 HandleAdvancedView();
+
+                if (BloonFiles_ComboBox.SelectedItem != null)
+                {
+                    if (BloonType_Label.Text.Replace(" bloon","") + ".bloon" != BloonFiles_ComboBox.SelectedItem.ToString())
+                    {
+                        BloonFiles_ComboBox.SelectedItem = BloonType_Label.Text.Replace(" bloon", "") + ".bloon";
+                    }
+                }
             }
         }
         private void HandleAdvancedView()

@@ -22,8 +22,11 @@ namespace BTDToolbox.Extra_Forms
         Card card;
         Card newCard;
         EasyTowerEditor ezTower;
+        EZBloon_Editor ezBloon;
+
         bool openStarterCard = false;
         bool openTower = false;
+        bool openBloon = false;
         public static bool EZCard_Opened = false;
         public string[] startingCards_array = new string[0];
         string game = Serializer.Deserialize_Config().CurrentGame;
@@ -53,7 +56,54 @@ namespace BTDToolbox.Extra_Forms
             {
                 ResetUI();
                 RefreshStartCards_LB();
+
+                //Panel1 stuff
                 Card_Label.Text = "Card " + card.Name;
+                CardName_TB.Text = card.Name;
+                CardSet_TB.Text = card.CardSet;
+                CardSprite_TB.Text = card.CardSprite;
+                DiscardCost_TB.Text = card.DiscardCost.ToString();
+                OldName_TB.Text = card.NameOld;
+
+                StartingCard_CheckBox.Checked = card.StartingCard;
+                Visible_CheckBox.Checked = card.Visible;
+
+                int i = 0;
+                foreach (var item in UnlockMethod_LB.Items)
+                {
+                    if (card.UnlockMethod.ToString().ToLower() == item.ToString().ToLower())
+                    {
+                        UnlockMethod_LB.SelectedIndex = i;
+                        break;
+                    }
+                    i++;
+                }
+
+                //Panel2 stuff
+                //Tower stuff
+                TowerType_TB.Text = card.Tower.TowerType;
+                TowerBGSprite_TB.Text = card.Tower.BackgroundSprite;
+                Upgrades1_TB.Text = card.Tower.Upgrades[0].ToString();
+                Upgrades2_TB.Text = card.Tower.Upgrades[1].ToString();
+                TowerCost_TB.Text = card.Tower.Cost.ToString();
+                foreach (var cardfeats in card.Tower.Features)
+                {
+                    TowerFeatures_LB.SelectedItem = cardfeats;
+                }
+
+
+                //Bloon stuff
+                BloonType_TB.Text = card.Bloon.BloonType;
+                UnlockRound_TB.Text = card.Bloon.UnlockRound.ToString();
+                BloonBGSprite_TB.Text = card.Bloon.BackgroundSprite;
+                BloonCost_TB.Text = card.Bloon.Cost.ToString();
+                IncomeChange_TB.Text = card.Bloon.IncomeChange.ToString();
+                NumBloons_TB.Text = card.Bloon.NumBloons.ToString();
+                Interval_TB.Text = card.Bloon.Interval.ToString();
+                foreach (var bloonfeats in card.Bloon.Features)
+                {
+                    BloonFeatures_LB.SelectedItem = bloonfeats;
+                }
             }
         }
         private void SaveFile()
@@ -130,7 +180,35 @@ namespace BTDToolbox.Extra_Forms
         }
         private void ResetUI()
         {
+            //Panel1 stuff
             Card_Label.Text = "";
+            CardName_TB.Text = "";
+            CardSet_TB.Text = "";
+            CardSprite_TB.Text = "";
+            DiscardCost_TB.Text = "";
+            OldName_TB.Text = "";
+            StartingCard_CheckBox.Checked = false;
+            Visible_CheckBox.Checked = false;
+            UnlockMethod_LB.SelectedIndex = -1;
+
+            //Panel2 stuff
+            //Tower stuff
+            TowerType_TB.Text = "";
+            TowerBGSprite_TB.Text = "";
+            Upgrades1_TB.Text = "";
+            Upgrades2_TB.Text = "";
+            TowerCost_TB.Text = "";
+            TowerFeatures_LB.SelectedIndex = -1;
+
+            //Bloon stuff
+            BloonType_TB.Text = "";
+            UnlockRound_TB.Text = "";
+            BloonBGSprite_TB.Text = "";
+            BloonCost_TB.Text = "";
+            IncomeChange_TB.Text = "";
+            NumBloons_TB.Text = "";
+            Interval_TB.Text = "";
+            BloonFeatures_LB.SelectedIndex = -1;
         }
         //
         // Handling UI changes
@@ -201,8 +279,9 @@ namespace BTDToolbox.Extra_Forms
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
-            SaveFile();
-            ConsoleHandler.appendLog_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());
+            ResetUI();
+            /*SaveFile();
+            ConsoleHandler.appendLog_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());*/
         }
         private void SwitchPanel_Click(object sender, EventArgs e)
         {
@@ -252,6 +331,17 @@ namespace BTDToolbox.Extra_Forms
                     else
                     {
                         ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+                    }
+                }
+                else if (openBloon == true)
+                {
+                    if (card.Bloon.BloonType != null)
+                    {
+                        selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
+                    }
+                    else
+                    {
+                        ConsoleHandler.appendLog("This card doesn't have a specified bloon type");
                     }
                 }
                 else
@@ -404,6 +494,8 @@ namespace BTDToolbox.Extra_Forms
             RefreshList_Button.MouseClick += Close_OpenPanel;
             Save_Button.MouseClick += Close_OpenPanel;
             SwitchPanel.MouseClick += Close_OpenPanel;
+            OpenEZTower_Button.MouseClick += Close_OpenPanel;
+            OpenEZBloon_Button.MouseClick += Close_OpenPanel;
         }
         private void Close_OpenPanel(object sender, EventArgs e)
         {
@@ -411,6 +503,8 @@ namespace BTDToolbox.Extra_Forms
                 Open_Panel.Visible = false;
             if (OpenTower_Panel.Visible == true)
                 OpenTower_Panel.Visible = false;
+            if (OpenBloon_Panel.Visible == true)
+                OpenBloon_Panel.Visible = false;
         }
 
         private void OpenTower_Button_Click(object sender, EventArgs e)
@@ -444,6 +538,39 @@ namespace BTDToolbox.Extra_Forms
             openTower = true;
             OpenInText();
             openTower = false;
+        }
+
+        private void OpenBloon_Button_Click(object sender, EventArgs e)
+        {
+            OpenBloon_Panel.Visible = !OpenBloon_Panel.Visible;
+        }
+
+        private void OpenBloonText_Button_Click(object sender, EventArgs e)
+        {
+            OpenBloon_Panel.Visible = false;
+            openBloon = true;
+            OpenInText();
+            openBloon = false;
+        }
+
+        private void OpenEZBloon_Button_Click(object sender, EventArgs e)
+        {
+            OpenBloon_Panel.Visible = false;
+            if (card.Bloon.BloonType != null)
+            {
+                if (ezBloon == null)
+                {
+                    ezBloon = new EZBloon_Editor();
+                }
+                string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
+                ezBloon.path = path;
+                ezBloon.Show();
+                ezBloon.CreateBloonObject(path);
+            }
+            else
+            {
+                ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+            }
         }
     }
 }
