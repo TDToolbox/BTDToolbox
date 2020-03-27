@@ -510,11 +510,8 @@ namespace BTDToolbox
             spriteVisualizer.path = path;
             spriteVisualizer.Show();*/
 
-            var ezBloon = new EZBloon_Editor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
-            ezBloon.path = path;
-            ezBloon.Show();
-
+            New_JsonEditor jsonEditor = new New_JsonEditor();
+            jsonEditor.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)

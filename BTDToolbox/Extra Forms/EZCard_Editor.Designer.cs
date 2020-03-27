@@ -1533,9 +1533,9 @@
             this.Controls.Add(this.CardFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.Card_Label);
-            this.Controls.Add(this.TowerPanel);
             this.Controls.Add(this.Tower_Bloon_Panel);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.TowerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;

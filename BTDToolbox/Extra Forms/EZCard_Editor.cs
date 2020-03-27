@@ -613,7 +613,7 @@ namespace BTDToolbox.Extra_Forms
             }
             Open_Panel.Visible = false;
         }
-        private void OpenInEZCard_Button_Click(object sender, EventArgs e)
+        private void OpenInEZCard_Button_Click(object sender, EventArgs e)  
         {
             if (StartingCards_LB.SelectedIndices.Count == 1)
             {
