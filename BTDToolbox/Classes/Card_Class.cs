@@ -98,7 +98,7 @@ namespace BTDToolbox.Classes
         public static Card FromJson(string json) => JsonConvert.DeserializeObject<Card>(json, BTDToolbox.Classes.Converter.Settings);
     }
 
-    public static class Serialize
+    public static class SerializeCard
     {
         public static string ToJson(this Card self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.Converter.Settings);
     }

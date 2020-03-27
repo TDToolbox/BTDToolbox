@@ -59,6 +59,10 @@
             this.TotalStartingCards_Label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.Tower_Bloon_Panel = new System.Windows.Forms.Panel();
+            this.OpenBloon_Panel = new System.Windows.Forms.Panel();
+            this.OpenBloonText_Button = new System.Windows.Forms.Button();
+            this.OpenEZBloon_Button = new System.Windows.Forms.Button();
+            this.OpenBloon_Button = new System.Windows.Forms.Button();
             this.OpenTower_Panel = new System.Windows.Forms.Panel();
             this.OpenTowerText_Button = new System.Windows.Forms.Button();
             this.OpenEZTower_Button = new System.Windows.Forms.Button();
@@ -70,6 +74,8 @@
             this.label22 = new System.Windows.Forms.Label();
             this.Upgrades1_TB = new System.Windows.Forms.RichTextBox();
             this.label23 = new System.Windows.Forms.Label();
+            this.UnlockRound_TB = new System.Windows.Forms.RichTextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.TowerBGSprite_TB = new System.Windows.Forms.RichTextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.TowerCost_TB = new System.Windows.Forms.RichTextBox();
@@ -87,20 +93,14 @@
             this.IncomeChange_TB = new System.Windows.Forms.RichTextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.BloonBGSprite_TB = new System.Windows.Forms.RichTextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.UnlockRound_TB = new System.Windows.Forms.RichTextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.BloonType_TB = new System.Windows.Forms.RichTextBox();
-            this.OpenBloon_Panel = new System.Windows.Forms.Panel();
-            this.OpenBloonText_Button = new System.Windows.Forms.Button();
-            this.OpenEZBloon_Button = new System.Windows.Forms.Button();
-            this.OpenBloon_Button = new System.Windows.Forms.Button();
             this.TowerPanel.SuspendLayout();
             this.Open_Panel.SuspendLayout();
             this.Tower_Bloon_Panel.SuspendLayout();
+            this.OpenBloon_Panel.SuspendLayout();
             this.OpenTower_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Seperator_PB)).BeginInit();
-            this.OpenBloon_Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // CardName_TB
@@ -534,11 +534,63 @@
             this.Tower_Bloon_Panel.TabIndex = 74;
             this.Tower_Bloon_Panel.Visible = false;
             // 
+            // OpenBloon_Panel
+            // 
+            this.OpenBloon_Panel.Controls.Add(this.OpenBloonText_Button);
+            this.OpenBloon_Panel.Controls.Add(this.OpenEZBloon_Button);
+            this.OpenBloon_Panel.Location = new System.Drawing.Point(867, 22);
+            this.OpenBloon_Panel.Name = "OpenBloon_Panel";
+            this.OpenBloon_Panel.Size = new System.Drawing.Size(168, 70);
+            this.OpenBloon_Panel.TabIndex = 114;
+            this.OpenBloon_Panel.Visible = false;
+            // 
+            // OpenBloonText_Button
+            // 
+            this.OpenBloonText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenBloonText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenBloonText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenBloonText_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenBloonText_Button.Location = new System.Drawing.Point(3, 0);
+            this.OpenBloonText_Button.Name = "OpenBloonText_Button";
+            this.OpenBloonText_Button.Size = new System.Drawing.Size(164, 34);
+            this.OpenBloonText_Button.TabIndex = 77;
+            this.OpenBloonText_Button.Text = "Open in Text";
+            this.OpenBloonText_Button.UseVisualStyleBackColor = false;
+            this.OpenBloonText_Button.Click += new System.EventHandler(this.OpenBloonText_Button_Click);
+            // 
+            // OpenEZBloon_Button
+            // 
+            this.OpenEZBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenEZBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenEZBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenEZBloon_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenEZBloon_Button.Location = new System.Drawing.Point(3, 35);
+            this.OpenEZBloon_Button.Name = "OpenEZBloon_Button";
+            this.OpenEZBloon_Button.Size = new System.Drawing.Size(164, 35);
+            this.OpenEZBloon_Button.TabIndex = 76;
+            this.OpenEZBloon_Button.Text = "Open in EZ Bloon";
+            this.OpenEZBloon_Button.UseVisualStyleBackColor = false;
+            this.OpenEZBloon_Button.Click += new System.EventHandler(this.OpenEZBloon_Button_Click);
+            // 
+            // OpenBloon_Button
+            // 
+            this.OpenBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.OpenBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
+            this.OpenBloon_Button.ForeColor = System.Drawing.Color.White;
+            this.OpenBloon_Button.Location = new System.Drawing.Point(820, 85);
+            this.OpenBloon_Button.Name = "OpenBloon_Button";
+            this.OpenBloon_Button.Size = new System.Drawing.Size(141, 34);
+            this.OpenBloon_Button.TabIndex = 113;
+            this.OpenBloon_Button.Text = "Open";
+            this.OpenBloon_Button.UseVisualStyleBackColor = false;
+            this.OpenBloon_Button.Click += new System.EventHandler(this.OpenBloon_Button_Click);
+            // 
             // OpenTower_Panel
             // 
             this.OpenTower_Panel.Controls.Add(this.OpenTowerText_Button);
             this.OpenTower_Panel.Controls.Add(this.OpenEZTower_Button);
-            this.OpenTower_Panel.Location = new System.Drawing.Point(438, 65);
+            this.OpenTower_Panel.Location = new System.Drawing.Point(427, 65);
             this.OpenTower_Panel.Name = "OpenTower_Panel";
             this.OpenTower_Panel.Size = new System.Drawing.Size(168, 70);
             this.OpenTower_Panel.TabIndex = 112;
@@ -578,7 +630,7 @@
             this.OpenTower_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OpenTower_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.OpenTower_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenTower_Button.Location = new System.Drawing.Point(301, 81);
+            this.OpenTower_Button.Location = new System.Drawing.Point(290, 81);
             this.OpenTower_Button.Name = "OpenTower_Button";
             this.OpenTower_Button.Size = new System.Drawing.Size(141, 34);
             this.OpenTower_Button.TabIndex = 111;
@@ -676,6 +728,30 @@
             this.label23.Size = new System.Drawing.Size(146, 20);
             this.label23.TabIndex = 104;
             this.label23.Text = "Background sprite:";
+            // 
+            // UnlockRound_TB
+            // 
+            this.UnlockRound_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.UnlockRound_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UnlockRound_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UnlockRound_TB.ForeColor = System.Drawing.Color.White;
+            this.UnlockRound_TB.Location = new System.Drawing.Point(592, 211);
+            this.UnlockRound_TB.Name = "UnlockRound_TB";
+            this.UnlockRound_TB.ReadOnly = true;
+            this.UnlockRound_TB.Size = new System.Drawing.Size(171, 24);
+            this.UnlockRound_TB.TabIndex = 84;
+            this.UnlockRound_TB.Text = "";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(592, 188);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(111, 20);
+            this.label15.TabIndex = 85;
+            this.label15.Text = "Unlock round:";
             // 
             // TowerBGSprite_TB
             // 
@@ -888,30 +964,6 @@
             this.BloonBGSprite_TB.TabIndex = 86;
             this.BloonBGSprite_TB.Text = "";
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(592, 188);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(111, 20);
-            this.label15.TabIndex = 85;
-            this.label15.Text = "Unlock round:";
-            // 
-            // UnlockRound_TB
-            // 
-            this.UnlockRound_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.UnlockRound_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.UnlockRound_TB.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UnlockRound_TB.ForeColor = System.Drawing.Color.White;
-            this.UnlockRound_TB.Location = new System.Drawing.Point(592, 211);
-            this.UnlockRound_TB.Name = "UnlockRound_TB";
-            this.UnlockRound_TB.ReadOnly = true;
-            this.UnlockRound_TB.Size = new System.Drawing.Size(171, 24);
-            this.UnlockRound_TB.TabIndex = 84;
-            this.UnlockRound_TB.Text = "";
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -935,58 +987,6 @@
             this.BloonType_TB.Size = new System.Drawing.Size(222, 24);
             this.BloonType_TB.TabIndex = 82;
             this.BloonType_TB.Text = "";
-            // 
-            // OpenBloon_Panel
-            // 
-            this.OpenBloon_Panel.Controls.Add(this.OpenBloonText_Button);
-            this.OpenBloon_Panel.Controls.Add(this.OpenEZBloon_Button);
-            this.OpenBloon_Panel.Location = new System.Drawing.Point(867, 22);
-            this.OpenBloon_Panel.Name = "OpenBloon_Panel";
-            this.OpenBloon_Panel.Size = new System.Drawing.Size(168, 70);
-            this.OpenBloon_Panel.TabIndex = 114;
-            this.OpenBloon_Panel.Visible = false;
-            // 
-            // OpenBloonText_Button
-            // 
-            this.OpenBloonText_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.OpenBloonText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenBloonText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.OpenBloonText_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenBloonText_Button.Location = new System.Drawing.Point(3, 0);
-            this.OpenBloonText_Button.Name = "OpenBloonText_Button";
-            this.OpenBloonText_Button.Size = new System.Drawing.Size(164, 34);
-            this.OpenBloonText_Button.TabIndex = 77;
-            this.OpenBloonText_Button.Text = "Open in Text";
-            this.OpenBloonText_Button.UseVisualStyleBackColor = false;
-            this.OpenBloonText_Button.Click += new System.EventHandler(this.OpenBloonText_Button_Click);
-            // 
-            // OpenEZBloon_Button
-            // 
-            this.OpenEZBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.OpenEZBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenEZBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.OpenEZBloon_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenEZBloon_Button.Location = new System.Drawing.Point(3, 35);
-            this.OpenEZBloon_Button.Name = "OpenEZBloon_Button";
-            this.OpenEZBloon_Button.Size = new System.Drawing.Size(164, 35);
-            this.OpenEZBloon_Button.TabIndex = 76;
-            this.OpenEZBloon_Button.Text = "Open in EZ Bloon";
-            this.OpenEZBloon_Button.UseVisualStyleBackColor = false;
-            this.OpenEZBloon_Button.Click += new System.EventHandler(this.OpenEZBloon_Button_Click);
-            // 
-            // OpenBloon_Button
-            // 
-            this.OpenBloon_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.OpenBloon_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenBloon_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.OpenBloon_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenBloon_Button.Location = new System.Drawing.Point(820, 85);
-            this.OpenBloon_Button.Name = "OpenBloon_Button";
-            this.OpenBloon_Button.Size = new System.Drawing.Size(141, 34);
-            this.OpenBloon_Button.TabIndex = 113;
-            this.OpenBloon_Button.Text = "Open";
-            this.OpenBloon_Button.UseVisualStyleBackColor = false;
-            this.OpenBloon_Button.Click += new System.EventHandler(this.OpenBloon_Button_Click);
             // 
             // EZCard_Editor
             // 
@@ -1016,9 +1016,9 @@
             this.Open_Panel.ResumeLayout(false);
             this.Tower_Bloon_Panel.ResumeLayout(false);
             this.Tower_Bloon_Panel.PerformLayout();
+            this.OpenBloon_Panel.ResumeLayout(false);
             this.OpenTower_Panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Seperator_PB)).EndInit();
-            this.OpenBloon_Panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

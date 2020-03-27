@@ -111,17 +111,59 @@ namespace BTDToolbox.Extra_Forms
             bool error = false;
             newCard = new Card();
             newCard = card;
-            
 
-            /*try { newBloon.BaseSpeed = Double.Parse(BaseSpeed_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your base speed is not a valid number..."); error = true; }*/
-
-            
-            /*if (!error)
+            //Panel 1 stuff
+            newCard.Name = CardName_TB.Text;
+            newCard.CardSet = CardSet_TB.Text;
+            newCard.CardSprite = CardSprite_TB.Text;
+            newCard.NameOld = OldName_TB.Text;
+            if(UnlockMethod_LB.SelectedItems.Count == 1)
+                newCard.UnlockMethod = UnlockMethod_LB.SelectedItem.ToString();
+            else
             {
-                var saveFile = SerializeBloon.ToJson(newCard);
+                ConsoleHandler.force_appendNotice("You need to select at least one Unlock method!");
+                error = true;
+            }
+            newCard.StartingCard = StartingCard_CheckBox.Checked;
+            newCard.Visible = Visible_CheckBox.Checked;
+            try { newCard.DiscardCost = Int64.Parse(DiscardCost_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your discard cost is not a valid number..."); error = true; }
+
+
+            //Panel 2 stuff
+            //Tower stuff
+            newCard.Tower.TowerType = TowerType_TB.Text;
+            newCard.Tower.BackgroundSprite = TowerBGSprite_TB.Text;
+            TowerFeatures_LB.SelectedItems.CopyTo(newCard.Tower.Features, 0);
+
+            try { newCard.Tower.Upgrades[0] = Int64.Parse(Upgrades1_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your left path upgrade is not a valid number..."); error = true; }
+            try { newCard.Tower.Upgrades[1] = Int64.Parse(Upgrades2_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your right path upgrade is not a valid number..."); error = true; }
+            try { newCard.Tower.Cost = Int64.Parse(TowerCost_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your tower cost is not a valid number..."); error = true; }
+
+            //Bloon shit
+            newCard.Bloon.BloonType = BloonType_TB.Text;
+            newCard.Bloon.BackgroundSprite = BloonBGSprite_TB.Text;
+            BloonFeatures_LB.SelectedItems.CopyTo(newCard.Bloon.Features, 0);
+
+            try { newCard.Bloon.UnlockRound = Int64.Parse(UnlockRound_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your unlock round is not a valid number..."); error = true; }
+            try { newCard.Bloon.Cost = Int64.Parse(BloonCost_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your bloon cost is not a valid number..."); error = true; }
+            try { newCard.Bloon.IncomeChange = Int64.Parse(IncomeChange_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your income changed amount is not a valid number..."); error = true; }
+            try { newCard.Bloon.Interval = Double.Parse(Interval_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your interval amount is not a valid number..."); error = true; }
+            try { newCard.Bloon.NumBloons = Int64.Parse(NumBloons_TB.Text); }
+            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your num bloons amount is not a valid number..."); error = true; }
+
+            if (!error)
+            {
+                var saveFile = SerializeCard.ToJson(newCard);
                 File.WriteAllText(path, saveFile);
-            }*/
+            }
         }
         private int CountStartingCards()
         {
@@ -279,9 +321,8 @@ namespace BTDToolbox.Extra_Forms
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
-            ResetUI();
-            /*SaveFile();
-            ConsoleHandler.appendLog_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());*/
+            SaveFile();
+            ConsoleHandler.appendLog_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());
         }
         private void SwitchPanel_Click(object sender, EventArgs e)
         {
@@ -308,7 +349,6 @@ namespace BTDToolbox.Extra_Forms
                 ConsoleHandler.appendLog_CanRepeat("Launching " + game);
             }
         }
-
         private void OpenText_Button_Click(object sender, EventArgs e)
         {
             OpenInText();
@@ -363,7 +403,6 @@ namespace BTDToolbox.Extra_Forms
         {
             EZCard_Opened = false;
         }
-
         private void SeeStartingCards_Button_Click(object sender, EventArgs e)
         {
             startingCards_array = new string[0];
@@ -373,7 +412,6 @@ namespace BTDToolbox.Extra_Forms
 
             TowerPanel.Visible = false;
         }
-
         private void StartingCard_OpenText_Button_Click(object sender, EventArgs e)
         {
             if (StartingCards_LB.SelectedIndices.Count == 1)
@@ -394,7 +432,6 @@ namespace BTDToolbox.Extra_Forms
             }
             Open_Panel.Visible = false;
         }
-
         private void OpenInEZCard_Button_Click(object sender, EventArgs e)
         {
             if (StartingCards_LB.SelectedIndices.Count == 1)
@@ -413,7 +450,6 @@ namespace BTDToolbox.Extra_Forms
             }
             Open_Panel.Visible = false;
         }
-
         private void RefreshStartCards_LB()
         {
             startingCards_array = new string[0];
@@ -506,12 +542,10 @@ namespace BTDToolbox.Extra_Forms
             if (OpenBloon_Panel.Visible == true)
                 OpenBloon_Panel.Visible = false;
         }
-
         private void OpenTower_Button_Click(object sender, EventArgs e)
         {
             OpenTower_Panel.Visible = !OpenTower_Panel.Visible;
         }
-
         private void OpenEZTower_Button_Click(object sender, EventArgs e)
         {
             OpenTower_Panel.Visible = false;
@@ -531,7 +565,6 @@ namespace BTDToolbox.Extra_Forms
                 ConsoleHandler.appendLog("This card doesn't have a specified tower type");
             }
         }
-
         private void OpenTowerText_Button_Click(object sender, EventArgs e)
         {
             OpenTower_Panel.Visible = false;
@@ -539,12 +572,10 @@ namespace BTDToolbox.Extra_Forms
             OpenInText();
             openTower = false;
         }
-
         private void OpenBloon_Button_Click(object sender, EventArgs e)
         {
             OpenBloon_Panel.Visible = !OpenBloon_Panel.Visible;
         }
-
         private void OpenBloonText_Button_Click(object sender, EventArgs e)
         {
             OpenBloon_Panel.Visible = false;
@@ -552,7 +583,6 @@ namespace BTDToolbox.Extra_Forms
             OpenInText();
             openBloon = false;
         }
-
         private void OpenEZBloon_Button_Click(object sender, EventArgs e)
         {
             OpenBloon_Panel.Visible = false;
