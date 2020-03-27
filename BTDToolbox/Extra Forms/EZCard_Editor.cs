@@ -21,6 +21,8 @@ namespace BTDToolbox.Extra_Forms
 
         Card card;
         Card newCard;
+
+        bool openStarterCard = false;
         public static bool EZCard_Opened = false;
         public string[] startingCards_array = new string[0];
         string game = Serializer.Deserialize_Config().CurrentGame;
@@ -29,6 +31,8 @@ namespace BTDToolbox.Extra_Forms
         {
             InitializeComponent();
             EZCard_Opened = true;
+
+            Set_ClickEvents();
         }
         public void CreateCardObject(string cardPath)
         {
@@ -47,7 +51,8 @@ namespace BTDToolbox.Extra_Forms
             if (card != null)
             {
                 ResetUI();
-                Card_Label.Text = card.Name;
+                RefreshStartCards_LB();
+                Card_Label.Text = "Card " + card.Name;
             }
         }
         private void SaveFile()
@@ -203,11 +208,13 @@ namespace BTDToolbox.Extra_Forms
             if (SwitchPanel.Text == "Page 2")
             {
                 TowerPanel.Visible = false;
+                Bloon_Panel.Visible = true;
                 SwitchPanel.Text = "Page 1";
             }
             else if (SwitchPanel.Text == "Page 1")
             {
                 TowerPanel.Visible = true;
+                Bloon_Panel.Visible = false;
                 SwitchPanel.Text = "Page 2";
             }
         }
@@ -231,7 +238,7 @@ namespace BTDToolbox.Extra_Forms
             if (Serializer.Deserialize_Config().useExternalEditor == false)
             {
                 string selectedCard = "";
-                if (StarterCards_Panel.Visible == true)
+                if (openStarterCard == true)
                 {
                     selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
                 }
@@ -262,7 +269,6 @@ namespace BTDToolbox.Extra_Forms
             StartingCards_LB.Items.Clear();
             StartingCards_LB.Items.AddRange(startingCards_array);
 
-            StarterCards_Panel.Visible = true;
             TowerPanel.Visible = false;
         }
 
@@ -270,41 +276,96 @@ namespace BTDToolbox.Extra_Forms
         {
             if (StartingCards_LB.SelectedIndices.Count == 1)
             {
+                openStarterCard = true;
                 OpenInText();
+                openStarterCard = false;
             }
             else if (StartingCards_LB.SelectedIndices.Count > 1)
             {
                 ConsoleHandler.force_appendNotice("Please select only ONE file to continue");
+                this.Focus();
             }
             else if (StartingCards_LB.SelectedIndices.Count == 0)
             {
                 ConsoleHandler.force_appendNotice("You need to have at least one file selected to contiune...");
+                this.Focus();
             }
+            Open_Panel.Visible = false;
         }
 
         private void OpenInEZCard_Button_Click(object sender, EventArgs e)
         {
             if (StartingCards_LB.SelectedIndices.Count == 1)
             {
-                string selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
-                CreateCardObject(selectedCard);
+                CardFiles_ComboBox.SelectedItem = "Card " + StartingCards_LB.SelectedItem.ToString().Replace(".json","");
             }
             else if (StartingCards_LB.SelectedIndices.Count > 1)
             {
                 ConsoleHandler.force_appendNotice("Please select only ONE file to continue");
+                this.Focus();
             }
             else if (StartingCards_LB.SelectedIndices.Count == 0)
             {
                 ConsoleHandler.force_appendNotice("You need to have at least one file selected to contiune...");
+                this.Focus();
             }
+            Open_Panel.Visible = false;
         }
 
-        private void RefreshList_Button_Click(object sender, EventArgs e)
+        private void RefreshStartCards_LB()
         {
             startingCards_array = new string[0];
             CountStartingCards();
             StartingCards_LB.Items.Clear();
             StartingCards_LB.Items.AddRange(startingCards_array);
+        }
+        private void RefreshList_Button_Click(object sender, EventArgs e)
+        {
+            RefreshStartCards_LB();
+        }
+        private void Open_Button_Click(object sender, EventArgs e)
+        {
+            if(Open_Panel.Visible == false)
+                Open_Panel.Visible = true;
+            else
+                Open_Panel.Visible = false;
+        }
+        private void Set_ClickEvents()
+        {
+            this.MouseClick += Close_OpenPanel;
+
+            Card_Label.MouseClick += Close_OpenPanel;
+            UnlockMethod_Label.MouseClick += Close_OpenPanel;
+            TotalStartingCards_Label.MouseClick += Close_OpenPanel;
+            label1.MouseClick += Close_OpenPanel;
+            label2.MouseClick += Close_OpenPanel;
+            label3.MouseClick += Close_OpenPanel;
+            label4.MouseClick += Close_OpenPanel;
+            label5.MouseClick += Close_OpenPanel;
+            label6.MouseClick += Close_OpenPanel;
+            label16.MouseClick += Close_OpenPanel;
+            Game_Label.MouseClick += Close_OpenPanel;
+
+            CardFiles_ComboBox.MouseClick += Close_OpenPanel;
+            OpenText_Button.MouseClick += Close_OpenPanel;
+            CardName_TB.MouseClick += Close_OpenPanel;
+            TowerPanel.MouseClick += Close_OpenPanel;
+            CardSet_TB.MouseClick += Close_OpenPanel;
+            CardSprite_TB.MouseClick += Close_OpenPanel;
+            DiscardCost_TB.MouseClick += Close_OpenPanel;
+            OldName_TB.MouseClick += Close_OpenPanel;
+            UnlockMethod_LB.MouseClick += Close_OpenPanel;
+            StartingCard_CheckBox.MouseClick += Close_OpenPanel;
+            Visible_CheckBox.MouseClick += Close_OpenPanel;
+            StartingCards_LB.MouseClick += Close_OpenPanel;
+            RefreshList_Button.MouseClick += Close_OpenPanel;
+            Save_Button.MouseClick += Close_OpenPanel;
+            SwitchPanel.MouseClick += Close_OpenPanel;
+        }
+        private void Close_OpenPanel(object sender, EventArgs e)
+        {
+            if (Open_Panel.Visible == true)
+                Open_Panel.Visible = false;
         }
     }
 }
