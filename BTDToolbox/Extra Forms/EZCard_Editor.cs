@@ -78,6 +78,9 @@ namespace BTDToolbox.Extra_Forms
             OldName_TB.Size = new Size(253, 24);
             OldName_Label.Location = new Point(316, 202);
             OldName_TB.Location = new Point(316, 223);
+
+            if (Power_Panel.Visible)
+                SwitchPanel.Text = "Hide";
         }
         private void Hide_PowerCardStuff()
         {
@@ -825,16 +828,22 @@ namespace BTDToolbox.Extra_Forms
                     if (CardFiles_ComboBox.Items.Contains(searchText))
                     {
                         CardFiles_ComboBox.SelectedItem = searchText;
+                        TowerPanel.Visible = true;
+                        Tower_Bloon_Panel.Visible = false;
                     }
                     if (!CardFiles_ComboBox.Items.Contains(searchText))
                     {
                         if (CardFiles_ComboBox.Items.Contains(searchText.Replace(".json", "")))
                         {
                             CardFiles_ComboBox.SelectedItem = searchText;
+                            TowerPanel.Visible = true;
+                            Tower_Bloon_Panel.Visible = false;
                         }
                         else if (CardFiles_ComboBox.Items.Contains(searchText.Replace("Card ", "")))
                         {
                             CardFiles_ComboBox.SelectedItem = searchText;
+                            TowerPanel.Visible = true;
+                            Tower_Bloon_Panel.Visible = false;
                         }
                         else
                         {

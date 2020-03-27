@@ -16,7 +16,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.7";
+        public static string version = "Alpha 0.0.8";
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
@@ -141,9 +141,9 @@ namespace BTDToolbox
             if (programData.recentUpdate == true)
                 ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
 
-            /*ConsoleHandler.announcement();
+            ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();*/
+            isUpdate.HandleUpdates();
 
             foreach (Control con in Controls)
                 if (con is MdiClient)

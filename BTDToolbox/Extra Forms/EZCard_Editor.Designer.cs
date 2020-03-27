@@ -132,7 +132,6 @@
             this.PowerFeatures_LB = new System.Windows.Forms.ListBox();
             this.label26 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Reset_Button = new System.Windows.Forms.Button();
             this.TowerPanel.SuspendLayout();
             this.CardSprites_Panel.SuspendLayout();
             this.UnlockWin_Panel.SuspendLayout();
@@ -1514,27 +1513,12 @@
             this.pictureBox1.TabIndex = 124;
             this.pictureBox1.TabStop = false;
             // 
-            // Reset_Button
-            // 
-            this.Reset_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.Reset_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Reset_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
-            this.Reset_Button.ForeColor = System.Drawing.Color.White;
-            this.Reset_Button.Location = new System.Drawing.Point(440, 7);
-            this.Reset_Button.Name = "Reset_Button";
-            this.Reset_Button.Size = new System.Drawing.Size(117, 32);
-            this.Reset_Button.TabIndex = 125;
-            this.Reset_Button.Text = "Reset";
-            this.Reset_Button.UseVisualStyleBackColor = false;
-            this.Reset_Button.Click += new System.EventHandler(this.Reset_Button_Click);
-            // 
             // EZCard_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
-            this.Controls.Add(this.Reset_Button);
             this.Controls.Add(this.Power_Panel);
             this.Controls.Add(this.PrevCard_Button);
             this.Controls.Add(this.NextCard_Button);
@@ -1688,6 +1672,5 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.RichTextBox PowerCost_TB;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button Reset_Button;
     }
 }
