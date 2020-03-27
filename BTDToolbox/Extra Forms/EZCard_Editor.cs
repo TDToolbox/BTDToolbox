@@ -475,6 +475,9 @@ namespace BTDToolbox.Extra_Forms
             path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + selectedCard;
             CreateCardObject(path);
             CountStartingCards();
+
+            if (Tower_Bloon_Panel.Visible)
+                SwitchPanel.Text = "Page 1";
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
