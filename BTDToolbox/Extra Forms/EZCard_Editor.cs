@@ -69,7 +69,6 @@ namespace BTDToolbox.Extra_Forms
         {
             Tower_Bloon_Panel.Visible = false;
             TowerPanel.Visible = true;
-            //SwitchPanel.Visible = false;
             Desc_label.Visible = true;
             Description_TB.Visible = true;
             label1.Visible = true;
@@ -94,40 +93,6 @@ namespace BTDToolbox.Extra_Forms
             OldName_TB.Size = new Size(527, 24);
             OldName_Label.Location = new Point(42, 251);
             OldName_TB.Location = new Point(42, 272);
-        }
-        private void PopulateUI_Power()
-        {
-            ResetUI();
-            RefreshStartCards_LB();
-            Tower_Bloon_Panel.Visible = false;
-            TowerPanel.Visible = true;
-            SwitchPanel.Visible = false;
-            Desc_label.Visible = true;
-            Description_TB.Visible = true;
-            label1.Visible = true;
-            PlatformProduectID_TB.Visible = true;
-            ProductID_Label.Visible = true;
-            ProductID_TB.Visible = true;
-            OldName_TB.Size = new Size(213, 24);
-            OldName_Label.Location = new Point(356, 202);
-            OldName_TB.Location = new Point(356, 223);
-
-            Card_Label.Text = "Card " + powerCard.Name;
-            CardName_TB.Text = powerCard.Name;
-            CardSet_TB.Text = powerCard.CardSet;
-            CardSet_LB.SelectedItem = powerCard.CardSet;
-            CardSprite_TB.Text = powerCard.CardSprite;
-            CardSprites_LB.SelectedItem = powerCard.CardSprite;
-            DiscardCost_TB.Text = powerCard.DiscardCost.ToString();
-            OldName_TB.Text = powerCard.NameOld;
-            ProductID_TB.Text = powerCard.ProductId;
-            Description_TB.Text = powerCard.Description;
-            PlatformProduectID_TB.Text = powerCard.PlatformProductId;
-            UnlockMethod_LB.SelectedItem = powerCard.UnlockMethod;
-            UnlockWinCount_TB.Text = powerCard.UnlockWin.Count.ToString();
-            UnlockWinType_TB.Text = powerCard.UnlockWin.Type.ToString();
-            SpotlightCount_TB.Text = powerCard.UnlockWin.SpotlightCount.ToString();
-            
         }
         private void PopulateUI_Cards()
         {
@@ -232,7 +197,19 @@ namespace BTDToolbox.Extra_Forms
             newCard.CardSprite = CardSprite_TB.Text;
             newCard.NameOld = OldName_TB.Text;
             if(UnlockMethod_LB.SelectedItems.Count == 1)
+            {
                 newCard.UnlockMethod = UnlockMethod_LB.SelectedItem.ToString();
+                if (newCard.UnlockWin != null)
+                {
+                    newCard.UnlockWin.Type = UnlockWinType_TB.Text;
+
+                    try { newCard.UnlockWin.Count = Int64.Parse(UnlockWinCount_TB.Text); }
+                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your power's count is not a valid number..."); error = true; }
+
+                    try { newCard.UnlockWin.SpotlightCount = Int64.Parse(SpotlightCount_TB.Text); }
+                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your power's spotlight count is not a valid number..."); error = true; }
+                }
+            }
             else
             {
                 ConsoleHandler.force_appendNotice("You need to select at least one Unlock method!");
@@ -246,32 +223,78 @@ namespace BTDToolbox.Extra_Forms
 
             //Panel 2 stuff
             //Tower stuff
-            newCard.Tower.TowerType = TowerType_TB.Text;
-            newCard.Tower.BackgroundSprite = TowerBGSprite_TB.Text;
-            TowerFeatures_LB.SelectedItems.CopyTo(newCard.Tower.Features, 0);
+            if(newCard.Tower != null)
+            {
+                newCard.Tower.TowerType = TowerType_TB.Text;
+                newCard.Tower.BackgroundSprite = TowerBGSprite_TB.Text;
 
-            try { newCard.Tower.Upgrades[0] = Int64.Parse(Upgrades1_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your left path upgrade is not a valid number..."); error = true; }
-            try { newCard.Tower.Upgrades[1] = Int64.Parse(Upgrades2_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your right path upgrade is not a valid number..."); error = true; }
-            try { newCard.Tower.Cost = Int64.Parse(TowerCost_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your tower cost is not a valid number..."); error = true; }
+                int i = 0;
+                string[] feats = new string[TowerFeatures_LB.SelectedItems.Count];
+                foreach (var item in TowerFeatures_LB.SelectedItems)
+                {
+                    feats[i] = item.ToString();
+                    i++;
+                }
+                newCard.Tower.Features = feats;
+
+                try { newCard.Tower.Upgrades[0] = Int64.Parse(Upgrades1_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your left path upgrade is not a valid number..."); error = true; }
+                try { newCard.Tower.Upgrades[1] = Int64.Parse(Upgrades2_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your right path upgrade is not a valid number..."); error = true; }
+                try { newCard.Tower.Cost = Int64.Parse(TowerCost_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your tower cost is not a valid number..."); error = true; }
+            }
+
 
             //Bloon shit
-            newCard.Bloon.BloonType = BloonType_TB.Text;
-            newCard.Bloon.BackgroundSprite = BloonBGSprite_TB.Text;
-            BloonFeatures_LB.SelectedItems.CopyTo(newCard.Bloon.Features, 0);
+            if(newCard.Bloon != null)
+            {
+                newCard.Bloon.BloonType = BloonType_TB.Text;
+                newCard.Bloon.BackgroundSprite = BloonBGSprite_TB.Text;
 
-            try { newCard.Bloon.UnlockRound = Int64.Parse(UnlockRound_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your unlock round is not a valid number..."); error = true; }
-            try { newCard.Bloon.Cost = Int64.Parse(BloonCost_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your bloon cost is not a valid number..."); error = true; }
-            try { newCard.Bloon.IncomeChange = Int64.Parse(IncomeChange_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your income changed amount is not a valid number..."); error = true; }
-            try { newCard.Bloon.Interval = Double.Parse(Interval_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your interval amount is not a valid number..."); error = true; }
-            try { newCard.Bloon.NumBloons = Int64.Parse(NumBloons_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your num bloons amount is not a valid number..."); error = true; }
+                int i = 0;
+                string[] feats = new string[BloonFeatures_LB.SelectedItems.Count];
+                foreach (var item in BloonFeatures_LB.SelectedItems)
+                {
+                    feats[i] = item.ToString();
+                    i++;
+                }
+                newCard.Bloon.Features = feats;
+
+                try { newCard.Bloon.UnlockRound = Int64.Parse(UnlockRound_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your unlock round is not a valid number..."); error = true; }
+                try { newCard.Bloon.Cost = Int64.Parse(BloonCost_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your bloon cost is not a valid number..."); error = true; }
+                try { newCard.Bloon.IncomeChange = Int64.Parse(IncomeChange_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your income changed amount is not a valid number..."); error = true; }
+                try { newCard.Bloon.Interval = Double.Parse(Interval_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your interval amount is not a valid number..."); error = true; }
+                try { newCard.Bloon.NumBloons = Int64.Parse(NumBloons_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your num bloons amount is not a valid number..."); error = true; }
+            }
+
+
+            //Power stuff
+            if (newCard.Power != null)
+            {
+                newCard.PlatformProductId = PlatformProduectID_TB.Text;
+                newCard.ProductId = ProductID_TB.Text;
+                newCard.Description = Description_TB.Text;
+                newCard.Power.BackgroundSprite = PowerBGSprite_TB.Text;
+                newCard.Power.Type = PowerType_TB.Text;
+
+                try { newCard.Power.Cost = Int64.Parse(PowerCost_TB.Text); }
+                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your power cost is not a valid number..."); error = true; }
+
+                int i = 0;
+                string[] feats = new string[PowerFeatures_LB.SelectedItems.Count];
+                foreach (var item in PowerFeatures_LB.SelectedItems)
+                {
+                    feats[i] = item.ToString();
+                    i++;
+                }
+                newCard.Power.Features = feats;
+            }
 
             if (!error)
             {
@@ -915,6 +938,8 @@ namespace BTDToolbox.Extra_Forms
         private void CardSprites_Button_Click(object sender, EventArgs e)
         {
             CardSprites_Panel.Visible = !CardSprites_Panel.Visible;
+            if (CardSets_Panel.Visible)
+                CardSets_Panel.Visible = false;
         }
         private void CardSprites_LB_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -926,6 +951,8 @@ namespace BTDToolbox.Extra_Forms
         private void CardSets_Button_Click(object sender, EventArgs e)
         {
             CardSets_Panel.Visible = !CardSets_Panel.Visible;
+            if (CardSprites_Panel.Visible)
+                CardSprites_Panel.Visible = false;
         }
 
         private void CardSet_LB_SelectedValueChanged(object sender, EventArgs e)
