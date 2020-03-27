@@ -23,6 +23,7 @@ namespace BTDToolbox.Extra_Forms
         Tower_Class.Artist artist;
         bool finishedLoading = false;
         bool firstLoad = false;
+        public static bool EZTower_Opened = false;
         string[] upgradenames = new string[] { };
         string[] upgradeIcons = new string[] { };
         string[] upgradeAvatars = new string[] { };
@@ -42,6 +43,7 @@ namespace BTDToolbox.Extra_Forms
         public EasyTowerEditor()
         {
             InitializeComponent();
+            EZTower_Opened = true;
             if (game == "BTDB")
             {
                 label2.Hide();
@@ -209,6 +211,14 @@ namespace BTDToolbox.Extra_Forms
                     {
                         Upgrades_ListBox.SelectedIndex = 0;
                         PopulateUpgrades();
+                    }
+                }
+
+                if (AllTowerFiles_ComboBox.SelectedItem != null)
+                {
+                    if (TowerType_Label.Text + ".tower" != AllTowerFiles_ComboBox.SelectedItem.ToString())
+                    {
+                        AllTowerFiles_ComboBox.SelectedItem = TowerType_Label.Text + ".tower";
                     }
                 }
             }        
@@ -881,6 +891,22 @@ namespace BTDToolbox.Extra_Forms
                 string selectedFile = path;
                 Process.Start(selectedFile);
             }
+        }
+
+        private void EasyTowerEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                SaveFile();
+                ConsoleHandler.appendLog_CanRepeat("Saved " + AllTowerFiles_ComboBox.SelectedItem.ToString());
+                GeneralMethods.CompileJet("launch");
+                ConsoleHandler.appendLog_CanRepeat("Launching " + game);
+            }
+        }
+
+        private void EasyTowerEditor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            EZTower_Opened = false;
         }
     }
 }

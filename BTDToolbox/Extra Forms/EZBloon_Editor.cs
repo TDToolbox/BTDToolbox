@@ -24,12 +24,14 @@ namespace BTDToolbox.Extra_Forms
 
         bool advancedView = false;
         bool forceAdvancedView = false;
+        public static bool EZBloon_Opened = false;
 
         string game = Serializer.Deserialize_Config().CurrentGame;
 
         public EZBloon_Editor()
         {
             InitializeComponent();
+            EZBloon_Opened = true;
         }
         public void CreateBloonObject(string bloonPath)
         {
@@ -87,6 +89,14 @@ namespace BTDToolbox.Extra_Forms
                     label9.Visible = false;
                 }
                 HandleAdvancedView();
+
+                if (BloonFiles_ComboBox.SelectedItem != null)
+                {
+                    if (BloonType_Label.Text.Replace(" bloon","") + ".bloon" != BloonFiles_ComboBox.SelectedItem.ToString())
+                    {
+                        BloonFiles_ComboBox.SelectedItem = BloonType_Label.Text.Replace(" bloon", "") + ".bloon";
+                    }
+                }
             }
         }
         private void HandleAdvancedView()
@@ -296,9 +306,11 @@ namespace BTDToolbox.Extra_Forms
 
             newBloon.StatusImmunity = CreateStringArray_FromCheckedLB(StatusImmunity_CheckedListBox);
             newBloon.DamageImmunity = CreateStringArray_FromCheckedLB(DamageImmunity_CheckedListBox);
-            newBloon.ApplyStatus = CreateStringArray_FromCheckedLB(ApplyStatus_CheckedListBox);
             if(game == "BTD5")
+            {
                 newBloon.BloonAbility = CreateStringArray_FromCheckedLB(BloonAbility_CheckedListBox);
+                newBloon.ApplyStatus = CreateStringArray_FromCheckedLB(ApplyStatus_CheckedListBox);
+            }
 
             if (!error)
             {
@@ -377,12 +389,12 @@ namespace BTDToolbox.Extra_Forms
             //reset checkboxes
             resetCheckedListBox(StatusImmunity_CheckedListBox);
             resetCheckedListBox(DamageImmunity_CheckedListBox);
-            resetCheckedListBox(ApplyStatus_CheckedListBox);
 
             //BTD5 stuff
             if (game == "BTD5")
             {
                 resetCheckedListBox(BloonAbility_CheckedListBox);
+                resetCheckedListBox(ApplyStatus_CheckedListBox);
             }
         }
         private CheckedListBox resetCheckedListBox(CheckedListBox checkedListBox)
@@ -402,6 +414,7 @@ namespace BTDToolbox.Extra_Forms
         //
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
+            EZBloon_Opened = true;
             string gameDir = "";
             if (game == "BTD5")
                 gameDir = Serializer.Deserialize_Config().BTD5_Directory;
@@ -432,6 +445,7 @@ namespace BTDToolbox.Extra_Forms
 
                 if(game == "BTD5")
                 {
+                    Game_Label.Text = "BTD5";
                     string abilityPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonAbilities";
                     var abilityFiles = Directory.GetFiles(abilityPath);
                     foreach (var file in abilityFiles)
@@ -443,8 +457,15 @@ namespace BTDToolbox.Extra_Forms
                             BloonAbility_CheckedListBox.Items.Add(filename.Replace(".json", ""), false);
                         }
                     }
+                    ApplyStatus_CheckedListBox.Show();
+                    ApplyStatus_Label.Show();
                 }
-
+                else
+                {
+                    Game_Label.Text = "BTDB";
+                    ApplyStatus_CheckedListBox.Hide();
+                    ApplyStatus_Label.Hide();
+                }
                 CreateBloonObject(path);
             }
             else
@@ -597,6 +618,11 @@ namespace BTDToolbox.Extra_Forms
                 string selectedFile = path;
                 Process.Start(selectedFile);
             }
+        }
+
+        private void EZBloon_Editor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            EZBloon_Opened = false;
         }
     }
 }

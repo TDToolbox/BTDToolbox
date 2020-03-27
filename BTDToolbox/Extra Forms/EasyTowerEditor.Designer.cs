@@ -769,7 +769,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EasyTowerEditor_FormClosed);
             this.Shown += new System.EventHandler(this.EasyTowerEditor_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EasyTowerEditor_KeyDown);
             this.TowerPanel.ResumeLayout(false);
             this.TowerPanel.PerformLayout();
             this.UpgradesPanel.ResumeLayout(false);

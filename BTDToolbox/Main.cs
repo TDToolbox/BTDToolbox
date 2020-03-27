@@ -16,7 +16,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.7";
+        public static string version = "Alpha 0.0.8";
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
@@ -715,6 +715,21 @@ namespace BTDToolbox
             string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
             ezBloon.path = path;
             ezBloon.Show();
+        }
+
+        private void EZCard_Editor_Click(object sender, EventArgs e)
+        {
+            if (Serializer.Deserialize_Config().CurrentGame == "BTDB")
+            {
+                var ezCard = new EZCard_Editor();
+                string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
+                ezCard.path = path;
+                ezCard.Show();
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
+            }
         }
     }
 }

@@ -43,6 +43,7 @@
             this.Save_Button = new System.Windows.Forms.Button();
             this.BloonFiles_ComboBox = new System.Windows.Forms.ComboBox();
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.Game_Label = new System.Windows.Forms.Label();
             this.DrawLayer_LB = new System.Windows.Forms.ListBox();
             this.HitAddon_TextBox = new System.Windows.Forms.RichTextBox();
             this.HitAddon_Label = new System.Windows.Forms.Label();
@@ -59,7 +60,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Panel2 = new System.Windows.Forms.Panel();
             this.ApplyStatus_CheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.ApplyStatus_Label = new System.Windows.Forms.Label();
             this.BloonAbility_CheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.label9 = new System.Windows.Forms.Label();
             this.StatusImmunity_CheckedListBox = new System.Windows.Forms.CheckedListBox();
@@ -254,6 +255,7 @@
             // 
             this.Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel1.Controls.Add(this.Game_Label);
             this.Panel1.Controls.Add(this.DrawLayer_LB);
             this.Panel1.Controls.Add(this.HitAddon_TextBox);
             this.Panel1.Controls.Add(this.HitAddon_Label);
@@ -282,6 +284,18 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(1071, 425);
             this.Panel1.TabIndex = 49;
+            // 
+            // Game_Label
+            // 
+            this.Game_Label.AutoSize = true;
+            this.Game_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Game_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Game_Label.ForeColor = System.Drawing.Color.White;
+            this.Game_Label.Location = new System.Drawing.Point(945, 0);
+            this.Game_Label.Name = "Game_Label";
+            this.Game_Label.Size = new System.Drawing.Size(90, 35);
+            this.Game_Label.TabIndex = 66;
+            this.Game_Label.Text = "Game";
             // 
             // DrawLayer_LB
             // 
@@ -453,7 +467,7 @@
             this.Panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Panel2.Controls.Add(this.ApplyStatus_CheckedListBox);
-            this.Panel2.Controls.Add(this.label10);
+            this.Panel2.Controls.Add(this.ApplyStatus_Label);
             this.Panel2.Controls.Add(this.BloonAbility_CheckedListBox);
             this.Panel2.Controls.Add(this.label9);
             this.Panel2.Controls.Add(this.StatusImmunity_CheckedListBox);
@@ -482,17 +496,17 @@
             this.ApplyStatus_CheckedListBox.Size = new System.Drawing.Size(204, 352);
             this.ApplyStatus_CheckedListBox.TabIndex = 69;
             // 
-            // label10
+            // ApplyStatus_Label
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label10.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(856, 8);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(103, 20);
-            this.label10.TabIndex = 68;
-            this.label10.Text = "Apply status:";
+            this.ApplyStatus_Label.AutoSize = true;
+            this.ApplyStatus_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.ApplyStatus_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ApplyStatus_Label.ForeColor = System.Drawing.Color.White;
+            this.ApplyStatus_Label.Location = new System.Drawing.Point(856, 8);
+            this.ApplyStatus_Label.Name = "ApplyStatus_Label";
+            this.ApplyStatus_Label.Size = new System.Drawing.Size(103, 20);
+            this.ApplyStatus_Label.TabIndex = 68;
+            this.ApplyStatus_Label.Text = "Apply status:";
             // 
             // BloonAbility_CheckedListBox
             // 
@@ -769,6 +783,7 @@
             this.MaximizeBox = false;
             this.Name = "EZBloon_Editor";
             this.Text = "EZ Bloon Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EZBloon_Editor_FormClosed);
             this.Shown += new System.EventHandler(this.EasyTowerEditor_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EZBloon_Editor_KeyDown);
             this.Panel1.ResumeLayout(false);
@@ -818,7 +833,7 @@
         private System.Windows.Forms.CheckedListBox StatusImmunity_CheckedListBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckedListBox ApplyStatus_CheckedListBox;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label ApplyStatus_Label;
         private System.Windows.Forms.CheckedListBox BloonAbility_CheckedListBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button ChildBloons_Button;
@@ -831,5 +846,6 @@
         private System.Windows.Forms.Button AddChild_Button;
         private System.Windows.Forms.ListBox DrawLayer_LB;
         private System.Windows.Forms.Button OpenText_Button;
+        private System.Windows.Forms.Label Game_Label;
     }
 }
