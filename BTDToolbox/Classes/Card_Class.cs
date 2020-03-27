@@ -43,9 +43,23 @@ namespace BTDToolbox.Classes
 
         [JsonProperty("UnlockMethod")]
         public string UnlockMethod { get; set; }
+        [JsonProperty("UnlockWin")]
+        public UnlockWin UnlockWin { get; set; }
 
         [JsonProperty("Visible")]
         public bool Visible { get; set; }
+
+        [JsonProperty("Description")]
+        public string Description { get; set; }
+
+        [JsonProperty("PlatformProductID")]
+        public string PlatformProductId { get; set; }
+
+        [JsonProperty("Power")]
+        public Power Power { get; set; }
+
+        [JsonProperty("ProductID")]
+        public string ProductId { get; set; }
     }
 
     public partial class Card_Bloon

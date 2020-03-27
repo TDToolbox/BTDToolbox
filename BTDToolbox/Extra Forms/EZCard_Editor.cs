@@ -54,16 +54,46 @@ namespace BTDToolbox.Extra_Forms
 
                 if (card.CardSet == "Power")
                 {
-                    powerCard = PowerCard.FromJson(json);
-                    PopulateUI_Power();
+                    HandlePowerCards();
                 }
                 else
                 {
-                    PopulateUI_Cards();
+                    Hide_PowerCardStuff();
                 }
+                PopulateUI_Cards();
             }
             else
                 ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
+        }
+        private void HandlePowerCards()
+        {
+            Tower_Bloon_Panel.Visible = false;
+            TowerPanel.Visible = true;
+            //SwitchPanel.Visible = false;
+            Desc_label.Visible = true;
+            Description_TB.Visible = true;
+            label1.Visible = true;
+            PlatformProduectID_TB.Visible = true;
+            ProductID_Label.Visible = true;
+            ProductID_TB.Visible = true;
+            OldName_TB.Size = new Size(253, 24);
+            OldName_Label.Location = new Point(316, 202);
+            OldName_TB.Location = new Point(316, 223);
+        }
+        private void Hide_PowerCardStuff()
+        {
+            SwitchPanel.Text = "Page 2";
+            SwitchPanel.Visible = true;
+            Desc_label.Visible = false;
+            Description_TB.Visible = false;
+            label1.Visible = false;
+            PlatformProduectID_TB.Visible = false;
+            ProductID_Label.Visible = false;
+            ProductID_TB.Visible = false;
+            Power_Panel.Visible = false;
+            OldName_TB.Size = new Size(527, 24);
+            OldName_Label.Location = new Point(42, 251);
+            OldName_TB.Location = new Point(42, 272);
         }
         private void PopulateUI_Power()
         {
@@ -79,13 +109,15 @@ namespace BTDToolbox.Extra_Forms
             ProductID_Label.Visible = true;
             ProductID_TB.Visible = true;
             OldName_TB.Size = new Size(213, 24);
-            OldName_Label.Location = new Point(280, 202);
-            OldName_TB.Location = new Point(280, 223);
+            OldName_Label.Location = new Point(356, 202);
+            OldName_TB.Location = new Point(356, 223);
 
             Card_Label.Text = "Card " + powerCard.Name;
             CardName_TB.Text = powerCard.Name;
             CardSet_TB.Text = powerCard.CardSet;
+            CardSet_LB.SelectedItem = powerCard.CardSet;
             CardSprite_TB.Text = powerCard.CardSprite;
+            CardSprites_LB.SelectedItem = powerCard.CardSprite;
             DiscardCost_TB.Text = powerCard.DiscardCost.ToString();
             OldName_TB.Text = powerCard.NameOld;
             ProductID_TB.Text = powerCard.ProductId;
@@ -95,6 +127,7 @@ namespace BTDToolbox.Extra_Forms
             UnlockWinCount_TB.Text = powerCard.UnlockWin.Count.ToString();
             UnlockWinType_TB.Text = powerCard.UnlockWin.Type.ToString();
             SpotlightCount_TB.Text = powerCard.UnlockWin.SpotlightCount.ToString();
+            
         }
         private void PopulateUI_Cards()
         {
@@ -102,23 +135,14 @@ namespace BTDToolbox.Extra_Forms
             {
                 ResetUI();
                 RefreshStartCards_LB();
-                SwitchPanel.Text = "Page 2";
-                SwitchPanel.Visible = true;
-                Desc_label.Visible = false;
-                Description_TB.Visible = false;
-                label1.Visible = false;
-                PlatformProduectID_TB.Visible = false;
-                ProductID_Label.Visible = false;
-                ProductID_TB.Visible = false;
 
-                OldName_TB.Size = new Size(451, 24);
-                OldName_Label.Location = new Point(42, 251);
-                OldName_TB.Location = new Point(42, 272);
                 //Panel1 stuff
                 Card_Label.Text = "Card " + card.Name;
                 CardName_TB.Text = card.Name;
                 CardSet_TB.Text = card.CardSet;
+                CardSet_LB.SelectedItem = card.CardSet;
                 CardSprite_TB.Text = card.CardSprite;
+                CardSprites_LB.SelectedItem = card.CardSprite;
                 DiscardCost_TB.Text = card.DiscardCost.ToString();
                 OldName_TB.Text = card.NameOld;
 
@@ -135,34 +159,64 @@ namespace BTDToolbox.Extra_Forms
                     }
                     i++;
                 }
+                if(card.UnlockWin!= null)
+                {
+                    UnlockWinCount_TB.Text = card.UnlockWin.Count.ToString();
+                    UnlockWinType_TB.Text = card.UnlockWin.Type.ToString();
+                    SpotlightCount_TB.Text = card.UnlockWin.SpotlightCount.ToString();
+                }
 
                 //Panel2 stuff
                 //Tower stuff
-                TowerType_TB.Text = card.Tower.TowerType;
-                TowerBGSprite_TB.Text = card.Tower.BackgroundSprite;
-                Upgrades1_TB.Text = card.Tower.Upgrades[0].ToString();
-                Upgrades2_TB.Text = card.Tower.Upgrades[1].ToString();
-                TowerCost_TB.Text = card.Tower.Cost.ToString();
-                if (card.Tower.Features != null)
+                if(card.Tower != null)
                 {
-                    foreach (var cardfeats in card.Tower.Features)
+                    TowerType_TB.Text = card.Tower.TowerType;
+                    TowerBGSprite_TB.Text = card.Tower.BackgroundSprite;
+                    Upgrades1_TB.Text = card.Tower.Upgrades[0].ToString();
+                    Upgrades2_TB.Text = card.Tower.Upgrades[1].ToString();
+                    TowerCost_TB.Text = card.Tower.Cost.ToString();
+                    if (card.Tower.Features != null)
                     {
-                        TowerFeatures_LB.SelectedItem = cardfeats;
+                        foreach (var cardfeats in card.Tower.Features)
+                        {
+                            TowerFeatures_LB.SelectedItem = cardfeats;
+                        }
+                    }
+                }             
+
+                //Bloon stuff
+                if(card.Bloon != null)
+                {
+                    BloonType_TB.Text = card.Bloon.BloonType;
+                    UnlockRound_TB.Text = card.Bloon.UnlockRound.ToString();
+                    BloonBGSprite_TB.Text = card.Bloon.BackgroundSprite;
+                    BloonCost_TB.Text = card.Bloon.Cost.ToString();
+                    IncomeChange_TB.Text = card.Bloon.IncomeChange.ToString();
+                    NumBloons_TB.Text = card.Bloon.NumBloons.ToString();
+                    Interval_TB.Text = card.Bloon.Interval.ToString();
+                    foreach (var bloonfeats in card.Bloon.Features)
+                    {
+                        BloonFeatures_LB.SelectedItem = bloonfeats;
                     }
                 }
 
-
-                //Bloon stuff
-                BloonType_TB.Text = card.Bloon.BloonType;
-                UnlockRound_TB.Text = card.Bloon.UnlockRound.ToString();
-                BloonBGSprite_TB.Text = card.Bloon.BackgroundSprite;
-                BloonCost_TB.Text = card.Bloon.Cost.ToString();
-                IncomeChange_TB.Text = card.Bloon.IncomeChange.ToString();
-                NumBloons_TB.Text = card.Bloon.NumBloons.ToString();
-                Interval_TB.Text = card.Bloon.Interval.ToString();
-                foreach (var bloonfeats in card.Bloon.Features)
+                //Power stuff
+                if(card.Power != null)
                 {
-                    BloonFeatures_LB.SelectedItem = bloonfeats;
+                    PlatformProduectID_TB.Text = card.PlatformProductId;
+                    ProductID_TB.Text = card.ProductId;
+                    Description_TB.Text = card.Description;
+                    PowerBGSprite_TB.Text = card.Power.BackgroundSprite;
+                    PowerCost_TB.Text = card.Power.Cost.ToString();
+                    PowerType_TB.Text = card.Power.Type;
+
+                    if (card.Power.Features != null)
+                    {
+                        foreach (var powerfeats in card.Power.Features)
+                        {
+                            PowerFeatures_LB.SelectedItem = powerfeats;
+                        }
+                    }
                 }
             }
         }
@@ -294,6 +348,7 @@ namespace BTDToolbox.Extra_Forms
             StartingCard_CheckBox.Checked = false;
             Visible_CheckBox.Checked = false;
             UnlockMethod_LB.SelectedIndex = -1;
+            GoToCard_TB.Text = "";
 
             //Panel2 stuff
             //Tower stuff
@@ -318,6 +373,15 @@ namespace BTDToolbox.Extra_Forms
             UnlockWinCount_TB.Text = "";
             UnlockWinType_TB.Text = "";
             SpotlightCount_TB.Text = "";
+            PlatformProduectID_TB.Text = "";
+            ProductID_TB.Text = "";
+            Description_TB.Text = "";
+            PowerCost_TB.Text = "";
+            PowerType_TB.Text = "";
+            PowerBGSprite_TB.Text = "";
+            CardSet_LB.SelectedIndex = -1;
+            CardSprites_LB.SelectedIndex = -1;
+            PowerFeatures_LB.SelectedIndex = -1;
         }
         //
         // Handling UI changes
@@ -393,7 +457,20 @@ namespace BTDToolbox.Extra_Forms
         }
         private void SwitchPanel_Click(object sender, EventArgs e)
         {
-            if (SwitchPanel.Text == "Page 2")
+            if (CardSet_TB.Text == "Power")
+            {
+                if (SwitchPanel.Text == "Power")
+                {
+                    Power_Panel.Visible = true;
+                    SwitchPanel.Text = "Hide";
+                }
+                else if (SwitchPanel.Text == "Hide")
+                {
+                    Power_Panel.Visible = false;
+                    SwitchPanel.Text = "Power";
+                }
+            }
+            else if (SwitchPanel.Text == "Page 2")
             {
                 TowerPanel.Visible = false;
                 Tower_Bloon_Panel.Visible = true;
@@ -421,7 +498,6 @@ namespace BTDToolbox.Extra_Forms
                 {
                     GoToFile();
                     GoToCard_TB.Text = "";
-                    
                 }
             }
         }
@@ -609,7 +685,7 @@ namespace BTDToolbox.Extra_Forms
             StartingCards_LB.MouseClick += Close_OpenPanel;
             RefreshList_Button.MouseClick += Close_OpenPanel;
             Save_Button.MouseClick += Close_OpenPanel;
-            SwitchPanel.MouseClick += Close_OpenPanel;
+            //SwitchPanel.MouseClick += Close_OpenPanel;
             OpenEZTower_Button.MouseClick += Close_OpenPanel;
             OpenEZBloon_Button.MouseClick += Close_OpenPanel;
 
@@ -619,6 +695,14 @@ namespace BTDToolbox.Extra_Forms
             label1.MouseClick += Close_OpenPanel;
             ProductID_Label.MouseClick += Close_OpenPanel;
             ProductID_TB.MouseClick += Close_OpenPanel;
+            CardSprites_LB.MouseClick += Close_OpenPanel;
+            label10.MouseClick += Close_OpenPanel;
+            CardSprites_Panel.MouseClick += Close_OpenPanel;
+            Description_TB.MouseClick += Close_OpenPanel;
+            Desc_label.MouseClick += Close_OpenPanel;
+            CardSet_LB.MouseClick += Close_OpenPanel;
+            label7.MouseClick += Close_OpenPanel;
+            CardSets_Panel.MouseClick += Close_OpenPanel;
         }
         private void Close_OpenPanel(object sender, EventArgs e)
         {
@@ -630,6 +714,16 @@ namespace BTDToolbox.Extra_Forms
                 OpenBloon_Panel.Visible = false;
             if (UnlockWin_Panel.Visible == true)
                 UnlockWin_Panel.Visible = false;
+            if (CardSprites_Panel.Visible == true)
+                CardSprites_Panel.Visible = false;
+            if (CardSets_Panel.Visible == true)
+                CardSets_Panel.Visible = false;
+            if (Power_Panel.Visible == true)
+            {
+                Power_Panel.Visible = false;
+                SwitchPanel.Text = "Power";
+            }
+            
         }
         private void OpenTower_Button_Click(object sender, EventArgs e)
         {
@@ -741,7 +835,6 @@ namespace BTDToolbox.Extra_Forms
                 MessageBox.Show("ERROR! You don't have at least 15 Starter Cards! The game will crash if you don't have at least 15 starter cards");
             }
         }
-
         private void UnlockMethod_LB_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(UnlockMethod_LB.SelectedIndex == 2)
@@ -753,7 +846,6 @@ namespace BTDToolbox.Extra_Forms
                 UnlockWin_Button.Visible = false;
             }
         }
-
         private void UnlockWin_Button_Click(object sender, EventArgs e)
         {
             UnlockWin_Panel.Visible = !UnlockWin_Panel.Visible;
@@ -764,7 +856,6 @@ namespace BTDToolbox.Extra_Forms
             thread = new System.Threading.Thread(delegate () { CardAutoScroll("back"); });
             thread.Start();
         }
-        
         private void CardAutoScroll(string direction)
         {
             Invoke((MethodInvoker)delegate {
@@ -785,7 +876,9 @@ namespace BTDToolbox.Extra_Forms
                 
             });
             int sleeptime = 125;
-            if (autoscrollcount > 3 && autoscrollcount < 8)
+            if (autoscrollcount < 3)
+                sleeptime = 125;
+            else if (autoscrollcount > 3 && autoscrollcount < 8)
                 sleeptime = 90;
             else if (autoscrollcount > 8 && autoscrollcount < 15)
                 sleeptime = 75;
@@ -818,6 +911,45 @@ namespace BTDToolbox.Extra_Forms
             mouseHolding = false;
             autoscrollcount = 0;
             thread.Abort();
+        }
+        private void CardSprites_Button_Click(object sender, EventArgs e)
+        {
+            CardSprites_Panel.Visible = !CardSprites_Panel.Visible;
+        }
+        private void CardSprites_LB_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if(CardSprites_LB.SelectedItem != null)
+            {
+                CardSprite_TB.Text = CardSprites_LB.SelectedItem.ToString();
+            }
+        }
+        private void CardSets_Button_Click(object sender, EventArgs e)
+        {
+            CardSets_Panel.Visible = !CardSets_Panel.Visible;
+        }
+
+        private void CardSet_LB_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (CardSet_LB.SelectedItem != null)
+            {
+                CardSet_TB.Text = CardSet_LB.SelectedItem.ToString();
+                if (CardSet_TB.Text == "Power")
+                {
+                    SwitchPanel.Text = "Power";
+                    HandlePowerCards();
+                }
+
+                else
+                {
+                    Hide_PowerCardStuff();
+                    SwitchPanel.Text = "Page 2";
+                }
+            }
+        }
+
+        private void Reset_Button_Click(object sender, EventArgs e)
+        {
+            ResetUI();
         }
     }
 }
