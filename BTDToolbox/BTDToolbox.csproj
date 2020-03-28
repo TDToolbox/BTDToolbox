@@ -115,12 +115,6 @@
     <Compile Include="Extra Forms\EasyTowerEditor.Designer.cs">
       <DependentUpon>EasyTowerEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extra Forms\EZ_Round.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Extra Forms\EZ_Round.Designer.cs">
-      <DependentUpon>EZ_Round.cs</DependentUpon>
-    </Compile>
     <Compile Include="Extra Forms\First_Time_Use.cs">
       <SubType>Form</SubType>
     </Compile>

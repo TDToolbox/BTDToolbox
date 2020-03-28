@@ -196,18 +196,8 @@ namespace BTDToolbox.Extra_Forms
         }
         private void OpenText_Button_Click(object sender, EventArgs e)
         {
-            if (Serializer.Deserialize_Config().useExternalEditor == false)
-            {
-                JsonEditor JsonWindow = new JsonEditor(path);
-                JsonWindow.MdiParent = Main.getInstance();
-                JsonWindow.Show();
-                this.Focus();
-            }
-            else
-            {
-                string selectedFile = path;
-                Process.Start(selectedFile);
-            }
+            JsonEditorHandler.OpenFile(path);
+            this.Focus();
         }
         private void EZ_Base_KeyDown(object sender, KeyEventArgs e)
         {

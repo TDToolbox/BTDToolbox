@@ -108,16 +108,17 @@ namespace BTDToolbox
         {
             int i = tabControl1.SelectedIndex;
 
-            int j = 0;
-
             //Remove the closed filepath
-            j = 0;
+            int j = 0;
             string[] tempFilePaths = new string[tabFilePaths.Length - 1];
             foreach (string tf in tabFilePaths)
             {
                 if (j != i)
                 {
-                    tempFilePaths[j] = tf;
+                    if(i == 0)
+                        tempFilePaths[j - 1] = tf;
+                    else
+                        tempFilePaths[j] = tf;
                 }
                 j++;
             }
@@ -132,7 +133,10 @@ namespace BTDToolbox
             {
                 if (j != i)
                 {
-                    tempUserControl[j] = tf;
+                    if (i == 0)
+                        tempUserControl[j - 1] = tf;
+                    else
+                        tempUserControl[j] = tf;
                 }
                 j++;
             }
@@ -147,7 +151,10 @@ namespace BTDToolbox
             {
                 if (j != i)
                 {
-                    tempTabPages[j] = tf;
+                    if (i == 0)
+                        tempTabPages[j - 1] = tf;
+                    else
+                        tempTabPages[j] = tf;
                 }
                 j++;
             }
@@ -158,7 +165,10 @@ namespace BTDToolbox
                 this.Close();
 
             tabControl1.TabPages.Remove(tabControl1.SelectedTab);
-            tabControl1.SelectedIndex = i - 1;
+            if(i == 0)
+                tabControl1.SelectedIndex = i;
+            else
+                tabControl1.SelectedIndex = i - 1;
         }
         private void New_JsonEditor_KeyDown(object sender, KeyEventArgs e)
         {

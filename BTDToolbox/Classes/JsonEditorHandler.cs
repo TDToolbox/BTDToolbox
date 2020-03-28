@@ -28,22 +28,25 @@ namespace BTDToolbox.Classes
         }
         public static void OpenFile(string path)
         {
-            ValidateEditor();
+            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            {
+                ValidateEditor();
 
-            int i = 0;
-            bool isFileOpened = false;
-            foreach (string tp in jeditor.tabFilePaths)
-            {
-                if(path == tp)
+                int i = 0;
+                bool isFileOpened = false;
+                foreach (string tp in jeditor.tabFilePaths)
                 {
-                    isFileOpened = true;
-                    jeditor.tabControl1.SelectedTab = jeditor.tabPages[i];
+                    if (path == tp)
+                    {
+                        isFileOpened = true;
+                        jeditor.tabControl1.SelectedTab = jeditor.tabPages[i];
+                    }
+                    i++;
                 }
-                i++;
-            } 
-            if(!isFileOpened)
-            {
-                jeditor.NewTab(path);
+                if (!isFileOpened)
+                {
+                    jeditor.NewTab(path);
+                }
             }
         }
         public static void CloseFile(string path)
