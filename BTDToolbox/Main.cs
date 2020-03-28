@@ -36,6 +36,7 @@ namespace BTDToolbox
         public static string BTD5_Dir;
         public static string BTDB_Dir;
         public static bool enableConsole;
+        bool projNoGame = false;
 
         // Win32 Constants
         private const int SB_HORZ = 0;
@@ -384,19 +385,27 @@ namespace BTDToolbox
         }
         private void NewProject(string gameName)
         {
-            if (isGamePathValid(gameName) == false)
+            if (projNoGame == false)
             {
-                ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
-                browseForExe(gameName);
                 if (isGamePathValid(gameName) == false)
                 {
-                    ConsoleHandler.appendLog("Theres been an error identifying your game");
+                    ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
+                    browseForExe(gameName);
+                    if (isGamePathValid(gameName) == false)
+                    {
+                        ConsoleHandler.appendLog("Theres been an error identifying your game");
+                    }
+                    else
+                    {
+                        if (!Validate_Backup(gameName))
+                            CreateBackup(gameName);
+                        Serializer.SaveConfig(this, "directories", cfgFile);
+                        var setProjName = new SetProjectName();
+                        setProjName.Show();
+                    }
                 }
                 else
                 {
-                    if (!Validate_Backup(gameName))
-                        CreateBackup(gameName);
-                    Serializer.SaveConfig(this, "directories", cfgFile);
                     var setProjName = new SetProjectName();
                     setProjName.Show();
                 }

@@ -71,7 +71,6 @@ namespace BTDToolbox
             }
             gameName = std;
             steamJetPath = gameDir + "\\Assets\\" + jetName;
-            ValidateEXE(gameName);
         }
         public void Extract()
         {

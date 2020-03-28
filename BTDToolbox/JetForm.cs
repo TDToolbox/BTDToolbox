@@ -48,6 +48,7 @@ namespace BTDToolbox
             this.projName = projName;
             Main.projName = projName;
             this.DoubleBuffered = true;
+            string gamedir = "";
 
             initMultiContextMenu();
             initSelContextMenu();
@@ -58,10 +59,21 @@ namespace BTDToolbox
             if (projName.Contains("BTD5"))
             {
                 Main.gameName = "BTD5";
+                gamedir = Serializer.Deserialize_Config().BTD5_Directory;
+
             }
             else if (projName.Contains("BTDB"))
             {
                 Main.gameName = "BTDB";
+                gamedir = Serializer.Deserialize_Config().BTDB_Directory;
+            }
+            if (gamedir == "" || gamedir == null)
+            {
+                Main.getInstance().Launch_Program_ToolStrip.Visible = false;
+            }
+            else
+            {
+                Main.getInstance().Launch_Program_ToolStrip.Visible = true;
             }
             ConsoleHandler.appendLog("Game: " + Main.gameName);
             ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
