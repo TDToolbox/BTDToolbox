@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using static BTDToolbox.Main;
 using static BTDToolbox.JetForm;
+using BTDToolbox.Classes;
 
 namespace BTDToolbox
 {
@@ -41,12 +42,36 @@ namespace BTDToolbox
             serialize.Write(output_Cfg);
             serialize.Close();
         }
+        public static void SaveJSONEditor_Instance(JsonEditor_UserControl jeditor, ConfigFile serialize_config)
+        {
+            var cfg = Serializer.Deserialize_Config();
+            if(jeditor!= null)
+            {
+                cfg.JSON_Editor_FontSize = jeditor.Editor_TextBox.Font.Size;
+                string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
+                StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
+                serialize.Write(output_Cfg);
+                serialize.Close();
+            }
+        }
+        public static void SaveJSONEditor_Tabs(ConfigFile cfg)
+        {
+            if (JsonEditorHandler.jeditor != null)
+                cfg.JsonEditor_OpenedTabs = JsonEditorHandler.jeditor.tabFilePaths;
+            else
+                cfg.JsonEditor_OpenedTabs = new string[0];
+
+            string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
+
+            StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
+            serialize.Write(output_Cfg);
+            serialize.Close();
+        }
+        
         public static void SaveConfig(Form frm, string formName, ConfigFile serialize_config)
         {
             var cfg = Serializer.Deserialize_Config();
-
-            
 
             if (formName == "game")
             {
@@ -108,7 +133,6 @@ namespace BTDToolbox
                 cfg.JSON_Editor_SizeY = frm.Size.Height;
                 cfg.JSON_Editor_PosX = frm.Location.X;
                 cfg.JSON_Editor_PosY = frm.Location.Y;
-                cfg.JSON_Editor_FontSize = JsonEditor.jsonEditorFont;//frm.Font.Size;
             }
 
             if (formName == "updater")

@@ -264,7 +264,6 @@ namespace BTDToolbox
                     }
                 }
             }
-            
         }
         private void HideFindButton()
         {
@@ -397,11 +396,11 @@ namespace BTDToolbox
         {
             Serializer.SaveConfig(this, "json editor", programData);
         }
-
         private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
         {
             ShowReplaceMenu();
         }
+
         public int getWidth()
         {
             int w = 25;
@@ -440,7 +439,6 @@ namespace BTDToolbox
                 tB_line.Text += i + 1 + "\n";   
             }
         }
-
         private void Editor_TextBox_SelectionChanged(object sender, EventArgs e)
         {
             Point pt = Editor_TextBox.GetPositionFromCharIndex(Editor_TextBox.SelectionStart);
@@ -449,27 +447,23 @@ namespace BTDToolbox
                 AddLineNumbers();
             }
         }
-
         private void Editor_TextBox_VScroll(object sender, EventArgs e)
         {
             tB_line.Text = "";
             AddLineNumbers();
             tB_line.Invalidate();
         }
-
         private void Editor_TextBox_FontChanged(object sender, EventArgs e)
         {
             tB_line.Font = Editor_TextBox.Font;
             Editor_TextBox.Select();
             AddLineNumbers();
         }
-
         private void TB_line_MouseDown(object sender, MouseEventArgs e)
         {
             Editor_TextBox.Select();
             tB_line.DeselectAll();
         }
-
         private void Editor_TextBox_MouseClick(object sender, MouseEventArgs e)
         {
             //SearchForPairs();

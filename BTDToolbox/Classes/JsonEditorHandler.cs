@@ -53,5 +53,26 @@ namespace BTDToolbox.Classes
         {
             jeditor.CloseTab(path);
         }
+        public static bool AreJsonErrors()
+        {
+            if(jeditor != null)
+            {
+                int i = 0;
+                bool isError = false;
+                foreach (var u in jeditor.userControls)
+                {
+                    if (u.jsonError)
+                    {
+                        isError = true;
+                        jeditor.tabControl1.SelectedIndex = i;
+                        break;
+                    }
+                    i++;
+                }
+                if (isError)
+                    return true;
+            }
+            return false;
+        }
     }
 }

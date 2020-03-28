@@ -21,6 +21,7 @@ namespace BTDToolbox
         public static int JsonEditor_Width = 0;
         public static int JsonEditor_Height = 0;
         public static string selectedPath = "";
+        public static bool isJsonError = false;
         public JsonEditor_UserControl[] userControls;
         public TabPage[] tabPages;
         public string[] tabFilePaths;
@@ -33,11 +34,11 @@ namespace BTDToolbox
             this.Font = new Font("Consolas", 11);
             JsonEditor_Width = tabControl1.Width;
             JsonEditor_Height = tabControl1.Height;
-            
+
             programData = Serializer.Deserialize_Config();
             this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
             this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
-
+            
             /*jsonEditorFont = programData.JSON_Editor_FontSize;
             Font newfont = new Font("Consolas", jsonEditorFont);
             tB_line.Font = newfont;
@@ -45,6 +46,11 @@ namespace BTDToolbox
             FontSize_TextBox.Text = jsonEditorFont.ToString();*/
 
         }
+
+
+        //
+        //Open stuff
+        //
         public void NewTab(string path)
         {
             //handle user control stuff
@@ -90,7 +96,7 @@ namespace BTDToolbox
         public void OpenTab(string path)
         {
             int i = 0;
-            foreach(string t in tabFilePaths)
+            foreach (string t in tabFilePaths)
             {
                 if (t == path)
                 {
@@ -99,6 +105,23 @@ namespace BTDToolbox
                 }
                 i++;
             }
+        }
+
+        //
+        //Methods
+        //
+        private string GetTabFilePath()
+        {
+            int i = 0;
+            foreach (TabPage x in tabPages)
+            {
+                if (x.Text == tabControl1.SelectedTab.Text)
+                {
+                    selectedPath = tabFilePaths[i];
+                }
+                i++;
+            }
+            return selectedPath;
         }
 
         //
@@ -197,6 +220,29 @@ namespace BTDToolbox
             else
                 tabControl1.SelectedIndex = i - 1;
         }
+        private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Serializer.SaveConfig(this, "json editor", programData);
+            Serializer.SaveJSONEditor_Tabs(programData);
+            if(userControls.Length >0)
+                Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex], programData);
+            JsonEditorHandler.jeditor = null;
+        }
+        private void Close_button_Click(object sender, EventArgs e)
+        {
+            if(JsonEditorHandler.AreJsonErrors())
+            {
+                //tabControl1.SelectedIndex = i;
+                DialogResult diag = MessageBox.Show(tabControl1.SelectedTab.Text + " has a Json Error! Your mod will break if you don't fix it.\nClose anyways?", "WARNING!!", MessageBoxButtons.YesNo);
+                if (diag == DialogResult.Yes)
+                    this.Close();
+                
+            }
+        }
+
+        //
+        //Other stuff
+        //
         private void New_JsonEditor_KeyDown(object sender, KeyEventArgs e)
         {
             /*if (e.Control && e.KeyCode == Keys.F)
@@ -215,12 +261,11 @@ namespace BTDToolbox
                 }
             }
         }
-
         private void TabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
             TabPage page = tabControl1.TabPages[e.Index];
             //e.Graphics.FillRectangle(new SolidBrush(page.BackColor), e.Bounds);
-            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(40,40,40)), e.Bounds);
+            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(40, 40, 40)), e.Bounds);
 
             Rectangle paddedBounds = e.Bounds;
             int yOffset = (e.State == DrawItemState.Selected) ? -2 : 1;
@@ -228,32 +273,11 @@ namespace BTDToolbox
             //TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, page.ForeColor);
             TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, Color.White);
         }
-        private string GetTabFilePath()
-        {
-            int i = 0;
-            foreach (TabPage x in tabPages)
-            {
-                if (x.Text == tabControl1.SelectedTab.Text)
-                {
-                    selectedPath = tabFilePaths[i];
-                }
-                i++;
-            }
-            return selectedPath;
-        }
         private void Button1_Click(object sender, EventArgs e)
         {
-
-            //GetTabFilePath();
             ConsoleHandler.appendLog_CanRepeat("Tab Pages: " + tabPages.Length.ToString());
             ConsoleHandler.appendLog_CanRepeat("User Controls: " + userControls.Length.ToString());
             ConsoleHandler.appendLog_CanRepeat("File paths: " + tabFilePaths.Length.ToString());
-        }
-
-        private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Serializer.SaveConfig(this, "json editor", programData);
-            JsonEditorHandler.jeditor = null;
         }
     }
 }

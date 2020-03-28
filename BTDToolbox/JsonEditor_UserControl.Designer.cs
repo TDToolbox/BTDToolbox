@@ -48,7 +48,13 @@
             this.lintPanel = new System.Windows.Forms.Panel();
             this.CloseFile_Button = new System.Windows.Forms.Button();
             this.JsonError_Label = new System.Windows.Forms.Label();
+            this.Find_Panel = new System.Windows.Forms.Panel();
+            this.Replace_TB = new System.Windows.Forms.RichTextBox();
+            this.OpenReplacePanel_Button = new System.Windows.Forms.Button();
+            this.Find_Button = new System.Windows.Forms.Button();
+            this.Find_TB = new System.Windows.Forms.RichTextBox();
             this.JsonToolstrip.SuspendLayout();
+            this.Find_Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Editor_TextBox
@@ -58,16 +64,17 @@
             this.Editor_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Editor_TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Editor_TextBox.ForeColor = System.Drawing.Color.White;
-            this.Editor_TextBox.Location = new System.Drawing.Point(32, 22);
+            this.Editor_TextBox.Location = new System.Drawing.Point(32, 24);
             this.Editor_TextBox.Name = "Editor_TextBox";
             this.Editor_TextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.Editor_TextBox.Size = new System.Drawing.Size(719, 309);
+            this.Editor_TextBox.Size = new System.Drawing.Size(719, 313);
             this.Editor_TextBox.TabIndex = 26;
             this.Editor_TextBox.Text = "";
             this.Editor_TextBox.SelectionChanged += new System.EventHandler(this.Editor_TextBox_SelectionChanged);
             this.Editor_TextBox.VScroll += new System.EventHandler(this.Editor_TextBox_VScroll);
             this.Editor_TextBox.FontChanged += new System.EventHandler(this.Editor_TextBox_FontChanged);
             this.Editor_TextBox.TextChanged += new System.EventHandler(this.Editor_TextBox_TextChanged);
+            this.Editor_TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Editor_TextBox_KeyDown);
             // 
             // tB_line
             // 
@@ -81,7 +88,7 @@
             this.tB_line.Name = "tB_line";
             this.tB_line.ReadOnly = true;
             this.tB_line.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.tB_line.Size = new System.Drawing.Size(53, 309);
+            this.tB_line.Size = new System.Drawing.Size(53, 313);
             this.tB_line.TabIndex = 27;
             this.tB_line.TabStop = false;
             this.tB_line.Text = "";
@@ -175,6 +182,7 @@
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
             // 
             // EZTowerEditor_Button
             // 
@@ -182,12 +190,14 @@
             this.EZTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
             this.EZTowerEditor_Button.Text = "EZ Tower tool";
             this.EZTowerEditor_Button.Visible = false;
+            this.EZTowerEditor_Button.Click += new System.EventHandler(this.EZTowerEditor_Button_Click);
             // 
             // EZBoon_Button
             // 
             this.EZBoon_Button.Name = "EZBoon_Button";
             this.EZBoon_Button.Size = new System.Drawing.Size(201, 22);
             this.EZBoon_Button.Text = "EZ Bloon tool";
+            this.EZBoon_Button.Click += new System.EventHandler(this.EZBoon_Button_Click);
             // 
             // Help_DropDown
             // 
@@ -244,11 +254,74 @@
             this.JsonError_Label.Text = "<<  Click to go to error";
             this.JsonError_Label.Visible = false;
             // 
+            // Find_Panel
+            // 
+            this.Find_Panel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Find_Panel.Controls.Add(this.Find_Button);
+            this.Find_Panel.Controls.Add(this.Find_TB);
+            this.Find_Panel.Controls.Add(this.OpenReplacePanel_Button);
+            this.Find_Panel.Controls.Add(this.Replace_TB);
+            this.Find_Panel.Location = new System.Drawing.Point(3, 213);
+            this.Find_Panel.Name = "Find_Panel";
+            this.Find_Panel.Size = new System.Drawing.Size(748, 124);
+            this.Find_Panel.TabIndex = 32;
+            this.Find_Panel.Visible = false;
+            // 
+            // Replace_TB
+            // 
+            this.Replace_TB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Replace_TB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Replace_TB.Location = new System.Drawing.Point(361, 5);
+            this.Replace_TB.Multiline = false;
+            this.Replace_TB.Name = "Replace_TB";
+            this.Replace_TB.Size = new System.Drawing.Size(181, 23);
+            this.Replace_TB.TabIndex = 0;
+            this.Replace_TB.Text = "";
+            this.Replace_TB.Visible = false;
+            // 
+            // OpenReplacePanel_Button
+            // 
+            this.OpenReplacePanel_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.OpenReplacePanel_Button.Location = new System.Drawing.Point(301, 4);
+            this.OpenReplacePanel_Button.Name = "OpenReplacePanel_Button";
+            this.OpenReplacePanel_Button.Size = new System.Drawing.Size(59, 24);
+            this.OpenReplacePanel_Button.TabIndex = 2;
+            this.OpenReplacePanel_Button.Text = "Replace";
+            this.OpenReplacePanel_Button.UseVisualStyleBackColor = true;
+            this.OpenReplacePanel_Button.Visible = false;
+            // 
+            // Find_Button
+            // 
+            this.Find_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Find_Button.Location = new System.Drawing.Point(30, 4);
+            this.Find_Button.Name = "Find_Button";
+            this.Find_Button.Size = new System.Drawing.Size(59, 24);
+            this.Find_Button.TabIndex = 4;
+            this.Find_Button.Text = "Find";
+            this.Find_Button.UseVisualStyleBackColor = true;
+            this.Find_Button.Visible = false;
+            this.Find_Button.Click += new System.EventHandler(this.Find_Button_Click);
+            // 
+            // Find_TB
+            // 
+            this.Find_TB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Find_TB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Find_TB.Location = new System.Drawing.Point(90, 5);
+            this.Find_TB.Multiline = false;
+            this.Find_TB.Name = "Find_TB";
+            this.Find_TB.Size = new System.Drawing.Size(181, 23);
+            this.Find_TB.TabIndex = 3;
+            this.Find_TB.Text = "";
+            this.Find_TB.Visible = false;
+            this.Find_TB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Find_TB_KeyDown);
+            // 
             // JsonEditor_UserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Controls.Add(this.Find_Panel);
             this.Controls.Add(this.JsonError_Label);
             this.Controls.Add(this.CloseFile_Button);
             this.Controls.Add(this.lintPanel);
@@ -260,6 +333,7 @@
             this.Resize += new System.EventHandler(this.JsonEditor_UserControl_Resize);
             this.JsonToolstrip.ResumeLayout(false);
             this.JsonToolstrip.PerformLayout();
+            this.Find_Panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,5 +359,10 @@
         public System.Windows.Forms.RichTextBox tB_line;
         private System.Windows.Forms.Button CloseFile_Button;
         private System.Windows.Forms.Label JsonError_Label;
+        private System.Windows.Forms.Panel Find_Panel;
+        private System.Windows.Forms.RichTextBox Replace_TB;
+        private System.Windows.Forms.Button OpenReplacePanel_Button;
+        private System.Windows.Forms.Button Find_Button;
+        private System.Windows.Forms.RichTextBox Find_TB;
     }
 }

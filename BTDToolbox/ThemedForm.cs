@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTDToolbox.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -88,7 +89,7 @@ namespace BTDToolbox
         }
         public virtual void close_button_Click(object sender, EventArgs e)
         {
-            if (JsonEditor.jsonError != true)
+            if (!JsonEditorHandler.AreJsonErrors())
                 this.Close();
         }
 

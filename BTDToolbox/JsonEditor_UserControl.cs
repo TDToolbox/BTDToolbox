@@ -9,27 +9,47 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BTDToolbox.Classes;
 using System.IO;
+using BTDToolbox.Extra_Forms;
+using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
     public partial class JsonEditor_UserControl : UserControl
     {
         Font font;
+        ConfigFile programData;
         public bool jsonError;
         public string path = "";
+
+        //Tab new line vars
+        string tab;
+        bool tabLine = false;
+
+
+        //Find vars
+        int endEditor = 0;
+        int endPosition = 0;
+        int startPosition = 0;
+        int numPhrasesFound = 0;
+        string previousSearchPhrase = "";
+
         public JsonEditor_UserControl()
         {
             InitializeComponent();
 
-            font = new Font("Consolas", 14);
-            Editor_TextBox.Font = font;
-            tB_line.Font = Editor_TextBox.Font;
             Editor_TextBox.Select();
             AddLineNumbers();
+
         }
         public void FinishedLoading()
         {
             HandleTools();
+            if (Serializer.Deserialize_Config().JSON_Editor_FontSize > 0)
+                Editor_TextBox.Font = new Font("Consolas", Serializer.Deserialize_Config().JSON_Editor_FontSize);
+            else
+                Editor_TextBox.Font = new Font("Consolas", 14);
+            tB_line.Font = Editor_TextBox.Font;
+            FontSize_TextBox.Text = Editor_TextBox.Font.Size.ToString();
         }
         //
         //JSON
@@ -38,20 +58,30 @@ namespace BTDToolbox
         {
             CheckJSON(Editor_TextBox.Text);
             File.WriteAllText(path, Editor_TextBox.Text);
+
+            if (tabLine)
+            {
+                Editor_TextBox.SelectedText = tab;
+                tabLine = false;
+            }
         }
         private void CheckJSON(string text)
         {
             if (JSON_Reader.IsValidJson(text) == true)
             {
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                jsonError = false;
                 JsonError_Label.Visible = false;
+
+                jsonError = false;
+                New_JsonEditor.isJsonError = false;
             }
             else
             {
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                jsonError = true;
                 JsonError_Label.Visible = true;
+
+                jsonError = true;
+                New_JsonEditor.isJsonError = true;
             }
         }
         private void LintPanel_MouseClick(object sender, MouseEventArgs e)
@@ -79,9 +109,7 @@ namespace BTDToolbox
                 //highlight line with error
                 index = Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 2) + linePos;
                 Editor_TextBox.Focus();
-                Editor_TextBox.Select(index, numChars-2);
-
-                
+                Editor_TextBox.Select(index, numChars-2);                
             }
         }
         private void CloseFile_Button_Click(object sender, EventArgs e)
@@ -89,6 +117,7 @@ namespace BTDToolbox
             if(!jsonError)
             {
                 JsonEditorHandler.CloseFile(path);
+                Serializer.SaveJSONEditor_Instance(this, programData);
             }
             else
             {
@@ -97,14 +126,30 @@ namespace BTDToolbox
                 if (dialogResult == DialogResult.Yes)
                 {
                     JsonEditorHandler.CloseFile(path);
+                    Serializer.SaveJSONEditor_Instance(this, programData);
                 }
             }
         }
 
 
         //
-        //EZ Tools
+        //EZ Tools and text formatting
         //
+        private int IndentNewLines()
+        {
+            int index = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
+            string text = Editor_TextBox.Text.Remove(0, index);
+
+            int numSpace = 0;
+            foreach (char c in text)
+            {
+                if (c != ' ')
+                    break;
+                else
+                    numSpace++;
+            }
+            return numSpace;
+        }
         private void HandleTools()
         {
             if (path.EndsWith("tower"))
@@ -194,6 +239,164 @@ namespace BTDToolbox
             {
                 AddLineNumbers();
             }
+        }
+
+        //
+        //Find and replace stuff
+        //
+        private void ShowSearchMenu(string op)
+        {
+            Editor_TextBox.Size = new Size(Editor_TextBox.Size.Width, Editor_TextBox.Size.Height - 40);
+            tB_line.Size = new Size(tB_line.Size.Width, tB_line.Size.Height - 40);
+
+            if(op == "find")
+            {
+                Find_TB.Location = new Point(Editor_TextBox.Width- 221, 5);
+                Find_Button.Location = new Point(Editor_TextBox.Width - 301, 4);
+                Find_TB.Visible = !Find_TB.Visible;
+                Find_Button.Visible = !Find_Button.Visible;
+                Find_Panel.Visible = !Find_Panel.Visible;
+            }
+            if (op == "replace")
+            {
+                Find_TB.Visible = !Find_TB.Visible;
+                Find_Button.Visible = !Find_Button.Visible;
+                Replace_TB.Visible = !Replace_TB.Visible;
+                OpenReplacePanel_Button.Visible = !ShowReplaceMenu_Button.Visible;
+
+                Replace_TB.Location = new Point(Editor_TextBox.Width - 221, 5);
+                OpenReplacePanel_Button.Location = new Point(Editor_TextBox.Width - 301, 4);
+                Find_TB.Location = new Point(Editor_TextBox.Width - 591, 5);
+                Find_Button.Location = new Point(Editor_TextBox.Width - 671, 4);
+
+                Find_Panel.Visible = !Find_Panel.Visible;
+            }
+            if (Find_TB.Visible)
+                Find_TB.Focus();
+            else
+                Editor_TextBox.Focus();
+
+            if (!Find_Panel.Visible)
+            {
+                Editor_TextBox.Size = new Size(Editor_TextBox.Size.Width, Editor_TextBox.Size.Height + 80);
+                tB_line.Size = new Size(tB_line.Size.Width, tB_line.Size.Height + 80);
+            }
+        }
+        private void Find_Button_Click(object sender, EventArgs e)
+        {
+            if (Find_TB.Text.Length > 0)
+            {
+                Editor_TextBox.Focus();
+                FindText();
+            }
+            else
+            {
+                ConsoleHandler.appendLog("You didn't enter anything to search");
+            }
+        }
+        private void FindText()
+        {
+            int lastSearchIndex = 0;
+            endEditor =  Editor_TextBox.Text.Length;
+            startPosition = Editor_TextBox.SelectionStart + 1;
+
+            if (previousSearchPhrase != Find_TB.Text)
+            {
+                startPosition = 0;
+                endPosition = Find_TB.Text.Length;
+                //endPosition = 0;
+                numPhrasesFound = 0;
+            }
+            for (int i = 0; i < endEditor; i = startPosition)
+            {
+                if (i == -1)
+                {
+                    MessageBox.Show("Reached the end of the file");
+                    break;
+                }
+                if (startPosition >= endEditor)
+                {
+                    MessageBox.Show("Reached the end of the file");
+                    startPosition = 0;
+                    break;
+                }
+                startPosition = Editor_TextBox.Find(Find_TB.Text, startPosition, endEditor, RichTextBoxFinds.None);
+                /*ConsoleHandler.appendLog_CanRepeat(endPosition.ToString());
+                ConsoleHandler.appendLog_CanRepeat(startPosition.ToString());*/
+                if (startPosition >= 0)
+                {
+                    numPhrasesFound++;
+                    endPosition = this.Find_TB.Text.Length;
+                    startPosition = startPosition + endPosition;
+                    previousSearchPhrase = this.Find_TB.Text;
+                    break;
+                }
+                if (numPhrasesFound == 0)
+                {
+                    MessageBox.Show("No Match Found!!!");
+                    break;
+                }
+            }
+        }
+        //
+        //UI Events
+        //
+        private void Find_TB_KeyDown(object sender, KeyEventArgs e)
+        {
+            /*Find_TB.Focus();
+            if (e.KeyCode == Keys.Enter)
+            {
+                FindText();
+            }*/
+        }
+        private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                tab = string.Concat(Enumerable.Repeat(" ", IndentNewLines()));
+                tabLine = true;
+            }
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+                ShowSearchMenu("find");
+            }
+            if (e.Control && e.KeyCode == Keys.H)
+            {
+                ShowSearchMenu("replace");
+            }
+        }
+        private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
+        {
+            float FontSize = 0;
+            float.TryParse(FontSize_TextBox.Text, out FontSize);
+            if (FontSize < 3)
+                FontSize = 3;
+
+            Editor_TextBox.Font = new Font("Consolas", FontSize);
+            tB_line.Font = new Font("Consolas", FontSize);
+            Serializer.SaveJSONEditor_Instance(this, programData);
+        }
+        private void EZTowerEditor_Button_Click(object sender, EventArgs e)
+        {
+            var easyTower = new EasyTowerEditor();
+            easyTower.path = path;
+            easyTower.Show();
+        }
+        private void EZBoon_Button_Click(object sender, EventArgs e)
+        {
+            var ezBloon = new EZBloon_Editor();
+            ezBloon.path = path;
+            ezBloon.Show();
+        }
+
+        private void ReplaceButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ReplaceAllButton_DropDown_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -41,7 +41,32 @@ namespace BTDToolbox
         public JetForm(DirectoryInfo dirInfo, Main Form, string projName)
         {
             InitializeComponent();
+            programData = DeserializeConfig();
             StartUp();
+
+            if (projName == Serializer.Deserialize_Config().LastProject)
+            {
+                if (Serializer.Deserialize_Config().JsonEditor_OpenedTabs.Length > 0)
+                {
+                    DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        foreach (string tab in Serializer.Deserialize_Config().JsonEditor_OpenedTabs)
+                            JsonEditorHandler.OpenFile(tab);
+                    }
+                    else
+                    {
+                        programData.JsonEditor_OpenedTabs = new string[0];
+                        Serializer.SaveJSONEditor_Tabs(programData);
+                    }
+                }
+            }
+            else
+            {
+                programData.JsonEditor_OpenedTabs = new string[0];
+                Serializer.SaveJSONEditor_Tabs(programData);
+            }
+
             goUpButton.Font = new Font("Microsoft Sans Serif", 9);
             this.dirInfo = dirInfo;
             this.Form = Form;
@@ -77,6 +102,10 @@ namespace BTDToolbox
             }
             ConsoleHandler.appendLog("Game: " + Main.gameName);
             ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
+            
+
+            
+
             Serializer.SaveConfig(this, "game", programData);
             Serializer.SaveConfig(this, "jet explorer", programData);
 
@@ -89,15 +118,9 @@ namespace BTDToolbox
             if (EZCard_Editor.EZCard_Opened == true)
                 ConsoleHandler.force_appendNotice("The EZ Card tool is currently opened for a different project. Please close it to avoid errors...");
         }
-        private void Deserialize_Config()
-        {
-            programData = DeserializeConfig();
-            //programData = Serializer.Deserialize_Config();
-        }
         private void StartUp()
         {
             //config stuff
-            Deserialize_Config();
             this.Size = new Size(programData.JetExplorer_SizeX, programData.JetExplorer_SizeY);
             this.Location = new Point(programData.JetExplorer_PosX, programData.JetExplorer_PosY);
 
