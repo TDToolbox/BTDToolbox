@@ -324,10 +324,7 @@ namespace BTDToolbox
 
                         string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
 
-                        string test = listView1.SelectedItems[0].Text;
-                        MessageBox.Show(test);
-
-                        if (filename.Contains(".bloon"))
+                        if (filename.EndsWith(".bloon"))
                         {
                             int i = 0;
                             bool ezBloonExists = false;
@@ -362,7 +359,7 @@ namespace BTDToolbox
                         }
 
                         //Handle towers
-                        if (filename.Contains(".tower"))
+                        if (filename.EndsWith(".tower"))
                         {
                             int i = 0;
                             bool ezTowerExists = false;
@@ -473,7 +470,7 @@ namespace BTDToolbox
             {
                 try
                 {
-                    //delete();
+                    restoreOriginal();
                 }
                 catch (Exception)
                 {
@@ -574,7 +571,7 @@ namespace BTDToolbox
             {
                 try
                 {
-                    delete();
+                    restoreOriginal();
                 }
                 catch (Exception)
                 {
@@ -701,6 +698,63 @@ namespace BTDToolbox
                 listView1.Items.Add(item);
             }
         }
+        private void restoreOriginal()
+        {
+            string filepath = this.Text + "\\" + listView1.SelectedItems[0].Text;
+
+            if (listView1.SelectedItems.Count == 1)
+            {
+                if(listView1.SelectedItems[0].Text.Contains("."))
+                {
+                    if (File.Exists(filepath))
+                    {
+                        File.Delete(filepath);
+                    }
+                    File.Copy(Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + filepath.Replace(Environment.CurrentDirectory, "").Replace("\\" + projName + "\\", ""), this.Text + "\\" + listView1.SelectedItems[0].Text);
+                    ConsoleHandler.appendLog_CanRepeat(listView1.SelectedItems[0].Text + "has been restored");
+                }
+                else
+                {
+                    foreach (var a in Directory.GetFiles(filepath))
+                    {
+                        string[] split = a.Split('\\');
+                        string filename = split[split.Length - 1];
+                        string sourcefile = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + filepath.Replace(Environment.CurrentDirectory, "").Replace("\\" + projName + "\\", "") + "\\" + filename;
+
+                        if (File.Exists(a))
+                        {
+                            File.Delete(a);
+                        }
+                        File.Copy(sourcefile, a);
+                        ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
+                    }
+                }
+            }
+            else
+            {
+                int i = 0;
+                ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
+                foreach (var a in listView1.SelectedItems)
+                {
+                    string filename = a.ToString().Replace("ListViewItem: {", "").Replace("}", "");
+                    string destPath = this.Text + "\\" + listView1.SelectedItems[i].Text;
+                    string sourcefile = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + destPath.Replace(Environment.CurrentDirectory, "").Replace("\\" + projName + "\\", "");
+                    
+                    if (File.Exists(destPath))
+                    {
+                        File.Delete(destPath);
+                    }
+                    File.Copy(sourcefile, destPath);
+                    ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
+                    i++;
+                }
+            }
+
+            if (Main.gameName == "BTD5")
+            {
+                
+            }
+        }
         private void Open_EZBloon()
         {
             string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
@@ -777,21 +831,12 @@ namespace BTDToolbox
             {
                 if(listView1.Focused)
                 {
-                    try
+                    int i = 0;
+                    foreach (var a in listView1.Items)
                     {
-                        DirectoryInfo dirInfo = new DirectoryInfo(this.Text);
-                        var x = dirInfo.GetFiles(".",SearchOption.TopDirectoryOnly);
-                        if(x.Length > 0)
-                        {
-                            int i = 0;
-                            foreach (var a in listView1.Items)
-                            {
-                                listView1.Items[i].Selected = true;
-                                i++;
-                            }
-                        }
+                        listView1.Items[i].Selected = true;
+                        i++;
                     }
-                    catch { }
                 }
             }
         }
