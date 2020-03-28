@@ -7,26 +7,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BTDToolbox.Classes;
 
 namespace BTDToolbox
 {
     public partial class JsonEditor_UserControl : UserControl
     {
+        Font font;
+        public bool jsonError;
         public JsonEditor_UserControl()
         {
             InitializeComponent();
+
+            font = new Font("Consolas", 14);
+            Editor_TextBox.Font = font;
             tB_line.Font = Editor_TextBox.Font;
             Editor_TextBox.Select();
             AddLineNumbers();
         }
 
         //
+        //JSON
+        //
+        private void Editor_TextBox_TextChanged(object sender, EventArgs e)
+        {
+            CheckJSON(Editor_TextBox.Text);
+        }
+        private void CheckJSON(string text)
+        {
+            if (JSON_Reader.IsValidJson(text) == true)
+            {
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                jsonError = false;
+            }
+            else
+            {
+                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                jsonError = true;
+            }
+        }
+
+        //
         //Add line numbers
         //
-        public void ResizeEvent(object sender, EventArgs e)
-        {
-            this.Size = new Size(New_JsonEditor.JsonEditor_Width-8, New_JsonEditor.JsonEditor_Height-24);
-        }
         public int getWidth()
         {
             int w = 25;
@@ -65,11 +88,6 @@ namespace BTDToolbox
                 tB_line.Text += i + 1 + "\n";
             }
         }
-        
-        private void Editor_TextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
         private void Editor_TextBox_SelectionChanged(object sender, EventArgs e)
         {
             Point pt = Editor_TextBox.GetPositionFromCharIndex(Editor_TextBox.SelectionStart);
@@ -97,8 +115,8 @@ namespace BTDToolbox
         }
         private void JsonEditor_UserControl_Resize(object sender, EventArgs e)
         {
-            Editor_TextBox.Size = new Size(this.Width - 43, this.Height-1);
-            tB_line.Size = new Size(tB_line.Width, this.Height);
+            Editor_TextBox.Size = new Size(this.Width - 43, this.Height-38);
+            tB_line.Size = new Size(tB_line.Width, this.Height - 38);
 
             Point pt = Editor_TextBox.GetPositionFromCharIndex(Editor_TextBox.SelectionStart);
             if (pt.X == 1)

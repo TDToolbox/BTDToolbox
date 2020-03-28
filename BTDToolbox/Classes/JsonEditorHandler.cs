@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BTDToolbox.Classes
+{
+    class JsonEditorHandler
+    {
+        public static New_JsonEditor jeditor;
+
+        public static void ValidateEditor()
+        {
+            if (jeditor == null)
+            {
+                jeditor = new New_JsonEditor();
+                jeditor.userControls = new JsonEditor_UserControl[0];
+                jeditor.tabPages = new TabPage[0];
+                jeditor.tabFilePaths = new string[0];
+                jeditor.Show();
+            }
+            else if (jeditor.Visible == false)
+            {
+                jeditor.Show();
+            }
+        }
+        public static void OpenFile(string path)
+        {
+            ValidateEditor();
+
+            int i = 0;
+            bool isFileOpened = false;
+            foreach (string tp in jeditor.tabFilePaths)
+            {
+                if(path == tp)
+                {
+                    isFileOpened = true;
+                    jeditor.tabControl1.SelectedTab = jeditor.tabPages[i];
+                }
+                i++;
+            } 
+            if(!isFileOpened)
+            {
+                jeditor.NewTab(path);
+            }
+                /*for (int x = 0; x < 3; x++)
+                {
+                    uc = new JsonEditor_UserControl();
+                    tp = new TabPage();
+                    Array.Resize(ref userControls, userControls.Length + 1);
+                    userControls[userControls.Length - 1] = uc;
+
+                    //uc.Size = new Size(tp.Width, tp.Height);
+                    tp.Controls.Add(uc);
+                    this.tabControl1.TabPages.Add(tp);
+                    //tabControl1.Resize += uc.ResizeEvent;
+                }*/
+        }
+    }
+}

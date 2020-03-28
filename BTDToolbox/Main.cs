@@ -429,10 +429,7 @@ namespace BTDToolbox
         }
         private void TestForm_Click(object sender, EventArgs e)
         {
-            var splash = new SplashScreen();
-            splash.Show();
-            /*var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
-            editor.Show();*/
+            JsonEditorHandler.OpenFile(Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
         }
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {

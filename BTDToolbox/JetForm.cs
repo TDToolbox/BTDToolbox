@@ -255,11 +255,32 @@ namespace BTDToolbox
             {
                 if (useExternalEditor == false)
                 {
-                    try
+                    if (!Selected[0].Text.Contains("."))
                     {
-                        JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
+                        try
+                        {
+                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
+                            {
+                                if (node.Text == Selected[0].Text)
+                                {
+                                    node.Expand();
+                                    treeView1.SelectedNode = node;
+                                }
+                            }
+                        }
+                        catch { }
+                        
+                    }
+                    else
+                    {
+                        JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[0].Text);
+                    }
+                    /*try
+                    {
+                        JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[0].Text);
+                        *//*JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
                         JsonWindow.MdiParent = Form;
-                        JsonWindow.Show();
+                        JsonWindow.Show();*//*
                     }
                     catch (Exception)
                     {
@@ -280,7 +301,7 @@ namespace BTDToolbox
                         catch (Exception)
                         {
                         }
-                    }
+                    }*/
                 }
                 else
                 {
