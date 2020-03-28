@@ -45,11 +45,43 @@ namespace BTDToolbox
             {
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
                 jsonError = false;
+                JsonError_Label.Visible = false;
             }
             else
             {
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
                 jsonError = true;
+                JsonError_Label.Visible = true;
+            }
+        }
+        private void LintPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (jsonError)
+            {
+                string error = JSON_Reader.GetJSON_Error(Editor_TextBox.Text);
+                ConsoleHandler.force_appendNotice(error);
+                //Line number
+                string[] split = error.Split(',');
+                string[] line = split[split.Length - 2].Split(' ');
+                int lineNumber = Int32.Parse(line[line.Length - 1].Replace(".", "").Replace(",", ""));
+
+                //Position in line
+                string[] pos = split[split.Length - 1].Split(' ');
+                int linePos = Int32.Parse(pos[pos.Length - 1].Replace(".", "").Replace(",", ""));
+
+                //Scroll to the line above error
+                int index = Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 3) + linePos;
+                Editor_TextBox.Select(index, 1);
+                Editor_TextBox.ScrollToCaret();
+
+                int numChars = (Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 1)) - (Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 2));
+
+                //highlight line with error
+                index = Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 2) + linePos;
+                Editor_TextBox.Focus();
+                Editor_TextBox.Select(index, numChars-2);
+
+                
             }
         }
         private void CloseFile_Button_Click(object sender, EventArgs e)

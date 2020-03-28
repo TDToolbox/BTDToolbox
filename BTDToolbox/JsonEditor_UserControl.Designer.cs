@@ -47,6 +47,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lintPanel = new System.Windows.Forms.Panel();
             this.CloseFile_Button = new System.Windows.Forms.Button();
+            this.JsonError_Label = new System.Windows.Forms.Label();
             this.JsonToolstrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -216,6 +217,7 @@
             this.lintPanel.Name = "lintPanel";
             this.lintPanel.Size = new System.Drawing.Size(60, 20);
             this.lintPanel.TabIndex = 29;
+            this.lintPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LintPanel_MouseClick);
             // 
             // CloseFile_Button
             // 
@@ -230,11 +232,24 @@
             this.CloseFile_Button.UseVisualStyleBackColor = false;
             this.CloseFile_Button.Click += new System.EventHandler(this.CloseFile_Button_Click);
             // 
+            // JsonError_Label
+            // 
+            this.JsonError_Label.AutoSize = true;
+            this.JsonError_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JsonError_Label.ForeColor = System.Drawing.Color.Orange;
+            this.JsonError_Label.Location = new System.Drawing.Point(176, 4);
+            this.JsonError_Label.Name = "JsonError_Label";
+            this.JsonError_Label.Size = new System.Drawing.Size(178, 20);
+            this.JsonError_Label.TabIndex = 31;
+            this.JsonError_Label.Text = "<<  Click to go to error";
+            this.JsonError_Label.Visible = false;
+            // 
             // JsonEditor_UserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Controls.Add(this.JsonError_Label);
             this.Controls.Add(this.CloseFile_Button);
             this.Controls.Add(this.lintPanel);
             this.Controls.Add(this.JsonToolstrip);
@@ -269,5 +284,6 @@
         public System.Windows.Forms.RichTextBox Editor_TextBox;
         public System.Windows.Forms.RichTextBox tB_line;
         private System.Windows.Forms.Button CloseFile_Button;
+        private System.Windows.Forms.Label JsonError_Label;
     }
 }

@@ -107,15 +107,13 @@ namespace BTDToolbox
         public void CloseTab(string path)
         {
             int i = tabControl1.SelectedIndex;
-            tabControl1.TabPages.Remove(tabControl1.SelectedTab);
-            tabControl1.SelectedIndex = i - 1;
 
             int j = 0;
 
             //Remove the closed filepath
             j = 0;
             string[] tempFilePaths = new string[tabFilePaths.Length - 1];
-            foreach (string tf in tempFilePaths)
+            foreach (string tf in tabFilePaths)
             {
                 if (j != i)
                 {
@@ -130,7 +128,7 @@ namespace BTDToolbox
             //Remove the closed usercontrol
             j = 0;
             JsonEditor_UserControl[] tempUserControl = new JsonEditor_UserControl[userControls.Length - 1];
-            foreach (JsonEditor_UserControl tf in tempUserControl)
+            foreach (JsonEditor_UserControl tf in userControls)
             {
                 if (j != i)
                 {
@@ -145,7 +143,7 @@ namespace BTDToolbox
             //Remove the closed tab page
             j = 0;
             TabPage[] tempTabPages = new TabPage[tabPages.Length - 1];
-            foreach (TabPage tf in tempTabPages)
+            foreach (TabPage tf in tabPages)
             {
                 if (j != i)
                 {
@@ -158,6 +156,9 @@ namespace BTDToolbox
 
             if (tabControl1.TabPages.Count - 1 <= 0)
                 this.Close();
+
+            tabControl1.TabPages.Remove(tabControl1.SelectedTab);
+            tabControl1.SelectedIndex = i - 1;
         }
         private void New_JsonEditor_KeyDown(object sender, KeyEventArgs e)
         {

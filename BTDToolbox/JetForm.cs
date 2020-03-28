@@ -248,10 +248,14 @@ namespace BTDToolbox
             {
             }
         }
+        private void openFile()
+        {
+
+        }
         private void ListView1_DoubleClicked(object sender, EventArgs e)
         {
             ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
-            if (Selected.Count == 1)
+            if (Selected.Count > 0)
             {
                 if (useExternalEditor == false)
                 {
@@ -269,11 +273,23 @@ namespace BTDToolbox
                             }
                         }
                         catch { }
-                        
+
                     }
                     else
                     {
-                        JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[0].Text);
+                        if (Selected.Count == 1)
+                        {
+                            JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[0].Text);
+                        }
+                        else if (Selected.Count > 1)
+                        {
+                            int i = 0;
+                            foreach (var v in Selected)
+                            {
+                                JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[i].Text);
+                                i++;
+                            }
+                        }
                     }
                     /*try
                     {
