@@ -31,15 +31,21 @@ namespace BTDToolbox
         int endPosition = 0;
         int startPosition = 0;
         int numPhrasesFound = 0;
+        bool searchPhrase_selected = false;
         string previousSearchPhrase = "";
 
         public JsonEditor_UserControl()
         {
             InitializeComponent();
+            SetHideEvents();
 
             Editor_TextBox.Select();
             AddLineNumbers();
 
+            Find_Button.KeyDown += Find_TB_KeyDown;
+            Replace_TB.KeyDown += Find_TB_KeyDown;
+            SearchOptions_Panel.KeyDown += Find_TB_KeyDown;
+            SearchOptions_Button.KeyDown += Find_TB_KeyDown;
         }
         public void FinishedLoading()
         {
@@ -251,24 +257,33 @@ namespace BTDToolbox
 
             if(op == "find")
             {
-                Find_TB.Location = new Point(Editor_TextBox.Width- 221, 5);
-                Find_Button.Location = new Point(Editor_TextBox.Width - 301, 4);
+                Find_TB.Location = new Point(Editor_TextBox.Width- 241, 5);
+                Find_Button.Location = new Point(Editor_TextBox.Width - 321, 4);
+                SearchOptions_Button.Location = new Point(Editor_TextBox.Width, 4);
                 Find_TB.Visible = !Find_TB.Visible;
                 Find_Button.Visible = !Find_Button.Visible;
+                SearchOptions_Button.Visible = !SearchOptions_Button.Visible;
+
+                Option1_CB.Text = "Subtask";
+                Option1_CB.Location = new Point(15, Option1_CB.Location.Y);
                 Find_Panel.Visible = !Find_Panel.Visible;
             }
             if (op == "replace")
             {
                 Find_TB.Visible = !Find_TB.Visible;
                 Find_Button.Visible = !Find_Button.Visible;
+                SearchOptions_Button.Visible = !SearchOptions_Button.Visible;
                 Replace_TB.Visible = !Replace_TB.Visible;
-                OpenReplacePanel_Button.Visible = !ShowReplaceMenu_Button.Visible;
+                Replace_Button.Visible = !ShowReplaceMenu_Button.Visible;
 
-                Replace_TB.Location = new Point(Editor_TextBox.Width - 221, 5);
-                OpenReplacePanel_Button.Location = new Point(Editor_TextBox.Width - 301, 4);
+                Replace_TB.Location = new Point(Editor_TextBox.Width - 241, 5);
+                Replace_Button.Location = new Point(Editor_TextBox.Width - 321, 4);
                 Find_TB.Location = new Point(Editor_TextBox.Width - 591, 5);
                 Find_Button.Location = new Point(Editor_TextBox.Width - 671, 4);
+                SearchOptions_Button.Location = new Point(Editor_TextBox.Width, 4);
 
+                Option1_CB.Text = "Replace all";
+                Option1_CB.Location = new Point(10, Option1_CB.Location.Y);
                 Find_Panel.Visible = !Find_Panel.Visible;
             }
             if (Find_TB.Visible)
@@ -278,6 +293,9 @@ namespace BTDToolbox
 
             if (!Find_Panel.Visible)
             {
+                Find_TB.Text = "";
+                Replace_TB.Text = "";
+                SearchOptions_Panel.Visible = false;
                 Editor_TextBox.Size = new Size(Editor_TextBox.Size.Width, Editor_TextBox.Size.Height + 80);
                 tB_line.Size = new Size(tB_line.Size.Width, tB_line.Size.Height + 80);
             }
@@ -294,9 +312,12 @@ namespace BTDToolbox
                 ConsoleHandler.appendLog("You didn't enter anything to search");
             }
         }
+        private void FindOptions_Button_Click(object sender, EventArgs e)
+        {
+            SearchOptions_Panel.Visible = !SearchOptions_Panel.Visible;
+        }
         private void FindText()
         {
-            int lastSearchIndex = 0;
             endEditor =  Editor_TextBox.Text.Length;
             startPosition = Editor_TextBox.SelectionStart + 1;
 
@@ -304,11 +325,11 @@ namespace BTDToolbox
             {
                 startPosition = 0;
                 endPosition = Find_TB.Text.Length;
-                //endPosition = 0;
                 numPhrasesFound = 0;
             }
             for (int i = 0; i < endEditor; i = startPosition)
             {
+                searchPhrase_selected = false;
                 if (i == -1)
                 {
                     MessageBox.Show("Reached the end of the file");
@@ -316,16 +337,15 @@ namespace BTDToolbox
                 }
                 if (startPosition >= endEditor)
                 {
-                    MessageBox.Show("Reached the end of the file");
                     startPosition = 0;
                     break;
                 }
                 startPosition = Editor_TextBox.Find(Find_TB.Text, startPosition, endEditor, RichTextBoxFinds.None);
-                /*ConsoleHandler.appendLog_CanRepeat(endPosition.ToString());
-                ConsoleHandler.appendLog_CanRepeat(startPosition.ToString());*/
                 if (startPosition >= 0)
                 {
                     numPhrasesFound++;
+                    searchPhrase_selected = true;
+
                     endPosition = this.Find_TB.Text.Length;
                     startPosition = startPosition + endPosition;
                     previousSearchPhrase = this.Find_TB.Text;
@@ -338,16 +358,76 @@ namespace BTDToolbox
                 }
             }
         }
+        private void Replace_Button_Click(object sender, EventArgs e)
+        {
+            if (Find_TB.Text.Length <= 0)
+            {
+                MessageBox.Show("You didn't enter anything to search for. Please Try Again");
+            }
+            if (Replace_TB.Text.Length <= 0)
+            {
+                MessageBox.Show("You didn't enter anything to replace with. Please Try Again");
+            }
+            if (Option1_CB.Checked)
+            {
+                Editor_TextBox.Text = Editor_TextBox.Text.Replace(Find_TB.Text, Replace_TB.Text);
+            }
+            else
+            {
+                if (!searchPhrase_selected)
+                {
+                    MessageBox.Show("You need to find something before you can try replacing it...");
+                }
+                else
+                {
+                    Editor_TextBox.Focus();
+                    ReplaceText();
+                }
+            }
+            
+        }
+        private void ReplaceText()
+        {
+            Editor_TextBox.Text = Editor_TextBox.Text.Remove(startPosition - endPosition, Find_TB.Text.Length);
+            Editor_TextBox.Text = Editor_TextBox.Text.Insert(startPosition - endPosition, Replace_TB.Text);
+            endPosition = this.Replace_TB.Text.Length;
+            startPosition = startPosition + endPosition + Editor_TextBox.SelectionStart + 1;
+
+            //startPosition = Editor_TextBox.SelectionStart + 1;
+            FindText();
+        }
+
         //
         //UI Events
         //
+        private void SetHideEvents()
+        {
+            MouseClick += HideExtraPanels;
+            Editor_TextBox.Click += HideExtraPanels;
+            this.Click += HideExtraPanels;
+            Find_TB.Click += HideExtraPanels;
+            Replace_TB.Click += HideExtraPanels;
+            Replace_Button.Click += HideExtraPanels;
+            Find_Button.Click += HideExtraPanels;
+            ShowReplaceMenu_Button.Click += HideExtraPanels;
+        }
+        private void HideExtraPanels(object sender, EventArgs e)
+        {
+            if (SearchOptions_Panel.Visible)
+            {
+                SearchOptions_Panel.Visible = false;
+            }
+        }
         private void Find_TB_KeyDown(object sender, KeyEventArgs e)
         {
-            /*Find_TB.Focus();
-            if (e.KeyCode == Keys.Enter)
+            if (e.Control && e.KeyCode == Keys.F)
             {
-                FindText();
-            }*/
+                ShowSearchMenu("find");
+            }
+            if (e.Control && e.KeyCode == Keys.H)
+            {
+                ShowSearchMenu("replace");
+            }
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -398,5 +478,7 @@ namespace BTDToolbox
         {
 
         }
+
+        
     }
 }

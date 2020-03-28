@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -39,10 +38,6 @@
             // 
             // titleSeperator
             // 
-            // 
-            // titleSeperator.Panel1
-            // 
-            this.titleSeperator.Panel1.Controls.Add(this.button1);
             // 
             // TitleLabel
             // 
@@ -76,16 +71,6 @@
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl1_DrawItem);
             this.tabControl1.SizeChanged += new System.EventHandler(this.TabControl1_SizeChanged);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(594, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
             // New_JsonEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -109,7 +94,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button button1;
         public System.Windows.Forms.TabControl tabControl1;
     }
 }

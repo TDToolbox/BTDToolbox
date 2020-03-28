@@ -49,12 +49,16 @@
             this.CloseFile_Button = new System.Windows.Forms.Button();
             this.JsonError_Label = new System.Windows.Forms.Label();
             this.Find_Panel = new System.Windows.Forms.Panel();
-            this.Replace_TB = new System.Windows.Forms.RichTextBox();
-            this.OpenReplacePanel_Button = new System.Windows.Forms.Button();
+            this.SearchOptions_Button = new System.Windows.Forms.Button();
             this.Find_Button = new System.Windows.Forms.Button();
             this.Find_TB = new System.Windows.Forms.RichTextBox();
+            this.Replace_Button = new System.Windows.Forms.Button();
+            this.Replace_TB = new System.Windows.Forms.RichTextBox();
+            this.SearchOptions_Panel = new System.Windows.Forms.Panel();
+            this.Option1_CB = new System.Windows.Forms.CheckBox();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
+            this.SearchOptions_Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Editor_TextBox
@@ -258,9 +262,10 @@
             // 
             this.Find_Panel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Find_Panel.Controls.Add(this.SearchOptions_Button);
             this.Find_Panel.Controls.Add(this.Find_Button);
             this.Find_Panel.Controls.Add(this.Find_TB);
-            this.Find_Panel.Controls.Add(this.OpenReplacePanel_Button);
+            this.Find_Panel.Controls.Add(this.Replace_Button);
             this.Find_Panel.Controls.Add(this.Replace_TB);
             this.Find_Panel.Location = new System.Drawing.Point(3, 213);
             this.Find_Panel.Name = "Find_Panel";
@@ -268,28 +273,18 @@
             this.Find_Panel.TabIndex = 32;
             this.Find_Panel.Visible = false;
             // 
-            // Replace_TB
+            // SearchOptions_Button
             // 
-            this.Replace_TB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Replace_TB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Replace_TB.Location = new System.Drawing.Point(361, 5);
-            this.Replace_TB.Multiline = false;
-            this.Replace_TB.Name = "Replace_TB";
-            this.Replace_TB.Size = new System.Drawing.Size(181, 23);
-            this.Replace_TB.TabIndex = 0;
-            this.Replace_TB.Text = "";
-            this.Replace_TB.Visible = false;
-            // 
-            // OpenReplacePanel_Button
-            // 
-            this.OpenReplacePanel_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.OpenReplacePanel_Button.Location = new System.Drawing.Point(301, 4);
-            this.OpenReplacePanel_Button.Name = "OpenReplacePanel_Button";
-            this.OpenReplacePanel_Button.Size = new System.Drawing.Size(59, 24);
-            this.OpenReplacePanel_Button.TabIndex = 2;
-            this.OpenReplacePanel_Button.Text = "Replace";
-            this.OpenReplacePanel_Button.UseVisualStyleBackColor = true;
-            this.OpenReplacePanel_Button.Visible = false;
+            this.SearchOptions_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchOptions_Button.Font = new System.Drawing.Font("Candara Light", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SearchOptions_Button.Location = new System.Drawing.Point(270, 6);
+            this.SearchOptions_Button.Name = "SearchOptions_Button";
+            this.SearchOptions_Button.Size = new System.Drawing.Size(25, 21);
+            this.SearchOptions_Button.TabIndex = 5;
+            this.SearchOptions_Button.Text = "^";
+            this.SearchOptions_Button.UseVisualStyleBackColor = true;
+            this.SearchOptions_Button.Visible = false;
+            this.SearchOptions_Button.Click += new System.EventHandler(this.FindOptions_Button_Click);
             // 
             // Find_Button
             // 
@@ -316,11 +311,58 @@
             this.Find_TB.Visible = false;
             this.Find_TB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Find_TB_KeyDown);
             // 
+            // Replace_Button
+            // 
+            this.Replace_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Replace_Button.Location = new System.Drawing.Point(301, 4);
+            this.Replace_Button.Name = "Replace_Button";
+            this.Replace_Button.Size = new System.Drawing.Size(59, 24);
+            this.Replace_Button.TabIndex = 2;
+            this.Replace_Button.Text = "Replace";
+            this.Replace_Button.UseVisualStyleBackColor = true;
+            this.Replace_Button.Visible = false;
+            this.Replace_Button.Click += new System.EventHandler(this.Replace_Button_Click);
+            // 
+            // Replace_TB
+            // 
+            this.Replace_TB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Replace_TB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Replace_TB.Location = new System.Drawing.Point(361, 5);
+            this.Replace_TB.Multiline = false;
+            this.Replace_TB.Name = "Replace_TB";
+            this.Replace_TB.Size = new System.Drawing.Size(181, 23);
+            this.Replace_TB.TabIndex = 0;
+            this.Replace_TB.Text = "";
+            this.Replace_TB.Visible = false;
+            // 
+            // SearchOptions_Panel
+            // 
+            this.SearchOptions_Panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchOptions_Panel.Controls.Add(this.Option1_CB);
+            this.SearchOptions_Panel.Location = new System.Drawing.Point(473, 188);
+            this.SearchOptions_Panel.Name = "SearchOptions_Panel";
+            this.SearchOptions_Panel.Size = new System.Drawing.Size(104, 25);
+            this.SearchOptions_Panel.TabIndex = 33;
+            this.SearchOptions_Panel.Visible = false;
+            // 
+            // Option1_CB
+            // 
+            this.Option1_CB.AutoSize = true;
+            this.Option1_CB.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Option1_CB.ForeColor = System.Drawing.Color.White;
+            this.Option1_CB.Location = new System.Drawing.Point(15, 7);
+            this.Option1_CB.Name = "Option1_CB";
+            this.Option1_CB.Size = new System.Drawing.Size(89, 25);
+            this.Option1_CB.TabIndex = 0;
+            this.Option1_CB.Text = "Subtask";
+            this.Option1_CB.UseVisualStyleBackColor = true;
+            // 
             // JsonEditor_UserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Controls.Add(this.SearchOptions_Panel);
             this.Controls.Add(this.Find_Panel);
             this.Controls.Add(this.JsonError_Label);
             this.Controls.Add(this.CloseFile_Button);
@@ -334,6 +376,8 @@
             this.JsonToolstrip.ResumeLayout(false);
             this.JsonToolstrip.PerformLayout();
             this.Find_Panel.ResumeLayout(false);
+            this.SearchOptions_Panel.ResumeLayout(false);
+            this.SearchOptions_Panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,8 +405,11 @@
         private System.Windows.Forms.Label JsonError_Label;
         private System.Windows.Forms.Panel Find_Panel;
         private System.Windows.Forms.RichTextBox Replace_TB;
-        private System.Windows.Forms.Button OpenReplacePanel_Button;
+        private System.Windows.Forms.Button Replace_Button;
         private System.Windows.Forms.Button Find_Button;
         private System.Windows.Forms.RichTextBox Find_TB;
+        private System.Windows.Forms.Button SearchOptions_Button;
+        private System.Windows.Forms.Panel SearchOptions_Panel;
+        private System.Windows.Forms.CheckBox Option1_CB;
     }
 }
