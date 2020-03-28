@@ -200,8 +200,6 @@ namespace BTDToolbox
                             archive.ExtractAll(destPath);
                             archive.Dispose();
                         });
-
-                        
                     }
                 }
                 ConsoleHandler.appendLog("Project files created at: " + projName);

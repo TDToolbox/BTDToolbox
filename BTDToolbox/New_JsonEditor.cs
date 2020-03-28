@@ -116,7 +116,16 @@ namespace BTDToolbox
                 if (j != i)
                 {
                     if(i == 0)
-                        tempFilePaths[j - 1] = tf;
+                    {
+                        if(j == 0)
+                        {
+                            tempFilePaths[j] = tf;
+                        }
+                        else
+                        {
+                            tempFilePaths[j - 1] = tf;
+                        }
+                    }
                     else
                         tempFilePaths[j] = tf;
                 }
@@ -134,7 +143,16 @@ namespace BTDToolbox
                 if (j != i)
                 {
                     if (i == 0)
-                        tempUserControl[j - 1] = tf;
+                    {
+                        if (j == 0)
+                        {
+                            tempUserControl[j] = tf;
+                        }
+                        else
+                        {
+                            tempUserControl[j - 1] = tf;
+                        }
+                    }
                     else
                         tempUserControl[j] = tf;
                 }
@@ -152,7 +170,16 @@ namespace BTDToolbox
                 if (j != i)
                 {
                     if (i == 0)
-                        tempTabPages[j - 1] = tf;
+                    {
+                        if (j == 0)
+                        {
+                            tempTabPages[j] = tf;
+                        }
+                        else
+                        {
+                            tempTabPages[j - 1] = tf;
+                        }
+                    }
                     else
                         tempTabPages[j] = tf;
                 }
