@@ -127,7 +127,8 @@ namespace BTDToolbox
             selMenu.Items.Add("Delete");
             selMenu.Items.Add("Copy");
             selMenu.Items.Add("Restore original");
-            
+            selMenu.Items.Add("Open in File Explorer");
+
             selMenu.ItemClicked += jsonContextClicked;
         }
 
@@ -491,6 +492,23 @@ namespace BTDToolbox
                 try
                 {
                     Open_EZTower();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Open in File Explorer")
+            {
+                try
+                {
+                    if(!listView1.SelectedItems[0].Text.Contains("."))
+                    {
+                        Process.Start(this.Text + "\\" + listView1.SelectedItems[0].Text);
+                    }
+                    else
+                    {
+                        Process.Start(this.Text);
+                    }
                 }
                 catch (Exception)
                 {
