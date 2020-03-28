@@ -122,6 +122,7 @@ namespace BTDToolbox
         private void initSelContextMenu()
         {
             selMenu = new ContextMenuStrip();
+            selMenu.Items.Add("Open File");
             selMenu.Items.Add("Rename");
             selMenu.Items.Add("Delete");
             selMenu.Items.Add("Copy");
@@ -133,8 +134,10 @@ namespace BTDToolbox
         private void initMultiContextMenu()
         {
             multiSelMenu = new ContextMenuStrip();
+            multiSelMenu.Items.Add("Open Files");
             multiSelMenu.Items.Add("Delete");
             multiSelMenu.Items.Add("Copy");
+            multiSelMenu.Items.Add("Restore original");
             multiSelMenu.ItemClicked += multiJsonContextClicked;
         }
         private void initEmpContextMenu()
@@ -260,91 +263,51 @@ namespace BTDToolbox
             {
             }
         }
-        private void openFile()
-        {
-
-        }
-        private void ListView1_DoubleClicked(object sender, EventArgs e)
+        private void OpenFile()
         {
             ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
             if (Selected.Count > 0)
             {
-                if (useExternalEditor == false)
-                {
-                    if (!Selected[0].Text.Contains("."))
-                    {
-                        try
-                        {
-                            foreach (TreeNode node in treeView1.SelectedNode.Nodes)
-                            {
-                                if (node.Text == Selected[0].Text)
-                                {
-                                    node.Expand();
-                                    treeView1.SelectedNode = node;
-                                }
-                            }
-                        }
-                        catch { }
-
-                    }
-                    else
-                    {
-                        if (Selected.Count == 1)
-                        {
-                            JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[0].Text);
-                        }
-                        else if (Selected.Count > 1)
-                        {
-                            int i = 0;
-                            foreach (var v in Selected)
-                            {
-                                JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[i].Text);
-                                i++;
-                            }
-                        }
-                    }
-                    /*try
-                    {
-                        JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[0].Text);
-                        *//*JsonEditor JsonWindow = new JsonEditor(this.Text + "\\" + Selected[0].Text);
-                        JsonWindow.MdiParent = Form;
-                        JsonWindow.Show();*//*
-                    }
-                    catch (Exception)
-                    {
-                        try
-                        {
-                            if (!Selected[0].Text.Contains("."))
-                            {
-                                foreach (TreeNode node in treeView1.SelectedNode.Nodes)
-                                {
-                                    if (node.Text == Selected[0].Text)
-                                    {
-                                        node.Expand();
-                                        treeView1.SelectedNode = node;
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }*/
-                }
-                else
+                if (!Selected[0].Text.Contains("."))
                 {
                     try
                     {
-                        string selectedFile = this.Text + "\\" + Selected[0].Text;
-                        Process.Start(selectedFile);
+                        foreach (TreeNode node in treeView1.SelectedNode.Nodes)
+                        {
+                            if (node.Text == Selected[0].Text)
+                            {
+                                node.Expand();
+                                treeView1.SelectedNode = node;
+                            }
+                        }
                     }
-                    catch
-                    {
-
-                    }
+                    catch { }
                 }
-                
+                else
+                {
+                    if (Selected.Count == 1)
+                    {
+                        JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[0].Text);
+                    }
+                    else
+                    {
+                        int i = 0;
+                        foreach (var v in Selected)
+                        {
+                            JsonEditorHandler.OpenFile(this.Text + "\\" + Selected[i].Text);
+                            i++;
+                        }
+                    }
+                }   
             }
+            else
+            {
+                ConsoleHandler.appendLog("You need to select at least one file to open");
+            }
+        }
+        private void ListView1_DoubleClicked(object sender, EventArgs e)
+        {
+            OpenFile();
         }
 
         //Context caller
@@ -360,6 +323,10 @@ namespace BTDToolbox
                         selMenu.Show(listView1, e.Location);
 
                         string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
+
+                        string test = listView1.SelectedItems[0].Text;
+                        MessageBox.Show(test);
+
                         if (filename.Contains(".bloon"))
                         {
                             int i = 0;
@@ -462,6 +429,16 @@ namespace BTDToolbox
         //Context caller
         private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            if (e.ClickedItem.Text == "Open File")
+            {
+                try
+                {
+                    OpenFile();
+                }
+                catch (Exception)
+                {
+                }
+            }
             if (e.ClickedItem.Text == "Rename")
             {
                 try
@@ -487,6 +464,16 @@ namespace BTDToolbox
                 try
                 {
                     copy();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Restore original")
+            {
+                try
+                {
+                    //delete();
                 }
                 catch (Exception)
                 {
@@ -553,6 +540,16 @@ namespace BTDToolbox
         }
         private void multiJsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            if (e.ClickedItem.Text == "Open Files")
+            {
+                try
+                {
+                    OpenFile();
+                }
+                catch (Exception)
+                {
+                }
+            }
             if (e.ClickedItem.Text == "Delete")
             {
                 try
@@ -568,6 +565,16 @@ namespace BTDToolbox
                 try
                 {
                     copy();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Restore original")
+            {
+                try
+                {
+                    delete();
                 }
                 catch (Exception)
                 {
@@ -764,6 +771,27 @@ namespace BTDToolbox
                 {
                     findPanel.Visible = true;
                     findBox.Select();
+                }
+            }
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                if(listView1.Focused)
+                {
+                    try
+                    {
+                        DirectoryInfo dirInfo = new DirectoryInfo(this.Text);
+                        var x = dirInfo.GetFiles(".",SearchOption.TopDirectoryOnly);
+                        if(x.Length > 0)
+                        {
+                            int i = 0;
+                            foreach (var a in listView1.Items)
+                            {
+                                listView1.Items[i].Selected = true;
+                                i++;
+                            }
+                        }
+                    }
+                    catch { }
                 }
             }
         }
