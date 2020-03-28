@@ -45,18 +45,10 @@ namespace BTDToolbox.Classes
             {
                 jeditor.NewTab(path);
             }
-                /*for (int x = 0; x < 3; x++)
-                {
-                    uc = new JsonEditor_UserControl();
-                    tp = new TabPage();
-                    Array.Resize(ref userControls, userControls.Length + 1);
-                    userControls[userControls.Length - 1] = uc;
-
-                    //uc.Size = new Size(tp.Width, tp.Height);
-                    tp.Controls.Add(uc);
-                    this.tabControl1.TabPages.Add(tp);
-                    //tabControl1.Resize += uc.ResizeEvent;
-                }*/
+        }
+        public static void CloseFile(string path)
+        {
+            jeditor.CloseTab(path);
         }
     }
 }

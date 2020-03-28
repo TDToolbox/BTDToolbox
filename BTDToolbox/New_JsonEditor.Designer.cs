@@ -44,6 +44,11 @@
             // 
             this.titleSeperator.Panel1.Controls.Add(this.button1);
             // 
+            // TitleLabel
+            // 
+            this.TitleLabel.Size = new System.Drawing.Size(75, 16);
+            this.TitleLabel.Text = "Json Editor";
+            // 
             // contentPanel
             // 
             this.contentPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -88,7 +93,9 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.KeyPreview = true;
             this.Name = "New_JsonEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "New_JsonEditor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.New_JsonEditor_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.New_JsonEditor_KeyDown);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();

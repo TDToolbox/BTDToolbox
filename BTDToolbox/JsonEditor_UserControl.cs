@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BTDToolbox.Classes;
+using System.IO;
 
 namespace BTDToolbox
 {
@@ -15,6 +16,7 @@ namespace BTDToolbox
     {
         Font font;
         public bool jsonError;
+        public string path = "";
         public JsonEditor_UserControl()
         {
             InitializeComponent();
@@ -25,13 +27,17 @@ namespace BTDToolbox
             Editor_TextBox.Select();
             AddLineNumbers();
         }
-
+        public void FinishedLoading()
+        {
+            HandleTools();
+        }
         //
         //JSON
         //
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             CheckJSON(Editor_TextBox.Text);
+            File.WriteAllText(path, Editor_TextBox.Text);
         }
         private void CheckJSON(string text)
         {
@@ -45,6 +51,39 @@ namespace BTDToolbox
                 this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
                 jsonError = true;
             }
+        }
+        private void CloseFile_Button_Click(object sender, EventArgs e)
+        {
+            if(!jsonError)
+            {
+                JsonEditorHandler.CloseFile(path);
+            }
+            else
+            {
+                
+                DialogResult dialogResult = MessageBox.Show("This file has a JSON error! Are you sure you want to close and save it?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    JsonEditorHandler.CloseFile(path);
+                }
+            }
+        }
+
+
+        //
+        //EZ Tools
+        //
+        private void HandleTools()
+        {
+            if (path.EndsWith("tower"))
+                EZTowerEditor_Button.Visible = true;
+            else
+                EZTowerEditor_Button.Visible = false;
+
+            if (path.EndsWith("bloon"))
+                EZBoon_Button.Visible = true;
+            else
+                EZBoon_Button.Visible = false;
         }
 
         //

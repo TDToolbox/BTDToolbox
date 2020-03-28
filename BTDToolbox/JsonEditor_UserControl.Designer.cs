@@ -41,11 +41,12 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ChangeFontSize_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontSize_TextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.EasyTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lintPanel = new System.Windows.Forms.Panel();
+            this.CloseFile_Button = new System.Windows.Forms.Button();
             this.JsonToolstrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,7 +98,7 @@
             this.JsonToolstrip.Location = new System.Drawing.Point(0, 0);
             this.JsonToolstrip.Name = "JsonToolstrip";
             this.JsonToolstrip.Padding = new System.Windows.Forms.Padding(0, 0, 1, 5);
-            this.JsonToolstrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.JsonToolstrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.JsonToolstrip.Size = new System.Drawing.Size(754, 28);
             this.JsonToolstrip.TabIndex = 28;
             this.JsonToolstrip.Text = "toolStrip1";
@@ -114,7 +115,7 @@
             this.FindSubtask_Button,
             this.toolStripSeparator3,
             this.ChangeFontSize_MenuItem,
-            this.EasyTowerEditor_Button,
+            this.EZTowerEditor_Button,
             this.EZBoon_Button});
             this.File_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.File_DropDown.ForeColor = System.Drawing.Color.White;
@@ -169,16 +170,17 @@
             // 
             // FontSize_TextBox
             // 
+            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // EasyTowerEditor_Button
+            // EZTowerEditor_Button
             // 
-            this.EasyTowerEditor_Button.Name = "EasyTowerEditor_Button";
-            this.EasyTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
-            this.EasyTowerEditor_Button.Text = "EZ Tower tool";
-            this.EasyTowerEditor_Button.Visible = false;
+            this.EZTowerEditor_Button.Name = "EZTowerEditor_Button";
+            this.EZTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
+            this.EZTowerEditor_Button.Text = "EZ Tower tool";
+            this.EZTowerEditor_Button.Visible = false;
             // 
             // EZBoon_Button
             // 
@@ -195,7 +197,7 @@
             this.Help_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Help_DropDown.Image")));
             this.Help_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Help_DropDown.Name = "Help_DropDown";
-            this.Help_DropDown.Size = new System.Drawing.Size(45, 22);
+            this.Help_DropDown.Size = new System.Drawing.Size(45, 20);
             this.Help_DropDown.Text = "Help";
             // 
             // toolStripSeparator1
@@ -203,7 +205,7 @@
             this.toolStripSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
             // 
             // lintPanel
             // 
@@ -215,11 +217,25 @@
             this.lintPanel.Size = new System.Drawing.Size(60, 20);
             this.lintPanel.TabIndex = 29;
             // 
+            // CloseFile_Button
+            // 
+            this.CloseFile_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CloseFile_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.CloseFile_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CloseFile_Button.Location = new System.Drawing.Point(527, 0);
+            this.CloseFile_Button.Name = "CloseFile_Button";
+            this.CloseFile_Button.Size = new System.Drawing.Size(36, 20);
+            this.CloseFile_Button.TabIndex = 30;
+            this.CloseFile_Button.Text = "X";
+            this.CloseFile_Button.UseVisualStyleBackColor = false;
+            this.CloseFile_Button.Click += new System.EventHandler(this.CloseFile_Button_Click);
+            // 
             // JsonEditor_UserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Controls.Add(this.CloseFile_Button);
             this.Controls.Add(this.lintPanel);
             this.Controls.Add(this.JsonToolstrip);
             this.Controls.Add(this.Editor_TextBox);
@@ -245,12 +261,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem ChangeFontSize_MenuItem;
         private System.Windows.Forms.ToolStripTextBox FontSize_TextBox;
-        private System.Windows.Forms.ToolStripMenuItem EasyTowerEditor_Button;
+        private System.Windows.Forms.ToolStripMenuItem EZTowerEditor_Button;
         private System.Windows.Forms.ToolStripMenuItem EZBoon_Button;
         private System.Windows.Forms.ToolStripDropDownButton Help_DropDown;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Panel lintPanel;
         public System.Windows.Forms.RichTextBox Editor_TextBox;
         public System.Windows.Forms.RichTextBox tB_line;
+        private System.Windows.Forms.Button CloseFile_Button;
     }
 }

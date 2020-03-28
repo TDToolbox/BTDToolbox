@@ -24,6 +24,8 @@ namespace BTDToolbox
         public JsonEditor_UserControl[] userControls;
         public TabPage[] tabPages;
         public string[] tabFilePaths;
+
+        ConfigFile programData;
         public New_JsonEditor()
         {
             InitializeComponent();
@@ -31,33 +33,49 @@ namespace BTDToolbox
             this.Font = new Font("Consolas", 11);
             JsonEditor_Width = tabControl1.Width;
             JsonEditor_Height = tabControl1.Height;
+            
+            programData = Serializer.Deserialize_Config();
+            this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
+            this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
+
+            /*jsonEditorFont = programData.JSON_Editor_FontSize;
+            Font newfont = new Font("Consolas", jsonEditorFont);
+            tB_line.Font = newfont;
+            Editor_TextBox.Font = newfont;
+            FontSize_TextBox.Text = jsonEditorFont.ToString();*/
 
         }
         public void NewTab(string path)
         {
+            //handle user control stuff
             Array.Resize(ref userControls, userControls.Length + 1);
             userControls[userControls.Length - 1] = new JsonEditor_UserControl();
 
+            //handle tab pages
             Array.Resize(ref tabPages, tabPages.Length + 1);
             tabPages[tabPages.Length - 1] = new TabPage();
-            string[] split = path.Split('\\');
-            string filename = split[split.Length - 1];
-            tabPages[tabPages.Length - 1].Text = filename;
 
+            //handle file path array
             Array.Resize(ref tabFilePaths, tabFilePaths.Length + 1);
             tabFilePaths[tabFilePaths.Length - 1] = path;
 
+            //create the tab and do required processing
+            string[] split = path.Split('\\');
+            string filename = split[split.Length - 1];
+            tabPages[tabPages.Length - 1].Text = filename;
             tabPages[tabPages.Length - 1].Controls.Add(userControls[userControls.Length - 1]);
+            userControls[userControls.Length - 1].path = path;
+
             AddText(path);
-            
             this.tabControl1.TabPages.Add(tabPages[tabPages.Length - 1]);
 
             OpenTab(path);
+            ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
+            userControls[userControls.Length - 1].FinishedLoading();
         }
         private void AddText(string path)
         {
             string unformattedText = File.ReadAllText(path);
-
             try
             {
                 JToken jt = JToken.Parse(unformattedText);
@@ -68,8 +86,6 @@ namespace BTDToolbox
             {
                 userControls[userControls.Length - 1].Editor_TextBox.Text = unformattedText;
             }
-            /*CheckJSON(userControls[userControls.Length - 1].Editor_TextBox.Text);
-            s*/
         }
         public void OpenTab(string path)
         {
@@ -83,6 +99,65 @@ namespace BTDToolbox
                 }
                 i++;
             }
+        }
+
+        //
+        //Closing stuff
+        //
+        public void CloseTab(string path)
+        {
+            int i = tabControl1.SelectedIndex;
+            tabControl1.TabPages.Remove(tabControl1.SelectedTab);
+            tabControl1.SelectedIndex = i - 1;
+
+            int j = 0;
+
+            //Remove the closed filepath
+            j = 0;
+            string[] tempFilePaths = new string[tabFilePaths.Length - 1];
+            foreach (string tf in tempFilePaths)
+            {
+                if (j != i)
+                {
+                    tempFilePaths[j] = tf;
+                }
+                j++;
+            }
+            Array.Resize(ref tabFilePaths, tabFilePaths.Length - 1);
+            Array.Copy(tempFilePaths, 0, tabFilePaths, 0, tempFilePaths.Length);
+
+
+            //Remove the closed usercontrol
+            j = 0;
+            JsonEditor_UserControl[] tempUserControl = new JsonEditor_UserControl[userControls.Length - 1];
+            foreach (JsonEditor_UserControl tf in tempUserControl)
+            {
+                if (j != i)
+                {
+                    tempUserControl[j] = tf;
+                }
+                j++;
+            }
+            Array.Resize(ref userControls, userControls.Length - 1);
+            Array.Copy(tempUserControl, 0, userControls, 0, tempUserControl.Length);
+
+
+            //Remove the closed tab page
+            j = 0;
+            TabPage[] tempTabPages = new TabPage[tabPages.Length - 1];
+            foreach (TabPage tf in tempTabPages)
+            {
+                if (j != i)
+                {
+                    tempTabPages[j] = tf;
+                }
+                j++;
+            }
+            Array.Resize(ref tabPages, tabPages.Length - 1);
+            Array.Copy(tempTabPages, 0, tabPages, 0, tempTabPages.Length);
+
+            if (tabControl1.TabPages.Count - 1 <= 0)
+                this.Close();
         }
         private void New_JsonEditor_KeyDown(object sender, KeyEventArgs e)
         {
@@ -130,8 +205,17 @@ namespace BTDToolbox
         }
         private void Button1_Click(object sender, EventArgs e)
         {
-            GetTabFilePath();
-            ConsoleHandler.appendLog_CanRepeat(selectedPath);
+
+            //GetTabFilePath();
+            ConsoleHandler.appendLog_CanRepeat("Tab Pages: " + tabPages.Length.ToString());
+            ConsoleHandler.appendLog_CanRepeat("User Controls: " + userControls.Length.ToString());
+            ConsoleHandler.appendLog_CanRepeat("File paths: " + tabFilePaths.Length.ToString());
+        }
+
+        private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Serializer.SaveConfig(this, "json editor", programData);
+            JsonEditorHandler.jeditor = null;
         }
     }
 }
