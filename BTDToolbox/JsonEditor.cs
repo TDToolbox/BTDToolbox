@@ -829,7 +829,6 @@ namespace BTDToolbox
             easyTower.path = path;
             easyTower.Show();
         }
-
         private void EZBoon_Button_Click(object sender, EventArgs e)
         {
             var ezBloon = new EZBloon_Editor();

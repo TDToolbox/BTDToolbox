@@ -142,9 +142,9 @@ namespace BTDToolbox
             if (programData.recentUpdate == true)
                 ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
 
-            /*ConsoleHandler.announcement();
+            ConsoleHandler.announcement();
             var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();*/
+            isUpdate.HandleUpdates();
 
             foreach (Control con in Controls)
                 if (con is MdiClient)

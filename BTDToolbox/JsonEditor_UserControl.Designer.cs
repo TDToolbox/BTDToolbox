@@ -356,6 +356,7 @@
             this.Option1_CB.TabIndex = 0;
             this.Option1_CB.Text = "Subtask";
             this.Option1_CB.UseVisualStyleBackColor = true;
+            this.Option1_CB.CheckedChanged += new System.EventHandler(this.Option1_CB_CheckedChanged);
             // 
             // JsonEditor_UserControl
             // 

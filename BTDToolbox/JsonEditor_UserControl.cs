@@ -25,14 +25,18 @@ namespace BTDToolbox
         string tab;
         bool tabLine = false;
 
+        //Context menu stuff
+        private ContextMenuStrip selMenu;
+        private ContextMenuStrip highlightMenu;
 
         //Find vars
         int endEditor = 0;
         int endPosition = 0;
         int startPosition = 0;
         int numPhrasesFound = 0;
-        bool searchPhrase_selected = false;
+        int CharIndex_UnderMouse = 0;
         string previousSearchPhrase = "";
+        bool searchPhrase_selected = false;
 
         public JsonEditor_UserControl()
         {
@@ -46,6 +50,10 @@ namespace BTDToolbox
             Replace_TB.KeyDown += Find_TB_KeyDown;
             SearchOptions_Panel.KeyDown += Find_TB_KeyDown;
             SearchOptions_Button.KeyDown += Find_TB_KeyDown;
+            Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
+
+            initSelContextMenu();
+            initHighlightContextMenu();
         }
         public void FinishedLoading()
         {
@@ -136,7 +144,6 @@ namespace BTDToolbox
                 }
             }
         }
-
 
         //
         //EZ Tools and text formatting
@@ -264,6 +271,11 @@ namespace BTDToolbox
                 Find_Button.Visible = !Find_Button.Visible;
                 SearchOptions_Button.Visible = !SearchOptions_Button.Visible;
 
+                if(Option1_CB.Text == "Replace all")
+                {
+                    if (Option1_CB.Checked)
+                        Option1_CB.Checked = false;
+                }
                 Option1_CB.Text = "Subtask";
                 Option1_CB.Location = new Point(15, Option1_CB.Location.Y);
                 Find_Panel.Visible = !Find_Panel.Visible;
@@ -282,6 +294,11 @@ namespace BTDToolbox
                 Find_Button.Location = new Point(Editor_TextBox.Width - 671, 4);
                 SearchOptions_Button.Location = new Point(Editor_TextBox.Width, 4);
 
+                if (Option1_CB.Text == "Subtask")
+                {
+                    if (Option1_CB.Checked)
+                        Option1_CB.Checked = false;
+                }
                 Option1_CB.Text = "Replace all";
                 Option1_CB.Location = new Point(10, Option1_CB.Location.Y);
                 Find_Panel.Visible = !Find_Panel.Visible;
@@ -305,7 +322,10 @@ namespace BTDToolbox
             if (Find_TB.Text.Length > 0)
             {
                 Editor_TextBox.Focus();
-                FindText();
+                if (Option1_CB.Checked)
+                    SearchForSubtask();
+                else
+                    FindText();
             }
             else
             {
@@ -392,9 +412,168 @@ namespace BTDToolbox
             Editor_TextBox.Text = Editor_TextBox.Text.Insert(startPosition - endPosition, Replace_TB.Text);
             endPosition = this.Replace_TB.Text.Length;
             startPosition = startPosition + endPosition + Editor_TextBox.SelectionStart + 1;
-
-            //startPosition = Editor_TextBox.SelectionStart + 1;
             FindText();
+        }
+
+        //
+        //Right-Click menu
+        //
+        private void initHighlightContextMenu()
+        {
+            highlightMenu = new ContextMenuStrip();
+            highlightMenu.Items.Add("Copy");
+            highlightMenu.Items.Add("Paste");
+            highlightMenu.Items.Add("Find");
+            highlightMenu.Items.Add("Replace");
+            highlightMenu.Items.Add("Find subtask");
+            highlightMenu.Items.Add("Get current subtask number");
+            highlightMenu.ItemClicked += highlightContextClicked;
+        }
+        private void initSelContextMenu()
+        {
+            selMenu = new ContextMenuStrip();
+            selMenu.Items.Add("Paste");
+            selMenu.Items.Add("Find subtask");
+            selMenu.Items.Add("Get current subtask number");
+            selMenu.ItemClicked += jsonContextClicked;
+        }
+        private void jsonContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    Editor_TextBox.SelectionStart = CharIndex_UnderMouse;
+                    Editor_TextBox.Paste();
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Find subtask")
+            {
+                if (!Find_Panel.Visible)
+                    ShowSearchMenu("find");
+                Option1_CB.Checked = true;
+                ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+            }
+            if (e.ClickedItem.Text == "Get current subtask number")
+            {
+                if (jsonError == false)
+                {
+                    GetSubtaskNum();
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                }
+            }
+        }
+        private void highlightContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Copy")
+            {
+                if(Editor_TextBox.SelectedText.Length > 0)
+                    Clipboard.SetText(Editor_TextBox.SelectedText);
+            }
+            if (e.ClickedItem.Text == "Paste")
+            {
+                try
+                {
+                    Editor_TextBox.Paste();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (e.ClickedItem.Text == "Find")
+            {
+                Find_TB.Text = Editor_TextBox.SelectedText;
+                if(!Find_Panel.Visible)
+                    ShowSearchMenu("find");
+
+                Option1_CB.Checked = false;
+            }
+            if (e.ClickedItem.Text == "Replace")
+            {
+                ShowSearchMenu("replace");
+                if (!Replace_TB.Visible)
+                    ShowSearchMenu("replace");
+
+                Find_TB.Text = Editor_TextBox.SelectedText;
+                Option1_CB.Checked = false;
+            }
+            if (e.ClickedItem.Text == "Find subtask")
+            {
+                if (!Find_Panel.Visible)
+                    ShowSearchMenu("find");
+                Option1_CB.Checked = true;
+                ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+            }
+            if (e.ClickedItem.Text == "Get current subtask number")
+            {
+                if (jsonError == false)
+                {
+                    GetSubtaskNum();
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                }
+            }
+        }
+
+        //
+        //Subtask stuff
+        //
+        private void GetSubtaskNum()
+        {
+            string subtaskNum = JSON_Reader.GetSubtaskNum(CharIndex_UnderMouse, Editor_TextBox.Text);
+            if (subtaskNum != "" && subtaskNum != " " && subtaskNum != null)
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("Subtask:  [" + subtaskNum + " ]");
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("Unable to detect subtask. Please try clicking somewhere else...");
+                this.Focus();
+            }
+        }
+        private void SearchForSubtask()
+        {
+            int i = 0;
+            bool found = false;
+            foreach (char c in Editor_TextBox.Text)
+            {
+                if (c == ':')
+                {
+                    string subtaskNum = JSON_Reader.GetSubtaskNum(i, Editor_TextBox.Text);
+                    if (subtaskNum.Replace(" ", "").Replace(",", "") == Find_TB.Text.Replace(" ", "").Replace(",", ""))
+                    {
+                        found = true;
+
+                        int startHighlighht = Editor_TextBox.Text.LastIndexOf("\"", i - 2);
+                        Editor_TextBox.SelectionStart = i;
+                        Editor_TextBox.Select(i, -(i - startHighlighht));
+                        Editor_TextBox.ScrollToCaret();
+                        break;
+                    }
+                }
+                i++;
+            }
+            if (!found)
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("That subtask was not found");
+            }
+        }
+        private void Option1_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Option1_CB.Text == "Subtask")
+            {
+                if (Option1_CB.Checked)
+                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+            }
         }
 
         //
@@ -458,27 +637,47 @@ namespace BTDToolbox
         }
         private void EZTowerEditor_Button_Click(object sender, EventArgs e)
         {
-            var easyTower = new EasyTowerEditor();
-            easyTower.path = path;
-            easyTower.Show();
+            if (JSON_Reader.IsValidJson(Editor_TextBox.Text))
+            {
+                var easyTower = new EasyTowerEditor();
+                easyTower.path = path;
+                easyTower.Show();
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
+                this.Focus();
+            }
         }
         private void EZBoon_Button_Click(object sender, EventArgs e)
         {
-            var ezBloon = new EZBloon_Editor();
-            ezBloon.path = path;
-            ezBloon.Show();
+            if(JSON_Reader.IsValidJson(Editor_TextBox.Text))
+            {
+                var ezBloon = new EZBloon_Editor();
+                ezBloon.path = path;
+                ezBloon.Show();
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
+                this.Focus();
+            }
         }
-
-        private void ReplaceButton_Click(object sender, EventArgs e)
+        private void Editor_TextBox_RightClicked(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+            {
+                CharIndex_UnderMouse = GeneralMethods.CharIndex_UnderMouse(Editor_TextBox, e.X, e.Y);
 
+                if (Editor_TextBox.SelectedText.Length > 0)
+                {
+                    highlightMenu.Show(Editor_TextBox, e.Location);
+                }
+                else if (Editor_TextBox.SelectedText.Length == 0)
+                {
+                    selMenu.Show(Editor_TextBox, e.Location);
+                }
+            }
         }
-
-        private void ReplaceAllButton_DropDown_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        
     }
 }
