@@ -46,7 +46,7 @@ namespace BTDToolbox
             serialize.Write(output_Cfg);
             serialize.Close();
         }
-        public static void SaveJSONEditor_Instance(JsonEditor_UserControl jeditor, ConfigFile serialize_config)
+        public static void SaveJSONEditor_Instance(JsonEditor_Instance jeditor, ConfigFile serialize_config)
         {
             var cfg = Serializer.Deserialize_Config();
             if(jeditor!= null)

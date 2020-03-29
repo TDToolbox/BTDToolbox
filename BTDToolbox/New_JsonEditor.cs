@@ -22,7 +22,7 @@ namespace BTDToolbox
         public static int JsonEditor_Height = 0;
         public static string selectedPath = "";
         public static bool isJsonError = false;
-        public JsonEditor_UserControl[] userControls;
+        public JsonEditor_Instance[] userControls;
         public TabPage[] tabPages;
         public string[] tabFilePaths;
 
@@ -38,13 +38,6 @@ namespace BTDToolbox
             programData = Serializer.Deserialize_Config();
             this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
             this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
-            
-            /*jsonEditorFont = programData.JSON_Editor_FontSize;
-            Font newfont = new Font("Consolas", jsonEditorFont);
-            tB_line.Font = newfont;
-            Editor_TextBox.Font = newfont;
-            FontSize_TextBox.Text = jsonEditorFont.ToString();*/
-
         }
 
 
@@ -53,31 +46,38 @@ namespace BTDToolbox
         //
         public void NewTab(string path)
         {
-            //handle user control stuff
-            Array.Resize(ref userControls, userControls.Length + 1);
-            userControls[userControls.Length - 1] = new JsonEditor_UserControl();
+            if(path != "" && path != null)
+            {
+                //handle user control stuff
+                Array.Resize(ref userControls, userControls.Length + 1);
+                userControls[userControls.Length - 1] = new JsonEditor_Instance();
 
-            //handle tab pages
-            Array.Resize(ref tabPages, tabPages.Length + 1);
-            tabPages[tabPages.Length - 1] = new TabPage();
+                //handle tab pages
+                Array.Resize(ref tabPages, tabPages.Length + 1);
+                tabPages[tabPages.Length - 1] = new TabPage();
 
-            //handle file path array
-            Array.Resize(ref tabFilePaths, tabFilePaths.Length + 1);
-            tabFilePaths[tabFilePaths.Length - 1] = path;
+                //handle file path array
+                Array.Resize(ref tabFilePaths, tabFilePaths.Length + 1);
+                tabFilePaths[tabFilePaths.Length - 1] = path;
 
-            //create the tab and do required processing
-            string[] split = path.Split('\\');
-            string filename = split[split.Length - 1];
-            tabPages[tabPages.Length - 1].Text = filename;
-            tabPages[tabPages.Length - 1].Controls.Add(userControls[userControls.Length - 1]);
-            userControls[userControls.Length - 1].path = path;
+                //create the tab and do required processing
+                string[] split = path.Split('\\');
+                string filename = split[split.Length - 1];
+                tabPages[tabPages.Length - 1].Text = filename;
+                tabPages[tabPages.Length - 1].Controls.Add(userControls[userControls.Length - 1]);
+                userControls[userControls.Length - 1].path = path;
 
-            AddText(path);
-            this.tabControl1.TabPages.Add(tabPages[tabPages.Length - 1]);
+                AddText(path);
+                this.tabControl1.TabPages.Add(tabPages[tabPages.Length - 1]);
 
-            OpenTab(path);
-            ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
-            userControls[userControls.Length - 1].FinishedLoading();
+                OpenTab(path);
+                ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
+                userControls[userControls.Length - 1].FinishedLoading();
+            }
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("Something went wrong when trying to read the files path...");
+            }
         }
         private void AddText(string path)
         {
@@ -138,9 +138,9 @@ namespace BTDToolbox
             {
                 if (j != i)
                 {
-                    if(i == 0)
+                    if (i == 0)
                     {
-                        if(j == 0)
+                        if (j == 0)
                         {
                             tempFilePaths[j] = tf;
                         }
@@ -149,8 +149,12 @@ namespace BTDToolbox
                             tempFilePaths[j - 1] = tf;
                         }
                     }
-                    else
+                    else if (j + 1 <= tempFilePaths.Length)
+                    {
                         tempFilePaths[j] = tf;
+                    }
+                    else if (j + 1 == tempFilePaths.Length + 1)
+                        tempFilePaths[j - 1] = tf;
                 }
                 j++;
             }
@@ -160,8 +164,8 @@ namespace BTDToolbox
 
             //Remove the closed usercontrol
             j = 0;
-            JsonEditor_UserControl[] tempUserControl = new JsonEditor_UserControl[userControls.Length - 1];
-            foreach (JsonEditor_UserControl tf in userControls)
+            JsonEditor_Instance[] tempUserControl = new JsonEditor_Instance[userControls.Length - 1];
+            foreach (JsonEditor_Instance tf in userControls)
             {
                 if (j != i)
                 {
@@ -176,8 +180,14 @@ namespace BTDToolbox
                             tempUserControl[j - 1] = tf;
                         }
                     }
-                    else
+                    else if (j + 1 <= tempUserControl.Length)
+                    {
                         tempUserControl[j] = tf;
+                    }
+                    else if (j + 1 == tempUserControl.Length + 1)
+                        tempUserControl[j - 1] = tf;
+                    /*else
+                        tempUserControl[j] = tf;*/
                 }
                 j++;
             }
@@ -203,8 +213,14 @@ namespace BTDToolbox
                             tempTabPages[j - 1] = tf;
                         }
                     }
-                    else
+                    else if (j + 1 <= tempTabPages.Length)
+                    {
                         tempTabPages[j] = tf;
+                    }
+                    else if (j + 1 == tempTabPages.Length + 1)
+                        tempTabPages[j - 1] = tf;
+                    //else
+                    //tempTabPages[j] = tf;
                 }
                 j++;
             }
@@ -215,7 +231,8 @@ namespace BTDToolbox
                 this.Close();
 
             tabControl1.TabPages.Remove(tabControl1.SelectedTab);
-            if(i == 0)
+            
+            if (i + 1 <= tabControl1.TabPages.Count)
                 tabControl1.SelectedIndex = i;
             else
                 tabControl1.SelectedIndex = i - 1;

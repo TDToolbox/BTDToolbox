@@ -14,7 +14,7 @@ using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
-    public partial class JsonEditor_UserControl : UserControl
+    public partial class JsonEditor_Instance : UserControl
     {
         Font font;
         ConfigFile programData;
@@ -38,7 +38,7 @@ namespace BTDToolbox
         string previousSearchPhrase = "";
         bool searchPhrase_selected = false;
 
-        public JsonEditor_UserControl()
+        public JsonEditor_Instance()
         {
             InitializeComponent();
             SetHideEvents();

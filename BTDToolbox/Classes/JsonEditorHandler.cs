@@ -16,7 +16,7 @@ namespace BTDToolbox.Classes
             if (jeditor == null)
             {
                 jeditor = new New_JsonEditor();
-                jeditor.userControls = new JsonEditor_UserControl[0];
+                jeditor.userControls = new JsonEditor_Instance[0];
                 jeditor.tabPages = new TabPage[0];
                 jeditor.tabFilePaths = new string[0];
                 jeditor.Show();

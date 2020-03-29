@@ -1,6 +1,6 @@
 ﻿namespace BTDToolbox
 {
-    partial class JsonEditor_UserControl
+    partial class JsonEditor_Instance
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonEditor_UserControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonEditor_Instance));
             this.Editor_TextBox = new System.Windows.Forms.RichTextBox();
             this.tB_line = new System.Windows.Forms.RichTextBox();
             this.JsonToolstrip = new System.Windows.Forms.ToolStrip();
