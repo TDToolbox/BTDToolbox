@@ -32,9 +32,9 @@
             this.Game_LB = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.Versions_CB = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.Password_TB = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.Save_Button = new System.Windows.Forms.Button();
@@ -65,7 +65,6 @@
             this.Game_LB.FormattingEnabled = true;
             this.Game_LB.ItemHeight = 25;
             this.Game_LB.Items.AddRange(new object[] {
-            "Steam",
             "Windows",
             "Android",
             "IOS",
@@ -74,6 +73,7 @@
             this.Game_LB.Name = "Game_LB";
             this.Game_LB.Size = new System.Drawing.Size(543, 175);
             this.Game_LB.TabIndex = 1;
+            this.Game_LB.SelectedIndexChanged += new System.EventHandler(this.Game_LB_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -100,27 +100,6 @@
             this.button2.Text = "Passwords";
             this.button2.UseVisualStyleBackColor = false;
             // 
-            // Versions_CB
-            // 
-            this.Versions_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Versions_CB.FormattingEnabled = true;
-            this.Versions_CB.ItemHeight = 20;
-            this.Versions_CB.Location = new System.Drawing.Point(185, 75);
-            this.Versions_CB.Name = "Versions_CB";
-            this.Versions_CB.Size = new System.Drawing.Size(324, 28);
-            this.Versions_CB.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(181, 53);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 19);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Battles version:";
-            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
@@ -136,6 +115,28 @@
             this.button1.Text = "New Pass";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Visible = false;
+            // 
+            // Versions_CB
+            // 
+            this.Versions_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Versions_CB.FormattingEnabled = true;
+            this.Versions_CB.ItemHeight = 20;
+            this.Versions_CB.Location = new System.Drawing.Point(185, 75);
+            this.Versions_CB.Name = "Versions_CB";
+            this.Versions_CB.Size = new System.Drawing.Size(324, 28);
+            this.Versions_CB.TabIndex = 3;
+            this.Versions_CB.Text = "6.5.2";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(181, 53);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(101, 19);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Battles version:";
             // 
             // Password_TB
             // 
@@ -172,6 +173,7 @@
             this.Save_Button.TabIndex = 7;
             this.Save_Button.Text = "Save";
             this.Save_Button.UseVisualStyleBackColor = false;
+            this.Save_Button.Click += new System.EventHandler(this.Save_Button_Click);
             // 
             // Copy_Button
             // 

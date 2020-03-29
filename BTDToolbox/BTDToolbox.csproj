@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Announcements.cs" />
+    <Compile Include="Classes\BattlesPass_Class.cs" />
     <Compile Include="Classes\Bloon_Class.cs" />
     <Compile Include="Classes\Card_Class.cs" />
     <Compile Include="Classes\CrackBTDB_Pass.cs" />

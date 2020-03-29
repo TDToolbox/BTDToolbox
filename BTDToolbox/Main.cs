@@ -734,5 +734,11 @@ namespace BTDToolbox
                 ConsoleHandler.force_appendNotice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
             }
         }
+
+        private void BTDBPasswordManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BattlesPassManager mgr = new BattlesPassManager();
+            mgr.Show();
+        }
     }
 }
