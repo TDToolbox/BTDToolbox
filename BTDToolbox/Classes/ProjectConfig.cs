@@ -15,6 +15,7 @@ namespace BTDToolbox
             public bool recentUpdate { get; set; }
             public bool useExternalEditor { get; set; }
             public string battlesPass { get; set; }
+            public bool disableUpdates { get; set; }
 
 
             //Project wide variables

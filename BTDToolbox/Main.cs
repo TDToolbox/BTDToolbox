@@ -16,7 +16,8 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.9";
+        public static string version = "Alpha 0.1.0";
+        public static bool disableUpdates = false;
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
@@ -90,11 +91,7 @@ namespace BTDToolbox
 
             enableConsole = cfgFile.EnableConsole;
             lastProject = cfgFile.LastProject;
-
-            if (lastProject != null)
-            {
-
-            }
+            disableUpdates = cfgFile.disableUpdates;
         }
         private void FirstTimeUse()
         {
@@ -142,9 +139,12 @@ namespace BTDToolbox
             if (programData.recentUpdate == true)
                 ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
 
-            ConsoleHandler.announcement();
-            var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();
+            if(!disableUpdates)
+            {
+                ConsoleHandler.announcement();
+                var isUpdate = new UpdateHandler();
+                isUpdate.HandleUpdates();
+            }
 
             foreach (Control con in Controls)
                 if (con is MdiClient)
@@ -516,8 +516,8 @@ namespace BTDToolbox
             spriteVisualizer.path = path;
             spriteVisualizer.Show();*/
 
-            New_JsonEditor jsonEditor = new New_JsonEditor();
-            jsonEditor.Show();
+            BattlesPassManager mgr = new BattlesPassManager();
+            mgr.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)

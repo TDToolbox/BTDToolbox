@@ -36,6 +36,10 @@ namespace BTDToolbox
             {
                 cfg.battlesPass = ZipForm.rememberedPassword;
             }
+            if (formName == "disableUpdates")
+            {
+                cfg.disableUpdates = Main.disableUpdates;
+            }
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
