@@ -55,7 +55,16 @@ namespace BTDToolbox
         private bool CheckForUpdates()
         {
             reader = new WebHandler();
-            return reader.CheckForUpdate(gitURL, "toolbox2019: ", 0, Main.version);
+            try
+            {
+                return reader.CheckForUpdate(gitURL, "toolbox2019: ", 0, Main.version);
+            }
+            catch
+            {
+                ConsoleHandler.appendNotice("Something went wrong when checking for updates.. Failed to check for updates");
+                return false;
+            }
+            
         }
         private void DownloadUpdate()
         {

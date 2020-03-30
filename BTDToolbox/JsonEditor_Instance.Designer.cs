@@ -184,7 +184,6 @@
             // 
             // FontSize_TextBox
             // 
-            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
