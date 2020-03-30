@@ -56,6 +56,12 @@
             this.Replace_TB = new System.Windows.Forms.RichTextBox();
             this.SearchOptions_Panel = new System.Windows.Forms.Panel();
             this.Option1_CB = new System.Windows.Forms.CheckBox();
+            this.viewOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreFileToOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.eZCardToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -127,8 +133,14 @@
             this.FindSubtask_Button,
             this.toolStripSeparator3,
             this.ChangeFontSize_MenuItem,
+            this.toolStripSeparator2,
+            this.viewOriginalToolStripMenuItem,
+            this.openInFileExplorerToolStripMenuItem,
+            this.restoreFileToOriginalToolStripMenuItem,
+            this.toolStripSeparator4,
             this.EZTowerEditor_Button,
-            this.EZBoon_Button});
+            this.EZBoon_Button,
+            this.eZCardToolToolStripMenuItem});
             this.File_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.File_DropDown.ForeColor = System.Drawing.Color.White;
             this.File_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("File_DropDown.Image")));
@@ -184,6 +196,7 @@
             // 
             // FontSize_TextBox
             // 
+            this.FontSize_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FontSize_TextBox.Name = "FontSize_TextBox";
             this.FontSize_TextBox.Size = new System.Drawing.Size(100, 23);
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -359,6 +372,41 @@
             this.Option1_CB.UseVisualStyleBackColor = true;
             this.Option1_CB.CheckedChanged += new System.EventHandler(this.Option1_CB_CheckedChanged);
             // 
+            // viewOriginalToolStripMenuItem
+            // 
+            this.viewOriginalToolStripMenuItem.Name = "viewOriginalToolStripMenuItem";
+            this.viewOriginalToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.viewOriginalToolStripMenuItem.Text = "View Original";
+            // 
+            // openInFileExplorerToolStripMenuItem
+            // 
+            this.openInFileExplorerToolStripMenuItem.Name = "openInFileExplorerToolStripMenuItem";
+            this.openInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.openInFileExplorerToolStripMenuItem.Text = "Open in File Explorer";
+            // 
+            // restoreFileToOriginalToolStripMenuItem
+            // 
+            this.restoreFileToOriginalToolStripMenuItem.Name = "restoreFileToOriginalToolStripMenuItem";
+            this.restoreFileToOriginalToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.restoreFileToOriginalToolStripMenuItem.Text = "Restore File to Original";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(198, 6);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(198, 6);
+            // 
+            // eZCardToolToolStripMenuItem
+            // 
+            this.eZCardToolToolStripMenuItem.Name = "eZCardToolToolStripMenuItem";
+            this.eZCardToolToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.eZCardToolToolStripMenuItem.Text = "EZ Card tool";
+            this.eZCardToolToolStripMenuItem.Visible = false;
+            // 
             // JsonEditor_Instance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -413,5 +461,11 @@
         private System.Windows.Forms.Button SearchOptions_Button;
         private System.Windows.Forms.Panel SearchOptions_Panel;
         private System.Windows.Forms.CheckBox Option1_CB;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem viewOriginalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openInFileExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restoreFileToOriginalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem eZCardToolToolStripMenuItem;
     }
 }
