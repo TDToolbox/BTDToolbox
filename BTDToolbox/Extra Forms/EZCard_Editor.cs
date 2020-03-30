@@ -416,8 +416,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (game == "BTDB")
             {
-                string gameDir = Serializer.Deserialize_Config().BTDB_Directory;
-                if (gameDir != null && gameDir != "")
+                if (Main.projName != "" && Main.projName != null)
                 {
                     Game_Label.Text = "BTDB";
                     string cardPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions";
@@ -455,7 +454,7 @@ namespace BTDToolbox.Extra_Forms
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("You're game directory has not been set! You need to set your game Dir before continuing. You can do this by clicking the \"Help\" tab at the top, then clicking on \"Browse for game\"");
+                    ConsoleHandler.force_appendNotice("You need to have a project opened to use this tool...");
                     this.Close();
                 }
             }

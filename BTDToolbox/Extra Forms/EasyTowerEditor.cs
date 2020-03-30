@@ -436,18 +436,15 @@ namespace BTDToolbox.Extra_Forms
         {
             finishedLoading = true;
             firstLoad = true;
-            string gameDir = "";
             if (game == "BTD5")
             {
-                gameDir = Serializer.Deserialize_Config().BTD5_Directory;
-                loc_Path = gameDir + "\\Assets\\Loc\\English.xml";
+                loc_Path = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Loc\\English.xml";
             }
             else
             {
-                gameDir = Serializer.Deserialize_Config().BTDB_Directory;
+                loc_Path = "";
             }
-
-            if (gameDir != null && gameDir != "")
+            if (Main.projName != "" && Main.projName != null)
             {
                 string towersPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions";
                 var towerFiles = Directory.GetFiles(towersPath);
@@ -468,7 +465,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.force_appendNotice("You're game directory has not been set! You need to set your game Dir before continuing. You can do this by clicking the \"Help\" tab at the top, then clicking on \"Browse for game\"");
+                ConsoleHandler.force_appendNotice("You need to have a project opened to use this tool...");
                 this.Close();
             }
         }

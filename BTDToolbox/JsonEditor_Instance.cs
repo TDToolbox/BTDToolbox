@@ -131,7 +131,10 @@ namespace BTDToolbox
             if(!jsonError)
             {
                 JsonEditorHandler.CloseFile(path);
+                if(programData == null)
+                    programData = Serializer.Deserialize_Config();
                 Serializer.SaveJSONEditor_Instance(this, programData);
+                Serializer.SaveJSONEditor_Tabs(programData);
             }
             else
             {
@@ -139,6 +142,8 @@ namespace BTDToolbox
                 DialogResult dialogResult = MessageBox.Show("This file has a JSON error! Are you sure you want to close and save it?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
+                    if (programData == null)
+                        programData = Serializer.Deserialize_Config();
                     JsonEditorHandler.CloseFile(path);
                     Serializer.SaveJSONEditor_Instance(this, programData);
                 }

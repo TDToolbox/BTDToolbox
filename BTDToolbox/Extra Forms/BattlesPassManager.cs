@@ -27,7 +27,7 @@ namespace BTDToolbox.Extra_Forms
         }
 
         private void Save_Button_Click(object sender, EventArgs e)
-        {
+        {/*
             if(JSON_Reader.IsValidJson(json))
             {
                 var ver = BattlesPassClass.FromJson(json);
@@ -45,7 +45,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 ConsoleHandler.appendLog_CanRepeat("Invalid json");
             }
-            
+            */
         }
 
         private void Game_LB_SelectedIndexChanged(object sender, EventArgs e)

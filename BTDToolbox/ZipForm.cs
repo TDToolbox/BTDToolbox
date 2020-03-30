@@ -185,7 +185,7 @@ namespace BTDToolbox
                         gamed = Serializer.Deserialize_Config().BTDB_Directory;
 
                     //they should have a backup jet of gamed not invalid. create backup proj
-                    if(gamed != "" || gamed != null)
+                    if(gamed != "" && gamed != null)
                     {
                         ConsoleHandler.force_appendNotice("Backup project not detected.... Creating one now..");
                         Invoke((MethodInvoker)delegate {
@@ -200,6 +200,10 @@ namespace BTDToolbox
                             archive.ExtractAll(destPath);
                             archive.Dispose();
                         });
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendNotice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
                     }
                 }
                 ConsoleHandler.appendLog("Project files created at: " + projName);

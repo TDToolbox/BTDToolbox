@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.Spritesheets;
 using BTDToolbox.Extra_Forms;
 using System;
 using System.Diagnostics;
@@ -511,13 +512,46 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
-            var spriteVisualizer = new SpriteVisualizer();
-            spriteVisualizer.path = path;
-            spriteVisualizer.Show();*/
-
-            BattlesPassManager mgr = new BattlesPassManager();
-            mgr.Show();
+            string startDir = "";
+            if (gameName != "")
+            {
+                MessageBox.Show("Please select the sprite file you want to decompile");
+                if (gameName == "BTD5")
+                {
+                    if(Serializer.Deserialize_Config().BTD5_Directory != "")
+                    {
+                        startDir = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Textures";
+                    }
+                }
+                else
+                {
+                    if (Serializer.Deserialize_Config().BTDB_Directory != "")
+                    {
+                        startDir = Serializer.Deserialize_Config().BTDB_Directory + "\\Assets\\Textures";
+                    }
+                }
+            }
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = startDir;
+            ofd.Title = "Browse for sprite sheet";
+            ofd.Filter = "Image files (*.png, *.jpng, *.jpg, *.jpeg) | *.png; *.jpng; *.jpg; *.jpeg";
+            ofd.Multiselect = true;
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                if(ofd.FileName.EndsWith(".png") || ofd.FileName.EndsWith(".jpng") || ofd.FileName.EndsWith(".jpg") || ofd.FileName.EndsWith(".jpeg"))
+                {
+                    SpriteSheet_Handler handler = new SpriteSheet_Handler();
+                    Thread thread = new Thread(delegate () { handler.Extract(ofd.FileName, "Cell"); });
+                    thread.Start();
+                    
+                }
+                else
+                {
+                    MessageBox.Show("You selected an invalid filetype. Please contact the TD Toolbox team if you think we should add this to the list");
+                }
+            }
+            /*BattlesPassManager mgr = new BattlesPassManager();
+            mgr.Show();*/
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
