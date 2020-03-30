@@ -706,7 +706,6 @@ namespace BTDToolbox
                 }
             }
         }
-
         private void ShowFindMenu_Button_Click(object sender, EventArgs e)
         {
             if (Find_Panel.Visible == false)
@@ -721,7 +720,6 @@ namespace BTDToolbox
                 FindText();
 
         }
-
         private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
         {
             if (Find_Panel.Visible == false)
@@ -753,37 +751,62 @@ namespace BTDToolbox
 
         private void RestoreToOriginal_Button_Click(object sender, EventArgs e)
         {
-            string backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace("\\" + Serializer.Deserialize_Config().LastProject + "\\", "");
-            if (File.Exists(backupProj))
+            RestoreToOriginal();
+        }
+        public void RestoreToOriginal()
+        {
+            if (!filename.EndsWith("_original"))
             {
-                if (!filename.Contains("_original"))
+                DialogResult diag = MessageBox.Show("You are trying to restore this file to the original unmodded version. Are you sure you want to do this?", "Restore to original?", MessageBoxButtons.YesNo);
+                if (diag == DialogResult.Yes)
                 {
-                    if (path.Contains("."))
+                    string backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace("\\" + Serializer.Deserialize_Config().LastProject + "\\", "");
+                    if (File.Exists(backupProj))
                     {
-                        if (File.Exists(path))
+                        if (path.Contains("."))
                         {
-                            JsonEditorHandler.CloseFile(path);
-                            File.Delete(path);
+                            if (File.Exists(path))
+                            {
+                                JsonEditorHandler.CloseFile(path);
+                                File.Delete(path);
+                            }
+                            File.Copy(backupProj, path);
+                            JsonEditorHandler.OpenFile(path);
+                            ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
                         }
-                        File.Copy(backupProj, path);
-                        JsonEditorHandler.OpenFile(path);
-                        ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
                     }
+                    else
+                    {
+                        ConsoleHandler.appendLog_CanRepeat("Could not find file in backup project... Unable to restore file");
+                    }
+                }
+                else
+                {
+                    ConsoleHandler.appendLog_CanRepeat("User cancelled restore");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog_CanRepeat("Could not find file in backup project... Unable to restore file");
-            }
+                ConsoleHandler.appendLog_CanRepeat("You can't restore the backup to original because it IS the original");
+            }            
         }
-
         private void OpenInFileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenInFileExplorer();
+        }
+        public void OpenInFileExplorer()
         {
             string[] split = path.Split('\\');
             string foldername = path.Replace(split[split.Length - 1], "");
-            Process.Start(foldername);
+            if(!foldername.Contains("BackupProject"))
+            {
+                Process.Start(foldername);
+            }
+            else
+            {
+                ConsoleHandler.appendNotice("Operation cancelled. We don't want you to edit the backup on accident... If you really need to look at it, you can find it in the Backups folder");
+            }
         }
-
         private void ViewOriginalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JsonEditorHandler.OpenOriginalFile(path);

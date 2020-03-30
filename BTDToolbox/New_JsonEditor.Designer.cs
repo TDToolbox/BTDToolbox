@@ -70,6 +70,7 @@
             this.tabControl1.TabIndex = 0;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl1_DrawItem);
             this.tabControl1.SizeChanged += new System.EventHandler(this.TabControl1_SizeChanged);
+            this.tabControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TabControl1_MouseMove);
             // 
             // New_JsonEditor
             // 

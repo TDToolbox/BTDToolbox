@@ -61,7 +61,7 @@ namespace BTDToolbox
             public int JSON_Editor_PosX { get; set; }
             public int JSON_Editor_PosY { get; set; }
             public float JSON_Editor_FontSize { get; set; }
-            public string[] JsonEditor_OpenedTabs { get; set; }
+            public List<string> JsonEditor_OpenedTabs { get; set; }
         }
     }
 }

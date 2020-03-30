@@ -46,7 +46,7 @@ namespace BTDToolbox
 
             if (projName == Serializer.Deserialize_Config().LastProject)
             {
-                if (Serializer.Deserialize_Config().JsonEditor_OpenedTabs.Length > 0)
+                if (Serializer.Deserialize_Config().JsonEditor_OpenedTabs.Count > 0)
                 {
                     DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
@@ -56,14 +56,14 @@ namespace BTDToolbox
                     }
                     else
                     {
-                        programData.JsonEditor_OpenedTabs = new string[0];
+                        programData.JsonEditor_OpenedTabs = new List<string>();
                         Serializer.SaveJSONEditor_Tabs(programData);
                     }
                 }
             }
             else
             {
-                programData.JsonEditor_OpenedTabs = new string[0];
+                programData.JsonEditor_OpenedTabs =  new List<string>();
                 Serializer.SaveJSONEditor_Tabs(programData);
             }
 
@@ -752,7 +752,6 @@ namespace BTDToolbox
         private void restoreOriginal()
         {
             string filepath = this.Text + "\\" + listView1.SelectedItems[0].Text;
-
             if (listView1.SelectedItems.Count == 1)
             {
                 if(listView1.SelectedItems[0].Text.Contains("."))

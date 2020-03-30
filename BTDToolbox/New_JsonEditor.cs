@@ -22,14 +22,20 @@ namespace BTDToolbox
         public static int JsonEditor_Height = 0;
         public static string selectedPath = "";
         public static bool isJsonError = false;
-        public JsonEditor_Instance[] userControls;
-        public TabPage[] tabPages;
-        public string[] tabFilePaths;
+        public Point mouseClickPos;
+        private ContextMenuStrip selMenu;
+
+        public List<TabPage> tabPages;
+        public List<string> tabFilePaths;
+        public List<JsonEditor_Instance> userControls;
 
         ConfigFile programData;
         public New_JsonEditor()
         {
             InitializeComponent();
+            initSelContextMenu();
+            tabControl1.MouseUp += Mouse_RightClick;
+
             this.MdiParent = Main.getInstance();
             this.Font = new Font("Consolas", 11);
             JsonEditor_Width = tabControl1.Width;
@@ -44,21 +50,60 @@ namespace BTDToolbox
         //
         //Open stuff
         //
+        private void initSelContextMenu()
+        {
+            selMenu = new ContextMenuStrip();
+            selMenu.Items.Add("Close");
+            selMenu.Items.Add("View original");
+            selMenu.Items.Add("Restore to original");
+            selMenu.Items.Add("Open in File Explorer");
+            selMenu.ItemClicked += ContextClicked;
+        }
+        private void ContextClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            int i = GetTabUnderMouse(mouseClickPos.X, mouseClickPos.Y);
+            if (i != 9999)
+            {
+                if (e.ClickedItem.Text == "Close")
+                {
+                    CloseTab(tabFilePaths[i]);
+                }
+                else if (e.ClickedItem.Text == "View original")
+                {
+                    JsonEditorHandler.OpenOriginalFile(tabFilePaths[i]);
+                }
+                else if (e.ClickedItem.Text == "Restore to original")
+                {
+                    userControls[i].RestoreToOriginal();
+                }
+                else if (e.ClickedItem.Text == "Open in File Explorer")
+                {
+                    userControls[i].OpenInFileExplorer();
+                }
+            }
+            
+        }
+        private void Mouse_RightClick(object sender, MouseEventArgs e)
+        {
+            mouseClickPos = new Point(e.X, e.Y);
+            if (e.Button == MouseButtons.Right)
+            {
+                selMenu.Show(tabControl1, e.Location);
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                int i = GetTabUnderMouse(mouseClickPos.X, mouseClickPos.Y);
+                if (i != 9999)
+                    CloseTab(tabFilePaths[i]);
+            }
+        }
         public void NewTab(string path)
         {
             if (path != "" && path != null)
             {
-                //handle user control stuff
-                Array.Resize(ref userControls, userControls.Length + 1);
-                userControls[userControls.Length - 1] = new JsonEditor_Instance();
-
-                //handle tab pages
-                Array.Resize(ref tabPages, tabPages.Length + 1);
-                tabPages[tabPages.Length - 1] = new TabPage();
-
-                //handle file path array
-                Array.Resize(ref tabFilePaths, tabFilePaths.Length + 1);
-                tabFilePaths[tabFilePaths.Length - 1] = path;
+                tabFilePaths.Add(path);
+                tabPages.Add(new TabPage());
+                userControls.Add(new JsonEditor_Instance());
 
                 //create the tab and do required processing
 
@@ -67,21 +112,21 @@ namespace BTDToolbox
                 if (path.Contains("BackupProject"))
                 {
                     filename = filename + "_original";
-                    userControls[userControls.Length - 1].Editor_TextBox.ReadOnly = true;
+                    userControls[userControls.Count - 1].Editor_TextBox.ReadOnly = true;
                 }
 
-                tabPages[tabPages.Length - 1].Text = filename;
-                tabPages[tabPages.Length - 1].Controls.Add(userControls[userControls.Length - 1]);
-                userControls[userControls.Length - 1].path = path;
-                userControls[userControls.Length - 1].filename = filename;
+                tabPages[tabPages.Count - 1].Text = filename;
+                tabPages[tabPages.Count - 1].Controls.Add(userControls[userControls.Count - 1]);
+                userControls[userControls.Count - 1].path = path;
+                userControls[userControls.Count - 1].filename = filename;
 
                 AddText(path);
 
-                this.tabControl1.TabPages.Add(tabPages[tabPages.Length - 1]);
-
+                tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
+                
                 OpenTab(path);
                 ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
-                userControls[userControls.Length - 1].FinishedLoading();
+                userControls[userControls.Count - 1].FinishedLoading();
 
             }
             else
@@ -96,11 +141,11 @@ namespace BTDToolbox
             {
                 JToken jt = JToken.Parse(unformattedText);
                 string formattedText = jt.ToString(Formatting.Indented);
-                userControls[userControls.Length - 1].Editor_TextBox.Text = formattedText;
+                userControls[userControls.Count - 1].Editor_TextBox.Text = formattedText;
             }
             catch (Exception)
             {
-                userControls[userControls.Length - 1].Editor_TextBox.Text = unformattedText;
+                userControls[userControls.Count - 1].Editor_TextBox.Text = unformattedText;
             }
         }
         public void OpenTab(string path)
@@ -120,152 +165,54 @@ namespace BTDToolbox
         //
         //Methods
         //
-        private string GetTabFilePath()
+        public int GetTabUnderMouse(int mouseX, int mouseY)
         {
-            int i = 0;
-            foreach (TabPage x in tabPages)
+            for (int i = 0; i < tabControl1.TabCount; i++)
             {
-                if (x.Text == tabControl1.SelectedTab.Text)
+                if (tabControl1.GetTabRect(i).Contains(mouseX, mouseY))
                 {
-                    selectedPath = tabFilePaths[i];
+                    return i;
                 }
-                i++;
             }
-            return selectedPath;
+            return 9999;
         }
-
         //
         //Closing stuff
         //
         public void CloseTab(string path)
         {
-            int i = tabControl1.SelectedIndex;
+            int i = tabFilePaths.IndexOf(path);
+            int indexBeforeDelete = tabControl1.SelectedIndex;
 
-            //Remove the closed filepath
-            int j = 0;
-            string[] tempFilePaths = new string[tabFilePaths.Length - 1];
-            foreach (string tf in tabFilePaths)
-            {
-                if (j != i)
-                {
-                    if (i == 0)
-                    {
-                        if (j == 0)
-                        {
-                            tempFilePaths[j] = tf;
-                        }
-                        else
-                        {
-                            tempFilePaths[j - 1] = tf;
-                        }
-                    }
-                    else if (j + 1 <= tempFilePaths.Length)
-                    {
-                        tempFilePaths[j] = tf;
-                    }
-                    else if (j + 1 == tempFilePaths.Length + 1)
-                        tempFilePaths[j - 1] = tf;
-                }
-                j++;
-            }
-            Array.Resize(ref tabFilePaths, tabFilePaths.Length - 1);
-            Array.Copy(tempFilePaths, 0, tabFilePaths, 0, tempFilePaths.Length);
-
-
-            //Remove the closed usercontrol
-            j = 0;
-            JsonEditor_Instance[] tempUserControl = new JsonEditor_Instance[userControls.Length - 1];
-            foreach (JsonEditor_Instance tf in userControls)
-            {
-                if (j != i)
-                {
-                    if (i == 0)
-                    {
-                        if (j == 0)
-                        {
-                            tempUserControl[j] = tf;
-                        }
-                        else
-                        {
-                            tempUserControl[j - 1] = tf;
-                        }
-                    }
-                    else if (j + 1 <= tempUserControl.Length)
-                    {
-                        tempUserControl[j] = tf;
-                    }
-                    else if (j + 1 == tempUserControl.Length + 1)
-                        tempUserControl[j - 1] = tf;
-                    /*else
-                        tempUserControl[j] = tf;*/
-                }
-                j++;
-            }
-            Array.Resize(ref userControls, userControls.Length - 1);
-            Array.Copy(tempUserControl, 0, userControls, 0, tempUserControl.Length);
-
-
-            //Remove the closed tab page
-            j = 0;
-            TabPage[] tempTabPages = new TabPage[tabPages.Length - 1];
-            foreach (TabPage tf in tabPages)
-            {
-                if (j != i)
-                {
-                    if (i == 0)
-                    {
-                        if (j == 0)
-                        {
-                            tempTabPages[j] = tf;
-                        }
-                        else
-                        {
-                            tempTabPages[j - 1] = tf;
-                        }
-                    }
-                    else if (j + 1 <= tempTabPages.Length)
-                    {
-                        tempTabPages[j] = tf;
-                    }
-                    else if (j + 1 == tempTabPages.Length + 1)
-                        tempTabPages[j - 1] = tf;
-                    //else
-                    //tempTabPages[j] = tf;
-                }
-                j++;
-            }
-            Array.Resize(ref tabPages, tabPages.Length - 1);
-            Array.Copy(tempTabPages, 0, tabPages, 0, tempTabPages.Length);
-
-            if (tabControl1.TabPages.Count - 1 <= 0)
-                this.Close();
-
-            tabControl1.TabPages.Remove(tabControl1.SelectedTab);
-            
-            if (i + 1 <= tabControl1.TabPages.Count)
-                tabControl1.SelectedIndex = i;
+            tabControl1.TabPages.Remove(tabPages[i]);
+            if (indexBeforeDelete + 1 <= tabControl1.TabPages.Count)
+                tabControl1.SelectedIndex = indexBeforeDelete;   
             else
-                tabControl1.SelectedIndex = i - 1;
+                tabControl1.SelectedIndex = indexBeforeDelete - 1;
+
+            tabFilePaths.RemoveAt(i);
+            tabPages.RemoveAt(i);
+            userControls.RemoveAt(i);
+
+            if (tabControl1.TabPages.Count <= 0)
+                this.Close();
         }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             Serializer.SaveConfig(this, "json editor", programData);
             Serializer.SaveJSONEditor_Tabs(programData);
-            if(userControls.Length >0)
+            if(userControls.Count >0)
                 Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex], programData);
             JsonEditorHandler.jeditor = null;
         }
         private void Close_button_Click(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "json editor", programData);
-            Serializer.SaveJSONEditor_Tabs(programData);
             if (JsonEditorHandler.AreJsonErrors())
             {
-                //tabControl1.SelectedIndex = i;
                 DialogResult diag = MessageBox.Show(tabControl1.SelectedTab.Text + " has a Json Error! Your mod will break if you don't fix it.\nClose anyways?", "WARNING!!", MessageBoxButtons.YesNo);
                 if (diag == DialogResult.Yes)
                     this.Close();
-                
             }
         }
 
@@ -302,11 +249,10 @@ namespace BTDToolbox
             //TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, page.ForeColor);
             TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, Color.White);
         }
-        private void Button1_Click(object sender, EventArgs e)
+
+        private void TabControl1_MouseMove(object sender, MouseEventArgs e)
         {
-            ConsoleHandler.appendLog_CanRepeat("Tab Pages: " + tabPages.Length.ToString());
-            ConsoleHandler.appendLog_CanRepeat("User Controls: " + userControls.Length.ToString());
-            ConsoleHandler.appendLog_CanRepeat("File paths: " + tabFilePaths.Length.ToString());
+            
         }
     }
 }

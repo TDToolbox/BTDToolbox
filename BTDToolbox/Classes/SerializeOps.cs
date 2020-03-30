@@ -62,9 +62,11 @@ namespace BTDToolbox
         public static void SaveJSONEditor_Tabs(ConfigFile cfg)
         {
             if (JsonEditorHandler.jeditor != null)
+            {
                 cfg.JsonEditor_OpenedTabs = JsonEditorHandler.jeditor.tabFilePaths;
+            }
             else
-                cfg.JsonEditor_OpenedTabs = new string[0];
+                cfg.JsonEditor_OpenedTabs = new List<string>();
 
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
@@ -170,7 +172,7 @@ namespace BTDToolbox
                     programData.useExternalEditor = false;
                     programData.disableUpdates = false;
 
-                    programData.JsonEditor_OpenedTabs = new string[0];
+                    programData.JsonEditor_OpenedTabs = new List<string>();
 
 
                     programData.BTD5_Directory = "";

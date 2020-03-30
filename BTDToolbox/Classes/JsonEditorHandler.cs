@@ -18,9 +18,9 @@ namespace BTDToolbox.Classes
             if (jeditor == null)
             {
                 jeditor = new New_JsonEditor();
-                jeditor.userControls = new JsonEditor_Instance[0];
-                jeditor.tabPages = new TabPage[0];
-                jeditor.tabFilePaths = new string[0];
+                jeditor.tabPages = new List<TabPage>();
+                jeditor.tabFilePaths = new List<string>();
+                jeditor.userControls = new List<JsonEditor_Instance>();
                 jeditor.Show();
             }
             else if (jeditor.Visible == false)
@@ -33,19 +33,11 @@ namespace BTDToolbox.Classes
             if (Serializer.Deserialize_Config().useExternalEditor == false)
             {
                 ValidateEditor();
-
-                int i = 0;
-                bool isFileOpened = false;
-                foreach (string tp in jeditor.tabFilePaths)
+                if(jeditor.tabFilePaths.Contains(path))
                 {
-                    if (path == tp)
-                    {
-                        isFileOpened = true;
-                        jeditor.tabControl1.SelectedTab = jeditor.tabPages[i];
-                    }
-                    i++;
+                    jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
                 }
-                if (!isFileOpened)
+                else
                 {
                     jeditor.NewTab(path);
                 }
@@ -54,16 +46,16 @@ namespace BTDToolbox.Classes
         public static void OpenOriginalFile(string path)
         {
             string[] split = path.Split('\\');
-            string filename = split[split.Length - 1];
-            string backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory,"").Replace(Serializer.Deserialize_Config().LastProject + "\\", "");
-            if (File.Exists(backupProj))
-            {
-                OpenFile(backupProj);
-            }
+            string backupProj = "";
+            if (!path.Contains("\\Backups\\" + Main.gameName + "_BackupProject\\"))
+                backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace(Serializer.Deserialize_Config().LastProject + "\\", "");
             else
-            {
+                backupProj = path;
+            
+            if (File.Exists(backupProj))
+                OpenFile(backupProj);
+            else
                 ConsoleHandler.appendLog_CanRepeat("Could not find file in backup project... Unable to view original file");
-            }
         }
         public static void CloseFile(string path)
         {
