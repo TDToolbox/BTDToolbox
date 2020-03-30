@@ -154,12 +154,14 @@
             this.ShowFindMenu_Button.Name = "ShowFindMenu_Button";
             this.ShowFindMenu_Button.Size = new System.Drawing.Size(201, 22);
             this.ShowFindMenu_Button.Text = "Find                  (Ctrl + F)";
+            this.ShowFindMenu_Button.Click += new System.EventHandler(this.ShowFindMenu_Button_Click);
             // 
             // ShowReplaceMenu_Button
             // 
             this.ShowReplaceMenu_Button.Name = "ShowReplaceMenu_Button";
             this.ShowReplaceMenu_Button.Size = new System.Drawing.Size(201, 22);
             this.ShowReplaceMenu_Button.Text = "Replace            (Ctrl + H)";
+            this.ShowReplaceMenu_Button.Click += new System.EventHandler(this.ShowReplaceMenu_Button_Click);
             // 
             // FindSubtask_Button
             // 
@@ -358,7 +360,7 @@
             this.Option1_CB.UseVisualStyleBackColor = true;
             this.Option1_CB.CheckedChanged += new System.EventHandler(this.Option1_CB_CheckedChanged);
             // 
-            // JsonEditor_UserControl
+            // JsonEditor_Instance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -371,7 +373,7 @@
             this.Controls.Add(this.JsonToolstrip);
             this.Controls.Add(this.Editor_TextBox);
             this.Controls.Add(this.tB_line);
-            this.Name = "JsonEditor_UserControl";
+            this.Name = "JsonEditor_Instance";
             this.Size = new System.Drawing.Size(754, 337);
             this.Resize += new System.EventHandler(this.JsonEditor_UserControl_Resize);
             this.JsonToolstrip.ResumeLayout(false);

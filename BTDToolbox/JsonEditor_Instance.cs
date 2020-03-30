@@ -102,28 +102,35 @@ namespace BTDToolbox
         {
             if (jsonError)
             {
-                string error = JSON_Reader.GetJSON_Error(Editor_TextBox.Text);
-                ConsoleHandler.force_appendNotice(error);
-                //Line number
-                string[] split = error.Split(',');
-                string[] line = split[split.Length - 2].Split(' ');
-                int lineNumber = Int32.Parse(line[line.Length - 1].Replace(".", "").Replace(",", ""));
+                try
+                {
+                    string error = JSON_Reader.GetJSON_Error(Editor_TextBox.Text);
+                    ConsoleHandler.force_appendNotice(error);
+                    //Line number
+                    string[] split = error.Split(',');
+                    string[] line = split[split.Length - 2].Split(' ');
+                    int lineNumber = Int32.Parse(line[line.Length - 1].Replace(".", "").Replace(",", ""));
 
-                //Position in line
-                string[] pos = split[split.Length - 1].Split(' ');
-                int linePos = Int32.Parse(pos[pos.Length - 1].Replace(".", "").Replace(",", ""));
+                    //Position in line
+                    string[] pos = split[split.Length - 1].Split(' ');
+                    int linePos = Int32.Parse(pos[pos.Length - 1].Replace(".", "").Replace(",", ""));
 
-                //Scroll to the line above error
-                int index = Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 3) + linePos;
-                Editor_TextBox.Select(index, 1);
-                Editor_TextBox.ScrollToCaret();
+                    //Scroll to the line above error
+                    int index = Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 3) + linePos;
+                    Editor_TextBox.Select(index, 1);
+                    Editor_TextBox.ScrollToCaret();
 
-                int numChars = (Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 1)) - (Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 2));
+                    int numChars = (Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 1)) - (Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 2));
 
-                //highlight line with error
-                index = Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 2) + linePos;
-                Editor_TextBox.Focus();
-                Editor_TextBox.Select(index, numChars-2);                
+                    //highlight line with error
+                    index = Editor_TextBox.GetFirstCharIndexFromLine(lineNumber - 2) + linePos;
+                    Editor_TextBox.Focus();
+                    Editor_TextBox.Select(index, numChars - 2);
+                }           
+                catch
+                {
+                    ConsoleHandler.appendLog_CanRepeat("Something went wrong... Unable to find the bad json");
+                }
             }
         }
         private void CloseFile_Button_Click(object sender, EventArgs e)
@@ -622,10 +629,18 @@ namespace BTDToolbox
             }
             if (e.Control && e.KeyCode == Keys.F)
             {
+                if (Find_Panel.Visible == false && Editor_TextBox.SelectedText.Length > 0)
+                {
+                    Find_TB.Text = Editor_TextBox.SelectedText;
+                }
                 ShowSearchMenu("find");
             }
             if (e.Control && e.KeyCode == Keys.H)
             {
+                if (Find_Panel.Visible == false && Editor_TextBox.SelectedText.Length > 0)
+                {
+                    Find_TB.Text = Editor_TextBox.SelectedText;
+                }
                 ShowSearchMenu("replace");
             }
         }
@@ -683,6 +698,35 @@ namespace BTDToolbox
                     selMenu.Show(Editor_TextBox, e.Location);
                 }
             }
+        }
+
+        private void ShowFindMenu_Button_Click(object sender, EventArgs e)
+        {
+            if (Find_Panel.Visible == false)
+            {
+                if(Find_Panel.Visible == false && Editor_TextBox.SelectedText.Length > 0)
+                {
+                    Find_TB.Text = Editor_TextBox.SelectedText;
+                }
+                    ShowSearchMenu("find");
+            }
+            else if (Find_Panel.Visible && Find_TB.Text.Length > 0)
+                FindText();
+
+        }
+
+        private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
+        {
+            if (Find_Panel.Visible == false)
+            {
+                if (Find_Panel.Visible == false && Editor_TextBox.SelectedText.Length > 0)
+                {
+                    Find_TB.Text = Editor_TextBox.SelectedText;
+                }
+                ShowSearchMenu("replace");
+            }
+            else if (Find_Panel.Visible && Find_TB.Text.Length > 0 && Replace_TB.Text.Length > 0)
+                ReplaceText();
         }
     }
 }

@@ -195,6 +195,8 @@ namespace BTDToolbox
         }
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (New_JsonEditor.isJsonError)
+                MessageBox.Show("One or more of your files has a JSON error! If you dont fix it your mod wont work and it will crash your game");
             Application.Exit();
         }
 
