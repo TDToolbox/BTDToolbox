@@ -58,6 +58,7 @@
             this.spriteEditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolboxSpriteDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.getBTDBPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -113,7 +114,6 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.toolboxSpriteDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -364,6 +364,12 @@
             this.spriteAnimationVisualizerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.spriteAnimationVisualizerToolStripMenuItem.Text = "Sprite/Animation Visualizer";
             this.spriteAnimationVisualizerToolStripMenuItem.Visible = false;
+            // 
+            // toolboxSpriteDecompilerToolStripMenuItem
+            // 
+            this.toolboxSpriteDecompilerToolStripMenuItem.Name = "toolboxSpriteDecompilerToolStripMenuItem";
+            this.toolboxSpriteDecompilerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.toolboxSpriteDecompilerToolStripMenuItem.Text = "Toolbox Sprite Decompiler";
             // 
             // toolStripSeparator7
             // 
@@ -759,21 +765,21 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // TestForm
             // 
             this.TestForm.Name = "TestForm";
-            this.TestForm.Size = new System.Drawing.Size(180, 22);
+            this.TestForm.Size = new System.Drawing.Size(148, 22);
             this.TestForm.Text = "JSON Editor";
             this.TestForm.Click += new System.EventHandler(this.TestForm_Click);
             // 
             // testingToolStripMenuItem
             // 
             this.testingToolStripMenuItem.Name = "testingToolStripMenuItem";
-            this.testingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.testingToolStripMenuItem.Text = "Testing";
             this.testingToolStripMenuItem.Click += new System.EventHandler(this.TestingToolStripMenuItem_Click);
             // 
@@ -789,12 +795,6 @@
             this.versionTag.Size = new System.Drawing.Size(98, 55);
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
-            // 
-            // toolboxSpriteDecompilerToolStripMenuItem
-            // 
-            this.toolboxSpriteDecompilerToolStripMenuItem.Name = "toolboxSpriteDecompilerToolStripMenuItem";
-            this.toolboxSpriteDecompilerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.toolboxSpriteDecompilerToolStripMenuItem.Text = "Toolbox Sprite Decompiler";
             // 
             // Main
             // 

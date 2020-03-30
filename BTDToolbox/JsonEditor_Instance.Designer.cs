@@ -58,10 +58,9 @@
             this.Option1_CB = new System.Windows.Forms.CheckBox();
             this.viewOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restoreFileToOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RestoreToOriginal_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.eZCardToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZCard_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -131,16 +130,15 @@
             this.ShowFindMenu_Button,
             this.ShowReplaceMenu_Button,
             this.FindSubtask_Button,
+            this.EZCard_Button,
+            this.EZBoon_Button,
+            this.EZTowerEditor_Button,
             this.toolStripSeparator3,
             this.ChangeFontSize_MenuItem,
             this.toolStripSeparator2,
             this.viewOriginalToolStripMenuItem,
             this.openInFileExplorerToolStripMenuItem,
-            this.restoreFileToOriginalToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.EZTowerEditor_Button,
-            this.EZBoon_Button,
-            this.eZCardToolToolStripMenuItem});
+            this.RestoreToOriginal_Button});
             this.File_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.File_DropDown.ForeColor = System.Drawing.Color.White;
             this.File_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("File_DropDown.Image")));
@@ -206,7 +204,7 @@
             // 
             this.EZTowerEditor_Button.Name = "EZTowerEditor_Button";
             this.EZTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
-            this.EZTowerEditor_Button.Text = "EZ Tower tool";
+            this.EZTowerEditor_Button.Text = "Open in EZ Tower tool";
             this.EZTowerEditor_Button.Visible = false;
             this.EZTowerEditor_Button.Click += new System.EventHandler(this.EZTowerEditor_Button_Click);
             // 
@@ -214,7 +212,8 @@
             // 
             this.EZBoon_Button.Name = "EZBoon_Button";
             this.EZBoon_Button.Size = new System.Drawing.Size(201, 22);
-            this.EZBoon_Button.Text = "EZ Bloon tool";
+            this.EZBoon_Button.Text = "Open in EZ Bloon tool";
+            this.EZBoon_Button.Visible = false;
             this.EZBoon_Button.Click += new System.EventHandler(this.EZBoon_Button_Click);
             // 
             // Help_DropDown
@@ -377,35 +376,34 @@
             this.viewOriginalToolStripMenuItem.Name = "viewOriginalToolStripMenuItem";
             this.viewOriginalToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.viewOriginalToolStripMenuItem.Text = "View Original";
+            this.viewOriginalToolStripMenuItem.Click += new System.EventHandler(this.ViewOriginalToolStripMenuItem_Click);
             // 
             // openInFileExplorerToolStripMenuItem
             // 
             this.openInFileExplorerToolStripMenuItem.Name = "openInFileExplorerToolStripMenuItem";
             this.openInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.openInFileExplorerToolStripMenuItem.Text = "Open in File Explorer";
+            this.openInFileExplorerToolStripMenuItem.Click += new System.EventHandler(this.OpenInFileExplorerToolStripMenuItem_Click);
             // 
-            // restoreFileToOriginalToolStripMenuItem
+            // RestoreToOriginal_Button
             // 
-            this.restoreFileToOriginalToolStripMenuItem.Name = "restoreFileToOriginalToolStripMenuItem";
-            this.restoreFileToOriginalToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.restoreFileToOriginalToolStripMenuItem.Text = "Restore File to Original";
+            this.RestoreToOriginal_Button.Name = "RestoreToOriginal_Button";
+            this.RestoreToOriginal_Button.Size = new System.Drawing.Size(201, 22);
+            this.RestoreToOriginal_Button.Text = "Restore File to Original";
+            this.RestoreToOriginal_Button.Click += new System.EventHandler(this.RestoreToOriginal_Button_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(198, 6);
             // 
-            // toolStripSeparator4
+            // EZCard_Button
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(198, 6);
-            // 
-            // eZCardToolToolStripMenuItem
-            // 
-            this.eZCardToolToolStripMenuItem.Name = "eZCardToolToolStripMenuItem";
-            this.eZCardToolToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.eZCardToolToolStripMenuItem.Text = "EZ Card tool";
-            this.eZCardToolToolStripMenuItem.Visible = false;
+            this.EZCard_Button.Name = "EZCard_Button";
+            this.EZCard_Button.Size = new System.Drawing.Size(201, 22);
+            this.EZCard_Button.Text = "Open in EZ Card tool";
+            this.EZCard_Button.Visible = false;
+            this.EZCard_Button.Click += new System.EventHandler(this.EZCard_Button_Click);
             // 
             // JsonEditor_Instance
             // 
@@ -464,8 +462,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem viewOriginalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openInFileExplorerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem restoreFileToOriginalToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem eZCardToolToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RestoreToOriginal_Button;
+        private System.Windows.Forms.ToolStripMenuItem EZCard_Button;
     }
 }

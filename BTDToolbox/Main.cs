@@ -199,7 +199,6 @@ namespace BTDToolbox
                 MessageBox.Show("One or more of your files has a JSON error! If you dont fix it your mod wont work and it will crash your game");
             Application.Exit();
         }
-
         private void Main_Shown(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Searching for existing projects...");

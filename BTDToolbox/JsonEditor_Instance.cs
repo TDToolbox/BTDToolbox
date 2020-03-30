@@ -11,6 +11,7 @@ using BTDToolbox.Classes;
 using System.IO;
 using BTDToolbox.Extra_Forms;
 using static BTDToolbox.ProjectConfig;
+using System.Diagnostics;
 
 namespace BTDToolbox
 {
@@ -20,6 +21,7 @@ namespace BTDToolbox
         ConfigFile programData;
         public bool jsonError;
         public string path = "";
+        public string filename = "";
 
         //Tab new line vars
         string tab;
@@ -186,6 +188,11 @@ namespace BTDToolbox
                 EZBoon_Button.Visible = true;
             else
                 EZBoon_Button.Visible = false;
+
+            if (path.Contains("BattleCardDefinitions"))
+                EZCard_Button.Visible = true;
+            else
+                EZCard_Button.Visible = false;
         }
 
         //
@@ -727,6 +734,59 @@ namespace BTDToolbox
             }
             else if (Find_Panel.Visible && Find_TB.Text.Length > 0 && Replace_TB.Text.Length > 0)
                 ReplaceText();
+        }
+
+        private void EZCard_Button_Click(object sender, EventArgs e)
+        {
+            if (JSON_Reader.IsValidJson(Editor_TextBox.Text))
+            {
+                var ezCard = new EZCard_Editor();
+                ezCard.path = path;
+                ezCard.Show();
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
+                this.Focus();
+            }
+        }
+
+        private void RestoreToOriginal_Button_Click(object sender, EventArgs e)
+        {
+            string backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace("\\" + Serializer.Deserialize_Config().LastProject + "\\", "");
+            if (File.Exists(backupProj))
+            {
+                if (!filename.Contains("_original"))
+                {
+                    if (path.Contains("."))
+                    {
+                        if (File.Exists(path))
+                        {
+                            JsonEditorHandler.CloseFile(path);
+                            File.Delete(path);
+                        }
+                        File.Copy(backupProj, path);
+                        JsonEditorHandler.OpenFile(path);
+                        ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
+                    }
+                }
+            }
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("Could not find file in backup project... Unable to restore file");
+            }
+        }
+
+        private void OpenInFileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] split = path.Split('\\');
+            string foldername = path.Replace(split[split.Length - 1], "");
+            Process.Start(foldername);
+        }
+
+        private void ViewOriginalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JsonEditorHandler.OpenOriginalFile(path);
         }
     }
 }

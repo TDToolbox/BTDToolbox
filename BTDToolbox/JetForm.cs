@@ -149,6 +149,7 @@ namespace BTDToolbox
             selMenu.Items.Add("Rename");
             selMenu.Items.Add("Delete");
             selMenu.Items.Add("Copy");
+            selMenu.Items.Add("View original");
             selMenu.Items.Add("Restore original");
             selMenu.Items.Add("Open in File Explorer");
 
@@ -161,6 +162,7 @@ namespace BTDToolbox
             multiSelMenu.Items.Add("Open Files");
             multiSelMenu.Items.Add("Delete");
             multiSelMenu.Items.Add("Copy");
+            multiSelMenu.Items.Add("View original");
             multiSelMenu.Items.Add("Restore original");
             multiSelMenu.ItemClicked += multiJsonContextClicked;
         }
@@ -352,7 +354,7 @@ namespace BTDToolbox
                         {
                             int i = 0;
                             bool ezBloonExists = false;
-                            foreach(var item in selMenu.Items)
+                            foreach (var item in selMenu.Items)
                             {
                                 if (item.ToString() == "Open with EZ Bloon Tool")
                                 {
@@ -364,7 +366,7 @@ namespace BTDToolbox
                                 }
                                 i++;
                             }
-                            if(!ezBloonExists)
+                            if (!ezBloonExists)
                             {
                                 selMenu.Items.Add("Open with EZ Bloon Tool");
                             }
@@ -372,7 +374,7 @@ namespace BTDToolbox
                         else
                         {
                             int i = 0;
-                            foreach(var item in selMenu.Items)
+                            foreach (var item in selMenu.Items)
                             {
                                 if (item.ToString() == "Open with EZ Bloon Tool")
                                 {
@@ -410,6 +412,40 @@ namespace BTDToolbox
                             foreach (var item in selMenu.Items)
                             {
                                 if (item.ToString() == "Open with EZ Tower Tool")
+                                {
+                                    selMenu.Items[i].Visible = false;
+                                }
+                                i++;
+                            }
+                        }
+                        //Handle cards
+                        if (this.Text.Contains("BattleCardDefinitions"))
+                        {
+                            int i = 0;
+                            bool ezCardExists = false;
+                            foreach (var item in selMenu.Items)
+                            {
+                                if (item.ToString() == "Open with EZ Card Tool")
+                                {
+                                    ezCardExists = true;
+                                    if (selMenu.Items[i].Visible == false)
+                                    {
+                                        selMenu.Items[i].Visible = true;
+                                    }
+                                }
+                                i++;
+                            }
+                            if (!ezCardExists)
+                            {
+                                selMenu.Items.Add("Open with EZ Card Tool");
+                            }
+                        }
+                        else
+                        {
+                            int i = 0;
+                            foreach (var item in selMenu.Items)
+                            {
+                                if (item.ToString() == "Open with EZ Card Tool")
                                 {
                                     selMenu.Items[i].Visible = false;
                                 }
@@ -490,67 +526,50 @@ namespace BTDToolbox
                 {
                 }
             }
+            if (e.ClickedItem.Text == "View original")
+            {
+                JsonEditorHandler.OpenOriginalFile(this.Text + "\\" + listView1.SelectedItems[0].Text);
+            }
             if (e.ClickedItem.Text == "Restore original")
             {
-                try
+                DialogResult diag = MessageBox.Show("Are you sure you want to restore this file to the original unmodded version?", "Restore to original?", MessageBoxButtons.YesNo);
+                if (diag == DialogResult.Yes)
                 {
                     restoreOriginal();
                 }
-                catch (Exception)
-                {
-                }
+                else
+                    ConsoleHandler.appendLog_CanRepeat("restore cancelled...");
             }
             if (e.ClickedItem.Text == "Open with EZ Bloon Tool")
             {
-                try
-                {
-                    Open_EZBloon();
-                }
-                catch (Exception)
-                {
-                }
+                Open_EZBloon();
             }
             if (e.ClickedItem.Text == "Open with EZ Tower Tool")
             {
-                try
-                {
-                    Open_EZTower();
-                }
-                catch (Exception)
-                {
-                }
+                Open_EZTower();
+            }
+            if (e.ClickedItem.Text == "Open with EZ Card Tool")
+            {
+                Open_EZCard();
             }
             if (e.ClickedItem.Text == "Open in File Explorer")
             {
-                try
+                if (!listView1.SelectedItems[0].Text.Contains("."))
                 {
-                    if(!listView1.SelectedItems[0].Text.Contains("."))
-                    {
-                        Process.Start(this.Text + "\\" + listView1.SelectedItems[0].Text);
-                    }
-                    else
-                    {
-                        Process.Start(this.Text);
-                    }
+                    Process.Start(this.Text + "\\" + listView1.SelectedItems[0].Text);
                 }
-                catch (Exception)
+                else
                 {
+                    Process.Start(this.Text);
                 }
             }
         }
         private void treeContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            try
+            if (e.ClickedItem.Text == "Open in File Explorer")
             {
-                if (e.ClickedItem.Text == "Open in File Explorer")
-                {
-                    ConsoleHandler.appendLog("Opening folder in File Explorer..");
-                    Process.Start(this.Text);
-                }
-            }
-            catch
-            {
-
+                ConsoleHandler.appendLog("Opening folder in File Explorer..");
+                Process.Start(this.Text);
             }
         }
         private void listContextClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -580,43 +599,34 @@ namespace BTDToolbox
         {
             if (e.ClickedItem.Text == "Open Files")
             {
-                try
-                {
-                    OpenFile();
-                }
-                catch (Exception)
-                {
-                }
+                OpenFile();
             }
             if (e.ClickedItem.Text == "Delete")
             {
-                try
-                {
-                    delete();
-                }
-                catch (Exception)
-                {
-                }
+                delete();
             }
             if (e.ClickedItem.Text == "Copy")
             {
-                try
+                copy();
+            }
+            if (e.ClickedItem.Text == "View original")
+            {
+                int i = 0;
+                foreach(var a in listView1.SelectedItems)
                 {
-                    copy();
-                }
-                catch (Exception)
-                {
+                    JsonEditorHandler.OpenOriginalFile(this.Text + "\\" + listView1.SelectedItems[i].Text);
+                    i++;
                 }
             }
             if (e.ClickedItem.Text == "Restore original")
             {
-                try
+                DialogResult diag = MessageBox.Show("Are you sure you want to restore this file to the original unmodded version?", "Restore to original?", MessageBoxButtons.YesNo);
+                if (diag == DialogResult.Yes)
                 {
                     restoreOriginal();
                 }
-                catch (Exception)
-                {
-                }
+                else
+                    ConsoleHandler.appendLog_CanRepeat("restore cancelled...");
             }
         }
 
@@ -749,9 +759,11 @@ namespace BTDToolbox
                 {
                     if (File.Exists(filepath))
                     {
+                        JsonEditorHandler.CloseFile(filepath);
                         File.Delete(filepath);
                     }
                     File.Copy(Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + filepath.Replace(Environment.CurrentDirectory, "").Replace("\\" + projName + "\\", ""), this.Text + "\\" + listView1.SelectedItems[0].Text);
+                    JsonEditorHandler.OpenFile(filepath);
                     ConsoleHandler.appendLog_CanRepeat(listView1.SelectedItems[0].Text + "has been restored");
                 }
                 else
@@ -764,9 +776,11 @@ namespace BTDToolbox
 
                         if (File.Exists(a))
                         {
+                            JsonEditorHandler.CloseFile(filepath);
                             File.Delete(a);
                         }
                         File.Copy(sourcefile, a);
+                        JsonEditorHandler.OpenFile(filepath);
                         ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
                     }
                 }
@@ -783,17 +797,18 @@ namespace BTDToolbox
                     
                     if (File.Exists(destPath))
                     {
+                        JsonEditorHandler.CloseFile(destPath);
                         File.Delete(destPath);
                     }
                     File.Copy(sourcefile, destPath);
                     ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
                     i++;
                 }
-            }
-
-            if (Main.gameName == "BTD5")
-            {
-                
+                foreach (var a in listView1.SelectedItems)
+                {
+                    string destPath = this.Text + "\\" + listView1.SelectedItems[i].Text;
+                    JsonEditorHandler.OpenFile(destPath);
+                }
             }
         }
         private void Open_EZBloon()
@@ -811,6 +826,14 @@ namespace BTDToolbox
             string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + filename;
             ezTower.path = path;
             ezTower.Show();
+        }
+        private void Open_EZCard()
+        {
+            string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
+            var ezCard = new EZCard_Editor();
+            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + filename;
+            ezCard.path = path;
+            ezCard.Show();
         }
         private void SplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {

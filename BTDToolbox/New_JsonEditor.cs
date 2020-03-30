@@ -46,7 +46,7 @@ namespace BTDToolbox
         //
         public void NewTab(string path)
         {
-            if(path != "" && path != null)
+            if (path != "" && path != null)
             {
                 //handle user control stuff
                 Array.Resize(ref userControls, userControls.Length + 1);
@@ -61,18 +61,28 @@ namespace BTDToolbox
                 tabFilePaths[tabFilePaths.Length - 1] = path;
 
                 //create the tab and do required processing
+
                 string[] split = path.Split('\\');
                 string filename = split[split.Length - 1];
+                if (path.Contains("BackupProject"))
+                {
+                    filename = filename + "_original";
+                    userControls[userControls.Length - 1].Editor_TextBox.ReadOnly = true;
+                }
+
                 tabPages[tabPages.Length - 1].Text = filename;
                 tabPages[tabPages.Length - 1].Controls.Add(userControls[userControls.Length - 1]);
                 userControls[userControls.Length - 1].path = path;
+                userControls[userControls.Length - 1].filename = filename;
 
                 AddText(path);
+
                 this.tabControl1.TabPages.Add(tabPages[tabPages.Length - 1]);
 
                 OpenTab(path);
                 ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
                 userControls[userControls.Length - 1].FinishedLoading();
+
             }
             else
             {
@@ -247,7 +257,9 @@ namespace BTDToolbox
         }
         private void Close_button_Click(object sender, EventArgs e)
         {
-            if(JsonEditorHandler.AreJsonErrors())
+            Serializer.SaveConfig(this, "json editor", programData);
+            Serializer.SaveJSONEditor_Tabs(programData);
+            if (JsonEditorHandler.AreJsonErrors())
             {
                 //tabControl1.SelectedIndex = i;
                 DialogResult diag = MessageBox.Show(tabControl1.SelectedTab.Text + " has a Json Error! Your mod will break if you don't fix it.\nClose anyways?", "WARNING!!", MessageBoxButtons.YesNo);

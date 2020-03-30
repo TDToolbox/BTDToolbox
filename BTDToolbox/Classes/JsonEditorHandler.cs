@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -47,6 +49,20 @@ namespace BTDToolbox.Classes
                 {
                     jeditor.NewTab(path);
                 }
+            }
+        }
+        public static void OpenOriginalFile(string path)
+        {
+            string[] split = path.Split('\\');
+            string filename = split[split.Length - 1];
+            string backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory,"").Replace(Serializer.Deserialize_Config().LastProject + "\\", "");
+            if (File.Exists(backupProj))
+            {
+                OpenFile(backupProj);
+            }
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("Could not find file in backup project... Unable to view original file");
             }
         }
         public static void CloseFile(string path)
