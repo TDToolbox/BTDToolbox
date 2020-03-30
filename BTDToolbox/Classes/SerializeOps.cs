@@ -168,6 +168,9 @@ namespace BTDToolbox
                     programData.enableSplash = true;
                     programData.recentUpdate = false;
                     programData.useExternalEditor = false;
+                    programData.disableUpdates = false;
+
+                    programData.JsonEditor_OpenedTabs = new string[0];
 
 
                     programData.BTD5_Directory = "";
