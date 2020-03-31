@@ -605,8 +605,22 @@ namespace BTDToolbox
                                 if (diag == DialogResult.Yes)
                                 {
                                     isOutputting = true;
-                                    ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
-                                    dest = OutputJet();
+                                    string exPath = programData.ExportPath;
+                                    if (exPath != "" && exPath != null)
+                                    {
+                                        DialogResult diagz = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
+                                        if (diagz == DialogResult.Yes)
+                                            dest = exPath;
+                                        else
+                                            exPath = "";
+                                    }
+                                    if (exPath == "" || exPath == null)
+                                    {
+                                        ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                                        dest = OutputJet();
+                                        ZipForm.savedExportPath = dest;
+                                        Serializer.SaveSmallSettings("export path", Serializer.Deserialize_Config());
+                                    }
                                     zip.destPath = dest;
                                 }
                             }

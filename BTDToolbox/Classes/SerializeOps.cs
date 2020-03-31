@@ -179,6 +179,7 @@ namespace BTDToolbox
                     programData.JsonEditor_OpenedTabs = new List<string>();
 
                     programData.ExportPath = "";
+                    programData.battlesPass = "";
 
                     programData.BTD5_Directory = "";
                     programData.BTDB_Directory = "";
