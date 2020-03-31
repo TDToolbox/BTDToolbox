@@ -84,7 +84,6 @@ namespace BTDToolbox
         {
             string zipPath = Environment.CurrentDirectory + "\\" + toolbox_updater_zipName;
             string extractedFilePath = Environment.CurrentDirectory;
-
             ConsoleHandler.appendLog("Extracting updater...");
             ZipFile archive = new ZipFile(zipPath);
             foreach (ZipEntry e in archive)
