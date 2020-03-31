@@ -60,6 +60,31 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.name_column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.OneSelected_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ezTools_Seperator = new System.Windows.Forms.ToolStripSeparator();
+            this.ezTower_CMButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.ezBloon_CMButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.ezCard_CMButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewOriginal_CMButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.RestoreToOriginal_CMButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.NoneSelected_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MultiSelected_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewOriginalToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreToOriginalToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -71,6 +96,9 @@
             this.fileViewContainer.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.findPanel.SuspendLayout();
+            this.OneSelected_CM.SuspendLayout();
+            this.NoneSelected_CM.SuspendLayout();
+            this.MultiSelected_CM.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleSeperator
@@ -342,7 +370,6 @@
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.Size = new System.Drawing.Size(251, 380);
             this.treeView1.TabIndex = 0;
-            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeView_CheckHotkey);
             // 
             // lastSelectedLabel
             // 
@@ -407,6 +434,180 @@
             this.name_column.Text = "Name";
             this.name_column.Width = 517;
             // 
+            // OneSelected_CM
+            // 
+            this.OneSelected_CM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.toolStripSeparator6,
+            this.copyToolStripMenuItem,
+            this.renameToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.ezTools_Seperator,
+            this.ezTower_CMButton,
+            this.ezBloon_CMButton,
+            this.ezCard_CMButton,
+            this.toolStripSeparator4,
+            this.viewOriginal_CMButton,
+            this.RestoreToOriginal_CMButton});
+            this.OneSelected_CM.Name = "OneSelected_CM";
+            this.OneSelected_CM.Size = new System.Drawing.Size(184, 242);
+            this.OneSelected_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.OneSelected_CM_ItemClicked);
+            // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.openFileToolStripMenuItem.Text = "Open File";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(183, 22);
+            this.toolStripMenuItem4.Text = "Open in File Explorer";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(180, 6);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.renameToolStripMenuItem.Text = "Rename";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            // 
+            // ezTools_Seperator
+            // 
+            this.ezTools_Seperator.Name = "ezTools_Seperator";
+            this.ezTools_Seperator.Size = new System.Drawing.Size(180, 6);
+            // 
+            // ezTower_CMButton
+            // 
+            this.ezTower_CMButton.Name = "ezTower_CMButton";
+            this.ezTower_CMButton.Size = new System.Drawing.Size(183, 22);
+            this.ezTower_CMButton.Text = "Open with EZ Tower";
+            this.ezTower_CMButton.Visible = false;
+            // 
+            // ezBloon_CMButton
+            // 
+            this.ezBloon_CMButton.Name = "ezBloon_CMButton";
+            this.ezBloon_CMButton.Size = new System.Drawing.Size(183, 22);
+            this.ezBloon_CMButton.Text = "Open with EZ Bloon";
+            this.ezBloon_CMButton.Visible = false;
+            // 
+            // ezCard_CMButton
+            // 
+            this.ezCard_CMButton.Name = "ezCard_CMButton";
+            this.ezCard_CMButton.Size = new System.Drawing.Size(183, 22);
+            this.ezCard_CMButton.Text = "Open with EZ Card";
+            this.ezCard_CMButton.Visible = false;
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(180, 6);
+            // 
+            // viewOriginal_CMButton
+            // 
+            this.viewOriginal_CMButton.Name = "viewOriginal_CMButton";
+            this.viewOriginal_CMButton.Size = new System.Drawing.Size(183, 22);
+            this.viewOriginal_CMButton.Text = "View original";
+            // 
+            // RestoreToOriginal_CMButton
+            // 
+            this.RestoreToOriginal_CMButton.Name = "RestoreToOriginal_CMButton";
+            this.RestoreToOriginal_CMButton.Size = new System.Drawing.Size(183, 22);
+            this.RestoreToOriginal_CMButton.Text = "Restore to original";
+            // 
+            // NoneSelected_CM
+            // 
+            this.NoneSelected_CM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.selectAllToolStripMenuItem});
+            this.NoneSelected_CM.Name = "NoneSelected_CM";
+            this.NoneSelected_CM.Size = new System.Drawing.Size(121, 70);
+            this.NoneSelected_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.NoneSelected_CM_ItemClicked);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.selectAllToolStripMenuItem.Text = "Select all";
+            // 
+            // MultiSelected_CM
+            // 
+            this.MultiSelected_CM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFilesToolStripMenuItem,
+            this.copyToolStripMenuItem1,
+            this.deleteToolStripMenuItem1,
+            this.toolStripSeparator7,
+            this.viewOriginalToolStripMenuItem1,
+            this.restoreToOriginalToolStripMenuItem1});
+            this.MultiSelected_CM.Name = "MultiSelected_CM";
+            this.MultiSelected_CM.Size = new System.Drawing.Size(171, 120);
+            this.MultiSelected_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MultiSelected_CM_ItemClicked);
+            // 
+            // openFilesToolStripMenuItem
+            // 
+            this.openFilesToolStripMenuItem.Name = "openFilesToolStripMenuItem";
+            this.openFilesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.openFilesToolStripMenuItem.Text = "Open Files";
+            // 
+            // copyToolStripMenuItem1
+            // 
+            this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.copyToolStripMenuItem1.Text = "Copy";
+            // 
+            // deleteToolStripMenuItem1
+            // 
+            this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.deleteToolStripMenuItem1.Text = "Delete";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(167, 6);
+            // 
+            // viewOriginalToolStripMenuItem1
+            // 
+            this.viewOriginalToolStripMenuItem1.Name = "viewOriginalToolStripMenuItem1";
+            this.viewOriginalToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.viewOriginalToolStripMenuItem1.Text = "View original";
+            // 
+            // restoreToOriginalToolStripMenuItem1
+            // 
+            this.restoreToOriginalToolStripMenuItem1.Name = "restoreToOriginalToolStripMenuItem1";
+            this.restoreToOriginalToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.restoreToOriginalToolStripMenuItem1.Text = "Restore to original";
+            // 
             // JetForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -419,6 +620,7 @@
             this.Load += new System.EventHandler(this.JetForm_Load);
             this.Shown += new System.EventHandler(this.JetForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.JetForm_KeyDown);
+            this.Controls.SetChildIndex(this.titleSeperator, 0);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();
             this.titleSeperator.Panel2.ResumeLayout(false);
@@ -435,6 +637,9 @@
             this.toolStrip1.PerformLayout();
             this.findPanel.ResumeLayout(false);
             this.findPanel.PerformLayout();
+            this.OneSelected_CM.ResumeLayout(false);
+            this.NoneSelected_CM.ResumeLayout(false);
+            this.MultiSelected_CM.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -471,5 +676,30 @@
         private System.Windows.Forms.ToolStripMenuItem DeleteProject_Button;
         private System.Windows.Forms.ToolStripMenuItem ValidateAllFiles;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ContextMenuStrip OneSelected_CM;
+        private System.Windows.Forms.ContextMenuStrip NoneSelected_CM;
+        private System.Windows.Forms.ContextMenuStrip MultiSelected_CM;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator ezTools_Seperator;
+        private System.Windows.Forms.ToolStripMenuItem ezTower_CMButton;
+        private System.Windows.Forms.ToolStripMenuItem ezBloon_CMButton;
+        private System.Windows.Forms.ToolStripMenuItem ezCard_CMButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem viewOriginal_CMButton;
+        private System.Windows.Forms.ToolStripMenuItem RestoreToOriginal_CMButton;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem viewOriginalToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem restoreToOriginalToolStripMenuItem1;
     }
 }

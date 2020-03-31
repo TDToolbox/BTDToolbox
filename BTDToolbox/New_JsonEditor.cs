@@ -22,8 +22,8 @@ namespace BTDToolbox
         public static int JsonEditor_Height = 0;
         public static string selectedPath = "";
         public static bool isJsonError = false;
+        public static string readOnlyName = "_original (READ-ONLY)";
         public Point mouseClickPos;
-        private ContextMenuStrip selMenu;
 
         public List<TabPage> tabPages;
         public List<string> tabFilePaths;
@@ -33,7 +33,7 @@ namespace BTDToolbox
         public New_JsonEditor()
         {
             InitializeComponent();
-            initSelContextMenu();
+            //initSelContextMenu();
             tabControl1.MouseUp += Mouse_RightClick;
 
             this.MdiParent = Main.getInstance();
@@ -50,15 +50,6 @@ namespace BTDToolbox
         //
         //Open stuff
         //
-        private void initSelContextMenu()
-        {
-            selMenu = new ContextMenuStrip();
-            selMenu.Items.Add("Close");
-            selMenu.Items.Add("View original");
-            selMenu.Items.Add("Restore to original");
-            selMenu.Items.Add("Open in File Explorer");
-            selMenu.ItemClicked += ContextClicked;
-        }
         private void ContextClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             int i = GetTabUnderMouse(mouseClickPos.X, mouseClickPos.Y);
@@ -88,7 +79,7 @@ namespace BTDToolbox
             mouseClickPos = new Point(e.X, e.Y);
             if (e.Button == MouseButtons.Right)
             {
-                selMenu.Show(tabControl1, e.Location);
+                ContextMenu.Show(tabControl1, e.Location);
             }
             else if (e.Button == MouseButtons.Middle)
             {
@@ -111,7 +102,7 @@ namespace BTDToolbox
                 string filename = split[split.Length - 1];
                 if (path.Contains("BackupProject"))
                 {
-                    filename = filename + "_original";
+                    filename = filename + readOnlyName;
                     userControls[userControls.Count - 1].Editor_TextBox.ReadOnly = true;
                 }
 
@@ -248,11 +239,6 @@ namespace BTDToolbox
             paddedBounds.Offset(1, yOffset);
             //TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, page.ForeColor);
             TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, Color.White);
-        }
-
-        private void TabControl1_MouseMove(object sender, MouseEventArgs e)
-        {
-            
         }
     }
 }

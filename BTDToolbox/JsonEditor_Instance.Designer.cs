@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonEditor_Instance));
             this.Editor_TextBox = new System.Windows.Forms.RichTextBox();
             this.tB_line = new System.Windows.Forms.RichTextBox();
@@ -38,11 +39,16 @@
             this.ShowFindMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowReplaceMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.FindSubtask_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZCard_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ChangeFontSize_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontSize_TextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.EZTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RestoreToOriginal_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lintPanel = new System.Windows.Forms.Panel();
@@ -56,14 +62,22 @@
             this.Replace_TB = new System.Windows.Forms.RichTextBox();
             this.SearchOptions_Panel = new System.Windows.Forms.Panel();
             this.Option1_CB = new System.Windows.Forms.CheckBox();
-            this.viewOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.RestoreToOriginal_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.EZCard_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.NoItem_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemHighlighted_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.findSubtaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getCurrentSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findSubtaskToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.getThisSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
+            this.NoItem_CM.SuspendLayout();
+            this.ItemHighlighted_CM.SuspendLayout();
             this.SuspendLayout();
             // 
             // Editor_TextBox
@@ -179,6 +193,30 @@
             this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
             this.FindSubtask_Button.Text = "Find Subtask";
             // 
+            // EZCard_Button
+            // 
+            this.EZCard_Button.Name = "EZCard_Button";
+            this.EZCard_Button.Size = new System.Drawing.Size(201, 22);
+            this.EZCard_Button.Text = "Open in EZ Card tool";
+            this.EZCard_Button.Visible = false;
+            this.EZCard_Button.Click += new System.EventHandler(this.EZCard_Button_Click);
+            // 
+            // EZBoon_Button
+            // 
+            this.EZBoon_Button.Name = "EZBoon_Button";
+            this.EZBoon_Button.Size = new System.Drawing.Size(201, 22);
+            this.EZBoon_Button.Text = "Open in EZ Bloon tool";
+            this.EZBoon_Button.Visible = false;
+            this.EZBoon_Button.Click += new System.EventHandler(this.EZBoon_Button_Click);
+            // 
+            // EZTowerEditor_Button
+            // 
+            this.EZTowerEditor_Button.Name = "EZTowerEditor_Button";
+            this.EZTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
+            this.EZTowerEditor_Button.Text = "Open in EZ Tower tool";
+            this.EZTowerEditor_Button.Visible = false;
+            this.EZTowerEditor_Button.Click += new System.EventHandler(this.EZTowerEditor_Button_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -200,21 +238,31 @@
             this.FontSize_TextBox.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.FontSize_TextBox.TextChanged += new System.EventHandler(this.FontSize_TextBox_TextChanged);
             // 
-            // EZTowerEditor_Button
+            // toolStripSeparator2
             // 
-            this.EZTowerEditor_Button.Name = "EZTowerEditor_Button";
-            this.EZTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
-            this.EZTowerEditor_Button.Text = "Open in EZ Tower tool";
-            this.EZTowerEditor_Button.Visible = false;
-            this.EZTowerEditor_Button.Click += new System.EventHandler(this.EZTowerEditor_Button_Click);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(198, 6);
             // 
-            // EZBoon_Button
+            // viewOriginalToolStripMenuItem
             // 
-            this.EZBoon_Button.Name = "EZBoon_Button";
-            this.EZBoon_Button.Size = new System.Drawing.Size(201, 22);
-            this.EZBoon_Button.Text = "Open in EZ Bloon tool";
-            this.EZBoon_Button.Visible = false;
-            this.EZBoon_Button.Click += new System.EventHandler(this.EZBoon_Button_Click);
+            this.viewOriginalToolStripMenuItem.Name = "viewOriginalToolStripMenuItem";
+            this.viewOriginalToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.viewOriginalToolStripMenuItem.Text = "View Original";
+            this.viewOriginalToolStripMenuItem.Click += new System.EventHandler(this.ViewOriginalToolStripMenuItem_Click);
+            // 
+            // openInFileExplorerToolStripMenuItem
+            // 
+            this.openInFileExplorerToolStripMenuItem.Name = "openInFileExplorerToolStripMenuItem";
+            this.openInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.openInFileExplorerToolStripMenuItem.Text = "Open in File Explorer";
+            this.openInFileExplorerToolStripMenuItem.Click += new System.EventHandler(this.OpenInFileExplorerToolStripMenuItem_Click);
+            // 
+            // RestoreToOriginal_Button
+            // 
+            this.RestoreToOriginal_Button.Name = "RestoreToOriginal_Button";
+            this.RestoreToOriginal_Button.Size = new System.Drawing.Size(201, 22);
+            this.RestoreToOriginal_Button.Text = "Restore File to Original";
+            this.RestoreToOriginal_Button.Click += new System.EventHandler(this.RestoreToOriginal_Button_Click);
             // 
             // Help_DropDown
             // 
@@ -371,39 +419,82 @@
             this.Option1_CB.UseVisualStyleBackColor = true;
             this.Option1_CB.CheckedChanged += new System.EventHandler(this.Option1_CB_CheckedChanged);
             // 
-            // viewOriginalToolStripMenuItem
+            // NoItem_CM
             // 
-            this.viewOriginalToolStripMenuItem.Name = "viewOriginalToolStripMenuItem";
-            this.viewOriginalToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.viewOriginalToolStripMenuItem.Text = "View Original";
-            this.viewOriginalToolStripMenuItem.Click += new System.EventHandler(this.ViewOriginalToolStripMenuItem_Click);
+            this.NoItem_CM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testToolStripMenuItem,
+            this.findSubtaskToolStripMenuItem,
+            this.getCurrentSubtaskNumberToolStripMenuItem});
+            this.NoItem_CM.Name = "NoItem_CM";
+            this.NoItem_CM.Size = new System.Drawing.Size(203, 70);
+            this.NoItem_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.NoItem_CM_ItemClicked);
             // 
-            // openInFileExplorerToolStripMenuItem
+            // testToolStripMenuItem
             // 
-            this.openInFileExplorerToolStripMenuItem.Name = "openInFileExplorerToolStripMenuItem";
-            this.openInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.openInFileExplorerToolStripMenuItem.Text = "Open in File Explorer";
-            this.openInFileExplorerToolStripMenuItem.Click += new System.EventHandler(this.OpenInFileExplorerToolStripMenuItem_Click);
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.testToolStripMenuItem.Text = "Paste";
             // 
-            // RestoreToOriginal_Button
+            // ItemHighlighted_CM
             // 
-            this.RestoreToOriginal_Button.Name = "RestoreToOriginal_Button";
-            this.RestoreToOriginal_Button.Size = new System.Drawing.Size(201, 22);
-            this.RestoreToOriginal_Button.Text = "Restore File to Original";
-            this.RestoreToOriginal_Button.Click += new System.EventHandler(this.RestoreToOriginal_Button_Click);
+            this.ItemHighlighted_CM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.findToolStripMenuItem,
+            this.replaceToolStripMenuItem,
+            this.findSubtaskToolStripMenuItem1,
+            this.getThisSubtaskNumberToolStripMenuItem});
+            this.ItemHighlighted_CM.Name = "ItemHighlighted_CM";
+            this.ItemHighlighted_CM.Size = new System.Drawing.Size(203, 158);
+            this.ItemHighlighted_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ItemHighlighted_CM_ItemClicked);
             // 
-            // toolStripSeparator2
+            // findSubtaskToolStripMenuItem
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(198, 6);
+            this.findSubtaskToolStripMenuItem.Name = "findSubtaskToolStripMenuItem";
+            this.findSubtaskToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.findSubtaskToolStripMenuItem.Text = "Find Subtask";
             // 
-            // EZCard_Button
+            // getCurrentSubtaskNumberToolStripMenuItem
             // 
-            this.EZCard_Button.Name = "EZCard_Button";
-            this.EZCard_Button.Size = new System.Drawing.Size(201, 22);
-            this.EZCard_Button.Text = "Open in EZ Card tool";
-            this.EZCard_Button.Visible = false;
-            this.EZCard_Button.Click += new System.EventHandler(this.EZCard_Button_Click);
+            this.getCurrentSubtaskNumberToolStripMenuItem.Name = "getCurrentSubtaskNumberToolStripMenuItem";
+            this.getCurrentSubtaskNumberToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.getCurrentSubtaskNumberToolStripMenuItem.Text = "Get this subtask number";
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            // 
+            // findToolStripMenuItem
+            // 
+            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.findToolStripMenuItem.Text = "Find";
+            // 
+            // replaceToolStripMenuItem
+            // 
+            this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.replaceToolStripMenuItem.Text = "Replace";
+            // 
+            // findSubtaskToolStripMenuItem1
+            // 
+            this.findSubtaskToolStripMenuItem1.Name = "findSubtaskToolStripMenuItem1";
+            this.findSubtaskToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
+            this.findSubtaskToolStripMenuItem1.Text = "Find Subtask";
+            // 
+            // getThisSubtaskNumberToolStripMenuItem
+            // 
+            this.getThisSubtaskNumberToolStripMenuItem.Name = "getThisSubtaskNumberToolStripMenuItem";
+            this.getThisSubtaskNumberToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.getThisSubtaskNumberToolStripMenuItem.Text = "Get this subtask number";
             // 
             // JsonEditor_Instance
             // 
@@ -426,6 +517,8 @@
             this.Find_Panel.ResumeLayout(false);
             this.SearchOptions_Panel.ResumeLayout(false);
             this.SearchOptions_Panel.PerformLayout();
+            this.NoItem_CM.ResumeLayout(false);
+            this.ItemHighlighted_CM.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,5 +557,16 @@
         private System.Windows.Forms.ToolStripMenuItem openInFileExplorerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestoreToOriginal_Button;
         private System.Windows.Forms.ToolStripMenuItem EZCard_Button;
+        private System.Windows.Forms.ContextMenuStrip NoItem_CM;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip ItemHighlighted_CM;
+        private System.Windows.Forms.ToolStripMenuItem findSubtaskToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem getCurrentSubtaskNumberToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findSubtaskToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem getThisSubtaskNumberToolStripMenuItem;
     }
 }

@@ -46,11 +46,16 @@ namespace BTDToolbox.Classes
         public static void OpenOriginalFile(string path)
         {
             string[] split = path.Split('\\');
+            string filename = split[split.Length - 1];
             string backupProj = "";
             if (!path.Contains("\\Backups\\" + Main.gameName + "_BackupProject\\"))
                 backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace(Serializer.Deserialize_Config().LastProject + "\\", "");
             else
+            {
                 backupProj = path;
+                if(jeditor.tabControl1.SelectedTab.Text == filename + New_JsonEditor.readOnlyName)
+                    ConsoleHandler.appendNotice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
+            }
             
             if (File.Exists(backupProj))
                 OpenFile(backupProj);

@@ -28,12 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreToOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.ContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleSeperator
@@ -70,7 +77,41 @@
             this.tabControl1.TabIndex = 0;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl1_DrawItem);
             this.tabControl1.SizeChanged += new System.EventHandler(this.TabControl1_SizeChanged);
-            this.tabControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TabControl1_MouseMove);
+            // 
+            // ContextMenu
+            // 
+            this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeToolStripMenuItem,
+            this.viewOriginalToolStripMenuItem,
+            this.restoreToOriginalToolStripMenuItem,
+            this.openInFileExplorerToolStripMenuItem});
+            this.ContextMenu.Name = "ContextMenu";
+            this.ContextMenu.Size = new System.Drawing.Size(184, 114);
+            this.ContextMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ContextClicked);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            // 
+            // viewOriginalToolStripMenuItem
+            // 
+            this.viewOriginalToolStripMenuItem.Name = "viewOriginalToolStripMenuItem";
+            this.viewOriginalToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.viewOriginalToolStripMenuItem.Text = "View original";
+            // 
+            // restoreToOriginalToolStripMenuItem
+            // 
+            this.restoreToOriginalToolStripMenuItem.Name = "restoreToOriginalToolStripMenuItem";
+            this.restoreToOriginalToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.restoreToOriginalToolStripMenuItem.Text = "Restore to original";
+            // 
+            // openInFileExplorerToolStripMenuItem
+            // 
+            this.openInFileExplorerToolStripMenuItem.Name = "openInFileExplorerToolStripMenuItem";
+            this.openInFileExplorerToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.openInFileExplorerToolStripMenuItem.Text = "Open in File Explorer";
             // 
             // New_JsonEditor
             // 
@@ -84,17 +125,24 @@
             this.Text = "New_JsonEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.New_JsonEditor_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.New_JsonEditor_KeyDown);
+            this.Controls.SetChildIndex(this.titleSeperator, 0);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();
             this.titleSeperator.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
+            this.ContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
         public System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ContextMenuStrip ContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewOriginalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restoreToOriginalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openInFileExplorerToolStripMenuItem;
     }
 }
