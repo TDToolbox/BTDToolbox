@@ -556,10 +556,11 @@ namespace BTDToolbox
                     gameNameTemp = Serializer.Deserialize_Config().CurrentGame;
                 else if (Main.gameName != "" && Main.gameName != null)
                 {
+                    gameNameTemp = Main.gameName;
                     Serializer.SaveConfig(Main.getInstance(), "main", Serializer.Deserialize_Config());
                 }
                 
-                if(gameNameTemp != "" && Main.gameName != null)
+                if(gameNameTemp != "" && gameNameTemp != null)
                 {
                     if (Main.gameName == "BTD5")
                         gameDir = Serializer.Deserialize_Config().BTD5_Directory;
@@ -570,6 +571,7 @@ namespace BTDToolbox
                     {
                         string dest = "";
                         bool isOutputting = false;
+                        bool abort = false;
 
                         var zip = new ZipForm();
 
@@ -600,47 +602,62 @@ namespace BTDToolbox
                                 zip.launch = true;
                             else
                             {
-                                ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to just save your jet file instead?");
-                                DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to just save your jet file instead?", "Game Dir not found", MessageBoxButtons.YesNo);
+                                ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?");
+                                DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?", "Browse for game?", MessageBoxButtons.YesNoCancel);
                                 if (diag == DialogResult.Yes)
                                 {
-                                    isOutputting = true;
-                                    string exPath = programData.ExportPath;
-                                    if (exPath != "" && exPath != null)
-                                    {
-                                        DialogResult diagz = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
-                                        if (diagz == DialogResult.Yes)
-                                            dest = exPath;
-                                        else
-                                            exPath = "";
-                                    }
-                                    if (exPath == "" || exPath == null)
-                                    {
-                                        ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
-                                        dest = OutputJet();
-                                        ZipForm.savedExportPath = dest;
-                                        Serializer.SaveSmallSettings("export path", Serializer.Deserialize_Config());
-                                    }
-                                    zip.destPath = dest;
+                                    browseForExe(gameNameTemp);
                                 }
+                                if (diag == DialogResult.No)
+                                {
+                                    DialogResult diag2 = MessageBox.Show("Do you want to just save your jet file instead?", "Save jet instead?", MessageBoxButtons.YesNo);
+                                    {
+                                        if (diag2 == DialogResult.Yes)
+                                        {
+                                            isOutputting = true;
+                                            string exPath = programData.ExportPath;
+                                            if (exPath != "" && exPath != null)
+                                            {
+                                                DialogResult diagz = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
+                                                if (diagz == DialogResult.Yes)
+                                                    dest = exPath;
+                                                else
+                                                    exPath = "";
+                                            }
+                                            if (exPath == "" || exPath == null)
+                                            {
+                                                ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                                                dest = OutputJet();
+                                                ZipForm.savedExportPath = dest;
+                                                Serializer.SaveSmallSettings("export path", Serializer.Deserialize_Config());
+                                            }
+                                            zip.destPath = dest;
+                                        }
+                                    }
+                                }
+                                else
+                                    abort = true;
                             }
                         }
-                        if (isOutputting)
+                        if(!abort)
                         {
-                            if (dest != null && dest != "")
+                            if (isOutputting)
+                            {
+                                if (dest != null && dest != "")
+                                {
+                                    zip.Show();
+                                    zip.Compile();
+                                }
+                                else
+                                {
+                                    ConsoleHandler.appendLog("Export cancelled...");
+                                }
+                            }
+                            else
                             {
                                 zip.Show();
                                 zip.Compile();
                             }
-                            else
-                            {
-                                ConsoleHandler.appendLog("Export cancelled...");
-                            }
-                        }
-                        else
-                        {
-                            zip.Show();
-                            zip.Compile();
                         }
                     }
                     else

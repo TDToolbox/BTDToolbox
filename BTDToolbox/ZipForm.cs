@@ -25,6 +25,7 @@ namespace BTDToolbox
 
         //Config variables
         ConfigFile programData;
+        string jetName = "";
         public string gameDir;
         public string gameName;
         public string steamJetPath;
@@ -58,7 +59,6 @@ namespace BTDToolbox
         {
             programData = DeserializeConfig();
             string std = DeserializeConfig().CurrentGame;
-            string jetName = "";
 
             if (std == "BTDB")
             {
@@ -295,7 +295,7 @@ namespace BTDToolbox
             bool cont = true;
             if(launch)
             {
-                if (gameDir == null && gameDir == "")
+                if (gameDir == null || gameDir == "")
                 {
                     cont = false;
                     this.Invoke(new Action(() => this.Close()));
@@ -312,38 +312,49 @@ namespace BTDToolbox
                 else
                     dir = destPath;
 
-                if (DeserializeConfig().LastProject == null)
-                    Serializer.SaveConfig(jf, "jet explorer", programData);
-
-                DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
-                if (Directory.Exists(projDir.ToString()))
+                if (dir != "\\Assets\\" + jetName)
                 {
-                    ConsoleHandler.appendLog("Compiling jet...");
-                    int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
-                    int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
-                    totalFiles = numFiles + numFolders;
-                    filesTransfered = 0;
+                    if (DeserializeConfig().LastProject == null)
+                        Serializer.SaveConfig(jf, "jet explorer", programData);
 
-                    ZipFile toExport = new ZipFile();
-
-                    toExport.Password = password;
-                    toExport.AddProgress += ZipCompileProgress;
-                    toExport.AddDirectory(projDir.FullName);
-                    toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
-                    toExport.Name = dir;
-                    toExport.CompressionLevel = CompressionLevel.Level6;
-                    toExport.Save();
-                    toExport.Dispose();
-
-                    /*if (isExporting == true)
+                    DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
+                    if (Directory.Exists(projDir.ToString()))
                     {
-                        savedExportPath = destPath;
-                        Serializer.SaveSmallSettings("export path", programData);
-                    }*/
-                    ConsoleHandler.appendLog("Jet was successfully exported to: " + destPath);
+                        ConsoleHandler.appendLog("Compiling jet...");
+                        int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
+                        int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
+                        totalFiles = numFiles + numFolders;
+                        filesTransfered = 0;
 
-                    if (launch == true)
-                        LaunchGame(gameName);
+                        ZipFile toExport = new ZipFile();
+                        MessageBox.Show(dir);
+                        toExport.Password = password;
+                        toExport.AddProgress += ZipCompileProgress;
+                        toExport.AddDirectory(projDir.FullName);
+                        toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
+                        toExport.Name = dir;
+                        toExport.CompressionLevel = CompressionLevel.Level6;
+                        toExport.Save();
+                        toExport.Dispose();
+
+                        ConsoleHandler.appendLog("Jet was successfully exported to: " + dir);
+
+                        if (launch == true)
+                            LaunchGame(gameName);
+                        try
+                        {
+                            this.Invoke(new Action(() => this.Close()));
+                        }
+                        catch (Exception ex)
+                        {
+                            PrintError(ex.Message);
+                        }
+                        backgroundThread.Abort();
+                    }
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Something went wrong with the export. The export path might have been invalid, or it might have been cancelled...");
                     try
                     {
                         this.Invoke(new Action(() => this.Close()));
