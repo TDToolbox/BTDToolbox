@@ -24,7 +24,7 @@ namespace BTDToolbox
             InitializeComponent();
             this.AcceptButton = CreateProject_Button;
 
-            if (savedPass == null)
+            if (savedPass == "" || savedPass == null)
                 UseLastPass_CB.Visible = false;
             else
                 UseLastPass_CB.Visible = true;
