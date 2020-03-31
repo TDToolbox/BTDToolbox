@@ -59,6 +59,7 @@ namespace BTDToolbox
         public void onThemedLoad(object sender, EventArgs e)
         {
             titleSeperator.SplitterDistance = 25;
+            CheckInBounds();
         }
         private void CheckInBounds()
         {

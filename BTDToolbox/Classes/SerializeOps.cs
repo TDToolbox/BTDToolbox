@@ -20,6 +20,10 @@ namespace BTDToolbox
         {
             var cfg = Serializer.Deserialize_Config();
 
+            if (formName == "export path")
+            {
+                cfg.ExportPath = ZipForm.savedExportPath;
+            }
             if (formName == "updater")
             {
                 cfg.recentUpdate = UpdateChangelog.recentUpdate;
@@ -174,6 +178,8 @@ namespace BTDToolbox
 
                     programData.JsonEditor_OpenedTabs = new List<string>();
 
+                    programData.ExportPath = "";
+                    programData.battlesPass = "";
 
                     programData.BTD5_Directory = "";
                     programData.BTDB_Directory = "";
