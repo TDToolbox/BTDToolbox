@@ -1,5 +1,5 @@
 # BTD Toolbox
-a fully featured .jet editor
+a fully featured mod maker and .jet editor for BTD5 and BTD Battles
 
 ![Toolbox logo](https://media.discordapp.net/attachments/231001909442379776/620116877515161611/ReadmeBanner.png)
 
