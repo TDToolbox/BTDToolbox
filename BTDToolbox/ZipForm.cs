@@ -327,7 +327,6 @@ namespace BTDToolbox
                         filesTransfered = 0;
 
                         ZipFile toExport = new ZipFile();
-                        MessageBox.Show(dir);
                         toExport.Password = password;
                         toExport.AddProgress += ZipCompileProgress;
                         toExport.AddDirectory(projDir.FullName);
