@@ -421,13 +421,15 @@ namespace BTDToolbox.Extra_Forms
                 RankToUnlockUpgrade_TextBox.Text = upgradeRanks[Upgrades_ListBox.SelectedIndex].ToString();
                 XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
 
-                if(game == "BTD5")
+                if (game == "BTD5")
                 {
                     if (File.Exists(loc_Path))
                         UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
                 }
-                else
+                else if (game != "" && game != null)
                     UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
+                else
+                    ConsoleHandler.force_appendNotice("Something went wrong and your current game was not detected. Please reload BTD Toolbox, otherwise you may encounter errors");
 
             }
         }

@@ -21,6 +21,7 @@ namespace BTDToolbox
         public int filesTransfered = 0;
         public static string rememberedPassword = "";
         public static string existingJetFile = "";
+        public static string savedExportPath = "";
 
         //Config variables
         ConfigFile programData;
@@ -40,6 +41,7 @@ namespace BTDToolbox
         public string projName { get; set; }
         public string password { get; set; }
         public bool launch { get; set; }
+        public bool isExporting { get; set; }
 
         //Threads
         Thread backgroundThread;
@@ -257,6 +259,7 @@ namespace BTDToolbox
                     if (rememberedPassword != null && rememberedPassword != "")
                     {
                         password = rememberedPassword;
+                        Serializer.SaveSmallSettings("battlesPass", programData);
                     }
 
                     if (password == null || password.Length <= 0)
@@ -331,6 +334,12 @@ namespace BTDToolbox
                     toExport.CompressionLevel = CompressionLevel.Level6;
                     toExport.Save();
                     toExport.Dispose();
+
+                    /*if (isExporting == true)
+                    {
+                        savedExportPath = destPath;
+                        Serializer.SaveSmallSettings("export path", programData);
+                    }*/
                     ConsoleHandler.appendLog("Jet was successfully exported to: " + destPath);
 
                     if (launch == true)
