@@ -318,6 +318,37 @@ namespace BTDToolbox
                 ConsoleHandler.appendLog("Unable to create backup for " + game + ".");
             }
         }
+        public static void SteamValidateBTD5()
+        {
+            Process.Start("steam://validate/306020");
+        }
+        public static void SteamValidateBTDB()
+        {
+            Process.Start("steam://validate/444640");
+        }
+        public static void BackupLOC(string game)
+        {
+            string backupDir = Environment.CurrentDirectory + "\\Backups";
+            string backupLocName = game + "_Original_LOC.xml";
+
+            if (!Directory.Exists(backupDir))
+            {
+                ConsoleHandler.appendLog("Backup directory does not exist. Creating directory...");
+                Directory.CreateDirectory(backupDir);
+            }
+
+            string gameDir = "";
+            if (game == "BTD5")
+                gameDir = DeserializeConfig().BTD5_Directory;
+            else
+                gameDir = DeserializeConfig().BTDB_Directory;
+
+            string steamJetPath = GetJetPath(game);
+            if (steamJetPath != null)
+                CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
+            else
+                ConsoleHandler.appendLog("Unable to create backup for " + game + ".");
+        }
         public static void RestoreGame_ToBackup(string game)
         {
             string gameDir = "";
@@ -516,8 +547,14 @@ namespace BTDToolbox
         }
         public static void CompileJet(string switchCase)
         {
-            if (JsonEditor.jsonError != true)
+            if (New_JsonEditor.isJsonError != true)
             {
+                string gameDir = "";
+                if(Main.gameName == "BTD5")
+                    gameDir = Serializer.Deserialize_Config().BTD5_Directory;
+                else
+                    gameDir = Serializer.Deserialize_Config().BTDB_Directory;
+
                 if (JetProps.get().Count == 1)
                 {
                     string dest = "";
@@ -532,9 +569,22 @@ namespace BTDToolbox
                         dest = OutputJet();
                         zip.destPath = dest;
                     }
-                    if (switchCase.Contains("launch"))
+                    else if (switchCase.Contains("launch"))
                     {
-                        zip.launch = true;
+                        if (gameDir != null && gameDir != "")
+                            zip.launch = true;
+                        else
+                        {
+                            ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to just save your jet file instead?");
+                            DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to just save your jet file instead?", "Game Dir not found", MessageBoxButtons.YesNo);
+                            if (diag == DialogResult.Yes)
+                            {
+                                isOutputting = true;
+                                ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                                dest = OutputJet();
+                                zip.destPath = dest;
+                            }
+                        }
                     }
                     if (isOutputting)
                     {

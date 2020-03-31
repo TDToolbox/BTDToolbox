@@ -18,16 +18,21 @@ namespace BTDToolbox
         public string destPath { get; set; }
         public bool isExtracting { get; set; }
         public bool launch { get; set; }
-
+        string savedPass = Serializer.Deserialize_Config().battlesPass;
         public Get_BTDB_Password()
         {
             InitializeComponent();
             this.AcceptButton = CreateProject_Button;
+
+            if (savedPass == null)
+                UseLastPass_CB.Visible = false;
+            else
+                UseLastPass_CB.Visible = true;
+
             if (rememberPass == true)
                 Dont_Ask_Again_Checkbox.Checked = true;
             else
                 Dont_Ask_Again_Checkbox.Checked = false;
-
         }
         public void GetPass()
         {
@@ -74,6 +79,20 @@ namespace BTDToolbox
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
             GetPass();
+        }
+
+        private void UseLastPass_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (UseLastPass_CB.Checked)
+            {
+                Password_TextBox.Text = savedPass;
+                Password_TextBox.ReadOnly = true;
+            }
+            else
+            {
+                Password_TextBox.Text = "";
+                Password_TextBox.ReadOnly = false;
+            }
         }
     }
 }

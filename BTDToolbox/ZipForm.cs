@@ -289,7 +289,19 @@ namespace BTDToolbox
         }
         private void Compile_OnThread()
         {
-            if (gameDir != null && gameDir != "")
+            bool cont = true;
+            if(launch)
+            {
+                if (gameDir == null && gameDir == "")
+                {
+                    cont = false;
+                    this.Invoke(new Action(() => this.Close()));
+                    ConsoleHandler.appendLog("There was an issue reading your game directory. Go to the \"Help\" tab at the top, browse for your game again, and then try again...");
+                    backgroundThread.Abort();
+                }
+            }
+            
+            if (cont)
             {
                 string dir = "";
                 if (destPath == null || destPath == "")
@@ -298,13 +310,11 @@ namespace BTDToolbox
                     dir = destPath;
 
                 if (DeserializeConfig().LastProject == null)
-                {
                     Serializer.SaveConfig(jf, "jet explorer", programData);
-                }
+
                 DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
                 if (Directory.Exists(projDir.ToString()))
                 {
-
                     ConsoleHandler.appendLog("Compiling jet...");
                     int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
                     int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
@@ -321,12 +331,10 @@ namespace BTDToolbox
                     toExport.CompressionLevel = CompressionLevel.Level6;
                     toExport.Save();
                     toExport.Dispose();
-                    ConsoleHandler.appendLog("Jet was successfully exported to: " + projDir.FullName);
+                    ConsoleHandler.appendLog("Jet was successfully exported to: " + destPath);
 
                     if (launch == true)
-                    {
                         LaunchGame(gameName);
-                    }
                     try
                     {
                         this.Invoke(new Action(() => this.Close()));
@@ -338,13 +346,6 @@ namespace BTDToolbox
                     backgroundThread.Abort();
                 }
             }
-            else
-            {
-                this.Invoke(new Action(() => this.Close()));
-                ConsoleHandler.appendLog("There was an issue reading your game directory. Go to the \"Help\" tab at the top, browse for your game again, and then try again...");
-                backgroundThread.Abort();
-            }
-            
         }
         private void ExtractJet_Window_Load(object sender, EventArgs e)
         {

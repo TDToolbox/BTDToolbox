@@ -34,6 +34,7 @@
             this.Password_TextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.Dont_Ask_Again_Checkbox = new System.Windows.Forms.CheckBox();
+            this.UseLastPass_CB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,12 +102,26 @@
             this.Dont_Ask_Again_Checkbox.Text = "Don\'t ask me again";
             this.Dont_Ask_Again_Checkbox.UseVisualStyleBackColor = true;
             // 
+            // UseLastPass_CB
+            // 
+            this.UseLastPass_CB.AutoSize = true;
+            this.UseLastPass_CB.Font = new System.Drawing.Font("Yu Gothic UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UseLastPass_CB.ForeColor = System.Drawing.Color.Snow;
+            this.UseLastPass_CB.Location = new System.Drawing.Point(257, 158);
+            this.UseLastPass_CB.Name = "UseLastPass_CB";
+            this.UseLastPass_CB.Size = new System.Drawing.Size(140, 21);
+            this.UseLastPass_CB.TabIndex = 15;
+            this.UseLastPass_CB.Text = "Use last password?";
+            this.UseLastPass_CB.UseVisualStyleBackColor = true;
+            this.UseLastPass_CB.CheckedChanged += new System.EventHandler(this.UseLastPass_CB_CheckedChanged);
+            // 
             // Get_BTDB_Password
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(409, 191);
+            this.Controls.Add(this.UseLastPass_CB);
             this.Controls.Add(this.Dont_Ask_Again_Checkbox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.CreateProject_Button);
@@ -133,5 +148,6 @@
         private System.Windows.Forms.TextBox Password_TextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox Dont_Ask_Again_Checkbox;
+        private System.Windows.Forms.CheckBox UseLastPass_CB;
     }
 }

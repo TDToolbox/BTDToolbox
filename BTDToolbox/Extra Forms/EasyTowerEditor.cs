@@ -35,7 +35,7 @@ namespace BTDToolbox.Extra_Forms
         string[] loc_upgradeDescs = new string[] { };
 
         string game = Serializer.Deserialize_Config().CurrentGame;
-
+        string gameDir = "";
         string[] loc_Text = new string[] { };
         string loc_Path = "";
         string loc_towerName = "";
@@ -199,7 +199,31 @@ namespace BTDToolbox.Extra_Forms
                         TowerDesc_TextBox.Text = loc_towerDesc;
                     }
                 }
-                ReadLoc();
+                if(game == "BTD5")
+                {
+                    if(File.Exists(loc_Path))
+                        ReadLoc();
+                    else
+                    {
+                        if(Serializer.Deserialize_Config().BTD5_Directory == null || Serializer.Deserialize_Config().BTD5_Directory == "")
+                        {
+                            ConsoleHandler.force_appendNotice("You haven't browsed for your BTD5 Game so you will not be able to edit the tower and upgrade descriptions");
+                            this.Focus();
+                        }
+                        else
+                        {
+                            ConsoleHandler.force_appendNotice("Unable to find your LOC file...");
+                            DialogResult diag = MessageBox.Show("Unable to find BTD5's LOC file. Do you want toolbox to make Steam validate BTD5 so it can reaquire it? If you have any mods applied to btd5 steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
+                            if (diag == DialogResult.Yes)
+                                GeneralMethods.SteamValidateBTD5();
+                            else
+                            {
+                                ConsoleHandler.force_appendNotice("Valdation cancelled. You will not be able to mod the tower or upgrade descriptions...");
+                                this.Focus();
+                            }
+                        }
+                    }
+                }
 
                 if (upgradenames != null)
                 {
@@ -397,7 +421,14 @@ namespace BTDToolbox.Extra_Forms
                 RankToUnlockUpgrade_TextBox.Text = upgradeRanks[Upgrades_ListBox.SelectedIndex].ToString();
                 XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
 
-                UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
+                if(game == "BTD5")
+                {
+                    if (File.Exists(loc_Path))
+                        UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
+                }
+                else
+                    UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
+
             }
         }
         private void ResetUI()
@@ -601,7 +632,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void ReadLoc()
         {
-            if (Serializer.Deserialize_Config().CurrentGame == "BTD5")
+            if(File.Exists(loc_Path))
             {
                 loc_Text = File.ReadAllLines(loc_Path);
                 string towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
@@ -669,6 +700,10 @@ namespace BTDToolbox.Extra_Forms
                     }
                 }
             }
+            else
+            {
+                    
+            }
         }
 
 
@@ -722,7 +757,8 @@ namespace BTDToolbox.Extra_Forms
         private void Save_Button_Click(object sender, EventArgs e)
         {
             SaveFile();
-            SaveLoc();
+            if (File.Exists(loc_Path))
+                SaveLoc();
             ConsoleHandler.appendLog_CanRepeat("Saved " + AllTowerFiles_ComboBox.SelectedItem.ToString());
         }
         private void UpgradeIcon_TextBox_TextChanged(object sender, EventArgs e)

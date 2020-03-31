@@ -709,12 +709,12 @@ namespace BTDToolbox
 
         private void ValidateBTD5_Click(object sender, EventArgs e)
         {
-            Process.Start("steam://validate/306020");
+            GeneralMethods.SteamValidateBTD5();
         }
 
         private void ValidateBTDB_Click(object sender, EventArgs e)
         {
-            Process.Start("steam://validate/444640");
+            GeneralMethods.SteamValidateBTDB();
         }
 
         private void FontForPCToolStripMenuItem_Click(object sender, EventArgs e)
