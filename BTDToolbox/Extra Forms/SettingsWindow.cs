@@ -28,6 +28,8 @@ namespace BTDToolbox
                 EnableSplash.CheckState = CheckState.Checked;
             if (projectData.useExternalEditor == true)
                 useExternalEditor.CheckState = CheckState.Checked;
+            if (projectData.disableUpdates == true)
+                DisableUpdates_CB.CheckState = CheckState.Checked;
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
@@ -48,11 +50,19 @@ namespace BTDToolbox
             {
                 Program.enableSplash = false;
             }
+            if (DisableUpdates_CB.Checked)
+            {
+                Main.disableUpdates = true;
+            }
+            else
+            {
+                Main.disableUpdates = false;
+            }
             Serializer.SaveSmallSettings("splash", projectData);
+            Serializer.SaveSmallSettings("disableUpdates", projectData);
             Serializer.SaveSmallSettings("external editor", projectData);
 
-
-            ConsoleHandler.appendLog("Settings saved!!!");
+            ConsoleHandler.appendLog_CanRepeat("Settings saved!!!");
         }
     }
 }

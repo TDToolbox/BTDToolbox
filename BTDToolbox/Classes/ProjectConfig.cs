@@ -15,6 +15,7 @@ namespace BTDToolbox
             public bool recentUpdate { get; set; }
             public bool useExternalEditor { get; set; }
             public string battlesPass { get; set; }
+            public bool disableUpdates { get; set; }
 
 
             //Project wide variables
@@ -60,6 +61,7 @@ namespace BTDToolbox
             public int JSON_Editor_PosX { get; set; }
             public int JSON_Editor_PosY { get; set; }
             public float JSON_Editor_FontSize { get; set; }
+            public List<string> JsonEditor_OpenedTabs { get; set; }
         }
     }
 }

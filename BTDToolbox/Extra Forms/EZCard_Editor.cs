@@ -416,8 +416,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (game == "BTDB")
             {
-                string gameDir = Serializer.Deserialize_Config().BTDB_Directory;
-                if (gameDir != null && gameDir != "")
+                if (Main.projName != "" && Main.projName != null)
                 {
                     Game_Label.Text = "BTDB";
                     string cardPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions";
@@ -455,7 +454,7 @@ namespace BTDToolbox.Extra_Forms
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("You're game directory has not been set! You need to set your game Dir before continuing. You can do this by clicking the \"Help\" tab at the top, then clicking on \"Browse for game\"");
+                    ConsoleHandler.force_appendNotice("You need to have a project opened to use this tool...");
                     this.Close();
                 }
             }
@@ -536,49 +535,29 @@ namespace BTDToolbox.Extra_Forms
         }
         private void OpenInText()
         {
-            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            string selectedCard = "";
+            if (openStarterCard == true)
+                selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
+
+            else if (openTower == true)
             {
-                string selectedCard = "";
-                if (openStarterCard == true)
-                {
-                    selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
-                }
-                else if (openTower == true)
-                {
-                    if(card.Tower.TowerType != null)
-                    {
-                        selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
-                    }
-                    else
-                    {
-                        ConsoleHandler.appendLog("This card doesn't have a specified tower type");
-                    }
-                }
-                else if (openBloon == true)
-                {
-                    if (card.Bloon.BloonType != null)
-                    {
-                        selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
-                    }
-                    else
-                    {
-                        ConsoleHandler.appendLog("This card doesn't have a specified bloon type");
-                    }
-                }
+                if (card.Tower.TowerType != null)
+                    selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
                 else
-                {
-                    selectedCard = path;
-                }
-                JsonEditor JsonWindow = new JsonEditor(selectedCard);
-                JsonWindow.MdiParent = Main.getInstance();
-                JsonWindow.Show();
-                this.Focus();
+                    ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+            }
+            else if (openBloon == true)
+            {
+                if (card.Bloon.BloonType != null)
+                    selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
+                else
+                    ConsoleHandler.appendLog("This card doesn't have a specified bloon type");
             }
             else
-            {
-                string selectedFile = path;
-                Process.Start(selectedFile);
-            }
+                selectedCard = path;
+
+            JsonEditorHandler.OpenFile(selectedCard);
+            this.Focus();
         }
         private void EZBloon_Editor_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -613,7 +592,7 @@ namespace BTDToolbox.Extra_Forms
             }
             Open_Panel.Visible = false;
         }
-        private void OpenInEZCard_Button_Click(object sender, EventArgs e)
+        private void OpenInEZCard_Button_Click(object sender, EventArgs e)  
         {
             if (StartingCards_LB.SelectedIndices.Count == 1)
             {

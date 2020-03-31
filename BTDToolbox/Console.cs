@@ -68,13 +68,20 @@ namespace BTDToolbox
         {
             WebHandler web = new WebHandler();
             string url = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/toolbox%20announcements";
-            string answer = web.WaitOn_URL(url);
-            output_log.SelectionColor = Color.OrangeRed;
+            try
+            {
+                string answer = web.WaitOn_URL(url);
+                output_log.SelectionColor = Color.OrangeRed;
 
-            if (answer.Length > 0 && answer != null)
-                appendLog("Announcement: " + answer);
-            else
-                appendLog("Failed to read announcement...");
+                if (answer.Length > 0 && answer != null)
+                    appendLog("Announcement: " + answer);
+                else
+                    appendLog("Failed to read announcement...");
+            }
+            catch
+            {
+                appendNotice("Something went wrong.. Failed to read announcements...");
+            }
         }
         public void appendNotice(string notice)
         {

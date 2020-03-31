@@ -34,6 +34,7 @@
             this.New_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.New_BTD5_Proj = new System.Windows.Forms.ToolStripMenuItem();
             this.New_BTDB_Proj = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.NewProject_From_Backup = new System.Windows.Forms.ToolStripMenuItem();
             this.btdpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,16 +47,6 @@
             this.Find_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Replace_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Launch_Program_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenJetExplorer = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.ShowBTD5_Pass = new System.Windows.Forms.ToolStripMenuItem();
-            this.ShowLastBattlesPass = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.bTD5DirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bTDBDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.NKHook_Github = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,11 +58,24 @@
             this.spriteEditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolboxSpriteDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.getBTDBPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.FlashReader = new System.Windows.Forms.ToolStripMenuItem();
             this.bTD5FlashMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenJetExplorer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.ShowBTD5_Pass = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowLastBattlesPass = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.bTD5DirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTDBDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.bTDBPasswordManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_Tools = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_TowerEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_BloonEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,8 +127,8 @@
             this.File_ToolStrip,
             this.viewToolStripMenuItem,
             this.Launch_Program_ToolStrip,
-            this.viewToolStripMenuItem1,
             this.toolStripMenuItem1,
+            this.viewToolStripMenuItem1,
             this.EZ_Tools,
             this.helpToolStripMenuItem,
             this.debugToolStripMenuItem});
@@ -152,6 +156,7 @@
             this.New_ToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.New_BTD5_Proj,
             this.New_BTDB_Proj,
+            this.toolStripSeparator8,
             this.NewProject_From_Backup,
             this.btdpToolStripMenuItem});
             this.New_ToolStrip.Name = "New_ToolStrip";
@@ -161,29 +166,35 @@
             // New_BTD5_Proj
             // 
             this.New_BTD5_Proj.Name = "New_BTD5_Proj";
-            this.New_BTD5_Proj.Size = new System.Drawing.Size(172, 22);
+            this.New_BTD5_Proj.Size = new System.Drawing.Size(220, 22);
             this.New_BTD5_Proj.Text = "BTD5 Project";
             this.New_BTD5_Proj.Click += new System.EventHandler(this.New_BTD5_Proj_Click);
             // 
             // New_BTDB_Proj
             // 
             this.New_BTDB_Proj.Name = "New_BTDB_Proj";
-            this.New_BTDB_Proj.Size = new System.Drawing.Size(172, 22);
+            this.New_BTDB_Proj.Size = new System.Drawing.Size(220, 22);
             this.New_BTDB_Proj.Text = "BTD Battles Project";
             this.New_BTDB_Proj.Click += new System.EventHandler(this.New_BTDB_Proj_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(217, 6);
             // 
             // NewProject_From_Backup
             // 
             this.NewProject_From_Backup.Name = "NewProject_From_Backup";
-            this.NewProject_From_Backup.Size = new System.Drawing.Size(172, 22);
-            this.NewProject_From_Backup.Text = "Project from .jet";
+            this.NewProject_From_Backup.Size = new System.Drawing.Size(220, 22);
+            this.NewProject_From_Backup.Text = "Project from .jet (No Game)";
             this.NewProject_From_Backup.Click += new System.EventHandler(this.NewProject_From_Backup_Click);
             // 
             // btdpToolStripMenuItem
             // 
             this.btdpToolStripMenuItem.Name = "btdpToolStripMenuItem";
-            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.btdpToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.btdpToolStripMenuItem.Text = "Project from .btdp";
+            this.btdpToolStripMenuItem.Visible = false;
             // 
             // openToolStripMenuItem1
             // 
@@ -415,7 +426,8 @@
             // 
             this.spriteEditingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.spriteSheetDecompilerToolStripMenuItem,
-            this.spriteAnimationVisualizerToolStripMenuItem});
+            this.spriteAnimationVisualizerToolStripMenuItem,
+            this.toolboxSpriteDecompilerToolStripMenuItem});
             this.spriteEditingToolStripMenuItem.Name = "spriteEditingToolStripMenuItem";
             this.spriteEditingToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.spriteEditingToolStripMenuItem.Text = "Sprite Editing";
@@ -433,6 +445,12 @@
             this.spriteAnimationVisualizerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.spriteAnimationVisualizerToolStripMenuItem.Text = "Sprite/Animation Visualizer";
             this.spriteAnimationVisualizerToolStripMenuItem.Visible = false;
+            // 
+            // toolboxSpriteDecompilerToolStripMenuItem
+            // 
+            this.toolboxSpriteDecompilerToolStripMenuItem.Name = "toolboxSpriteDecompilerToolStripMenuItem";
+            this.toolboxSpriteDecompilerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.toolboxSpriteDecompilerToolStripMenuItem.Text = "Toolbox Sprite Decompiler";
             // 
             // toolStripSeparator7
             // 
@@ -465,6 +483,96 @@
             this.bTD5FlashMapEditorToolStripMenuItem.Text = "BTD5 Flash Map Editor";
             this.bTD5FlashMapEditorToolStripMenuItem.Visible = false;
             // 
+            // viewToolStripMenuItem1
+            // 
+            this.viewToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToggleConsole,
+            this.OpenJetExplorer,
+            this.toolStripSeparator6,
+            this.ShowBTD5_Pass,
+            this.ShowLastBattlesPass,
+            this.toolStripSeparator5,
+            this.bTD5DirectoryToolStripMenuItem,
+            this.bTDBDirectoryToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.toolStripSeparator9,
+            this.bTDBPasswordManagerToolStripMenuItem});
+            this.viewToolStripMenuItem1.ForeColor = System.Drawing.Color.White;
+            this.viewToolStripMenuItem1.Name = "viewToolStripMenuItem1";
+            this.viewToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem1.Text = "View";
+            // 
+            // ToggleConsole
+            // 
+            this.ToggleConsole.Name = "ToggleConsole";
+            this.ToggleConsole.Size = new System.Drawing.Size(204, 22);
+            this.ToggleConsole.Text = "Console";
+            this.ToggleConsole.Click += new System.EventHandler(this.ToggleConsole_Click);
+            // 
+            // OpenJetExplorer
+            // 
+            this.OpenJetExplorer.Name = "OpenJetExplorer";
+            this.OpenJetExplorer.Size = new System.Drawing.Size(204, 22);
+            this.OpenJetExplorer.Text = "Jet Explorer";
+            this.OpenJetExplorer.Click += new System.EventHandler(this.OpenJetExplorer_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(201, 6);
+            // 
+            // ShowBTD5_Pass
+            // 
+            this.ShowBTD5_Pass.Name = "ShowBTD5_Pass";
+            this.ShowBTD5_Pass.Size = new System.Drawing.Size(204, 22);
+            this.ShowBTD5_Pass.Text = "BTD5 Password";
+            this.ShowBTD5_Pass.Click += new System.EventHandler(this.ShowBTD5_Pass_Click);
+            // 
+            // ShowLastBattlesPass
+            // 
+            this.ShowLastBattlesPass.Name = "ShowLastBattlesPass";
+            this.ShowLastBattlesPass.Size = new System.Drawing.Size(204, 22);
+            this.ShowLastBattlesPass.Text = "BTDB Password";
+            this.ShowLastBattlesPass.Click += new System.EventHandler(this.ShowLastBattlesPass_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(201, 6);
+            // 
+            // bTD5DirectoryToolStripMenuItem
+            // 
+            this.bTD5DirectoryToolStripMenuItem.Name = "bTD5DirectoryToolStripMenuItem";
+            this.bTD5DirectoryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.bTD5DirectoryToolStripMenuItem.Text = "BTD5 Directory";
+            this.bTD5DirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTD5DirectoryToolStripMenuItem_Click_1);
+            // 
+            // bTDBDirectoryToolStripMenuItem
+            // 
+            this.bTDBDirectoryToolStripMenuItem.Name = "bTDBDirectoryToolStripMenuItem";
+            this.bTDBDirectoryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.bTDBDirectoryToolStripMenuItem.Text = "BTDB Directory";
+            this.bTDBDirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTDBDirectoryToolStripMenuItem_Click_1);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItem4.Text = "Toolbox Directory";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(201, 6);
+            // 
+            // bTDBPasswordManagerToolStripMenuItem
+            // 
+            this.bTDBPasswordManagerToolStripMenuItem.Name = "bTDBPasswordManagerToolStripMenuItem";
+            this.bTDBPasswordManagerToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.bTDBPasswordManagerToolStripMenuItem.Text = "BTDB Password manager";
+            this.bTDBPasswordManagerToolStripMenuItem.Click += new System.EventHandler(this.BTDBPasswordManagerToolStripMenuItem_Click);
+            // 
             // EZ_Tools
             // 
             this.EZ_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -479,21 +587,21 @@
             // EZ_TowerEditor
             // 
             this.EZ_TowerEditor.Name = "EZ_TowerEditor";
-            this.EZ_TowerEditor.Size = new System.Drawing.Size(180, 22);
+            this.EZ_TowerEditor.Size = new System.Drawing.Size(155, 22);
             this.EZ_TowerEditor.Text = "EZ Tower editor";
             this.EZ_TowerEditor.Click += new System.EventHandler(this.EZ_TowerEditor_Click);
             // 
             // EZ_BloonEditor
             // 
             this.EZ_BloonEditor.Name = "EZ_BloonEditor";
-            this.EZ_BloonEditor.Size = new System.Drawing.Size(180, 22);
+            this.EZ_BloonEditor.Size = new System.Drawing.Size(155, 22);
             this.EZ_BloonEditor.Text = "EZ Bloon editor";
             this.EZ_BloonEditor.Click += new System.EventHandler(this.EZ_BloonEditor_Click);
             // 
             // EZCard_Editor
             // 
             this.EZCard_Editor.Name = "EZCard_Editor";
-            this.EZCard_Editor.Size = new System.Drawing.Size(180, 22);
+            this.EZCard_Editor.Size = new System.Drawing.Size(155, 22);
             this.EZCard_Editor.Text = "EZ Card editor";
             this.EZCard_Editor.Click += new System.EventHandler(this.EZCard_Editor_Click);
             // 
@@ -806,7 +914,6 @@
         private System.Windows.Forms.ToolStripMenuItem New_ToolStrip;
         private System.Windows.Forms.ToolStripMenuItem btdpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem Launch_Program_ToolStrip;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ToggleConsole;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -882,6 +989,11 @@
         private System.Windows.Forms.ToolStripMenuItem EZ_TowerEditor;
         private System.Windows.Forms.ToolStripMenuItem EZ_BloonEditor;
         private System.Windows.Forms.ToolStripMenuItem EZCard_Editor;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        public System.Windows.Forms.ToolStripMenuItem Launch_Program_ToolStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem bTDBPasswordManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolboxSpriteDecompilerToolStripMenuItem;
     }
 }
 

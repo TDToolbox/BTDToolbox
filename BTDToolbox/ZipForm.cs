@@ -71,7 +71,6 @@ namespace BTDToolbox
             }
             gameName = std;
             steamJetPath = gameDir + "\\Assets\\" + jetName;
-            ValidateEXE(gameName);
         }
         public void Extract()
         {
@@ -177,6 +176,36 @@ namespace BTDToolbox
                 archive.ExtractAll(destPath);
                 archive.Dispose();
 
+                if(!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
+                {
+                    string gamed = "";
+                    if(gameName == "BTD5")
+                        gamed = Serializer.Deserialize_Config().BTD5_Directory;
+                    else
+                        gamed = Serializer.Deserialize_Config().BTDB_Directory;
+
+                    //they should have a backup jet of gamed not invalid. create backup proj
+                    if(gamed != "" && gamed != null)
+                    {
+                        ConsoleHandler.force_appendNotice("Backup project not detected.... Creating one now..");
+                        Invoke((MethodInvoker)delegate {
+                            this.Focus();
+
+                            destPath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject";
+                            archive = new ZipFile(sourcePath);
+                            archive.Password = password;
+                            totalFiles = archive.Count();
+                            filesTransfered = 0;
+                            archive.ExtractProgress += ZipExtractProgress;
+                            archive.ExtractAll(destPath);
+                            archive.Dispose();
+                        });
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendNotice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
+                    }
+                }
                 ConsoleHandler.appendLog("Project files created at: " + projName);
                 Invoke((MethodInvoker)delegate {
                     jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);

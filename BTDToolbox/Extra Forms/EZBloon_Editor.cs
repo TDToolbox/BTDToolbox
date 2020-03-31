@@ -415,13 +415,8 @@ namespace BTDToolbox.Extra_Forms
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
             EZBloon_Opened = true;
-            string gameDir = "";
-            if (game == "BTD5")
-                gameDir = Serializer.Deserialize_Config().BTD5_Directory;
-            else
-                gameDir = Serializer.Deserialize_Config().BTDB_Directory;
 
-            if (gameDir != null && gameDir != "")
+            if(Main.projName != "" && Main.projName != null)
             {
                 string bloonPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions";
                 var bloonFiles = Directory.GetFiles(bloonPath);
@@ -470,7 +465,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.force_appendNotice("You're game directory has not been set! You need to set your game Dir before continuing. You can do this by clicking the \"Help\" tab at the top, then clicking on \"Browse for game\"");
+                ConsoleHandler.force_appendNotice("You need to have a project opened to use this tool...");
                 this.Close();
             }
         }
@@ -606,18 +601,8 @@ namespace BTDToolbox.Extra_Forms
 
         private void OpenText_Button_Click(object sender, EventArgs e)
         {
-            if (Serializer.Deserialize_Config().useExternalEditor == false)
-            {
-                JsonEditor JsonWindow = new JsonEditor(path);
-                JsonWindow.MdiParent = Main.getInstance();
-                JsonWindow.Show();
-                this.Focus();
-            }
-            else
-            {
-                string selectedFile = path;
-                Process.Start(selectedFile);
-            }
+            JsonEditorHandler.OpenFile(path);
+            this.Focus();
         }
 
         private void EZBloon_Editor_FormClosed(object sender, FormClosedEventArgs e)

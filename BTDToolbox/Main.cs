@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.Spritesheets;
 using BTDToolbox.Extra_Forms;
 using System;
 using System.Diagnostics;
@@ -16,7 +17,8 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.0.8";
+        public static string version = "Alpha 0.1.0";
+        public static bool disableUpdates = false;
         private static Main toolbox;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
@@ -36,6 +38,7 @@ namespace BTDToolbox
         public static string BTD5_Dir;
         public static string BTDB_Dir;
         public static bool enableConsole;
+        bool projNoGame = false;
 
         // Win32 Constants
         private const int SB_HORZ = 0;
@@ -89,11 +92,7 @@ namespace BTDToolbox
 
             enableConsole = cfgFile.EnableConsole;
             lastProject = cfgFile.LastProject;
-
-            if (lastProject != null)
-            {
-
-            }
+            disableUpdates = cfgFile.disableUpdates;
         }
         private void FirstTimeUse()
         {
@@ -141,9 +140,12 @@ namespace BTDToolbox
             if (programData.recentUpdate == true)
                 ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
 
-            ConsoleHandler.announcement();
-            var isUpdate = new UpdateHandler();
-            isUpdate.HandleUpdates();
+            if(!disableUpdates)
+            {
+                ConsoleHandler.announcement();
+                var isUpdate = new UpdateHandler();
+                isUpdate.HandleUpdates();
+            }
 
             foreach (Control con in Controls)
                 if (con is MdiClient)
@@ -193,9 +195,10 @@ namespace BTDToolbox
         }
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (New_JsonEditor.isJsonError)
+                MessageBox.Show("One or more of your files has a JSON error! If you dont fix it your mod wont work and it will crash your game");
             Application.Exit();
         }
-
         private void Main_Shown(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Searching for existing projects...");
@@ -384,19 +387,27 @@ namespace BTDToolbox
         }
         private void NewProject(string gameName)
         {
-            if (isGamePathValid(gameName) == false)
+            if (projNoGame == false)
             {
-                ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
-                browseForExe(gameName);
                 if (isGamePathValid(gameName) == false)
                 {
-                    ConsoleHandler.appendLog("Theres been an error identifying your game");
+                    ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
+                    browseForExe(gameName);
+                    if (isGamePathValid(gameName) == false)
+                    {
+                        ConsoleHandler.appendLog("Theres been an error identifying your game");
+                    }
+                    else
+                    {
+                        if (!Validate_Backup(gameName))
+                            CreateBackup(gameName);
+                        Serializer.SaveConfig(this, "directories", cfgFile);
+                        var setProjName = new SetProjectName();
+                        setProjName.Show();
+                    }
                 }
                 else
                 {
-                    if (!Validate_Backup(gameName))
-                        CreateBackup(gameName);
-                    Serializer.SaveConfig(this, "directories", cfgFile);
                     var setProjName = new SetProjectName();
                     setProjName.Show();
                 }
@@ -429,10 +440,7 @@ namespace BTDToolbox
         }
         private void TestForm_Click(object sender, EventArgs e)
         {
-            var splash = new SplashScreen();
-            splash.Show();
-            /*var editor = new JsonEditor(lastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
-            editor.Show();*/
+            JsonEditorHandler.OpenFile(Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
         }
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -505,16 +513,46 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSprites\\DartMonkey.json";
-            var spriteVisualizer = new SpriteVisualizer();
-            spriteVisualizer.path = path;
-            spriteVisualizer.Show();*/
-
-            var ezBloon = new EZBloon_Editor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
-            ezBloon.path = path;
-            ezBloon.Show();
-
+            string startDir = "";
+            if (gameName != "")
+            {
+                MessageBox.Show("Please select the sprite file you want to decompile");
+                if (gameName == "BTD5")
+                {
+                    if(Serializer.Deserialize_Config().BTD5_Directory != "")
+                    {
+                        startDir = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Textures";
+                    }
+                }
+                else
+                {
+                    if (Serializer.Deserialize_Config().BTDB_Directory != "")
+                    {
+                        startDir = Serializer.Deserialize_Config().BTDB_Directory + "\\Assets\\Textures";
+                    }
+                }
+            }
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = startDir;
+            ofd.Title = "Browse for sprite sheet";
+            ofd.Filter = "Image files (*.png, *.jpng, *.jpg, *.jpeg) | *.png; *.jpng; *.jpg; *.jpeg";
+            ofd.Multiselect = true;
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                if(ofd.FileName.EndsWith(".png") || ofd.FileName.EndsWith(".jpng") || ofd.FileName.EndsWith(".jpg") || ofd.FileName.EndsWith(".jpeg"))
+                {
+                    SpriteSheet_Handler handler = new SpriteSheet_Handler();
+                    Thread thread = new Thread(delegate () { handler.Extract(ofd.FileName, "Cell"); });
+                    thread.Start();
+                    
+                }
+                else
+                {
+                    MessageBox.Show("You selected an invalid filetype. Please contact the TD Toolbox team if you think we should add this to the list");
+                }
+            }
+            /*BattlesPassManager mgr = new BattlesPassManager();
+            mgr.Show();*/
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -730,6 +768,12 @@ namespace BTDToolbox
             {
                 ConsoleHandler.force_appendNotice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
             }
+        }
+
+        private void BTDBPasswordManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BattlesPassManager mgr = new BattlesPassManager();
+            mgr.Show();
         }
     }
 }

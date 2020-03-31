@@ -31,6 +31,7 @@
             this.EnableSplash = new System.Windows.Forms.CheckBox();
             this.Save_Button = new System.Windows.Forms.Button();
             this.useExternalEditor = new System.Windows.Forms.CheckBox();
+            this.DisableUpdates_CB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -48,6 +49,7 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.DisableUpdates_CB);
             this.contentPanel.Controls.Add(this.useExternalEditor);
             this.contentPanel.Controls.Add(this.Save_Button);
             this.contentPanel.Controls.Add(this.EnableSplash);
@@ -94,6 +96,18 @@
             this.useExternalEditor.Text = "Use External Text Editor";
             this.useExternalEditor.UseVisualStyleBackColor = true;
             // 
+            // DisableUpdates_CB
+            // 
+            this.DisableUpdates_CB.AutoSize = true;
+            this.DisableUpdates_CB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisableUpdates_CB.ForeColor = System.Drawing.Color.White;
+            this.DisableUpdates_CB.Location = new System.Drawing.Point(15, 82);
+            this.DisableUpdates_CB.Name = "DisableUpdates_CB";
+            this.DisableUpdates_CB.Size = new System.Drawing.Size(315, 24);
+            this.DisableUpdates_CB.TabIndex = 4;
+            this.DisableUpdates_CB.Text = "Disable updates (NOT RECOMMENDED)";
+            this.DisableUpdates_CB.UseVisualStyleBackColor = true;
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -117,5 +131,6 @@
         private System.Windows.Forms.CheckBox EnableSplash;
         private System.Windows.Forms.Button Save_Button;
         private System.Windows.Forms.CheckBox useExternalEditor;
+        private System.Windows.Forms.CheckBox DisableUpdates_CB;
     }
 }

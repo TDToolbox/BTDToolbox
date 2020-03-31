@@ -33,6 +33,14 @@ namespace BTDToolbox
                 int height = 0;
                 Label lbl = new Label();
                 lbl.Location = new Point(x, y);
+                if (line.StartsWith("#0"))
+                {
+                    text = line.Substring(2);
+                    size = 50;
+                    height = 15;
+                    x = 0;
+                    lbl.Location = new Point(x, y + 10);
+                }
                 if (line.StartsWith("#1"))
                 {
                     text = line.Substring(2);
@@ -40,6 +48,14 @@ namespace BTDToolbox
                     height = 10;
                     x = 0;
                     lbl.Location = new Point(x, y + 10);
+                }
+                if (line.StartsWith("#2"))
+                {
+                    text = line.Substring(2);
+                    size = 20;
+                    height = 10;
+                    x = 0;
+                    lbl.Location = new Point(x, y + 5);
                 }
                 if (line.StartsWith("#L"))
                 {
