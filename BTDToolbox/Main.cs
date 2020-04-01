@@ -20,6 +20,7 @@ namespace BTDToolbox
         public static string version = "Alpha 0.1.1";
         public static bool disableUpdates = false;
         private static Main toolbox;
+        public static BGForm bg;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
 
@@ -115,7 +116,7 @@ namespace BTDToolbox
         }
         private void Main_Load(object sender, EventArgs e)
         {
-            var bg = new BGForm();
+            bg = new BGForm();
             bg.MdiParent = this;
             bg.MouseClick += Bg_MouseClick;
             bg.Show();

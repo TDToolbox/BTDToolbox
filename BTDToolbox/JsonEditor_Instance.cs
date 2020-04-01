@@ -200,6 +200,10 @@ namespace BTDToolbox
         {
             string towerName = "";
             string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            if (!Directory.Exists(projPath + "TowerDefinitions"))
+            {
+                return towerName;
+            }
             foreach (var x in Directory.GetFiles(projPath + "TowerDefinitions"))
             {
                 string json = File.ReadAllText(x);
@@ -207,7 +211,7 @@ namespace BTDToolbox
                 {
                     Tower_Class.Artist t = new Tower_Class.Artist();
                     t = Tower_Class.Artist.FromJson(json);
-                    if(t != null)
+                    if (t != null)
                     {
                         if (t.SpriteUpgradeDefinition != null)
                         {

@@ -341,6 +341,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\bg 3_v2.png" />
+    <None Include="Resources\bg 3_no extra space_smaller 1.png" />
+    <None Include="Resources\bg 3_no extra space_smaller 4.png" />
+    <None Include="Resources\bg 3_no extra space_smaller 5.png" />
     <Content Include="Resources\JSON invalid_2.png" />
     <None Include="Resources\Welcome label.png" />
     <None Include="Resources\Splash1.png" />

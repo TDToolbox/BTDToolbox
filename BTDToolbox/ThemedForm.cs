@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Extra_Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,6 +40,7 @@ namespace BTDToolbox
         {
             InitializeComponent();
             this.DoubleBuffered = true;
+            Main.bg.SendToBack();
             //this.Dock = DockStyle.Fill;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -92,6 +94,7 @@ namespace BTDToolbox
         {
             if (!JsonEditorHandler.AreJsonErrors())
                 this.Close();
+            Main.bg.SendToBack();
         }
 
         //resizing event methods
