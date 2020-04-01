@@ -26,7 +26,9 @@ namespace BTDToolbox
         string file = "";
         string towerSpriteUpgradeDef = ""; //if user set custom tower sprite upgrade def
         string towerName = ""; //if user set custom tower sprite upgrade def, used to keep track of actual tower
-
+        string towerTypeName = "";
+        string specialty = "";
+        
         //Tab new line vars
         string tab;
         bool tabLine = false;
@@ -212,6 +214,7 @@ namespace BTDToolbox
                             if (t.SpriteUpgradeDefinition.Replace(".json", "") == file.Replace(".json", ""))
                             {
                                 towerName = x.Replace(projPath + "TowerDefinitions\\", "");
+                                towerTypeName = t.TypeName;
                                 break;
                             }
                         }
@@ -220,9 +223,42 @@ namespace BTDToolbox
             }
             return towerName;
         }
+        public string GetSpecialtyBuilding()
+        {
+            string specialtyBuilding = "";
+            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            
+            if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
+                return specialtyBuilding;
+            foreach (var x in Directory.GetFiles(projPath + "SpecialtyDefinitions"))
+            {
+                string json = File.ReadAllText(x);
+                if (JSON_Reader.IsValidJson(json))
+                {
+                    SpecialtyBuildingClass s = new SpecialtyBuildingClass();
+                    s = SpecialtyBuildingClass.FromJson(json);
+
+                    if (s != null)
+                    {
+                        
+                        if (s.RelatedTower != null)
+                        {
+                            //ConsoleHandler.appendLog_CanRepeat(s.RelatedTower);
+                            if (s.RelatedTower == towerTypeName)
+                            {
+                                specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
+                                towerTypeName = s.RelatedTower;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return specialtyBuilding;
+        }
         private void PopulateOpenButton()
         {
-            if (path.EndsWith("tower") || path.EndsWith("upgrades") || path.EndsWith("weapon") || path.Contains("TowerSpriteUpgradeDefinitions"))
+            if (path.EndsWith("tower") || path.EndsWith("upgrades") || path.EndsWith("weapon") || path.Contains("TowerSpriteUpgradeDefinitions") || path.Contains("SpecialtyDefinitions"))
             {
                 Open_Button.Visible = true;
                 Weapons_Button.DropDownItems.Clear();
@@ -235,14 +271,43 @@ namespace BTDToolbox
                     file = towerName.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
                 }
 
+                specialty = GetSpecialtyBuilding();
+                if (path.Contains("SpecialtyDefinitions"))
+                {
+                    string json = File.ReadAllText(path);
+                    if (JSON_Reader.IsValidJson(json))
+                    {
+                        SpecialtyBuildingClass s = new SpecialtyBuildingClass();
+                        s = SpecialtyBuildingClass.FromJson(json);
+                        towerTypeName = s.RelatedTower;
+                    }
+                    file = towerTypeName;
+                }
+
                 if (File.Exists(projPath + "TowerDefinitions\\" + file + ".tower"))
+                {
+                    TowerFile_Button.Visible = true;
                     TowerFile_Button.Text = file + ".tower";
+                }
                 else
                     TowerFile_Button.Visible = false;
+
                 if (File.Exists(projPath + "UpgradeDefinitions\\" + file + ".upgrades"))
                     UpgradeFIle_Button.Text = file + ".upgrades";
                 else
                     UpgradeFIle_Button.Visible = false;
+
+                if (!specialty.Contains(".json"))
+                    specialty = specialty + ".json";
+                if (specialty!= null && specialty != "")
+                {
+                    if (File.Exists(projPath + "SpecialtyDefinitions\\" + specialty))
+                        specialtyBuildingToolStripMenuItem.Visible = true;
+                    else
+                        specialtyBuildingToolStripMenuItem.Visible = false;
+                }
+                
+
                 if (Directory.Exists(projPath + "WeaponDefinitions\\" + file))
                 {
                     string weaponDir = projPath + "WeaponDefinitions\\" + file;
@@ -309,7 +374,6 @@ namespace BTDToolbox
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
-
         private void Weapons_Button_Click(object sender, ToolStripItemClickedEventArgs e)
         {
             string weaponfile = e.ClickedItem.Text.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
@@ -338,7 +402,12 @@ namespace BTDToolbox
             else
                 ConsoleHandler.appendLog("The TowerSpriteUpgradeDef  " + towerSpriteUpgradeDef + " was not found");
         }
-
+        private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+        }
         //
         //Add line numbers
         //

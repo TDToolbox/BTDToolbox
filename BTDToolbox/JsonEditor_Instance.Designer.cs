@@ -77,6 +77,7 @@
             this.UpgradeFIle_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Weapons_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.TowerSpriteUpgradeDef_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.specialtyBuildingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -276,6 +277,7 @@
             this.Weapons_Button,
             this.TowerFile_Button,
             this.UpgradeFIle_Button,
+            this.specialtyBuildingToolStripMenuItem,
             this.TowerSpriteUpgradeDef_Button});
             this.Open_Button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Open_Button.ForeColor = System.Drawing.Color.White;
@@ -533,6 +535,13 @@
             this.TowerSpriteUpgradeDef_Button.Text = "TowerSpriteUpgradeDef";
             this.TowerSpriteUpgradeDef_Button.Click += new System.EventHandler(this.TowerSpriteUpgradeDef_Button_Click);
             // 
+            // specialtyBuildingToolStripMenuItem
+            // 
+            this.specialtyBuildingToolStripMenuItem.Name = "specialtyBuildingToolStripMenuItem";
+            this.specialtyBuildingToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.specialtyBuildingToolStripMenuItem.Text = "Specialty Building";
+            this.specialtyBuildingToolStripMenuItem.Click += new System.EventHandler(this.SpecialtyBuildingToolStripMenuItem_Click);
+            // 
             // JsonEditor_Instance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -609,5 +618,6 @@
         private System.Windows.Forms.ToolStripMenuItem UpgradeFIle_Button;
         private System.Windows.Forms.ToolStripMenuItem Weapons_Button;
         private System.Windows.Forms.ToolStripMenuItem TowerSpriteUpgradeDef_Button;
+        private System.Windows.Forms.ToolStripMenuItem specialtyBuildingToolStripMenuItem;
     }
 }
