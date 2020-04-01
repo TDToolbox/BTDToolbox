@@ -49,7 +49,7 @@
             this.viewOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestoreToOriginal_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.Open_Button = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lintPanel = new System.Windows.Forms.Panel();
             this.CloseFile_Button = new System.Windows.Forms.Button();
@@ -64,15 +64,19 @@
             this.Option1_CB = new System.Windows.Forms.CheckBox();
             this.NoItem_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ItemHighlighted_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.findSubtaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getCurrentSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ItemHighlighted_CM = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findSubtaskToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.getThisSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TowerFile_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.UpgradeFIle_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.Weapons_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.TowerSpriteUpgradeDef_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -124,7 +128,7 @@
             this.JsonToolstrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.JsonToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.File_DropDown,
-            this.Help_DropDown,
+            this.Open_Button,
             this.toolStripSeparator1});
             this.JsonToolstrip.Location = new System.Drawing.Point(0, 0);
             this.JsonToolstrip.Name = "JsonToolstrip";
@@ -264,17 +268,23 @@
             this.RestoreToOriginal_Button.Text = "Restore File to Original";
             this.RestoreToOriginal_Button.Click += new System.EventHandler(this.RestoreToOriginal_Button_Click);
             // 
-            // Help_DropDown
+            // Open_Button
             // 
-            this.Help_DropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.Help_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.Help_DropDown.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Help_DropDown.ForeColor = System.Drawing.Color.White;
-            this.Help_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Help_DropDown.Image")));
-            this.Help_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Help_DropDown.Name = "Help_DropDown";
-            this.Help_DropDown.Size = new System.Drawing.Size(45, 20);
-            this.Help_DropDown.Text = "Help";
+            this.Open_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Open_Button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Open_Button.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Weapons_Button,
+            this.TowerFile_Button,
+            this.UpgradeFIle_Button,
+            this.TowerSpriteUpgradeDef_Button});
+            this.Open_Button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Open_Button.ForeColor = System.Drawing.Color.White;
+            this.Open_Button.Image = ((System.Drawing.Image)(resources.GetObject("Open_Button.Image")));
+            this.Open_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Open_Button.Name = "Open_Button";
+            this.Open_Button.Size = new System.Drawing.Size(49, 20);
+            this.Open_Button.Text = "Open";
+            this.Open_Button.Visible = false;
             // 
             // toolStripSeparator1
             // 
@@ -435,19 +445,6 @@
             this.testToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.testToolStripMenuItem.Text = "Paste";
             // 
-            // ItemHighlighted_CM
-            // 
-            this.ItemHighlighted_CM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem,
-            this.findToolStripMenuItem,
-            this.replaceToolStripMenuItem,
-            this.findSubtaskToolStripMenuItem1,
-            this.getThisSubtaskNumberToolStripMenuItem});
-            this.ItemHighlighted_CM.Name = "ItemHighlighted_CM";
-            this.ItemHighlighted_CM.Size = new System.Drawing.Size(203, 158);
-            this.ItemHighlighted_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ItemHighlighted_CM_ItemClicked);
-            // 
             // findSubtaskToolStripMenuItem
             // 
             this.findSubtaskToolStripMenuItem.Name = "findSubtaskToolStripMenuItem";
@@ -459,6 +456,19 @@
             this.getCurrentSubtaskNumberToolStripMenuItem.Name = "getCurrentSubtaskNumberToolStripMenuItem";
             this.getCurrentSubtaskNumberToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.getCurrentSubtaskNumberToolStripMenuItem.Text = "Get this subtask number";
+            // 
+            // ItemHighlighted_CM
+            // 
+            this.ItemHighlighted_CM.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.findToolStripMenuItem,
+            this.replaceToolStripMenuItem,
+            this.findSubtaskToolStripMenuItem1,
+            this.getThisSubtaskNumberToolStripMenuItem});
+            this.ItemHighlighted_CM.Name = "ItemHighlighted_CM";
+            this.ItemHighlighted_CM.Size = new System.Drawing.Size(203, 136);
+            this.ItemHighlighted_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ItemHighlighted_CM_ItemClicked);
             // 
             // copyToolStripMenuItem
             // 
@@ -495,6 +505,33 @@
             this.getThisSubtaskNumberToolStripMenuItem.Name = "getThisSubtaskNumberToolStripMenuItem";
             this.getThisSubtaskNumberToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.getThisSubtaskNumberToolStripMenuItem.Text = "Get this subtask number";
+            // 
+            // TowerFile_Button
+            // 
+            this.TowerFile_Button.Name = "TowerFile_Button";
+            this.TowerFile_Button.Size = new System.Drawing.Size(198, 22);
+            this.TowerFile_Button.Text = ".tower file";
+            this.TowerFile_Button.Click += new System.EventHandler(this.TowerFile_Button_Click);
+            // 
+            // UpgradeFIle_Button
+            // 
+            this.UpgradeFIle_Button.Name = "UpgradeFIle_Button";
+            this.UpgradeFIle_Button.Size = new System.Drawing.Size(198, 22);
+            this.UpgradeFIle_Button.Text = ".upgrade file";
+            this.UpgradeFIle_Button.Click += new System.EventHandler(this.UpgradeFIle_Button_Click);
+            // 
+            // Weapons_Button
+            // 
+            this.Weapons_Button.Name = "Weapons_Button";
+            this.Weapons_Button.Size = new System.Drawing.Size(198, 22);
+            this.Weapons_Button.Text = "Weapons";
+            // 
+            // TowerSpriteUpgradeDef_Button
+            // 
+            this.TowerSpriteUpgradeDef_Button.Name = "TowerSpriteUpgradeDef_Button";
+            this.TowerSpriteUpgradeDef_Button.Size = new System.Drawing.Size(198, 22);
+            this.TowerSpriteUpgradeDef_Button.Text = "TowerSpriteUpgradeDef";
+            this.TowerSpriteUpgradeDef_Button.Click += new System.EventHandler(this.TowerSpriteUpgradeDef_Button_Click);
             // 
             // JsonEditor_Instance
             // 
@@ -537,7 +574,7 @@
         private System.Windows.Forms.ToolStripTextBox FontSize_TextBox;
         private System.Windows.Forms.ToolStripMenuItem EZTowerEditor_Button;
         private System.Windows.Forms.ToolStripMenuItem EZBoon_Button;
-        private System.Windows.Forms.ToolStripDropDownButton Help_DropDown;
+        private System.Windows.Forms.ToolStripDropDownButton Open_Button;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Panel lintPanel;
         public System.Windows.Forms.RichTextBox Editor_TextBox;
@@ -568,5 +605,9 @@
         private System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findSubtaskToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem getThisSubtaskNumberToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TowerFile_Button;
+        private System.Windows.Forms.ToolStripMenuItem UpgradeFIle_Button;
+        private System.Windows.Forms.ToolStripMenuItem Weapons_Button;
+        private System.Windows.Forms.ToolStripMenuItem TowerSpriteUpgradeDef_Button;
     }
 }

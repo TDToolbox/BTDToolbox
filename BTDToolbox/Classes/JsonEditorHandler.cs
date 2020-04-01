@@ -33,7 +33,9 @@ namespace BTDToolbox.Classes
             if (Serializer.Deserialize_Config().useExternalEditor == false)
             {
                 ValidateEditor();
-                if(jeditor.tabFilePaths.Contains(path))
+                if (!path.Contains(Environment.CurrentDirectory))
+                    path = Environment.CurrentDirectory + "\\" + path;
+                if (jeditor.tabFilePaths.Contains(path))
                 {
                     jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
                 }

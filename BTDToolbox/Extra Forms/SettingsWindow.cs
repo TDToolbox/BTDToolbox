@@ -63,6 +63,7 @@ namespace BTDToolbox
             Serializer.SaveSmallSettings("external editor", projectData);
 
             ConsoleHandler.appendLog_CanRepeat("Settings saved!!!");
+            this.Close();
         }
     }
 }
