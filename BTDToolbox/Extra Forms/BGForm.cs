@@ -44,7 +44,10 @@ namespace BTDToolbox.Extra_Forms
             this.Top = (GeneralMethods.GetCenterScreen().Y) - splash_centerY-100;
             this.Left = (GeneralMethods.GetCenterScreen().X) - splash_centerX-100;
         }
-
+        public void SendBack()
+        {
+            this.SendToBack();
+        }
         private void BGForm_MouseClick(object sender, MouseEventArgs e)
         {
             this.SendToBack();

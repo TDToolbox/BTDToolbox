@@ -112,7 +112,7 @@ namespace BTDToolbox
             //save config real quick
             UpdateChangelog.recentUpdate = true;
             programData = DeserializeConfig();
-            Serializer.SaveSmallSettings("updater", programData);
+            Serializer.SaveSmallSettings("updater");
 
             Process p = new Process();
             p.StartInfo.Arguments = "-lineNumber:0 -url:https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Updater_launch%20parameters";

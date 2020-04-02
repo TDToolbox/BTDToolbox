@@ -62,6 +62,12 @@ namespace BTDToolbox
             public int JSON_Editor_PosY { get; set; }
             public float JSON_Editor_FontSize { get; set; }
             public List<string> JsonEditor_OpenedTabs { get; set; }
+
+
+            //Save editor
+            public string SavePathBTD5 { get; set; }
+            public string SavePathBTDB { get; set; }
+
         }
     }
 }

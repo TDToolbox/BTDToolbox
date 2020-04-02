@@ -99,7 +99,7 @@ namespace BTDToolbox
         }
         public override void close_button_Click(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "console", programData);
+            Serializer.SaveConfig(this, "console");
             this.Hide();
         }
 
@@ -154,7 +154,7 @@ namespace BTDToolbox
         }
         private void exitHandling(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "console", programData);
+            Serializer.SaveConfig(this, "console");
         }
         private void Deserialize_Config()
         {

@@ -54,14 +54,14 @@ namespace BTDToolbox
                     else
                     {
                         programData.JsonEditor_OpenedTabs = new List<string>();
-                        Serializer.SaveJSONEditor_Tabs(programData);
+                        Serializer.SaveJSONEditor_Tabs();
                     }
                 }
             }
             else
             {
                 programData.JsonEditor_OpenedTabs =  new List<string>();
-                Serializer.SaveJSONEditor_Tabs(programData);
+                Serializer.SaveJSONEditor_Tabs();
             }
 
             goUpButton.Font = new Font("Microsoft Sans Serif", 9);
@@ -100,8 +100,8 @@ namespace BTDToolbox
 
             
 
-            Serializer.SaveConfig(this, "game", programData);
-            Serializer.SaveConfig(this, "jet explorer", programData);
+            Serializer.SaveConfig(this, "game");
+            Serializer.SaveConfig(this, "jet explorer");
 
             if (EZBloon_Editor.EZBloon_Opened == true)
                 ConsoleHandler.force_appendNotice("The EZ Bloon tool is currently opened for a different project. Please close it to avoid errors...");
@@ -149,7 +149,7 @@ namespace BTDToolbox
         }
         private void JetForm_Shown(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "jet explorer", programData);
+            Serializer.SaveConfig(this, "jet explorer");
         }
         public void openDirWindow()
         {
@@ -162,14 +162,14 @@ namespace BTDToolbox
         private void JetForm_Closed(object sender, EventArgs e)
         {
             JetProps.decrement(this);
-            Serializer.SaveConfig(this, "jet explorer", programData);
-            Serializer.SaveSmallSettings("external editor", programData);
+            Serializer.SaveConfig(this, "jet explorer");
+            Serializer.SaveSmallSettings("external editor");
         }
 
         private void PopulateTreeView()
         {
             TreeNode rootNode;
-
+            
             DirectoryInfo info = new DirectoryInfo(tempName);
             if (info.Exists)
             {
@@ -179,26 +179,9 @@ namespace BTDToolbox
                 treeView1.Nodes.Add(rootNode);
             }
         }
-        private void GetDirectories(DirectoryInfo[] subDirs, TreeNode nodeToAddTo)
+        private void PopulateListView(TreeNode selectedTreeNode)
         {
-            TreeNode aNode;
-            DirectoryInfo[] subSubDirs;
-            foreach (DirectoryInfo subDir in subDirs)
-            {
-                aNode = new TreeNode(subDir.Name, 0, 0);
-                aNode.Tag = subDir;
-                aNode.ImageKey = "folder";
-                subSubDirs = subDir.GetDirectories();
-                if (subSubDirs.Length != 0)
-                {
-                    GetDirectories(subSubDirs, aNode);
-                }
-                nodeToAddTo.Nodes.Add(aNode);
-            }
-        }
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            TreeNode newSelected = e.Node;
+            TreeNode newSelected = selectedTreeNode;
             listView1.Items.Clear();
             DirectoryInfo nodeDirInfo = (DirectoryInfo)newSelected.Tag;
             this.Text = nodeDirInfo.FullName;
@@ -236,6 +219,27 @@ namespace BTDToolbox
                 MessageBox.Show("Project was desynced and can no longer be used");
                 this.Close();
             }
+        }
+        private void GetDirectories(DirectoryInfo[] subDirs, TreeNode nodeToAddTo)
+        {
+            TreeNode aNode;
+            DirectoryInfo[] subSubDirs;
+            foreach (DirectoryInfo subDir in subDirs)
+            {
+                aNode = new TreeNode(subDir.Name, 0, 0);
+                aNode.Tag = subDir;
+                aNode.ImageKey = "folder";
+                subSubDirs = subDir.GetDirectories();
+                if (subSubDirs.Length != 0)
+                {
+                    GetDirectories(subSubDirs, aNode);
+                }
+                nodeToAddTo.Nodes.Add(aNode);
+            }
+        }
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            PopulateListView(e.Node);
         }
         private void goUpButton_Click(object sender, EventArgs e)
         {
@@ -307,7 +311,7 @@ namespace BTDToolbox
                     if (filename.EndsWith(".tower"))
                         ezTower_CMButton.Visible = true;
                     else if (filename.EndsWith(".bloon"))
-                        ezTower_CMButton.Visible = false;
+                        ezBloon_CMButton.Visible = true;
                     else if ((this.Text).Contains("BattleCardDefinitions"))
                         ezCard_CMButton.Visible = true;
                     else
@@ -389,12 +393,22 @@ namespace BTDToolbox
                 ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
                 foreach (ListViewItem item in Selected)
                 {
-                    string currentPath = this.Text;
-                    string toDelete = currentPath + "\\" + item.Text;
+                    if(item.Text.Contains("."))
+                    {
+                        string currentPath = this.Text;
+                        string toDelete = currentPath + "\\" + item.Text;
 
-                    File.Delete(toDelete);
+                        File.Delete(toDelete);
 
-                    item.Remove();
+                        item.Remove();
+                    }
+                    else
+                    {
+                        GeneralMethods.DeleteDirectory(this.Text + "\\" + item.Text);
+                        treeView1.Nodes.Clear();
+                        listView1.Items.Clear();
+                        PopulateTreeView();
+                    }
                 }
             }
         }
@@ -415,35 +429,76 @@ namespace BTDToolbox
         {
             string targetDir = this.Text;
             StringCollection files = Clipboard.GetFileDropList();
+            
             foreach (string name in files)
             {
-                FileInfo info = new FileInfo(name);
-                string dest = targetDir + "\\" + info.Name;
-                if (File.Exists(targetDir + "\\" + info.Name))
+                if (name.Contains("."))
                 {
-                    int i = 1;
-                    string[] split = dest.Split('.');
-                    string noExtention = dest.Replace("." + split[split.Length - 1],"");
-                    string copyName = noExtention + "_Copy ";
-                    
-                    while (File.Exists(dest))
+                    FileInfo info = new FileInfo(name);
+                    string dest = targetDir + "\\" + info.Name;
+                    if (File.Exists(targetDir + "\\" + info.Name))
                     {
-                        dest = copyName + i + "." + split[split.Length-1];
-                        i++;
-                    }
-                }
-                File.Copy(name, dest);
+                        int i = 1;
+                        string[] split = dest.Split('.');
+                        string noExtention = dest.Replace("." + split[split.Length - 1], "");
+                        string copyName = noExtention + "_Copy ";
 
-                string[] filename = dest.Split('\\');
-                ListViewItem item = new ListViewItem(filename[filename.Length-1], 1);
-                ListViewItem.ListViewSubItem[] subItems = new ListViewItem.ListViewSubItem[]
-                    {
+                        while (File.Exists(dest))
+                        {
+                            dest = copyName + i + "." + split[split.Length - 1];
+                            i++;
+                        }
+                    }
+                    File.Copy(name, dest);
+
+                    string[] filename = dest.Split('\\');
+                    ListViewItem item = new ListViewItem(filename[filename.Length - 1], 1);
+                    ListViewItem.ListViewSubItem[] subItems = new ListViewItem.ListViewSubItem[]
+                        {
                         new ListViewItem.ListViewSubItem(item, "File"),
                         new ListViewItem.ListViewSubItem(item, "null")
-                    };
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
+                        };
+                    item.SubItems.AddRange(subItems);
+                    listView1.Items.Add(item);
+                }
+                else
+                {
+                    DirectoryInfo info = new DirectoryInfo(name);
+                    string dest = targetDir + "\\" + info.Name;
+                    if (Directory.Exists(targetDir + "\\" + info.Name))
+                    {
+                        int i = 1;
+                        
+                        string copyName = "_Copy ";
+                        string baseDest = dest;
+                        while (Directory.Exists(dest))
+                        {
+                            dest = baseDest + copyName + i;
+                            i++;
+                        }
+                    }
+                    if (!Directory.Exists(dest))
+                    {
+                        Directory.CreateDirectory(dest);
+
+                        string[] filename = dest.Split('\\');
+                        ListViewItem item = new ListViewItem(filename[filename.Length - 1], 1);
+                        listView1.Items.Add(item);
+                    }
+
+                    foreach (string dirPath in Directory.GetDirectories(name, "*",SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(name, dest));
+
+                    //Copy all the files & Replaces any files with the same name
+                    foreach (string newPath in Directory.GetFiles(name, "*.*", SearchOption.AllDirectories))
+                    {
+                        File.Copy(newPath, newPath.Replace(name, dest), true);
+                    }
+                }
             }
+            treeView1.Nodes.Clear();
+            listView1.Items.Clear();
+            PopulateTreeView();
         }
         private void selectAll()
         {
@@ -513,7 +568,7 @@ namespace BTDToolbox
         }
         private void Open_EZTower()
         {
-            string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
+            string filename = listView1.SelectedItems[0].Text;
             var ezTower = new EasyTowerEditor();
             string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + filename;
             ezTower.path = path;
@@ -543,7 +598,7 @@ namespace BTDToolbox
         
         private void exitHandling(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "jet explorer", programData);
+            Serializer.SaveConfig(this, "jet explorer");
         }
 
         private void JetForm_KeyDown(object sender, KeyEventArgs e)
@@ -599,7 +654,7 @@ namespace BTDToolbox
         }
         private void JetForm_Activated(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "jet explorer", programData);
+            Serializer.SaveConfig(this, "jet explorer");
         }
 
 
@@ -816,11 +871,11 @@ namespace BTDToolbox
                 delete();
             else if (e.ClickedItem.Text == "Copy")
                 copy();
-            else if (e.ClickedItem.Text == "Open with EZ Bloon Tool")
+            else if (e.ClickedItem.Text == "Open with EZ Bloon")
                 Open_EZBloon();
-            else if (e.ClickedItem.Text == "Open with EZ Tower Tool")
+            else if (e.ClickedItem.Text == "Open with EZ Tower")
                 Open_EZTower();
-            else if (e.ClickedItem.Text == "Open with EZ Card Tool")
+            else if (e.ClickedItem.Text == "Open with EZ Card")
                 Open_EZCard();
             else if (e.ClickedItem.Text == "Open in File Explorer")
                 openInFileExplorer();

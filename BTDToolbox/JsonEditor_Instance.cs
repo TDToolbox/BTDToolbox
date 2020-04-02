@@ -56,6 +56,8 @@ namespace BTDToolbox
             SearchOptions_Button.KeyDown += Find_TB_KeyDown;
             Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
+
+            //path and filename have NOT been set yet. Use FinishedLoading()
         }
         public void FinishedLoading()
         {
@@ -66,6 +68,9 @@ namespace BTDToolbox
                 Editor_TextBox.Font = new Font("Consolas", 14);
             tB_line.Font = Editor_TextBox.Font;
             FontSize_TextBox.Text = Editor_TextBox.Font.Size.ToString();
+
+            if (path.Contains("Profile.save"))
+                Encrypt_Button.Visible = true;
         }
         //
         //JSON
@@ -142,8 +147,8 @@ namespace BTDToolbox
                 JsonEditorHandler.CloseFile(path);
                 if(programData == null)
                     programData = Serializer.Deserialize_Config();
-                Serializer.SaveJSONEditor_Instance(this, programData);
-                Serializer.SaveJSONEditor_Tabs(programData);
+                Serializer.SaveJSONEditor_Instance(this);
+                Serializer.SaveJSONEditor_Tabs();
             }
             else
             {
@@ -154,7 +159,7 @@ namespace BTDToolbox
                     if (programData == null)
                         programData = Serializer.Deserialize_Config();
                     JsonEditorHandler.CloseFile(path);
-                    Serializer.SaveJSONEditor_Instance(this, programData);
+                    Serializer.SaveJSONEditor_Instance(this);
                 }
             }
         }
@@ -856,7 +861,7 @@ namespace BTDToolbox
 
             Editor_TextBox.Font = new Font("Consolas", FontSize);
             tB_line.Font = new Font("Consolas", FontSize);
-            Serializer.SaveJSONEditor_Instance(this, programData);
+            Serializer.SaveJSONEditor_Instance(this);
         }
         private void EZTowerEditor_Button_Click(object sender, EventArgs e)
         {
@@ -989,6 +994,33 @@ namespace BTDToolbox
                 JsonEditorHandler.OpenOriginalFile(path);
             else
                 ConsoleHandler.appendNotice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
+        }
+
+
+        //
+        //Save editor stuff
+        //
+        private void Encrypt_Button_Click(object sender, EventArgs e)
+        {
+            if(!jsonError)
+            {
+                if (filename.StartsWith("BTD5"))
+                {
+                    SaveEditor.SaveEditor.EncryptSave("BTD5");
+                }
+                else if (filename.StartsWith("BTDB"))
+                {
+                    SaveEditor.SaveEditor.EncryptSave("BTDB");
+                }
+                else if (filename.StartsWith("UnknownGame"))
+                {
+                    SaveEditor.SaveEditor.EncryptSave("UnknownGame");
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("You need to fix your JSON error before continuing...");
+            }
         }
     }
 }

@@ -30,19 +30,22 @@ namespace BTDToolbox.Classes
         }
         public static void OpenFile(string path)
         {
-            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            if (File.Exists(path))
             {
-                ValidateEditor();
-                if (!path.Contains(Environment.CurrentDirectory))
-                    path = Environment.CurrentDirectory + "\\" + path;
-                if (jeditor.tabFilePaths.Contains(path))
+                if (Serializer.Deserialize_Config().useExternalEditor == false)
                 {
-                    jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
+                    ValidateEditor();
+                    if (!path.Contains(Environment.CurrentDirectory))
+                        path = Environment.CurrentDirectory + "\\" + path;
+                    if (jeditor.tabFilePaths.Contains(path))
+                        jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
+                    else
+                        jeditor.NewTab(path);
                 }
-                else
-                {
-                    jeditor.NewTab(path);
-                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("One or more files was not found...");
             }
         }
         public static void OpenOriginalFile(string path)

@@ -161,6 +161,15 @@
     <Compile Include="New_JsonEditor.Designer.cs">
       <DependentUpon>New_JsonEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SaveEditor\DgUtil.cs" />
+    <Compile Include="SaveEditor\SaveEditor.cs" />
+    <Compile Include="SaveEditor\SaveEditorTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaveEditor\SaveEditorTest.Designer.cs">
+      <DependentUpon>SaveEditorTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaveEditor\TryFindSteam.cs" />
     <Compile Include="ZipForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="New_JsonEditor.resx">
       <DependentUpon>New_JsonEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaveEditor\SaveEditorTest.resx">
+      <DependentUpon>SaveEditorTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ZipForm.resx">
       <DependentUpon>ZipForm.cs</DependentUpon>

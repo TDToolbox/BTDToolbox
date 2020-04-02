@@ -120,7 +120,7 @@ namespace BTDToolbox
                         if(rememberedPassword != null && rememberedPassword != "")
                         {
                             password = rememberedPassword;
-                            Serializer.SaveSmallSettings("battlesPass", programData);
+                            Serializer.SaveSmallSettings("battlesPass");
                         }
                         backgroundThread = new Thread(Extract_OnThread);
                         backgroundThread.Start();
@@ -259,7 +259,7 @@ namespace BTDToolbox
                     if (rememberedPassword != null && rememberedPassword != "")
                     {
                         password = rememberedPassword;
-                        Serializer.SaveSmallSettings("battlesPass", programData);
+                        Serializer.SaveSmallSettings("battlesPass");
                     }
 
                     if (password == null || password.Length <= 0)
@@ -315,7 +315,7 @@ namespace BTDToolbox
                 if (dir != "\\Assets\\" + jetName)
                 {
                     if (DeserializeConfig().LastProject == null)
-                        Serializer.SaveConfig(jf, "jet explorer", programData);
+                        Serializer.SaveConfig(jf, "jet explorer");
 
                     DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
                     if (Directory.Exists(projDir.ToString()))

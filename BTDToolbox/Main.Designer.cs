@@ -113,7 +113,13 @@
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.findSteamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
+            this.saveEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTD5SaveModToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTDBSaveModToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.browseForSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -279,6 +285,7 @@
             this.combineModsToolStripMenuItem,
             this.modUpdaterToolStripMenuItem,
             this.spriteEditingToolStripMenuItem,
+            this.saveEditorToolStripMenuItem,
             this.toolStripSeparator7,
             this.getBTDBPasswordToolStripMenuItem,
             this.toolStripSeparator4,
@@ -756,7 +763,9 @@
             this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.themedFormToolStripMenuItem,
             this.TestForm,
-            this.testingToolStripMenuItem});
+            this.testingToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.findSteamToolStripMenuItem});
             this.debugToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
@@ -765,23 +774,37 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // TestForm
             // 
             this.TestForm.Name = "TestForm";
-            this.TestForm.Size = new System.Drawing.Size(148, 22);
+            this.TestForm.Size = new System.Drawing.Size(154, 22);
             this.TestForm.Text = "JSON Editor";
             this.TestForm.Click += new System.EventHandler(this.TestForm_Click);
             // 
             // testingToolStripMenuItem
             // 
             this.testingToolStripMenuItem.Name = "testingToolStripMenuItem";
-            this.testingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.testingToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.testingToolStripMenuItem.Text = "Testing";
             this.testingToolStripMenuItem.Click += new System.EventHandler(this.TestingToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(154, 22);
+            this.toolStripMenuItem3.Text = "Save Editor test";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
+            // 
+            // findSteamToolStripMenuItem
+            // 
+            this.findSteamToolStripMenuItem.Name = "findSteamToolStripMenuItem";
+            this.findSteamToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.findSteamToolStripMenuItem.Text = "FindSteam";
+            this.findSteamToolStripMenuItem.Click += new System.EventHandler(this.FindSteamToolStripMenuItem_Click);
             // 
             // versionTag
             // 
@@ -795,6 +818,37 @@
             this.versionTag.Size = new System.Drawing.Size(98, 55);
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
+            // 
+            // saveEditorToolStripMenuItem
+            // 
+            this.saveEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bTD5SaveModToolStripMenuItem,
+            this.bTDBSaveModToolStripMenuItem,
+            this.browseForSaveToolStripMenuItem});
+            this.saveEditorToolStripMenuItem.Name = "saveEditorToolStripMenuItem";
+            this.saveEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.saveEditorToolStripMenuItem.Text = "Save editor";
+            // 
+            // bTD5SaveModToolStripMenuItem
+            // 
+            this.bTD5SaveModToolStripMenuItem.Name = "bTD5SaveModToolStripMenuItem";
+            this.bTD5SaveModToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.bTD5SaveModToolStripMenuItem.Text = "BTD5 Save mod (Auto)";
+            this.bTD5SaveModToolStripMenuItem.Click += new System.EventHandler(this.BTD5SaveModToolStripMenuItem_Click);
+            // 
+            // bTDBSaveModToolStripMenuItem
+            // 
+            this.bTDBSaveModToolStripMenuItem.Name = "bTDBSaveModToolStripMenuItem";
+            this.bTDBSaveModToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.bTDBSaveModToolStripMenuItem.Text = "BTDB Save mod (Auto)";
+            this.bTDBSaveModToolStripMenuItem.Click += new System.EventHandler(this.BTDBSaveModToolStripMenuItem_Click);
+            // 
+            // browseForSaveToolStripMenuItem
+            // 
+            this.browseForSaveToolStripMenuItem.Name = "browseForSaveToolStripMenuItem";
+            this.browseForSaveToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.browseForSaveToolStripMenuItem.Text = "Browse for save file";
+            this.browseForSaveToolStripMenuItem.Click += new System.EventHandler(this.BrowseForSaveToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -913,6 +967,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem bTDBPasswordManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolboxSpriteDecompilerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem findSteamToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bTD5SaveModToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bTDBSaveModToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem browseForSaveToolStripMenuItem;
     }
 }
 

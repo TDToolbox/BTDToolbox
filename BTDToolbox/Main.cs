@@ -111,7 +111,7 @@ namespace BTDToolbox
                 else
                     enableConsole = false;
 
-                Serializer.SaveConfig(this, "main", cfgFile);
+                Serializer.SaveConfig(this, "main");
             }
         }
         private void Main_Load(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace BTDToolbox
                 changelog.Show();
 
                 UpdateChangelog.recentUpdate = false;
-                Serializer.SaveSmallSettings("updater", cfgFile);
+                Serializer.SaveSmallSettings("updater");
             }
         }
 
@@ -254,7 +254,7 @@ namespace BTDToolbox
                 {
                     gameName = DetermineJet_Game(path);
                     ZipForm.existingJetFile = path;
-                    Serializer.SaveConfig(this, "game", programData);
+                    Serializer.SaveConfig(this, "game");
                     var getName = new SetProjectName();
                     getName.Show();
                 }
@@ -285,11 +285,11 @@ namespace BTDToolbox
                     else if (path.Contains("BTDB"))
                         gameName = "BTDB";
 
-                    Serializer.SaveConfig(this, "game", cfgFile);
+                    Serializer.SaveConfig(this, "game");
                     JetForm jf = new JetForm(dirInfo, this, name);
                     jf.MdiParent = this;
                     jf.Show();
-                    Serializer.SaveConfig(this, "main", cfgFile);   //try changing this if having issues with last project
+                    Serializer.SaveConfig(this, "main");   //try changing this if having issues with last project
                 }
             }
         }
@@ -402,7 +402,7 @@ namespace BTDToolbox
                     {
                         if (!Validate_Backup(gameName))
                             CreateBackup(gameName);
-                        Serializer.SaveConfig(this, "directories", cfgFile);
+                        Serializer.SaveConfig(this, "directories");
                         var setProjName = new SetProjectName();
                         setProjName.Show();
                     }
@@ -422,13 +422,13 @@ namespace BTDToolbox
         private void New_BTD5_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTD5";
-            Serializer.SaveConfig(this, "game", cfgFile);
+            Serializer.SaveConfig(this, "game");
             NewProject(gameName);
         }
         private void New_BTDB_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTDB";
-            Serializer.SaveConfig(this, "game", cfgFile);
+            Serializer.SaveConfig(this, "game");
             NewProject(gameName);
         }
         private void Replace_BTDB_Backup_Click(object sender, EventArgs e)
@@ -775,6 +775,71 @@ namespace BTDToolbox
         {
             BattlesPassManager mgr = new BattlesPassManager();
             mgr.Show();
+        }
+
+        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            var x = new SaveEditor.SaveEditorTest();
+            x.Show();
+        }
+
+        private void FindSteamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTD5SaveModToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string save = Serializer.Deserialize_Config().SavePathBTD5;
+            if (save == null || save == "")
+            {
+                SaveEditor.TryFindSteam.FindSaveFiles();
+                save = Serializer.Deserialize_Config().SavePathBTD5;
+                if (save == "" || save == null)
+                {
+                    return;
+                }
+            }
+            SaveEditor.SaveEditor.DecryptSave("BTD5", "");
+
+            string btd5Save = SaveEditor.SaveEditor.savemodDir + "\\BTD5_Profile.save";
+            if (File.Exists(btd5Save))
+                JsonEditorHandler.OpenFile(btd5Save);
+            else
+                ConsoleHandler.appendLog("Decrypted save file not found");
+        }
+
+        private void BTDBSaveModToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string save = Serializer.Deserialize_Config().SavePathBTDB;
+            if (save == null || save == "")
+            {
+                SaveEditor.TryFindSteam.FindSaveFiles();
+                save = Serializer.Deserialize_Config().SavePathBTDB;
+                if (save == "" || save == null)
+                {
+                    return;
+                }
+            }
+            SaveEditor.SaveEditor.DecryptSave("BTDB", "");
+
+            string btdbSave = SaveEditor.SaveEditor.savemodDir + "\\BTDB_Profile.save";
+            if (File.Exists(btdbSave))
+                JsonEditorHandler.OpenFile(btdbSave);
+            else
+                ConsoleHandler.appendLog("Decrypted save file not found");
+        }
+
+        private void BrowseForSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string browsedSave = SaveEditor.TryFindSteam.BrowseForSave();
+            SaveEditor.SaveEditor.DecryptSave("", browsedSave);
+            
+            string save = SaveEditor.SaveEditor.savemodDir + "\\UnknownGame_Profile.save";
+            if (File.Exists(save))
+                JsonEditorHandler.OpenFile(save);
+            else
+                ConsoleHandler.appendLog("Decrypted save file not found");
         }
     }
 }

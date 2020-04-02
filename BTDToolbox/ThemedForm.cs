@@ -40,7 +40,7 @@ namespace BTDToolbox
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            Main.bg.SendToBack();
+            
             //this.Dock = DockStyle.Fill;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);

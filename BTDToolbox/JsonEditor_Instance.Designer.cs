@@ -50,6 +50,11 @@
             this.openInFileExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestoreToOriginal_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Open_Button = new System.Windows.Forms.ToolStripDropDownButton();
+            this.Weapons_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.TowerFile_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.UpgradeFIle_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.specialtyBuildingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TowerSpriteUpgradeDef_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lintPanel = new System.Windows.Forms.Panel();
             this.CloseFile_Button = new System.Windows.Forms.Button();
@@ -73,11 +78,7 @@
             this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findSubtaskToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.getThisSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TowerFile_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.UpgradeFIle_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.Weapons_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.TowerSpriteUpgradeDef_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.specialtyBuildingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Encrypt_Button = new System.Windows.Forms.Button();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -287,6 +288,40 @@
             this.Open_Button.Size = new System.Drawing.Size(49, 20);
             this.Open_Button.Text = "Open";
             this.Open_Button.Visible = false;
+            // 
+            // Weapons_Button
+            // 
+            this.Weapons_Button.Name = "Weapons_Button";
+            this.Weapons_Button.Size = new System.Drawing.Size(198, 22);
+            this.Weapons_Button.Text = "Weapons";
+            // 
+            // TowerFile_Button
+            // 
+            this.TowerFile_Button.Name = "TowerFile_Button";
+            this.TowerFile_Button.Size = new System.Drawing.Size(198, 22);
+            this.TowerFile_Button.Text = ".tower file";
+            this.TowerFile_Button.Click += new System.EventHandler(this.TowerFile_Button_Click);
+            // 
+            // UpgradeFIle_Button
+            // 
+            this.UpgradeFIle_Button.Name = "UpgradeFIle_Button";
+            this.UpgradeFIle_Button.Size = new System.Drawing.Size(198, 22);
+            this.UpgradeFIle_Button.Text = ".upgrade file";
+            this.UpgradeFIle_Button.Click += new System.EventHandler(this.UpgradeFIle_Button_Click);
+            // 
+            // specialtyBuildingToolStripMenuItem
+            // 
+            this.specialtyBuildingToolStripMenuItem.Name = "specialtyBuildingToolStripMenuItem";
+            this.specialtyBuildingToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.specialtyBuildingToolStripMenuItem.Text = "Specialty Building";
+            this.specialtyBuildingToolStripMenuItem.Click += new System.EventHandler(this.SpecialtyBuildingToolStripMenuItem_Click);
+            // 
+            // TowerSpriteUpgradeDef_Button
+            // 
+            this.TowerSpriteUpgradeDef_Button.Name = "TowerSpriteUpgradeDef_Button";
+            this.TowerSpriteUpgradeDef_Button.Size = new System.Drawing.Size(198, 22);
+            this.TowerSpriteUpgradeDef_Button.Text = "TowerSpriteUpgradeDef";
+            this.TowerSpriteUpgradeDef_Button.Click += new System.EventHandler(this.TowerSpriteUpgradeDef_Button_Click);
             // 
             // toolStripSeparator1
             // 
@@ -508,45 +543,24 @@
             this.getThisSubtaskNumberToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.getThisSubtaskNumberToolStripMenuItem.Text = "Get this subtask number";
             // 
-            // TowerFile_Button
+            // Encrypt_Button
             // 
-            this.TowerFile_Button.Name = "TowerFile_Button";
-            this.TowerFile_Button.Size = new System.Drawing.Size(198, 22);
-            this.TowerFile_Button.Text = ".tower file";
-            this.TowerFile_Button.Click += new System.EventHandler(this.TowerFile_Button_Click);
-            // 
-            // UpgradeFIle_Button
-            // 
-            this.UpgradeFIle_Button.Name = "UpgradeFIle_Button";
-            this.UpgradeFIle_Button.Size = new System.Drawing.Size(198, 22);
-            this.UpgradeFIle_Button.Text = ".upgrade file";
-            this.UpgradeFIle_Button.Click += new System.EventHandler(this.UpgradeFIle_Button_Click);
-            // 
-            // Weapons_Button
-            // 
-            this.Weapons_Button.Name = "Weapons_Button";
-            this.Weapons_Button.Size = new System.Drawing.Size(198, 22);
-            this.Weapons_Button.Text = "Weapons";
-            // 
-            // TowerSpriteUpgradeDef_Button
-            // 
-            this.TowerSpriteUpgradeDef_Button.Name = "TowerSpriteUpgradeDef_Button";
-            this.TowerSpriteUpgradeDef_Button.Size = new System.Drawing.Size(198, 22);
-            this.TowerSpriteUpgradeDef_Button.Text = "TowerSpriteUpgradeDef";
-            this.TowerSpriteUpgradeDef_Button.Click += new System.EventHandler(this.TowerSpriteUpgradeDef_Button_Click);
-            // 
-            // specialtyBuildingToolStripMenuItem
-            // 
-            this.specialtyBuildingToolStripMenuItem.Name = "specialtyBuildingToolStripMenuItem";
-            this.specialtyBuildingToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.specialtyBuildingToolStripMenuItem.Text = "Specialty Building";
-            this.specialtyBuildingToolStripMenuItem.Click += new System.EventHandler(this.SpecialtyBuildingToolStripMenuItem_Click);
+            this.Encrypt_Button.BackColor = System.Drawing.Color.PaleGreen;
+            this.Encrypt_Button.Location = new System.Drawing.Point(176, 0);
+            this.Encrypt_Button.Name = "Encrypt_Button";
+            this.Encrypt_Button.Size = new System.Drawing.Size(178, 20);
+            this.Encrypt_Button.TabIndex = 34;
+            this.Encrypt_Button.Text = "Encrypt and send to game";
+            this.Encrypt_Button.UseVisualStyleBackColor = false;
+            this.Encrypt_Button.Visible = false;
+            this.Encrypt_Button.Click += new System.EventHandler(this.Encrypt_Button_Click);
             // 
             // JsonEditor_Instance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.Controls.Add(this.Encrypt_Button);
             this.Controls.Add(this.SearchOptions_Panel);
             this.Controls.Add(this.Find_Panel);
             this.Controls.Add(this.JsonError_Label);
@@ -619,5 +633,6 @@
         private System.Windows.Forms.ToolStripMenuItem Weapons_Button;
         private System.Windows.Forms.ToolStripMenuItem TowerSpriteUpgradeDef_Button;
         private System.Windows.Forms.ToolStripMenuItem specialtyBuildingToolStripMenuItem;
+        private System.Windows.Forms.Button Encrypt_Button;
     }
 }

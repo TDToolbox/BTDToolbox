@@ -184,7 +184,7 @@ namespace BTDToolbox
         }
         private void exitHandling(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor", programData);
+            Serializer.SaveConfig(this, "json editor");
             JsonProps.decrement(this);
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -394,7 +394,7 @@ namespace BTDToolbox
         }
         private void JsonEditor_Load(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor", programData);
+            Serializer.SaveConfig(this, "json editor");
         }
         private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
         {

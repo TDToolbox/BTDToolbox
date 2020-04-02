@@ -58,9 +58,9 @@ namespace BTDToolbox
             {
                 Main.disableUpdates = false;
             }
-            Serializer.SaveSmallSettings("splash", projectData);
-            Serializer.SaveSmallSettings("disableUpdates", projectData);
-            Serializer.SaveSmallSettings("external editor", projectData);
+            Serializer.SaveSmallSettings("splash");
+            Serializer.SaveSmallSettings("disableUpdates");
+            Serializer.SaveSmallSettings("external editor");
 
             ConsoleHandler.appendLog_CanRepeat("Settings saved!!!");
             this.Close();
