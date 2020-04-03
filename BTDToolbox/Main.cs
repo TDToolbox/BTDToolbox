@@ -17,7 +17,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Alpha 0.1.1";
+        public static string version = "Toolbox 0.1.2";
         public static bool disableUpdates = false;
         private static Main toolbox;
         public static BGForm bg;
