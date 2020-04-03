@@ -725,33 +725,7 @@ namespace BTDToolbox
         }
         private void saveJet()
         {
-            /*if (JsonEditor.jsonError != true)
-            {
-                if (JetProps.get().Count == 1)
-                {
-                    ZipForm.currentProject = projName;
-                    ZipForm.switchCase = "output";
-                    if (programData.CurrentGame == "BTDB")
-                        ZipForm.switchCase = "output BTDB";
-                    var compile = new ZipForm();
-                }
-            }
-            else
-            {
-                DialogResult dialogResult = MessageBox.Show("ERROR!!! There is a JSON Error in this file!!!\n\nIf you leave the file now it will be corrupted and WILL break your mod. Do you still want to leave?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    if (JetProps.get().Count == 1)
-                    {
-                        ZipForm.currentProject = projName;
-                        ZipForm.switchCase = "output";
-                        if (programData.CurrentGame == "BTDB")
-                            ZipForm.switchCase = "output BTDB";
-                        var compile = new ZipForm();
-                    }
-                }
-            }*/
-            
+            CompileJet("output");
         }
 
         private void Open_Proj_Dir_Click(object sender, EventArgs e)
