@@ -59,6 +59,11 @@
             this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolboxSpriteDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTD5SaveModToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTDBSaveModToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.browseForSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monkeyWrenchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.getBTDBPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -116,10 +121,6 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.findSteamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.saveEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bTD5SaveModToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bTDBSaveModToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.browseForSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -286,6 +287,7 @@
             this.modUpdaterToolStripMenuItem,
             this.spriteEditingToolStripMenuItem,
             this.saveEditorToolStripMenuItem,
+            this.monkeyWrenchToolStripMenuItem,
             this.toolStripSeparator7,
             this.getBTDBPasswordToolStripMenuItem,
             this.toolStripSeparator4,
@@ -377,6 +379,45 @@
             this.toolboxSpriteDecompilerToolStripMenuItem.Name = "toolboxSpriteDecompilerToolStripMenuItem";
             this.toolboxSpriteDecompilerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.toolboxSpriteDecompilerToolStripMenuItem.Text = "Toolbox Sprite Decompiler";
+            // 
+            // saveEditorToolStripMenuItem
+            // 
+            this.saveEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bTD5SaveModToolStripMenuItem,
+            this.bTDBSaveModToolStripMenuItem,
+            this.browseForSaveToolStripMenuItem});
+            this.saveEditorToolStripMenuItem.Name = "saveEditorToolStripMenuItem";
+            this.saveEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.saveEditorToolStripMenuItem.Text = "Save editor";
+            // 
+            // bTD5SaveModToolStripMenuItem
+            // 
+            this.bTD5SaveModToolStripMenuItem.Name = "bTD5SaveModToolStripMenuItem";
+            this.bTD5SaveModToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.bTD5SaveModToolStripMenuItem.Text = "BTD5 Save mod (Auto)";
+            this.bTD5SaveModToolStripMenuItem.Click += new System.EventHandler(this.BTD5SaveModToolStripMenuItem_Click);
+            // 
+            // bTDBSaveModToolStripMenuItem
+            // 
+            this.bTDBSaveModToolStripMenuItem.Name = "bTDBSaveModToolStripMenuItem";
+            this.bTDBSaveModToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.bTDBSaveModToolStripMenuItem.Text = "BTDB Save mod (Auto)";
+            this.bTDBSaveModToolStripMenuItem.Click += new System.EventHandler(this.BTDBSaveModToolStripMenuItem_Click);
+            // 
+            // browseForSaveToolStripMenuItem
+            // 
+            this.browseForSaveToolStripMenuItem.Name = "browseForSaveToolStripMenuItem";
+            this.browseForSaveToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.browseForSaveToolStripMenuItem.Text = "Browse for save file";
+            this.browseForSaveToolStripMenuItem.Click += new System.EventHandler(this.BrowseForSaveToolStripMenuItem_Click);
+            // 
+            // monkeyWrenchToolStripMenuItem
+            // 
+            this.monkeyWrenchToolStripMenuItem.Name = "monkeyWrenchToolStripMenuItem";
+            this.monkeyWrenchToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.monkeyWrenchToolStripMenuItem.Text = "Monkey Wrench";
+            this.monkeyWrenchToolStripMenuItem.Click += new System.EventHandler(this.MonkeyWrenchToolStripMenuItem_Click);
+            this.monkeyWrenchToolStripMenuItem.MouseHover += new System.EventHandler(this.MonkeyWrenchToolStripMenuItem_MouseHover);
             // 
             // toolStripSeparator7
             // 
@@ -804,7 +845,6 @@
             this.findSteamToolStripMenuItem.Name = "findSteamToolStripMenuItem";
             this.findSteamToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.findSteamToolStripMenuItem.Text = "FindSteam";
-            this.findSteamToolStripMenuItem.Click += new System.EventHandler(this.FindSteamToolStripMenuItem_Click);
             // 
             // versionTag
             // 
@@ -818,37 +858,6 @@
             this.versionTag.Size = new System.Drawing.Size(98, 55);
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
-            // 
-            // saveEditorToolStripMenuItem
-            // 
-            this.saveEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bTD5SaveModToolStripMenuItem,
-            this.bTDBSaveModToolStripMenuItem,
-            this.browseForSaveToolStripMenuItem});
-            this.saveEditorToolStripMenuItem.Name = "saveEditorToolStripMenuItem";
-            this.saveEditorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.saveEditorToolStripMenuItem.Text = "Save editor";
-            // 
-            // bTD5SaveModToolStripMenuItem
-            // 
-            this.bTD5SaveModToolStripMenuItem.Name = "bTD5SaveModToolStripMenuItem";
-            this.bTD5SaveModToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.bTD5SaveModToolStripMenuItem.Text = "BTD5 Save mod (Auto)";
-            this.bTD5SaveModToolStripMenuItem.Click += new System.EventHandler(this.BTD5SaveModToolStripMenuItem_Click);
-            // 
-            // bTDBSaveModToolStripMenuItem
-            // 
-            this.bTDBSaveModToolStripMenuItem.Name = "bTDBSaveModToolStripMenuItem";
-            this.bTDBSaveModToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.bTDBSaveModToolStripMenuItem.Text = "BTDB Save mod (Auto)";
-            this.bTDBSaveModToolStripMenuItem.Click += new System.EventHandler(this.BTDBSaveModToolStripMenuItem_Click);
-            // 
-            // browseForSaveToolStripMenuItem
-            // 
-            this.browseForSaveToolStripMenuItem.Name = "browseForSaveToolStripMenuItem";
-            this.browseForSaveToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.browseForSaveToolStripMenuItem.Text = "Browse for save file";
-            this.browseForSaveToolStripMenuItem.Click += new System.EventHandler(this.BrowseForSaveToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -973,6 +982,7 @@
         private System.Windows.Forms.ToolStripMenuItem bTD5SaveModToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bTDBSaveModToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem browseForSaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem monkeyWrenchToolStripMenuItem;
     }
 }
 

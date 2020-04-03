@@ -386,26 +386,57 @@ namespace BTDToolbox
         {
             AddNewJet();
         }
+        public static string TryFindSteamDir(string gameFolder)
+        {
+            string gamedir = SaveEditor.TryFindSteam.CheckDirsForSteam("\\steamapps\\common\\" + gameFolder);
+            return gamedir;
+        }
         private void NewProject(string gameName)
         {
             if (projNoGame == false)
             {
                 if (isGamePathValid(gameName) == false)
                 {
-                    ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
-                    browseForExe(gameName);
-                    if (isGamePathValid(gameName) == false)
+                    string gameFolder = "";
+                    if (gameName == "BTD5")
+                        gameFolder = "BloonsTD5";
+                    if (gameName == "BTDB")
+                        gameFolder = "Bloons TD Battles";
+                    string tryFindGameDir = TryFindSteamDir(gameFolder);
+
+                    if (tryFindGameDir == "")
                     {
-                        ConsoleHandler.appendLog("Theres been an error identifying your game");
+                        ConsoleHandler.appendLog("Failed to automatically aquire game dir");
+                        ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
+                        browseForExe(gameName);
+                        if (isGamePathValid(gameName) == false)
+                        {
+                            ConsoleHandler.appendLog("Theres been an error identifying your game");
+                        }
+                        else
+                        {
+                            if (!Validate_Backup(gameName))
+                                CreateBackup(gameName);
+                            Serializer.SaveConfig(this, "directories");
+                            var setProjName = new SetProjectName();
+                            setProjName.Show();
+                        }
                     }
                     else
                     {
+                        ConsoleHandler.appendLog("Game directory was automatically aquired...");
+                        if (gameName == "BTD5")
+                            BTD5_Dir = tryFindGameDir;
+                        else if (gameName == "BTDB")
+                            BTDB_Dir = tryFindGameDir;
+
                         if (!Validate_Backup(gameName))
                             CreateBackup(gameName);
                         Serializer.SaveConfig(this, "directories");
                         var setProjName = new SetProjectName();
                         setProjName.Show();
                     }
+                    
                 }
                 else
                 {
@@ -782,12 +813,6 @@ namespace BTDToolbox
             var x = new SaveEditor.SaveEditorTest();
             x.Show();
         }
-
-        private void FindSteamToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void BTD5SaveModToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string save = Serializer.Deserialize_Config().SavePathBTD5;
@@ -840,6 +865,18 @@ namespace BTDToolbox
                 JsonEditorHandler.OpenFile(save);
             else
                 ConsoleHandler.appendLog("Decrypted save file not found");
+        }
+
+        private void MonkeyWrenchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening download for Monkey Wrench");
+            Process.Start("https://www.dropbox.com/s/j85siq4gu7yxdtc/monkey_wrench.exe?dl=1");
+        }
+
+        private void MonkeyWrenchToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendLog("Monkey Wrench is a great tool made by Topper, that allows you to convert .jpng files into regular .png files, and back again.");
+            ConsoleHandler.force_appendLog("Once it's opened, type     \'help\'     without quotes, to learn how to use the commands.");
         }
     }
 }

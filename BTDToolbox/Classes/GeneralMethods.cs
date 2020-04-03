@@ -22,7 +22,7 @@ namespace BTDToolbox
         public static bool badJetPass = false;
 
         public static ConfigFile programData;
-
+        
         public static void DeleteFile(string fileName)
         {
             if (File.Exists(fileName))

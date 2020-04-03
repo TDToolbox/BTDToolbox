@@ -46,7 +46,7 @@ namespace BTDToolbox.SaveEditor
         public static void FindSaveFiles()
         {
             ConsoleHandler.appendLog("Attempting to automatically find save folder...");
-            string steam = CheckDirsForSteam();
+            string steam = CheckDirsForSteam("\\userdata");
             if (steam != "")
             {
                 //Find btd5 save
@@ -90,7 +90,7 @@ namespace BTDToolbox.SaveEditor
             }
             return "";
         }
-        public static string CheckDirsForSteam()
+        public static string CheckDirsForSteam(string searchFolder)
         {
             string path = "";
             //Check if Steam is in the main drive
@@ -101,9 +101,9 @@ namespace BTDToolbox.SaveEditor
                     path = drive + p + "\\Steam";
                     if (Directory.Exists(path))
                     {
-                        if (Directory.Exists(path + "\\userdata"))
+                        if (Directory.Exists(path + searchFolder))
                         {
-                            return path + "\\userdata";
+                            return path + searchFolder;
                         }
                     }
                 }
