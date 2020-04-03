@@ -22,7 +22,7 @@ namespace BTDToolbox
         public static bool badJetPass = false;
 
         public static ConfigFile programData;
-
+        
         public static void DeleteFile(string fileName)
         {
             if (File.Exists(fileName))
@@ -523,7 +523,7 @@ namespace BTDToolbox
                         else if (game == "BTDB")
                             Main.BTDB_Dir = gameDir;
 
-                        Serializer.SaveConfig(Main.getInstance(), "directories", programData);
+                        Serializer.SaveConfig(Main.getInstance(), "directories");
                     }
                     else
                     {
@@ -557,7 +557,7 @@ namespace BTDToolbox
                 else if (Main.gameName != "" && Main.gameName != null)
                 {
                     gameNameTemp = Main.gameName;
-                    Serializer.SaveConfig(Main.getInstance(), "main", Serializer.Deserialize_Config());
+                    Serializer.SaveConfig(Main.getInstance(), "main");
                 }
                 
                 if(gameNameTemp != "" && gameNameTemp != null)
@@ -592,7 +592,7 @@ namespace BTDToolbox
                                 ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
                                 dest = OutputJet();
                                 ZipForm.savedExportPath = dest;
-                                Serializer.SaveSmallSettings("export path", Serializer.Deserialize_Config());
+                                Serializer.SaveSmallSettings("export path");
                             }
                             zip.destPath = dest;
                         }
@@ -629,7 +629,7 @@ namespace BTDToolbox
                                                 ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
                                                 dest = OutputJet();
                                                 ZipForm.savedExportPath = dest;
-                                                Serializer.SaveSmallSettings("export path", Serializer.Deserialize_Config());
+                                                Serializer.SaveSmallSettings("export path");
                                             }
                                             zip.destPath = dest;
                                         }

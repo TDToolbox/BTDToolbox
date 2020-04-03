@@ -16,13 +16,21 @@ namespace BTDToolbox
 {
     public class Serializer
     {
-        public static void SaveSmallSettings(string formName, ConfigFile serialize_config)
+        public static void SaveSmallSettings(string formName)
         {
             var cfg = Serializer.Deserialize_Config();
 
             if (formName == "export path")
             {
                 cfg.ExportPath = ZipForm.savedExportPath;
+            }
+            if (formName == "btd5 save")
+            {
+                cfg.SavePathBTD5 = SaveEditor.TryFindSteam.BTD5SavePath;
+            }
+            if (formName == "btdb save")
+            {
+                cfg.SavePathBTDB = SaveEditor.TryFindSteam.BTDBSavePath;
             }
             if (formName == "updater")
             {
@@ -50,7 +58,7 @@ namespace BTDToolbox
             serialize.Write(output_Cfg);
             serialize.Close();
         }
-        public static void SaveJSONEditor_Instance(JsonEditor_Instance jeditor, ConfigFile serialize_config)
+        public static void SaveJSONEditor_Instance(JsonEditor_Instance jeditor)
         {
             var cfg = Serializer.Deserialize_Config();
             if(jeditor!= null)
@@ -63,8 +71,9 @@ namespace BTDToolbox
                 serialize.Close();
             }
         }
-        public static void SaveJSONEditor_Tabs(ConfigFile cfg)
+        public static void SaveJSONEditor_Tabs()
         {
+            var cfg = Serializer.Deserialize_Config();
             if (JsonEditorHandler.jeditor != null)
             {
                 cfg.JsonEditor_OpenedTabs = JsonEditorHandler.jeditor.tabFilePaths;
@@ -79,7 +88,7 @@ namespace BTDToolbox
             serialize.Close();
         }
         
-        public static void SaveConfig(Form frm, string formName, ConfigFile serialize_config)
+        public static void SaveConfig(Form frm, string formName)
         {
             var cfg = Serializer.Deserialize_Config();
 
@@ -212,6 +221,9 @@ namespace BTDToolbox
                     programData.JSON_Editor_PosX = 462;
                     programData.JSON_Editor_PosY = 0;
                     programData.JSON_Editor_FontSize = 13;
+
+                    programData.SavePathBTD5 = "";
+                    programData.SavePathBTDB = "";
 
                     string output_Cfg = JsonConvert.SerializeObject(programData, Formatting.Indented);
 

@@ -190,15 +190,15 @@ namespace BTDToolbox
         }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor", programData);
-            Serializer.SaveJSONEditor_Tabs(programData);
+            Serializer.SaveConfig(this, "json editor");
+            Serializer.SaveJSONEditor_Tabs();
             if(userControls.Count >0)
-                Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex], programData);
+                Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex]);
             JsonEditorHandler.jeditor = null;
         }
         private void Close_button_Click(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor", programData);
+            Serializer.SaveConfig(this, "json editor");
             if (JsonEditorHandler.AreJsonErrors())
             {
                 DialogResult diag = MessageBox.Show(tabControl1.SelectedTab.Text + " has a Json Error! Your mod will break if you don't fix it.\nClose anyways?", "WARNING!!", MessageBoxButtons.YesNo);

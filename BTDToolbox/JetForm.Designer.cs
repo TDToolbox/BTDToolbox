@@ -451,7 +451,7 @@
             this.viewOriginal_CMButton,
             this.RestoreToOriginal_CMButton});
             this.OneSelected_CM.Name = "OneSelected_CM";
-            this.OneSelected_CM.Size = new System.Drawing.Size(184, 242);
+            this.OneSelected_CM.Size = new System.Drawing.Size(184, 264);
             this.OneSelected_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.OneSelected_CM_ItemClicked);
             // 
             // openFileToolStripMenuItem

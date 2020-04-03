@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuickType;
 using System.Windows.Forms;
 using BTDToolbox.Classes;
 using System.IO;
@@ -22,7 +23,12 @@ namespace BTDToolbox
         public bool jsonError;
         public string path = "";
         public string filename = "";
-
+        string file = "";
+        string towerSpriteUpgradeDef = ""; //if user set custom tower sprite upgrade def
+        string towerName = ""; //if user set custom tower sprite upgrade def, used to keep track of actual tower
+        string towerTypeName = "";
+        string specialty = "";
+        
         //Tab new line vars
         string tab;
         bool tabLine = false;
@@ -49,6 +55,9 @@ namespace BTDToolbox
             SearchOptions_Panel.KeyDown += Find_TB_KeyDown;
             SearchOptions_Button.KeyDown += Find_TB_KeyDown;
             Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
+            Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
+
+            //path and filename have NOT been set yet. Use FinishedLoading()
         }
         public void FinishedLoading()
         {
@@ -59,6 +68,9 @@ namespace BTDToolbox
                 Editor_TextBox.Font = new Font("Consolas", 14);
             tB_line.Font = Editor_TextBox.Font;
             FontSize_TextBox.Text = Editor_TextBox.Font.Size.ToString();
+
+            if (path.Contains("Profile.save"))
+                Encrypt_Button.Visible = true;
         }
         //
         //JSON
@@ -135,8 +147,8 @@ namespace BTDToolbox
                 JsonEditorHandler.CloseFile(path);
                 if(programData == null)
                     programData = Serializer.Deserialize_Config();
-                Serializer.SaveJSONEditor_Instance(this, programData);
-                Serializer.SaveJSONEditor_Tabs(programData);
+                Serializer.SaveJSONEditor_Instance(this);
+                Serializer.SaveJSONEditor_Tabs();
             }
             else
             {
@@ -147,13 +159,13 @@ namespace BTDToolbox
                     if (programData == null)
                         programData = Serializer.Deserialize_Config();
                     JsonEditorHandler.CloseFile(path);
-                    Serializer.SaveJSONEditor_Instance(this, programData);
+                    Serializer.SaveJSONEditor_Instance(this);
                 }
             }
         }
 
         //
-        //EZ Tools and text formatting
+        //EZ Tools, Open buttons, and text formatting
         //
         private int IndentNewLines()
         {
@@ -172,6 +184,8 @@ namespace BTDToolbox
         }
         private void HandleTools()
         {
+            PopulateOpenButton();
+            
             if (path.EndsWith("tower"))
                 EZTowerEditor_Button.Visible = true;
             else
@@ -187,7 +201,222 @@ namespace BTDToolbox
             else
                 EZCard_Button.Visible = false;
         }
+        private string GetTowerName()
+        {
+            string towerName = "";
+            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            if (!Directory.Exists(projPath + "TowerDefinitions"))
+            {
+                return towerName;
+            }
+            foreach (var x in Directory.GetFiles(projPath + "TowerDefinitions"))
+            {
+                string json = File.ReadAllText(x);
+                if (JSON_Reader.IsValidJson(json))
+                {
+                    Tower_Class.Artist t = new Tower_Class.Artist();
+                    t = Tower_Class.Artist.FromJson(json);
+                    if (t != null)
+                    {
+                        if (t.SpriteUpgradeDefinition != null)
+                        {
+                            if (t.SpriteUpgradeDefinition.Replace(".json", "") == file.Replace(".json", ""))
+                            {
+                                towerName = x.Replace(projPath + "TowerDefinitions\\", "");
+                                towerTypeName = t.TypeName;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return towerName;
+        }
+        public string GetSpecialtyBuilding()
+        {
+            string specialtyBuilding = "";
+            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            
+            if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
+                return specialtyBuilding;
+            foreach (var x in Directory.GetFiles(projPath + "SpecialtyDefinitions"))
+            {
+                string json = File.ReadAllText(x);
+                if (JSON_Reader.IsValidJson(json))
+                {
+                    SpecialtyBuildingClass s = new SpecialtyBuildingClass();
+                    s = SpecialtyBuildingClass.FromJson(json);
 
+                    if (s != null)
+                    {
+                        
+                        if (s.RelatedTower != null)
+                        {
+                            //ConsoleHandler.appendLog_CanRepeat(s.RelatedTower);
+                            if (s.RelatedTower == towerTypeName)
+                            {
+                                specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
+                                towerTypeName = s.RelatedTower;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return specialtyBuilding;
+        }
+        private void PopulateOpenButton()
+        {
+            if (path.EndsWith("tower") || path.EndsWith("upgrades") || path.EndsWith("weapon") || path.Contains("TowerSpriteUpgradeDefinitions") || path.Contains("SpecialtyDefinitions"))
+            {
+                Open_Button.Visible = true;
+                Weapons_Button.DropDownItems.Clear();
+                file = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+                string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+
+                towerName = GetTowerName();
+                if (towerName != "")
+                {
+                    file = towerName.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+                }
+
+                specialty = GetSpecialtyBuilding();
+                if (path.Contains("SpecialtyDefinitions"))
+                {
+                    string json = File.ReadAllText(path);
+                    if (JSON_Reader.IsValidJson(json))
+                    {
+                        SpecialtyBuildingClass s = new SpecialtyBuildingClass();
+                        s = SpecialtyBuildingClass.FromJson(json);
+                        towerTypeName = s.RelatedTower;
+                    }
+                    file = towerTypeName;
+                }
+
+                if (File.Exists(projPath + "TowerDefinitions\\" + file + ".tower"))
+                {
+                    TowerFile_Button.Visible = true;
+                    TowerFile_Button.Text = file + ".tower";
+                }
+                else
+                    TowerFile_Button.Visible = false;
+
+                if (File.Exists(projPath + "UpgradeDefinitions\\" + file + ".upgrades"))
+                    UpgradeFIle_Button.Text = file + ".upgrades";
+                else
+                    UpgradeFIle_Button.Visible = false;
+
+                if (!specialty.Contains(".json"))
+                    specialty = specialty + ".json";
+                if (specialty!= null && specialty != "")
+                {
+                    if (File.Exists(projPath + "SpecialtyDefinitions\\" + specialty))
+                        specialtyBuildingToolStripMenuItem.Visible = true;
+                    else
+                        specialtyBuildingToolStripMenuItem.Visible = false;
+                }
+                
+
+                if (Directory.Exists(projPath + "WeaponDefinitions\\" + file))
+                {
+                    string weaponDir = projPath + "WeaponDefinitions\\" + file;
+                    foreach (var x in Directory.GetFiles(weaponDir))
+                    {
+                        string[] split = x.Split('\\');
+                        Weapons_Button.DropDownItems.Add(split[split.Length-1]);
+                    }
+                }
+                else
+                    Weapons_Button.Visible = false;
+
+
+                //TowerSpriteUpgradeDef
+                //Attempting to get the TowerSpriteUpgradeDef from tower file
+                Tower_Class.Artist tower = new Tower_Class.Artist();
+                string towerfile = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+                if (File.Exists(towerfile))
+                {
+                    string json = File.ReadAllText(towerfile);
+                    if (JSON_Reader.IsValidJson(json))
+                    {
+                        tower = Tower_Class.Artist.FromJson(json);
+                        if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
+                        {
+                            TowerSpriteUpgradeDef_Button.Visible = false;
+                        }
+                        else
+                            towerSpriteUpgradeDef = tower.SpriteUpgradeDefinition;
+                    }
+                    else
+                    {
+                        if (File.Exists(projPath + "TowerSpriteUpgradeDefinitions\\" + file + ".json"))
+                        {
+                            ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Using default one instead...");
+                        }
+                        else
+                        {
+                            ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Additionally, the default one does not exist. Unable to open TowerSpriteUpgradeDef");
+                            TowerSpriteUpgradeDef_Button.Visible = false;
+                        }                      
+                    }
+                }
+                else
+                {
+                    if (!File.Exists(projPath + "TowerSpriteUpgradeDefinitions\\" + file + ".json"))
+                        TowerSpriteUpgradeDef_Button.Visible = false;
+                }
+            }
+            else if (!path.EndsWith("tower") && !path.EndsWith("upgrades") && !path.EndsWith("weapon") && !path.Contains("TowerSpriteUpgradeDefinitions"))
+            {
+                Open_Button.Visible = false;
+            }
+        }
+        private void TowerFile_Button_Click(object sender, EventArgs e)
+        {
+            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+        }
+        private void UpgradeFIle_Button_Click(object sender, EventArgs e)
+        {
+            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+        }
+        private void Weapons_Button_Click(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string weaponfile = e.ClickedItem.Text.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+            string foldername = "";
+            if (towerName != "")
+            {
+                foldername = towerName.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+            }
+            else
+                foldername = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
+
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+        }
+        private void TowerSpriteUpgradeDef_Button_Click(object sender, EventArgs e)
+        {
+            if (towerSpriteUpgradeDef == "")
+                towerSpriteUpgradeDef = file;
+            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
+            if (!filepath.EndsWith(".json"))
+                filepath = filepath + ".json";
+
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+            else
+                ConsoleHandler.appendLog("The TowerSpriteUpgradeDef  " + towerSpriteUpgradeDef + " was not found");
+        }
+        private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+        }
         //
         //Add line numbers
         //
@@ -632,7 +861,7 @@ namespace BTDToolbox
 
             Editor_TextBox.Font = new Font("Consolas", FontSize);
             tB_line.Font = new Font("Consolas", FontSize);
-            Serializer.SaveJSONEditor_Instance(this, programData);
+            Serializer.SaveJSONEditor_Instance(this);
         }
         private void EZTowerEditor_Button_Click(object sender, EventArgs e)
         {
@@ -765,6 +994,33 @@ namespace BTDToolbox
                 JsonEditorHandler.OpenOriginalFile(path);
             else
                 ConsoleHandler.appendNotice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
+        }
+
+
+        //
+        //Save editor stuff
+        //
+        private void Encrypt_Button_Click(object sender, EventArgs e)
+        {
+            if(!jsonError)
+            {
+                if (filename.StartsWith("BTD5"))
+                {
+                    SaveEditor.SaveEditor.EncryptSave("BTD5");
+                }
+                else if (filename.StartsWith("BTDB"))
+                {
+                    SaveEditor.SaveEditor.EncryptSave("BTDB");
+                }
+                else if (filename.StartsWith("UnknownGame"))
+                {
+                    SaveEditor.SaveEditor.EncryptSave("UnknownGame");
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("You need to fix your JSON error before continuing...");
+            }
         }
     }
 }

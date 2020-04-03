@@ -84,7 +84,6 @@ namespace BTDToolbox
         {
             string zipPath = Environment.CurrentDirectory + "\\" + toolbox_updater_zipName;
             string extractedFilePath = Environment.CurrentDirectory;
-
             ConsoleHandler.appendLog("Extracting updater...");
             ZipFile archive = new ZipFile(zipPath);
             foreach (ZipEntry e in archive)
@@ -113,7 +112,7 @@ namespace BTDToolbox
             //save config real quick
             UpdateChangelog.recentUpdate = true;
             programData = DeserializeConfig();
-            Serializer.SaveSmallSettings("updater", programData);
+            Serializer.SaveSmallSettings("updater");
 
             Process p = new Process();
             p.StartInfo.Arguments = "-lineNumber:0 -url:https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Updater_launch%20parameters";
