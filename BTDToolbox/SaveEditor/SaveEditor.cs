@@ -10,6 +10,8 @@ using System.Windows.Forms;
 
 namespace BTDToolbox.SaveEditor
 {
+    //this requires code made by Vadmeme on github
+    //https://github.com/Vadmeme/BTDSaveEditor
     class SaveEditor
     {
         public static string savemodDir = Environment.CurrentDirectory + "\\Save mods";

@@ -807,12 +807,6 @@ namespace BTDToolbox
             BattlesPassManager mgr = new BattlesPassManager();
             mgr.Show();
         }
-
-        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            var x = new SaveEditor.SaveEditorTest();
-            x.Show();
-        }
         private void BTD5SaveModToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string save = Serializer.Deserialize_Config().SavePathBTD5;
@@ -877,6 +871,12 @@ namespace BTDToolbox
         {
             ConsoleHandler.force_appendLog("Monkey Wrench is a great tool made by Topper, that allows you to convert .jpng files into regular .png files, and back again.");
             ConsoleHandler.force_appendLog("Once it's opened, type     \'help\'     without quotes, to learn how to use the commands.");
+        }
+
+        private void SaveEditorToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        {
+            ConsoleHandler.force_appendLog("This save editor was originally made by Vadmeme on github. They're allowing anyone to use it, so we added it to toolbox.");
+            ConsoleHandler.force_appendLog("If you're interested, the link for it is here: https://github.com/Vadmeme/BTDSaveEditor");
         }
     }
 }

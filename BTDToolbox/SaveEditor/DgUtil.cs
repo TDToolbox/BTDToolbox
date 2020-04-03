@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace DgDecryptor
 {
+    //this was made by Vadmeme on github
+    //https://github.com/Vadmeme/BTDSaveEditor
+
     class DgUtil
     {
 
