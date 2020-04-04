@@ -44,13 +44,7 @@ Click on "Save .jet" (CTRL+S) in the JetViewer window and then pick a spot to ex
 Give out your modded .jet to whomever and have them place it into their game's files.
 
 ## Debugging & Future features
-There are a bunch of unfinished features inside, so expect bugs when working with those.
-Here is a list of known not finished features as of 08/09/2019 (dd/mm/yyyy)
-- ``File -> Open Recent``
-- ``File -> Settings``
-- ``Edit -> *``
-- ``View -> Jet Explorer``
-- ``Debug -> *`` (Anything under here is used for testing & development of the program, you shouldn't need to touch these)
+There are still unfinished features inside, so you might encounter bugs. Let us know if you find any
 
 ## Help
 Need help? You can ask for help [here](https://discord.gg/Yr2tYte), all of the developers for the program can be found here.
