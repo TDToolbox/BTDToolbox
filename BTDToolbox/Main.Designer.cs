@@ -531,12 +531,14 @@
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(201, 6);
+            this.toolStripSeparator9.Visible = false;
             // 
             // bTDBPasswordManagerToolStripMenuItem
             // 
             this.bTDBPasswordManagerToolStripMenuItem.Name = "bTDBPasswordManagerToolStripMenuItem";
             this.bTDBPasswordManagerToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.bTDBPasswordManagerToolStripMenuItem.Text = "BTDB Password manager";
+            this.bTDBPasswordManagerToolStripMenuItem.Visible = false;
             this.bTDBPasswordManagerToolStripMenuItem.Click += new System.EventHandler(this.BTDBPasswordManagerToolStripMenuItem_Click);
             // 
             // EZ_Tools
@@ -812,21 +814,21 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // TestForm
             // 
             this.TestForm.Name = "TestForm";
-            this.TestForm.Size = new System.Drawing.Size(180, 22);
+            this.TestForm.Size = new System.Drawing.Size(148, 22);
             this.TestForm.Text = "JSON Editor";
             this.TestForm.Click += new System.EventHandler(this.TestForm_Click);
             // 
             // testingToolStripMenuItem
             // 
             this.testingToolStripMenuItem.Name = "testingToolStripMenuItem";
-            this.testingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.testingToolStripMenuItem.Text = "Testing";
             this.testingToolStripMenuItem.Click += new System.EventHandler(this.TestingToolStripMenuItem_Click);
             // 
