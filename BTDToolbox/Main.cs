@@ -752,7 +752,7 @@ namespace BTDToolbox
         private void FontForPCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening download for BTD Font for PC");
-            Process.Start("https://www.dropbox.com/s/k7y2utz42b5eg06/Oetztype.TTF?dl=1");
+            Process.Start("https://drive.google.com/open?id=19CgzvVJWo1E7lP-YSzaezGW79grUalnY");
         }
 
         private void OnlineFontGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -864,7 +864,7 @@ namespace BTDToolbox
         private void MonkeyWrenchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening download for Monkey Wrench");
-            Process.Start("https://www.dropbox.com/s/j85siq4gu7yxdtc/monkey_wrench.exe?dl=1");
+            Process.Start("https://drive.google.com/open?id=1lmQUXRRGHkuZIDqTzP2A3YhEDb5NfRuU");
         }
 
         private void MonkeyWrenchToolStripMenuItem_MouseHover(object sender, EventArgs e)
