@@ -494,11 +494,12 @@ namespace BTDToolbox
                     {
                         File.Copy(newPath, newPath.Replace(name, dest), true);
                     }
+
+                    treeView1.Nodes.Clear();
+                    listView1.Items.Clear();
+                    PopulateTreeView();
                 }
             }
-            treeView1.Nodes.Clear();
-            listView1.Items.Clear();
-            PopulateTreeView();
         }
         private void selectAll()
         {
