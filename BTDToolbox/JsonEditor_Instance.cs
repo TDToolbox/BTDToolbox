@@ -13,6 +13,9 @@ using System.IO;
 using BTDToolbox.Extra_Forms;
 using static BTDToolbox.ProjectConfig;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace BTDToolbox
 {
@@ -28,6 +31,7 @@ namespace BTDToolbox
         string towerName = ""; //if user set custom tower sprite upgrade def, used to keep track of actual tower
         string towerTypeName = "";
         string specialty = "";
+        bool hasPastedCode = false;
         
         //Tab new line vars
         string tab;
@@ -77,6 +81,11 @@ namespace BTDToolbox
         //
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
+            if (hasPastedCode == true)
+            {
+                ReformatText();
+                hasPastedCode = false;
+            }
             CheckJSON(Editor_TextBox.Text);
             File.WriteAllText(path, Editor_TextBox.Text);
 
@@ -340,12 +349,15 @@ namespace BTDToolbox
                     if (JSON_Reader.IsValidJson(json))
                     {
                         tower = Tower_Class.Artist.FromJson(json);
-                        if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
+                        if (tower != null)
                         {
-                            TowerSpriteUpgradeDef_Button.Visible = false;
+                            if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
+                            {
+                                TowerSpriteUpgradeDef_Button.Visible = false;
+                            }
+                            else
+                                towerSpriteUpgradeDef = tower.SpriteUpgradeDefinition;
                         }
-                        else
-                            towerSpriteUpgradeDef = tower.SpriteUpgradeDefinition;
                     }
                     else
                     {
@@ -851,6 +863,10 @@ namespace BTDToolbox
                 }
                 ShowSearchMenu("replace");
             }
+            if (e.Control && (e.KeyCode == Keys.V || e.KeyCode == Keys.X))
+            {
+                hasPastedCode = true;
+            }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1021,6 +1037,37 @@ namespace BTDToolbox
             {
                 ConsoleHandler.force_appendNotice("You need to fix your JSON error before continuing...");
             }
+        }
+        private void ReformatJSON_Button_Click(object sender, EventArgs e)
+        {
+            ReformatText();
+        }
+        private void ReformatText()
+        {
+            int selectedIndex = Editor_TextBox.SelectionStart;
+            Editor_TextBox.Text = Regex.Replace(Editor_TextBox.Text, @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline);
+            string unformattedText = Editor_TextBox.Text;
+            Editor_TextBox.Text = "";
+            try
+            {
+                JToken jt = JToken.Parse(unformattedText);
+                string formattedText = jt.ToString(Formatting.Indented);
+                formattedText = formattedText.Replace("\\t", "").Replace("\\n", "");
+                Editor_TextBox.Text = formattedText;
+            }
+            catch (Exception)
+            {
+                Editor_TextBox.Text = unformattedText;
+            }
+            AddLineNumbers();
+            Editor_TextBox.SelectionStart = selectedIndex;
+        }
+        private void FindSubtask_Button_Click(object sender, EventArgs e)
+        {
+            if (!Find_Panel.Visible)
+                ShowSearchMenu("find");
+            Option1_CB.Checked = true;
+            ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
         }
     }
 }

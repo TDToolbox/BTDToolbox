@@ -79,6 +79,7 @@
             this.findSubtaskToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.getThisSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Encrypt_Button = new System.Windows.Forms.Button();
+            this.ReformatJSON_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -150,6 +151,7 @@
             this.ShowFindMenu_Button,
             this.ShowReplaceMenu_Button,
             this.FindSubtask_Button,
+            this.ReformatJSON_Button,
             this.EZCard_Button,
             this.EZBoon_Button,
             this.EZTowerEditor_Button,
@@ -172,12 +174,14 @@
             this.Undo_Button.Name = "Undo_Button";
             this.Undo_Button.Size = new System.Drawing.Size(201, 22);
             this.Undo_Button.Text = "Undo                (Ctrl + Z)";
+            this.Undo_Button.Visible = false;
             // 
             // Redo_Button
             // 
             this.Redo_Button.Name = "Redo_Button";
             this.Redo_Button.Size = new System.Drawing.Size(201, 22);
             this.Redo_Button.Text = "Redo                 (Ctrl + R)";
+            this.Redo_Button.Visible = false;
             // 
             // ShowFindMenu_Button
             // 
@@ -198,6 +202,7 @@
             this.FindSubtask_Button.Name = "FindSubtask_Button";
             this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
             this.FindSubtask_Button.Text = "Find Subtask";
+            this.FindSubtask_Button.Click += new System.EventHandler(this.FindSubtask_Button_Click);
             // 
             // EZCard_Button
             // 
@@ -555,6 +560,13 @@
             this.Encrypt_Button.Visible = false;
             this.Encrypt_Button.Click += new System.EventHandler(this.Encrypt_Button_Click);
             // 
+            // ReformatJSON_Button
+            // 
+            this.ReformatJSON_Button.Name = "ReformatJSON_Button";
+            this.ReformatJSON_Button.Size = new System.Drawing.Size(201, 22);
+            this.ReformatJSON_Button.Text = "Re-format JSON";
+            this.ReformatJSON_Button.Click += new System.EventHandler(this.ReformatJSON_Button_Click);
+            // 
             // JsonEditor_Instance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -634,5 +646,6 @@
         private System.Windows.Forms.ToolStripMenuItem TowerSpriteUpgradeDef_Button;
         private System.Windows.Forms.ToolStripMenuItem specialtyBuildingToolStripMenuItem;
         private System.Windows.Forms.Button Encrypt_Button;
+        private System.Windows.Forms.ToolStripMenuItem ReformatJSON_Button;
     }
 }
