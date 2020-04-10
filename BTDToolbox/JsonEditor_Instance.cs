@@ -248,6 +248,7 @@ namespace BTDToolbox
             
             if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
                 return specialtyBuilding;
+
             foreach (var x in Directory.GetFiles(projPath + "SpecialtyDefinitions"))
             {
                 string json = File.ReadAllText(x);
@@ -261,7 +262,6 @@ namespace BTDToolbox
                         
                         if (s.RelatedTower != null)
                         {
-                            //ConsoleHandler.appendLog_CanRepeat(s.RelatedTower);
                             if (s.RelatedTower == towerTypeName)
                             {
                                 specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");

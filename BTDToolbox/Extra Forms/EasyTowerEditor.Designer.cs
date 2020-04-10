@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EasyTowerEditor));
             this.Upgrades_ListBox = new System.Windows.Forms.ListBox();
             this.TowerName_TextBox = new System.Windows.Forms.RichTextBox();
             this.TowerType_Label = new System.Windows.Forms.Label();
@@ -80,9 +81,17 @@
             this.SwitchPanel = new System.Windows.Forms.Button();
             this.OpenText_Button = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Toolbar = new System.Windows.Forms.ToolStrip();
+            this.Open_Button = new System.Windows.Forms.ToolStripDropDownButton();
+            this.Weapons_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.TowerFile_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.UpgradeFile_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.specialtyBuildingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TowerSpriteUpgradeDef_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.TowerPanel.SuspendLayout();
             this.UpgradesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Toolbar.SuspendLayout();
             this.SuspendLayout();
             // 
             // Upgrades_ListBox
@@ -118,7 +127,7 @@
             this.TowerType_Label.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.TowerType_Label.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TowerType_Label.ForeColor = System.Drawing.Color.White;
-            this.TowerType_Label.Location = new System.Drawing.Point(14, 18);
+            this.TowerType_Label.Location = new System.Drawing.Point(14, 34);
             this.TowerType_Label.Name = "TowerType_Label";
             this.TowerType_Label.Size = new System.Drawing.Size(162, 35);
             this.TowerType_Label.TabIndex = 3;
@@ -645,7 +654,7 @@
             this.AllTowerFiles_ComboBox.FormattingEnabled = true;
             this.AllTowerFiles_ComboBox.IntegralHeight = false;
             this.AllTowerFiles_ComboBox.ItemHeight = 19;
-            this.AllTowerFiles_ComboBox.Location = new System.Drawing.Point(24, 56);
+            this.AllTowerFiles_ComboBox.Location = new System.Drawing.Point(24, 75);
             this.AllTowerFiles_ComboBox.Name = "AllTowerFiles_ComboBox";
             this.AllTowerFiles_ComboBox.Size = new System.Drawing.Size(398, 27);
             this.AllTowerFiles_ComboBox.TabIndex = 48;
@@ -749,7 +758,7 @@
             this.OpenText_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OpenText_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.OpenText_Button.ForeColor = System.Drawing.Color.White;
-            this.OpenText_Button.Location = new System.Drawing.Point(440, 54);
+            this.OpenText_Button.Location = new System.Drawing.Point(440, 75);
             this.OpenText_Button.Name = "OpenText_Button";
             this.OpenText_Button.Size = new System.Drawing.Size(117, 32);
             this.OpenText_Button.TabIndex = 66;
@@ -766,20 +775,84 @@
             this.pictureBox1.TabIndex = 125;
             this.pictureBox1.TabStop = false;
             // 
+            // Toolbar
+            // 
+            this.Toolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Open_Button});
+            this.Toolbar.Location = new System.Drawing.Point(0, 0);
+            this.Toolbar.Name = "Toolbar";
+            this.Toolbar.Size = new System.Drawing.Size(1066, 25);
+            this.Toolbar.TabIndex = 127;
+            this.Toolbar.Text = "toolStrip1";
+            // 
+            // Open_Button
+            // 
+            this.Open_Button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Open_Button.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Weapons_Button,
+            this.TowerFile_Button,
+            this.UpgradeFile_Button,
+            this.specialtyBuildingToolStripMenuItem,
+            this.TowerSpriteUpgradeDef_Button});
+            this.Open_Button.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Open_Button.ForeColor = System.Drawing.Color.White;
+            this.Open_Button.Image = ((System.Drawing.Image)(resources.GetObject("Open_Button.Image")));
+            this.Open_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Open_Button.Name = "Open_Button";
+            this.Open_Button.Size = new System.Drawing.Size(53, 22);
+            this.Open_Button.Text = "Open";
+            this.Open_Button.Click += new System.EventHandler(this.Open_Button_Click);
+            // 
+            // Weapons_Button
+            // 
+            this.Weapons_Button.Name = "Weapons_Button";
+            this.Weapons_Button.Size = new System.Drawing.Size(217, 22);
+            this.Weapons_Button.Text = "Weapons";
+            // 
+            // TowerFile_Button
+            // 
+            this.TowerFile_Button.Name = "TowerFile_Button";
+            this.TowerFile_Button.Size = new System.Drawing.Size(217, 22);
+            this.TowerFile_Button.Text = ".tower file";
+            this.TowerFile_Button.Click += new System.EventHandler(this.TowerFile_Button_Click);
+            // 
+            // UpgradeFile_Button
+            // 
+            this.UpgradeFile_Button.Name = "UpgradeFile_Button";
+            this.UpgradeFile_Button.Size = new System.Drawing.Size(217, 22);
+            this.UpgradeFile_Button.Text = ".upgrade file";
+            this.UpgradeFile_Button.Click += new System.EventHandler(this.UpgradeFile_Button_Click);
+            // 
+            // specialtyBuildingToolStripMenuItem
+            // 
+            this.specialtyBuildingToolStripMenuItem.Name = "specialtyBuildingToolStripMenuItem";
+            this.specialtyBuildingToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.specialtyBuildingToolStripMenuItem.Text = "Specialty Building";
+            this.specialtyBuildingToolStripMenuItem.Click += new System.EventHandler(this.SpecialtyBuildingToolStripMenuItem_Click);
+            // 
+            // TowerSpriteUpgradeDef_Button
+            // 
+            this.TowerSpriteUpgradeDef_Button.Name = "TowerSpriteUpgradeDef_Button";
+            this.TowerSpriteUpgradeDef_Button.Size = new System.Drawing.Size(217, 22);
+            this.TowerSpriteUpgradeDef_Button.Text = "TowerSpriteUpgradeDef";
+            this.TowerSpriteUpgradeDef_Button.Click += new System.EventHandler(this.TowerSpriteUpgradeDef_Button_Click);
+            // 
             // EasyTowerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
+            this.Controls.Add(this.Toolbar);
             this.Controls.Add(this.OpenText_Button);
             this.Controls.Add(this.SwitchPanel);
             this.Controls.Add(this.AllTowerFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.TowerType_Label);
-            this.Controls.Add(this.UpgradesPanel);
             this.Controls.Add(this.TowerPanel);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.UpgradesPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";
@@ -791,6 +864,8 @@
             this.UpgradesPanel.ResumeLayout(false);
             this.UpgradesPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Toolbar.ResumeLayout(false);
+            this.Toolbar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -850,5 +925,12 @@
         private System.Windows.Forms.CheckBox UsePlacementRadius_Checkbox;
         private System.Windows.Forms.Button OpenText_Button;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStrip Toolbar;
+        private System.Windows.Forms.ToolStripDropDownButton Open_Button;
+        private System.Windows.Forms.ToolStripMenuItem TowerFile_Button;
+        private System.Windows.Forms.ToolStripMenuItem UpgradeFile_Button;
+        private System.Windows.Forms.ToolStripMenuItem Weapons_Button;
+        private System.Windows.Forms.ToolStripMenuItem TowerSpriteUpgradeDef_Button;
+        private System.Windows.Forms.ToolStripMenuItem specialtyBuildingToolStripMenuItem;
     }
 }
