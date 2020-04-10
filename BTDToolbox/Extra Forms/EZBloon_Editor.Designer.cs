@@ -627,6 +627,7 @@
             // AdvancedView_Checkbox
             // 
             this.AdvancedView_Checkbox.AutoSize = true;
+            this.AdvancedView_Checkbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.AdvancedView_Checkbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.AdvancedView_Checkbox.ForeColor = System.Drawing.Color.White;
             this.AdvancedView_Checkbox.Location = new System.Drawing.Point(911, 20);
@@ -634,7 +635,7 @@
             this.AdvancedView_Checkbox.Size = new System.Drawing.Size(143, 24);
             this.AdvancedView_Checkbox.TabIndex = 60;
             this.AdvancedView_Checkbox.Text = "Advanced users";
-            this.AdvancedView_Checkbox.UseVisualStyleBackColor = true;
+            this.AdvancedView_Checkbox.UseVisualStyleBackColor = false;
             this.AdvancedView_Checkbox.CheckedChanged += new System.EventHandler(this.AdvancedView_Checkbox_CheckedChanged);
             // 
             // ChildBloons_Button
@@ -772,7 +773,7 @@
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.pictureBox1.Location = new System.Drawing.Point(-71, -5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1225, 74);
+            this.pictureBox1.Size = new System.Drawing.Size(1225, 253);
             this.pictureBox1.TabIndex = 125;
             this.pictureBox1.TabStop = false;
             // 
@@ -789,10 +790,10 @@
             this.Controls.Add(this.BloonFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.BloonType_Label);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.Panel2);
             this.Controls.Add(this.Panel3);
+            this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;

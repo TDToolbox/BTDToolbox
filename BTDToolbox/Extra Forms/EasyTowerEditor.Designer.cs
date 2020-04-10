@@ -79,8 +79,10 @@
             this.UpgradesPanel = new System.Windows.Forms.Panel();
             this.SwitchPanel = new System.Windows.Forms.Button();
             this.OpenText_Button = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TowerPanel.SuspendLayout();
             this.UpgradesPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Upgrades_ListBox
@@ -653,6 +655,7 @@
             // 
             this.TowerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TowerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.TowerPanel.Controls.Add(this.UsePlacementRadius_Checkbox);
             this.TowerPanel.Controls.Add(this.label2);
             this.TowerPanel.Controls.Add(this.TowerName_TextBox);
@@ -701,6 +704,7 @@
             // 
             this.UpgradesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.UpgradesPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.UpgradesPanel.Controls.Add(this.Upgrades_ListBox);
             this.UpgradesPanel.Controls.Add(this.label3);
             this.UpgradesPanel.Controls.Add(this.UpgradeName_TextBox);
@@ -753,19 +757,29 @@
             this.OpenText_Button.UseVisualStyleBackColor = false;
             this.OpenText_Button.Click += new System.EventHandler(this.OpenText_Button_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.pictureBox1.Location = new System.Drawing.Point(-15, -9);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1225, 289);
+            this.pictureBox1.TabIndex = 125;
+            this.pictureBox1.TabStop = false;
+            // 
             // EasyTowerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
             this.Controls.Add(this.OpenText_Button);
             this.Controls.Add(this.SwitchPanel);
             this.Controls.Add(this.AllTowerFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.TowerType_Label);
-            this.Controls.Add(this.TowerPanel);
             this.Controls.Add(this.UpgradesPanel);
+            this.Controls.Add(this.TowerPanel);
+            this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";
@@ -776,6 +790,7 @@
             this.TowerPanel.PerformLayout();
             this.UpgradesPanel.ResumeLayout(false);
             this.UpgradesPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -834,5 +849,6 @@
         private System.Windows.Forms.Button SwitchPanel;
         private System.Windows.Forms.CheckBox UsePlacementRadius_Checkbox;
         private System.Windows.Forms.Button OpenText_Button;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
