@@ -40,7 +40,7 @@ namespace BTDToolbox.Extra_Forms
                 path = bloonPath;
                 json = File.ReadAllText(bloonPath);
                 if (JSON_Reader.IsValidJson(json))
-                {
+                {                    
                     bloon = Bloon.FromJson(json);
                     PopulateUI();
                 }
@@ -55,9 +55,11 @@ namespace BTDToolbox.Extra_Forms
             if (bloon != null)
             {
                 ResetUI();
-                
-                BloonType_Label.Text = bloon.Type + " bloon";
-                BloonName_TextBox.Text = bloon.Type;
+                string[] split = path.Split('\\');
+                string filename = split[split.Length - 1].Replace("\\", "");
+                BloonType_Label.Text = filename;
+
+                BloonName_TextBox.Text = bloon.Type + " bloon";                          
                 InitialHealth_TextBox.Text = bloon.InitialHealth.ToString();
                 BaseSpeed_TextBox.Text = bloon.BaseSpeed.ToString();
                 SpeedMultiplier_TextBox.Text = bloon.SpeedMultiplier.ToString();
@@ -89,14 +91,6 @@ namespace BTDToolbox.Extra_Forms
                     label9.Visible = false;
                 }
                 HandleAdvancedView();
-
-                if (BloonFiles_ComboBox.SelectedItem != null)
-                {
-                    if (BloonType_Label.Text.Replace(" bloon","") + ".bloon" != BloonFiles_ComboBox.SelectedItem.ToString())
-                    {
-                        BloonFiles_ComboBox.SelectedItem = BloonType_Label.Text.Replace(" bloon", "") + ".bloon";
-                    }
-                }
             }
         }
         private void HandleAdvancedView()
