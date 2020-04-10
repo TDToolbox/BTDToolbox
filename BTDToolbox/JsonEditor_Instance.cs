@@ -74,7 +74,20 @@ namespace BTDToolbox
             FontSize_TextBox.Text = Editor_TextBox.Font.Size.ToString();
 
             if (path.Contains("Profile.save"))
-                Encrypt_Button.Visible = true;
+            {
+                if (path.Contains("BTDB"))
+                {
+                    MessageBox.Show("This file is READ_Only until we figure out how to stop BTDB " +
+                        "from reseting the save. If you know how to do this, please contact the " +
+                        "devs so we can fix this. Thanks for understanding");
+
+                    Editor_TextBox.ReadOnly = true;
+                }
+                else
+                {
+                    Encrypt_Button.Visible = true;
+                }
+            }
         }
         //
         //JSON

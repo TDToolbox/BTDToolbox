@@ -858,6 +858,7 @@
             this.Text = "EasyTowerEditor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EasyTowerEditor_FormClosed);
             this.Shown += new System.EventHandler(this.EasyTowerEditor_Shown);
+            this.Click += new System.EventHandler(this.EasyTowerEditor_Click);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EasyTowerEditor_KeyDown);
             this.TowerPanel.ResumeLayout(false);
             this.TowerPanel.PerformLayout();

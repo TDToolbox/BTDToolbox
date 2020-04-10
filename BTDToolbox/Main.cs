@@ -830,6 +830,9 @@ namespace BTDToolbox
 
         private void BTDBSaveModToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Thanks for trying the save editor for BTDB. Unfortunately, we haven't been able to successfully edit the save for BTD Battles" +
+                ", as it resets the save when you run it. This happens with BTD Battles Only, but as a result " +
+                "you will only be able to read the save file, and not edit it. Hopefully we figure this out soon");
             string save = Serializer.Deserialize_Config().SavePathBTDB;
             if (save == null || save == "")
             {

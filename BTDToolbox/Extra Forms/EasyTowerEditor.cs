@@ -482,8 +482,7 @@ namespace BTDToolbox.Extra_Forms
             RankToUnlockUpgrade_TextBox.Text = "";
             UpgradeIcon_TextBox.Text = "";
             UpgradeAvatar_TextBox.Text = "";
-        }
-        
+        }     
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
             finishedLoading = true;
