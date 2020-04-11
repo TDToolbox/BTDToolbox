@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
+using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
 {
@@ -93,6 +94,7 @@ namespace BTDToolbox
             if (path != "" && path != null)
             {
                 tabFilePaths.Add(path);
+                CurrentProjectVariables.JsonEditor_OpenedTabs.Add(path);
                 tabPages.Add(new TabPage());
                 userControls.Add(new JsonEditor_Instance());
 
@@ -182,6 +184,7 @@ namespace BTDToolbox
                 tabControl1.SelectedIndex = indexBeforeDelete - 1;
 
             tabFilePaths.RemoveAt(i);
+            CurrentProjectVariables.JsonEditor_OpenedTabs.RemoveAt(i);
             tabPages.RemoveAt(i);
             userControls.RemoveAt(i);
 

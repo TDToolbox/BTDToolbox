@@ -32,6 +32,8 @@
             this.Save_Button = new System.Windows.Forms.Button();
             this.useExternalEditor = new System.Windows.Forms.CheckBox();
             this.DisableUpdates_CB = new System.Windows.Forms.CheckBox();
+            this.AutoFormatJSON_CB = new System.Windows.Forms.CheckBox();
+            this.Settings_Label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -49,6 +51,8 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.Settings_Label);
+            this.contentPanel.Controls.Add(this.AutoFormatJSON_CB);
             this.contentPanel.Controls.Add(this.DisableUpdates_CB);
             this.contentPanel.Controls.Add(this.useExternalEditor);
             this.contentPanel.Controls.Add(this.Save_Button);
@@ -66,7 +70,7 @@
             this.EnableSplash.AutoSize = true;
             this.EnableSplash.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EnableSplash.ForeColor = System.Drawing.Color.White;
-            this.EnableSplash.Location = new System.Drawing.Point(15, 22);
+            this.EnableSplash.Location = new System.Drawing.Point(28, 57);
             this.EnableSplash.Name = "EnableSplash";
             this.EnableSplash.Size = new System.Drawing.Size(181, 24);
             this.EnableSplash.TabIndex = 1;
@@ -89,7 +93,7 @@
             this.useExternalEditor.AutoSize = true;
             this.useExternalEditor.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.useExternalEditor.ForeColor = System.Drawing.Color.White;
-            this.useExternalEditor.Location = new System.Drawing.Point(15, 52);
+            this.useExternalEditor.Location = new System.Drawing.Point(28, 87);
             this.useExternalEditor.Name = "useExternalEditor";
             this.useExternalEditor.Size = new System.Drawing.Size(201, 24);
             this.useExternalEditor.TabIndex = 3;
@@ -101,12 +105,35 @@
             this.DisableUpdates_CB.AutoSize = true;
             this.DisableUpdates_CB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisableUpdates_CB.ForeColor = System.Drawing.Color.White;
-            this.DisableUpdates_CB.Location = new System.Drawing.Point(15, 82);
+            this.DisableUpdates_CB.Location = new System.Drawing.Point(28, 177);
             this.DisableUpdates_CB.Name = "DisableUpdates_CB";
             this.DisableUpdates_CB.Size = new System.Drawing.Size(315, 24);
             this.DisableUpdates_CB.TabIndex = 4;
             this.DisableUpdates_CB.Text = "Disable updates (NOT RECOMMENDED)";
             this.DisableUpdates_CB.UseVisualStyleBackColor = true;
+            // 
+            // AutoFormatJSON_CB
+            // 
+            this.AutoFormatJSON_CB.AutoSize = true;
+            this.AutoFormatJSON_CB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AutoFormatJSON_CB.ForeColor = System.Drawing.Color.White;
+            this.AutoFormatJSON_CB.Location = new System.Drawing.Point(28, 117);
+            this.AutoFormatJSON_CB.Name = "AutoFormatJSON_CB";
+            this.AutoFormatJSON_CB.Size = new System.Drawing.Size(231, 24);
+            this.AutoFormatJSON_CB.TabIndex = 5;
+            this.AutoFormatJSON_CB.Text = "Automatically format JSON?";
+            this.AutoFormatJSON_CB.UseVisualStyleBackColor = true;
+            // 
+            // Settings_Label
+            // 
+            this.Settings_Label.AutoSize = true;
+            this.Settings_Label.Font = new System.Drawing.Font("Oetztype", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Label.ForeColor = System.Drawing.Color.White;
+            this.Settings_Label.Location = new System.Drawing.Point(11, 10);
+            this.Settings_Label.Name = "Settings_Label";
+            this.Settings_Label.Size = new System.Drawing.Size(330, 35);
+            this.Settings_Label.TabIndex = 6;
+            this.Settings_Label.Text = "BTD Toolbox Settings";
             // 
             // SettingsWindow
             // 
@@ -132,5 +159,7 @@
         private System.Windows.Forms.Button Save_Button;
         private System.Windows.Forms.CheckBox useExternalEditor;
         private System.Windows.Forms.CheckBox DisableUpdates_CB;
+        private System.Windows.Forms.Label Settings_Label;
+        private System.Windows.Forms.CheckBox AutoFormatJSON_CB;
     }
 }

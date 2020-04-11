@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
 {
@@ -18,13 +20,14 @@ namespace BTDToolbox
         public string destPath { get; set; }
         public bool isExtracting { get; set; }
         public bool launch { get; set; }
-        string savedPass = Serializer.Deserialize_Config().battlesPass;
+        string savedProjPath = CurrentProjectVariables.JetPassword;
+        string savedSettingsPass = Serializer.Deserialize_Config().battlesPass;
         public Get_BTDB_Password()
         {
             InitializeComponent();
             this.AcceptButton = CreateProject_Button;
 
-            if (savedPass == "" || savedPass == null)
+            if (savedSettingsPass == "" || savedSettingsPass == null)
                 UseLastPass_CB.Visible = false;
             else
                 UseLastPass_CB.Visible = true;
@@ -78,14 +81,38 @@ namespace BTDToolbox
 
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
-            GetPass();
+            string projectJet = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+
+            if (File.Exists(projectJet))
+            {
+                bool result = GeneralMethods.Bad_JetPass(projectJet, Password_TextBox.Text);
+                if (!result)
+                {
+                    CurrentProjectVariables.JetPassword = Password_TextBox.Text;
+                    ProjectHandler.SaveProject();
+                    this.Close();
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("You entered a bad password. Please check your password and try again");
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("Your project file was not detected...");
+            }
+
+            //GetPass();
         }
 
         private void UseLastPass_CB_CheckedChanged(object sender, EventArgs e)
         {
             if (UseLastPass_CB.Checked)
             {
-                Password_TextBox.Text = savedPass;
+                if (savedProjPath.Length > 0)
+                    Password_TextBox.Text = savedProjPath;
+                else if(savedSettingsPass.Length > 0)
+                    Password_TextBox.Text = savedSettingsPass;
                 Password_TextBox.ReadOnly = true;
             }
             else

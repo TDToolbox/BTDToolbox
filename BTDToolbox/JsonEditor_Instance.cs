@@ -876,9 +876,12 @@ namespace BTDToolbox
                 }
                 ShowSearchMenu("replace");
             }
-            if (e.Control && (e.KeyCode == Keys.V || e.KeyCode == Keys.X))
+            if(Serializer.Deserialize_Config().autoFormatJSON == true)
             {
-                hasPastedCode = true;
+                if (e.Control && (e.KeyCode == Keys.V || e.KeyCode == Keys.X))
+                {
+                    hasPastedCode = true;
+                }
             }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)

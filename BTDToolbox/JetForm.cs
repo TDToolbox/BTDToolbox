@@ -16,6 +16,7 @@ using static System.Windows.Forms.ToolStripItem;
 using static BTDToolbox.GeneralMethods;
 using BTDToolbox.Classes;
 using BTDToolbox.Extra_Forms;
+using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
 {
@@ -136,6 +137,122 @@ namespace BTDToolbox
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
         }
+        public void PopulateTreeview()
+        {
+            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            if (File.Exists(jetpath))
+            {
+                string pass = CurrentProjectVariables.JetPassword;
+                
+                if (pass != "" && pass != null)
+                {
+                    ZipFile jet = new ZipFile(jetpath);
+                    jet.Password = pass;
+                    var files = jet.EntryFileNames;
+                    string firstDirPath = "";
+                    //DirectoryInfo d;
+                    List<string> zipFiles = new List<string>();
+                    foreach (ZipEntry z in jet)
+                    {
+                        if (z.IsDirectory)
+                        {
+                            //lets only get the first dir
+                            //firstDirPath = jetpath + "\\" + z.FileName;
+                            zipFiles.Add(z.FileName);
+                            treeView1.Nodes.Add(z.FileName);
+                            /*d = new DirectoryInfo(z.FileName);
+                            foreach (var f in d.GetFiles("*", SearchOption.AllDirectories))
+                            {
+                                ConsoleHandler.appendLog_CanRepeat(f.FullName);
+                            }*/
+                        }
+                    }
+                    ConsoleHandler.appendLog_CanRepeat("Done");
+                    /*DirectoryInfo d = new DirectoryInfo(firstDirPath);
+                    foreach (var f in d.GetFiles("*", SearchOption.AllDirectories))
+                    {
+                        ConsoleHandler.appendLog_CanRepeat(f.FullName);
+                    }*/
+                    //ListDirectory(treeView1, firstDirPath);
+                    /*DirectoryInfo d = new DirectoryInfo(jet.);
+                    ListDirectory(treeView1,);*/
+
+                    /*foreach (var file in files)
+                    {
+                        //treeView1.Nodes.Add(file);
+                        
+                    }*/
+
+                    //ReadJetProject();
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("Something went wrong and the saved password for this project is empty...");
+                    if (CurrentProjectVariables.GameName != "" && CurrentProjectVariables.GameName != null)
+                    {
+                        if (CurrentProjectVariables.GameName == "BTD5" || CurrentProjectVariables.GameName == "BMC")
+                        {
+                            pass = "Q%_{6#Px]]";
+                            CurrentProjectVariables.JetPassword = "Q%_{6#Px]]";
+                            ProjectHandler.SaveProject();
+                        }
+                        else
+                        {
+                            var getPasss = new Get_BTDB_Password();
+                            getPasss.Show();
+                        }
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendLog("Game name for project is invalid!");
+                        ConsoleHandler.force_appendNotice("Please enter a password so the jet file can be read");
+
+                        var getPasss = new Get_BTDB_Password();
+                        getPasss.Show();
+                    }
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("Unable to find project file...");
+            }
+        }
+        public void ReadJetProject()
+        {
+            
+        }
+
+        private void ListDirectory(TreeView treeView, string path)
+        {
+            treeView.Nodes.Clear();
+            var rootDirectoryInfo = new DirectoryInfo(path);
+            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
+        }
+
+        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
+        {
+            var directoryNode = new TreeNode(directoryInfo.Name);
+            foreach (var directory in directoryInfo.GetDirectories())
+                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+            foreach (var file in directoryInfo.GetFiles())
+                directoryNode.Nodes.Add(new TreeNode(file.Name));
+            return directoryNode;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private void initTreeMenu()
         {
             treeMenu = new ContextMenuStrip();

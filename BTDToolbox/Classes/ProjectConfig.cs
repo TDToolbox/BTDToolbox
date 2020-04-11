@@ -16,11 +16,13 @@ namespace BTDToolbox
             public bool useExternalEditor { get; set; }
             public string battlesPass { get; set; }
             public bool disableUpdates { get; set; }
+            public bool autoFormatJSON { get; set; }
 
 
             //Project wide variables
             public string BTD5_Directory { get; set; }
             public string BTDB_Directory { get; set; }
+            public string BMC_Directory { get; set; }
             public string LastProject { get; set; }
             public string CurrentGame { get; set; }
             public string ExportPath { get; set; }

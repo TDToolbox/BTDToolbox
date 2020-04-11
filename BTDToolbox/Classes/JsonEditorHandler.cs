@@ -21,6 +21,9 @@ namespace BTDToolbox.Classes
                 jeditor.tabPages = new List<TabPage>();
                 jeditor.tabFilePaths = new List<string>();
                 jeditor.userControls = new List<JsonEditor_Instance>();
+
+                if (NewProjects.CurrentProjectVariables.JsonEditor_OpenedTabs == null)
+                    NewProjects.CurrentProjectVariables.JsonEditor_OpenedTabs = new List<string>();
                 jeditor.Show();
             }
             else if (jeditor.Visible == false)

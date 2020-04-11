@@ -151,6 +151,8 @@ namespace BTDToolbox
                     exeName = "BTD5-Win.exe";
                 else if (game == "BTDB")
                     exeName = "Battles-Win.exe";
+                else if (game == "BMC")
+                    exeName = "MonkeyCity-Win.exe";
 
                 return exeName;
             }
@@ -168,13 +170,33 @@ namespace BTDToolbox
             }
             return game;
         }
-        public static bool isGamePathValid(string game)
+        public static string ReturnGamePath(string game)
         {
             string gameDir = "";
             if (game == "BTD5")
                 gameDir = DeserializeConfig().BTD5_Directory;
             else if (game == "BTDB")
                 gameDir = DeserializeConfig().BTDB_Directory;
+            else if (game == "BMC")
+                gameDir = DeserializeConfig().BMC_Directory;
+
+            return gameDir;
+        }
+        public static string ReturnJetName(string game)
+        {
+            string jetName = "";
+            if (game == "BTD5")
+                jetName = "BTD5.jet";
+            else if (game == "BTDB")
+                jetName = "data.jet";
+            else if (game == "BMC")
+                jetName = "data.jet";
+
+            return jetName;
+        }
+        public static bool isGamePathValid(string game)
+        {
+            string gameDir = ReturnGamePath(game);
 
             if (gameDir == null || gameDir == "")
             {
@@ -194,16 +216,9 @@ namespace BTDToolbox
 
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    exeName = "\\BTD5-Win.exe";
-                    gameDir = DeserializeConfig().BTD5_Directory;
-                }
-                else if (game == "BTDB")
-                {
-                    exeName = "\\Battles-Win.exe";
-                    gameDir = DeserializeConfig().BTDB_Directory;
-                }
+                gameDir= ReturnGamePath(game);
+                exeName = Get_EXE_Name(game);
+                
                 exePath = gameDir + exeName;
                 ConsoleHandler.appendLog("Launching " + game + "...");
                 Process.Start(exePath);
@@ -223,34 +238,31 @@ namespace BTDToolbox
                 string backupDir = Environment.CurrentDirectory + "\\Backups";
                 string backupLocName = gameName + "_Original_LOC.xml";
 
-                ConsoleHandler.appendLog("Attempting to validate backup...");
+                ConsoleHandler.appendLog("Validating backup...");
                 if (Directory.Exists(backupDir))
                 {
-                    if (File.Exists(backupDir + "\\" + backupName))
+                    if (!File.Exists(backupDir + "\\" + backupName))
                     {
-                       
-                    }
-                    else
-                    {
+                        ConsoleHandler.appendLog("Failed to validate backup...");
                         return false;
                     }
-                    if (File.Exists(backupDir + "\\" + backupLocName))
+                    if (!File.Exists(backupDir + "\\" + backupLocName))
                     {
-
-                    }
-                    else
-                    {
+                        ConsoleHandler.appendLog("Failed to validate backup...");
                         return false;
                     }
+                    ConsoleHandler.appendLog("Backup validated");
                     return true;
                 }
                 else
                 {
+                    ConsoleHandler.appendLog("Failed to validate backup...");
                     return false;
                 }
             }
             else
             {
+                ConsoleHandler.appendLog("Failed to validate backup...");
                 return false;
             }
         }
@@ -258,19 +270,13 @@ namespace BTDToolbox
         {
             string steamJetPath = "";
             string jetName = "";
-
+            string gameDir = "";
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    jetName = "BTD5.jet";
-                    steamJetPath = DeserializeConfig().BTD5_Directory + "\\Assets\\" + jetName;
-                }
-                else if (game == "BTDB")
-                {
-                    jetName = "data.jet";
-                    steamJetPath = DeserializeConfig().BTDB_Directory + "\\Assets\\" + jetName;
-                }
+                jetName = ReturnJetName(game);
+                gameDir = ReturnGamePath(game);
+                steamJetPath = gameDir + "\\Assets\\" + jetName;
+                
                 return steamJetPath;
             }
             else
@@ -293,17 +299,9 @@ namespace BTDToolbox
                 Directory.CreateDirectory(backupDir);
             }
 
-            string gameDir = "";
-            if(game == "BTD5")
-            {
-                gameDir = DeserializeConfig().BTD5_Directory;
-            }
-            else
-            {
-                gameDir = DeserializeConfig().BTDB_Directory;
-            }
-
+            string gameDir = ReturnGamePath(game);
             string steamJetPath = GetJetPath(game);
+
             if (steamJetPath != null)
             {
                 CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
@@ -326,6 +324,10 @@ namespace BTDToolbox
         {
             Process.Start("steam://validate/444640");
         }
+        public static void SteamValidateBMC()
+        {
+            Process.Start("steam://validate/1252780");
+        }
         public static void BackupLOC(string game)
         {
             string backupDir = Environment.CurrentDirectory + "\\Backups";
@@ -337,13 +339,9 @@ namespace BTDToolbox
                 Directory.CreateDirectory(backupDir);
             }
 
-            string gameDir = "";
-            if (game == "BTD5")
-                gameDir = DeserializeConfig().BTD5_Directory;
-            else
-                gameDir = DeserializeConfig().BTDB_Directory;
-
+            string gameDir = ReturnGamePath(game);
             string steamJetPath = GetJetPath(game);
+
             if (steamJetPath != null)
                 CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
             else
@@ -357,16 +355,8 @@ namespace BTDToolbox
 
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    jetName = "BTD5.jet";
-                    gameDir = DeserializeConfig().BTD5_Directory;
-                }
-                else if (game == "BTDB")
-                {
-                    jetName = "data.jet";
-                    gameDir = DeserializeConfig().BTDB_Directory;
-                }
+                gameDir = ReturnGamePath(game);
+                jetName = ReturnJetName(game);
                 string steamJetPath = gameDir + "\\Assets\\" + jetName;
 
                 if (!File.Exists(backupJetLoc))
@@ -396,14 +386,7 @@ namespace BTDToolbox
 
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    gameDir = DeserializeConfig().BTD5_Directory;
-                }
-                else if (game == "BTDB")
-                {
-                    gameDir = DeserializeConfig().BTDB_Directory;
-                }
+                gameDir = ReturnGamePath(game);
                 string locPath = gameDir + "\\Assets\\Loc\\" + locName;
 
                 if (!File.Exists(backupJetLoc))
@@ -478,8 +461,6 @@ namespace BTDToolbox
             string game = "";
             if (Bad_JetPass(jetPath, "Q%_{6#Px]]"))
                 game = "BTDB";
-            else
-                game = "BTD5";
 
             return game;
         }
@@ -522,6 +503,8 @@ namespace BTDToolbox
                             Main.BTD5_Dir = gameDir;
                         else if (game == "BTDB")
                             Main.BTDB_Dir = gameDir;
+                        else if (game == "BMC")
+                            Main.BMC_Dir = gameDir;
 
                         Serializer.SaveConfig(Main.getInstance(), "directories");
                     }
@@ -562,11 +545,8 @@ namespace BTDToolbox
                 
                 if(gameNameTemp != "" && gameNameTemp != null)
                 {
-                    if (Main.gameName == "BTD5")
-                        gameDir = Serializer.Deserialize_Config().BTD5_Directory;
-                    else
-                        gameDir = Serializer.Deserialize_Config().BTDB_Directory;
-
+                    gameDir = ReturnGamePath(Main.gameName);
+                    
                     if (JetProps.get().Count == 1)
                     {
                         string dest = "";
@@ -692,12 +672,8 @@ namespace BTDToolbox
         }
         public static bool IsGameRunning(string game)
         {
-            string exename = "";
-            if (game == "BTD5")
-                exename = "BTD5-Win";
-            else
-                exename = "Battles-Win";
-
+            string exename =  Get_EXE_Name(game).Replace(".exe", "");
+            
             Process[] pname = Process.GetProcessesByName(exename);
             if (pname.Length == 0)
                 return false;
@@ -706,11 +682,7 @@ namespace BTDToolbox
         }
         public static void TerminateGame(string game)
         {
-            string exename = "";
-            if (game == "BTD5")
-                exename = "BTD5-Win";
-            else
-                exename = "Battles-Win";
+            string exename = Get_EXE_Name(game).Replace(".exe", "");
 
             foreach (var process in Process.GetProcessesByName(exename))
             {

@@ -30,36 +30,38 @@ namespace BTDToolbox
                 useExternalEditor.CheckState = CheckState.Checked;
             if (projectData.disableUpdates == true)
                 DisableUpdates_CB.CheckState = CheckState.Checked;
+            if (projectData.autoFormatJSON == true)
+                AutoFormatJSON_CB.CheckState = CheckState.Checked; 
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
             if (useExternalEditor.Checked)
-            {
                 JetForm.useExternalEditor = true;
-            }
             else
-            {
                 JetForm.useExternalEditor = false;
-            }
+
 
             if (EnableSplash.Checked)
-            {
                 Program.enableSplash = true;
-            }
             else
-            {
                 Program.enableSplash = false;
-            }
+
+
             if (DisableUpdates_CB.Checked)
-            {
                 Main.disableUpdates = true;
-            }
             else
-            {
                 Main.disableUpdates = false;
-            }
+
+
+            if (AutoFormatJSON_CB.Checked)
+                Main.autoFormatJSON = true;
+            else
+                Main.autoFormatJSON = false;
+
+
             Serializer.SaveSmallSettings("splash");
             Serializer.SaveSmallSettings("disableUpdates");
+            Serializer.SaveSmallSettings("autoFormatJSON");
             Serializer.SaveSmallSettings("external editor");
 
             ConsoleHandler.appendLog_CanRepeat("Settings saved!!!");
