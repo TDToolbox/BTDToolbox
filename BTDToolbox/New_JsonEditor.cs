@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
+using Ionic.Zip;
 
 namespace BTDToolbox
 {
@@ -89,10 +90,13 @@ namespace BTDToolbox
                     CloseTab(tabFilePaths[i]);
             }
         }
-        public void NewTab(string path)
+        public void NewTab(string path, bool isFromZip)
         {
             if (path != "" && path != null)
             {
+                string filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/");
+                path = filepath;
+
                 tabFilePaths.Add(path);
                 CurrentProjectVariables.JsonEditor_OpenedTabs.Add(path);
                 tabPages.Add(new TabPage());
@@ -113,7 +117,10 @@ namespace BTDToolbox
                 userControls[userControls.Count - 1].path = path;
                 userControls[userControls.Count - 1].filename = filename;
 
-                AddText(path);
+                if(isFromZip == false)
+                    AddText(path, false);
+                else
+                    AddText(path, true);
 
                 tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
                 
@@ -127,9 +134,42 @@ namespace BTDToolbox
                 ConsoleHandler.appendLog_CanRepeat("Something went wrong when trying to read the files path...");
             }
         }
-        private void AddText(string path)
+        private void AddText(string path, bool isFromZip)
         {
-            string unformattedText = File.ReadAllText(path);
+            string unformattedText = "";
+            if (!isFromZip)
+                unformattedText = File.ReadAllText(path);
+            else
+            {
+                string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+                string filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/"); ;
+
+                ZipFile jet = new ZipFile(jetpath);
+                jet.Password = CurrentProjectVariables.JetPassword;
+
+                if (jet.EntryFileNames.Contains(filepath))
+                {
+                    foreach (var entry in jet)
+                    {
+                        if (entry.FileName.Contains(filepath))
+                        {
+                            using (Stream s = entry.OpenReader())
+                            {
+                                using (StreamReader sr = new StreamReader(s))
+                                {
+                                    unformattedText = sr.ReadToEnd();
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("Unable to find specific file in the Jet...");
+                }
+            }
+
             try
             {
                 JToken jt = JToken.Parse(unformattedText);

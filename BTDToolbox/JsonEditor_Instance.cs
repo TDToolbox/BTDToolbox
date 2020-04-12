@@ -16,6 +16,8 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Ionic.Zip;
+using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
 {
@@ -32,7 +34,8 @@ namespace BTDToolbox
         string towerTypeName = "";
         string specialty = "";
         bool hasPastedCode = false;
-        
+        bool finishedLoading = false;
+
         //Tab new line vars
         string tab;
         bool tabLine = false;
@@ -100,13 +103,64 @@ namespace BTDToolbox
                 hasPastedCode = false;
             }
             CheckJSON(Editor_TextBox.Text);
-            File.WriteAllText(path, Editor_TextBox.Text);
 
+
+            WriteToZipFile();
+            /*if (!finishedLoading)
+                finishedLoading = true;
+            else
+                WriteToZipFile();*/
+            
             if (tabLine)
             {
                 Editor_TextBox.SelectedText = tab;
                 tabLine = false;
             }
+        }
+        private void WriteToZipFile()
+        {
+            //File.WriteAllText(path, Editor_TextBox.Text);
+            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            string filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/"); ;
+            string modifiedFile = (CurrentProjectVariables.PathToProjectClassFile + "\\ModifiedFiles\\" + filepath).Replace("/","\\");
+
+            string[] dirpath = modifiedFile.Split('\\');
+            MessageBox.Show(modifiedFile);
+            if (!Directory.Exists(modifiedFile.Replace(dirpath[dirpath.Length-1],"")))
+                Directory.CreateDirectory(modifiedFile.Replace(dirpath[dirpath.Length - 1], ""));
+
+            if (!File.Exists(modifiedFile))
+            {
+                File.Create(modifiedFile);
+            }
+
+            //File.WriteAllText(modifiedFile, Editor_TextBox.Text);
+            /*ZipFile jet = new ZipFile(jetpath);
+            jet.Password = CurrentProjectVariables.JetPassword;
+
+            jet.UpdateEntry(path, Editor_TextBox.Text);
+            if (jet.EntryFileNames.Contains(filepath))
+            {
+                *//*foreach (var entry in jet)
+                {
+                    if (entry.FileName.Contains(filepath))
+                    {
+                        
+                        using (Stream s = entry.InputStream)
+                        {
+                            using (StreamWriter sr = new StreamWriter(s))
+                            {
+                                sr.Write(Editor_TextBox.Text);
+                                sr.write
+                            }
+                        }
+                    }
+                }*//*
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("Unable to find file in Jet. Failed to save...");
+            }*/
         }
         private void CheckJSON(string text)
         {

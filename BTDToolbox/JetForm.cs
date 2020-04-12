@@ -17,6 +17,7 @@ using static BTDToolbox.GeneralMethods;
 using BTDToolbox.Classes;
 using BTDToolbox.Extra_Forms;
 using BTDToolbox.Classes.NewProjects;
+using BTDToolbox.Properties;
 
 namespace BTDToolbox
 {
@@ -137,6 +138,49 @@ namespace BTDToolbox
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
         }
+        public void PopulateListview(TreeNode selectedTreeNode)
+        {
+            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            string pass = CurrentProjectVariables.JetPassword;
+            string selectedPath = selectedTreeNode.FullPath.Replace(CurrentProjectVariables.ProjectName + "\\","").Replace("/", "\\");
+            string[] split1 = selectedPath.Split('\\');
+            List<string> files = new List<string>();
+
+            ZipFile jet = new ZipFile(jetpath);
+            jet.Password = pass;
+
+            listView1.Items.Clear();
+            foreach (var z in jet)
+            {
+                string name = z.FileName.Replace("/", "\\");
+                if (name.EndsWith("\\"))
+                    name = name.Remove(name.Length - 1);
+                files.Add(name);
+            }
+
+            List<string> folderz = new List<string>();
+            List<string> filez = new List<string>();
+            foreach (string a in files)
+            {
+                if (a.Contains(selectedPath + "\\"))
+                {
+                    string[] split2 = a.Split('\\');
+                    if(split2[split2.Length-2] == split1[split1.Length - 1])
+                    {
+                        if (split2[split2.Length - 1].Contains("."))
+                            filez.Add(split2[split2.Length - 1]);
+                        else
+                            folderz.Add(split2[split2.Length - 1]);
+                    }
+                }
+            }
+
+            foreach(string fold in folderz)
+                listView1.Items.Add(fold, 0);
+            foreach (string fil in filez)
+                listView1.Items.Add(fil, 1);
+
+        }
         public void PopulateTreeview()
         {
             string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
@@ -148,42 +192,29 @@ namespace BTDToolbox
                 {
                     ZipFile jet = new ZipFile(jetpath);
                     jet.Password = pass;
-                    var files = jet.EntryFileNames;
-                    string firstDirPath = "";
-                    //DirectoryInfo d;
-                    List<string> zipFiles = new List<string>();
+
+                    string temp = CurrentProjectVariables.PathToProjectClassFile;
+                    List<string> folders = new List<string>();
                     foreach (ZipEntry z in jet)
                     {
                         if (z.IsDirectory)
                         {
-                            //lets only get the first dir
-                            //firstDirPath = jetpath + "\\" + z.FileName;
-                            zipFiles.Add(z.FileName);
-                            treeView1.Nodes.Add(z.FileName);
-                            /*d = new DirectoryInfo(z.FileName);
-                            foreach (var f in d.GetFiles("*", SearchOption.AllDirectories))
-                            {
-                                ConsoleHandler.appendLog_CanRepeat(f.FullName);
-                            }*/
+                            folders.Add(z.FileName);
+                            z.ExtractWithPassword(temp, ExtractExistingFileAction.OverwriteSilently, CurrentProjectVariables.JetPassword);
                         }
                     }
-                    ConsoleHandler.appendLog_CanRepeat("Done");
-                    /*DirectoryInfo d = new DirectoryInfo(firstDirPath);
-                    foreach (var f in d.GetFiles("*", SearchOption.AllDirectories))
-                    {
-                        ConsoleHandler.appendLog_CanRepeat(f.FullName);
-                    }*/
-                    //ListDirectory(treeView1, firstDirPath);
-                    /*DirectoryInfo d = new DirectoryInfo(jet.);
-                    ListDirectory(treeView1,);*/
+                    ListDirectory(treeView1, CurrentProjectVariables.PathToProjectClassFile);
 
-                    /*foreach (var file in files)
+                    DirectoryInfo dir = new DirectoryInfo(temp);        
+                    foreach(var folder in dir.GetDirectories())
                     {
-                        //treeView1.Nodes.Add(file);
+                        foreach(string f in folders)
+                        {
+                            folder.Delete(true);
+                            break;
+                        }
                         
-                    }*/
-
-                    //ReadJetProject();
+                    }
                 }
                 else
                 {
@@ -217,10 +248,6 @@ namespace BTDToolbox
                 ConsoleHandler.force_appendLog("Unable to find project file...");
             }
         }
-        public void ReadJetProject()
-        {
-            
-        }
 
         private void ListDirectory(TreeView treeView, string path)
         {
@@ -228,14 +255,18 @@ namespace BTDToolbox
             var rootDirectoryInfo = new DirectoryInfo(path);
             treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
         }
-
         private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
             foreach (var directory in directoryInfo.GetDirectories())
                 directoryNode.Nodes.Add(CreateDirectoryNode(directory));
             foreach (var file in directoryInfo.GetFiles())
-                directoryNode.Nodes.Add(new TreeNode(file.Name));
+            {
+                if(file.Name != CurrentProjectVariables.ProjectName + ".jet" && file.Name != CurrentProjectVariables.ProjectName + ".toolbox")
+                {
+                    directoryNode.Nodes.Add(new TreeNode(file.Name));
+                }
+            }
             return directoryNode;
         }
 
@@ -356,7 +387,7 @@ namespace BTDToolbox
         }
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            PopulateListView(e.Node);
+            PopulateListview(e.Node);
         }
         private void goUpButton_Click(object sender, EventArgs e)
         {
@@ -372,14 +403,14 @@ namespace BTDToolbox
             {
             }
         }
-        private void OpenFile()
+        private void OpenFile(bool openFromZip)
         {
             if(listView1.SelectedItems.Count <= 0)
                 ConsoleHandler.appendLog("You need to select at least one file to open");
             else
             {
                 int i = 0;
-                foreach (var a in listView1.SelectedItems)
+                foreach (ListViewItem a in listView1.SelectedItems)
                 {
                     var Selected = listView1.SelectedItems[i];
                     if (!Selected.Text.Contains("."))
@@ -397,7 +428,13 @@ namespace BTDToolbox
                     }
                     else
                     {
-                        JsonEditorHandler.OpenFile(this.Text + "\\" + Selected.Text);
+                        if(!openFromZip)
+                            JsonEditorHandler.OpenFile(this.Text + "\\" + Selected.Text);
+                        else
+                        {
+                            string selected = (treeView1.SelectedNode.FullPath + "\\" + a.Text).Replace(CurrentProjectVariables.ProjectName + "\\", "");
+                            JsonEditorHandler.OpenFileFromZip(selected);
+                        }
                     }
                     i++;
                 }
@@ -405,7 +442,7 @@ namespace BTDToolbox
         }
         private void ListView1_DoubleClicked(object sender, EventArgs e)
         {
-            OpenFile();
+            OpenFile(true);
         }
 
         //Context caller
@@ -956,7 +993,7 @@ namespace BTDToolbox
         private void OneSelected_CM_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == "Open File")
-                OpenFile();
+                OpenFile(true);
             else if (e.ClickedItem.Text == "Rename")
                 rename();
             else if (e.ClickedItem.Text == "Delete")
@@ -985,7 +1022,7 @@ namespace BTDToolbox
         private void MultiSelected_CM_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == "Open Files")
-                OpenFile();
+                OpenFile(true);
             if (e.ClickedItem.Text == "Delete")
                 delete();
             if (e.ClickedItem.Text == "Copy")

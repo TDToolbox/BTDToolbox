@@ -31,6 +31,19 @@ namespace BTDToolbox.Classes
                 jeditor.Show();
             }
         }
+        public static void OpenFileFromZip(string path)
+        {
+            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            {
+                ValidateEditor();
+                if (!path.Contains(Environment.CurrentDirectory))
+                    path = Environment.CurrentDirectory + "\\" + path;
+                if (jeditor.tabFilePaths.Contains(path))
+                    jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
+                else
+                    jeditor.NewTab(path, true);
+            }
+        }
         public static void OpenFile(string path)
         {
             if (File.Exists(path))
@@ -43,7 +56,7 @@ namespace BTDToolbox.Classes
                     if (jeditor.tabFilePaths.Contains(path))
                         jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
                     else
-                        jeditor.NewTab(path);
+                        jeditor.NewTab(path, false);
                 }
             }
             else

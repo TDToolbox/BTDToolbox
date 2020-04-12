@@ -82,7 +82,7 @@ namespace BTDToolbox
             }
 
             bool overwriteProj = true;
-            string projName = ReturnName(ProjectName_TextBox.Text, gameName);
+            string projName = ReturnName(ProjectName_TextBox.Text, gameName).Replace("\\", "");
             string projdir = Environment.CurrentDirectory + "\\Projects\\" + projName;
 
 
@@ -92,7 +92,11 @@ namespace BTDToolbox
                 if (result == DialogResult.Yes)
                 {
                     ConsoleHandler.appendLog("Deleting original project");
-                    Directory.Delete(projdir, true);
+                    try
+                    {
+                        Directory.Delete(projdir, true);
+                    }
+                    catch { ConsoleHandler.appendLog("Directory is currently open in windows file explorer..."); }
                     overwriteProj = true;
                 }
                 else if (result == DialogResult.Cancel)
@@ -118,10 +122,11 @@ namespace BTDToolbox
 
                 if (File.Exists(backupPath))
                 {
-                    if (!Directory.Exists(projdir + "\\"))
-                        Directory.CreateDirectory(projdir + "\\");
+                    if (!Directory.Exists(projdir))
+                        Directory.CreateDirectory(projdir);
                     File.Copy(backupPath, projdir + "\\" + projName + ".jet");
-                    CurrentProjectVariables.ProjectName = ReturnName(ProjectName_TextBox.Text, gameName).Replace("\\", "");
+
+                    CurrentProjectVariables.ProjectName = projName;
                     CurrentProjectVariables.PathToProjectClassFile = projdir;
 
                     ProjectHandler.SaveProject();
@@ -145,6 +150,7 @@ namespace BTDToolbox
 
                 DirectoryInfo dinfo = new DirectoryInfo(projdir);
                 jetf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
+                jetf.MdiParent = Main.getInstance();
                 jetf.Show();
                 jetf.PopulateTreeview();
             }
