@@ -40,6 +40,10 @@ namespace BTDToolbox
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
+            CreateProject();
+        }
+        private void CreateProject()
+        {
             if (CustomName_RadioButton.Checked)
             {
                 if (ProjectName_TextBox.TextLength == 0)
@@ -124,15 +128,22 @@ namespace BTDToolbox
                 {
                     if (!Directory.Exists(projdir))
                         Directory.CreateDirectory(projdir);
-                    File.Copy(backupPath, projdir + "\\" + projName + ".jet");
 
-                    CurrentProjectVariables.ProjectName = projName;
-                    CurrentProjectVariables.PathToProjectClassFile = projdir;
+                    if(!File.Exists(projdir + "\\" + projName + ".jet"))
+                    {
+                        File.Copy(backupPath, projdir + "\\" + projName + ".jet");
+                        CurrentProjectVariables.ProjectName = projName;
+                        CurrentProjectVariables.PathToProjectClassFile = projdir;
 
-                    ProjectHandler.SaveProject();
-
-                    
-
+                        ProjectHandler.SaveProject();
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendLog("It appears the project already exists OR it is currently opened " +
+                            "somewhere... Unable to continue, please try again..." +
+                            "\nIf this error persists, please contact Toolbox devs");
+                        this.Close();
+                    }
                 }
                 else
                 {
@@ -210,6 +221,18 @@ namespace BTDToolbox
                 CreateProject_Button.Location = new Point(CreateProject_Button.Location.X, CreateProject_Button.Location.Y - 40);
             }
 
+        }
+
+        private void SetProjectName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                CreateProject();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

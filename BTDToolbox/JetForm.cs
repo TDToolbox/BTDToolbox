@@ -81,25 +81,26 @@ namespace BTDToolbox
             {
                 Main.gameName = "BTD5";
                 gamedir = Serializer.Deserialize_Config().BTD5_Directory;
-
             }
             else if (projName.Contains("BTDB"))
             {
                 Main.gameName = "BTDB";
                 gamedir = Serializer.Deserialize_Config().BTDB_Directory;
             }
+            else if (projName.Contains("BMC"))
+            {
+                Main.gameName = "BMC";
+                gamedir = Serializer.Deserialize_Config().BMC_Directory;
+            }
+
             if (gamedir == "" || gamedir == null)
-            {
                 Main.getInstance().Launch_Program_ToolStrip.Visible = false;
-            }
             else
-            {
                 Main.getInstance().Launch_Program_ToolStrip.Visible = true;
-            }
-            ConsoleHandler.appendLog("Game: " + Main.gameName);
+
+            ConsoleHandler.appendLog("Game: " + CurrentProjectVariables.GameName);
             ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
             
-
             
 
             Serializer.SaveConfig(this, "game");
@@ -210,7 +211,8 @@ namespace BTDToolbox
                     {
                         foreach(string f in folders)
                         {
-                            folder.Delete(true);
+                            try { folder.Delete(true); }
+                            catch { }
                             break;
                         }
                         

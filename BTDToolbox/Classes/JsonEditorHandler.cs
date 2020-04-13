@@ -36,10 +36,10 @@ namespace BTDToolbox.Classes
             if (Serializer.Deserialize_Config().useExternalEditor == false)
             {
                 ValidateEditor();
-                if (!path.Contains(Environment.CurrentDirectory))
-                    path = Environment.CurrentDirectory + "\\" + path;
-                if (jeditor.tabFilePaths.Contains(path))
-                    jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
+
+                string pathCleaned = path.Replace("\\", "/");
+                if (jeditor.tabFilePaths.Contains(pathCleaned))
+                    jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(pathCleaned);
                 else
                     jeditor.NewTab(path, true);
             }

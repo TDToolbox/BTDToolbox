@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Ionic.Zip;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BTDToolbox.Classes.NewProjects
@@ -14,9 +16,7 @@ namespace BTDToolbox.Classes.NewProjects
         public static void CreateProject()
         {
             project = new ProjectClass.ProjectFile();
-            CurrentProjectVariables.ResetProjectVariables();
-
-            //SaveProject();            
+            CurrentProjectVariables.ResetProjectVariables();          
         }
         public static ProjectClass.ProjectFile ReadProject(string projFile)
         {
@@ -64,6 +64,82 @@ namespace BTDToolbox.Classes.NewProjects
             {
                 ConsoleHandler.force_appendLog("Unknown error occured... Project path is invalid...");
             }            
+        }
+        public static void UpdateFileInZip(ZipFile zip, string pathToFile, string newText)
+        {
+            zip.Password = CurrentProjectVariables.JetPassword;
+            zip.UpdateEntry(pathToFile, newText);
+
+            if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+            {
+                CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
+                SaveProject();
+            }
+        }
+        public static void SaveZipFile(ZipFile zip)
+        {
+            try
+            {
+                zip.Password = CurrentProjectVariables.JetPassword;
+                zip.Save();
+                zip.Dispose();
+            }
+            catch (Exception e) { ConsoleHandler.appendLog_CanRepeat("SaveZipFile Exception: " + e.Message); }
+        }
+        public static string ReadTextFromZipFile(ZipFile zip, string fileInZip)
+        {
+            string returnText = "";
+
+            if (zip.EntryFileNames.Contains(fileInZip))
+            {
+                try
+                {
+                    foreach (var entry in New_JsonEditor.jet)
+                    {
+                        if (entry.FileName.Contains(fileInZip))
+                        {
+                            entry.Password = CurrentProjectVariables.JetPassword;
+
+                            Stream s = entry.OpenReader();
+                            StreamReader sr = new StreamReader(s);
+                            returnText = sr.ReadToEnd();
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    ConsoleHandler.appendLog_CanRepeat("ReadTextFromZipFile Exception: " + e.Message);
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("Unable to find specific file in the Jet... Failed to read file..");
+            }
+            return returnText;
+        }
+        public static bool ConfirmModifiedFiles(ZipFile moddedZip, ZipFile backupZip, string fileInZip)
+        {
+            string modText = Regex.Replace(ReadTextFromZipFile(moddedZip, fileInZip), @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline).ToLower().Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\r\n", "");
+            string originalText = Regex.Replace(ReadTextFromZipFile(backupZip, fileInZip), @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline).ToLower().Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\r\n", "");
+
+            if (modText == originalText)
+            {
+                if (CurrentProjectVariables.ModifiedFiles.Contains(fileInZip))
+                {
+                    CurrentProjectVariables.ModifiedFiles.Remove(fileInZip);
+                    SaveProject();
+                }
+                return false;
+            }
+            else
+            {
+                if (!CurrentProjectVariables.ModifiedFiles.Contains(fileInZip))
+                {
+                    CurrentProjectVariables.ModifiedFiles.Add(fileInZip);
+                    SaveProject();
+                }
+                return true;
+            }
         }
     }
 }

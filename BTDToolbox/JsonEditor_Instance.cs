@@ -26,6 +26,7 @@ namespace BTDToolbox
         Font font;
         ConfigFile programData;
         public bool jsonError;
+        public bool fileModified = false;
         public string path = "";
         public string filename = "";
         string file = "";
@@ -36,6 +37,7 @@ namespace BTDToolbox
         bool hasPastedCode = false;
         bool finishedLoading = false;
 
+        
         //Tab new line vars
         string tab;
         bool tabLine = false;
@@ -63,7 +65,6 @@ namespace BTDToolbox
             SearchOptions_Button.KeyDown += Find_TB_KeyDown;
             Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
-
             //path and filename have NOT been set yet. Use FinishedLoading()
         }
         public void FinishedLoading()
@@ -91,6 +92,7 @@ namespace BTDToolbox
                     Encrypt_Button.Visible = true;
                 }
             }
+            finishedLoading = true;
         }
         //
         //JSON
@@ -102,15 +104,14 @@ namespace BTDToolbox
                 ReformatText();
                 hasPastedCode = false;
             }
-            CheckJSON(Editor_TextBox.Text);
+                CheckJSON(Editor_TextBox.Text);
 
+            if (finishedLoading)
+            {
+                WriteToZipFile();
+                ConsoleHandler.appendLog_CanRepeat("Text Changed");
+            }
 
-            WriteToZipFile();
-            /*if (!finishedLoading)
-                finishedLoading = true;
-            else
-                WriteToZipFile();*/
-            
             if (tabLine)
             {
                 Editor_TextBox.SelectedText = tab;
@@ -119,48 +120,16 @@ namespace BTDToolbox
         }
         private void WriteToZipFile()
         {
-            //File.WriteAllText(path, Editor_TextBox.Text);
-            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            //
+            //Note: This doesnt actually save the zip file until it closes
+
+            fileModified = true;
             string filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/"); ;
-            string modifiedFile = (CurrentProjectVariables.PathToProjectClassFile + "\\ModifiedFiles\\" + filepath).Replace("/","\\");
 
-            string[] dirpath = modifiedFile.Split('\\');
-            MessageBox.Show(modifiedFile);
-            if (!Directory.Exists(modifiedFile.Replace(dirpath[dirpath.Length-1],"")))
-                Directory.CreateDirectory(modifiedFile.Replace(dirpath[dirpath.Length - 1], ""));
+            if (New_JsonEditor.jet == null)
+                New_JsonEditor.jet = new ZipFile(CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet");
 
-            if (!File.Exists(modifiedFile))
-            {
-                File.Create(modifiedFile);
-            }
-
-            //File.WriteAllText(modifiedFile, Editor_TextBox.Text);
-            /*ZipFile jet = new ZipFile(jetpath);
-            jet.Password = CurrentProjectVariables.JetPassword;
-
-            jet.UpdateEntry(path, Editor_TextBox.Text);
-            if (jet.EntryFileNames.Contains(filepath))
-            {
-                *//*foreach (var entry in jet)
-                {
-                    if (entry.FileName.Contains(filepath))
-                    {
-                        
-                        using (Stream s = entry.InputStream)
-                        {
-                            using (StreamWriter sr = new StreamWriter(s))
-                            {
-                                sr.Write(Editor_TextBox.Text);
-                                sr.write
-                            }
-                        }
-                    }
-                }*//*
-            }
-            else
-            {
-                ConsoleHandler.force_appendLog("Unable to find file in Jet. Failed to save...");
-            }*/
+            ProjectHandler.UpdateFileInZip(New_JsonEditor.jet, filepath, Editor_TextBox.Text);
         }
         private void CheckJSON(string text)
         {
@@ -218,17 +187,22 @@ namespace BTDToolbox
         }
         private void CloseFile_Button_Click(object sender, EventArgs e)
         {
-            if(!jsonError)
+            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            string backupJetPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
+
+            ZipFile backup = new ZipFile(backupJetPath);
+            backup.Password = CurrentProjectVariables.JetPassword;
+
+            if (!jsonError)
             {
                 JsonEditorHandler.CloseFile(path);
-                if(programData == null)
+                if (programData == null)
                     programData = Serializer.Deserialize_Config();
                 Serializer.SaveJSONEditor_Instance(this);
                 Serializer.SaveJSONEditor_Tabs();
             }
             else
             {
-                
                 DialogResult dialogResult = MessageBox.Show("This file has a JSON error! Are you sure you want to close and save it?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -238,6 +212,7 @@ namespace BTDToolbox
                     Serializer.SaveJSONEditor_Instance(this);
                 }
             }
+            
         }
 
         //

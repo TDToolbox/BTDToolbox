@@ -27,6 +27,7 @@ namespace BTDToolbox
         public static string readOnlyName = "_original (READ-ONLY)";
         public Point mouseClickPos;
 
+        public static ZipFile jet;
         public List<TabPage> tabPages;
         public List<string> tabFilePaths;
         public List<JsonEditor_Instance> userControls;
@@ -35,7 +36,8 @@ namespace BTDToolbox
         public New_JsonEditor()
         {
             InitializeComponent();
-            //initSelContextMenu();
+            
+            
             tabControl1.MouseUp += Mouse_RightClick;
 
             this.MdiParent = Main.getInstance();
@@ -46,6 +48,10 @@ namespace BTDToolbox
             programData = Serializer.Deserialize_Config();
             this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
             this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
+
+            
+
+            //ProjectHandler.SaveZipFile(jet);
         }
 
 
@@ -98,13 +104,19 @@ namespace BTDToolbox
                 path = filepath;
 
                 tabFilePaths.Add(path);
-                CurrentProjectVariables.JsonEditor_OpenedTabs.Add(path);
+                
+                if(!CurrentProjectVariables.JsonEditor_OpenedTabs.Contains(path))
+                {
+                    CurrentProjectVariables.JsonEditor_OpenedTabs.Add(path);
+                    ProjectHandler.SaveProject();
+                }
+
                 tabPages.Add(new TabPage());
                 userControls.Add(new JsonEditor_Instance());
 
                 //create the tab and do required processing
 
-                string[] split = path.Split('\\');
+                string[] split = path.Replace("/", "\\").Split('\\');
                 string filename = split[split.Length - 1];
                 if (path.Contains("BackupProject"))
                 {
@@ -127,7 +139,6 @@ namespace BTDToolbox
                 OpenTab(path);
                 ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
                 userControls[userControls.Count - 1].FinishedLoading();
-
             }
             else
             {
@@ -141,33 +152,10 @@ namespace BTDToolbox
                 unformattedText = File.ReadAllText(path);
             else
             {
-                string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
-                string filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/"); ;
+                if (jet == null)
+                    jet = new ZipFile(CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet");
 
-                ZipFile jet = new ZipFile(jetpath);
-                jet.Password = CurrentProjectVariables.JetPassword;
-
-                if (jet.EntryFileNames.Contains(filepath))
-                {
-                    foreach (var entry in jet)
-                    {
-                        if (entry.FileName.Contains(filepath))
-                        {
-                            using (Stream s = entry.OpenReader())
-                            {
-                                using (StreamReader sr = new StreamReader(s))
-                                {
-                                    unformattedText = sr.ReadToEnd();
-                                }
-                            }
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    ConsoleHandler.force_appendLog("Unable to find specific file in the Jet...");
-                }
+                unformattedText = ProjectHandler.ReadTextFromZipFile(jet, path);
             }
 
             try
@@ -178,6 +166,7 @@ namespace BTDToolbox
             }
             catch (Exception)
             {
+                ConsoleHandler.appendLog_CanRepeat("File contains invalid json. Unable to format..");
                 userControls[userControls.Count - 1].Editor_TextBox.Text = unformattedText;
             }
         }
@@ -209,34 +198,51 @@ namespace BTDToolbox
             }
             return 9999;
         }
+        
+        
         //
         //Closing stuff
         //
         public void CloseTab(string path)
         {
+            if(jet != null)
+                ProjectHandler.SaveZipFile(jet);
             int i = tabFilePaths.IndexOf(path);
             int indexBeforeDelete = tabControl1.SelectedIndex;
 
+            tabControl1.TabPages.Remove(tabPages[i]);            
+
             tabControl1.TabPages.Remove(tabPages[i]);
             if (indexBeforeDelete + 1 <= tabControl1.TabPages.Count)
-                tabControl1.SelectedIndex = indexBeforeDelete;   
+                tabControl1.SelectedIndex = indexBeforeDelete;
             else
                 tabControl1.SelectedIndex = indexBeforeDelete - 1;
 
             tabFilePaths.RemoveAt(i);
             CurrentProjectVariables.JsonEditor_OpenedTabs.RemoveAt(i);
+            ProjectHandler.SaveProject();
+
             tabPages.RemoveAt(i);
             userControls.RemoveAt(i);
+
 
             if (tabControl1.TabPages.Count <= 0)
                 this.Close();
         }
+
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             Serializer.SaveConfig(this, "json editor");
+            ProjectHandler.SaveProject();
             Serializer.SaveJSONEditor_Tabs();
-            if(userControls.Count >0)
-                Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex]);
+            ProjectHandler.SaveZipFile(jet);
+
+            if (userControls.Count >0)
+            {
+                //Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex]);                
+            }
+
+            jet = null;
             JsonEditorHandler.jeditor = null;
         }
         private void Close_button_Click(object sender, EventArgs e)
