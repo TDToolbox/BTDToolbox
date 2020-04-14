@@ -100,8 +100,15 @@ namespace BTDToolbox
         {
             if (path != "" && path != null)
             {
-                string filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/");
-                path = filepath;
+                string filepath = "";
+                if (isFromZip)
+                {
+                    filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/");
+                    path = filepath;
+                }
+                else
+                    filepath = path;
+                
 
                 tabFilePaths.Add(path);
                 

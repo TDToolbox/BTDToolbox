@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
 using Ionic.Zip;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json.Linq;
@@ -38,6 +39,11 @@ namespace BTDToolbox
         }
         public static void DeleteDirectory(string path)
         {
+            if(path == Environment.CurrentDirectory)
+            {
+                ConsoleHandler.force_appendNotice("A Critical error occured... Attempted to delete BTD Toolbox folder...");
+                return;
+            }
             if (Directory.Exists(path))
             {
                 ConsoleHandler.appendLog("Deleting directory..");
@@ -216,10 +222,10 @@ namespace BTDToolbox
 
             if (isGamePathValid(game) == true)
             {
-                gameDir= ReturnGamePath(game);
+                gameDir = CurrentProjectVariables.GamePath;
                 exeName = Get_EXE_Name(game);
                 
-                exePath = gameDir + exeName;
+                exePath = gameDir + "\\" + exeName;
                 ConsoleHandler.appendLog("Launching " + game + "...");
                 Process.Start(exePath);
                 ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
@@ -431,9 +437,18 @@ namespace BTDToolbox
             archive.Password = password;
             archive.ExtractProgress += ZipExtractProgress;
 
+            int i = 0;
             try
             {
-                archive.ExtractAll(tempDir);
+                foreach(ZipEntry e in archive)
+                {
+                    e.Extract(tempDir);
+                    
+                    if(i >= 5)
+                        break;
+                    i++;
+                }
+                //archive.ExtractAll(tempDir);
             }
             catch (BadPasswordException)
             {
@@ -531,132 +546,126 @@ namespace BTDToolbox
         public static void CompileJet(string switchCase)
         {
             if (New_JsonEditor.isJsonError != true)
-            {
-                string gameDir = "";
-                string gameNameTemp = "";
+            {                
+                if (JetProps.get().Count == 1)
+                {
+                    string dest = "";
+                    bool isOutputting = false;
+                    bool abort = false;
 
-                if (Serializer.Deserialize_Config().CurrentGame != "" && Serializer.Deserialize_Config() != null)
-                    gameNameTemp = Serializer.Deserialize_Config().CurrentGame;
-                else if (Main.gameName != "" && Main.gameName != null)
-                {
-                    gameNameTemp = Main.gameName;
-                    Serializer.SaveConfig(Main.getInstance(), "main");
-                }
-                
-                if(gameNameTemp != "" && gameNameTemp != null)
-                {
-                    gameDir = ReturnGamePath(Main.gameName);
-                    
-                    if (JetProps.get().Count == 1)
+                    var zip = new ZipForm();
+
+                    if (switchCase.Contains("output"))
                     {
-                        string dest = "";
-                        bool isOutputting = false;
-                        bool abort = false;
-
-                        var zip = new ZipForm();
-
-                        if (switchCase.Contains("output"))
+                        isOutputting = true;
+                        //string exPath = programData.ExportPath;
+                        string exPath = CurrentProjectVariables.ExportPath;
+                        if (exPath != "" && exPath != null)
                         {
-                            isOutputting = true;
-                            string exPath = programData.ExportPath;
-                            if (exPath != "" && exPath != null)
-                            {
-                                DialogResult diag = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
-                                if (diag == DialogResult.Yes)
-                                    dest = exPath;
-                                else
-                                    exPath = "";
-                            }
-                            if (exPath == "" || exPath == null)
-                            {
-                                ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
-                                dest = OutputJet();
-                                ZipForm.savedExportPath = dest;
-                                Serializer.SaveSmallSettings("export path");
-                            }
-                            zip.destPath = dest;
-                        }
-                        else if (switchCase.Contains("launch"))
-                        {
-                            if (gameDir != null && gameDir != "")
-                                zip.launch = true;
+                            DialogResult diag = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
+                            if (diag == DialogResult.Yes)
+                                dest = exPath;
                             else
-                            {
-                                ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?");
-                                DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?", "Browse for game?", MessageBoxButtons.YesNoCancel);
-                                if (diag == DialogResult.Yes)
-                                {
-                                    browseForExe(gameNameTemp);
-                                }
-                                if (diag == DialogResult.No)
-                                {
-                                    DialogResult diag2 = MessageBox.Show("Do you want to just save your jet file instead?", "Save jet instead?", MessageBoxButtons.YesNo);
-                                    {
-                                        if (diag2 == DialogResult.Yes)
-                                        {
-                                            isOutputting = true;
-                                            string exPath = programData.ExportPath;
-                                            if (exPath != "" && exPath != null)
-                                            {
-                                                DialogResult diagz = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
-                                                if (diagz == DialogResult.Yes)
-                                                    dest = exPath;
-                                                else
-                                                    exPath = "";
-                                            }
-                                            if (exPath == "" || exPath == null)
-                                            {
-                                                ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
-                                                dest = OutputJet();
-                                                ZipForm.savedExportPath = dest;
-                                                Serializer.SaveSmallSettings("export path");
-                                            }
-                                            zip.destPath = dest;
-                                        }
-                                    }
-                                }
-                                else
-                                    abort = true;
-                            }
+                                exPath = "";
                         }
-                        if(!abort)
+                        if (exPath == "" || exPath == null)
                         {
-                            if (isOutputting)
-                            {
-                                if (dest != null && dest != "")
-                                {
-                                    zip.Show();
-                                    zip.Compile();
-                                }
-                                else
-                                {
-                                    ConsoleHandler.appendLog("Export cancelled...");
-                                }
-                            }
-                            else
-                            {
-                                zip.Show();
-                                zip.Compile();
-                            }
+                            ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                            dest = OutputJet();
+
+                            CurrentProjectVariables.ExportPath = dest;
+                            ProjectHandler.SaveProject();
+                            
+                            //ZipForm.savedExportPath = dest;
+                            //Serializer.SaveSmallSettings("export path");
                         }
+                        zip.destPath = dest;
                     }
-                    else
+
+
+                    else if (switchCase.Contains("launch"))
                     {
-                        if (JetProps.get().Count < 1)
+                        if (CurrentProjectVariables.GamePath != null && CurrentProjectVariables.GamePath != "")
                         {
-                            MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                            ConsoleHandler.appendLog("You need to open a project to continue...");
+                            zip.launch = true;
+                            zip.destPath = CurrentProjectVariables.GamePath + "\\Assets\\" + ReturnJetName(CurrentProjectVariables.GameName);
                         }
                         else
                         {
-                            MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                            ConsoleHandler.appendLog("You need to close projects to continue...");
+                            ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?");
+                            DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?", "Browse for game?", MessageBoxButtons.YesNoCancel);
+                            if (diag == DialogResult.Yes)
+                            {
+                                browseForExe(CurrentProjectVariables.GameName);
+                            }
+                            if (diag == DialogResult.No)
+                            {
+                                DialogResult diag2 = MessageBox.Show("Do you want to just save your jet file instead?", "Save jet instead?", MessageBoxButtons.YesNo);
+                                {
+                                    if (diag2 == DialogResult.Yes)
+                                    {
+                                        isOutputting = true;
+                                        string exPath = CurrentProjectVariables.ExportPath;
+                                        if (exPath != "" && exPath != null)
+                                        {
+                                            DialogResult diagz = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
+                                            if (diagz == DialogResult.Yes)
+                                                dest = exPath;
+                                            else
+                                                exPath = "";
+                                        }
+                                        if (exPath == "" || exPath == null)
+                                        {
+                                            ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                                            dest = OutputJet();
+                                            CurrentProjectVariables.ExportPath = dest;
+                                            ProjectHandler.SaveProject();
+
+                                            /*ZipForm.savedExportPath = dest;
+                                            Serializer.SaveSmallSettings("export path");*/
+                                        }
+                                        zip.destPath = dest;
+                                    }
+                                }
+                            }
+                            else
+                                abort = true;
+                        }
+                    }
+                    if (!abort)
+                    {
+                        if (isOutputting)
+                        {
+                            if (dest != null && dest != "")
+                            {
+                                zip.destPath = dest;
+                                zip.Show();
+                                zip.Compile();
+                            }
+                            else
+                            {
+                                ConsoleHandler.appendLog("Export cancelled...");
+                            }
+                        }
+                        else
+                        {
+                            zip.Show();
+                            zip.Compile();
                         }
                     }
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("There was an issue detecting your current game! Please restart toolbox and try again...");
+                    if (JetProps.get().Count < 1)
+                    {
+                        MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                        ConsoleHandler.appendLog("You need to open a project to continue...");
+                    }
+                    else
+                    {
+                        MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                        ConsoleHandler.appendLog("You need to close projects to continue...");
+                    }
                 }
             }
         }

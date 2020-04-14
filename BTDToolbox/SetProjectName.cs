@@ -85,7 +85,7 @@ namespace BTDToolbox
                 this.Close();
             }
 
-            bool overwriteProj = true;
+            bool writeProj = true;
             string projName = ReturnName(ProjectName_TextBox.Text, gameName).Replace("\\", "");
             string projdir = Environment.CurrentDirectory + "\\Projects\\" + projName;
 
@@ -101,21 +101,21 @@ namespace BTDToolbox
                         Directory.Delete(projdir, true);
                     }
                     catch { ConsoleHandler.appendLog("Directory is currently open in windows file explorer..."); }
-                    overwriteProj = true;
+                    writeProj = true;
                 }
                 else if (result == DialogResult.Cancel)
                 {
-                    overwriteProj = false;
+                    writeProj = false;
                     this.Close();
                 }
                 else
                 {
-                    overwriteProj = false;
+                    writeProj = false;
                     ProjectName_TextBox.Text = "";
                 }
             }
 
-            if (overwriteProj == true)
+            if (writeProj == true)
             {
                 if (!Directory.Exists(projdir))
                     Directory.CreateDirectory(projdir);
@@ -131,9 +131,10 @@ namespace BTDToolbox
 
                     if(!File.Exists(projdir + "\\" + projName + ".jet"))
                     {
-                        File.Copy(backupPath, projdir + "\\" + projName + ".jet");
+                        //File.Copy(backupPath, projdir + "\\" + projName + ".jet");
                         CurrentProjectVariables.ProjectName = projName;
                         CurrentProjectVariables.PathToProjectClassFile = projdir;
+                        CurrentProjectVariables.PathToProjectFiles = projdir + "\\" + projName;
 
                         ProjectHandler.SaveProject();
                     }
@@ -150,11 +151,25 @@ namespace BTDToolbox
                     ConsoleHandler.force_appendLog("Unable to locate or create backup... Cancelling project creation...");
                     if (Directory.Exists(projdir))
                         Directory.Delete(projdir);
+                    this.Close();
                 }
-                //this.Close();
             }
-            //if (gameName == "BTDB")
-            if (gameName != "BTDB")
+            if(gameName == "BTDB")
+            {
+                var getPasss = new Get_BTDB_Password();
+                getPasss.Show();
+                getPasss.isExtracting = true;
+                this.Close();
+            }
+            else
+            {
+                var zip = new ZipForm();
+                zip.Show();
+                zip.Extract();
+                this.Close();
+            }
+            //This stuff is for zip projects
+            /*if (gameName != "BTDB")
             {
                 CurrentProjectVariables.JetPassword = "Q%_{6#Px]]";
                 ProjectHandler.SaveProject();
@@ -170,36 +185,7 @@ namespace BTDToolbox
                 var getPasss = new Get_BTDB_Password();
                 getPasss.Show();
             }
-            this.Close();
-            /*else if (gameName == "BTDB")
-            {
-                var getPasss = new Get_BTDB_Password();
-                getPasss.isExtracting = true;
-                //getPasss.projName = ProjectName_TextBox.Text;
-
-                string temp = gameName;
-                getPasss.projName = ReturnName(ProjectName_TextBox.Text, gameName);
-                gameName = temp;
-                getPasss.Show();
-                this.Close();
-            }
-            else if (gameName == "BMC")
-            {
-                
-            }
-            else
-            {
-                var extract = new ZipForm();
-                //extract.projName = ProjectName_TextBox.Text;
-
-                string temp = gameName;
-                extract.projName = ReturnName(ProjectName_TextBox.Text, gameName);
-                gameName = temp;
-                
-                extract.Show();
-                extract.Extract();
-                this.Close();
-            }*/
+            this.Close();*/
         }
 
         private void CustomName_RadioButton_MouseClick(object sender, MouseEventArgs e)

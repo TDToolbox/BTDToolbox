@@ -289,6 +289,8 @@ namespace BTDToolbox
                         gameName = "BTD5";
                     else if (path.Contains("BTDB"))
                         gameName = "BTDB";
+                    else if (path.Contains("BMC"))
+                        gameName = "BMC";
 
                     Serializer.SaveConfig(this, "game");
                     JetForm jf = new JetForm(dirInfo, this, name);
@@ -498,7 +500,7 @@ namespace BTDToolbox
         }
         private void TestForm_Click(object sender, EventArgs e)
         {
-            JsonEditorHandler.OpenFile(Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
+            JsonEditorHandler.OpenFile(CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
         }
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -731,7 +733,7 @@ namespace BTDToolbox
         private void EasyTowerEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var easyTower = new EasyTowerEditor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
             easyTower.path = path;
             easyTower.Show();
         }
@@ -796,14 +798,14 @@ namespace BTDToolbox
         private void EZ_TowerEditor_Click(object sender, EventArgs e)
         {
             var ezTower = new EasyTowerEditor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
             ezTower.path = path;
             ezTower.Show();
         }
         private void EZ_BloonEditor_Click(object sender, EventArgs e)
         {
             var ezBloon = new EZBloon_Editor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
             ezBloon.path = path;
             ezBloon.Show();
         }
@@ -812,7 +814,7 @@ namespace BTDToolbox
             if (Serializer.Deserialize_Config().CurrentGame == "BTDB")
             {
                 var ezCard = new EZCard_Editor();
-                string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
+                string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
                 ezCard.path = path;
                 ezCard.Show();
             }

@@ -850,9 +850,9 @@
             this.Controls.Add(this.AllTowerFiles_ComboBox);
             this.Controls.Add(this.Save_Button);
             this.Controls.Add(this.TowerType_Label);
+            this.Controls.Add(this.UpgradesPanel);
             this.Controls.Add(this.TowerPanel);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.UpgradesPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";

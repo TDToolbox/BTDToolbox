@@ -20,6 +20,7 @@ namespace BTDToolbox
         //zip variables
         public static int totalFiles = 0;
         public int filesTransfered = 0;
+        public static bool useLastPass = false;
         public static string rememberedPassword = "";
         public static string existingJetFile = "";
         public static string savedExportPath = "";
@@ -61,85 +62,18 @@ namespace BTDToolbox
         {
             programData = DeserializeConfig();
             //string std = DeserializeConfig().CurrentGame;
-            string std = ReturnJetName(CurrentProjectVariables.GameName);
-            jetName = ReturnJetName(std);
-            gameDir = ReturnGamePath(std);
-            if (std != "BTDB" && std != "" && std != null)
+
+            gameName = CurrentProjectVariables.GameName;
+            jetName = ReturnJetName(gameName);
+            gameDir = CurrentProjectVariables.GamePath;
+            if (gameName != "BTDB" && gameName != "" && gameName != null)
             {
                 password = "Q%_{6#Px]]";
                 CurrentProjectVariables.JetPassword = password;
                 ProjectHandler.SaveProject();
             }
-
-            gameName = std;
             steamJetPath = gameDir + "\\Assets\\" + jetName;
         }
-        private void HandleBTDBPass()
-        {
-            bool rememberPass = Get_BTDB_Password.rememberPass;
-            if (File.Exists(sourcePath) && gameName == "BTDB")
-            {
-                this.Hide();
-                bool passRes = Bad_JetPass(sourcePath, password);
-                if (passRes == true)
-                {
-                    DialogResult res = MessageBox.Show("You entered the wrong password. Would you like to try again?", "Wrong Password!", MessageBoxButtons.OKCancel);
-                    if (res == DialogResult.OK)
-                    {
-                        var getpas = new Get_BTDB_Password();
-                        getpas.projName = projName;
-                        getpas.isExtracting = true;
-
-                        if (rememberPass == true)
-                            Get_BTDB_Password.rememberPass = true;
-                        else
-                            Get_BTDB_Password.rememberPass = false;
-                        getpas.Show();
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                }
-                else
-                {
-                    this.Show();
-
-                    password = rememberedPassword;
-                    CurrentProjectVariables.JetPassword = password;
-
-                    ProjectHandler.SaveProject();
-                    Serializer.SaveSmallSettings("battlesPass");
-                }
-            }
-        }
-
-        public static void ExtractFile(string path)
-        {
-            Extractor.Extractor.ExtractFile(path);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public void Extract()
         {
             bool rememberPass = Get_BTDB_Password.rememberPass;
@@ -153,14 +87,16 @@ namespace BTDToolbox
             {
                 sourcePath = existingJetFile;
             }
+
             if (File.Exists(sourcePath))
             {
                 //check password
                 if (File.Exists(sourcePath) && gameName == "BTDB")
                 {
                     this.Hide();
-                    bool passRes = Bad_JetPass(sourcePath, password);
-                    if (passRes == true)
+                    bool badPass = Bad_JetPass(sourcePath, password);
+                    
+                    if (badPass == true)
                     {
                         DialogResult res = MessageBox.Show("You entered the wrong password. Would you like to try again?", "Wrong Password!", MessageBoxButtons.OKCancel);
                         if (res == DialogResult.OK)
@@ -230,7 +166,7 @@ namespace BTDToolbox
         }
         private void Extract_OnThread()
         {
-            destPath = Environment.CurrentDirectory + "\\" + projName;
+            destPath = CurrentProjectVariables.PathToProjectFiles;
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
@@ -288,9 +224,11 @@ namespace BTDToolbox
                 {
                     MessageBox.Show("Please close the Jet viewer for the old project...");
                     ConsoleHandler.appendLog("Deleting existing project....");
+                    MessageBox.Show(dinfo.ToString());
                     DeleteDirectory(dinfo.ToString());
                     ConsoleHandler.appendLog("Project Deleted. Creating new project...");
                     Extract_OnThread();
+                    return;
                 }
                 if (varr == DialogResult.Cancel)
                 {
@@ -322,16 +260,20 @@ namespace BTDToolbox
                 this.Text = "Compiling..";
                 if (gameName == "BTDB")
                 {
+
                     if (rememberedPassword != null && rememberedPassword != "")
                     {
                         password = rememberedPassword;
                         Serializer.SaveSmallSettings("battlesPass");
+                        CurrentProjectVariables.JetPassword = password;
+                        ProjectHandler.SaveProject();
                     }
 
                     if (password == null || password.Length <= 0)
                     {
                         var getpas = new Get_BTDB_Password();
                         getpas.launch = launch;
+                        getpas.isExtracting = false;
                         getpas.projName = projName;
                         getpas.destPath = destPath;
                         getpas.Show();
@@ -383,7 +325,7 @@ namespace BTDToolbox
                     if (DeserializeConfig().LastProject == null)
                         Serializer.SaveConfig(jf, "jet explorer");
 
-                    DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
+                    DirectoryInfo projDir = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles);
                     if (Directory.Exists(projDir.ToString()))
                     {
                         ConsoleHandler.appendLog("Compiling jet...");
@@ -415,6 +357,10 @@ namespace BTDToolbox
                             PrintError(ex.Message);
                         }
                         backgroundThread.Abort();
+                    }
+                    else
+                    {
+                        ConsoleHandler.appendLog("Output directory not found... Failed to compile...");
                     }
                 }
                 else
@@ -485,5 +431,55 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("An error occured that may prevent the program from running properly.\r\nThe error is below: \r\n\r\n" + exception + "\r\n");
             this.Close();
         }
+
+
+
+        //
+        //Zip stuff
+        //
+        /*private void HandleBTDBPass()
+        {
+            bool rememberPass = Get_BTDB_Password.rememberPass;
+            if (File.Exists(sourcePath) && gameName == "BTDB")
+            {
+                this.Hide();
+                bool passRes = Bad_JetPass(sourcePath, password);
+                if (passRes == true)
+                {
+                    DialogResult res = MessageBox.Show("You entered the wrong password. Would you like to try again?", "Wrong Password!", MessageBoxButtons.OKCancel);
+                    if (res == DialogResult.OK)
+                    {
+                        var getpas = new Get_BTDB_Password();
+                        getpas.projName = projName;
+                        getpas.isExtracting = true;
+
+                        if (rememberPass == true)
+                            Get_BTDB_Password.rememberPass = true;
+                        else
+                            Get_BTDB_Password.rememberPass = false;
+                        getpas.Show();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    this.Show();
+
+                    password = rememberedPassword;
+                    CurrentProjectVariables.JetPassword = password;
+
+                    ProjectHandler.SaveProject();
+                    Serializer.SaveSmallSettings("battlesPass");
+                }
+            }
+        }
+
+        public static void ExtractFile(string path)
+        {
+            Extractor.Extractor.ExtractFile(path);
+        }*/
     }
 }

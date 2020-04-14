@@ -107,10 +107,7 @@ namespace BTDToolbox
                 CheckJSON(Editor_TextBox.Text);
 
             if (finishedLoading)
-            {
-                WriteToZipFile();
-                ConsoleHandler.appendLog_CanRepeat("Text Changed");
-            }
+                File.WriteAllText(path, Editor_TextBox.Text);
 
             if (tabLine)
             {
@@ -255,7 +252,7 @@ namespace BTDToolbox
         private string GetTowerName()
         {
             string towerName = "";
-            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
             if (!Directory.Exists(projPath + "TowerDefinitions"))
             {
                 return towerName;
@@ -286,7 +283,7 @@ namespace BTDToolbox
         public string GetSpecialtyBuilding()
         {
             string specialtyBuilding = "";
-            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
             
             if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
                 return specialtyBuilding;
@@ -323,7 +320,7 @@ namespace BTDToolbox
                 Open_Button.Visible = true;
                 Weapons_Button.DropDownItems.Clear();
                 file = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
-                string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+                string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
 
                 towerName = GetTowerName();
                 if (towerName != "")
@@ -384,7 +381,7 @@ namespace BTDToolbox
                 //TowerSpriteUpgradeDef
                 //Attempting to get the TowerSpriteUpgradeDef from tower file
                 Tower_Class.Artist tower = new Tower_Class.Artist();
-                string towerfile = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+                string towerfile = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
                 if (File.Exists(towerfile))
                 {
                     string json = File.ReadAllText(towerfile);
@@ -427,13 +424,13 @@ namespace BTDToolbox
         }
         private void TowerFile_Button_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
         private void UpgradeFIle_Button_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
@@ -447,7 +444,7 @@ namespace BTDToolbox
             }
             else
                 foldername = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
 
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
@@ -456,7 +453,7 @@ namespace BTDToolbox
         {
             if (towerSpriteUpgradeDef == "")
                 towerSpriteUpgradeDef = file;
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
             if (!filepath.EndsWith(".json"))
                 filepath = filepath + ".json";
 
@@ -467,7 +464,7 @@ namespace BTDToolbox
         }
         private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
@@ -1004,7 +1001,7 @@ namespace BTDToolbox
                 DialogResult diag = MessageBox.Show("You are trying to restore this file to the original unmodded version. Are you sure you want to do this?", "Restore to original?", MessageBoxButtons.YesNo);
                 if (diag == DialogResult.Yes)
                 {
-                    string backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace("\\" + Serializer.Deserialize_Config().LastProject + "\\", "");
+                    string backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace("\\" + CurrentProjectVariables.PathToProjectFiles + "\\", "");
                     if (File.Exists(backupProj))
                     {
                         if (path.Contains("."))

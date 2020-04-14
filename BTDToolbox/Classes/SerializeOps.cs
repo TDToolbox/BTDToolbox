@@ -155,7 +155,8 @@ namespace BTDToolbox
                 if (projName == null)
                     cfg.LastProject = cfg.LastProject;
                 else
-                    cfg.LastProject = projName;
+                    cfg.LastProject = JetForm.lastProject;
+                    //cfg.LastProject = projName;
             }
 
             if (formName == "json editor")

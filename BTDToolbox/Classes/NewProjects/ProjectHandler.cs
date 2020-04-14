@@ -20,13 +20,29 @@ namespace BTDToolbox.Classes.NewProjects
         }
         public static ProjectClass.ProjectFile ReadProject(string projFile)
         {
-            if(project == null)
+            if (project != null)
+                CurrentProjectVariables.ResetProjectVariables();
+
+            if (project == null)
                 project = new ProjectClass.ProjectFile();
 
             if (File.Exists(projFile))
             {
-                string json = File.ReadAllText(Environment.CurrentDirectory + "\\settings.json");
+                //string json = File.ReadAllText(Environment.CurrentDirectory + "\\settings.json");
+                string json = File.ReadAllText(projFile);
                 project = JsonConvert.DeserializeObject<ProjectClass.ProjectFile>(json);
+
+                CurrentProjectVariables.ProjectName = project.ProjectName;
+                CurrentProjectVariables.PathToProjectFiles = project.PathToProjectFiles;
+                CurrentProjectVariables.PathToProjectClassFile = project.PathToProjectClassFile;
+                CurrentProjectVariables.GameName = project.GameName;
+                CurrentProjectVariables.GamePath = project.GamePath;
+                CurrentProjectVariables.GameVersion = project.GameVersion;
+                CurrentProjectVariables.JetPassword = project.JetPassword;
+                CurrentProjectVariables.ExportPath= project.ExportPath;
+                CurrentProjectVariables.DateLastOpened = project.DateLastOpened;
+                CurrentProjectVariables.JsonEditor_OpenedTabs = project.JsonEditor_OpenedTabs;
+                CurrentProjectVariables.ModifiedFiles = project.ModifiedFiles;
             }
             else
             {

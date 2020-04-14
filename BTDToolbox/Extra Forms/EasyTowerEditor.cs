@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,8 +35,8 @@ namespace BTDToolbox.Extra_Forms
         string[] loc_upgradeNames = new string[] { };
         string[] loc_upgradeDescs = new string[] { };
 
-        string game = Serializer.Deserialize_Config().CurrentGame;
-        string gameDir = "";
+        string game = CurrentProjectVariables.GameName;
+        string gameDir = CurrentProjectVariables.GamePath;
         string[] loc_Text = new string[] { };
         string loc_Path = "";
         string loc_towerName = "";
@@ -218,7 +219,7 @@ namespace BTDToolbox.Extra_Forms
                         TowerDesc_TextBox.Text = loc_towerDesc;
                     }
                 }
-                if(game == "BTD5")
+                if(game == "BTD5" || game == "BMC")
                 {
                     if(File.Exists(loc_Path))
                         ReadLoc();
@@ -440,12 +441,12 @@ namespace BTDToolbox.Extra_Forms
                 RankToUnlockUpgrade_TextBox.Text = upgradeRanks[Upgrades_ListBox.SelectedIndex].ToString();
                 XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
 
-                if (game == "BTD5")
+                if (game == "BTD5" || game == "BMC")
                 {
                     if (File.Exists(loc_Path))
                         UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
                 }
-                else if (game != "" && game != null)
+                else if (game == "BTDB")
                     UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
                 else
                     ConsoleHandler.force_appendNotice("Something went wrong and your current game was not detected. Please reload BTD Toolbox, otherwise you may encounter errors");
@@ -491,13 +492,17 @@ namespace BTDToolbox.Extra_Forms
             {
                 loc_Path = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Loc\\English.xml";
             }
+            else if (game == "BMC")
+            {
+                loc_Path = Serializer.Deserialize_Config().BMC_Directory + "\\Assets\\Loc\\English.xml";
+            }
             else
             {
                 loc_Path = "";
             }
             if (Main.projName != "" && Main.projName != null)
             {
-                string towersPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions";
+                string towersPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions";
                 var towerFiles = Directory.GetFiles(towersPath);
                 foreach (string file in towerFiles)
                 {
@@ -740,7 +745,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 ResetUI();
 
-                path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + AllTowerFiles_ComboBox.SelectedItem;
+                path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + AllTowerFiles_ComboBox.SelectedItem;
                 CreateTowerObject(path);
                 this.Refresh();
             }
@@ -960,7 +965,7 @@ namespace BTDToolbox.Extra_Forms
         public string GetSpecialtyBuilding()
         {
             string specialtyBuilding = "";
-            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
 
             if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
                 return specialtyBuilding;
@@ -992,7 +997,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void PopulateOpenButton()
         {
-            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
 
             Weapons_Button.DropDownItems.Clear();
             filename = AllTowerFiles_ComboBox.SelectedItem.ToString();
@@ -1035,7 +1040,7 @@ namespace BTDToolbox.Extra_Forms
             //TowerSpriteUpgradeDef
             //Attempting to get the TowerSpriteUpgradeDef from tower file
             Tower_Class.Artist tower = new Tower_Class.Artist();
-            string towerfile = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+            string towerfile = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
             if (File.Exists(towerfile))
             {
                 string json = File.ReadAllText(towerfile);
@@ -1073,14 +1078,14 @@ namespace BTDToolbox.Extra_Forms
         }
         private void TowerFile_Button_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
             this.Focus();
         }
         private void UpgradeFile_Button_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
             this.Focus();
@@ -1095,7 +1100,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
                 foldername = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
 
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
@@ -1105,7 +1110,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (towerSpriteUpgradeDef == "")
                 towerSpriteUpgradeDef = file;
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
             if (!filepath.EndsWith(".json"))
                 filepath = filepath + ".json";
 
@@ -1117,7 +1122,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
             this.Focus();
