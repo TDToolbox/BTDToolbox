@@ -78,6 +78,8 @@ namespace BTDToolbox
         {
             bool rememberPass = Get_BTDB_Password.rememberPass;
             this.Text = "Extracting..";
+            Filename_TB.Text = ReturnJetName(gameName);
+
             if (existingJetFile == "")
             {
                 if (sourcePath == null || sourcePath == "")
@@ -90,6 +92,10 @@ namespace BTDToolbox
 
             if (File.Exists(sourcePath))
             {
+                if(projName == "" || projName == null)
+                {
+                    projName = CurrentProjectVariables.ProjectName;
+                }
                 //check password
                 if (File.Exists(sourcePath) && gameName == "BTDB")
                 {
@@ -180,16 +186,26 @@ namespace BTDToolbox
                 archive.ExtractAll(destPath);
                 archive.Dispose();
 
-                if(!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
+                if (CurrentProjectVariables.GameName == "BMC")
+                {
+                    Invoke((MethodInvoker)delegate {
+                        Filename_TB.Text = "AssetBundles";
+                    });
+                    ExtractAssetBundleJet();
+                }
+
+                if (!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
                 {
                     string gamed = "";
                     if(gameName == "BTD5")
                         gamed = Serializer.Deserialize_Config().BTD5_Directory;
-                    else
+                    else if (gameName == "BTDB")
                         gamed = Serializer.Deserialize_Config().BTDB_Directory;
+                    else if(gameName == "BMC")
+                        gamed = Serializer.Deserialize_Config().BMC_Directory;
 
                     //they should have a backup jet of gamed not invalid. create backup proj
-                    if(gamed != "" && gamed != null)
+                    if (gamed != "" && gamed != null)
                     {
                         ConsoleHandler.force_appendNotice("Backup project not detected.... Creating one now..");
                         Invoke((MethodInvoker)delegate {
@@ -203,6 +219,14 @@ namespace BTDToolbox
                             archive.ExtractProgress += ZipExtractProgress;
                             archive.ExtractAll(destPath);
                             archive.Dispose();
+
+                            if (CurrentProjectVariables.GameName == "BMC")
+                            {
+                                Invoke((MethodInvoker)delegate {
+                                    Filename_TB.Text = "AssetBundles";
+                                });
+                                ExtractAssetBundleJet();
+                            }
                         });
                     }
                     else
@@ -210,7 +234,7 @@ namespace BTDToolbox
                         ConsoleHandler.force_appendNotice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
                     }
                 }
-                ConsoleHandler.appendLog("Project files created at: " + projName);
+                ConsoleHandler.appendLog("Project files created at: " + CurrentProjectVariables.PathToProjectFiles);
                 Invoke((MethodInvoker)delegate {
                     jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
                     jf.MdiParent = Main.getInstance();
@@ -258,6 +282,8 @@ namespace BTDToolbox
             if (!IsGameRunning(gameName))
             {
                 this.Text = "Compiling..";
+                Filename_TB.Text = ReturnJetName(gameName);
+
                 if (gameName == "BTDB")
                 {
 
@@ -344,10 +370,18 @@ namespace BTDToolbox
                         toExport.Save();
                         toExport.Dispose();
 
+                        if (CurrentProjectVariables.GameName == "BMC")
+                        {
+                            Invoke((MethodInvoker)delegate {
+                                Filename_TB.Text = "AssetBundles";
+                            });
+                            CompileAssetBundles();
+                        }
+
                         ConsoleHandler.appendLog("Jet was successfully exported to: " + dir);
 
-                        if (launch == true)
-                            LaunchGame(gameName);
+                        /*if (launch == true)
+                            LaunchGame(gameName);*/
                         try
                         {
                             this.Invoke(new Action(() => this.Close()));
@@ -385,7 +419,7 @@ namespace BTDToolbox
 
             TotalProgress_ProgressBar.Location = new Point(TotalProgress_ProgressBar.Location.X, TotalProgress_ProgressBar.Location.Y - 50);
             TotalProgress_Label.Location = new Point(TotalProgress_Label.Location.X, TotalProgress_Label.Location.Y - 50);
-            richTextBox1.Location = new Point(richTextBox1.Location.X, richTextBox1.Location.Y - 50);
+            Filename_TB.Location = new Point(Filename_TB.Location.X, Filename_TB.Location.Y - 50);
             label1.Location = new Point(label1.Location.X, label1.Location.Y - 50);
             this.Size = new Size(this.Size.Width, this.Size.Height - 50);
             pictureBox1.Location = new Point(pictureBox1.Location.X, pictureBox1.Location.Y - 50);
@@ -432,8 +466,83 @@ namespace BTDToolbox
             this.Close();
         }
 
+        public static void CreateAssetBundleJet(string exportPath)
+        {
+            string defaultLocation = Serializer.Deserialize_Config().BMC_Directory + "\\AssetBundles";
+            ZipFile zip = new ZipFile();
+            zip.AddDirectory(defaultLocation, "");
+            zip.Save(exportPath);
+            zip.Dispose();
+        }
+        public void ExtractAssetBundleJet()
+        {
+            string destPath = CurrentProjectVariables.PathToProjectFiles + "\\AssetBundles";
+            string backupAssetBundle = Environment.CurrentDirectory + "\\Backups\\AssetBundles_Original";
+            if (!Directory.Exists(backupAssetBundle))
+            {
+                ConsoleHandler.appendLog("Unable to find the Backup for BMC Asset Bundles. Reaquiring...");
+                GeneralMethods.CreateBackup("BMC");
+            }
+            var jets = new DirectoryInfo(backupAssetBundle).GetFiles();
 
+            foreach(var jet in jets)
+            {
+                
+                if (jet.Name.EndsWith(".jet"))
+                {
+                    Invoke((MethodInvoker)delegate {
+                        Filename_TB.Text = "Asset Bundle: " + jet.Name;
+                    });
+                    string dest = (destPath + "\\" + jet.Name).Replace("/", "\\");
 
+                    ZipFile zip = new ZipFile(jet.FullName);
+                    zip.Password = CurrentProjectVariables.JetPassword;
+                    foreach (ZipEntry z in zip)
+                    {
+                        //string dest = (destPath + "\\" + jet.Name + "\\" + z.FileName).Replace("/", "\\");
+                        if (z.FileName.Contains("JSON") && !dest.Contains(".tmp"))
+                        {
+                            z.ExtractWithPassword(dest, ExtractExistingFileAction.OverwriteSilently, CurrentProjectVariables.JetPassword);
+                        }
+                    }
+                    zip.Dispose();
+                }
+            }
+        }
+
+        public void CompileAssetBundles()
+        {
+            string moddedBundles = CurrentProjectVariables.PathToProjectFiles + "\\AssetBundles";
+            var dirs = new DirectoryInfo(moddedBundles).GetDirectories();
+
+            foreach (var dir in dirs)
+            {
+
+                if (dir.Name.EndsWith(".jet"))
+                {
+                    Invoke((MethodInvoker)delegate {
+                        Filename_TB.Text = "Asset Bundle: " + dir.Name;
+                    });
+
+                    string dest = (Environment.CurrentDirectory + "\\ModdedAssetBundles\\" + dir.Name).Replace("/", "\\");
+                    //string dest = (DeserializeConfig().BMC_Directory + "\\AssetBundles\\" + dir.Name).Replace("/", "\\");
+
+                    ZipFile bundle = new ZipFile(dest);
+                    bundle.Password = CurrentProjectVariables.JetPassword;
+                    bundle.AddDirectory(dir.FullName);
+
+                    bundle.Encryption = EncryptionAlgorithm.PkzipWeak;
+                    bundle.Name = dest;
+                    bundle.CompressionLevel = CompressionLevel.Level6;
+                    bundle.Save();
+                    bundle.Dispose();
+                }
+            }
+        }
+        public void MergeAssetBundles()
+        {
+
+        }
         //
         //Zip stuff
         //
@@ -481,5 +590,5 @@ namespace BTDToolbox
         {
             Extractor.Extractor.ExtractFile(path);
         }*/
-    }
-}
+                }
+            }

@@ -1082,6 +1082,16 @@ namespace BTDToolbox
         }
         private void ReformatJSON_Button_Click(object sender, EventArgs e)
         {
+            if(!Serializer.Deserialize_Config().autoFormatJSON)
+            {
+                DialogResult diag = MessageBox.Show("Autoformatting isn't enabled in your settings. Would you like to toolbox to enable it, " +
+                    "or keep it set to manual, so you have to press this button to format?", "Enable AutoFormating?", MessageBoxButtons.YesNo);
+                if(diag == DialogResult.Yes)
+                {
+                    Main.autoFormatJSON = true;
+                    Serializer.SaveSmallSettings("autoFormatJSON");
+                }
+            }
             ReformatText();
         }
         private void ReformatText()

@@ -62,13 +62,16 @@ namespace BTDToolbox
         }
         public static void CopyFile(string originalLocation, string newLocation)
         {
+            string[] split = originalLocation.Split('\\');
+            string filename = split[split.Length - 1];
+
             if (File.Exists(originalLocation))
             {
                 if (!File.Exists(newLocation))
                 {
-                    ConsoleHandler.appendLog("Copying file...");
+                    ConsoleHandler.appendLog("Copying "+ filename + "...");
                     File.Copy(originalLocation, newLocation);
-                    ConsoleHandler.appendLog("File Copied!");
+                    ConsoleHandler.appendLog("Copied " + filename + "!");
                 }
                 else
                 {
@@ -76,23 +79,26 @@ namespace BTDToolbox
                     DeleteFile(newLocation);
                     ConsoleHandler.appendLog("Replacing existing file..");
                     File.Copy(originalLocation, newLocation);
-                    ConsoleHandler.appendLog("File copied!");
+                    ConsoleHandler.appendLog("Copied " + filename + "!");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Failed to copy file because it was not found at: \r\n" + originalLocation);
+                ConsoleHandler.appendLog("Failed to copy " + filename + " because it was not found at: \r\n" + originalLocation);
             }
         }
-        public static void CopyDirectory(string originalLocation, string newLocation)
+        public static void CopyDirectory(string source, string destination)
         {
-            ConsoleHandler.appendLog("Copying directory...");
-            foreach (string dirPath in Directory.GetDirectories(originalLocation, "*", SearchOption.AllDirectories))
-                Directory.CreateDirectory(dirPath.Replace(originalLocation, newLocation));
+            string[] split = source.Split('\\');
+            string dirname = split[split.Length - 1];
 
-            foreach (string newPath in Directory.GetFiles(originalLocation, "*.*", SearchOption.AllDirectories))
-                File.Copy(newPath, newPath.Replace(originalLocation, newLocation), true);
-            ConsoleHandler.appendLog("Directory copied.");
+            ConsoleHandler.appendLog("Copying " + dirname + "...");
+            foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(source, destination));
+
+            foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
+                File.Copy(newPath, newPath.Replace(source, destination), true);
+            ConsoleHandler.appendLog("Copied " + dirname + "!");
         }
         public static ConfigFile DeserializeConfig()
         {
@@ -254,21 +260,31 @@ namespace BTDToolbox
                     }
                     if (!File.Exists(backupDir + "\\" + backupLocName))
                     {
-                        ConsoleHandler.appendLog("Failed to validate backup...");
+                        ConsoleHandler.appendLog("Failed to validate backup loc...");
                         return false;
                     }
+                    if(gameName == "BMC")
+                    {
+                        string backupAssetBundle = backupDir + "\\AssetBundles_Original";
+                        if (!Directory.Exists(backupAssetBundle))
+                        {
+                            ConsoleHandler.appendLog("Failed to validate backup Asset Bundle for BMC...");
+                            return false;
+                        }
+                    }
+                    
                     ConsoleHandler.appendLog("Backup validated");
                     return true;
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Failed to validate backup...");
+                    ConsoleHandler.appendLog("Failed to validate one or more backup files...");
                     return false;
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Failed to validate backup...");
+                ConsoleHandler.appendLog("Failed to validate one or more backup files...");
                 return false;
             }
         }
@@ -299,6 +315,8 @@ namespace BTDToolbox
             string backupLocName = game + "_Original_LOC.xml";
             string fullBackupPath = backupDir + "\\" + backupName;
 
+            MessageBox.Show("One or more of the backup files failed to be aquired... Please wait while they are reaquired...");
+            ConsoleHandler.appendLog("Aquiring new backups..");
             if (!Directory.Exists(backupDir))
             {
                 ConsoleHandler.appendLog("Backup directory does not exist. Creating directory...");
@@ -311,11 +329,23 @@ namespace BTDToolbox
             if (steamJetPath != null)
             {
                 CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
-                CopyFile(steamJetPath, fullBackupPath);                    
+                CopyFile(steamJetPath, fullBackupPath);    
+                
                 if (File.Exists(fullBackupPath))
-                    ConsoleHandler.appendLog("Backup created!");
+                    ConsoleHandler.appendLog("Backup jet created!");
                 else
-                    ConsoleHandler.appendLog("Backup failed...");
+                    ConsoleHandler.appendLog("Backup jet failed...");
+
+                if (game == "BMC")
+                {
+                    string source = Serializer.Deserialize_Config().BMC_Directory + "\\AssetBundles";
+                    string destination = backupDir + "\\AssetBundles_Original";
+                    if (Directory.Exists(destination))
+                        Directory.Delete(destination, true);
+
+                    Directory.CreateDirectory(destination);
+                    CopyDirectory(source, destination);
+                }
             }
             else
             {

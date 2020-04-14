@@ -84,6 +84,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
             }
+            finishedLoading = true;
         }
         private void PopulateToolbar()
         {
@@ -225,17 +226,27 @@ namespace BTDToolbox.Extra_Forms
                         ReadLoc();
                     else
                     {
-                        if(Serializer.Deserialize_Config().BTD5_Directory == null || Serializer.Deserialize_Config().BTD5_Directory == "")
+                        string gameDir = CurrentProjectVariables.GamePath;
+                        if(gameDir == null || gameDir == "")
                         {
-                            ConsoleHandler.force_appendNotice("You haven't browsed for your BTD5 Game so you will not be able to edit the tower and upgrade descriptions");
+                            ConsoleHandler.force_appendNotice("You haven't browsed for your " + game + " Game so you will not be able to edit the tower and upgrade descriptions");
                             this.Focus();
                         }
                         else
                         {
                             ConsoleHandler.force_appendNotice("Unable to find your LOC file...");
-                            DialogResult diag = MessageBox.Show("Unable to find BTD5's LOC file. Do you want toolbox to make Steam validate BTD5 so it can reaquire it? If you have any mods applied to btd5 steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
+                            DialogResult diag = MessageBox.Show("Unable to find " + game + "'s LOC file. Do you want toolbox to make Steam validate " + game + " so it can reaquire it? If you have any mods applied to " + game + " steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
                             if (diag == DialogResult.Yes)
-                                GeneralMethods.SteamValidateBTD5();
+                            {
+                                if (game == "BTD5")
+                                {
+                                    GeneralMethods.SteamValidateBTD5();
+                                }
+                                else
+                                {
+                                    GeneralMethods.SteamValidateBMC();
+                                }
+                            }
                             else
                             {
                                 ConsoleHandler.force_appendNotice("Valdation cancelled. You will not be able to mod the tower or upgrade descriptions...");
@@ -486,7 +497,6 @@ namespace BTDToolbox.Extra_Forms
         }     
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
-            finishedLoading = true;
             firstLoad = true;
             if (game == "BTD5")
             {
@@ -494,7 +504,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else if (game == "BMC")
             {
-                loc_Path = Serializer.Deserialize_Config().BMC_Directory + "\\Assets\\Loc\\English.xml";
+                loc_Path = CurrentProjectVariables.GamePath + "\\Assets\\Loc\\English.xml";
             }
             else
             {
@@ -527,13 +537,29 @@ namespace BTDToolbox.Extra_Forms
         }
         private void SaveLoc()
         {
-            if (game == "BTD5")
+            if (game == "BTD5" || game == "BMC")
             {
                 loc_Text = File.ReadAllLines(loc_Path);
-                string towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
-                string towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
-                string towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
-                string towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+
+                string towerName = "";
+                string towerNamePlural = "";
+                string towerNameCAPS = "";
+                string towerDesc = "";
+
+                if (game == "BMC")
+                {
+                    towerName = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME";
+                    towerNamePlural = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_DESC";
+                }
+                else if (game == "BTD5")
+                {
+                    towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
+                    towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+                }
 
                 //Upgrade Names
                 string towerUpgrade_A1 = "LOC_UPGRADE_A1_" + TowerType_Label.Text;
@@ -660,10 +686,27 @@ namespace BTDToolbox.Extra_Forms
             if(File.Exists(loc_Path))
             {
                 loc_Text = File.ReadAllLines(loc_Path);
-                string towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
-                string towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
-                string towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
-                string towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+
+                string towerName = "";
+                string towerNamePlural = "";
+                string towerNameCAPS = "";
+                string towerDesc = "";
+
+                if (game == "BMC")
+                {
+                    towerName = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME";
+                    towerNamePlural = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_DESC";
+                }
+                else if (game == "BTD5")
+                {
+                    towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
+                    towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+                }
+                
 
                 //Upgrade Names
                 string towerUpgrade_A1 = "LOC_UPGRADE_A1_" + TowerType_Label.Text;
@@ -884,12 +927,16 @@ namespace BTDToolbox.Extra_Forms
         }
         private void CanBePlacedOnPath_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (CanBePlacedOnPath_CheckBox.Checked)
+            if(finishedLoading)
             {
-                CanBePlacedOnLand_CheckBox.Checked = false;
-                CanBePlacedInWater_CheckBox.Checked = false;
-                ConsoleHandler.appendNotice("CanBePlacedOnPath  overrides CanBePlacedOnLand and CanBePlacedInWater");
+                if (CanBePlacedOnPath_CheckBox.Checked)
+                {
+                    CanBePlacedOnLand_CheckBox.Checked = false;
+                    CanBePlacedInWater_CheckBox.Checked = false;
+                    ConsoleHandler.appendNotice("CanBePlacedOnPath  overrides CanBePlacedOnLand and CanBePlacedInWater");
+                }
             }
+            
         }
         private void CanBePlacedOnLand_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
