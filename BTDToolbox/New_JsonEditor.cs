@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
 using Ionic.Zip;
+using System.Text.RegularExpressions;
 
 namespace BTDToolbox
 {
@@ -184,6 +185,9 @@ namespace BTDToolbox
             {
                 if (t == path)
                 {
+                    if (!path.Contains("Backups"))
+                        CheckIfModified(path);
+
                     tabControl1.SelectedTab = tabPages[i];
                     userControls[i].Size = new Size(tabControl1.SelectedTab.Width, tabControl1.SelectedTab.Height);
                 }
@@ -225,6 +229,9 @@ namespace BTDToolbox
             else
                 tabControl1.SelectedIndex = indexBeforeDelete - 1;
 
+            if(!path.Contains("Backups"))
+                CheckIfModified(path);
+
             tabFilePaths.RemoveAt(i);
             CurrentProjectVariables.JsonEditor_OpenedTabs.RemoveAt(i);
             ProjectHandler.SaveProject();
@@ -232,24 +239,73 @@ namespace BTDToolbox
             tabPages.RemoveAt(i);
             userControls.RemoveAt(i);
 
+            
 
             if (tabControl1.TabPages.Count <= 0)
                 this.Close();
         }
+        public static string RemoveWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+        private void CheckIfModified(string pathToFile)
+        {
+            string backupfile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
+            if (File.Exists(backupfile))
+            {
+                ZipFile backup = new ZipFile(backupfile);
+                backup.Password = CurrentProjectVariables.JetPassword;
 
+                string modText = RemoveWhitespace(File.ReadAllText(pathToFile));
+                string pathInZip = pathToFile.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
+                string originalText = RemoveWhitespace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip));
+                
+                try
+                {
+                    if (modText == originalText)
+                    {
+                        //file not modded
+                        if (CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+                        {
+                            CurrentProjectVariables.ModifiedFiles.Remove(pathToFile);
+                        }
+                    }
+                    else
+                    {
+                        //file modded
+                        if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+                        {
+                            CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //exception occurred. file probably modded
+                    if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+                    {
+                        CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
+                    }
+                }
+
+                ProjectHandler.SaveProject();
+            }
+            else
+                ConsoleHandler.force_appendLog("Backup not detected... Unable to continue...");
+        }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             Serializer.SaveConfig(this, "json editor");
             ProjectHandler.SaveProject();
-            Serializer.SaveJSONEditor_Tabs();
-            //ProjectHandler.SaveZipFile(jet);
+            //Serializer.SaveJSONEditor_Tabs();
 
-            if (userControls.Count >0)
+            foreach (string t in tabFilePaths)
             {
-                //Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex]);                
+                if (!t.Contains("Backups"))
+                    CheckIfModified(t);
             }
-
-            jet = null;
             JsonEditorHandler.jeditor = null;
         }
         private void Close_button_Click(object sender, EventArgs e)

@@ -1052,12 +1052,15 @@ namespace BTDToolbox
             return directoryNode;
         }
 
-        private void FindModifiedFiles_Button_Click(object sender, EventArgs e)
+        private void FindAllModifiedFles_Button_Click(object sender, EventArgs e)
         {
-            
+            FindModFiles();
+        }
+        private void FindModFiles()
+        {
             DialogResult diag = MessageBox.Show("It will take up to 10 seconds to find all of the modified files" +
-                "in the project. Do you wish to continue?", "Do you wish to continue?", MessageBoxButtons.YesNo);
-            if(diag == DialogResult.Yes)
+                   " in the project. Do you wish to continue?", "Do you wish to continue?", MessageBoxButtons.YesNo);
+            if (diag == DialogResult.Yes)
             {
                 string backupfile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
                 if (File.Exists(backupfile))
@@ -1069,10 +1072,10 @@ namespace BTDToolbox
                     ConsoleHandler.force_appendLog("Searching for modified files");
                     foreach (var file in files)
                     {
-                        string modText = Regex.Replace(File.ReadAllText(file.FullName), @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline).ToLower().Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\r\n", "");
-                        
-                        string pathInZip = file.FullName.Replace(CurrentProjectVariables.PathToProjectFiles + "\\","");
-                        string originalText = Regex.Replace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip), @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline).ToLower().Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\r\n", "");
+                        string modText = RemoveWhitespace(File.ReadAllText(file.FullName));
+
+                        string pathInZip = file.FullName.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
+                        string originalText = RemoveWhitespace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip));
                         try
                         {
                             if (modText == originalText)
@@ -1097,7 +1100,7 @@ namespace BTDToolbox
                             {
                                 ConsoleHandler.appendLog_CanRepeat(ex.Message);
                                 CurrentProjectVariables.ModifiedFiles.Add(file.FullName);
-                                
+
                             }
                         }
 
@@ -1105,37 +1108,72 @@ namespace BTDToolbox
                     ProjectHandler.SaveProject();
                     ConsoleHandler.force_appendLog("Finished verifying files");
 
-                    
+
                     if (CurrentProjectVariables.ModifiedFiles.Count > 0)
                     {
                         bool open = false;
-                        DialogResult diaga = MessageBox.Show("Modified files were found. Would you like toolbox to open them all? If you press no, the console will still display the names of all the modified files.", "Open all modified files?", MessageBoxButtons.YesNo);
+                        DialogResult diaga = MessageBox.Show("Modified files were found. Would you like toolbox to open them all? If you press no, " +
+                            "the console will still display the names of all the modified files. \nYou can also find them " +
+                            "under \"View modified files\" in the Jet Viewer's \"File\" tab", "Open all modified files?", MessageBoxButtons.YesNo);
                         if (diaga == DialogResult.Yes)
                         {
                             open = true;
                         }
 
-                        foreach(var a in CurrentProjectVariables.ModifiedFiles)
+                        foreach (var a in CurrentProjectVariables.ModifiedFiles)
                         {
                             ConsoleHandler.force_appendLog_CanRepeat(a.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", ""));
                             if (open == true)
                             {
                                 JsonEditorHandler.OpenFile(a);
                             }
-                        }                        
+                        }
                     }
                     else
-                    {
                         ConsoleHandler.force_appendLog("No modified files found..");
-                    }
                 }
                 else
                     ConsoleHandler.force_appendLog("Backup not detected... Unable to continue...");
             }
             else
-            {
                 ConsoleHandler.appendLog("User cancelled operation...");
+        }
+        private void ViewModifiedFiles_Button_MouseHover(object sender, EventArgs e)
+        {
+            PopulateModFiles();
+        }
+        private void PopulateModFiles()
+        { 
+            ViewModifiedFiles_Button.DropDownItems.Clear();
+            ViewModifiedFiles_Button.DropDownItems.Add("Find all modified files");
+            ViewModifiedFiles_Button.DropDownItems.Add(new ToolStripSeparator());
+
+
+            foreach (var a in CurrentProjectVariables.ModifiedFiles)
+            {
+                ViewModifiedFiles_Button.DropDownItems.Add(a.Replace(CurrentProjectVariables.PathToProjectFiles + "\\",""));
             }
+        }
+        private void ViewModifiedFiles_Button_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if(e.ClickedItem.Text == "Find all modified files")
+            {
+                FindModFiles();
+            }
+            else if (e.ClickedItem.Text.Length > 0)
+            {
+                JsonEditorHandler.OpenFile(CurrentProjectVariables.PathToProjectFiles + "\\" + e.ClickedItem.Text);
+            }
+        }
+        public static string RemoveWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+        private void ViewModifiedFiles_Button_Click(object sender, EventArgs e)
+        {
+            PopulateModFiles();
         }
     }
 }

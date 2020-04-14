@@ -107,7 +107,13 @@ namespace BTDToolbox
                 CheckJSON(Editor_TextBox.Text);
 
             if (finishedLoading)
+            {
                 File.WriteAllText(path, Editor_TextBox.Text);
+                if(!CurrentProjectVariables.ModifiedFiles.Contains(path))
+                {
+                    CurrentProjectVariables.ModifiedFiles.Add(path);
+                }
+            }
 
             if (tabLine)
             {
