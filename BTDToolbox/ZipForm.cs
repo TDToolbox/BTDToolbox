@@ -188,10 +188,14 @@ namespace BTDToolbox
 
                 if (CurrentProjectVariables.GameName == "BMC")
                 {
-                    Invoke((MethodInvoker)delegate {
-                        Filename_TB.Text = "AssetBundles";
-                    });
-                    ExtractAssetBundleJet();
+                    DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? They are not necessary, and have to do with textures.", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                    if(diag == DialogResult.Yes)
+                    {
+                        Invoke((MethodInvoker)delegate {
+                            Filename_TB.Text = "AssetBundles";
+                        });
+                        ExtractAssetBundleJet();
+                    }
                 }
 
                 if (!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
@@ -220,7 +224,8 @@ namespace BTDToolbox
                             archive.ExtractAll(destPath);
                             archive.Dispose();
 
-                            if (CurrentProjectVariables.GameName == "BMC")
+                            DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? They are not necessary, and have to do with textures.", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                            if (diag == DialogResult.Yes)
                             {
                                 Invoke((MethodInvoker)delegate {
                                     Filename_TB.Text = "AssetBundles";
@@ -372,10 +377,16 @@ namespace BTDToolbox
 
                         if (CurrentProjectVariables.GameName == "BMC")
                         {
-                            Invoke((MethodInvoker)delegate {
-                                Filename_TB.Text = "AssetBundles";
-                            });
-                            CompileAssetBundles();
+                            var d = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles).GetDirectories();
+                            foreach(var a in d)
+                            {
+                                if (a.Name.Contains("AssetBundles"))
+                                {
+                                    Invoke((MethodInvoker)delegate { Filename_TB.Text = "AssetBundles"; });
+                                    CompileAssetBundles();
+                                    break;
+                                }
+                            }
                         }
 
                         ConsoleHandler.appendLog("Jet was successfully exported to: " + dir);
