@@ -188,7 +188,9 @@ namespace BTDToolbox
 
                 if (CurrentProjectVariables.GameName == "BMC")
                 {
-                    DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? They are not necessary, and have to do with textures.", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                    DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
+                        "They have to do with textures, and they are not necessary." +
+                        "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
                     if(diag == DialogResult.Yes)
                     {
                         Invoke((MethodInvoker)delegate {
@@ -224,7 +226,10 @@ namespace BTDToolbox
                             archive.ExtractAll(destPath);
                             archive.Dispose();
 
-                            DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? They are not necessary, and have to do with textures.", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                            DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
+                        "They have to do with textures, and they are not necessary." +
+                        "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+
                             if (diag == DialogResult.Yes)
                             {
                                 Invoke((MethodInvoker)delegate {
