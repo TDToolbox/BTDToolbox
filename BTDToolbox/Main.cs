@@ -336,7 +336,21 @@ namespace BTDToolbox
         {
             try
             {
-                OpenJetForm();
+                if(JetProps.get().Count >0)
+                {
+                    foreach (var a in JetProps.get())
+                    {
+                        if (a.Visible)
+                            a.Hide();
+                        else
+                            a.Show();
+                    }
+                }
+                else
+                {
+                    OpenJetForm();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -709,14 +723,54 @@ namespace BTDToolbox
 
         private void ShowBTD5_Pass_Click(object sender, EventArgs e)
         {
+            string pass = "Q%_{6#Px]]";
             ConsoleHandler.force_appendLog("The password for BTD5.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
-        }
 
+            DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
+            if (diag == DialogResult.Yes)
+            {
+                Clipboard.SetText(pass);
+                ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+            }
+            else
+                ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
+        }
+        private void ShowBMCPass_Button_Click(object sender, EventArgs e)
+        {
+            string pass = "Q%_{6#Px]]";
+            ConsoleHandler.force_appendLog("The password for BMC's data.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
+
+            DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
+            if (diag == DialogResult.Yes)
+            {
+                Clipboard.SetText(pass);
+                ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+            }
+            else
+                ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
+        }
         private void ShowLastBattlesPass_Click(object sender, EventArgs e)
         {
-            if(Serializer.Deserialize_Config().battlesPass != null && Serializer.Deserialize_Config().battlesPass != "")
+            string pass = "";
+            if (CurrentProjectVariables.GameName == "BTDB")
             {
-                ConsoleHandler.force_appendLog("The last password you used for BTDB is:   " + Serializer.Deserialize_Config().battlesPass);
+                if (CurrentProjectVariables.JetPassword != "" && CurrentProjectVariables.JetPassword != null)
+                    pass = CurrentProjectVariables.JetPassword;
+            }
+            else if(Serializer.Deserialize_Config().battlesPass != null && Serializer.Deserialize_Config().battlesPass != "")
+                pass = Serializer.Deserialize_Config().battlesPass;
+
+            if(pass != null && pass !="")
+            {
+                ConsoleHandler.force_appendLog("The last password you used for BTDB is:   " + pass);
+                DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
+                if(diag == DialogResult.Yes)
+                {
+                    Clipboard.SetText(pass);
+                    ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+                }
+                else
+                    ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
             }
             else
             {

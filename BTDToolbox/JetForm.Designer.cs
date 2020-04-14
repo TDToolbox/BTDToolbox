@@ -85,6 +85,7 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.viewOriginalToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreToOriginalToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.FindModifiedFiles_Button = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -172,6 +173,7 @@
             this.Save_ToolStrip,
             this.toolStripSeparator1,
             this.ValidateAllFiles,
+            this.FindModifiedFiles_Button,
             this.toolStripSeparator3,
             this.retToolStripMenuItem,
             this.revertToBackupToolStripMenuItem,
@@ -189,7 +191,7 @@
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Open_Proj_Dir});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // Open_Proj_Dir
@@ -202,26 +204,26 @@
             // Save_ToolStrip
             // 
             this.Save_ToolStrip.Name = "Save_ToolStrip";
-            this.Save_ToolStrip.Size = new System.Drawing.Size(158, 22);
+            this.Save_ToolStrip.Size = new System.Drawing.Size(187, 22);
             this.Save_ToolStrip.Text = "Save";
             this.Save_ToolStrip.Click += new System.EventHandler(this.Save_ToolStrip_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
             // 
             // ValidateAllFiles
             // 
             this.ValidateAllFiles.Name = "ValidateAllFiles";
-            this.ValidateAllFiles.Size = new System.Drawing.Size(158, 22);
+            this.ValidateAllFiles.Size = new System.Drawing.Size(187, 22);
             this.ValidateAllFiles.Text = "Validate All Files";
             this.ValidateAllFiles.Click += new System.EventHandler(this.ValidateAllFiles_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(184, 6);
             // 
             // retToolStripMenuItem
             // 
@@ -229,7 +231,7 @@
             this.makeBackupOfProjectToolStripMenuItem,
             this.revertToBackupToolStripMenuItem1});
             this.retToolStripMenuItem.Name = "retToolStripMenuItem";
-            this.retToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.retToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.retToolStripMenuItem.Text = "Backup project";
             this.retToolStripMenuItem.Visible = false;
             // 
@@ -248,26 +250,26 @@
             // revertToBackupToolStripMenuItem
             // 
             this.revertToBackupToolStripMenuItem.Name = "revertToBackupToolStripMenuItem";
-            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.revertToBackupToolStripMenuItem.Text = "Remake Project";
             this.revertToBackupToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(184, 6);
             // 
             // RenameProject_Button
             // 
             this.RenameProject_Button.Name = "RenameProject_Button";
-            this.RenameProject_Button.Size = new System.Drawing.Size(158, 22);
+            this.RenameProject_Button.Size = new System.Drawing.Size(187, 22);
             this.RenameProject_Button.Text = "Rename Project";
             this.RenameProject_Button.Click += new System.EventHandler(this.RenameProject_Button_Click);
             // 
             // DeleteProject_Button
             // 
             this.DeleteProject_Button.Name = "DeleteProject_Button";
-            this.DeleteProject_Button.Size = new System.Drawing.Size(158, 22);
+            this.DeleteProject_Button.Size = new System.Drawing.Size(187, 22);
             this.DeleteProject_Button.Text = "Delete Project";
             this.DeleteProject_Button.Click += new System.EventHandler(this.DeleteProject_Button_Click);
             // 
@@ -451,7 +453,7 @@
             this.viewOriginal_CMButton,
             this.RestoreToOriginal_CMButton});
             this.OneSelected_CM.Name = "OneSelected_CM";
-            this.OneSelected_CM.Size = new System.Drawing.Size(184, 264);
+            this.OneSelected_CM.Size = new System.Drawing.Size(184, 242);
             this.OneSelected_CM.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.OneSelected_CM_ItemClicked);
             // 
             // openFileToolStripMenuItem
@@ -608,6 +610,13 @@
             this.restoreToOriginalToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
             this.restoreToOriginalToolStripMenuItem1.Text = "Restore to original";
             // 
+            // FindModifiedFiles_Button
+            // 
+            this.FindModifiedFiles_Button.Name = "FindModifiedFiles_Button";
+            this.FindModifiedFiles_Button.Size = new System.Drawing.Size(187, 22);
+            this.FindModifiedFiles_Button.Text = "Find all modified files";
+            this.FindModifiedFiles_Button.Click += new System.EventHandler(this.FindModifiedFiles_Button_Click);
+            // 
             // JetForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -701,5 +710,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem viewOriginalToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem restoreToOriginalToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem FindModifiedFiles_Button;
     }
 }

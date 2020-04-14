@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BTDToolbox.Classes.NewProjects
 {
@@ -105,20 +106,23 @@ namespace BTDToolbox.Classes.NewProjects
         public static string ReadTextFromZipFile(ZipFile zip, string fileInZip)
         {
             string returnText = "";
-
-            if (zip.EntryFileNames.Contains(fileInZip))
+            //zip.ContainsEntry(fileInZip);
+            //MessageBox.Show(zip.Entries.Count().ToString());
+            //if (zip.EntryFileNames.Contains(fileInZip))
+            if (zip.ContainsEntry(fileInZip))
             {
                 try
                 {
-                    foreach (var entry in New_JsonEditor.jet)
+                    foreach (var entry in zip)
                     {
-                        if (entry.FileName.Contains(fileInZip))
+                        if (entry.FileName.Replace("/","\\").Contains(fileInZip))
                         {
                             entry.Password = CurrentProjectVariables.JetPassword;
 
-                            Stream s = entry.OpenReader();
+                            Stream s = entry.OpenReader(CurrentProjectVariables.JetPassword);
                             StreamReader sr = new StreamReader(s);
                             returnText = sr.ReadToEnd();
+                            
                         }
                     }
                 }
@@ -129,7 +133,7 @@ namespace BTDToolbox.Classes.NewProjects
             }
             else
             {
-                ConsoleHandler.force_appendLog("Unable to find specific file in the Jet... Failed to read file..");
+                ConsoleHandler.force_appendLog_CanRepeat("Unable to find   " + fileInZip + "   in the Jet... Failed to read file..");
             }
             return returnText;
         }

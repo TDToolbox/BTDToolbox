@@ -18,6 +18,7 @@ using BTDToolbox.Classes;
 using BTDToolbox.Extra_Forms;
 using BTDToolbox.Classes.NewProjects;
 using BTDToolbox.Properties;
+using System.Text.RegularExpressions;
 
 namespace BTDToolbox
 {
@@ -1049,6 +1050,92 @@ namespace BTDToolbox
                 }
             }
             return directoryNode;
+        }
+
+        private void FindModifiedFiles_Button_Click(object sender, EventArgs e)
+        {
+            
+            DialogResult diag = MessageBox.Show("It will take up to 10 seconds to find all of the modified files" +
+                "in the project. Do you wish to continue?", "Do you wish to continue?", MessageBoxButtons.YesNo);
+            if(diag == DialogResult.Yes)
+            {
+                string backupfile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
+                if (File.Exists(backupfile))
+                {
+                    ZipFile backup = new ZipFile(backupfile);
+                    backup.Password = CurrentProjectVariables.JetPassword;
+                    var files = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles).GetFiles("*", SearchOption.AllDirectories);
+
+                    ConsoleHandler.force_appendLog("Searching for modified files");
+                    foreach (var file in files)
+                    {
+                        string modText = Regex.Replace(File.ReadAllText(file.FullName), @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline).ToLower().Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\r\n", "");
+                        
+                        string pathInZip = file.FullName.Replace(CurrentProjectVariables.PathToProjectFiles + "\\","");
+                        string originalText = Regex.Replace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip), @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline).ToLower().Trim().Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\r\n", "");
+                        try
+                        {
+                            if (modText == originalText)
+                            {
+                                if (CurrentProjectVariables.ModifiedFiles.Contains(file.FullName))
+                                {
+                                    CurrentProjectVariables.ModifiedFiles.Remove(file.FullName);
+                                }
+                            }
+                            else
+                            {
+                                if (!CurrentProjectVariables.ModifiedFiles.Contains(file.FullName))
+                                {
+                                    CurrentProjectVariables.ModifiedFiles.Add(file.FullName);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //It broke for some reason, probably something modded here...
+                            if (!CurrentProjectVariables.ModifiedFiles.Contains(file.FullName))
+                            {
+                                ConsoleHandler.appendLog_CanRepeat(ex.Message);
+                                CurrentProjectVariables.ModifiedFiles.Add(file.FullName);
+                                
+                            }
+                        }
+
+                    }
+                    ProjectHandler.SaveProject();
+                    ConsoleHandler.force_appendLog("Finished verifying files");
+
+                    
+                    if (CurrentProjectVariables.ModifiedFiles.Count > 0)
+                    {
+                        bool open = false;
+                        DialogResult diaga = MessageBox.Show("Modified files were found. Would you like toolbox to open them all? If you press no, the console will still display the names of all the modified files.", "Open all modified files?", MessageBoxButtons.YesNo);
+                        if (diaga == DialogResult.Yes)
+                        {
+                            open = true;
+                        }
+
+                        foreach(var a in CurrentProjectVariables.ModifiedFiles)
+                        {
+                            ConsoleHandler.force_appendLog_CanRepeat(a.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", ""));
+                            if (open == true)
+                            {
+                                JsonEditorHandler.OpenFile(a);
+                            }
+                        }                        
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendLog("No modified files found..");
+                    }
+                }
+                else
+                    ConsoleHandler.force_appendLog("Backup not detected... Unable to continue...");
+            }
+            else
+            {
+                ConsoleHandler.appendLog("User cancelled operation...");
+            }
         }
     }
 }

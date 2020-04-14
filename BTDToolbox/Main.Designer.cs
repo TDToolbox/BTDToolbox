@@ -34,6 +34,7 @@
             this.New_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.New_BTD5_Proj = new System.Windows.Forms.ToolStripMenuItem();
             this.New_BTDB_Proj = new System.Windows.Forms.ToolStripMenuItem();
+            this.New_BMC_Proj_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.NewProject_From_Backup = new System.Windows.Forms.ToolStripMenuItem();
             this.btdpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +82,8 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.bTDBPasswordManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_Tools = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_TowerEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_BloonEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -119,9 +122,7 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.New_BMC_Proj_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowBMCPass_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -166,7 +167,7 @@
             this.NewProject_From_Backup,
             this.btdpToolStripMenuItem});
             this.New_ToolStrip.Name = "New_ToolStrip";
-            this.New_ToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.New_ToolStrip.Size = new System.Drawing.Size(142, 22);
             this.New_ToolStrip.Text = "New";
             // 
             // New_BTD5_Proj
@@ -182,6 +183,13 @@
             this.New_BTDB_Proj.Size = new System.Drawing.Size(220, 22);
             this.New_BTDB_Proj.Text = "BTD Battles Project";
             this.New_BTDB_Proj.Click += new System.EventHandler(this.New_BTDB_Proj_Click);
+            // 
+            // New_BMC_Proj_Button
+            // 
+            this.New_BMC_Proj_Button.Name = "New_BMC_Proj_Button";
+            this.New_BMC_Proj_Button.Size = new System.Drawing.Size(220, 22);
+            this.New_BMC_Proj_Button.Text = "Monkey City Project";
+            this.New_BMC_Proj_Button.Click += new System.EventHandler(this.New_BMC_Proj_Button_Click);
             // 
             // toolStripSeparator8
             // 
@@ -208,7 +216,7 @@
             this.Open_Existing_JetFile,
             this.OpenExistingProject});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // Open_Existing_JetFile
@@ -228,21 +236,21 @@
             // MainForm_SaveButton
             // 
             this.MainForm_SaveButton.Name = "MainForm_SaveButton";
-            this.MainForm_SaveButton.Size = new System.Drawing.Size(180, 22);
+            this.MainForm_SaveButton.Size = new System.Drawing.Size(142, 22);
             this.MainForm_SaveButton.Text = "Save";
             this.MainForm_SaveButton.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // OpenSettings_Button
             // 
             this.OpenSettings_Button.Name = "OpenSettings_Button";
-            this.OpenSettings_Button.Size = new System.Drawing.Size(180, 22);
+            this.OpenSettings_Button.Size = new System.Drawing.Size(142, 22);
             this.OpenSettings_Button.Text = "Settings";
             this.OpenSettings_Button.Click += new System.EventHandler(this.OpenSettings_Button_Click);
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             this.openRecentToolStripMenuItem.Visible = false;
             // 
@@ -461,6 +469,7 @@
             this.toolStripSeparator6,
             this.ShowBTD5_Pass,
             this.ShowLastBattlesPass,
+            this.ShowBMCPass_Button,
             this.toolStripSeparator5,
             this.bTD5DirectoryToolStripMenuItem,
             this.bTDBDirectoryToolStripMenuItem,
@@ -545,6 +554,21 @@
             this.bTDBPasswordManagerToolStripMenuItem.Text = "BTDB Password manager";
             this.bTDBPasswordManagerToolStripMenuItem.Visible = false;
             this.bTDBPasswordManagerToolStripMenuItem.Click += new System.EventHandler(this.BTDBPasswordManagerToolStripMenuItem_Click);
+            // 
+            // advancedToolStripMenuItem
+            // 
+            this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
+            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.advancedToolStripMenuItem.Text = "Advanced";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.settingsToolStripMenuItem.Text = "Settings file";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // EZ_Tools
             // 
@@ -850,27 +874,12 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // New_BMC_Proj_Button
+            // ShowBMCPass_Button
             // 
-            this.New_BMC_Proj_Button.Name = "New_BMC_Proj_Button";
-            this.New_BMC_Proj_Button.Size = new System.Drawing.Size(220, 22);
-            this.New_BMC_Proj_Button.Text = "Monkey City Project";
-            this.New_BMC_Proj_Button.Click += new System.EventHandler(this.New_BMC_Proj_Button_Click);
-            // 
-            // advancedToolStripMenuItem
-            // 
-            this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
-            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
-            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.advancedToolStripMenuItem.Text = "Advanced";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.settingsToolStripMenuItem.Text = "Settings file";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
+            this.ShowBMCPass_Button.Name = "ShowBMCPass_Button";
+            this.ShowBMCPass_Button.Size = new System.Drawing.Size(204, 22);
+            this.ShowBMCPass_Button.Text = "BMC Password";
+            this.ShowBMCPass_Button.Click += new System.EventHandler(this.ShowBMCPass_Button_Click);
             // 
             // Main
             // 
@@ -997,6 +1006,7 @@
         private System.Windows.Forms.ToolStripMenuItem New_BMC_Proj_Button;
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ShowBMCPass_Button;
     }
 }
 
