@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTDToolbox.Classes.NewProjects;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -69,8 +70,8 @@ namespace BTDToolbox.Classes
             string[] split = path.Split('\\');
             string filename = split[split.Length - 1];
             string backupProj = "";
-            if (!path.Contains("\\Backups\\" + Main.gameName + "_BackupProject\\"))
-                backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace(Serializer.Deserialize_Config().LastProject + "\\", "");
+            if (!path.Contains("\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\"))
+                backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
             else
             {
                 backupProj = path;

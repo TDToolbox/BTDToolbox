@@ -113,7 +113,6 @@ namespace BTDToolbox
                 else
                     cfg.BTDB_Directory = BTDB_Dir;
 
-
                 if (BMC_Dir == null)
                     cfg.BMC_Directory = "";
                 else

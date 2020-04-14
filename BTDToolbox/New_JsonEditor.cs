@@ -212,8 +212,8 @@ namespace BTDToolbox
         //
         public void CloseTab(string path)
         {
-            if(jet != null)
-                ProjectHandler.SaveZipFile(jet);
+            /*if(jet != null)
+                ProjectHandler.SaveZipFile(jet);*/
             int i = tabFilePaths.IndexOf(path);
             int indexBeforeDelete = tabControl1.SelectedIndex;
 
@@ -242,7 +242,7 @@ namespace BTDToolbox
             Serializer.SaveConfig(this, "json editor");
             ProjectHandler.SaveProject();
             Serializer.SaveJSONEditor_Tabs();
-            ProjectHandler.SaveZipFile(jet);
+            //ProjectHandler.SaveZipFile(jet);
 
             if (userControls.Count >0)
             {

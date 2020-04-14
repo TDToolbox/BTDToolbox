@@ -43,21 +43,6 @@ namespace BTDToolbox
             programData = DeserializeConfig();
             StartUp();
 
-            if (CurrentProjectVariables.JsonEditor_OpenedTabs != null &&CurrentProjectVariables.JsonEditor_OpenedTabs.Count > 0)
-            {
-                DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    foreach (string tab in CurrentProjectVariables.JsonEditor_OpenedTabs)
-                        JsonEditorHandler.OpenFile(tab);
-                }
-                else
-                {
-                    CurrentProjectVariables.JsonEditor_OpenedTabs = new List<string>();
-                    ProjectHandler.SaveProject();
-                }
-            }
-
             goUpButton.Font = new Font("Microsoft Sans Serif", 9);
             this.dirInfo = dirInfo;
             this.Form = Form;
@@ -92,9 +77,9 @@ namespace BTDToolbox
 
             ConsoleHandler.appendLog("Game: " + CurrentProjectVariables.GameName);
             ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
-            
-            
 
+
+            LoadProjectFile();
             Serializer.SaveConfig(this, "game");
             Serializer.SaveConfig(this, "jet explorer");
 
@@ -106,6 +91,22 @@ namespace BTDToolbox
 
             if (EZCard_Editor.EZCard_Opened == true)
                 ConsoleHandler.force_appendNotice("The EZ Card tool is currently opened for a different project. Please close it to avoid errors...");
+
+
+            if (CurrentProjectVariables.JsonEditor_OpenedTabs != null && CurrentProjectVariables.JsonEditor_OpenedTabs.Count > 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    foreach (string tab in CurrentProjectVariables.JsonEditor_OpenedTabs)
+                        JsonEditorHandler.OpenFile(tab);
+                }
+                else
+                {
+                    CurrentProjectVariables.JsonEditor_OpenedTabs = new List<string>();
+                    ProjectHandler.SaveProject();
+                }
+            }
         }
         private void StartUp()
         {
@@ -130,8 +131,6 @@ namespace BTDToolbox
             this.treeView1.AfterSelect += treeView1_AfterSelect;
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
-
-            LoadProjectFile();
         }
         private void LoadProjectFile()
         {
