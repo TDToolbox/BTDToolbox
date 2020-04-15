@@ -186,10 +186,13 @@ namespace BTDToolbox
                 archive.ExtractAll(destPath);
                 archive.Dispose();
 
+                //Commented this out for now
+                /*
                 if (CurrentProjectVariables.GameName == "BMC")
                 {
                     DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
-                        "They have to do with textures, and they are not necessary." +
+                        "They mostly have to do with textures and maps, and" +
+                        " while you can mod those as well as anything else from data.jet, they are not necessary." +
                         "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
                     if(diag == DialogResult.Yes)
                     {
@@ -198,7 +201,7 @@ namespace BTDToolbox
                         });
                         ExtractAssetBundleJet();
                     }
-                }
+                }*/
 
                 if (!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
                 {
@@ -226,17 +229,22 @@ namespace BTDToolbox
                             archive.ExtractAll(destPath);
                             archive.Dispose();
 
-                            DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
-                        "They have to do with textures, and they are not necessary." +
-                        "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
-
-                            if (diag == DialogResult.Yes)
+                            //Commented this out for now
+                            /*if (gameName == "BMC")
                             {
-                                Invoke((MethodInvoker)delegate {
-                                    Filename_TB.Text = "AssetBundles";
-                                });
-                                ExtractAssetBundleJet();
-                            }
+                                DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
+                        "They mostly have to do with textures and maps, and" +
+                        " while you can mod those as well as anything else from data.jet, they are not necessary." +
+                        "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                                if (diag == DialogResult.Yes)
+                                {
+                                    Invoke((MethodInvoker)delegate {
+                                        Filename_TB.Text = "AssetBundles";
+                                    });
+                                    ExtractAssetBundleJet();
+                                }
+                            }*/
+                            
                         });
                     }
                     else
@@ -380,7 +388,8 @@ namespace BTDToolbox
                         toExport.Save();
                         toExport.Dispose();
 
-                        if (CurrentProjectVariables.GameName == "BMC")
+                        //Commented this out for now
+                        /*if (CurrentProjectVariables.GameName == "BMC")
                         {
                             var d = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles).GetDirectories();
                             foreach(var a in d)
@@ -392,12 +401,12 @@ namespace BTDToolbox
                                     break;
                                 }
                             }
-                        }
+                        }*/
 
                         ConsoleHandler.appendLog("Jet was successfully exported to: " + dir);
 
-                        /*if (launch == true)
-                            LaunchGame(gameName);*/
+                        if (launch == true)
+                            LaunchGame(gameName);
                         try
                         {
                             this.Invoke(new Action(() => this.Close()));

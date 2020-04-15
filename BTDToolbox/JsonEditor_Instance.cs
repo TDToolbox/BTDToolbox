@@ -1088,7 +1088,8 @@ namespace BTDToolbox
         }
         private void ReformatJSON_Button_Click(object sender, EventArgs e)
         {
-            if(!Serializer.Deserialize_Config().autoFormatJSON)
+            ConsoleHandler.appendLog("JSON Formatted!");
+            if (!Serializer.Deserialize_Config().autoFormatJSON)
             {
                 DialogResult diag = MessageBox.Show("Autoformatting isn't enabled in your settings. Would you like to toolbox to enable it, " +
                     "or keep it set to manual, so you have to press this button to format?", "Enable AutoFormating?", MessageBoxButtons.YesNo);
@@ -1126,6 +1127,23 @@ namespace BTDToolbox
                 ShowSearchMenu("find");
             Option1_CB.Checked = true;
             ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+        }
+
+        private void DisableAutoformattinhToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Serializer.Deserialize_Config().autoFormatJSON == true)
+            {
+                ConsoleHandler.appendLog("Auto-formatting disabled.");
+                ConsoleHandler.force_appendNotice("You can enable or disable this in Settings, " +
+                   "which you can find under the \"File\" button at the top of toolbox.");
+                Main.autoFormatJSON = false;
+                Serializer.SaveSmallSettings("autoFormatJSON");
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("It is already disabled. You can use it manually by pressing the \"Re-format JSON\" button above. " +
+                    "Or, you can change it in  Settings, which you can find under the \"File\" button at the top of toolbox.");
+            }
         }
     }
 }

@@ -39,6 +39,7 @@
             this.ShowFindMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowReplaceMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.FindSubtask_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReformatJSON_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.EZCard_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.EZTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,7 +80,7 @@
             this.findSubtaskToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.getThisSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Encrypt_Button = new System.Windows.Forms.Button();
-            this.ReformatJSON_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableAutoformattinhToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -152,6 +153,7 @@
             this.ShowReplaceMenu_Button,
             this.FindSubtask_Button,
             this.ReformatJSON_Button,
+            this.disableAutoformattinhToolStripMenuItem,
             this.EZCard_Button,
             this.EZBoon_Button,
             this.EZTowerEditor_Button,
@@ -203,6 +205,13 @@
             this.FindSubtask_Button.Size = new System.Drawing.Size(201, 22);
             this.FindSubtask_Button.Text = "Find Subtask";
             this.FindSubtask_Button.Click += new System.EventHandler(this.FindSubtask_Button_Click);
+            // 
+            // ReformatJSON_Button
+            // 
+            this.ReformatJSON_Button.Name = "ReformatJSON_Button";
+            this.ReformatJSON_Button.Size = new System.Drawing.Size(201, 22);
+            this.ReformatJSON_Button.Text = "Re-format JSON";
+            this.ReformatJSON_Button.Click += new System.EventHandler(this.ReformatJSON_Button_Click);
             // 
             // EZCard_Button
             // 
@@ -560,12 +569,12 @@
             this.Encrypt_Button.Visible = false;
             this.Encrypt_Button.Click += new System.EventHandler(this.Encrypt_Button_Click);
             // 
-            // ReformatJSON_Button
+            // disableAutoformattinhToolStripMenuItem
             // 
-            this.ReformatJSON_Button.Name = "ReformatJSON_Button";
-            this.ReformatJSON_Button.Size = new System.Drawing.Size(201, 22);
-            this.ReformatJSON_Button.Text = "Re-format JSON";
-            this.ReformatJSON_Button.Click += new System.EventHandler(this.ReformatJSON_Button_Click);
+            this.disableAutoformattinhToolStripMenuItem.Name = "disableAutoformattinhToolStripMenuItem";
+            this.disableAutoformattinhToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.disableAutoformattinhToolStripMenuItem.Text = "Disable auto-formatting";
+            this.disableAutoformattinhToolStripMenuItem.Click += new System.EventHandler(this.DisableAutoformattinhToolStripMenuItem_Click);
             // 
             // JsonEditor_Instance
             // 
@@ -647,5 +656,6 @@
         private System.Windows.Forms.ToolStripMenuItem specialtyBuildingToolStripMenuItem;
         private System.Windows.Forms.Button Encrypt_Button;
         private System.Windows.Forms.ToolStripMenuItem ReformatJSON_Button;
+        private System.Windows.Forms.ToolStripMenuItem disableAutoformattinhToolStripMenuItem;
     }
 }
