@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.GeneralMethods;
 using static BTDToolbox.ProjectConfig;
+using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
 {
@@ -19,6 +20,7 @@ namespace BTDToolbox
         //zip variables
         public static int totalFiles = 0;
         public int filesTransfered = 0;
+        public static bool useLastPass = false;
         public static string rememberedPassword = "";
         public static string existingJetFile = "";
         public static string savedExportPath = "";
@@ -31,6 +33,7 @@ namespace BTDToolbox
         public string steamJetPath;
         public static string BTD5_Dir;
         public static string BTDB_Dir;
+        public static string BMC_Dir;
 
 
         //other variables
@@ -58,26 +61,25 @@ namespace BTDToolbox
         private void StartUp()
         {
             programData = DeserializeConfig();
-            string std = DeserializeConfig().CurrentGame;
+            //string std = DeserializeConfig().CurrentGame;
 
-            if (std == "BTDB")
+            gameName = CurrentProjectVariables.GameName;
+            jetName = ReturnJetName(gameName);
+            gameDir = CurrentProjectVariables.GamePath;
+            if (gameName != "BTDB" && gameName != "" && gameName != null)
             {
-                gameDir = DeserializeConfig().BTDB_Directory;
-                jetName = "data.jet";
-            }
-            else
-            {
-                gameDir = DeserializeConfig().BTD5_Directory;
-                jetName = "BTD5.jet";
                 password = "Q%_{6#Px]]";
+                CurrentProjectVariables.JetPassword = password;
+                ProjectHandler.SaveProject();
             }
-            gameName = std;
             steamJetPath = gameDir + "\\Assets\\" + jetName;
         }
         public void Extract()
         {
             bool rememberPass = Get_BTDB_Password.rememberPass;
             this.Text = "Extracting..";
+            Filename_TB.Text = ReturnJetName(gameName);
+
             if (existingJetFile == "")
             {
                 if (sourcePath == null || sourcePath == "")
@@ -87,14 +89,20 @@ namespace BTDToolbox
             {
                 sourcePath = existingJetFile;
             }
+
             if (File.Exists(sourcePath))
             {
+                if(projName == "" || projName == null)
+                {
+                    projName = CurrentProjectVariables.ProjectName;
+                }
                 //check password
                 if (File.Exists(sourcePath) && gameName == "BTDB")
                 {
                     this.Hide();
-                    bool passRes = Bad_JetPass(sourcePath, password);
-                    if (passRes == true)
+                    bool badPass = Bad_JetPass(sourcePath, password);
+                    
+                    if (badPass == true)
                     {
                         DialogResult res = MessageBox.Show("You entered the wrong password. Would you like to try again?", "Wrong Password!", MessageBoxButtons.OKCancel);
                         if (res == DialogResult.OK)
@@ -164,7 +172,7 @@ namespace BTDToolbox
         }
         private void Extract_OnThread()
         {
-            destPath = Environment.CurrentDirectory + "\\" + projName;
+            destPath = CurrentProjectVariables.PathToProjectFiles;
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
@@ -178,16 +186,35 @@ namespace BTDToolbox
                 archive.ExtractAll(destPath);
                 archive.Dispose();
 
-                if(!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
+                //Commented this out for now
+                /*
+                if (CurrentProjectVariables.GameName == "BMC")
+                {
+                    DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
+                        "They mostly have to do with textures and maps, and" +
+                        " while you can mod those as well as anything else from data.jet, they are not necessary." +
+                        "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                    if(diag == DialogResult.Yes)
+                    {
+                        Invoke((MethodInvoker)delegate {
+                            Filename_TB.Text = "AssetBundles";
+                        });
+                        ExtractAssetBundleJet();
+                    }
+                }*/
+
+                if (!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
                 {
                     string gamed = "";
                     if(gameName == "BTD5")
                         gamed = Serializer.Deserialize_Config().BTD5_Directory;
-                    else
+                    else if (gameName == "BTDB")
                         gamed = Serializer.Deserialize_Config().BTDB_Directory;
+                    else if(gameName == "BMC")
+                        gamed = Serializer.Deserialize_Config().BMC_Directory;
 
                     //they should have a backup jet of gamed not invalid. create backup proj
-                    if(gamed != "" && gamed != null)
+                    if (gamed != "" && gamed != null)
                     {
                         ConsoleHandler.force_appendNotice("Backup project not detected.... Creating one now..");
                         Invoke((MethodInvoker)delegate {
@@ -201,6 +228,23 @@ namespace BTDToolbox
                             archive.ExtractProgress += ZipExtractProgress;
                             archive.ExtractAll(destPath);
                             archive.Dispose();
+
+                            //Commented this out for now
+                            /*if (gameName == "BMC")
+                            {
+                                DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
+                        "They mostly have to do with textures and maps, and" +
+                        " while you can mod those as well as anything else from data.jet, they are not necessary." +
+                        "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                                if (diag == DialogResult.Yes)
+                                {
+                                    Invoke((MethodInvoker)delegate {
+                                        Filename_TB.Text = "AssetBundles";
+                                    });
+                                    ExtractAssetBundleJet();
+                                }
+                            }*/
+                            
                         });
                     }
                     else
@@ -208,7 +252,7 @@ namespace BTDToolbox
                         ConsoleHandler.force_appendNotice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
                     }
                 }
-                ConsoleHandler.appendLog("Project files created at: " + projName);
+                ConsoleHandler.appendLog("Project files created at: " + CurrentProjectVariables.PathToProjectFiles);
                 Invoke((MethodInvoker)delegate {
                     jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
                     jf.MdiParent = Main.getInstance();
@@ -222,9 +266,11 @@ namespace BTDToolbox
                 {
                     MessageBox.Show("Please close the Jet viewer for the old project...");
                     ConsoleHandler.appendLog("Deleting existing project....");
+                    MessageBox.Show(dinfo.ToString());
                     DeleteDirectory(dinfo.ToString());
                     ConsoleHandler.appendLog("Project Deleted. Creating new project...");
                     Extract_OnThread();
+                    return;
                 }
                 if (varr == DialogResult.Cancel)
                 {
@@ -254,18 +300,24 @@ namespace BTDToolbox
             if (!IsGameRunning(gameName))
             {
                 this.Text = "Compiling..";
+                Filename_TB.Text = ReturnJetName(gameName);
+
                 if (gameName == "BTDB")
                 {
+
                     if (rememberedPassword != null && rememberedPassword != "")
                     {
                         password = rememberedPassword;
                         Serializer.SaveSmallSettings("battlesPass");
+                        CurrentProjectVariables.JetPassword = password;
+                        ProjectHandler.SaveProject();
                     }
 
                     if (password == null || password.Length <= 0)
                     {
                         var getpas = new Get_BTDB_Password();
                         getpas.launch = launch;
+                        getpas.isExtracting = false;
                         getpas.projName = projName;
                         getpas.destPath = destPath;
                         getpas.Show();
@@ -317,7 +369,7 @@ namespace BTDToolbox
                     if (DeserializeConfig().LastProject == null)
                         Serializer.SaveConfig(jf, "jet explorer");
 
-                    DirectoryInfo projDir = new DirectoryInfo(DeserializeConfig().LastProject);
+                    DirectoryInfo projDir = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles);
                     if (Directory.Exists(projDir.ToString()))
                     {
                         ConsoleHandler.appendLog("Compiling jet...");
@@ -336,6 +388,21 @@ namespace BTDToolbox
                         toExport.Save();
                         toExport.Dispose();
 
+                        //Commented this out for now
+                        /*if (CurrentProjectVariables.GameName == "BMC")
+                        {
+                            var d = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles).GetDirectories();
+                            foreach(var a in d)
+                            {
+                                if (a.Name.Contains("AssetBundles"))
+                                {
+                                    Invoke((MethodInvoker)delegate { Filename_TB.Text = "AssetBundles"; });
+                                    CompileAssetBundles();
+                                    break;
+                                }
+                            }
+                        }*/
+
                         ConsoleHandler.appendLog("Jet was successfully exported to: " + dir);
 
                         if (launch == true)
@@ -349,6 +416,10 @@ namespace BTDToolbox
                             PrintError(ex.Message);
                         }
                         backgroundThread.Abort();
+                    }
+                    else
+                    {
+                        ConsoleHandler.appendLog("Output directory not found... Failed to compile...");
                     }
                 }
                 else
@@ -373,7 +444,7 @@ namespace BTDToolbox
 
             TotalProgress_ProgressBar.Location = new Point(TotalProgress_ProgressBar.Location.X, TotalProgress_ProgressBar.Location.Y - 50);
             TotalProgress_Label.Location = new Point(TotalProgress_Label.Location.X, TotalProgress_Label.Location.Y - 50);
-            richTextBox1.Location = new Point(richTextBox1.Location.X, richTextBox1.Location.Y - 50);
+            Filename_TB.Location = new Point(Filename_TB.Location.X, Filename_TB.Location.Y - 50);
             label1.Location = new Point(label1.Location.X, label1.Location.Y - 50);
             this.Size = new Size(this.Size.Width, this.Size.Height - 50);
             pictureBox1.Location = new Point(pictureBox1.Location.X, pictureBox1.Location.Y - 50);
@@ -419,5 +490,130 @@ namespace BTDToolbox
             ConsoleHandler.appendLog("An error occured that may prevent the program from running properly.\r\nThe error is below: \r\n\r\n" + exception + "\r\n");
             this.Close();
         }
-    }
-}
+
+        public static void CreateAssetBundleJet(string exportPath)
+        {
+            string defaultLocation = Serializer.Deserialize_Config().BMC_Directory + "\\AssetBundles";
+            ZipFile zip = new ZipFile();
+            zip.AddDirectory(defaultLocation, "");
+            zip.Save(exportPath);
+            zip.Dispose();
+        }
+        public void ExtractAssetBundleJet()
+        {
+            string destPath = CurrentProjectVariables.PathToProjectFiles + "\\AssetBundles";
+            string backupAssetBundle = Environment.CurrentDirectory + "\\Backups\\AssetBundles_Original";
+            if (!Directory.Exists(backupAssetBundle))
+            {
+                ConsoleHandler.appendLog("Unable to find the Backup for BMC Asset Bundles. Reaquiring...");
+                GeneralMethods.CreateBackup("BMC");
+            }
+            var jets = new DirectoryInfo(backupAssetBundle).GetFiles();
+
+            foreach(var jet in jets)
+            {
+                
+                if (jet.Name.EndsWith(".jet"))
+                {
+                    Invoke((MethodInvoker)delegate {
+                        Filename_TB.Text = "Asset Bundle: " + jet.Name;
+                    });
+                    string dest = (destPath + "\\" + jet.Name).Replace("/", "\\");
+
+                    ZipFile zip = new ZipFile(jet.FullName);
+                    zip.Password = CurrentProjectVariables.JetPassword;
+                    foreach (ZipEntry z in zip)
+                    {
+                        //string dest = (destPath + "\\" + jet.Name + "\\" + z.FileName).Replace("/", "\\");
+                        if (z.FileName.Contains("JSON") && !dest.Contains(".tmp"))
+                        {
+                            z.ExtractWithPassword(dest, ExtractExistingFileAction.OverwriteSilently, CurrentProjectVariables.JetPassword);
+                        }
+                    }
+                    zip.Dispose();
+                }
+            }
+        }
+
+        public void CompileAssetBundles()
+        {
+            string moddedBundles = CurrentProjectVariables.PathToProjectFiles + "\\AssetBundles";
+            var dirs = new DirectoryInfo(moddedBundles).GetDirectories();
+
+            foreach (var dir in dirs)
+            {
+
+                if (dir.Name.EndsWith(".jet"))
+                {
+                    Invoke((MethodInvoker)delegate {
+                        Filename_TB.Text = "Asset Bundle: " + dir.Name;
+                    });
+
+                    string dest = (Environment.CurrentDirectory + "\\ModdedAssetBundles\\" + dir.Name).Replace("/", "\\");
+                    //string dest = (DeserializeConfig().BMC_Directory + "\\AssetBundles\\" + dir.Name).Replace("/", "\\");
+
+                    ZipFile bundle = new ZipFile(dest);
+                    bundle.Password = CurrentProjectVariables.JetPassword;
+                    bundle.AddDirectory(dir.FullName);
+
+                    bundle.Encryption = EncryptionAlgorithm.PkzipWeak;
+                    bundle.Name = dest;
+                    bundle.CompressionLevel = CompressionLevel.Level6;
+                    bundle.Save();
+                    bundle.Dispose();
+                }
+            }
+        }
+        public void MergeAssetBundles()
+        {
+
+        }
+        //
+        //Zip stuff
+        //
+        /*private void HandleBTDBPass()
+        {
+            bool rememberPass = Get_BTDB_Password.rememberPass;
+            if (File.Exists(sourcePath) && gameName == "BTDB")
+            {
+                this.Hide();
+                bool passRes = Bad_JetPass(sourcePath, password);
+                if (passRes == true)
+                {
+                    DialogResult res = MessageBox.Show("You entered the wrong password. Would you like to try again?", "Wrong Password!", MessageBoxButtons.OKCancel);
+                    if (res == DialogResult.OK)
+                    {
+                        var getpas = new Get_BTDB_Password();
+                        getpas.projName = projName;
+                        getpas.isExtracting = true;
+
+                        if (rememberPass == true)
+                            Get_BTDB_Password.rememberPass = true;
+                        else
+                            Get_BTDB_Password.rememberPass = false;
+                        getpas.Show();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    this.Show();
+
+                    password = rememberedPassword;
+                    CurrentProjectVariables.JetPassword = password;
+
+                    ProjectHandler.SaveProject();
+                    Serializer.SaveSmallSettings("battlesPass");
+                }
+            }
+        }
+
+        public static void ExtractFile(string path)
+        {
+            Extractor.Extractor.ExtractFile(path);
+        }*/
+                }
+            }

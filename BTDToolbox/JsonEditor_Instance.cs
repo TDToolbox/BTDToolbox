@@ -13,6 +13,11 @@ using System.IO;
 using BTDToolbox.Extra_Forms;
 using static BTDToolbox.ProjectConfig;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using Ionic.Zip;
+using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
 {
@@ -21,6 +26,7 @@ namespace BTDToolbox
         Font font;
         ConfigFile programData;
         public bool jsonError;
+        public bool fileModified = false;
         public string path = "";
         public string filename = "";
         string file = "";
@@ -28,6 +34,9 @@ namespace BTDToolbox
         string towerName = ""; //if user set custom tower sprite upgrade def, used to keep track of actual tower
         string towerTypeName = "";
         string specialty = "";
+        bool hasPastedCode = false;
+        bool finishedLoading = false;
+
         
         //Tab new line vars
         string tab;
@@ -56,7 +65,6 @@ namespace BTDToolbox
             SearchOptions_Button.KeyDown += Find_TB_KeyDown;
             Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
-
             //path and filename have NOT been set yet. Use FinishedLoading()
         }
         public void FinishedLoading()
@@ -70,21 +78,61 @@ namespace BTDToolbox
             FontSize_TextBox.Text = Editor_TextBox.Font.Size.ToString();
 
             if (path.Contains("Profile.save"))
-                Encrypt_Button.Visible = true;
+            {
+                if (path.Contains("BTDB"))
+                {
+                    MessageBox.Show("This file is READ_Only until we figure out how to stop BTDB " +
+                        "from reseting the save. If you know how to do this, please contact the " +
+                        "devs so we can fix this. Thanks for understanding");
+
+                    Editor_TextBox.ReadOnly = true;
+                }
+                else
+                {
+                    Encrypt_Button.Visible = true;
+                }
+            }
+            finishedLoading = true;
         }
         //
         //JSON
         //
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
-            CheckJSON(Editor_TextBox.Text);
-            File.WriteAllText(path, Editor_TextBox.Text);
+            if (hasPastedCode == true)
+            {
+                ReformatText();
+                hasPastedCode = false;
+            }
+                CheckJSON(Editor_TextBox.Text);
+
+            if (finishedLoading)
+            {
+                File.WriteAllText(path, Editor_TextBox.Text);
+                if(!CurrentProjectVariables.ModifiedFiles.Contains(path))
+                {
+                    CurrentProjectVariables.ModifiedFiles.Add(path);
+                }
+            }
 
             if (tabLine)
             {
                 Editor_TextBox.SelectedText = tab;
                 tabLine = false;
             }
+        }
+        private void WriteToZipFile()
+        {
+            //
+            //Note: This doesnt actually save the zip file until it closes
+
+            fileModified = true;
+            string filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/"); ;
+
+            if (New_JsonEditor.jet == null)
+                New_JsonEditor.jet = new ZipFile(CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet");
+
+            ProjectHandler.UpdateFileInZip(New_JsonEditor.jet, filepath, Editor_TextBox.Text);
         }
         private void CheckJSON(string text)
         {
@@ -142,17 +190,22 @@ namespace BTDToolbox
         }
         private void CloseFile_Button_Click(object sender, EventArgs e)
         {
-            if(!jsonError)
+            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            string backupJetPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
+
+            ZipFile backup = new ZipFile(backupJetPath);
+            backup.Password = CurrentProjectVariables.JetPassword;
+
+            if (!jsonError)
             {
                 JsonEditorHandler.CloseFile(path);
-                if(programData == null)
+                if (programData == null)
                     programData = Serializer.Deserialize_Config();
                 Serializer.SaveJSONEditor_Instance(this);
                 Serializer.SaveJSONEditor_Tabs();
             }
             else
             {
-                
                 DialogResult dialogResult = MessageBox.Show("This file has a JSON error! Are you sure you want to close and save it?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -162,6 +215,7 @@ namespace BTDToolbox
                     Serializer.SaveJSONEditor_Instance(this);
                 }
             }
+            
         }
 
         //
@@ -204,7 +258,7 @@ namespace BTDToolbox
         private string GetTowerName()
         {
             string towerName = "";
-            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
             if (!Directory.Exists(projPath + "TowerDefinitions"))
             {
                 return towerName;
@@ -235,10 +289,11 @@ namespace BTDToolbox
         public string GetSpecialtyBuilding()
         {
             string specialtyBuilding = "";
-            string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
             
             if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
                 return specialtyBuilding;
+
             foreach (var x in Directory.GetFiles(projPath + "SpecialtyDefinitions"))
             {
                 string json = File.ReadAllText(x);
@@ -252,7 +307,6 @@ namespace BTDToolbox
                         
                         if (s.RelatedTower != null)
                         {
-                            //ConsoleHandler.appendLog_CanRepeat(s.RelatedTower);
                             if (s.RelatedTower == towerTypeName)
                             {
                                 specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
@@ -272,7 +326,7 @@ namespace BTDToolbox
                 Open_Button.Visible = true;
                 Weapons_Button.DropDownItems.Clear();
                 file = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
-                string projPath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+                string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
 
                 towerName = GetTowerName();
                 if (towerName != "")
@@ -333,19 +387,22 @@ namespace BTDToolbox
                 //TowerSpriteUpgradeDef
                 //Attempting to get the TowerSpriteUpgradeDef from tower file
                 Tower_Class.Artist tower = new Tower_Class.Artist();
-                string towerfile = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+                string towerfile = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
                 if (File.Exists(towerfile))
                 {
                     string json = File.ReadAllText(towerfile);
                     if (JSON_Reader.IsValidJson(json))
                     {
                         tower = Tower_Class.Artist.FromJson(json);
-                        if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
+                        if (tower != null)
                         {
-                            TowerSpriteUpgradeDef_Button.Visible = false;
+                            if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
+                            {
+                                TowerSpriteUpgradeDef_Button.Visible = false;
+                            }
+                            else
+                                towerSpriteUpgradeDef = tower.SpriteUpgradeDefinition;
                         }
-                        else
-                            towerSpriteUpgradeDef = tower.SpriteUpgradeDefinition;
                     }
                     else
                     {
@@ -373,13 +430,13 @@ namespace BTDToolbox
         }
         private void TowerFile_Button_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
         private void UpgradeFIle_Button_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
@@ -393,7 +450,7 @@ namespace BTDToolbox
             }
             else
                 foldername = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
 
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
@@ -402,7 +459,7 @@ namespace BTDToolbox
         {
             if (towerSpriteUpgradeDef == "")
                 towerSpriteUpgradeDef = file;
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
             if (!filepath.EndsWith(".json"))
                 filepath = filepath + ".json";
 
@@ -413,7 +470,7 @@ namespace BTDToolbox
         }
         private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string filepath = Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
@@ -851,6 +908,13 @@ namespace BTDToolbox
                 }
                 ShowSearchMenu("replace");
             }
+            if(Serializer.Deserialize_Config().autoFormatJSON == true)
+            {
+                if (e.Control && (e.KeyCode == Keys.V || e.KeyCode == Keys.X))
+                {
+                    hasPastedCode = true;
+                }
+            }
         }
         private void FontSize_TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -943,7 +1007,7 @@ namespace BTDToolbox
                 DialogResult diag = MessageBox.Show("You are trying to restore this file to the original unmodded version. Are you sure you want to do this?", "Restore to original?", MessageBoxButtons.YesNo);
                 if (diag == DialogResult.Yes)
                 {
-                    string backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace("\\" + Serializer.Deserialize_Config().LastProject + "\\", "");
+                    string backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
                     if (File.Exists(backupProj))
                     {
                         if (path.Contains("."))
@@ -1020,6 +1084,65 @@ namespace BTDToolbox
             else
             {
                 ConsoleHandler.force_appendNotice("You need to fix your JSON error before continuing...");
+            }
+        }
+        private void ReformatJSON_Button_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("JSON Formatted!");
+            if (!Serializer.Deserialize_Config().autoFormatJSON)
+            {
+                DialogResult diag = MessageBox.Show("Autoformatting isn't enabled in your settings. Would you like to toolbox to enable it, " +
+                    "or keep it set to manual, so you have to press this button to format?", "Enable AutoFormating?", MessageBoxButtons.YesNo);
+                if(diag == DialogResult.Yes)
+                {
+                    Main.autoFormatJSON = true;
+                    Serializer.SaveSmallSettings("autoFormatJSON");
+                }
+            }
+            ReformatText();
+        }
+        private void ReformatText()
+        {
+            int selectedIndex = Editor_TextBox.SelectionStart;
+            Editor_TextBox.Text = Regex.Replace(Editor_TextBox.Text, @"^\s*$(\n|\r|\r\n)", "", RegexOptions.Multiline);
+            string unformattedText = Editor_TextBox.Text;
+            Editor_TextBox.Text = "";
+            try
+            {
+                JToken jt = JToken.Parse(unformattedText);
+                string formattedText = jt.ToString(Formatting.Indented);
+                formattedText = formattedText.Replace("\\t", "").Replace("\\n", "");
+                Editor_TextBox.Text = formattedText;
+            }
+            catch (Exception)
+            {
+                Editor_TextBox.Text = unformattedText;
+            }
+            AddLineNumbers();
+            Editor_TextBox.SelectionStart = selectedIndex;
+        }
+        private void FindSubtask_Button_Click(object sender, EventArgs e)
+        {
+            if (!Find_Panel.Visible)
+                ShowSearchMenu("find");
+            Option1_CB.Checked = true;
+            ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+        }
+
+        private void DisableAutoformattinhToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Serializer.Deserialize_Config().autoFormatJSON == true)
+            {
+                ConsoleHandler.appendLog("Auto-formatting disabled.");
+                ConsoleHandler.force_appendNotice("You can enable or disable this in Settings, " +
+                   "which you can find under the \"File\" button at the top of toolbox.");
+                Main.autoFormatJSON = false;
+                Serializer.SaveSmallSettings("autoFormatJSON");
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("It is already disabled. You can use it manually by pressing the \"Re-format JSON\" button above. " +
+                    "Or, you can change it in  Settings, which you can find under the \"File\" button at the top of toolbox.");
             }
         }
     }

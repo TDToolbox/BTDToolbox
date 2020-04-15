@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -310,7 +311,7 @@ namespace BTDToolbox.Extra_Forms
         private int CountStartingCards()
         {
             numStarterCards = 0;
-            string cardPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions";
+            string cardPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions";
             var cardFiles = Directory.GetFiles(cardPath);
             string[] cards_length2 = new string[0];
             string[] cards_length3 = new string[0];
@@ -419,7 +420,7 @@ namespace BTDToolbox.Extra_Forms
                 if (Main.projName != "" && Main.projName != null)
                 {
                     Game_Label.Text = "BTDB";
-                    string cardPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions";
+                    string cardPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions";
                     var cardFiles = Directory.GetFiles(cardPath);
                     string[] cards_length2 = new string[0];
                     string[] cards_length3 = new string[0];
@@ -471,7 +472,7 @@ namespace BTDToolbox.Extra_Forms
                 selectedCard = CardFiles_ComboBox.SelectedItem.ToString().Replace("Card ", "") + ".json";
             else
                 selectedCard = CardFiles_ComboBox.SelectedItem.ToString() + ".json";
-            path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + selectedCard;
+            path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\" + selectedCard;
             CreateCardObject(path);
             CountStartingCards();
 
@@ -537,19 +538,19 @@ namespace BTDToolbox.Extra_Forms
         {
             string selectedCard = "";
             if (openStarterCard == true)
-                selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
+                selectedCard = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\" + StartingCards_LB.SelectedItem.ToString();
 
             else if (openTower == true)
             {
                 if (card.Tower.TowerType != null)
-                    selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
+                    selectedCard = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
                 else
                     ConsoleHandler.appendLog("This card doesn't have a specified tower type");
             }
             else if (openBloon == true)
             {
                 if (card.Bloon.BloonType != null)
-                    selectedCard = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
+                    selectedCard = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
                 else
                     ConsoleHandler.appendLog("This card doesn't have a specified bloon type");
             }
@@ -746,7 +747,7 @@ namespace BTDToolbox.Extra_Forms
                 {
                      ezTower = new EasyTowerEditor();
                 }
-                string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
+                string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
                 ezTower.path = path;
                 ezTower.Show();
                 ezTower.CreateTowerObject(path);
@@ -783,7 +784,7 @@ namespace BTDToolbox.Extra_Forms
                 {
                     ezBloon = new EZBloon_Editor();
                 }
-                string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
+                string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
                 ezBloon.path = path;
                 ezBloon.Show();
                 ezBloon.CreateBloonObject(path);

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.Filename_TB = new System.Windows.Forms.RichTextBox();
             this.TotalProgress_ProgressBar = new System.Windows.Forms.ProgressBar();
             this.TotalProgress_Label = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -38,19 +38,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // Filename_TB
             // 
-            this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.richTextBox1.ForeColor = System.Drawing.Color.White;
-            this.richTextBox1.Location = new System.Drawing.Point(12, 173);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.Size = new System.Drawing.Size(472, 43);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.Filename_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.Filename_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Filename_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.Filename_TB.ForeColor = System.Drawing.Color.White;
+            this.Filename_TB.Location = new System.Drawing.Point(12, 173);
+            this.Filename_TB.Name = "Filename_TB";
+            this.Filename_TB.ReadOnly = true;
+            this.Filename_TB.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.Filename_TB.Size = new System.Drawing.Size(472, 43);
+            this.Filename_TB.TabIndex = 1;
+            this.Filename_TB.Text = "";
             // 
             // TotalProgress_ProgressBar
             // 
@@ -118,7 +118,7 @@
             this.Controls.Add(this.TotalProgress_Label);
             this.Controls.Add(this.CurrentFileProgress_Label);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.Filename_TB);
             this.Controls.Add(this.TotalProgress_ProgressBar);
             this.Controls.Add(this.CurrentFileProgress);
             this.Controls.Add(this.pictureBox1);
@@ -134,7 +134,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox Filename_TB;
         private System.Windows.Forms.ProgressBar TotalProgress_ProgressBar;
         private System.Windows.Forms.Label TotalProgress_Label;
         private System.Windows.Forms.PictureBox pictureBox1;

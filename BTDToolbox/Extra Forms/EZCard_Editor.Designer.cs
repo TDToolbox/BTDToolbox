@@ -1509,7 +1509,7 @@
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.pictureBox1.Location = new System.Drawing.Point(-77, -6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1225, 74);
+            this.pictureBox1.Size = new System.Drawing.Size(1225, 195);
             this.pictureBox1.TabIndex = 124;
             this.pictureBox1.TabStop = false;
             // 

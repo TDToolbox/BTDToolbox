@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTDToolbox.Classes.NewProjects;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,11 +22,27 @@ namespace BTDToolbox.Classes
                 jeditor.tabPages = new List<TabPage>();
                 jeditor.tabFilePaths = new List<string>();
                 jeditor.userControls = new List<JsonEditor_Instance>();
+
+                if (NewProjects.CurrentProjectVariables.JsonEditor_OpenedTabs == null)
+                    NewProjects.CurrentProjectVariables.JsonEditor_OpenedTabs = new List<string>();
                 jeditor.Show();
             }
             else if (jeditor.Visible == false)
             {
                 jeditor.Show();
+            }
+        }
+        public static void OpenFileFromZip(string path)
+        {
+            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            {
+                ValidateEditor();
+
+                string pathCleaned = path.Replace("\\", "/");
+                if (jeditor.tabFilePaths.Contains(pathCleaned))
+                    jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(pathCleaned);
+                else
+                    jeditor.NewTab(path, true);
             }
         }
         public static void OpenFile(string path)
@@ -40,7 +57,7 @@ namespace BTDToolbox.Classes
                     if (jeditor.tabFilePaths.Contains(path))
                         jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
                     else
-                        jeditor.NewTab(path);
+                        jeditor.NewTab(path, false);
                 }
             }
             else
@@ -53,8 +70,8 @@ namespace BTDToolbox.Classes
             string[] split = path.Split('\\');
             string filename = split[split.Length - 1];
             string backupProj = "";
-            if (!path.Contains("\\Backups\\" + Main.gameName + "_BackupProject\\"))
-                backupProj = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + path.Replace(Environment.CurrentDirectory, "").Replace(Serializer.Deserialize_Config().LastProject + "\\", "");
+            if (!path.Contains("\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\"))
+                backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
             else
             {
                 backupProj = path;

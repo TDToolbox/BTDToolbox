@@ -52,6 +52,11 @@ namespace BTDToolbox
             {
                 cfg.disableUpdates = Main.disableUpdates;
             }
+            if (formName == "autoFormatJSON")
+            {
+                cfg.autoFormatJSON = Main.autoFormatJSON;
+            }
+            
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
@@ -107,6 +112,12 @@ namespace BTDToolbox
                     cfg.BTDB_Directory = cfg.BTDB_Directory;
                 else
                     cfg.BTDB_Directory = BTDB_Dir;
+
+                if (BMC_Dir == null)
+                    cfg.BMC_Directory = "";
+                else
+                    cfg.BMC_Directory = BMC_Dir;
+                
             }
 
             if (formName == "main")
@@ -143,7 +154,8 @@ namespace BTDToolbox
                 if (projName == null)
                     cfg.LastProject = cfg.LastProject;
                 else
-                    cfg.LastProject = projName;
+                    cfg.LastProject = JetForm.lastProject;
+                    //cfg.LastProject = projName;
             }
 
             if (formName == "json editor")
@@ -184,6 +196,7 @@ namespace BTDToolbox
                     programData.recentUpdate = false;
                     programData.useExternalEditor = false;
                     programData.disableUpdates = false;
+                    programData.autoFormatJSON = Main.autoFormatJSON;
 
                     programData.JsonEditor_OpenedTabs = new List<string>();
 
@@ -192,6 +205,7 @@ namespace BTDToolbox
 
                     programData.BTD5_Directory = "";
                     programData.BTDB_Directory = "";
+                    programData.BMC_Directory = "";
                     programData.LastProject = null;
                     programData.CurrentGame = null;
                     programData.ExistingUser = false;

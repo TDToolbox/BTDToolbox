@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,15 +35,27 @@ namespace BTDToolbox.Extra_Forms
         string[] loc_upgradeNames = new string[] { };
         string[] loc_upgradeDescs = new string[] { };
 
-        string game = Serializer.Deserialize_Config().CurrentGame;
-        string gameDir = "";
+        string game = CurrentProjectVariables.GameName;
+        string gameDir = CurrentProjectVariables.GamePath;
         string[] loc_Text = new string[] { };
         string loc_Path = "";
         string loc_towerName = "";
         string loc_towerDesc = "";
+
+        //Open button stuff (god i need to fix this)
+        string file = "";
+        string towerSpriteUpgradeDef = ""; //if user set custom tower sprite upgrade def
+        string towerName = ""; //if user set custom tower sprite upgrade def, used to keep track of actual tower
+        string towerTypeName = "";
+        string specialty = "";
+        string filename = ""; //this is to get the TowerName.tower part
+
+
         public EasyTowerEditor()
         {
             InitializeComponent();
+            Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
+
             EZTower_Opened = true;
             if (game == "BTDB")
             {
@@ -62,12 +75,20 @@ namespace BTDToolbox.Extra_Forms
             {
                 artist = Tower_Class.Artist.FromJson(json);
                 PopulateUI();
+
+                string[] split = towerPath.Split('\\');
+                filename = split[split.Length - 1];
+                PopulateToolbar();
             }
             else
             {
                 ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
             }
-
+            finishedLoading = true;
+        }
+        private void PopulateToolbar()
+        {
+            PopulateOpenButton();
         }
         private void PopulateUI()
         {
@@ -199,23 +220,33 @@ namespace BTDToolbox.Extra_Forms
                         TowerDesc_TextBox.Text = loc_towerDesc;
                     }
                 }
-                if(game == "BTD5")
+                if(game == "BTD5" || game == "BMC")
                 {
                     if(File.Exists(loc_Path))
                         ReadLoc();
                     else
                     {
-                        if(Serializer.Deserialize_Config().BTD5_Directory == null || Serializer.Deserialize_Config().BTD5_Directory == "")
+                        string gameDir = CurrentProjectVariables.GamePath;
+                        if(gameDir == null || gameDir == "")
                         {
-                            ConsoleHandler.force_appendNotice("You haven't browsed for your BTD5 Game so you will not be able to edit the tower and upgrade descriptions");
+                            ConsoleHandler.force_appendNotice("You haven't browsed for your " + game + " Game so you will not be able to edit the tower and upgrade descriptions");
                             this.Focus();
                         }
                         else
                         {
                             ConsoleHandler.force_appendNotice("Unable to find your LOC file...");
-                            DialogResult diag = MessageBox.Show("Unable to find BTD5's LOC file. Do you want toolbox to make Steam validate BTD5 so it can reaquire it? If you have any mods applied to btd5 steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
+                            DialogResult diag = MessageBox.Show("Unable to find " + game + "'s LOC file. Do you want toolbox to make Steam validate " + game + " so it can reaquire it? If you have any mods applied to " + game + " steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
                             if (diag == DialogResult.Yes)
-                                GeneralMethods.SteamValidateBTD5();
+                            {
+                                if (game == "BTD5")
+                                {
+                                    GeneralMethods.SteamValidateBTD5();
+                                }
+                                else
+                                {
+                                    GeneralMethods.SteamValidateBMC();
+                                }
+                            }
                             else
                             {
                                 ConsoleHandler.force_appendNotice("Valdation cancelled. You will not be able to mod the tower or upgrade descriptions...");
@@ -421,12 +452,12 @@ namespace BTDToolbox.Extra_Forms
                 RankToUnlockUpgrade_TextBox.Text = upgradeRanks[Upgrades_ListBox.SelectedIndex].ToString();
                 XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
 
-                if (game == "BTD5")
+                if (game == "BTD5" || game == "BMC")
                 {
                     if (File.Exists(loc_Path))
                         UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
                 }
-                else if (game != "" && game != null)
+                else if (game == "BTDB")
                     UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
                 else
                     ConsoleHandler.force_appendNotice("Something went wrong and your current game was not detected. Please reload BTD Toolbox, otherwise you may encounter errors");
@@ -463,15 +494,17 @@ namespace BTDToolbox.Extra_Forms
             RankToUnlockUpgrade_TextBox.Text = "";
             UpgradeIcon_TextBox.Text = "";
             UpgradeAvatar_TextBox.Text = "";
-        }
-        
+        }     
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
-            finishedLoading = true;
             firstLoad = true;
             if (game == "BTD5")
             {
                 loc_Path = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Loc\\English.xml";
+            }
+            else if (game == "BMC")
+            {
+                loc_Path = CurrentProjectVariables.GamePath + "\\Assets\\Loc\\English.xml";
             }
             else
             {
@@ -479,7 +512,7 @@ namespace BTDToolbox.Extra_Forms
             }
             if (Main.projName != "" && Main.projName != null)
             {
-                string towersPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions";
+                string towersPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions";
                 var towerFiles = Directory.GetFiles(towersPath);
                 foreach (string file in towerFiles)
                 {
@@ -504,13 +537,29 @@ namespace BTDToolbox.Extra_Forms
         }
         private void SaveLoc()
         {
-            if (game == "BTD5")
+            if (game == "BTD5" || game == "BMC")
             {
                 loc_Text = File.ReadAllLines(loc_Path);
-                string towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
-                string towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
-                string towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
-                string towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+
+                string towerName = "";
+                string towerNamePlural = "";
+                string towerNameCAPS = "";
+                string towerDesc = "";
+
+                if (game == "BMC")
+                {
+                    towerName = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME";
+                    towerNamePlural = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_DESC";
+                }
+                else if (game == "BTD5")
+                {
+                    towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
+                    towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+                }
 
                 //Upgrade Names
                 string towerUpgrade_A1 = "LOC_UPGRADE_A1_" + TowerType_Label.Text;
@@ -637,10 +686,27 @@ namespace BTDToolbox.Extra_Forms
             if(File.Exists(loc_Path))
             {
                 loc_Text = File.ReadAllLines(loc_Path);
-                string towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
-                string towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
-                string towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
-                string towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+
+                string towerName = "";
+                string towerNamePlural = "";
+                string towerNameCAPS = "";
+                string towerDesc = "";
+
+                if (game == "BMC")
+                {
+                    towerName = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME";
+                    towerNamePlural = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_NAME_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_MY_MONKEYS_" + TowerType_Label.Text + "_DESC";
+                }
+                else if (game == "BTD5")
+                {
+                    towerName = "LOC_" + TowerType_Label.Text + "_TOWER";
+                    towerNamePlural = "LOC_" + TowerType_Label.Text + "_TOWER_PLURAL";
+                    towerNameCAPS = "LOC_" + TowerType_Label.Text.ToUpper() + "_TOWER";
+                    towerDesc = "LOC_TOWER_DESC_" + TowerType_Label.Text;
+                }
+                
 
                 //Upgrade Names
                 string towerUpgrade_A1 = "LOC_UPGRADE_A1_" + TowerType_Label.Text;
@@ -722,7 +788,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 ResetUI();
 
-                path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + AllTowerFiles_ComboBox.SelectedItem;
+                path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + AllTowerFiles_ComboBox.SelectedItem;
                 CreateTowerObject(path);
                 this.Refresh();
             }
@@ -861,12 +927,16 @@ namespace BTDToolbox.Extra_Forms
         }
         private void CanBePlacedOnPath_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (CanBePlacedOnPath_CheckBox.Checked)
+            if(finishedLoading)
             {
-                CanBePlacedOnLand_CheckBox.Checked = false;
-                CanBePlacedInWater_CheckBox.Checked = false;
-                ConsoleHandler.appendNotice("CanBePlacedOnPath  overrides CanBePlacedOnLand and CanBePlacedInWater");
+                if (CanBePlacedOnPath_CheckBox.Checked)
+                {
+                    CanBePlacedOnLand_CheckBox.Checked = false;
+                    CanBePlacedInWater_CheckBox.Checked = false;
+                    ConsoleHandler.appendNotice("CanBePlacedOnPath  overrides CanBePlacedOnLand and CanBePlacedInWater");
+                }
             }
+            
         }
         private void CanBePlacedOnLand_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -932,6 +1002,182 @@ namespace BTDToolbox.Extra_Forms
         private void EasyTowerEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
             EZTower_Opened = false;
+        }
+
+
+        //
+        //Handle open buttons
+        //
+
+        public string GetSpecialtyBuilding()
+        {
+            string specialtyBuilding = "";
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
+
+            if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
+                return specialtyBuilding;
+            foreach (var x in Directory.GetFiles(projPath + "SpecialtyDefinitions"))
+            {
+                string json = File.ReadAllText(x);
+                if (JSON_Reader.IsValidJson(json))
+                {
+                    SpecialtyBuildingClass s = new SpecialtyBuildingClass();
+                    s = SpecialtyBuildingClass.FromJson(json);
+
+                    if (s != null)
+                    {
+
+                        if (s.RelatedTower != null)
+                        {
+                            //ConsoleHandler.appendLog_CanRepeat(s.RelatedTower);
+                            if (s.RelatedTower == file)
+                            {
+                                specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
+                                towerTypeName = s.RelatedTower;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return specialtyBuilding;
+        }
+        private void PopulateOpenButton()
+        {
+            string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
+
+            Weapons_Button.DropDownItems.Clear();
+            filename = AllTowerFiles_ComboBox.SelectedItem.ToString();
+            TowerFile_Button.Text = filename;
+            file = filename.Replace(".tower", "");
+
+
+            
+            if (File.Exists(projPath + "UpgradeDefinitions\\" + file + ".upgrades"))
+                UpgradeFile_Button.Text = file + ".upgrades";
+            else
+                UpgradeFile_Button.Visible = false;
+
+
+
+            specialty = GetSpecialtyBuilding();
+            if (!specialty.Contains(".json"))
+                specialty = specialty + ".json";
+            if (specialty != null && specialty != "")
+            {
+                if (File.Exists(projPath + "SpecialtyDefinitions\\" + specialty))
+                    specialtyBuildingToolStripMenuItem.Visible = true;
+                else
+                    specialtyBuildingToolStripMenuItem.Visible = false;
+            }
+
+            if (Directory.Exists(projPath + "WeaponDefinitions\\" + file))
+            {
+                string weaponDir = projPath + "WeaponDefinitions\\" + file;
+                foreach (var x in Directory.GetFiles(weaponDir))
+                {
+                    string[] split = x.Split('\\');
+                    Weapons_Button.DropDownItems.Add(split[split.Length - 1]);
+                }
+            }
+            else
+                Weapons_Button.Visible = false;
+
+
+            //TowerSpriteUpgradeDef
+            //Attempting to get the TowerSpriteUpgradeDef from tower file
+            Tower_Class.Artist tower = new Tower_Class.Artist();
+            string towerfile = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+            if (File.Exists(towerfile))
+            {
+                string json = File.ReadAllText(towerfile);
+                if (JSON_Reader.IsValidJson(json))
+                {
+                    tower = Tower_Class.Artist.FromJson(json);
+                    if (tower != null)
+                    {
+                        if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
+                        {
+                            TowerSpriteUpgradeDef_Button.Visible = false;
+                        }
+                        else
+                            towerSpriteUpgradeDef = tower.SpriteUpgradeDefinition;
+                    }
+                }
+                else
+                {
+                    if (File.Exists(projPath + "TowerSpriteUpgradeDefinitions\\" + file + ".json"))
+                    {
+                        ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Using default one instead...");
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Additionally, the default one does not exist. Unable to open TowerSpriteUpgradeDef");
+                        TowerSpriteUpgradeDef_Button.Visible = false;
+                    }
+                }
+            }
+            else
+            {
+                if (!File.Exists(projPath + "TowerSpriteUpgradeDefinitions\\" + file + ".json"))
+                    TowerSpriteUpgradeDef_Button.Visible = false;
+            }
+        }
+        private void TowerFile_Button_Click(object sender, EventArgs e)
+        {
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+            this.Focus();
+        }
+        private void UpgradeFile_Button_Click(object sender, EventArgs e)
+        {
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\UpgradeDefinitions\\" + file + ".upgrades";
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+            this.Focus();
+        }
+        private void Weapons_Button_Click(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string weaponfile = e.ClickedItem.Text.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+            string foldername = "";
+            if (towerName != "")
+            {
+                foldername = towerName.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+            }
+            else
+                foldername = filename.Replace(".tower", "").Replace(".upgrades", "").Replace(".weapon", "").Replace(".json", "");
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\WeaponDefinitions\\" + foldername + "\\" + weaponfile + ".weapon";
+
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+            this.Focus();
+        }
+        private void TowerSpriteUpgradeDef_Button_Click(object sender, EventArgs e)
+        {
+            if (towerSpriteUpgradeDef == "")
+                towerSpriteUpgradeDef = file;
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + towerSpriteUpgradeDef;
+            if (!filepath.EndsWith(".json"))
+                filepath = filepath + ".json";
+
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+            else
+                ConsoleHandler.appendLog("The TowerSpriteUpgradeDef  " + towerSpriteUpgradeDef + " was not found");
+            this.Focus();
+        }
+        private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string filepath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\SpecialtyDefinitions\\" + specialty;
+            if (File.Exists(filepath))
+                JsonEditorHandler.OpenFile(filepath);
+            this.Focus();
+        }
+
+        private void Open_Button_Click(object sender, EventArgs e)
+        {
+            //Open_Button.ForeColor = Color.Black;
         }
     }
 }

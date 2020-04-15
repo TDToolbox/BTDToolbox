@@ -16,6 +16,9 @@ using static System.Windows.Forms.ToolStripItem;
 using static BTDToolbox.GeneralMethods;
 using BTDToolbox.Classes;
 using BTDToolbox.Extra_Forms;
+using BTDToolbox.Classes.NewProjects;
+using BTDToolbox.Properties;
+using System.Text.RegularExpressions;
 
 namespace BTDToolbox
 {
@@ -41,29 +44,6 @@ namespace BTDToolbox
             programData = DeserializeConfig();
             StartUp();
 
-            if (projName == Serializer.Deserialize_Config().LastProject)
-            {
-                if (Serializer.Deserialize_Config().JsonEditor_OpenedTabs.Count > 0)
-                {
-                    DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        foreach (string tab in Serializer.Deserialize_Config().JsonEditor_OpenedTabs)
-                            JsonEditorHandler.OpenFile(tab);
-                    }
-                    else
-                    {
-                        programData.JsonEditor_OpenedTabs = new List<string>();
-                        Serializer.SaveJSONEditor_Tabs();
-                    }
-                }
-            }
-            else
-            {
-                programData.JsonEditor_OpenedTabs =  new List<string>();
-                Serializer.SaveJSONEditor_Tabs();
-            }
-
             goUpButton.Font = new Font("Microsoft Sans Serif", 9);
             this.dirInfo = dirInfo;
             this.Form = Form;
@@ -79,27 +59,28 @@ namespace BTDToolbox
             {
                 Main.gameName = "BTD5";
                 gamedir = Serializer.Deserialize_Config().BTD5_Directory;
-
             }
             else if (projName.Contains("BTDB"))
             {
                 Main.gameName = "BTDB";
                 gamedir = Serializer.Deserialize_Config().BTDB_Directory;
             }
+            else if (projName.Contains("BMC"))
+            {
+                Main.gameName = "BMC";
+                gamedir = Serializer.Deserialize_Config().BMC_Directory;
+            }
+
             if (gamedir == "" || gamedir == null)
-            {
                 Main.getInstance().Launch_Program_ToolStrip.Visible = false;
-            }
             else
-            {
                 Main.getInstance().Launch_Program_ToolStrip.Visible = true;
-            }
-            ConsoleHandler.appendLog("Game: " + Main.gameName);
+
+            ConsoleHandler.appendLog("Game: " + CurrentProjectVariables.GameName);
             ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
-            
 
-            
 
+            LoadProjectFile();
             Serializer.SaveConfig(this, "game");
             Serializer.SaveConfig(this, "jet explorer");
 
@@ -111,6 +92,22 @@ namespace BTDToolbox
 
             if (EZCard_Editor.EZCard_Opened == true)
                 ConsoleHandler.force_appendNotice("The EZ Card tool is currently opened for a different project. Please close it to avoid errors...");
+
+
+            if (CurrentProjectVariables.JsonEditor_OpenedTabs != null && CurrentProjectVariables.JsonEditor_OpenedTabs.Count > 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    foreach (string tab in CurrentProjectVariables.JsonEditor_OpenedTabs)
+                        JsonEditorHandler.OpenFile(tab);
+                }
+                else
+                {
+                    CurrentProjectVariables.JsonEditor_OpenedTabs = new List<string>();
+                    ProjectHandler.SaveProject();
+                }
+            }
         }
         private void StartUp()
         {
@@ -135,6 +132,19 @@ namespace BTDToolbox
             this.treeView1.AfterSelect += treeView1_AfterSelect;
             this.FormClosed += exitHandling;
             this.FormClosing += this.JetForm_Closed;
+        }
+        private void LoadProjectFile()
+        {
+            var dirs = new DirectoryInfo(Environment.CurrentDirectory + "\\Projects").GetDirectories();
+            foreach (var dir in dirs)
+            {
+                if (dir.Name == projName)
+                {
+                    lastProject = dir.FullName;
+                    ProjectHandler.ReadProject(dir.FullName + "\\" + projName + ".toolbox");
+                    Serializer.SaveConfig(this, "jet explorer");
+                }
+            }
         }
         private void initTreeMenu()
         {
@@ -171,6 +181,20 @@ namespace BTDToolbox
             TreeNode rootNode;
             
             DirectoryInfo info = new DirectoryInfo(tempName);
+            var dirs = info.GetDirectories();
+            bool found = false;
+
+            foreach(var dir in dirs)
+            {
+                if (dir.Name == projName)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if(found)
+                info = new DirectoryInfo(tempName + "\\" + projName);
+
             if (info.Exists)
             {
                 rootNode = new TreeNode(info.Name);
@@ -178,6 +202,7 @@ namespace BTDToolbox
                 GetDirectories(info.GetDirectories(), rootNode);
                 treeView1.Nodes.Add(rootNode);
             }
+
         }
         private void PopulateListView(TreeNode selectedTreeNode)
         {
@@ -255,14 +280,14 @@ namespace BTDToolbox
             {
             }
         }
-        private void OpenFile()
+        private void OpenFile(bool openFromZip)
         {
             if(listView1.SelectedItems.Count <= 0)
                 ConsoleHandler.appendLog("You need to select at least one file to open");
             else
             {
                 int i = 0;
-                foreach (var a in listView1.SelectedItems)
+                foreach (ListViewItem a in listView1.SelectedItems)
                 {
                     var Selected = listView1.SelectedItems[i];
                     if (!Selected.Text.Contains("."))
@@ -280,7 +305,13 @@ namespace BTDToolbox
                     }
                     else
                     {
-                        JsonEditorHandler.OpenFile(this.Text + "\\" + Selected.Text);
+                        if(!openFromZip)
+                            JsonEditorHandler.OpenFile(this.Text + "\\" + Selected.Text);
+                        else
+                        {
+                            string selected = (treeView1.SelectedNode.FullPath + "\\" + a.Text).Replace(CurrentProjectVariables.ProjectName + "\\", "");
+                            JsonEditorHandler.OpenFileFromZip(selected);
+                        }
                     }
                     i++;
                 }
@@ -288,7 +319,7 @@ namespace BTDToolbox
         }
         private void ListView1_DoubleClicked(object sender, EventArgs e)
         {
-            OpenFile();
+            OpenFile(false);
         }
 
         //Context caller
@@ -494,11 +525,12 @@ namespace BTDToolbox
                     {
                         File.Copy(newPath, newPath.Replace(name, dest), true);
                     }
+
+                    treeView1.Nodes.Clear();
+                    listView1.Items.Clear();
+                    PopulateTreeView();
                 }
             }
-            treeView1.Nodes.Clear();
-            listView1.Items.Clear();
-            PopulateTreeView();
         }
         private void selectAll()
         {
@@ -654,7 +686,7 @@ namespace BTDToolbox
         }
         private void JetForm_Activated(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "jet explorer");
+            LoadProjectFile();
         }
 
 
@@ -838,7 +870,7 @@ namespace BTDToolbox
         private void OneSelected_CM_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == "Open File")
-                OpenFile();
+                OpenFile(false);
             else if (e.ClickedItem.Text == "Rename")
                 rename();
             else if (e.ClickedItem.Text == "Delete")
@@ -867,7 +899,7 @@ namespace BTDToolbox
         private void MultiSelected_CM_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text == "Open Files")
-                OpenFile();
+                OpenFile(false);
             if (e.ClickedItem.Text == "Delete")
                 delete();
             if (e.ClickedItem.Text == "Copy")
@@ -882,6 +914,266 @@ namespace BTDToolbox
                 else
                     ConsoleHandler.appendLog_CanRepeat("restore cancelled...");
             }
+        }
+
+
+        //
+        //Zip stuff
+        //
+        public void PopulateListview(TreeNode selectedTreeNode)
+        {
+            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            string pass = CurrentProjectVariables.JetPassword;
+            string selectedPath = selectedTreeNode.FullPath.Replace(CurrentProjectVariables.ProjectName + "\\", "").Replace("/", "\\");
+            string[] split1 = selectedPath.Split('\\');
+            List<string> files = new List<string>();
+
+            ZipFile jet = new ZipFile(jetpath);
+            jet.Password = pass;
+
+            listView1.Items.Clear();
+            foreach (var z in jet)
+            {
+                string name = z.FileName.Replace("/", "\\");
+                if (name.EndsWith("\\"))
+                    name = name.Remove(name.Length - 1);
+                files.Add(name);
+            }
+
+            List<string> folderz = new List<string>();
+            List<string> filez = new List<string>();
+            foreach (string a in files)
+            {
+                if (a.Contains(selectedPath + "\\"))
+                {
+                    string[] split2 = a.Split('\\');
+                    if (split2[split2.Length - 2] == split1[split1.Length - 1])
+                    {
+                        if (split2[split2.Length - 1].Contains("."))
+                            filez.Add(split2[split2.Length - 1]);
+                        else
+                            folderz.Add(split2[split2.Length - 1]);
+                    }
+                }
+            }
+
+            foreach (string fold in folderz)
+                listView1.Items.Add(fold, 0);
+            foreach (string fil in filez)
+                listView1.Items.Add(fil, 1);
+
+        }
+        public void PopulateTreeview()
+        {
+            string jetpath = CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet";
+            if (File.Exists(jetpath))
+            {
+                string pass = CurrentProjectVariables.JetPassword;
+
+                if (pass != "" && pass != null)
+                {
+                    ZipFile jet = new ZipFile(jetpath);
+                    jet.Password = pass;
+
+                    string temp = CurrentProjectVariables.PathToProjectClassFile;
+                    List<string> folders = new List<string>();
+                    foreach (ZipEntry z in jet)
+                    {
+                        if (z.IsDirectory)
+                        {
+                            folders.Add(z.FileName);
+                            z.ExtractWithPassword(temp, ExtractExistingFileAction.OverwriteSilently, CurrentProjectVariables.JetPassword);
+                        }
+                    }
+                    ListDirectory(treeView1, CurrentProjectVariables.PathToProjectClassFile);
+
+                    DirectoryInfo dir = new DirectoryInfo(temp);
+                    foreach (var folder in dir.GetDirectories())
+                    {
+                        foreach (string f in folders)
+                        {
+                            try { folder.Delete(true); }
+                            catch { }
+                            break;
+                        }
+
+                    }
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("Something went wrong and the saved password for this project is empty...");
+                    if (CurrentProjectVariables.GameName != "" && CurrentProjectVariables.GameName != null)
+                    {
+                        if (CurrentProjectVariables.GameName == "BTD5" || CurrentProjectVariables.GameName == "BMC")
+                        {
+                            pass = "Q%_{6#Px]]";
+                            CurrentProjectVariables.JetPassword = "Q%_{6#Px]]";
+                            ProjectHandler.SaveProject();
+                        }
+                        else
+                        {
+                            var getPasss = new Get_BTDB_Password();
+                            getPasss.Show();
+                        }
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendLog("Game name for project is invalid!");
+                        ConsoleHandler.force_appendNotice("Please enter a password so the jet file can be read");
+
+                        var getPasss = new Get_BTDB_Password();
+                        getPasss.Show();
+                    }
+                }
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog("Unable to find project file...");
+            }
+        }
+        private void ListDirectory(TreeView treeView, string path)
+        {
+            treeView.Nodes.Clear();
+            var rootDirectoryInfo = new DirectoryInfo(path);
+            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
+        }
+        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
+        {
+            var directoryNode = new TreeNode(directoryInfo.Name);
+            foreach (var directory in directoryInfo.GetDirectories())
+                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+            foreach (var file in directoryInfo.GetFiles())
+            {
+                if (file.Name != CurrentProjectVariables.ProjectName + ".jet" && file.Name != CurrentProjectVariables.ProjectName + ".toolbox")
+                {
+                    directoryNode.Nodes.Add(new TreeNode(file.Name));
+                }
+            }
+            return directoryNode;
+        }
+
+        private void FindAllModifiedFles_Button_Click(object sender, EventArgs e)
+        {
+            FindModFiles();
+        }
+        private void FindModFiles()
+        {
+            DialogResult diag = MessageBox.Show("It will take up to 10 seconds to find all of the modified files" +
+                   " in the project. Do you wish to continue?", "Do you wish to continue?", MessageBoxButtons.YesNo);
+            if (diag == DialogResult.Yes)
+            {
+                string backupfile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
+                if (File.Exists(backupfile))
+                {
+                    ZipFile backup = new ZipFile(backupfile);
+                    backup.Password = CurrentProjectVariables.JetPassword;
+                    var files = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles).GetFiles("*", SearchOption.AllDirectories);
+
+                    ConsoleHandler.force_appendLog("Searching for modified files");
+                    foreach (var file in files)
+                    {
+                        string modText = RemoveWhitespace(File.ReadAllText(file.FullName));
+
+                        string pathInZip = file.FullName.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
+                        string originalText = RemoveWhitespace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip));
+                        try
+                        {
+                            if (modText == originalText)
+                            {
+                                if (CurrentProjectVariables.ModifiedFiles.Contains(file.FullName))
+                                {
+                                    CurrentProjectVariables.ModifiedFiles.Remove(file.FullName);
+                                }
+                            }
+                            else
+                            {
+                                if (!CurrentProjectVariables.ModifiedFiles.Contains(file.FullName))
+                                {
+                                    CurrentProjectVariables.ModifiedFiles.Add(file.FullName);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //It broke for some reason, probably something modded here...
+                            if (!CurrentProjectVariables.ModifiedFiles.Contains(file.FullName))
+                            {
+                                ConsoleHandler.appendLog_CanRepeat(ex.Message);
+                                CurrentProjectVariables.ModifiedFiles.Add(file.FullName);
+
+                            }
+                        }
+
+                    }
+                    ProjectHandler.SaveProject();
+                    ConsoleHandler.force_appendLog("Finished verifying files");
+
+
+                    if (CurrentProjectVariables.ModifiedFiles.Count > 0)
+                    {
+                        bool open = false;
+                        DialogResult diaga = MessageBox.Show("Modified files were found. Would you like toolbox to open them all? If you press no, " +
+                            "the console will still display the names of all the modified files. \nYou can also find them " +
+                            "under \"View modified files\" in the Jet Viewer's \"File\" tab", "Open all modified files?", MessageBoxButtons.YesNo);
+                        if (diaga == DialogResult.Yes)
+                        {
+                            open = true;
+                        }
+
+                        foreach (var a in CurrentProjectVariables.ModifiedFiles)
+                        {
+                            ConsoleHandler.force_appendLog_CanRepeat(a.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", ""));
+                            if (open == true)
+                            {
+                                JsonEditorHandler.OpenFile(a);
+                            }
+                        }
+                    }
+                    else
+                        ConsoleHandler.force_appendLog("No modified files found..");
+                }
+                else
+                    ConsoleHandler.force_appendLog("Backup not detected... Unable to continue...");
+            }
+            else
+                ConsoleHandler.appendLog("User cancelled operation...");
+        }
+        private void ViewModifiedFiles_Button_MouseHover(object sender, EventArgs e)
+        {
+            PopulateModFiles();
+        }
+        private void PopulateModFiles()
+        { 
+            ViewModifiedFiles_Button.DropDownItems.Clear();
+            ViewModifiedFiles_Button.DropDownItems.Add("Find all modified files");
+            ViewModifiedFiles_Button.DropDownItems.Add(new ToolStripSeparator());
+
+
+            foreach (var a in CurrentProjectVariables.ModifiedFiles)
+            {
+                ViewModifiedFiles_Button.DropDownItems.Add(a.Replace(CurrentProjectVariables.PathToProjectFiles + "\\",""));
+            }
+        }
+        private void ViewModifiedFiles_Button_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if(e.ClickedItem.Text == "Find all modified files")
+            {
+                FindModFiles();
+            }
+            else if (e.ClickedItem.Text.Length > 0)
+            {
+                JsonEditorHandler.OpenFile(CurrentProjectVariables.PathToProjectFiles + "\\" + e.ClickedItem.Text);
+            }
+        }
+        public static string RemoveWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+        private void ViewModifiedFiles_Button_Click(object sender, EventArgs e)
+        {
+            PopulateModFiles();
         }
     }
 }

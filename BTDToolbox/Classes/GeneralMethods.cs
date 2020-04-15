@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
 using Ionic.Zip;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json.Linq;
@@ -38,6 +39,11 @@ namespace BTDToolbox
         }
         public static void DeleteDirectory(string path)
         {
+            if(path == Environment.CurrentDirectory)
+            {
+                ConsoleHandler.force_appendNotice("A Critical error occured... Attempted to delete BTD Toolbox folder...");
+                return;
+            }
             if (Directory.Exists(path))
             {
                 ConsoleHandler.appendLog("Deleting directory..");
@@ -56,13 +62,16 @@ namespace BTDToolbox
         }
         public static void CopyFile(string originalLocation, string newLocation)
         {
+            string[] split = originalLocation.Split('\\');
+            string filename = split[split.Length - 1];
+
             if (File.Exists(originalLocation))
             {
                 if (!File.Exists(newLocation))
                 {
-                    ConsoleHandler.appendLog("Copying file...");
+                    ConsoleHandler.appendLog("Copying "+ filename + "...");
                     File.Copy(originalLocation, newLocation);
-                    ConsoleHandler.appendLog("File Copied!");
+                    ConsoleHandler.appendLog("Copied " + filename + "!");
                 }
                 else
                 {
@@ -70,23 +79,26 @@ namespace BTDToolbox
                     DeleteFile(newLocation);
                     ConsoleHandler.appendLog("Replacing existing file..");
                     File.Copy(originalLocation, newLocation);
-                    ConsoleHandler.appendLog("File copied!");
+                    ConsoleHandler.appendLog("Copied " + filename + "!");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Failed to copy file because it was not found at: \r\n" + originalLocation);
+                ConsoleHandler.appendLog("Failed to copy " + filename + " because it was not found at: \r\n" + originalLocation);
             }
         }
-        public static void CopyDirectory(string originalLocation, string newLocation)
+        public static void CopyDirectory(string source, string destination)
         {
-            ConsoleHandler.appendLog("Copying directory...");
-            foreach (string dirPath in Directory.GetDirectories(originalLocation, "*", SearchOption.AllDirectories))
-                Directory.CreateDirectory(dirPath.Replace(originalLocation, newLocation));
+            string[] split = source.Split('\\');
+            string dirname = split[split.Length - 1];
 
-            foreach (string newPath in Directory.GetFiles(originalLocation, "*.*", SearchOption.AllDirectories))
-                File.Copy(newPath, newPath.Replace(originalLocation, newLocation), true);
-            ConsoleHandler.appendLog("Directory copied.");
+            ConsoleHandler.appendLog("Copying " + dirname + "...");
+            foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(source, destination));
+
+            foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
+                File.Copy(newPath, newPath.Replace(source, destination), true);
+            ConsoleHandler.appendLog("Copied " + dirname + "!");
         }
         public static ConfigFile DeserializeConfig()
         {
@@ -151,6 +163,8 @@ namespace BTDToolbox
                     exeName = "BTD5-Win.exe";
                 else if (game == "BTDB")
                     exeName = "Battles-Win.exe";
+                else if (game == "BMC")
+                    exeName = "MonkeyCity-Win.exe";
 
                 return exeName;
             }
@@ -168,13 +182,33 @@ namespace BTDToolbox
             }
             return game;
         }
-        public static bool isGamePathValid(string game)
+        public static string ReturnGamePath(string game)
         {
             string gameDir = "";
             if (game == "BTD5")
                 gameDir = DeserializeConfig().BTD5_Directory;
             else if (game == "BTDB")
                 gameDir = DeserializeConfig().BTDB_Directory;
+            else if (game == "BMC")
+                gameDir = DeserializeConfig().BMC_Directory;
+
+            return gameDir;
+        }
+        public static string ReturnJetName(string game)
+        {
+            string jetName = "";
+            if (game == "BTD5")
+                jetName = "BTD5.jet";
+            else if (game == "BTDB")
+                jetName = "data.jet";
+            else if (game == "BMC")
+                jetName = "data.jet";
+
+            return jetName;
+        }
+        public static bool isGamePathValid(string game)
+        {
+            string gameDir = ReturnGamePath(game);
 
             if (gameDir == null || gameDir == "")
             {
@@ -194,17 +228,10 @@ namespace BTDToolbox
 
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    exeName = "\\BTD5-Win.exe";
-                    gameDir = DeserializeConfig().BTD5_Directory;
-                }
-                else if (game == "BTDB")
-                {
-                    exeName = "\\Battles-Win.exe";
-                    gameDir = DeserializeConfig().BTDB_Directory;
-                }
-                exePath = gameDir + exeName;
+                gameDir = CurrentProjectVariables.GamePath;
+                exeName = Get_EXE_Name(game);
+                
+                exePath = gameDir + "\\" + exeName;
                 ConsoleHandler.appendLog("Launching " + game + "...");
                 Process.Start(exePath);
                 ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
@@ -223,34 +250,41 @@ namespace BTDToolbox
                 string backupDir = Environment.CurrentDirectory + "\\Backups";
                 string backupLocName = gameName + "_Original_LOC.xml";
 
-                ConsoleHandler.appendLog("Attempting to validate backup...");
+                ConsoleHandler.appendLog("Validating backup...");
                 if (Directory.Exists(backupDir))
                 {
-                    if (File.Exists(backupDir + "\\" + backupName))
+                    if (!File.Exists(backupDir + "\\" + backupName))
                     {
-                       
-                    }
-                    else
-                    {
+                        ConsoleHandler.appendLog("Failed to validate backup...");
                         return false;
                     }
-                    if (File.Exists(backupDir + "\\" + backupLocName))
+                    if (!File.Exists(backupDir + "\\" + backupLocName))
                     {
-
-                    }
-                    else
-                    {
+                        ConsoleHandler.appendLog("Failed to validate backup loc...");
                         return false;
                     }
+                    if(gameName == "BMC")
+                    {
+                        string backupAssetBundle = backupDir + "\\AssetBundles_Original";
+                        if (!Directory.Exists(backupAssetBundle))
+                        {
+                            ConsoleHandler.appendLog("Failed to validate backup Asset Bundle for BMC...");
+                            return false;
+                        }
+                    }
+                    
+                    ConsoleHandler.appendLog("Backup validated");
                     return true;
                 }
                 else
                 {
+                    ConsoleHandler.appendLog("Failed to validate one or more backup files...");
                     return false;
                 }
             }
             else
             {
+                ConsoleHandler.appendLog("Failed to validate one or more backup files...");
                 return false;
             }
         }
@@ -258,19 +292,13 @@ namespace BTDToolbox
         {
             string steamJetPath = "";
             string jetName = "";
-
+            string gameDir = "";
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    jetName = "BTD5.jet";
-                    steamJetPath = DeserializeConfig().BTD5_Directory + "\\Assets\\" + jetName;
-                }
-                else if (game == "BTDB")
-                {
-                    jetName = "data.jet";
-                    steamJetPath = DeserializeConfig().BTDB_Directory + "\\Assets\\" + jetName;
-                }
+                jetName = ReturnJetName(game);
+                gameDir = ReturnGamePath(game);
+                steamJetPath = gameDir + "\\Assets\\" + jetName;
+                
                 return steamJetPath;
             }
             else
@@ -287,31 +315,37 @@ namespace BTDToolbox
             string backupLocName = game + "_Original_LOC.xml";
             string fullBackupPath = backupDir + "\\" + backupName;
 
+            MessageBox.Show("One or more of the backup files failed to be aquired... Please wait while they are reaquired...");
+            ConsoleHandler.appendLog("Aquiring new backups..");
             if (!Directory.Exists(backupDir))
             {
                 ConsoleHandler.appendLog("Backup directory does not exist. Creating directory...");
                 Directory.CreateDirectory(backupDir);
             }
 
-            string gameDir = "";
-            if(game == "BTD5")
-            {
-                gameDir = DeserializeConfig().BTD5_Directory;
-            }
-            else
-            {
-                gameDir = DeserializeConfig().BTDB_Directory;
-            }
-
+            string gameDir = ReturnGamePath(game);
             string steamJetPath = GetJetPath(game);
+
             if (steamJetPath != null)
             {
                 CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
-                CopyFile(steamJetPath, fullBackupPath);                    
+                CopyFile(steamJetPath, fullBackupPath);    
+                
                 if (File.Exists(fullBackupPath))
-                    ConsoleHandler.appendLog("Backup created!");
+                    ConsoleHandler.appendLog("Backup jet created!");
                 else
-                    ConsoleHandler.appendLog("Backup failed...");
+                    ConsoleHandler.appendLog("Backup jet failed...");
+
+                if (game == "BMC")
+                {
+                    string source = Serializer.Deserialize_Config().BMC_Directory + "\\AssetBundles";
+                    string destination = backupDir + "\\AssetBundles_Original";
+                    if (Directory.Exists(destination))
+                        Directory.Delete(destination, true);
+
+                    Directory.CreateDirectory(destination);
+                    CopyDirectory(source, destination);
+                }
             }
             else
             {
@@ -326,6 +360,10 @@ namespace BTDToolbox
         {
             Process.Start("steam://validate/444640");
         }
+        public static void SteamValidateBMC()
+        {
+            Process.Start("steam://validate/1252780");
+        }
         public static void BackupLOC(string game)
         {
             string backupDir = Environment.CurrentDirectory + "\\Backups";
@@ -337,13 +375,9 @@ namespace BTDToolbox
                 Directory.CreateDirectory(backupDir);
             }
 
-            string gameDir = "";
-            if (game == "BTD5")
-                gameDir = DeserializeConfig().BTD5_Directory;
-            else
-                gameDir = DeserializeConfig().BTDB_Directory;
-
+            string gameDir = ReturnGamePath(game);
             string steamJetPath = GetJetPath(game);
+
             if (steamJetPath != null)
                 CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
             else
@@ -357,16 +391,8 @@ namespace BTDToolbox
 
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    jetName = "BTD5.jet";
-                    gameDir = DeserializeConfig().BTD5_Directory;
-                }
-                else if (game == "BTDB")
-                {
-                    jetName = "data.jet";
-                    gameDir = DeserializeConfig().BTDB_Directory;
-                }
+                gameDir = ReturnGamePath(game);
+                jetName = ReturnJetName(game);
                 string steamJetPath = gameDir + "\\Assets\\" + jetName;
 
                 if (!File.Exists(backupJetLoc))
@@ -396,14 +422,7 @@ namespace BTDToolbox
 
             if (isGamePathValid(game) == true)
             {
-                if (game == "BTD5")
-                {
-                    gameDir = DeserializeConfig().BTD5_Directory;
-                }
-                else if (game == "BTDB")
-                {
-                    gameDir = DeserializeConfig().BTDB_Directory;
-                }
+                gameDir = ReturnGamePath(game);
                 string locPath = gameDir + "\\Assets\\Loc\\" + locName;
 
                 if (!File.Exists(backupJetLoc))
@@ -448,9 +467,18 @@ namespace BTDToolbox
             archive.Password = password;
             archive.ExtractProgress += ZipExtractProgress;
 
+            int i = 0;
             try
             {
-                archive.ExtractAll(tempDir);
+                foreach(ZipEntry e in archive)
+                {
+                    e.Extract(tempDir);
+                    
+                    if(i >= 5)
+                        break;
+                    i++;
+                }
+                //archive.ExtractAll(tempDir);
             }
             catch (BadPasswordException)
             {
@@ -478,8 +506,6 @@ namespace BTDToolbox
             string game = "";
             if (Bad_JetPass(jetPath, "Q%_{6#Px]]"))
                 game = "BTDB";
-            else
-                game = "BTD5";
 
             return game;
         }
@@ -522,6 +548,8 @@ namespace BTDToolbox
                             Main.BTD5_Dir = gameDir;
                         else if (game == "BTDB")
                             Main.BTDB_Dir = gameDir;
+                        else if (game == "BMC")
+                            Main.BMC_Dir = gameDir;
 
                         Serializer.SaveConfig(Main.getInstance(), "directories");
                     }
@@ -548,135 +576,126 @@ namespace BTDToolbox
         public static void CompileJet(string switchCase)
         {
             if (New_JsonEditor.isJsonError != true)
-            {
-                string gameDir = "";
-                string gameNameTemp = "";
-
-                if (Serializer.Deserialize_Config().CurrentGame != "" && Serializer.Deserialize_Config() != null)
-                    gameNameTemp = Serializer.Deserialize_Config().CurrentGame;
-                else if (Main.gameName != "" && Main.gameName != null)
+            {                
+                if (JetProps.get().Count == 1)
                 {
-                    gameNameTemp = Main.gameName;
-                    Serializer.SaveConfig(Main.getInstance(), "main");
-                }
-                
-                if(gameNameTemp != "" && gameNameTemp != null)
-                {
-                    if (Main.gameName == "BTD5")
-                        gameDir = Serializer.Deserialize_Config().BTD5_Directory;
-                    else
-                        gameDir = Serializer.Deserialize_Config().BTDB_Directory;
+                    string dest = "";
+                    bool isOutputting = false;
+                    bool abort = false;
 
-                    if (JetProps.get().Count == 1)
+                    var zip = new ZipForm();
+
+                    if (switchCase.Contains("output"))
                     {
-                        string dest = "";
-                        bool isOutputting = false;
-                        bool abort = false;
-
-                        var zip = new ZipForm();
-
-                        if (switchCase.Contains("output"))
+                        isOutputting = true;
+                        //string exPath = programData.ExportPath;
+                        string exPath = CurrentProjectVariables.ExportPath;
+                        if (exPath != "" && exPath != null)
                         {
-                            isOutputting = true;
-                            string exPath = programData.ExportPath;
-                            if (exPath != "" && exPath != null)
-                            {
-                                DialogResult diag = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
-                                if (diag == DialogResult.Yes)
-                                    dest = exPath;
-                                else
-                                    exPath = "";
-                            }
-                            if (exPath == "" || exPath == null)
-                            {
-                                ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
-                                dest = OutputJet();
-                                ZipForm.savedExportPath = dest;
-                                Serializer.SaveSmallSettings("export path");
-                            }
-                            zip.destPath = dest;
-                        }
-                        else if (switchCase.Contains("launch"))
-                        {
-                            if (gameDir != null && gameDir != "")
-                                zip.launch = true;
+                            DialogResult diag = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
+                            if (diag == DialogResult.Yes)
+                                dest = exPath;
                             else
-                            {
-                                ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?");
-                                DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?", "Browse for game?", MessageBoxButtons.YesNoCancel);
-                                if (diag == DialogResult.Yes)
-                                {
-                                    browseForExe(gameNameTemp);
-                                }
-                                if (diag == DialogResult.No)
-                                {
-                                    DialogResult diag2 = MessageBox.Show("Do you want to just save your jet file instead?", "Save jet instead?", MessageBoxButtons.YesNo);
-                                    {
-                                        if (diag2 == DialogResult.Yes)
-                                        {
-                                            isOutputting = true;
-                                            string exPath = programData.ExportPath;
-                                            if (exPath != "" && exPath != null)
-                                            {
-                                                DialogResult diagz = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
-                                                if (diagz == DialogResult.Yes)
-                                                    dest = exPath;
-                                                else
-                                                    exPath = "";
-                                            }
-                                            if (exPath == "" || exPath == null)
-                                            {
-                                                ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
-                                                dest = OutputJet();
-                                                ZipForm.savedExportPath = dest;
-                                                Serializer.SaveSmallSettings("export path");
-                                            }
-                                            zip.destPath = dest;
-                                        }
-                                    }
-                                }
-                                else
-                                    abort = true;
-                            }
+                                exPath = "";
                         }
-                        if(!abort)
+                        if (exPath == "" || exPath == null)
                         {
-                            if (isOutputting)
-                            {
-                                if (dest != null && dest != "")
-                                {
-                                    zip.Show();
-                                    zip.Compile();
-                                }
-                                else
-                                {
-                                    ConsoleHandler.appendLog("Export cancelled...");
-                                }
-                            }
-                            else
-                            {
-                                zip.Show();
-                                zip.Compile();
-                            }
+                            ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                            dest = OutputJet();
+
+                            CurrentProjectVariables.ExportPath = dest;
+                            ProjectHandler.SaveProject();
+                            
+                            //ZipForm.savedExportPath = dest;
+                            //Serializer.SaveSmallSettings("export path");
                         }
+                        zip.destPath = dest;
                     }
-                    else
+
+
+                    else if (switchCase.Contains("launch"))
                     {
-                        if (JetProps.get().Count < 1)
+                        if (CurrentProjectVariables.GamePath != null && CurrentProjectVariables.GamePath != "")
                         {
-                            MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                            ConsoleHandler.appendLog("You need to open a project to continue...");
+                            zip.launch = true;
+                            zip.destPath = CurrentProjectVariables.GamePath + "\\Assets\\" + ReturnJetName(CurrentProjectVariables.GameName);
                         }
                         else
                         {
-                            MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                            ConsoleHandler.appendLog("You need to close projects to continue...");
+                            ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?");
+                            DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?", "Browse for game?", MessageBoxButtons.YesNoCancel);
+                            if (diag == DialogResult.Yes)
+                            {
+                                browseForExe(CurrentProjectVariables.GameName);
+                            }
+                            if (diag == DialogResult.No)
+                            {
+                                DialogResult diag2 = MessageBox.Show("Do you want to just save your jet file instead?", "Save jet instead?", MessageBoxButtons.YesNo);
+                                {
+                                    if (diag2 == DialogResult.Yes)
+                                    {
+                                        isOutputting = true;
+                                        string exPath = CurrentProjectVariables.ExportPath;
+                                        if (exPath != "" && exPath != null)
+                                        {
+                                            DialogResult diagz = MessageBox.Show("Do you want export to the same place as last time?", "Export to the same place?", MessageBoxButtons.YesNo);
+                                            if (diagz == DialogResult.Yes)
+                                                dest = exPath;
+                                            else
+                                                exPath = "";
+                                        }
+                                        if (exPath == "" || exPath == null)
+                                        {
+                                            ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                                            dest = OutputJet();
+                                            CurrentProjectVariables.ExportPath = dest;
+                                            ProjectHandler.SaveProject();
+
+                                            /*ZipForm.savedExportPath = dest;
+                                            Serializer.SaveSmallSettings("export path");*/
+                                        }
+                                        zip.destPath = dest;
+                                    }
+                                }
+                            }
+                            else
+                                abort = true;
+                        }
+                    }
+                    if (!abort)
+                    {
+                        if (isOutputting)
+                        {
+                            if (dest != null && dest != "")
+                            {
+                                zip.destPath = dest;
+                                zip.Show();
+                                zip.Compile();
+                            }
+                            else
+                            {
+                                ConsoleHandler.appendLog("Export cancelled...");
+                            }
+                        }
+                        else
+                        {
+                            zip.Show();
+                            zip.Compile();
                         }
                     }
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("There was an issue detecting your current game! Please restart toolbox and try again...");
+                    if (JetProps.get().Count < 1)
+                    {
+                        MessageBox.Show("You have no .jets or projects open, you need one to launch.");
+                        ConsoleHandler.appendLog("You need to open a project to continue...");
+                    }
+                    else
+                    {
+                        MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
+                        ConsoleHandler.appendLog("You need to close projects to continue...");
+                    }
                 }
             }
         }
@@ -692,12 +711,8 @@ namespace BTDToolbox
         }
         public static bool IsGameRunning(string game)
         {
-            string exename = "";
-            if (game == "BTD5")
-                exename = "BTD5-Win";
-            else
-                exename = "Battles-Win";
-
+            string exename =  Get_EXE_Name(game).Replace(".exe", "");
+            
             Process[] pname = Process.GetProcessesByName(exename);
             if (pname.Length == 0)
                 return false;
@@ -706,11 +721,7 @@ namespace BTDToolbox
         }
         public static void TerminateGame(string game)
         {
-            string exename = "";
-            if (game == "BTD5")
-                exename = "BTD5-Win";
-            else
-                exename = "Battles-Win";
+            string exename = Get_EXE_Name(game).Replace(".exe", "");
 
             foreach (var process in Process.GetProcessesByName(exename))
             {

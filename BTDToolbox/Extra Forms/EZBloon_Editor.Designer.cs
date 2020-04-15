@@ -77,9 +77,11 @@
             this.CurrentChildBloon_ListBox = new System.Windows.Forms.ListBox();
             this.label11 = new System.Windows.Forms.Label();
             this.OpenText_Button = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Panel1.SuspendLayout();
             this.Panel2.SuspendLayout();
             this.Panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // BloonName_TextBox
@@ -255,6 +257,7 @@
             // 
             this.Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.Panel1.Controls.Add(this.Game_Label);
             this.Panel1.Controls.Add(this.DrawLayer_LB);
             this.Panel1.Controls.Add(this.HitAddon_TextBox);
@@ -466,6 +469,7 @@
             // 
             this.Panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.Panel2.Controls.Add(this.ApplyStatus_CheckedListBox);
             this.Panel2.Controls.Add(this.ApplyStatus_Label);
             this.Panel2.Controls.Add(this.BloonAbility_CheckedListBox);
@@ -623,6 +627,7 @@
             // AdvancedView_Checkbox
             // 
             this.AdvancedView_Checkbox.AutoSize = true;
+            this.AdvancedView_Checkbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.AdvancedView_Checkbox.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.AdvancedView_Checkbox.ForeColor = System.Drawing.Color.White;
             this.AdvancedView_Checkbox.Location = new System.Drawing.Point(911, 20);
@@ -630,7 +635,7 @@
             this.AdvancedView_Checkbox.Size = new System.Drawing.Size(143, 24);
             this.AdvancedView_Checkbox.TabIndex = 60;
             this.AdvancedView_Checkbox.Text = "Advanced users";
-            this.AdvancedView_Checkbox.UseVisualStyleBackColor = true;
+            this.AdvancedView_Checkbox.UseVisualStyleBackColor = false;
             this.AdvancedView_Checkbox.CheckedChanged += new System.EventHandler(this.AdvancedView_Checkbox_CheckedChanged);
             // 
             // ChildBloons_Button
@@ -651,6 +656,7 @@
             // 
             this.Panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.Panel3.Controls.Add(this.RemoveChild_Button);
             this.Panel3.Controls.Add(this.AddChild_Button);
             this.Panel3.Controls.Add(this.label12);
@@ -762,11 +768,20 @@
             this.OpenText_Button.UseVisualStyleBackColor = false;
             this.OpenText_Button.Click += new System.EventHandler(this.OpenText_Button_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.pictureBox1.Location = new System.Drawing.Point(-71, -5);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1225, 253);
+            this.pictureBox1.TabIndex = 125;
+            this.pictureBox1.TabStop = false;
+            // 
             // EZBloon_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(1066, 554);
             this.Controls.Add(this.OpenText_Button);
             this.Controls.Add(this.ChildBloons_Button);
@@ -778,6 +793,7 @@
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.Panel2);
             this.Controls.Add(this.Panel3);
+            this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -792,6 +808,7 @@
             this.Panel2.PerformLayout();
             this.Panel3.ResumeLayout(false);
             this.Panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -847,5 +864,6 @@
         private System.Windows.Forms.ListBox DrawLayer_LB;
         private System.Windows.Forms.Button OpenText_Button;
         private System.Windows.Forms.Label Game_Label;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

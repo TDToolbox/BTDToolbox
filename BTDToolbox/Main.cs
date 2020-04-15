@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.GeneralMethods;
 using static BTDToolbox.ProjectConfig;
+using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
 {
@@ -18,7 +19,7 @@ namespace BTDToolbox
     {
         //Form variables
         public static string version = "Toolbox 0.1.2";
-        public static bool disableUpdates = false;
+        public static string projectFilePath = "";
         private static Main toolbox;
         public static BGForm bg;
         private static UpdateHandler update;
@@ -38,6 +39,9 @@ namespace BTDToolbox
         public static string gameName;
         public static string BTD5_Dir;
         public static string BTDB_Dir;
+        public static string BMC_Dir;
+        public static bool disableUpdates = false;
+        public static bool autoFormatJSON = true;
         public static bool enableConsole;
         bool projNoGame = false;
 
@@ -94,6 +98,7 @@ namespace BTDToolbox
             enableConsole = cfgFile.EnableConsole;
             lastProject = cfgFile.LastProject;
             disableUpdates = cfgFile.disableUpdates;
+            autoFormatJSON = cfgFile.autoFormatJSON;
         }
         private void FirstTimeUse()
         {
@@ -284,6 +289,8 @@ namespace BTDToolbox
                         gameName = "BTD5";
                     else if (path.Contains("BTDB"))
                         gameName = "BTDB";
+                    else if (path.Contains("BMC"))
+                        gameName = "BMC";
 
                     Serializer.SaveConfig(this, "game");
                     JetForm jf = new JetForm(dirInfo, this, name);
@@ -329,7 +336,21 @@ namespace BTDToolbox
         {
             try
             {
-                OpenJetForm();
+                if(JetProps.get().Count >0)
+                {
+                    foreach (var a in JetProps.get())
+                    {
+                        if (a.Visible)
+                            a.Hide();
+                        else
+                            a.Show();
+                    }
+                }
+                else
+                {
+                    OpenJetForm();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -402,6 +423,9 @@ namespace BTDToolbox
                         gameFolder = "BloonsTD5";
                     if (gameName == "BTDB")
                         gameFolder = "Bloons TD Battles";
+                    if (gameName == "BMC")
+                        gameFolder = "Bloons Monkey City";
+
                     string tryFindGameDir = TryFindSteamDir(gameFolder);
 
                     if (tryFindGameDir == "")
@@ -429,12 +453,14 @@ namespace BTDToolbox
                             BTD5_Dir = tryFindGameDir;
                         else if (gameName == "BTDB")
                             BTDB_Dir = tryFindGameDir;
+                        else if (gameName == "BMC")
+                            BMC_Dir = tryFindGameDir;
 
                         if (!Validate_Backup(gameName))
                             CreateBackup(gameName);
                         Serializer.SaveConfig(this, "directories");
                         var setProjName = new SetProjectName();
-                        setProjName.Show();
+                        setProjName.Show();                        
                     }
                     
                 }
@@ -453,14 +479,30 @@ namespace BTDToolbox
         private void New_BTD5_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTD5";
+            ProjectHandler.CreateProject();
+            CurrentProjectVariables.GameName = "BTD5";
+            CurrentProjectVariables.GamePath = DeserializeConfig().BTD5_Directory;
+
             Serializer.SaveConfig(this, "game");
             NewProject(gameName);
         }
         private void New_BTDB_Proj_Click(object sender, EventArgs e)
         {
             gameName = "BTDB";
+            ProjectHandler.CreateProject();
+            CurrentProjectVariables.GameName = "BTDB";
+            CurrentProjectVariables.GamePath = DeserializeConfig().BTDB_Directory;
+
             Serializer.SaveConfig(this, "game");
             NewProject(gameName);
+        }
+        private void New_BMC_Proj_Button_Click(object sender, EventArgs e)
+        {
+            ProjectHandler.CreateProject();
+            CurrentProjectVariables.GameName = "BMC";
+            CurrentProjectVariables.GamePath = DeserializeConfig().BMC_Directory;
+
+            NewProject("BMC");
         }
         private void Replace_BTDB_Backup_Click(object sender, EventArgs e)
         {
@@ -472,7 +514,7 @@ namespace BTDToolbox
         }
         private void TestForm_Click(object sender, EventArgs e)
         {
-            JsonEditorHandler.OpenFile(Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
+            JsonEditorHandler.OpenFile(CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
         }
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -681,14 +723,54 @@ namespace BTDToolbox
 
         private void ShowBTD5_Pass_Click(object sender, EventArgs e)
         {
+            string pass = "Q%_{6#Px]]";
             ConsoleHandler.force_appendLog("The password for BTD5.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
-        }
 
+            DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
+            if (diag == DialogResult.Yes)
+            {
+                Clipboard.SetText(pass);
+                ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+            }
+            else
+                ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
+        }
+        private void ShowBMCPass_Button_Click(object sender, EventArgs e)
+        {
+            string pass = "Q%_{6#Px]]";
+            ConsoleHandler.force_appendLog("The password for BMC's data.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
+
+            DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
+            if (diag == DialogResult.Yes)
+            {
+                Clipboard.SetText(pass);
+                ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+            }
+            else
+                ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
+        }
         private void ShowLastBattlesPass_Click(object sender, EventArgs e)
         {
-            if(Serializer.Deserialize_Config().battlesPass != null && Serializer.Deserialize_Config().battlesPass != "")
+            string pass = "";
+            if (CurrentProjectVariables.GameName == "BTDB")
             {
-                ConsoleHandler.force_appendLog("The last password you used for BTDB is:   " + Serializer.Deserialize_Config().battlesPass);
+                if (CurrentProjectVariables.JetPassword != "" && CurrentProjectVariables.JetPassword != null)
+                    pass = CurrentProjectVariables.JetPassword;
+            }
+            else if(Serializer.Deserialize_Config().battlesPass != null && Serializer.Deserialize_Config().battlesPass != "")
+                pass = Serializer.Deserialize_Config().battlesPass;
+
+            if(pass != null && pass !="")
+            {
+                ConsoleHandler.force_appendLog("The last password you used for BTDB is:   " + pass);
+                DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
+                if(diag == DialogResult.Yes)
+                {
+                    Clipboard.SetText(pass);
+                    ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+                }
+                else
+                    ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
             }
             else
             {
@@ -699,12 +781,13 @@ namespace BTDToolbox
         private void EraseConsoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.ClearConsole();
+            ConsoleHandler.appendLog("Console successfully cleared.");
         }
 
         private void EasyTowerEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var easyTower = new EasyTowerEditor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
             easyTower.path = path;
             easyTower.Show();
         }
@@ -738,61 +821,54 @@ namespace BTDToolbox
         {
             ConsoleHandler.force_appendNotice("This will reset your game path...");
         }
-
         private void ValidateBTD5_Click(object sender, EventArgs e)
         {
             GeneralMethods.SteamValidateBTD5();
         }
-
         private void ValidateBTDB_Click(object sender, EventArgs e)
         {
             GeneralMethods.SteamValidateBTDB();
         }
-
         private void FontForPCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening download for BTD Font for PC");
-            Process.Start("https://www.dropbox.com/s/k7y2utz42b5eg06/Oetztype.TTF?dl=1");
+            Process.Start("https://drive.google.com/open?id=19CgzvVJWo1E7lP-YSzaezGW79grUalnY");
         }
-
         private void OnlineFontGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening Online BTD Font Generator...");
             Process.Start("https://fontmeme.com/bloons-td-battles-font/");
         }
-
         private void SpriteSheetDecompilerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening Sprite Decompiler github link...");
             Process.Start("https://github.com/TheSubtleKiller/SpriteSheetRebuilder");
         }
-
         private void NewProject_From_Backup_Click(object sender, EventArgs e)
         {
             AddNewJet();
         }
+
         private void EZ_TowerEditor_Click(object sender, EventArgs e)
         {
             var ezTower = new EasyTowerEditor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
             ezTower.path = path;
             ezTower.Show();
         }
-
         private void EZ_BloonEditor_Click(object sender, EventArgs e)
         {
             var ezBloon = new EZBloon_Editor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
             ezBloon.path = path;
             ezBloon.Show();
         }
-
         private void EZCard_Editor_Click(object sender, EventArgs e)
         {
             if (Serializer.Deserialize_Config().CurrentGame == "BTDB")
             {
                 var ezCard = new EZCard_Editor();
-                string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
+                string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
                 ezCard.path = path;
                 ezCard.Show();
             }
@@ -806,6 +882,38 @@ namespace BTDToolbox
         {
             BattlesPassManager mgr = new BattlesPassManager();
             mgr.Show();
+        }
+        
+
+        
+        //Monkey Wrench stuff
+        bool mwMessageShown = false;
+        private void MonkeyWrenchToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        {
+            if(!mwMessageShown)
+            {
+                mwMessageShown = true;
+                ConsoleHandler.force_appendLog("Monkey Wrench is a great tool made by Topper, that allows you to convert .jpng files into regular .png files, and back again.");
+                ConsoleHandler.force_appendLog("Once it's opened, type     \'help\'     without quotes, to learn how to use the commands.");
+            }
+        }
+        private void MonkeyWrenchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConsoleHandler.appendLog("Opening download for Monkey Wrench");
+            Process.Start("https://drive.google.com/open?id=1lmQUXRRGHkuZIDqTzP2A3YhEDb5NfRuU");
+        }
+
+
+        //Save editor stuff
+        bool seMessageShown = false;
+        private void SaveEditorToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        {
+            if(!seMessageShown)
+            {
+                seMessageShown = true;
+                ConsoleHandler.force_appendLog("This save editor was originally made by Vadmeme on github. They're allowing anyone to use it, so we added it to toolbox.");
+                ConsoleHandler.force_appendLog("If you're interested, the link for it is here: https://github.com/Vadmeme/BTDSaveEditor");
+            }
         }
         private void BTD5SaveModToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -827,9 +935,11 @@ namespace BTDToolbox
             else
                 ConsoleHandler.appendLog("Decrypted save file not found");
         }
-
         private void BTDBSaveModToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Thanks for trying the save editor for BTDB. Unfortunately, we haven't been able to successfully edit the save for BTD Battles" +
+                ", as it resets the save when you run it. This happens with BTD Battles Only, but as a result " +
+                "you will only be able to read the save file, and not edit it. Hopefully we figure this out soon");
             string save = Serializer.Deserialize_Config().SavePathBTDB;
             if (save == null || save == "")
             {
@@ -848,12 +958,11 @@ namespace BTDToolbox
             else
                 ConsoleHandler.appendLog("Decrypted save file not found");
         }
-
         private void BrowseForSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string browsedSave = SaveEditor.TryFindSteam.BrowseForSave();
             SaveEditor.SaveEditor.DecryptSave("", browsedSave);
-            
+
             string save = SaveEditor.SaveEditor.savemodDir + "\\UnknownGame_Profile.save";
             if (File.Exists(save))
                 JsonEditorHandler.OpenFile(save);
@@ -861,22 +970,9 @@ namespace BTDToolbox
                 ConsoleHandler.appendLog("Decrypted save file not found");
         }
 
-        private void MonkeyWrenchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening download for Monkey Wrench");
-            Process.Start("https://www.dropbox.com/s/j85siq4gu7yxdtc/monkey_wrench.exe?dl=1");
-        }
 
-        private void MonkeyWrenchToolStripMenuItem_MouseHover(object sender, EventArgs e)
-        {
-            ConsoleHandler.force_appendLog("Monkey Wrench is a great tool made by Topper, that allows you to convert .jpng files into regular .png files, and back again.");
-            ConsoleHandler.force_appendLog("Once it's opened, type     \'help\'     without quotes, to learn how to use the commands.");
-        }
-
-        private void SaveEditorToolStripMenuItem_MouseHover(object sender, EventArgs e)
-        {
-            ConsoleHandler.force_appendLog("This save editor was originally made by Vadmeme on github. They're allowing anyone to use it, so we added it to toolbox.");
-            ConsoleHandler.force_appendLog("If you're interested, the link for it is here: https://github.com/Vadmeme/BTDSaveEditor");
         }
     }
 }

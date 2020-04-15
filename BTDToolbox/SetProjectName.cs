@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
+using BTDToolbox.Classes.NewProjects;
+using System.IO;
 
 namespace BTDToolbox
 {
@@ -24,7 +26,8 @@ namespace BTDToolbox
         {
             InitializeComponent();
             programData = Serializer.Deserialize_Config();
-            gameName = programData.CurrentGame;
+            gameName = CurrentProjectVariables.GameName;
+
             if (gameName == "BTDB")
             {
                 CreateProject_Button.Text = "Continue";
@@ -36,6 +39,10 @@ namespace BTDToolbox
             this.Activate();
         }
         private void CreateProject_Button_Click(object sender, EventArgs e)
+        {
+            CreateProject();
+        }
+        private void CreateProject()
         {
             if (CustomName_RadioButton.Checked)
             {
@@ -65,7 +72,7 @@ namespace BTDToolbox
             return projectName_Identifier + projName;
         }
         private void SubmitModName()
-        {
+        {           
             if (CustomName_RadioButton.Checked)
                 ConsoleHandler.appendLog("You chose the project name: " + ProjectName_TextBox.Text);
             else
@@ -77,31 +84,108 @@ namespace BTDToolbox
                 gameName = temp;
                 this.Close();
             }
-            else if (gameName == "BTDB")
+
+            bool writeProj = true;
+            string projName = ReturnName(ProjectName_TextBox.Text, gameName).Replace("\\", "");
+            string projdir = Environment.CurrentDirectory + "\\Projects\\" + projName;
+
+
+            if (Directory.Exists(projdir))
+            {
+                var result = MessageBox.Show("A project with this name already exists, do you want to replace it with a new one?", "Replace Existing Project?", MessageBoxButtons.YesNoCancel);
+                if (result == DialogResult.Yes)
+                {
+                    ConsoleHandler.appendLog("Deleting original project");
+                    try
+                    {
+                        Directory.Delete(projdir, true);
+                    }
+                    catch { ConsoleHandler.appendLog("Directory is currently open in windows file explorer..."); }
+                    writeProj = true;
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    writeProj = false;
+                    this.Close();
+                }
+                else
+                {
+                    writeProj = false;
+                    ProjectName_TextBox.Text = "";
+                }
+            }
+
+            if (writeProj == true)
+            {
+                if (!Directory.Exists(projdir))
+                    Directory.CreateDirectory(projdir);
+
+                string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
+                if (!GeneralMethods.Validate_Backup(gameName))
+                    GeneralMethods.CreateBackup(gameName);
+
+                if (File.Exists(backupPath))
+                {
+                    if (!Directory.Exists(projdir))
+                        Directory.CreateDirectory(projdir);
+
+                    if(!File.Exists(projdir + "\\" + projName + ".jet"))
+                    {
+                        //File.Copy(backupPath, projdir + "\\" + projName + ".jet");
+                        CurrentProjectVariables.ProjectName = projName;
+                        CurrentProjectVariables.PathToProjectClassFile = projdir;
+                        CurrentProjectVariables.PathToProjectFiles = projdir + "\\" + projName;
+
+                        ProjectHandler.SaveProject();
+                    }
+                    else
+                    {
+                        ConsoleHandler.force_appendLog("It appears the project already exists OR it is currently opened " +
+                            "somewhere... Unable to continue, please try again..." +
+                            "\nIf this error persists, please contact Toolbox devs");
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    ConsoleHandler.force_appendLog("Unable to locate or create backup... Cancelling project creation...");
+                    if (Directory.Exists(projdir))
+                        Directory.Delete(projdir);
+                    this.Close();
+                }
+            }
+            if(gameName == "BTDB")
             {
                 var getPasss = new Get_BTDB_Password();
-                getPasss.isExtracting = true;
-                //getPasss.projName = ProjectName_TextBox.Text;
-
-                string temp = gameName;
-                getPasss.projName = ReturnName(ProjectName_TextBox.Text, gameName);
-                gameName = temp;
                 getPasss.Show();
+                getPasss.isExtracting = true;
                 this.Close();
             }
             else
             {
-                var extract = new ZipForm();
-                //extract.projName = ProjectName_TextBox.Text;
-
-                string temp = gameName;
-                extract.projName = ReturnName(ProjectName_TextBox.Text, gameName);
-                gameName = temp;
-                
-                extract.Show();
-                extract.Extract();
+                var zip = new ZipForm();
+                zip.Show();
+                zip.Extract();
                 this.Close();
             }
+            //This stuff is for zip projects
+            /*if (gameName != "BTDB")
+            {
+                CurrentProjectVariables.JetPassword = "Q%_{6#Px]]";
+                ProjectHandler.SaveProject();
+
+                DirectoryInfo dinfo = new DirectoryInfo(projdir);
+                jetf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
+                jetf.MdiParent = Main.getInstance();
+                jetf.Show();
+                jetf.PopulateTreeview();
+            }
+            else
+            {
+                var getPasss = new Get_BTDB_Password();
+                getPasss.Show();
+            }
+            this.Close();*/
         }
 
         private void CustomName_RadioButton_MouseClick(object sender, MouseEventArgs e)
@@ -123,6 +207,18 @@ namespace BTDToolbox
                 CreateProject_Button.Location = new Point(CreateProject_Button.Location.X, CreateProject_Button.Location.Y - 40);
             }
 
+        }
+
+        private void SetProjectName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                CreateProject();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

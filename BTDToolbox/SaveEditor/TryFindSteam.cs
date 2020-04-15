@@ -93,6 +93,7 @@ namespace BTDToolbox.SaveEditor
         public static string CheckDirsForSteam(string searchFolder)
         {
             string path = "";
+            
             //Check if Steam is in the main drive
             foreach (string drive in drives)
             {

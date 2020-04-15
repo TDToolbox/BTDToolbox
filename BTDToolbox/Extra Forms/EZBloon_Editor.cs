@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,7 +41,7 @@ namespace BTDToolbox.Extra_Forms
                 path = bloonPath;
                 json = File.ReadAllText(bloonPath);
                 if (JSON_Reader.IsValidJson(json))
-                {
+                {                    
                     bloon = Bloon.FromJson(json);
                     PopulateUI();
                 }
@@ -55,9 +56,11 @@ namespace BTDToolbox.Extra_Forms
             if (bloon != null)
             {
                 ResetUI();
-                
-                BloonType_Label.Text = bloon.Type + " bloon";
-                BloonName_TextBox.Text = bloon.Type;
+                string[] split = path.Split('\\');
+                string filename = split[split.Length - 1].Replace("\\", "");
+                BloonType_Label.Text = filename;
+
+                BloonName_TextBox.Text = bloon.Type + " bloon";                          
                 InitialHealth_TextBox.Text = bloon.InitialHealth.ToString();
                 BaseSpeed_TextBox.Text = bloon.BaseSpeed.ToString();
                 SpeedMultiplier_TextBox.Text = bloon.SpeedMultiplier.ToString();
@@ -81,7 +84,7 @@ namespace BTDToolbox.Extra_Forms
                 //ApplyStatus checked listbox
                 ApplyStatus_CheckedListBox = Handle_CheckedListbox(ApplyStatus_CheckedListBox, bloon.ApplyStatus);
                 //BloonAbility checked listbox
-                if (game == "BTD5")
+                if (game == "BTD5" || game == "BMC")
                     BloonAbility_CheckedListBox = Handle_CheckedListbox(BloonAbility_CheckedListBox, bloon.BloonAbility);
                 else
                 {
@@ -89,14 +92,6 @@ namespace BTDToolbox.Extra_Forms
                     label9.Visible = false;
                 }
                 HandleAdvancedView();
-
-                if (BloonFiles_ComboBox.SelectedItem != null)
-                {
-                    if (BloonType_Label.Text.Replace(" bloon","") + ".bloon" != BloonFiles_ComboBox.SelectedItem.ToString())
-                    {
-                        BloonFiles_ComboBox.SelectedItem = BloonType_Label.Text.Replace(" bloon", "") + ".bloon";
-                    }
-                }
             }
         }
         private void HandleAdvancedView()
@@ -391,7 +386,7 @@ namespace BTDToolbox.Extra_Forms
             resetCheckedListBox(DamageImmunity_CheckedListBox);
 
             //BTD5 stuff
-            if (game == "BTD5")
+            if (game == "BTD5" || game == "BMC")
             {
                 resetCheckedListBox(BloonAbility_CheckedListBox);
                 resetCheckedListBox(ApplyStatus_CheckedListBox);
@@ -418,7 +413,7 @@ namespace BTDToolbox.Extra_Forms
 
             if(Main.projName != "" && Main.projName != null)
             {
-                string bloonPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions";
+                string bloonPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions";
                 var bloonFiles = Directory.GetFiles(bloonPath);
                 foreach (string file in bloonFiles)
                 {
@@ -438,10 +433,10 @@ namespace BTDToolbox.Extra_Forms
                     }
                 }
 
-                if(game == "BTD5")
+                Game_Label.Text = CurrentProjectVariables.GameName;
+                if (game == "BTD5" || game == "BMC")
                 {
-                    Game_Label.Text = "BTD5";
-                    string abilityPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonAbilities";
+                    string abilityPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonAbilities";
                     var abilityFiles = Directory.GetFiles(abilityPath);
                     foreach (var file in abilityFiles)
                     {
@@ -457,7 +452,6 @@ namespace BTDToolbox.Extra_Forms
                 }
                 else
                 {
-                    Game_Label.Text = "BTDB";
                     ApplyStatus_CheckedListBox.Hide();
                     ApplyStatus_Label.Hide();
                 }
@@ -471,7 +465,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void BloonFiles_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + BloonFiles_ComboBox.SelectedItem;
+            path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\" + BloonFiles_ComboBox.SelectedItem;
             CreateBloonObject(path);
         }
         private void Save_Button_Click(object sender, EventArgs e)

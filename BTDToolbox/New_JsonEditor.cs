@@ -13,6 +13,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
+using BTDToolbox.Classes.NewProjects;
+using Ionic.Zip;
+using System.Text.RegularExpressions;
 
 namespace BTDToolbox
 {
@@ -25,6 +28,7 @@ namespace BTDToolbox
         public static string readOnlyName = "_original (READ-ONLY)";
         public Point mouseClickPos;
 
+        public static ZipFile jet;
         public List<TabPage> tabPages;
         public List<string> tabFilePaths;
         public List<JsonEditor_Instance> userControls;
@@ -33,7 +37,8 @@ namespace BTDToolbox
         public New_JsonEditor()
         {
             InitializeComponent();
-            //initSelContextMenu();
+            
+            
             tabControl1.MouseUp += Mouse_RightClick;
 
             this.MdiParent = Main.getInstance();
@@ -44,6 +49,10 @@ namespace BTDToolbox
             programData = Serializer.Deserialize_Config();
             this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
             this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
+
+            
+
+            //ProjectHandler.SaveZipFile(jet);
         }
 
 
@@ -88,17 +97,34 @@ namespace BTDToolbox
                     CloseTab(tabFilePaths[i]);
             }
         }
-        public void NewTab(string path)
+        public void NewTab(string path, bool isFromZip)
         {
             if (path != "" && path != null)
             {
+                string filepath = "";
+                if (isFromZip)
+                {
+                    filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/");
+                    path = filepath;
+                }
+                else
+                    filepath = path;
+                
+
                 tabFilePaths.Add(path);
+                
+                if(!CurrentProjectVariables.JsonEditor_OpenedTabs.Contains(path))
+                {
+                    CurrentProjectVariables.JsonEditor_OpenedTabs.Add(path);
+                    ProjectHandler.SaveProject();
+                }
+
                 tabPages.Add(new TabPage());
                 userControls.Add(new JsonEditor_Instance());
 
                 //create the tab and do required processing
 
-                string[] split = path.Split('\\');
+                string[] split = path.Replace("/", "\\").Split('\\');
                 string filename = split[split.Length - 1];
                 if (path.Contains("BackupProject"))
                 {
@@ -111,23 +137,35 @@ namespace BTDToolbox
                 userControls[userControls.Count - 1].path = path;
                 userControls[userControls.Count - 1].filename = filename;
 
-                AddText(path);
+                if(isFromZip == false)
+                    AddText(path, false);
+                else
+                    AddText(path, true);
 
                 tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
                 
                 OpenTab(path);
                 ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
                 userControls[userControls.Count - 1].FinishedLoading();
-
             }
             else
             {
                 ConsoleHandler.appendLog_CanRepeat("Something went wrong when trying to read the files path...");
             }
         }
-        private void AddText(string path)
+        private void AddText(string path, bool isFromZip)
         {
-            string unformattedText = File.ReadAllText(path);
+            string unformattedText = "";
+            if (!isFromZip)
+                unformattedText = File.ReadAllText(path);
+            else
+            {
+                if (jet == null)
+                    jet = new ZipFile(CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".jet");
+
+                unformattedText = ProjectHandler.ReadTextFromZipFile(jet, path);
+            }
+
             try
             {
                 JToken jt = JToken.Parse(unformattedText);
@@ -136,6 +174,7 @@ namespace BTDToolbox
             }
             catch (Exception)
             {
+                ConsoleHandler.appendLog_CanRepeat("File contains invalid json. Unable to format..");
                 userControls[userControls.Count - 1].Editor_TextBox.Text = unformattedText;
             }
         }
@@ -146,6 +185,9 @@ namespace BTDToolbox
             {
                 if (t == path)
                 {
+                    if (!path.Contains("Backups"))
+                        CheckIfModified(path);
+
                     tabControl1.SelectedTab = tabPages[i];
                     userControls[i].Size = new Size(tabControl1.SelectedTab.Width, tabControl1.SelectedTab.Height);
                 }
@@ -167,33 +209,103 @@ namespace BTDToolbox
             }
             return 9999;
         }
+        
+        
         //
         //Closing stuff
         //
         public void CloseTab(string path)
         {
+            /*if(jet != null)
+                ProjectHandler.SaveZipFile(jet);*/
             int i = tabFilePaths.IndexOf(path);
             int indexBeforeDelete = tabControl1.SelectedIndex;
 
+            tabControl1.TabPages.Remove(tabPages[i]);            
+
             tabControl1.TabPages.Remove(tabPages[i]);
             if (indexBeforeDelete + 1 <= tabControl1.TabPages.Count)
-                tabControl1.SelectedIndex = indexBeforeDelete;   
+                tabControl1.SelectedIndex = indexBeforeDelete;
             else
                 tabControl1.SelectedIndex = indexBeforeDelete - 1;
 
+            if(!path.Contains("Backups"))
+                CheckIfModified(path);
+
             tabFilePaths.RemoveAt(i);
+            CurrentProjectVariables.JsonEditor_OpenedTabs.RemoveAt(i);
+            ProjectHandler.SaveProject();
+
             tabPages.RemoveAt(i);
             userControls.RemoveAt(i);
+
+            
 
             if (tabControl1.TabPages.Count <= 0)
                 this.Close();
         }
+        public static string RemoveWhitespace(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+        private void CheckIfModified(string pathToFile)
+        {
+            string backupfile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
+            if (File.Exists(backupfile))
+            {
+                ZipFile backup = new ZipFile(backupfile);
+                backup.Password = CurrentProjectVariables.JetPassword;
+
+                string modText = RemoveWhitespace(File.ReadAllText(pathToFile));
+                string pathInZip = pathToFile.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
+                string originalText = RemoveWhitespace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip));
+                
+                try
+                {
+                    if (modText == originalText)
+                    {
+                        //file not modded
+                        if (CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+                        {
+                            CurrentProjectVariables.ModifiedFiles.Remove(pathToFile);
+                        }
+                    }
+                    else
+                    {
+                        //file modded
+                        if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+                        {
+                            CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //exception occurred. file probably modded
+                    if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+                    {
+                        CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
+                    }
+                }
+
+                ProjectHandler.SaveProject();
+            }
+            else
+                ConsoleHandler.force_appendLog("Backup not detected... Unable to continue...");
+        }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             Serializer.SaveConfig(this, "json editor");
-            Serializer.SaveJSONEditor_Tabs();
-            if(userControls.Count >0)
-                Serializer.SaveJSONEditor_Instance(userControls[tabControl1.SelectedIndex]);
+            ProjectHandler.SaveProject();
+            //Serializer.SaveJSONEditor_Tabs();
+
+            foreach (string t in tabFilePaths)
+            {
+                if (!t.Contains("Backups"))
+                    CheckIfModified(t);
+            }
             JsonEditorHandler.jeditor = null;
         }
         private void Close_button_Click(object sender, EventArgs e)
