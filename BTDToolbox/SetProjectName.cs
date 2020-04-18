@@ -68,11 +68,12 @@ namespace BTDToolbox
                 int randName = rand.Next(1, 99999999);
                 projName = randName.ToString();
             }
-
+            //MessageBox.Show(projectName_Identifier + projName);
             return projectName_Identifier + projName;
         }
         private void SubmitModName()
-        {           
+        {
+            
             if (CustomName_RadioButton.Checked)
                 ConsoleHandler.appendLog("You chose the project name: " + ProjectName_TextBox.Text);
             else
@@ -86,32 +87,38 @@ namespace BTDToolbox
             }
 
             bool writeProj = true;
-            string projName = ReturnName(ProjectName_TextBox.Text, gameName).Replace("\\", "");
-            string projdir = Environment.CurrentDirectory + "\\Projects\\" + projName;
+            string projName = ReturnName(ProjectName_TextBox.Text, gameName);//.Replace("\\", "");
+            string projdir = Environment.CurrentDirectory + "\\Projects" + projName;
 
+/*            
+            MessageBox.Show(projName);
+            MessageBox.Show(projdir);*/
 
             if (Directory.Exists(projdir))
             {
                 var result = MessageBox.Show("A project with this name already exists, do you want to replace it with a new one?", "Replace Existing Project?", MessageBoxButtons.YesNoCancel);
-                if (result == DialogResult.Yes)
-                {
-                    ConsoleHandler.appendLog("Deleting original project");
-                    try
-                    {
-                        Directory.Delete(projdir, true);
-                    }
-                    catch { ConsoleHandler.appendLog("Directory is currently open in windows file explorer..."); }
-                    writeProj = true;
-                }
-                else if (result == DialogResult.Cancel)
+                if (result == DialogResult.Cancel)
                 {
                     writeProj = false;
                     this.Close();
                 }
                 else
                 {
-                    writeProj = false;
-                    ProjectName_TextBox.Text = "";
+                    if (result == DialogResult.Yes)
+                    {
+                        ConsoleHandler.appendLog("Deleting original project");
+                        try
+                        {
+                            Directory.Delete(projdir, true);
+                        }
+                        catch { ConsoleHandler.appendLog("Directory is currently open in windows file explorer..."); }
+                        writeProj = true;
+                    }
+                    else
+                    {
+                        writeProj = false;
+                        ProjectName_TextBox.Text = "";
+                    }
                 }
             }
 
@@ -129,12 +136,12 @@ namespace BTDToolbox
                     if (!Directory.Exists(projdir))
                         Directory.CreateDirectory(projdir);
 
-                    if(!File.Exists(projdir + "\\" + projName + ".jet"))
+                    if(!File.Exists(projdir + projName + ".jet"))
                     {
                         //File.Copy(backupPath, projdir + "\\" + projName + ".jet");
                         CurrentProjectVariables.ProjectName = projName;
                         CurrentProjectVariables.PathToProjectClassFile = projdir;
-                        CurrentProjectVariables.PathToProjectFiles = projdir + "\\" + projName;
+                        CurrentProjectVariables.PathToProjectFiles = projdir + projName;
 
                         ProjectHandler.SaveProject();
                     }
@@ -143,6 +150,21 @@ namespace BTDToolbox
                         ConsoleHandler.force_appendLog("It appears the project already exists OR it is currently opened " +
                             "somewhere... Unable to continue, please try again..." +
                             "\nIf this error persists, please contact Toolbox devs");
+                        this.Close();
+                    }
+
+                    if (gameName == "BTDB")
+                    {
+                        var getPasss = new Get_BTDB_Password();
+                        getPasss.Show();
+                        getPasss.isExtracting = true;
+                        this.Close();
+                    }
+                    else
+                    {
+                        var zip = new ZipForm();
+                        zip.Show();
+                        zip.Extract();
                         this.Close();
                     }
                 }
@@ -154,20 +176,7 @@ namespace BTDToolbox
                     this.Close();
                 }
             }
-            if(gameName == "BTDB")
-            {
-                var getPasss = new Get_BTDB_Password();
-                getPasss.Show();
-                getPasss.isExtracting = true;
-                this.Close();
-            }
-            else
-            {
-                var zip = new ZipForm();
-                zip.Show();
-                zip.Extract();
-                this.Close();
-            }
+            
             //This stuff is for zip projects
             /*if (gameName != "BTDB")
             {

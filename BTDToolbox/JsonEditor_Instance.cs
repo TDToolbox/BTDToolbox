@@ -138,19 +138,26 @@ namespace BTDToolbox
         {
             if (JSON_Reader.IsValidJson(text) == true)
             {
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
-                JsonError_Label.Visible = false;
+                if(!path.EndsWith(".xml"))
+                {
+                    this.lintPanel.BackgroundImage = Properties.Resources.JSON_valid;
+                    JsonError_Label.Visible = false;
 
-                jsonError = false;
-                New_JsonEditor.isJsonError = false;
+                    jsonError = false;
+                    New_JsonEditor.isJsonError = false;
+                }
+                
             }
             else
             {
-                this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
-                JsonError_Label.Visible = true;
+                if (!path.EndsWith(".xml"))
+                {
+                    this.lintPanel.BackgroundImage = Properties.Resources.JSON_Invalid;
+                    JsonError_Label.Visible = true;
 
-                jsonError = true;
-                New_JsonEditor.isJsonError = true;
+                    jsonError = true;
+                    New_JsonEditor.isJsonError = true;
+                }
             }
         }
         private void LintPanel_MouseClick(object sender, MouseEventArgs e)

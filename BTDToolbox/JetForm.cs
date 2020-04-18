@@ -557,14 +557,28 @@ namespace BTDToolbox
             {
                 File.Delete(filepath);
             }
-            File.Copy(Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + filepath.Replace(Environment.CurrentDirectory, "").Replace("\\" + projName + "\\", ""), filepath);
+            string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + filepath.Replace(CurrentProjectVariables.PathToProjectFiles, "").Replace("\\" + projName + "\\", "");
 
-            if (JsonEditorHandler.jeditor.tabFilePaths.Contains(filepath))
+            if (File.Exists(backupPath))
             {
-                JsonEditorHandler.CloseFile(filepath);
-                JsonEditorHandler.OpenFile(filepath);
+                File.Copy(backupPath, filepath);
+
+                if (JsonEditorHandler.jeditor == null)
+                {
+                    JsonEditorHandler.OpenFile(filepath);
+                }
+                else if (JsonEditorHandler.jeditor.tabFilePaths.Contains(filepath))
+                {
+                    JsonEditorHandler.CloseFile(filepath);
+                    JsonEditorHandler.OpenFile(filepath);
+                }
+                ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
             }
-            ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
+            else
+            {
+                ConsoleHandler.appendLog_CanRepeat("Could not find " + filename + " in the backup, failed to restore file.");
+            }
+            
         }
         private void restoreOriginal()
         {
@@ -828,10 +842,10 @@ namespace BTDToolbox
             {
                 foreach (JetForm o in JetProps.get())
                 {
-                    if (o.projName == this.projName)
+                    if (o.projName == CurrentProjectVariables.ProjectName)
                     {
                         o.Close();
-                        DeleteDirectory(this.projName);
+                        DeleteDirectory(Environment.CurrentDirectory + "\\Projects\\" + CurrentProjectVariables.ProjectName);
                     }
                 }
             }

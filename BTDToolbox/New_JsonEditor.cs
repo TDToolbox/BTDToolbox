@@ -253,7 +253,7 @@ namespace BTDToolbox
         private void CheckIfModified(string pathToFile)
         {
             string backupfile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
-            if (File.Exists(backupfile))
+            if (File.Exists(pathToFile) && File.Exists(backupfile))
             {
                 ZipFile backup = new ZipFile(backupfile);
                 backup.Password = CurrentProjectVariables.JetPassword;
@@ -293,13 +293,18 @@ namespace BTDToolbox
                 ProjectHandler.SaveProject();
             }
             else
-                ConsoleHandler.force_appendLog("Backup not detected... Unable to continue...");
+            {
+                if (!File.Exists(pathToFile))
+                    ConsoleHandler.force_appendLog("Can't check if file is modified because the file itself was not found. Was it deleted?");
+                else
+                    ConsoleHandler.force_appendLog("Can't check if file is modified because the backup was not found");
+            }
+                
         }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             Serializer.SaveConfig(this, "json editor");
             ProjectHandler.SaveProject();
-            //Serializer.SaveJSONEditor_Tabs();
 
             foreach (string t in tabFilePaths)
             {

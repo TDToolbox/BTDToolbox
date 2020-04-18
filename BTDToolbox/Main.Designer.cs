@@ -54,8 +54,8 @@
             this.bTDFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fontForPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onlineFontGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.combineModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modUpdaterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            //this.combineModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            //this.modUpdaterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteEditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteSheetDecompilerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spriteAnimationVisualizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,7 +69,7 @@
             this.getBTDBPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.FlashReader = new System.Windows.Forms.ToolStripMenuItem();
-            this.bTD5FlashMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            //this.bTD5FlashMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToggleConsole = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenJetExplorer = new System.Windows.Forms.ToolStripMenuItem();

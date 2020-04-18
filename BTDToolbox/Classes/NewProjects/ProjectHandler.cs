@@ -106,9 +106,6 @@ namespace BTDToolbox.Classes.NewProjects
         public static string ReadTextFromZipFile(ZipFile zip, string fileInZip)
         {
             string returnText = "";
-            //zip.ContainsEntry(fileInZip);
-            //MessageBox.Show(zip.Entries.Count().ToString());
-            //if (zip.EntryFileNames.Contains(fileInZip))
             if (zip.ContainsEntry(fileInZip))
             {
                 try
@@ -133,7 +130,8 @@ namespace BTDToolbox.Classes.NewProjects
             }
             else
             {
-                ConsoleHandler.force_appendLog_CanRepeat("Unable to find   " + fileInZip + "   in the Jet... Failed to read file..");
+                ConsoleHandler.force_appendLog_CanRepeat("Unable to check if  " + fileInZip.Replace("\\\\","\\").Replace(CurrentProjectVariables.PathToProjectFiles,"") + "  is modified because it wasnt found in the backup, and therefore has nothing to compare it too.");
+                //ConsoleHandler.force_appendLog_CanRepeat("Unable to find   " + fileInZip + "   in the Jet... Failed to read file..");
             }
             return returnText;
         }

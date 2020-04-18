@@ -18,6 +18,7 @@ namespace BTDToolbox
         JetForm jf;
 
         //zip variables
+        bool error = false;
         public static int totalFiles = 0;
         public int filesTransfered = 0;
         public static bool useLastPass = false;
@@ -181,10 +182,19 @@ namespace BTDToolbox
                 ZipFile archive = new ZipFile(sourcePath);
                 archive.Password = password;
                 totalFiles = archive.Count();
-                filesTransfered = 0;
-                archive.ExtractProgress += ZipExtractProgress;
-                archive.ExtractAll(destPath);
-                archive.Dispose();
+                filesTransfered = 0;        
+
+                try
+                {
+                    archive.ExtractProgress += ZipExtractProgress;
+                    archive.ExtractAll(destPath);
+                    archive.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    error = true;
+                    PrintError(ex.Message);                    
+                }
 
                 //Commented this out for now
                 /*
@@ -202,62 +212,89 @@ namespace BTDToolbox
                         ExtractAssetBundleJet();
                     }
                 }*/
-
-                if (!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
+                if(error == false)
                 {
-                    string gamed = "";
-                    if(gameName == "BTD5")
-                        gamed = Serializer.Deserialize_Config().BTD5_Directory;
-                    else if (gameName == "BTDB")
-                        gamed = Serializer.Deserialize_Config().BTDB_Directory;
-                    else if(gameName == "BMC")
-                        gamed = Serializer.Deserialize_Config().BMC_Directory;
-
-                    //they should have a backup jet of gamed not invalid. create backup proj
-                    if (gamed != "" && gamed != null)
+                    if (!Directory.Exists(Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject"))
                     {
-                        ConsoleHandler.force_appendNotice("Backup project not detected.... Creating one now..");
-                        Invoke((MethodInvoker)delegate {
-                            this.Focus();
+                        string gamed = "";
+                        if (gameName == "BTD5")
+                            gamed = Serializer.Deserialize_Config().BTD5_Directory;
+                        else if (gameName == "BTDB")
+                            gamed = Serializer.Deserialize_Config().BTDB_Directory;
+                        else if (gameName == "BMC")
+                            gamed = Serializer.Deserialize_Config().BMC_Directory;
 
-                            destPath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject";
-                            archive = new ZipFile(sourcePath);
-                            archive.Password = password;
-                            totalFiles = archive.Count();
-                            filesTransfered = 0;
-                            archive.ExtractProgress += ZipExtractProgress;
-                            archive.ExtractAll(destPath);
-                            archive.Dispose();
+                        //they should have a backup jet of gamed not invalid. create backup proj
+                        if (error == false && gamed != "" && gamed != null)
+                        {
+                            ConsoleHandler.force_appendNotice("Backup project not detected.... Creating one now..");
+                            Invoke((MethodInvoker)delegate {
+                                this.Focus();
 
-                            //Commented this out for now
-                            /*if (gameName == "BMC")
-                            {
-                                DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
-                        "They mostly have to do with textures and maps, and" +
-                        " while you can mod those as well as anything else from data.jet, they are not necessary." +
-                        "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
-                                if (diag == DialogResult.Yes)
+                                destPath = Environment.CurrentDirectory + "\\Backups\\" + gameName + "_BackupProject";
+                                archive = new ZipFile(sourcePath);
+                                archive.Password = password;
+                                totalFiles = archive.Count();
+                                filesTransfered = 0;
+                                archive.ExtractProgress += ZipExtractProgress;
+
+                                try
                                 {
-                                    Invoke((MethodInvoker)delegate {
-                                        Filename_TB.Text = "AssetBundles";
-                                    });
-                                    ExtractAssetBundleJet();
+                                    archive.ExtractAll(destPath);
+                                    archive.Dispose();
                                 }
-                            }*/
-                            
-                        });
+                                catch (Exception ex)
+                                {
+                                    error = true;
+                                    PrintError(ex.Message);
+                                }
+
+
+                                //Commented this out for now
+                                /*if (gameName == "BMC")
+                                {
+                                    DialogResult diag = MessageBox.Show("Would you like to extract the Asset Bundles as well? " +
+                            "They mostly have to do with textures and maps, and" +
+                            " while you can mod those as well as anything else from data.jet, they are not necessary." +
+                            "\nNote: Your project will take up more space", "Extract Asset Bundles as well?", MessageBoxButtons.YesNo);
+                                    if (diag == DialogResult.Yes)
+                                    {
+                                        Invoke((MethodInvoker)delegate {
+                                            Filename_TB.Text = "AssetBundles";
+                                        });
+                                        ExtractAssetBundleJet();
+                                    }
+                                }*/
+
+                            });
+                        }
+                        else
+                        {
+                            ConsoleHandler.force_appendNotice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
+                        }
                     }
-                    else
+                    ConsoleHandler.appendLog("Project files created at: " + CurrentProjectVariables.PathToProjectFiles);
+                    Invoke((MethodInvoker)delegate {
+                        jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
+                        jf.MdiParent = Main.getInstance();
+                        jf.Show();
+                    });
+                }
+                else
+                {
+                    try
                     {
-                        ConsoleHandler.force_appendNotice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
+                        this.Invoke(new Action(() => this.Close()));
+                        backgroundThread.Abort();
+                    }
+                    catch (Exception ex)
+                    {
+                        error = true;
+                        PrintError(ex.Message);
+                        this.Invoke(new Action(() => this.Close()));
+                        backgroundThread.Abort();
                     }
                 }
-                ConsoleHandler.appendLog("Project files created at: " + CurrentProjectVariables.PathToProjectFiles);
-                Invoke((MethodInvoker)delegate {
-                    jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
-                    jf.MdiParent = Main.getInstance();
-                    jf.Show();
-                });
             }
             else
             {
@@ -281,6 +318,7 @@ namespace BTDToolbox
                     catch (Exception ex)
                     {
                         PrintError(ex.Message);
+                        backgroundThread.Abort();
                     }
                     backgroundThread.Abort();
                 }
@@ -292,6 +330,7 @@ namespace BTDToolbox
             catch (Exception ex)
             {
                 PrintError(ex.Message);
+                backgroundThread.Abort();
             }
             backgroundThread.Abort();
         }
@@ -385,8 +424,17 @@ namespace BTDToolbox
                         toExport.Encryption = EncryptionAlgorithm.PkzipWeak;
                         toExport.Name = dir;
                         toExport.CompressionLevel = CompressionLevel.Level6;
-                        toExport.Save();
-                        toExport.Dispose();
+
+                        try
+                        {
+                            toExport.Save();
+                            toExport.Dispose();
+                        }
+                        catch(System.IO.IOException)
+                        {
+                            ConsoleHandler.force_appendNotice("Something went wrong... Is your jet file opened?");
+                            this.Invoke(new Action(() => this.Close()));
+                        }
 
                         //Commented this out for now
                         /*if (CurrentProjectVariables.GameName == "BMC")
@@ -414,6 +462,7 @@ namespace BTDToolbox
                         catch (Exception ex)
                         {
                             PrintError(ex.Message);
+                            backgroundThread.Abort();
                         }
                         backgroundThread.Abort();
                     }

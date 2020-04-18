@@ -18,7 +18,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Toolbox 0.1.2";
+        public static string version = "Toolbox 0.1.3";
         public static string projectFilePath = "";
         private static Main toolbox;
         public static BGForm bg;
@@ -426,25 +426,13 @@ namespace BTDToolbox
                     if (gameName == "BMC")
                         gameFolder = "Bloons Monkey City";
 
+                    bool failed = false;
                     string tryFindGameDir = TryFindSteamDir(gameFolder);
-
+                    
                     if (tryFindGameDir == "")
                     {
+                        failed = true;
                         ConsoleHandler.appendLog("Failed to automatically aquire game dir");
-                        ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
-                        browseForExe(gameName);
-                        if (isGamePathValid(gameName) == false)
-                        {
-                            ConsoleHandler.appendLog("Theres been an error identifying your game");
-                        }
-                        else
-                        {
-                            if (!Validate_Backup(gameName))
-                                CreateBackup(gameName);
-                            Serializer.SaveConfig(this, "directories");
-                            var setProjName = new SetProjectName();
-                            setProjName.Show();
-                        }
                     }
                     else
                     {
@@ -456,11 +444,47 @@ namespace BTDToolbox
                         else if (gameName == "BMC")
                             BMC_Dir = tryFindGameDir;
 
+                        Serializer.SaveConfig(this, "directories");
+
+                        CurrentProjectVariables.GameName = tryFindGameDir;
+                        ProjectHandler.SaveProject();
+                        
+
                         if (!Validate_Backup(gameName))
                             CreateBackup(gameName);
-                        Serializer.SaveConfig(this, "directories");
-                        var setProjName = new SetProjectName();
-                        setProjName.Show();                        
+
+                        if (Validate_Backup(gameName))
+                        {
+                            var setProjName = new SetProjectName();
+                            setProjName.Show();
+                        }
+                        else
+                        {
+                            failed = true;
+                            ConsoleHandler.force_appendNotice("Failed to create a new project because the backup failed to be aquired...");
+                        }
+                    }
+
+                    if(failed)
+                    {
+                        ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
+                        browseForExe(gameName);
+                        if (isGamePathValid(gameName) == false)
+                        {
+                            ConsoleHandler.appendLog("Theres been an error identifying your game");
+                        }
+                        else
+                        {
+                            if (!Validate_Backup(gameName))
+                                CreateBackup(gameName);
+
+                            if (Validate_Backup(gameName))
+                            {
+                                var setProjName = new SetProjectName();
+                                setProjName.Show();
+                            }
+                            ConsoleHandler.force_appendNotice("Failed to create a new project because the backup failed to be aquired...");
+                        }
                     }
                     
                 }
