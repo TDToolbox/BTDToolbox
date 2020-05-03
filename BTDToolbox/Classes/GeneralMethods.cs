@@ -352,17 +352,17 @@ namespace BTDToolbox
                 ConsoleHandler.appendLog("Unable to create backup for " + game + ".");
             }
         }
-        public static void SteamValidateBTD5()
+        public static void SteamValidate(string game)
         {
-            Process.Start("steam://validate/306020");
-        }
-        public static void SteamValidateBTDB()
-        {
-            Process.Start("steam://validate/444640");
-        }
-        public static void SteamValidateBMC()
-        {
-            Process.Start("steam://validate/1252780");
+            string url = "";
+            if (game == "BTD5")
+                url = "306020";
+            else if (game == "BTDB")
+                url = "444640";
+            else if (game == "BMC")
+                url = "1252780";
+
+            Process.Start("steam://validate/" + url);
         }
         public static void BackupLOC(string game)
         {
@@ -534,31 +534,34 @@ namespace BTDToolbox
         {
             string exeName = Get_EXE_Name(game);
 
-            if (exeName != null && exeName != "")
-            {
-                MessageBox.Show("Please browse for " + exeName + ".\n\nMake sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup");
-                ConsoleHandler.appendLog("Make sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup..");
-                string exePath = BrowseForFile("Open game exe", "exe", "Exe files (*.exe)|*.exe|All files (*.*)|*.*", "");
-                if (exePath != null && exePath != "")
-                {
-                    if (exePath.Contains(exeName))
-                    {
-                        string gameDir = exePath.Replace("\\" + exeName, "");
-                        if (game == "BTD5")
-                            Main.BTD5_Dir = gameDir;
-                        else if (game == "BTDB")
-                            Main.BTDB_Dir = gameDir;
-                        else if (game == "BMC")
-                            Main.BMC_Dir = gameDir;
+            if(!Guard.IsStringValid(exeName))
+                return;
 
-                        Serializer.SaveConfig(Main.getInstance(), "directories");
-                    }
-                    else
-                    {
-                        ConsoleHandler.appendLog("You selected an Invalid .exe. Please browse for the exe for your game.");
-                    }
-                }
+
+            MessageBox.Show("Please browse for " + exeName + ".\n\nMake sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup");
+            ConsoleHandler.appendLog("Make sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup..");
+            string exePath = BrowseForFile("Open game exe", "exe", "Exe files (*.exe)|*.exe|All files (*.*)|*.*", "");
+            if (!Guard.IsStringValid(exePath))
+            {
+                ConsoleHandler.force_appendLog("Invalid EXE path!");
+                return;
             }
+
+            if (!exePath.Contains(exeName))
+            {
+                ConsoleHandler.appendLog("You selected an Invalid .exe. Please browse for the exe for your game.");
+                return;
+            }
+
+            string gameDir = exePath.Replace("\\" + exeName, "");
+            if (game == "BTD5")
+                Main.BTD5_Dir = gameDir;
+            else if (game == "BTDB")
+                Main.BTDB_Dir = gameDir;
+            else if (game == "BMC")
+                Main.BMC_Dir = gameDir;
+
+            Serializer.SaveConfig(Main.getInstance(), "directories");
         }
         public static string OutputJet()
         {

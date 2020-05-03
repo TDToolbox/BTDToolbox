@@ -38,6 +38,7 @@ namespace BTDToolbox
             this.AcceptButton = CreateProject_Button;
             this.Activate();
         }
+
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
             CreateProject();

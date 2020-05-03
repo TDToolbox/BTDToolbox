@@ -240,11 +240,11 @@ namespace BTDToolbox.Extra_Forms
                             {
                                 if (game == "BTD5")
                                 {
-                                    GeneralMethods.SteamValidateBTD5();
+                                    GeneralMethods.SteamValidate("BTD5");
                                 }
                                 else
                                 {
-                                    GeneralMethods.SteamValidateBMC();
+                                    GeneralMethods.SteamValidate("BMC");
                                 }
                             }
                             else
