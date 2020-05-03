@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BTDToolbox.GeneralMethods;
 
 namespace BTDToolbox.Extra_Forms
 {
@@ -38,6 +39,12 @@ namespace BTDToolbox.Extra_Forms
 
         public void OnGameSelected()
         {
+            if (DoWork(GameName) == false)
+            {
+                this.Close();
+                return;
+            }
+
             ZipForm.existingJetFile = this.JetPath;
 
             Main.gameName = GameName;
@@ -53,6 +60,74 @@ namespace BTDToolbox.Extra_Forms
             getName.Show();
 
             this.Close();
+        }
+
+        public bool DoWork(string gameName)
+        {
+            if (isGamePathValid(gameName) == false)
+            {
+                string gameFolder = "";
+                if (gameName == "BTD5")
+                    gameFolder = "BloonsTD5";
+                if (gameName == "BTDB")
+                    gameFolder = "Bloons TD Battles";
+                if (gameName == "BMC")
+                    gameFolder = "Bloons Monkey City";
+
+                bool failed = false;
+                string tryFindGameDir = Main.TryFindSteamDir(gameFolder);
+
+                if (tryFindGameDir == "")
+                {
+                    failed = true;
+                    ConsoleHandler.appendLog("Failed to automatically aquire game dir");
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Game directory was automatically aquired...");
+                    if (gameName == "BTD5")
+                        Main.BTD5_Dir = tryFindGameDir;
+                    else if (gameName == "BTDB")
+                        Main.BTDB_Dir = tryFindGameDir;
+                    else if (gameName == "BMC")
+                        Main.BMC_Dir = tryFindGameDir;
+
+                    Serializer.SaveConfig(this, "directories");
+
+                    CurrentProjectVariables.GameName = tryFindGameDir;
+                    ProjectHandler.SaveProject();
+                }
+
+                if (failed)
+                {
+                    DialogResult diag = MessageBox.Show("Unable to find the game directory. Do you want to create the project without" +
+                        " the game? Choose no to browse for your game's EXE." +
+                        " If you choose Yes, you wont be able to launch your mod until you select it.", "Browse for EXE", MessageBoxButtons.YesNoCancel); ;
+                    
+                    if (diag == DialogResult.Cancel)
+                        return false;
+                    else if (diag == DialogResult.Yes)
+                    {
+                        ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
+                        browseForExe(gameName);
+                        if (isGamePathValid(gameName) == false)
+                        {
+                            ConsoleHandler.appendLog("Theres been an error identifying your game");
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if (!Validate_Backup(gameName))
+                CreateBackup(gameName);
+
+            if (!Validate_Backup(gameName))
+            {
+                ConsoleHandler.force_appendNotice("Failed to create a new project because the backup failed to be aquired...");
+                return false;
+            }
+            return true;
         }
 
 
