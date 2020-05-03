@@ -46,5 +46,8 @@ Give out your modded .jet to whomever and have them place it into their game's f
 ## Debugging & Future features
 There are still unfinished features inside, so you might encounter bugs. Let us know if you find any
 
+## Learn how to make mods for BTD games:
+The devs of BTD Toolbox made a modding tutorial series on YouTube, to teach you how to make mods! You can find it [here](https://www.youtube.com/watch?v=nY9Cfe2O_XI&list=PLWFKnf1pcvUuGt2UQO7E5xNfVdn-IY_AQ&index=3&t=1s)
+
 ## Help
-Need help? You can ask for help [here](https://discord.gg/Yr2tYte), all of the developers for the program can be found here.
+Need help? You can ask for help [here](https://discord.gg/jj5Q7mA), all of the developers for the program can be found here.
