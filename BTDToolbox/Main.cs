@@ -18,7 +18,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Toolbox 0.1.3";
+        public static string version = "Toolbox 0.1.4";
         public static string projectFilePath = "";
         private static Main toolbox;
         public static BGForm bg;
