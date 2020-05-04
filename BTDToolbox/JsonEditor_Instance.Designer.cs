@@ -40,6 +40,7 @@
             this.ShowReplaceMenu_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.FindSubtask_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.ReformatJSON_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableAutoformattinhToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EZCard_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.EZTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +81,7 @@
             this.findSubtaskToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.getThisSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Encrypt_Button = new System.Windows.Forms.Button();
-            this.disableAutoformattinhToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CloseFindPanel_Button = new System.Windows.Forms.Button();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -212,6 +213,13 @@
             this.ReformatJSON_Button.Size = new System.Drawing.Size(201, 22);
             this.ReformatJSON_Button.Text = "Re-format JSON";
             this.ReformatJSON_Button.Click += new System.EventHandler(this.ReformatJSON_Button_Click);
+            // 
+            // disableAutoformattinhToolStripMenuItem
+            // 
+            this.disableAutoformattinhToolStripMenuItem.Name = "disableAutoformattinhToolStripMenuItem";
+            this.disableAutoformattinhToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.disableAutoformattinhToolStripMenuItem.Text = "Disable auto-formatting";
+            this.disableAutoformattinhToolStripMenuItem.Click += new System.EventHandler(this.DisableAutoformattinhToolStripMenuItem_Click);
             // 
             // EZCard_Button
             // 
@@ -384,6 +392,7 @@
             // 
             this.Find_Panel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Find_Panel.Controls.Add(this.CloseFindPanel_Button);
             this.Find_Panel.Controls.Add(this.SearchOptions_Button);
             this.Find_Panel.Controls.Add(this.Find_Button);
             this.Find_Panel.Controls.Add(this.Find_TB);
@@ -569,12 +578,18 @@
             this.Encrypt_Button.Visible = false;
             this.Encrypt_Button.Click += new System.EventHandler(this.Encrypt_Button_Click);
             // 
-            // disableAutoformattinhToolStripMenuItem
+            // CloseFindPanel_Button
             // 
-            this.disableAutoformattinhToolStripMenuItem.Name = "disableAutoformattinhToolStripMenuItem";
-            this.disableAutoformattinhToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.disableAutoformattinhToolStripMenuItem.Text = "Disable auto-formatting";
-            this.disableAutoformattinhToolStripMenuItem.Click += new System.EventHandler(this.DisableAutoformattinhToolStripMenuItem_Click);
+            this.CloseFindPanel_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CloseFindPanel_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.CloseFindPanel_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CloseFindPanel_Button.Location = new System.Drawing.Point(0, 1);
+            this.CloseFindPanel_Button.Name = "CloseFindPanel_Button";
+            this.CloseFindPanel_Button.Size = new System.Drawing.Size(25, 20);
+            this.CloseFindPanel_Button.TabIndex = 35;
+            this.CloseFindPanel_Button.Text = "X";
+            this.CloseFindPanel_Button.UseVisualStyleBackColor = false;
+            this.CloseFindPanel_Button.Click += new System.EventHandler(this.CloseFindPanel_Button_Click);
             // 
             // JsonEditor_Instance
             // 
@@ -657,5 +672,6 @@
         private System.Windows.Forms.Button Encrypt_Button;
         private System.Windows.Forms.ToolStripMenuItem ReformatJSON_Button;
         private System.Windows.Forms.ToolStripMenuItem disableAutoformattinhToolStripMenuItem;
+        private System.Windows.Forms.Button CloseFindPanel_Button;
     }
 }
