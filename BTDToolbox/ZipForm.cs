@@ -283,16 +283,11 @@ namespace BTDToolbox
                 else
                 {
                     try
-                    {
-                        this.Invoke(new Action(() => this.Close()));
-                        backgroundThread.Abort();
-                    }
+                    { this.Invoke(new Action(() => this.Close())); }
                     catch (Exception ex)
                     {
                         error = true;
                         PrintError(ex.Message);
-                        this.Invoke(new Action(() => this.Close()));
-                        backgroundThread.Abort();
                     }
                 }
             }
@@ -312,27 +307,21 @@ namespace BTDToolbox
                 if (varr == DialogResult.Cancel)
                 {
                     try
-                    {
-                        this.Invoke(new Action(() => this.Close()));
-                    }
+                    { this.Invoke(new Action(() => this.Close())); }
                     catch (Exception ex)
                     {
+                        error = true;
                         PrintError(ex.Message);
-                        backgroundThread.Abort();
                     }
-                    backgroundThread.Abort();
                 }
             }
             try
-            {
-                this.Invoke(new Action(() => this.Close()));
-            }
+            { this.Invoke(new Action(() => this.Close())); }
             catch (Exception ex)
             {
+                error = true;
                 PrintError(ex.Message);
-                backgroundThread.Abort();
             }
-            backgroundThread.Abort();
         }
         public void Compile()
         {
@@ -536,8 +525,23 @@ namespace BTDToolbox
         }
         private void PrintError(string exception)
         {
+            if (this == null)
+                return;
+
             ConsoleHandler.appendLog("An error occured that may prevent the program from running properly.\r\nThe error is below: \r\n\r\n" + exception + "\r\n");
-            this.Close();
+
+            if(exception == "The password did not match.")
+            {
+                MessageBox.Show("Failed to create project!!!\n\nThe password for the zip was incorrect, " +
+                    "make sure you entered the correct password" +
+                    " and selected the correct game for your mod (if you browsed for an existing" +
+                    " mod rather than creating a new one)");
+            }
+            
+            try
+            { this.Invoke(new Action(() => this.Close())); }
+            catch(System.InvalidOperationException)
+            { }
         }
 
         public static void CreateAssetBundleJet(string exportPath)

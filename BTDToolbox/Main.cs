@@ -253,16 +253,10 @@ namespace BTDToolbox
         {
             ZipForm.existingJetFile = "";
             string path = BrowseForFile("Browse for an existing .jet file", "jet", "Jet files (*.jet)|*.jet|All files (*.*)|*.*", "");
-            if (path != null && path != "")
+            if (Guard.IsStringValid(path) && path.Contains(".jet"))
             {
-                if (path.Contains(".jet"))
-                {
-                    gameName = DetermineJet_Game(path);
-                    ZipForm.existingJetFile = path;
-                    Serializer.SaveConfig(this, "game");
-                    var getName = new SetProjectName();
-                    getName.Show();
-                }
+                SelectGame select = new SelectGame(path);
+                select.Show();
             }
         }
         private void OpenExistingProject_Click(object sender, EventArgs e)
@@ -536,6 +530,11 @@ namespace BTDToolbox
         {
             CreateBackup("BTD5");
         }
+        private void Replace_BMC_Backup_Click(object sender, EventArgs e)
+        {
+            CreateBackup("BMC");
+        }
+
         private void TestForm_Click(object sender, EventArgs e)
         {
             JsonEditorHandler.OpenFile(CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower");
@@ -564,6 +563,19 @@ namespace BTDToolbox
             else
                 ConsoleHandler.appendLog("Invalid game directory selected.");
         }
+        private void resetBMCexeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string g = "BMC";
+            ConsoleHandler.appendLog("Please browse for MonkeyCity-Win.exe");
+            browseForExe(g);
+            if (isGamePathValid(g) == true)
+            {
+                ConsoleHandler.appendLog("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
+            }
+            else
+                ConsoleHandler.appendLog("Invalid game directory selected.");
+        }
+
         private void ResetUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Resetting user settings...");
@@ -583,7 +595,11 @@ namespace BTDToolbox
         {
             RestoreGame_ToBackup("BTDB");
         }
-        
+        private void Restore_BMC_Click(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup("BMC");
+        }
+
 
         private void BTDFontsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -611,46 +627,8 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string startDir = "";
-            if (gameName != "")
-            {
-                MessageBox.Show("Please select the sprite file you want to decompile");
-                if (gameName == "BTD5")
-                {
-                    if(Serializer.Deserialize_Config().BTD5_Directory != "")
-                    {
-                        startDir = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Textures";
-                    }
-                }
-                else
-                {
-                    if (Serializer.Deserialize_Config().BTDB_Directory != "")
-                    {
-                        startDir = Serializer.Deserialize_Config().BTDB_Directory + "\\Assets\\Textures";
-                    }
-                }
-            }
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = startDir;
-            ofd.Title = "Browse for sprite sheet";
-            ofd.Filter = "Image files (*.png, *.jpng, *.jpg, *.jpeg) | *.png; *.jpng; *.jpg; *.jpeg";
-            ofd.Multiselect = true;
-            if(ofd.ShowDialog() == DialogResult.OK)
-            {
-                if(ofd.FileName.EndsWith(".png") || ofd.FileName.EndsWith(".jpng") || ofd.FileName.EndsWith(".jpg") || ofd.FileName.EndsWith(".jpeg"))
-                {
-                    SpriteSheet_Handler handler = new SpriteSheet_Handler();
-                    Thread thread = new Thread(delegate () { handler.Extract(ofd.FileName, "Cell"); });
-                    thread.Start();
-                    
-                }
-                else
-                {
-                    MessageBox.Show("You selected an invalid filetype. Please contact the TD Toolbox team if you think we should add this to the list");
-                }
-            }
-            /*BattlesPassManager mgr = new BattlesPassManager();
-            mgr.Show();*/
+            SelectGame form = new SelectGame();
+            form.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -693,6 +671,30 @@ namespace BTDToolbox
             }
         }
 
+
+
+        private void bMCDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isGamePathValid("BMC"))
+            {
+                ConsoleHandler.appendLog("Opening Monkey City Directory");
+                Process.Start(DeserializeConfig().BMC_Directory);
+            }
+            else
+            {
+                ConsoleHandler.appendLog("Could not find your BMC directory");
+                browseForExe("BMC");
+                if (isGamePathValid("BMC"))
+                {
+                    ConsoleHandler.appendLog("Opening BMC Directory");
+                    Process.Start(DeserializeConfig().BMC_Directory);
+                }
+                else
+                {
+                    ConsoleHandler.appendLog("Something went wrong...");
+                }
+            }
+        }
         private void BTD5DirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             if (isGamePathValid("BTD5"))
@@ -825,6 +827,10 @@ namespace BTDToolbox
         {
             CreateBackup("BTDB");
         }
+        private void forBMCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateBackup("BMC");
+        }
 
         private void RestoreBTD5LocToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -835,6 +841,12 @@ namespace BTDToolbox
         {
             RestoreGame_ToBackup_LOC("BTDB");
         }
+        private void restoreBMCLocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreGame_ToBackup_LOC("BMC");
+        }
+
+
 
         private void Reset_EXE_Click(object sender, EventArgs e)
         {
@@ -847,12 +859,17 @@ namespace BTDToolbox
         }
         private void ValidateBTD5_Click(object sender, EventArgs e)
         {
-            GeneralMethods.SteamValidateBTD5();
+            SteamValidate("BTD5");
         }
         private void ValidateBTDB_Click(object sender, EventArgs e)
         {
-            GeneralMethods.SteamValidateBTDB();
+            SteamValidate("BTDB");
         }
+        private void ValidateBMC_Click(object sender, EventArgs e)
+        {
+            SteamValidate("BMC");
+        }
+
         private void FontForPCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("Opening download for BTD Font for PC");
@@ -997,6 +1014,11 @@ namespace BTDToolbox
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ContactUs_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://discordapp.com/invite/jj5Q7mA");
         }
     }
 }

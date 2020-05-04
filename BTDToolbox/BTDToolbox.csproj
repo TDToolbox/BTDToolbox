@@ -69,6 +69,7 @@
     <Compile Include="Classes\Bloon_Class.cs" />
     <Compile Include="Classes\Card_Class.cs" />
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
+    <Compile Include="Classes\Guard.cs" />
     <Compile Include="Classes\ImageProcessing.cs" />
     <Compile Include="Classes\JsonEditorHandler.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
@@ -141,6 +142,12 @@
     <Compile Include="Extra Forms\FlashReader.Designer.cs">
       <DependentUpon>FlashReader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extra Forms\SelectGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\SelectGame.Designer.cs">
+      <DependentUpon>SelectGame.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extra Forms\SpriteVisualizer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\FlashReader.resx">
       <DependentUpon>FlashReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\SelectGame.resx">
+      <DependentUpon>SelectGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>

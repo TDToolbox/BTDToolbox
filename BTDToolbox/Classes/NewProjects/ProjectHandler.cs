@@ -57,6 +57,9 @@ namespace BTDToolbox.Classes.NewProjects
         }
         public static void SaveProject()
         {
+            if (project == null)
+                project = new ProjectClass.ProjectFile();
+
             project.ProjectName = CurrentProjectVariables.ProjectName;
             project.PathToProjectFiles = CurrentProjectVariables.PathToProjectFiles;
             project.PathToProjectClassFile = CurrentProjectVariables.PathToProjectClassFile;

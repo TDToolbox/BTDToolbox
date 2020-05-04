@@ -240,11 +240,11 @@ namespace BTDToolbox.Extra_Forms
                             {
                                 if (game == "BTD5")
                                 {
-                                    GeneralMethods.SteamValidateBTD5();
+                                    GeneralMethods.SteamValidate("BTD5");
                                 }
                                 else
                                 {
-                                    GeneralMethods.SteamValidateBMC();
+                                    GeneralMethods.SteamValidate("BMC");
                                 }
                             }
                             else
@@ -809,11 +809,16 @@ namespace BTDToolbox.Extra_Forms
                 {
                     if (Upgrades_ListBox.Items.Count > 0)
                     {
-                        var item = Upgrades_ListBox.SelectedIndex;
-                        Upgrades_ListBox.Items.RemoveAt(item);
-                        Upgrades_ListBox.Items.Insert(item, UpgradeName_TextBox.Text);
-                        upgradenames[item] = UpgradeName_TextBox.Text;
-                        loc_upgradeNames[item] = UpgradeName_TextBox.Text;
+                        if (Upgrades_ListBox.SelectedIndex < 0)
+                            return;
+
+                        int item = Upgrades_ListBox.SelectedIndex;;
+                        string text = UpgradeName_TextBox.Text;
+                        Upgrades_ListBox.Items[item] = text;
+                        upgradenames[item] = text;
+
+                        if(CurrentProjectVariables.GameName != "BTDB")
+                            loc_upgradeNames[item] = UpgradeName_TextBox.Text;
 
                         Upgrades_ListBox.SelectedIndex = item;
                         UpgradeName_TextBox.SelectionStart = UpgradeName_TextBox.Text.Length;

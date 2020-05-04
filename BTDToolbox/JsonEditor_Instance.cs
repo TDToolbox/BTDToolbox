@@ -746,11 +746,11 @@ namespace BTDToolbox
                 Editor_TextBox.SelectionStart = CharIndex_UnderMouse;
                 Editor_TextBox.Paste();
             }
-            if (e.ClickedItem.Text == "Find subtask")
+            if (e.ClickedItem.Text == "Find Subtask")
             {
                 FindSubtask_Button_Event();
             }
-            if (e.ClickedItem.Text == "Get current subtask number")
+            if (e.ClickedItem.Text == "Get this subtask number")
             {
                 GetSubtaskNum();
             }
@@ -1151,6 +1151,17 @@ namespace BTDToolbox
                 ConsoleHandler.force_appendLog("It is already disabled. You can use it manually by pressing the \"Re-format JSON\" button above. " +
                     "Or, you can change it in  Settings, which you can find under the \"File\" button at the top of toolbox.");
             }
+        }
+
+        private void CloseFindPanel_Button_Click(object sender, EventArgs e)
+        {
+            Find_Panel.Hide();
+
+            Find_TB.Text = "";
+            Replace_TB.Text = "";
+            SearchOptions_Panel.Visible = false;
+            Editor_TextBox.Size = new Size(Editor_TextBox.Size.Width, Editor_TextBox.Size.Height + 80);
+            tB_line.Size = new Size(tB_line.Size.Width, tB_line.Size.Height + 80);
         }
     }
 }
