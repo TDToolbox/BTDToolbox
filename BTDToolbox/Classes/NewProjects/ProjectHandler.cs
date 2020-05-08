@@ -33,14 +33,19 @@ namespace BTDToolbox.Classes.NewProjects
                 bool isValid = JSON_Reader.IsValidJson(json);
                 if(!isValid)
                 {
-                    if (JetProps.get().Count() > 0)
+                    json = json.Replace("\\\\", "\\").Replace("\\", "\\\\");
+                    isValid = JSON_Reader.IsValidJson(json);
+                    if (!isValid)
                     {
-                        MessageBox.Show("Project File has invalid JSON. Please contact BTD Toolbox devs for assistance. Click \"Help\" at the top, then click \"Contact Us\"");
-                        try { JetProps.getForm(JetProps.get().Count() - 1).Close(); }
-                        catch (System.InvalidOperationException) { }
-                    }
+                        if (JetProps.get().Count() > 0)
+                        {
+                            MessageBox.Show("Project File has invalid JSON. Please contact BTD Toolbox devs for assistance. Click \"Help\" at the top, then click \"Contact Us\"");
+                            try { JetProps.getForm(JetProps.get().Count() - 1).Close(); }
+                            catch (System.InvalidOperationException) { }
+                        }
 
-                    return null;
+                        return null;
+                    }
                 }
 
                 project = JsonConvert.DeserializeObject<ProjectClass.ProjectFile>(json);
