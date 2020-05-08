@@ -48,9 +48,11 @@ namespace BTDToolbox
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
-            Main.projName = projName;
+            Main.projName = dirInfo.FullName;
             this.DoubleBuffered = true;
             string gamedir = "";
+
+            //MessageBox.Show(dirInfo.FullName);
 
             initTreeMenu();
 
@@ -135,16 +137,35 @@ namespace BTDToolbox
         }
         private void LoadProjectFile()
         {
-            var dirs = new DirectoryInfo(Environment.CurrentDirectory + "\\Projects").GetDirectories();
+            string projClassFolder = "";
+            string[] split = dirInfo.FullName.Split('\\');
+            if (split[split.Length - 1] == split[split.Length - 2])
+                projClassFolder = dirInfo.FullName.Remove(dirInfo.FullName.LastIndexOf('\\'), dirInfo.FullName.Length - dirInfo.FullName.LastIndexOf('\\'));
+            else
+                projClassFolder = dirInfo.FullName;
+
+
+            var files = new DirectoryInfo(projClassFolder).GetFiles("*.toolbox");
+            if (files.Count() == 1)
+            {
+                ProjectHandler.ReadProject(files[0].FullName);
+            }
+            else
+            {
+                ConsoleHandler.force_appendLog_CanRepeat("Something went wrong. Your project file wasnt found or you had more than one. ");
+            }
+            /*var dirs = new DirectoryInfo(Environment.CurrentDirectory + "\\Projects").GetDirectories();
             foreach (var dir in dirs)
             {
                 if (dir.Name == projName)
                 {
                     lastProject = dir.FullName;
                     ProjectHandler.ReadProject(dir.FullName + "\\" + projName + ".toolbox");
+
+                    //Main.projName = dir.FullName + "\\" + projName;
                     Serializer.SaveConfig(this, "jet explorer");
                 }
-            }
+            }*/
         }
         private void initTreeMenu()
         {

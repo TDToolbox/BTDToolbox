@@ -51,6 +51,7 @@ namespace BTDToolbox
         string previousSearchPhrase = "";
         bool searchPhrase_selected = false;
 
+        #region Initialize
         public JsonEditor_Instance()
         {
             InitializeComponent();
@@ -94,9 +95,12 @@ namespace BTDToolbox
             }
             finishedLoading = true;
         }
+        #endregion
+
         //
         //JSON
         //
+        #region JSON
         private void Editor_TextBox_TextChanged(object sender, EventArgs e)
         {
             if (hasPastedCode == true)
@@ -224,10 +228,12 @@ namespace BTDToolbox
             }
             
         }
+        #endregion
 
         //
         //EZ Tools, Open buttons, and text formatting
         //
+        #region EZ Tools, Open Buttons, and text formatting
         private int IndentNewLines()
         {
             int index = Editor_TextBox.GetFirstCharIndexOfCurrentLine();
@@ -481,9 +487,12 @@ namespace BTDToolbox
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
         }
+        #endregion
+
         //
         //Add line numbers
         //
+        #region Add Line Numbers
         public int getWidth()
         {
             int w = 25;
@@ -558,10 +567,12 @@ namespace BTDToolbox
                 AddLineNumbers();
             }
         }
+        #endregion
 
         //
         //Find and replace stuff
         //
+        #region Find and Replace stuff
         private void ShowSearchMenu(string op)
         {
             Editor_TextBox.Size = new Size(Editor_TextBox.Size.Width, Editor_TextBox.Size.Height - 40);
@@ -719,10 +730,12 @@ namespace BTDToolbox
             startPosition = startPosition + endPosition + Editor_TextBox.SelectionStart + 1;
             FindText();
         }
+        #endregion
 
         //
         //Right-Click menu
         //
+        #region Right-Click Menu
         private void Editor_TextBox_RightClicked(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -792,11 +805,12 @@ namespace BTDToolbox
                 GetSubtaskNum();
             }
         }
-
+        #endregion
 
         //
         //Subtask stuff
         //
+        #region Subtast stuff
         private void FindSubtask_Button_Event()
         {
             if (!Find_Panel.Visible)
@@ -859,10 +873,12 @@ namespace BTDToolbox
                     ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
             }
         }
+        #endregion
 
         //
         //UI Events
         //
+        #region UI Events
         private void SetHideEvents()
         {
             MouseClick += HideExtraPanels;
@@ -1066,11 +1082,12 @@ namespace BTDToolbox
             else
                 ConsoleHandler.appendNotice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
         }
-
+        #endregion
 
         //
         //Save editor stuff
         //
+        #region Save editor stuff
         private void Encrypt_Button_Click(object sender, EventArgs e)
         {
             if(!jsonError)
@@ -1093,6 +1110,11 @@ namespace BTDToolbox
                 ConsoleHandler.force_appendNotice("You need to fix your JSON error before continuing...");
             }
         }
+        #endregion
+
+
+
+        #region Unsorted
         private void ReformatJSON_Button_Click(object sender, EventArgs e)
         {
             ConsoleHandler.appendLog("JSON Formatted!");
@@ -1163,5 +1185,6 @@ namespace BTDToolbox
             Editor_TextBox.Size = new Size(Editor_TextBox.Size.Width, Editor_TextBox.Size.Height + 80);
             tB_line.Size = new Size(tB_line.Size.Width, tB_line.Size.Height + 80);
         }
+        #endregion
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
 using System.IO;
+using BTDToolbox.Classes;
 
 namespace BTDToolbox
 {
@@ -21,10 +22,12 @@ namespace BTDToolbox
         public bool isRenaming = false;
         ConfigFile programData;
         public JetForm jetf;
+        string customFolder;
 
         public SetProjectName()
         {
             InitializeComponent();
+            
             programData = Serializer.Deserialize_Config();
             gameName = CurrentProjectVariables.GameName;
 
@@ -88,12 +91,13 @@ namespace BTDToolbox
             }
 
             bool writeProj = true;
-            string projName = ReturnName(ProjectName_TextBox.Text, gameName);//.Replace("\\", "");
-            string projdir = Environment.CurrentDirectory + "\\Projects" + projName;
+            string projName = ReturnName(ProjectName_TextBox.Text, gameName);
+            string projdir = "";
 
-/*            
-            MessageBox.Show(projName);
-            MessageBox.Show(projdir);*/
+            if(Guard.IsStringValid(customFolder))
+                projdir = customFolder + "\\" + projName;
+            else
+                projdir = Environment.CurrentDirectory + "\\Projects" + projName;
 
             if (Directory.Exists(projdir))
             {
@@ -229,6 +233,21 @@ namespace BTDToolbox
             {
                 this.Close();
             }
+        }
+
+        private void CustomLocation_Button_Click(object sender, EventArgs e)
+        {
+            string path = GeneralMethods.BrowseForDirectory("Please choose where to save the project", Environment.CurrentDirectory);
+            this.Focus();
+
+            if (!Guard.IsStringValid(path))
+            {
+                ConsoleHandler.appendLog("You didn't select a valid folder. Please try again, or use let toolbox use the default folder");
+                MessageBox.Show("You didn't select a valid folder. Please try again, or use let toolbox use the default folder");
+                return;
+            }
+            
+            customFolder = path;
         }
     }
 }

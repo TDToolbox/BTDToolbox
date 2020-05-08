@@ -34,6 +34,8 @@
             this.RandomName_RadioButton = new System.Windows.Forms.RadioButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.CreateProject_Button = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.CustomLocation_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,12 +108,36 @@
             this.CreateProject_Button.UseVisualStyleBackColor = true;
             this.CreateProject_Button.Click += new System.EventHandler(this.CreateProject_Button_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(9, 124);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 17);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Optional:";
+            // 
+            // CustomLocation_Button
+            // 
+            this.CustomLocation_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CustomLocation_Button.Location = new System.Drawing.Point(12, 144);
+            this.CustomLocation_Button.Name = "CustomLocation_Button";
+            this.CustomLocation_Button.Size = new System.Drawing.Size(110, 23);
+            this.CustomLocation_Button.TabIndex = 10;
+            this.CustomLocation_Button.Text = "Custom location";
+            this.CustomLocation_Button.UseVisualStyleBackColor = true;
+            this.CustomLocation_Button.Click += new System.EventHandler(this.CustomLocation_Button_Click);
+            // 
             // SetProjectName
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(405, 179);
+            this.Controls.Add(this.CustomLocation_Button);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.RandomName_RadioButton);
             this.Controls.Add(this.CustomName_RadioButton);
             this.Controls.Add(this.CreateProject_Button);
@@ -140,5 +166,7 @@
         private System.Windows.Forms.RadioButton RandomName_RadioButton;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button CreateProject_Button;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button CustomLocation_Button;
     }
 }
