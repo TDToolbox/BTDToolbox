@@ -26,6 +26,7 @@ namespace BTDToolbox
         Font font;
         ConfigFile programData;
         public bool jsonError;
+        bool pasted = false;
         public bool fileModified = false;
         public string path = "";
         public string filename = "";
@@ -899,6 +900,10 @@ namespace BTDToolbox
         }
         private void Find_TB_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                pasted = true;
+            }
             if (e.Control && e.KeyCode == Keys.F)
             {
                 ShowSearchMenu("find");
@@ -1186,5 +1191,35 @@ namespace BTDToolbox
             tB_line.Size = new Size(tB_line.Size.Width, tB_line.Size.Height + 80);
         }
         #endregion
+
+        private void Replace_TB_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                pasted = true;
+            }
+        }
+
+        private void Replace_TB_TextChanged(object sender, EventArgs e)
+        {
+            if(pasted)
+            {
+                Replace_TB.SelectAll();
+                Replace_TB.SelectionColor = Color.Black;
+
+                pasted = false;
+            }            
+        }
+
+        private void Find_TB_TextChanged(object sender, EventArgs e)
+        {
+            if (pasted)
+            {
+                Find_TB.SelectAll();
+                Find_TB.SelectionColor = Color.Black;
+
+                pasted = false;
+            }
+        }
     }
 }

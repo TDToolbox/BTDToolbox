@@ -62,6 +62,7 @@
             this.CloseFile_Button = new System.Windows.Forms.Button();
             this.JsonError_Label = new System.Windows.Forms.Label();
             this.Find_Panel = new System.Windows.Forms.Panel();
+            this.CloseFindPanel_Button = new System.Windows.Forms.Button();
             this.SearchOptions_Button = new System.Windows.Forms.Button();
             this.Find_Button = new System.Windows.Forms.Button();
             this.Find_TB = new System.Windows.Forms.RichTextBox();
@@ -81,7 +82,6 @@
             this.findSubtaskToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.getThisSubtaskNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Encrypt_Button = new System.Windows.Forms.Button();
-            this.CloseFindPanel_Button = new System.Windows.Forms.Button();
             this.JsonToolstrip.SuspendLayout();
             this.Find_Panel.SuspendLayout();
             this.SearchOptions_Panel.SuspendLayout();
@@ -404,6 +404,19 @@
             this.Find_Panel.TabIndex = 32;
             this.Find_Panel.Visible = false;
             // 
+            // CloseFindPanel_Button
+            // 
+            this.CloseFindPanel_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CloseFindPanel_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.CloseFindPanel_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CloseFindPanel_Button.Location = new System.Drawing.Point(0, 1);
+            this.CloseFindPanel_Button.Name = "CloseFindPanel_Button";
+            this.CloseFindPanel_Button.Size = new System.Drawing.Size(25, 20);
+            this.CloseFindPanel_Button.TabIndex = 35;
+            this.CloseFindPanel_Button.Text = "X";
+            this.CloseFindPanel_Button.UseVisualStyleBackColor = false;
+            this.CloseFindPanel_Button.Click += new System.EventHandler(this.CloseFindPanel_Button_Click);
+            // 
             // SearchOptions_Button
             // 
             this.SearchOptions_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -440,6 +453,7 @@
             this.Find_TB.TabIndex = 3;
             this.Find_TB.Text = "";
             this.Find_TB.Visible = false;
+            this.Find_TB.TextChanged += new System.EventHandler(this.Find_TB_TextChanged);
             this.Find_TB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Find_TB_KeyDown);
             // 
             // Replace_Button
@@ -465,6 +479,8 @@
             this.Replace_TB.TabIndex = 0;
             this.Replace_TB.Text = "";
             this.Replace_TB.Visible = false;
+            this.Replace_TB.TextChanged += new System.EventHandler(this.Replace_TB_TextChanged);
+            this.Replace_TB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Replace_TB_KeyDown);
             // 
             // SearchOptions_Panel
             // 
@@ -577,19 +593,6 @@
             this.Encrypt_Button.UseVisualStyleBackColor = false;
             this.Encrypt_Button.Visible = false;
             this.Encrypt_Button.Click += new System.EventHandler(this.Encrypt_Button_Click);
-            // 
-            // CloseFindPanel_Button
-            // 
-            this.CloseFindPanel_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CloseFindPanel_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.CloseFindPanel_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CloseFindPanel_Button.Location = new System.Drawing.Point(0, 1);
-            this.CloseFindPanel_Button.Name = "CloseFindPanel_Button";
-            this.CloseFindPanel_Button.Size = new System.Drawing.Size(25, 20);
-            this.CloseFindPanel_Button.TabIndex = 35;
-            this.CloseFindPanel_Button.Text = "X";
-            this.CloseFindPanel_Button.UseVisualStyleBackColor = false;
-            this.CloseFindPanel_Button.Click += new System.EventHandler(this.CloseFindPanel_Button_Click);
             // 
             // JsonEditor_Instance
             // 

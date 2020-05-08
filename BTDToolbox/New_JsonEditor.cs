@@ -142,10 +142,10 @@ namespace BTDToolbox
                 else
                     AddText(path, true);
 
-                /*if((tabPages.Count - 1) < 0 || tabPages[tabPages.Count - 1] == null)
+                if ((tabPages.Count - 1) < 0 || tabPages[tabPages.Count - 1] == null)
                 {
                     return;
-                }*/
+                }
 
                 tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
                 
@@ -160,7 +160,6 @@ namespace BTDToolbox
         }
         private void AddText(string path, bool isFromZip)
         {
-            MessageBox.Show(path);
             if (!File.Exists(path))
             {
                 CloseTab(path);
