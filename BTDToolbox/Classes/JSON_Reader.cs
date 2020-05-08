@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using BTDToolbox.Classes.NewProjects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -154,7 +155,7 @@ namespace BTDToolbox.Classes
         public static void ValidateAllJsonFiles()
         {
             ConsoleHandler.appendLog("Beginning project validation. This may take up to a minute...");
-            string projDir = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject;
+            string projDir = CurrentProjectVariables.PathToProjectFiles;
             if(Directory.Exists(projDir))
             {
                 string ignoreFiles = ".mask,README_subcompounds.txt,a9e50211ce5c11a0fe587b9ef452798f.json,333fd8efdbad97247c84556b100b1e74.json,brick_wall.path,battle_knot.path,19032012,005f0c8868851848d1269efd2d7e91a2.json,b7f1428b233718e0acaef609d317bad3.json,d4671aff849ceb62af5e9417f9db61d2.json";
