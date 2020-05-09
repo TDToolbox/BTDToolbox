@@ -71,11 +71,13 @@
     <Compile Include="Classes\CrackBTDB_Pass.cs" />
     <Compile Include="Classes\Guard.cs" />
     <Compile Include="Classes\ImageProcessing.cs" />
+    <Compile Include="Classes\JSON Classes\TowerSelectionMenu.cs" />
     <Compile Include="Classes\JsonEditorHandler.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NewProjects\CurrentProjectVariables.cs" />
     <Compile Include="Classes\NewProjects\ProjectHandler.cs" />
     <Compile Include="Classes\NewProjects\ProjectClass.cs" />
+    <Compile Include="Classes\NewTower.cs" />
     <Compile Include="Classes\NKHook.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\QuickType.cs" />
@@ -168,6 +170,12 @@
       <DependentUpon>UpdateChangelog.cs</DependentUpon>
     </Compile>
     <Compile Include="Extractor\Extractor.cs" />
+    <Compile Include="AlwaysUseNKH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlwaysUseNKH.Designer.cs">
+      <DependentUpon>AlwaysUseNKH.cs</DependentUpon>
+    </Compile>
     <Compile Include="JsonEditor_Instance.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -227,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\UpdateChangelog.resx">
       <DependentUpon>UpdateChangelog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlwaysUseNKH.resx">
+      <DependentUpon>AlwaysUseNKH.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JsonEditor_Instance.resx">
       <DependentUpon>JsonEditor_Instance.cs</DependentUpon>

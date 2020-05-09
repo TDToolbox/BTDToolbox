@@ -48,6 +48,8 @@
             this.Find_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Replace_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Launch_Program_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.LaunchWIthNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.LaunchNoNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.NKHook_Github = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,8 +132,6 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.LaunchWIthNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.LaunchNoNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -299,6 +299,18 @@
             this.Launch_Program_ToolStrip.Text = "Launch 🚀";
             this.Launch_Program_ToolStrip.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Launch_Program_ToolStrip_DropDownItemClicked);
             this.Launch_Program_ToolStrip.Click += new System.EventHandler(this.LaunchProgram_Click);
+            // 
+            // LaunchWIthNKH_Button
+            // 
+            this.LaunchWIthNKH_Button.Name = "LaunchWIthNKH_Button";
+            this.LaunchWIthNKH_Button.Size = new System.Drawing.Size(180, 22);
+            this.LaunchWIthNKH_Button.Text = "With NKHook";
+            // 
+            // LaunchNoNKH_Button
+            // 
+            this.LaunchNoNKH_Button.Name = "LaunchNoNKH_Button";
+            this.LaunchNoNKH_Button.Size = new System.Drawing.Size(180, 22);
+            this.LaunchNoNKH_Button.Text = "Without NKHook";
             // 
             // toolStripMenuItem1
             // 
@@ -951,18 +963,6 @@
             this.versionTag.Size = new System.Drawing.Size(98, 55);
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
-            // 
-            // LaunchWIthNKH_Button
-            // 
-            this.LaunchWIthNKH_Button.Name = "LaunchWIthNKH_Button";
-            this.LaunchWIthNKH_Button.Size = new System.Drawing.Size(180, 22);
-            this.LaunchWIthNKH_Button.Text = "With NKHook";
-            // 
-            // LaunchNoNKH_Button
-            // 
-            this.LaunchNoNKH_Button.Name = "LaunchNoNKH_Button";
-            this.LaunchNoNKH_Button.Size = new System.Drawing.Size(180, 22);
-            this.LaunchNoNKH_Button.Text = "Without NKHook";
             // 
             // Main
             // 

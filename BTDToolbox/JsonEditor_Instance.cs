@@ -1035,7 +1035,8 @@ namespace BTDToolbox
                 DialogResult diag = MessageBox.Show("You are trying to restore this file to the original unmodded version. Are you sure you want to do this?", "Restore to original?", MessageBoxButtons.YesNo);
                 if (diag == DialogResult.Yes)
                 {
-                    string backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
+                    
+                    string backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles.Replace("\\\\", "\\"), "");
                     if (File.Exists(backupProj))
                     {
                         if (path.Contains("."))

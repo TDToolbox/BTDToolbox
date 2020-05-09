@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
+using BTDToolbox.Extra_Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,58 +17,62 @@ namespace BTDToolbox
     public partial class SettingsWindow : ThemedForm
     {
         ConfigFile projectData;
+        bool saveNKH = false;
         public SettingsWindow()
         {
             InitializeComponent();
-            this.Size = new Size(350, 550);
+            this.Size = new Size(350, 500);
 
             projectData = Serializer.Deserialize_Config();
             Setup();
         }
         private void Setup()
         {
-            if (projectData.enableSplash == true)
-                EnableSplash.CheckState = CheckState.Checked;
-            if (projectData.useExternalEditor == true)
-                useExternalEditor.CheckState = CheckState.Checked;
-            if (projectData.disableUpdates == true)
-                DisableUpdates_CB.CheckState = CheckState.Checked;
-            if (projectData.autoFormatJSON == true)
-                AutoFormatJSON_CB.CheckState = CheckState.Checked; 
+            EnableSplash.Checked = projectData.enableSplash;
+            useExternalEditor.Checked = projectData.useExternalEditor;
+            DisableUpdates_CB.Checked = projectData.disableUpdates;
+            AutoFormatJSON_CB.Checked = projectData.autoFormatJSON;
+
+            if(CurrentProjectVariables.GameName == "BTD5")
+            {
+                UseNKH_CB.Checked = CurrentProjectVariables.UseNKHook;
+                UseNKH_CB.Visible = true;
+                CurrentProjSettings_Label.Visible = true;
+            }
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
-            if (useExternalEditor.Checked)
-                JetForm.useExternalEditor = true;
-            else
-                JetForm.useExternalEditor = false;
+            JetForm.useExternalEditor = useExternalEditor.Checked;
+            Program.enableSplash = EnableSplash.Checked;
+            Main.disableUpdates = DisableUpdates_CB.Checked;
+            Main.autoFormatJSON = AutoFormatJSON_CB.Checked;
 
-
-            if (EnableSplash.Checked)
-                Program.enableSplash = true;
-            else
-                Program.enableSplash = false;
-
-
-            if (DisableUpdates_CB.Checked)
-                Main.disableUpdates = true;
-            else
-                Main.disableUpdates = false;
-
-
-            if (AutoFormatJSON_CB.Checked)
-                Main.autoFormatJSON = true;
-            else
-                Main.autoFormatJSON = false;
-
+            CurrentProjectVariables.UseNKHook = UseNKH_CB.Checked;
 
             Serializer.SaveSmallSettings("splash");
             Serializer.SaveSmallSettings("disableUpdates");
             Serializer.SaveSmallSettings("autoFormatJSON");
             Serializer.SaveSmallSettings("external editor");
 
+            ProjectHandler.SaveProject();
             ConsoleHandler.appendLog_CanRepeat("Settings saved!!!");
             this.Close();
+        }
+
+        private void UseNKH_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!NKHook.DoesNkhExist())
+            {
+                if(UseNKH_CB.Checked == true)
+                {
+                    UseNKH_CB.Checked = false;
+
+                    ConsoleHandler.force_appendNotice("You need to have NKHook installed to do that!");
+                    MessageBox.Show("You need to have NKHook installed to do that!");
+                    NKHook_Message msg = new NKHook_Message();
+                    msg.Show();
+                }
+            }
         }
     }
 }

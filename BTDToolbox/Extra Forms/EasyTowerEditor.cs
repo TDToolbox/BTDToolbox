@@ -49,12 +49,19 @@ namespace BTDToolbox.Extra_Forms
         string towerTypeName = "";
         string specialty = "";
         string filename = ""; //this is to get the TowerName.tower part
-
+        int checkboxesChecked = 0; //number of SelectionMenuCheckboxes Checked
+        bool useBaseTower;
 
         public EasyTowerEditor()
         {
             InitializeComponent();
+            NewTower_Button.Visible = false;
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
+
+            SelectionMenu_Left_CB.CheckedChanged += SelectionMenu_ItemChecked;
+            SelectionMenu_Right_CB.CheckedChanged += SelectionMenu_ItemChecked;
+            SelectionMenu_FixedLeft_CB.CheckedChanged += SelectionMenu_ItemChecked;
+            SelectionMenu_FixedRight_CB.CheckedChanged += SelectionMenu_ItemChecked;
 
             EZTower_Opened = true;
             if (game == "BTDB")
@@ -66,8 +73,32 @@ namespace BTDToolbox.Extra_Forms
             {
                 label2.Show();
                 TowerName_TextBox.Show();
+
+                if(game == "BTD5")
+                {
+                    if (NKHook.DoesNkhExist())
+                        NewTower_Button.Visible = true;
+                }
             }
         }
+
+        private void SelectionMenu_ItemChecked(object sender, EventArgs e)
+        {
+            checkboxesChecked = 0;
+
+            if (SelectionMenu_Left_CB.Checked)
+                checkboxesChecked++;
+
+            if (SelectionMenu_Right_CB.Checked)
+                checkboxesChecked++;
+
+            if (SelectionMenu_FixedLeft_CB.Checked)
+                checkboxesChecked++;
+
+            if (SelectionMenu_FixedRight_CB.Checked)
+                checkboxesChecked++;
+        }
+
         public void CreateTowerObject(string towerPath)
         {
             string json = File.ReadAllText(towerPath);
@@ -1183,6 +1214,67 @@ namespace BTDToolbox.Extra_Forms
         private void Open_Button_Click(object sender, EventArgs e)
         {
             //Open_Button.ForeColor = Color.Black;
+        }
+
+        private void NewTower_Button_Click(object sender, EventArgs e)
+        {
+            Open_Panel.Visible = !Open_Panel.Visible;
+        }
+
+        private void ChoseName_Button_Click(object sender, EventArgs e)
+        {
+            if(NewTowerName_TB.Text.Length != 4)
+            {
+                MessageBox.Show("To use new towers with NKHook, your new tower name MUST be 4 characters long");
+            }
+            else if(checkboxesChecked == 0)
+            {
+                MessageBox.Show("Please check which side of the Tower Buy Menu you want the tower to be on");
+            }
+            else if (checkboxesChecked > 1)
+            {
+                MessageBox.Show("Please check only one checkbox");
+            }
+            else
+            {
+                CreateNewTower();
+            }
+        }
+        private void CreateNewTower()
+        {
+            NewTowerName_BGPanel.Hide();
+            var pos = NewTower.TowerSelectMenu_Pos.Left;
+
+            if (SelectionMenu_Right_CB.Checked)
+                pos = NewTower.TowerSelectMenu_Pos.Right;
+
+            if (SelectionMenu_FixedLeft_CB.Checked)
+                pos = NewTower.TowerSelectMenu_Pos.FixedLeft;
+
+            if (SelectionMenu_FixedRight_CB.Checked)
+                pos = NewTower.TowerSelectMenu_Pos.FixedRight;
+
+            string baseT = "";
+            if (useBaseTower)
+                baseT = path;
+            
+            NewTower newTower = new NewTower(NewTowerName_TB.Text, baseT, pos);
+            newTower.CreateSpecialtyBuilding = CreateSpecialty_CB.Checked;
+
+            newTower.DuplicateAllTowerFiles();
+        }
+        private void NewEmptyTower_Button_Click(object sender, EventArgs e)
+        {
+            NewTowerName_BGPanel.Show();
+            NewTowerName_BGPanel.BringToFront();
+            useBaseTower = false;
+        }
+
+        private void UseBaseTower_Buton_Click(object sender, EventArgs e)
+        {
+            NewTowerName_BGPanel.Show();
+            NewTowerName_BGPanel.BringToFront();
+            useBaseTower = true;
         }
     }
 }

@@ -36,6 +36,7 @@
             this.CreateProject_Button = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.CustomLocation_Button = new System.Windows.Forms.Button();
+            this.UseNKH_CB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,7 +114,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(9, 124);
+            this.label2.Location = new System.Drawing.Point(9, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 17);
             this.label2.TabIndex = 9;
@@ -130,12 +131,25 @@
             this.CustomLocation_Button.UseVisualStyleBackColor = true;
             this.CustomLocation_Button.Click += new System.EventHandler(this.CustomLocation_Button_Click);
             // 
+            // UseNKH_CB
+            // 
+            this.UseNKH_CB.AutoSize = true;
+            this.UseNKH_CB.ForeColor = System.Drawing.Color.White;
+            this.UseNKH_CB.Location = new System.Drawing.Point(12, 121);
+            this.UseNKH_CB.Name = "UseNKH_CB";
+            this.UseNKH_CB.Size = new System.Drawing.Size(89, 17);
+            this.UseNKH_CB.TabIndex = 11;
+            this.UseNKH_CB.Text = "Use NKHook";
+            this.UseNKH_CB.UseVisualStyleBackColor = true;
+            this.UseNKH_CB.CheckedChanged += new System.EventHandler(this.UseNKH_CB_CheckedChanged);
+            // 
             // SetProjectName
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(405, 179);
+            this.Controls.Add(this.UseNKH_CB);
             this.Controls.Add(this.CustomLocation_Button);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.RandomName_RadioButton);
@@ -168,5 +182,6 @@
         private System.Windows.Forms.Button CreateProject_Button;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button CustomLocation_Button;
+        private System.Windows.Forms.CheckBox UseNKH_CB;
     }
 }

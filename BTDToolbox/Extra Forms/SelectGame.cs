@@ -1,4 +1,5 @@
-﻿using BTDToolbox.Classes.NewProjects;
+﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.NewProjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,7 @@ namespace BTDToolbox.Extra_Forms
         {
             InitializeComponent();
         }
-
+        
         /// <summary>
         /// Constructs the form with a jet file path to pass it to other forms easier. This would be used for example
         /// if the user browsed for a jet file, then the game name is asked for.
@@ -29,6 +30,7 @@ namespace BTDToolbox.Extra_Forms
         {
             this.JetPath = jetPath;
         }
+
         #endregion
 
 
@@ -39,22 +41,23 @@ namespace BTDToolbox.Extra_Forms
 
         public void OnGameSelected()
         {
+            if (!Guard.IsStringValid(JetPath))
+                JetPath = Environment.CurrentDirectory + "\\Backups\\" + GameName + "_Original.jet";
+
             if (DoWork(GameName) == false)
             {
                 this.Close();
                 return;
             }
 
-            ZipForm.existingJetFile = this.JetPath;
+            ZipForm.existingJetFile = JetPath;
 
             Main.gameName = GameName;
             Serializer.SaveConfig(this, "game");
 
             ProjectHandler.CreateProject();
             CurrentProjectVariables.GameName = GameName;
-            CurrentProjectVariables.GamePath = GeneralMethods.ReturnGamePath(GameName);
-            ProjectHandler.SaveProject();
-
+            CurrentProjectVariables.GamePath = ReturnGamePath(GameName);
 
             var getName = new SetProjectName();
             getName.Show();

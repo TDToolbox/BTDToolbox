@@ -43,6 +43,8 @@ namespace BTDToolbox
         public static bool disableUpdates = false;
         public static bool autoFormatJSON = true;
         public static bool enableConsole;
+        
+
         bool projNoGame = false;
 
         // Win32 Constants
@@ -196,11 +198,25 @@ namespace BTDToolbox
         {
             if (e.KeyCode == Keys.F5)
             {
+                if (CurrentProjectVariables.GameName == "BTD5")
+                {
+                    if (NKHook.DoesNkhExist())
+                    {
+                        if (CurrentProjectVariables.UseNKHook == false && CurrentProjectVariables.DontAskAboutNKH == false)
+                        {
+                            AlwaysUseNKH ask = new AlwaysUseNKH(true);
+                            ask.Show();
+                            return;
+                        }
+                    }
+                }
+                
                 CompileJet("launch");
             }
             if (e.Control && e.KeyCode == Keys.N)
             {
-                AddNewJet();
+                SelectGame select = new SelectGame();
+                select.Show();
             }
             if (e.Control && e.KeyCode == Keys.S)
             {
@@ -1037,12 +1053,19 @@ namespace BTDToolbox
             {
                 if (NKHook.DoesNkhExist())
                 {
-                    CompileJet("launch nkh");
+                    if(CurrentProjectVariables.UseNKHook == false && CurrentProjectVariables.DontAskAboutNKH == false)
+                    {
+                        AlwaysUseNKH ask = new AlwaysUseNKH(true);
+                        ask.Show();
+                    }
+                    else
+                        CompileJet("launch nkh");
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Launching without it...");
-                    CompileJet("launch");
+                    ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Opening Get NKHook message... You need to launch without it until you download NKHook.");
+                    NKHook_Message msg = new NKHook_Message();
+                    msg.Show();
                 }
             }
             if (e.ClickedItem.Text == "Without NKHook")

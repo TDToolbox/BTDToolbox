@@ -155,18 +155,6 @@ namespace BTDToolbox
             {
                 ConsoleHandler.force_appendLog_CanRepeat("Something went wrong. Your project file wasnt found or you had more than one. ");
             }
-            /*var dirs = new DirectoryInfo(Environment.CurrentDirectory + "\\Projects").GetDirectories();
-            foreach (var dir in dirs)
-            {
-                if (dir.Name == projName)
-                {
-                    lastProject = dir.FullName;
-                    ProjectHandler.ReadProject(dir.FullName + "\\" + projName + ".toolbox");
-
-                    //Main.projName = dir.FullName + "\\" + projName;
-                    Serializer.SaveConfig(this, "jet explorer");
-                }
-            }*/
         }
         private void initTreeMenu()
         {
@@ -180,11 +168,8 @@ namespace BTDToolbox
 
             if (CurrentProjectVariables.GameName == "BTD5")
             {
-                if (NKHook.DoesNkhExist())
-                {
-                    Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
-                    Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
-                }
+                Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
+                Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
             }
         }
         private void JetForm_Load(object sender, EventArgs e)
@@ -623,32 +608,29 @@ namespace BTDToolbox
         }
         private void restoreSingleFile(string filepath, string filename)
         {
-            if (File.Exists(filepath))
-            {
-                File.Delete(filepath);
-            }
-            string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + filepath.Replace(CurrentProjectVariables.PathToProjectFiles, "").Replace("\\" + projName + "\\", "");
-
-            if (File.Exists(backupPath))
-            {
-                File.Copy(backupPath, filepath);
-
-                if (JsonEditorHandler.jeditor == null)
-                {
-                    JsonEditorHandler.OpenFile(filepath);
-                }
-                else if (JsonEditorHandler.jeditor.tabFilePaths.Contains(filepath))
-                {
-                    JsonEditorHandler.CloseFile(filepath);
-                    JsonEditorHandler.OpenFile(filepath);
-                }
-                ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
-            }
-            else
+            FileInfo f = new FileInfo(filepath);
+            string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + f.FullName.Replace(CurrentProjectVariables.PathToProjectFiles.Replace("\\\\", "\\"), "");
+            if (!File.Exists(backupPath))
             {
                 ConsoleHandler.appendLog_CanRepeat("Could not find " + filename + " in the backup, failed to restore file.");
+                return;
             }
-            
+
+            if (File.Exists(filepath))
+                File.Delete(filepath);
+
+            File.Copy(backupPath, filepath);
+
+            if (JsonEditorHandler.jeditor == null)
+            {
+                JsonEditorHandler.OpenFile(filepath);
+            }
+            else if (JsonEditorHandler.jeditor.tabFilePaths.Contains(filepath))
+            {
+                JsonEditorHandler.CloseFile(filepath);
+                JsonEditorHandler.OpenFile(filepath);
+            }
+            ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
         }
         private void restoreOriginal()
         {
@@ -915,7 +897,7 @@ namespace BTDToolbox
                     if (o.projName == CurrentProjectVariables.ProjectName)
                     {
                         o.Close();
-                        DeleteDirectory(Environment.CurrentDirectory + "\\Projects\\" + CurrentProjectVariables.ProjectName);
+                        DeleteDirectory(CurrentProjectVariables.PathToProjectFiles);
                     }
                 }
             }

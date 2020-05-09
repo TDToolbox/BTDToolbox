@@ -150,9 +150,9 @@
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(24, 207);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(550, 20);
+            this.label6.Size = new System.Drawing.Size(531, 20);
             this.label6.TabIndex = 7;
-            this.label6.Text = "• Make real 4x4 mods - You get get ALL of the upgrades from both upgrade paths";
+            this.label6.Text = "• Make real 4x4 mods - You get ALL of the upgrades from BOTH upgrade paths";
             // 
             // label7
             // 
