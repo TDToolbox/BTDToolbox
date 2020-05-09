@@ -201,7 +201,7 @@ namespace BTDToolbox
         {
             tempName = dirInfo.FullName;
             this.Text = tempName;
-            PopulateTreeView();
+            PopulateTreeView(null);
             return;
         }
 
@@ -212,7 +212,7 @@ namespace BTDToolbox
             Serializer.SaveSmallSettings("external editor");
         }
 
-        private void PopulateTreeView()
+        private void PopulateTreeView(string expandedpath)
         {
             TreeNode rootNode;
             
@@ -234,8 +234,15 @@ namespace BTDToolbox
             if (info.Exists)
             {
                 rootNode = new TreeNode(info.Name);
+                if(expandedpath != null)
+                {
+                    if (expandedpath.Contains(info.Name))
+                    {
+                        rootNode.Expand();
+                    }
+                }
                 rootNode.Tag = info;
-                GetDirectories(info.GetDirectories(), rootNode);
+                GetDirectories(info.GetDirectories(), rootNode, expandedpath);
                 treeView1.Nodes.Add(rootNode);
             }
 
@@ -281,7 +288,7 @@ namespace BTDToolbox
                 this.Close();
             }
         }
-        private void GetDirectories(DirectoryInfo[] subDirs, TreeNode nodeToAddTo)
+        private void GetDirectories(DirectoryInfo[] subDirs, TreeNode nodeToAddTo, string expandedPath)
         {
             TreeNode aNode;
             DirectoryInfo[] subSubDirs;
@@ -293,7 +300,19 @@ namespace BTDToolbox
                 subSubDirs = subDir.GetDirectories();
                 if (subSubDirs.Length != 0)
                 {
-                    GetDirectories(subSubDirs, aNode);
+                    GetDirectories(subSubDirs, aNode, expandedPath);
+                }
+                if (expandedPath != null)
+                {
+                    if (expandedPath.Contains(subDir.Name))
+                    {
+                        int index = expandedPath.IndexOf(subDir.Name);
+                        if (index + subDir.Name.Length + 1 > expandedPath.Length)
+                        {
+                            PopulateListView(aNode);
+                        }
+                        aNode.Expand();
+                    }
                 }
                 nodeToAddTo.Nodes.Add(aNode);
             }
@@ -485,9 +504,10 @@ namespace BTDToolbox
                     else
                     {
                         GeneralMethods.DeleteDirectory(this.Text + "\\" + item.Text);
+                        string path = this.Text;
                         treeView1.Nodes.Clear();
                         listView1.Items.Clear();
-                        PopulateTreeView();
+                        PopulateTreeView(path);
                     }
                 }
             }
@@ -575,9 +595,10 @@ namespace BTDToolbox
                         File.Copy(newPath, newPath.Replace(name, dest), true);
                     }
 
+                    string path = this.Text;
                     treeView1.Nodes.Clear();
                     listView1.Items.Clear();
-                    PopulateTreeView();
+                    PopulateTreeView(path);
                 }
             }
         }
