@@ -980,6 +980,7 @@
             this.NewTowerName_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
             this.NewTowerName_TB.ForeColor = System.Drawing.Color.White;
             this.NewTowerName_TB.Location = new System.Drawing.Point(12, 15);
+            this.NewTowerName_TB.MaxLength = 4;
             this.NewTowerName_TB.Name = "NewTowerName_TB";
             this.NewTowerName_TB.Size = new System.Drawing.Size(525, 32);
             this.NewTowerName_TB.TabIndex = 79;

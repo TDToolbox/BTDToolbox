@@ -66,7 +66,7 @@ namespace BTDToolbox
         public string ReturnName(string projName, string gameName)
         {
             Random rand = new Random();
-            string projectName_Identifier = "\\proj_" + gameName + "_";
+            string projectName_Identifier = "proj_" + gameName + "_";
 
             if (projName == null || projName == "")
             {
@@ -98,9 +98,9 @@ namespace BTDToolbox
             string projdir = "";
 
             if(Guard.IsStringValid(customFolder))
-                projdir = customFolder + projName;
+                projdir = customFolder + "\\" + projName;
             else
-                projdir = Environment.CurrentDirectory + "\\Projects" + projName;
+                projdir = Environment.CurrentDirectory + "\\Projects\\" + projName;
 
             if (Directory.Exists(projdir))
             {
@@ -149,7 +149,7 @@ namespace BTDToolbox
                         //File.Copy(backupPath, projdir + "\\" + projName + ".jet");
                         CurrentProjectVariables.ProjectName = projName;
                         CurrentProjectVariables.PathToProjectClassFile = projdir;
-                        CurrentProjectVariables.PathToProjectFiles = projdir + projName;
+                        CurrentProjectVariables.PathToProjectFiles = projdir + "\\" + projName;
 
                         ProjectHandler.SaveProject();
                     }

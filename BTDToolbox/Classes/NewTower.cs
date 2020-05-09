@@ -49,6 +49,7 @@ namespace BTDToolbox.Classes
         {
 
         }
+
         public NewTower(string newTowerName, string baseTowerPath, TowerSelectMenu_Pos towerSelectMenu_Pos) :this()
         {
             this.TowerName = newTowerName;
@@ -105,26 +106,24 @@ namespace BTDToolbox.Classes
                 return;
             }
 
-            MessageBox.Show(text);
             TowerSelectionMenu menu = TowerSelectionMenu.FromJson(text);
             TowerSelectItem newItem = new TowerSelectItem();
             bool foundBaseTower = false;
             if (UseBaseTower)
             {
-                MessageBox.Show("2");
                 newItem = TowerSelMenu_DupBaseTower();
-                if(!Guard.IsStringValid(newItem.ToString()))
+                if (!Guard.IsStringValid(newItem.ToString()))
                 {
                     foundBaseTower = false;
                     ConsoleHandler.appendLog("Unable to find chosen base tower in tower selection menu files. Using blank values instead.");
                 }
-                MessageBox.Show("3");
+                else
+                    foundBaseTower = true;
             }
             
             if(!UseBaseTower || !foundBaseTower)
                 newItem = TowerSelMenu_EmptyTower(newItem);
 
-            MessageBox.Show("4");
             if (newItem == null)
                 return;
             if (menu == null)
@@ -137,12 +136,6 @@ namespace BTDToolbox.Classes
         {
             menu.Items.Add(newItem);
             string text = menu.ToJson();
-
-            MessageBox.Show("TowerSelectFile   " + TowerSelectFiles[TowerSelPos]);
-            //MessageBox.Show(text);
-            
-
-
             string output_Cfg = JsonConvert.SerializeObject(text, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(TowerSelectFiles[TowerSelPos], false);

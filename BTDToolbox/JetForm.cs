@@ -865,7 +865,7 @@ namespace BTDToolbox
                     if (o.projName == CurrentProjectVariables.ProjectName)
                     {
                         o.Close();
-                        DeleteDirectory(Environment.CurrentDirectory + "\\Projects\\" + CurrentProjectVariables.ProjectName);
+                        DeleteDirectory(CurrentProjectVariables.PathToProjectFiles);
                     }
                 }
             }

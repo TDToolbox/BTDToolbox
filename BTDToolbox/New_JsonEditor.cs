@@ -141,7 +141,6 @@ namespace BTDToolbox
             userControls[userControls.Count - 1].path = path;
             userControls[userControls.Count - 1].filename = filename;
 
-            MessageBox.Show(path);
             if (isFromZip == false)
                 AddText(path, false);
             else

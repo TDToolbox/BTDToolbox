@@ -50,6 +50,7 @@ namespace BTDToolbox.Extra_Forms
         string specialty = "";
         string filename = ""; //this is to get the TowerName.tower part
         int checkboxesChecked = 0; //number of SelectionMenuCheckboxes Checked
+        bool useBaseTower;
 
         public EasyTowerEditor()
         {
@@ -1222,7 +1223,11 @@ namespace BTDToolbox.Extra_Forms
 
         private void ChoseName_Button_Click(object sender, EventArgs e)
         {
-            if(checkboxesChecked == 0)
+            if(NewTowerName_TB.Text.Length != 4)
+            {
+                MessageBox.Show("To use new towers with NKHook, your new tower name MUST be 4 characters long");
+            }
+            else if(checkboxesChecked == 0)
             {
                 MessageBox.Show("Please check which side of the Tower Buy Menu you want the tower to be on");
             }
@@ -1232,33 +1237,42 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                NewTowerName_BGPanel.Hide();
-                var pos = NewTower.TowerSelectMenu_Pos.Left;
-
-                if (SelectionMenu_Right_CB.Checked)
-                    pos = NewTower.TowerSelectMenu_Pos.Right;
-
-                if (SelectionMenu_FixedLeft_CB.Checked)
-                    pos = NewTower.TowerSelectMenu_Pos.FixedLeft;
-
-                if (SelectionMenu_FixedRight_CB.Checked)
-                    pos = NewTower.TowerSelectMenu_Pos.FixedRight;
-                
-
-                NewTower newTower = new NewTower("newName", path, pos);
+                CreateNewTower();
             }
         }
-        
+        private void CreateNewTower()
+        {
+            NewTowerName_BGPanel.Hide();
+            var pos = NewTower.TowerSelectMenu_Pos.Left;
+
+            if (SelectionMenu_Right_CB.Checked)
+                pos = NewTower.TowerSelectMenu_Pos.Right;
+
+            if (SelectionMenu_FixedLeft_CB.Checked)
+                pos = NewTower.TowerSelectMenu_Pos.FixedLeft;
+
+            if (SelectionMenu_FixedRight_CB.Checked)
+                pos = NewTower.TowerSelectMenu_Pos.FixedRight;
+
+            string baseT = "";
+            if (useBaseTower)
+                baseT = path;
+            
+            NewTower newTower = new NewTower(NewTowerName_TB.Text, baseT, pos);          
+
+        }
         private void NewEmptyTower_Button_Click(object sender, EventArgs e)
         {
             NewTowerName_BGPanel.Show();
             NewTowerName_BGPanel.BringToFront();
+            useBaseTower = false;
         }
 
         private void UseBaseTower_Buton_Click(object sender, EventArgs e)
         {
             NewTowerName_BGPanel.Show();
             NewTowerName_BGPanel.BringToFront();
+            useBaseTower = true;
         }
     }
 }
