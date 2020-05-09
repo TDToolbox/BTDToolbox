@@ -19,6 +19,7 @@ using BTDToolbox.Extra_Forms;
 using BTDToolbox.Classes.NewProjects;
 using BTDToolbox.Properties;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 namespace BTDToolbox
 {
@@ -442,7 +443,20 @@ namespace BTDToolbox
                     string source = currentPath + "\\" + select;
                     string dest = currentPath + "\\" + newName;
 
-                    File.Move(source, dest);
+                    if(source.ToLower() == dest.ToLower())
+                    {
+                        ConsoleHandler.appendLog("The file names are too similar!");
+                        return;
+                    }
+
+                    // get the file attributes for file or directory
+                    FileAttributes attr = File.GetAttributes(source);
+
+                    //detect whether its a directory or file
+                    if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                        Directory.Move(source, dest);
+                    else
+                        File.Move(source, dest);
 
                     Selected[0].Text = newName;
                 }
