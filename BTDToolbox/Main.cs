@@ -1063,8 +1063,9 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Launching without it...");
-                    CompileJet("launch");
+                    ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Opening Get NKHook message... You need to launch without it until you download NKHook.");
+                    NKHook_Message msg = new NKHook_Message();
+                    msg.Show();
                 }
             }
             if (e.ClickedItem.Text == "Without NKHook")

@@ -167,11 +167,8 @@ namespace BTDToolbox
 
             if (CurrentProjectVariables.GameName == "BTD5")
             {
-                if (NKHook.DoesNkhExist())
-                {
-                    Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
-                    Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
-                }
+                Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
+                Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
             }
         }
         private void JetForm_Load(object sender, EventArgs e)
