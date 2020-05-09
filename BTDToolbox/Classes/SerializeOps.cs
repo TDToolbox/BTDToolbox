@@ -24,15 +24,15 @@ namespace BTDToolbox
 
             if (formName == "export path")
             {
-                cfg.ExportPath = ZipForm.savedExportPath;
+                cfg.ExportPath = ZipForm.savedExportPath.Replace("\\\\", "\\");
             }
             if (formName == "btd5 save")
             {
-                cfg.SavePathBTD5 = SaveEditor.TryFindSteam.BTD5SavePath;
+                cfg.SavePathBTD5 = SaveEditor.TryFindSteam.BTD5SavePath.Replace("\\\\", "\\");
             }
             if (formName == "btdb save")
             {
-                cfg.SavePathBTDB = SaveEditor.TryFindSteam.BTDBSavePath;
+                cfg.SavePathBTDB = SaveEditor.TryFindSteam.BTDBSavePath.Replace("\\\\", "\\");
             }
             if (formName == "updater")
             {
@@ -112,17 +112,17 @@ namespace BTDToolbox
                 if (BTD5_Dir == null)
                     cfg.BTD5_Directory = cfg.BTD5_Directory;
                 else
-                    cfg.BTD5_Directory = BTD5_Dir;
+                    cfg.BTD5_Directory = BTD5_Dir.Replace("\\\\", "\\");
 
                 if (BTDB_Dir == null)
                     cfg.BTDB_Directory = cfg.BTDB_Directory;
                 else
-                    cfg.BTDB_Directory = BTDB_Dir;
+                    cfg.BTDB_Directory = BTDB_Dir.Replace("\\\\", "\\");
 
                 if (BMC_Dir == null)
                     cfg.BMC_Directory = "";
                 else
-                    cfg.BMC_Directory = BMC_Dir;
+                    cfg.BMC_Directory = BMC_Dir.Replace("\\\\", "\\");
                 
             }
 
@@ -160,7 +160,7 @@ namespace BTDToolbox
                 if (projName == null)
                     cfg.LastProject = cfg.LastProject;
                 else
-                    cfg.LastProject = projName;
+                    cfg.LastProject = projName.Replace("\\\\", "\\");
             }
 
             if (formName == "json editor")
