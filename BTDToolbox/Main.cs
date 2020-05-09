@@ -1022,23 +1022,24 @@ namespace BTDToolbox
             Process.Start("https://discordapp.com/invite/jj5Q7mA");
         }
 
-        private void LaunchWIthNKH_Button_Click(object sender, EventArgs e)
+        private void Launch_Program_ToolStrip_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            
-            if (NKHook.DoesNkhExist())
+            if(e.ClickedItem.Text == "With NKHook")
             {
-                CompileJet("launch nkh");
+                if (NKHook.DoesNkhExist())
+                {
+                    CompileJet("launch nkh");
+                }
+                else
+                {
+                    ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Launching without it...");
+                    CompileJet("launch");
+                }
             }
-            else
+            if (e.ClickedItem.Text == "Without NKHook")
             {
-                ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Launching without it...");
                 CompileJet("launch");
             }
-        }
-
-        private void LaunchNoNKH_Button_Click(object sender, EventArgs e)
-        {
-            CompileJet("launch");
         }
     }
 }
