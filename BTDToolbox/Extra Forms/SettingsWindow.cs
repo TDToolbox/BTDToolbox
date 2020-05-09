@@ -1,5 +1,6 @@
 ﻿using BTDToolbox.Classes;
 using BTDToolbox.Classes.NewProjects;
+using BTDToolbox.Extra_Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,14 +35,9 @@ namespace BTDToolbox
 
             if(CurrentProjectVariables.GameName == "BTD5")
             {
-                if(NKHook.DoesNkhExist())
-                {
-                    UseNKH_CB.Checked = CurrentProjectVariables.UseNKHook;
-                    
-                    saveNKH = true;
-                    UseNKH_CB.Visible = true;
-                    CurrentProjSettings_Label.Visible = true;
-                }
+                UseNKH_CB.Checked = CurrentProjectVariables.UseNKHook;
+                UseNKH_CB.Visible = true;
+                CurrentProjSettings_Label.Visible = true;
             }
         }
         private void Save_Button_Click(object sender, EventArgs e)
@@ -51,7 +47,7 @@ namespace BTDToolbox
             Main.disableUpdates = DisableUpdates_CB.Checked;
             Main.autoFormatJSON = AutoFormatJSON_CB.Checked;
 
-            if(saveNKH == true) CurrentProjectVariables.UseNKHook = UseNKH_CB.Checked;
+            CurrentProjectVariables.UseNKHook = UseNKH_CB.Checked;
 
             Serializer.SaveSmallSettings("splash");
             Serializer.SaveSmallSettings("disableUpdates");
@@ -61,6 +57,22 @@ namespace BTDToolbox
             ProjectHandler.SaveProject();
             ConsoleHandler.appendLog_CanRepeat("Settings saved!!!");
             this.Close();
+        }
+
+        private void UseNKH_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!NKHook.DoesNkhExist())
+            {
+                if(UseNKH_CB.Checked == true)
+                {
+                    UseNKH_CB.Checked = false;
+
+                    ConsoleHandler.force_appendNotice("You need to have NKHook installed to do that!");
+                    MessageBox.Show("You need to have NKHook installed to do that!");
+                    NKHook_Message msg = new NKHook_Message();
+                    msg.Show();
+                }
+            }
         }
     }
 }

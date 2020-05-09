@@ -151,6 +151,7 @@
             this.UseNKH_CB.Text = "Use NKHook";
             this.UseNKH_CB.UseVisualStyleBackColor = true;
             this.UseNKH_CB.Visible = false;
+            this.UseNKH_CB.CheckedChanged += new System.EventHandler(this.UseNKH_CB_CheckedChanged);
             // 
             // CurrentProjSettings_Label
             // 
