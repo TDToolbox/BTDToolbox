@@ -163,14 +163,17 @@ namespace BTDToolbox
         }
         private void HandleNKH()
         {
-            Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Clear();
-
-            if (CurrentProjectVariables.GameName == "BTD5")
+            Main.getInstance().PopulateNKHMewnu();
+        }
+        private void showNKHMessage()
+        {
+            if (programData.nkhookMsgShown == false)
             {
-                Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
-                Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
+                NKHook_Message msg = new NKHook_Message();
+                msg.Show();
             }
         }
+
         private void JetForm_Load(object sender, EventArgs e)
         {
             openDirWindow();
