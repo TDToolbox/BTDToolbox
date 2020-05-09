@@ -165,6 +165,10 @@ namespace BTDToolbox
         private void HandleNKH()
         {
             Main.getInstance().PopulateNKHMewnu();
+            if(CurrentProjectVariables.GameName == "BTD5")
+            {
+                showNKHMessage();
+            }
         }
         private void showNKHMessage()
         {
