@@ -76,6 +76,7 @@
     <Compile Include="Classes\NewProjects\CurrentProjectVariables.cs" />
     <Compile Include="Classes\NewProjects\ProjectHandler.cs" />
     <Compile Include="Classes\NewProjects\ProjectClass.cs" />
+    <Compile Include="Classes\NKHook.cs" />
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\QuickType.cs" />
     <Compile Include="Classes\SessionSettings\CurrentSessionSettings.cs" />

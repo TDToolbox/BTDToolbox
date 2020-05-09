@@ -252,7 +252,7 @@ namespace BTDToolbox
 
                     if (CurrentProjectVariables.GameName == "BTD5")
                     {
-                        if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NKHook5\\NKHook5-Injector.exe"))
+                        if(NKHook.DoesNkhExist())
                         {
                             LaunchWIthNKH_Button.Visible = true;
                             LaunchNoNKH_Button.Visible = true;
@@ -367,17 +367,6 @@ namespace BTDToolbox
         {
             if (CurrentProjectVariables.GameName != "BTD5")
                 CompileJet("launch");
-            else
-            {
-                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NKHook5\\NKHook5-Injector.exe"))
-                {
-
-                }
-                else
-                {
-                    CompileJet("launch");
-                }
-            }
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {
@@ -1043,6 +1032,25 @@ namespace BTDToolbox
         private void ContactUs_Click(object sender, EventArgs e)
         {
             Process.Start("https://discordapp.com/invite/jj5Q7mA");
+        }
+
+        private void LaunchWIthNKH_Button_Click(object sender, EventArgs e)
+        {
+            
+            if (NKHook.DoesNkhExist())
+            {
+                CompileJet("launch nkh");
+            }
+            else
+            {
+                ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Launching without it...");
+                CompileJet("launch");
+            }
+        }
+
+        private void LaunchNoNKH_Button_Click(object sender, EventArgs e)
+        {
+            CompileJet("launch");
         }
     }
 }

@@ -618,6 +618,9 @@ namespace BTDToolbox
 
                     else if (switchCase.Contains("launch"))
                     {
+                        if (switchCase.Contains("nkh"))
+                            zip.launchNKH = true;
+
                         if (CurrentProjectVariables.GamePath != null && CurrentProjectVariables.GamePath != "")
                         {
                             zip.launch = true;

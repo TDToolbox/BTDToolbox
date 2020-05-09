@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using static BTDToolbox.GeneralMethods;
 using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
+using BTDToolbox.Classes;
 
 namespace BTDToolbox
 {
@@ -47,6 +48,8 @@ namespace BTDToolbox
         public string password { get; set; }
         public bool launch { get; set; }
         public bool isExporting { get; set; }
+        public bool launchNKH { get; set; }
+
 
         //Threads
         Thread backgroundThread;
@@ -443,7 +446,12 @@ namespace BTDToolbox
                         ConsoleHandler.appendLog("Jet was successfully exported to: " + dir);
 
                         if (launch == true)
-                            LaunchGame(gameName);
+                        {
+                            if(!launchNKH)
+                                LaunchGame(gameName);
+                            else
+                                NKHook.LaunchNKH();
+                        }
                         try
                         {
                             this.Invoke(new Action(() => this.Close()));

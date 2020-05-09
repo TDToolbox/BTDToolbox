@@ -956,12 +956,14 @@
             this.LaunchWIthNKH_Button.Name = "LaunchWIthNKH_Button";
             this.LaunchWIthNKH_Button.Size = new System.Drawing.Size(180, 22);
             this.LaunchWIthNKH_Button.Text = "With NKHook";
+            this.LaunchWIthNKH_Button.Click += new System.EventHandler(this.LaunchWIthNKH_Button_Click);
             // 
             // LaunchNoNKH_Button
             // 
             this.LaunchNoNKH_Button.Name = "LaunchNoNKH_Button";
             this.LaunchNoNKH_Button.Size = new System.Drawing.Size(180, 22);
             this.LaunchNoNKH_Button.Text = "Without NKHook";
+            this.LaunchNoNKH_Button.Click += new System.EventHandler(this.LaunchNoNKH_Button_Click);
             // 
             // Main
             // 
