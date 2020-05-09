@@ -69,7 +69,7 @@ namespace BTDToolbox.Classes
             string filename = split[split.Length - 1];
             string backupProj = "";
             if (!path.Contains("\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\"))
-                backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
+                backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles.Replace("\\\\", "\\"), "");
             else
             {
                 backupProj = path;

@@ -576,39 +576,29 @@ namespace BTDToolbox
         }
         private void restoreSingleFile(string filepath, string filename)
         {
-            string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + filepath.Replace(CurrentProjectVariables.PathToProjectFiles, "").Replace("\\" + projName + "\\", "");
+            FileInfo f = new FileInfo(filepath);
+            string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + f.FullName.Replace(CurrentProjectVariables.PathToProjectFiles.Replace("\\\\", "\\"), "");
             if (!File.Exists(backupPath))
             {
-
-            }
-            
-            /*if (File.Exists(filepath))
-            {
-                File.Delete(filepath);
-            }*/
-           
-            MessageBox.Show(backupPath);
-
-            if (File.Exists(backupPath))
-            {
-                File.Copy(backupPath, filepath);
-
-                if (JsonEditorHandler.jeditor == null)
-                {
-                    JsonEditorHandler.OpenFile(filepath);
-                }
-                else if (JsonEditorHandler.jeditor.tabFilePaths.Contains(filepath))
-                {
-                    JsonEditorHandler.CloseFile(filepath);
-                    JsonEditorHandler.OpenFile(filepath);
-                }
-                ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
-            }
-            else
-            {
                 ConsoleHandler.appendLog_CanRepeat("Could not find " + filename + " in the backup, failed to restore file.");
+                return;
             }
-            
+
+            if (File.Exists(filepath))
+                File.Delete(filepath);
+
+            File.Copy(backupPath, filepath);
+
+            if (JsonEditorHandler.jeditor == null)
+            {
+                JsonEditorHandler.OpenFile(filepath);
+            }
+            else if (JsonEditorHandler.jeditor.tabFilePaths.Contains(filepath))
+            {
+                JsonEditorHandler.CloseFile(filepath);
+                JsonEditorHandler.OpenFile(filepath);
+            }
+            ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
         }
         private void restoreOriginal()
         {
