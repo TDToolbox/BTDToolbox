@@ -34,6 +34,8 @@
             this.DisableUpdates_CB = new System.Windows.Forms.CheckBox();
             this.AutoFormatJSON_CB = new System.Windows.Forms.CheckBox();
             this.Settings_Label = new System.Windows.Forms.Label();
+            this.UseNKH_CB = new System.Windows.Forms.CheckBox();
+            this.CurrentProjSettings_Label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -51,6 +53,8 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.CurrentProjSettings_Label);
+            this.contentPanel.Controls.Add(this.UseNKH_CB);
             this.contentPanel.Controls.Add(this.Settings_Label);
             this.contentPanel.Controls.Add(this.AutoFormatJSON_CB);
             this.contentPanel.Controls.Add(this.DisableUpdates_CB);
@@ -105,7 +109,7 @@
             this.DisableUpdates_CB.AutoSize = true;
             this.DisableUpdates_CB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisableUpdates_CB.ForeColor = System.Drawing.Color.White;
-            this.DisableUpdates_CB.Location = new System.Drawing.Point(28, 177);
+            this.DisableUpdates_CB.Location = new System.Drawing.Point(28, 147);
             this.DisableUpdates_CB.Name = "DisableUpdates_CB";
             this.DisableUpdates_CB.Size = new System.Drawing.Size(315, 24);
             this.DisableUpdates_CB.TabIndex = 4;
@@ -135,6 +139,31 @@
             this.Settings_Label.TabIndex = 6;
             this.Settings_Label.Text = "BTD Toolbox Settings";
             // 
+            // UseNKH_CB
+            // 
+            this.UseNKH_CB.AutoSize = true;
+            this.UseNKH_CB.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UseNKH_CB.ForeColor = System.Drawing.Color.White;
+            this.UseNKH_CB.Location = new System.Drawing.Point(17, 272);
+            this.UseNKH_CB.Name = "UseNKH_CB";
+            this.UseNKH_CB.Size = new System.Drawing.Size(121, 24);
+            this.UseNKH_CB.TabIndex = 7;
+            this.UseNKH_CB.Text = "Use NKHook";
+            this.UseNKH_CB.UseVisualStyleBackColor = true;
+            this.UseNKH_CB.Visible = false;
+            // 
+            // CurrentProjSettings_Label
+            // 
+            this.CurrentProjSettings_Label.AutoSize = true;
+            this.CurrentProjSettings_Label.Font = new System.Drawing.Font("Oetztype", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrentProjSettings_Label.ForeColor = System.Drawing.Color.White;
+            this.CurrentProjSettings_Label.Location = new System.Drawing.Point(11, 225);
+            this.CurrentProjSettings_Label.Name = "CurrentProjSettings_Label";
+            this.CurrentProjSettings_Label.Size = new System.Drawing.Size(372, 35);
+            this.CurrentProjSettings_Label.TabIndex = 8;
+            this.CurrentProjSettings_Label.Text = "Current Project Settings";
+            this.CurrentProjSettings_Label.Visible = false;
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -161,5 +190,7 @@
         private System.Windows.Forms.CheckBox DisableUpdates_CB;
         private System.Windows.Forms.Label Settings_Label;
         private System.Windows.Forms.CheckBox AutoFormatJSON_CB;
+        private System.Windows.Forms.Label CurrentProjSettings_Label;
+        private System.Windows.Forms.CheckBox UseNKH_CB;
     }
 }

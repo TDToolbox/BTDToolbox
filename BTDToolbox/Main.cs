@@ -200,7 +200,8 @@ namespace BTDToolbox
             }
             if (e.Control && e.KeyCode == Keys.N)
             {
-                AddNewJet();
+                SelectGame select = new SelectGame();
+                select.Show();
             }
             if (e.Control && e.KeyCode == Keys.S)
             {

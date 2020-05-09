@@ -32,12 +32,19 @@ namespace BTDToolbox
             gameName = CurrentProjectVariables.GameName;
 
             if (gameName == "BTDB")
-            {
                 CreateProject_Button.Text = "Continue";
-            }
             else
                 CreateProject_Button.Text = "Create Project";
-                
+
+            if(gameName == "BTD5")
+            {
+                if(!NKHook.DoesNkhExist())
+                {
+                    label2.Location = new Point(12, 120);
+                    UseNKH_CB.Visible = false;
+                }
+            }
+
             this.AcceptButton = CreateProject_Button;
             this.Activate();
         }
@@ -144,22 +151,11 @@ namespace BTDToolbox
                     if (!Directory.Exists(projdir))
                         Directory.CreateDirectory(projdir);
 
-                    if(!File.Exists(projdir + projName + ".jet"))
-                    {
-                        //File.Copy(backupPath, projdir + "\\" + projName + ".jet");
-                        CurrentProjectVariables.ProjectName = projName;
-                        CurrentProjectVariables.PathToProjectClassFile = projdir;
-                        CurrentProjectVariables.PathToProjectFiles = projdir + "\\" + projName;
-
-                        ProjectHandler.SaveProject();
-                    }
-                    else
-                    {
-                        ConsoleHandler.force_appendLog("It appears the project already exists OR it is currently opened " +
-                            "somewhere... Unable to continue, please try again..." +
-                            "\nIf this error persists, please contact Toolbox devs");
-                        this.Close();
-                    }
+                    CurrentProjectVariables.ProjectName = projName;
+                    CurrentProjectVariables.PathToProjectClassFile = projdir;
+                    CurrentProjectVariables.PathToProjectFiles = projdir + "\\" + projName;
+                    CurrentProjectVariables.UseNKHook = UseNKH_CB.Checked;
+                    ProjectHandler.SaveProject();
 
                     if (gameName == "BTDB")
                     {
@@ -251,6 +247,13 @@ namespace BTDToolbox
             }
             
             customFolder = path;
+        }
+
+        private void UseNKH_CB_CheckedChanged(object sender, EventArgs e)
+        {
+            if(UseNKH_CB.Checked)
+                ConsoleHandler.force_appendNotice("Checking this will make toolbox use NKH with your project by default. You can always change this later in Settings if you want by clicking \"File\" at the top, then \"Settings\"");
+            this.Focus();
         }
     }
 }

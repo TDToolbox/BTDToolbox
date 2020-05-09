@@ -16,6 +16,7 @@ namespace BTDToolbox.Classes.NewProjects
         public static string GameVersion = "";
         public static string JetPassword = "";
         public static string ExportPath = "";
+        public static bool UseNKHook = false;
         public static DateTime DateLastOpened;
         public static List<string> JsonEditor_OpenedTabs;
         public static List<string> ModifiedFiles;
@@ -31,6 +32,7 @@ namespace BTDToolbox.Classes.NewProjects
             JetPassword = "";
             ExportPath = "";
             DateLastOpened = DateTime.Now;
+            UseNKHook = false;
             JsonEditor_OpenedTabs = new List<String>();
             ModifiedFiles = new List<String>();
         }

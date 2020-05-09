@@ -19,6 +19,28 @@ namespace BTDToolbox.Classes.NewProjects
             project = new ProjectClass.ProjectFile();
             CurrentProjectVariables.ResetProjectVariables();          
         }
+        public static bool IsProjectVald(string projFile)
+        {
+            string json = File.ReadAllText(projFile);
+            bool isValid = JSON_Reader.IsValidJson(json);
+            if (!isValid)
+            {
+                json = json.Replace("\\\\", "\\").Replace("\\", "\\\\");
+                isValid = JSON_Reader.IsValidJson(json);
+                if (!isValid)
+                {
+                    if (JetProps.get().Count() > 0)
+                    {
+                        MessageBox.Show("Project File has invalid JSON. Please contact BTD Toolbox devs for assistance. Click \"Help\" at the top, then click \"Contact Us\"");
+                        try { JetProps.getForm(JetProps.get().Count() - 1).Close(); }
+                        catch (System.InvalidOperationException) { }
+                    }
+
+                    return false;
+                }
+            }
+            return true;
+        }
         public static ProjectClass.ProjectFile ReadProject(string projFile)
         {
             if (project != null)
@@ -27,47 +49,39 @@ namespace BTDToolbox.Classes.NewProjects
             if (project == null)
                 project = new ProjectClass.ProjectFile();
 
-            if (File.Exists(projFile))
+            if (!File.Exists(projFile))
             {
-                string json = File.ReadAllText(projFile);
-                bool isValid = JSON_Reader.IsValidJson(json);
-                if(!isValid)
-                {
-                    json = json.Replace("\\\\", "\\").Replace("\\", "\\\\");
-                    isValid = JSON_Reader.IsValidJson(json);
-                    if (!isValid)
-                    {
-                        if (JetProps.get().Count() > 0)
-                        {
-                            MessageBox.Show("Project File has invalid JSON. Please contact BTD Toolbox devs for assistance. Click \"Help\" at the top, then click \"Contact Us\"");
-                            try { JetProps.getForm(JetProps.get().Count() - 1).Close(); }
-                            catch (System.InvalidOperationException) { }
-                        }
-
-                        return null;
-                    }
-                }
-
-                project = JsonConvert.DeserializeObject<ProjectClass.ProjectFile>(json);
-
-                CurrentProjectVariables.ProjectName = project.ProjectName.Replace("\\\\", "\\");
-                CurrentProjectVariables.PathToProjectFiles = project.PathToProjectFiles.Replace("\\\\", "\\");
-                CurrentProjectVariables.PathToProjectClassFile = project.PathToProjectClassFile.Replace("\\\\", "\\");
-                CurrentProjectVariables.GameName = project.GameName;
-                CurrentProjectVariables.GamePath = project.GamePath.Replace("\\\\", "\\");
-                CurrentProjectVariables.GameVersion = project.GameVersion;
-                CurrentProjectVariables.JetPassword = project.JetPassword;
-                CurrentProjectVariables.ExportPath = project.ExportPath;
-                CurrentProjectVariables.DateLastOpened = project.DateLastOpened;
-                CurrentProjectVariables.JsonEditor_OpenedTabs = project.JsonEditor_OpenedTabs;
-                CurrentProjectVariables.ModifiedFiles = project.ModifiedFiles;
-            }
-            else
-            {
-                //Create new project
                 ConsoleHandler.appendLog("Something went wrong when trying to read the" +
                     "project. Project not found...");
+                return null;
+
+                //Create new project
                 //CreateProject();  //Commented out until im sure this is what needs to happen next
+            }
+
+            if (!IsProjectVald(projFile))
+                return null;
+
+            string json = File.ReadAllText(projFile);
+            project = JsonConvert.DeserializeObject<ProjectClass.ProjectFile>(json);
+
+            CurrentProjectVariables.ProjectName = project.ProjectName.Replace("\\\\", "\\");
+            CurrentProjectVariables.PathToProjectFiles = project.PathToProjectFiles.Replace("\\\\", "\\");
+            CurrentProjectVariables.PathToProjectClassFile = project.PathToProjectClassFile.Replace("\\\\", "\\");
+            CurrentProjectVariables.GameName = project.GameName;
+            CurrentProjectVariables.GamePath = project.GamePath.Replace("\\\\", "\\");
+            CurrentProjectVariables.GameVersion = project.GameVersion;
+            CurrentProjectVariables.JetPassword = project.JetPassword;
+            CurrentProjectVariables.ExportPath = project.ExportPath;
+            CurrentProjectVariables.DateLastOpened = project.DateLastOpened;
+            CurrentProjectVariables.JsonEditor_OpenedTabs = project.JsonEditor_OpenedTabs;
+            CurrentProjectVariables.ModifiedFiles = project.ModifiedFiles;
+
+            CurrentProjectVariables.UseNKHook = false;
+            if (CurrentProjectVariables.GameName == "BTD5")
+            {
+                if (NKHook.DoesNkhExist())
+                    CurrentProjectVariables.UseNKHook = project.UseNKHook;
             }
 
             return project;
@@ -88,19 +102,26 @@ namespace BTDToolbox.Classes.NewProjects
             project.DateLastOpened = CurrentProjectVariables.DateLastOpened;
             project.JsonEditor_OpenedTabs = CurrentProjectVariables.JsonEditor_OpenedTabs;
             project.ModifiedFiles = CurrentProjectVariables.ModifiedFiles;
+            
+            
+            project.UseNKHook = false;
+            if (CurrentProjectVariables.GameName == "BTD5")
+            {
+                if (NKHook.DoesNkhExist())
+                    project.UseNKHook = CurrentProjectVariables.UseNKHook;
+            }
+
 
             string output_Cfg = JsonConvert.SerializeObject(project, Formatting.Indented);
-
-            if(project.PathToProjectClassFile != "" && project.PathToProjectClassFile != null)
+            if(!Guard.IsStringValid(project.PathToProjectClassFile))
             {
-                StreamWriter serialize = new StreamWriter(project.PathToProjectClassFile + "\\" + project.ProjectName + ".toolbox", false);
-                serialize.Write(output_Cfg);
-                serialize.Close();
+                ConsoleHandler.force_appendLog("Unknown error occured in the Project Handler... Project path is null or empty...");
+                return;
             }
-            else
-            {
-                ConsoleHandler.force_appendLog("Unknown error occured... Project path is invalid...");
-            }            
+
+            StreamWriter serialize = new StreamWriter(project.PathToProjectClassFile + "\\" + project.ProjectName + ".toolbox", false);
+            serialize.Write(output_Cfg);
+            serialize.Close();
         }
         public static void UpdateFileInZip(ZipFile zip, string pathToFile, string newText)
         {
