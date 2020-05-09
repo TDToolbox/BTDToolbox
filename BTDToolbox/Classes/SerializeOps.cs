@@ -16,6 +16,8 @@ namespace BTDToolbox
 {
     public class Serializer
     {
+        public static bool nkhookMsgShown;
+
         public static void SaveSmallSettings(string formName)
         {
             var cfg = Serializer.Deserialize_Config();
@@ -56,7 +58,11 @@ namespace BTDToolbox
             {
                 cfg.autoFormatJSON = Main.autoFormatJSON;
             }
-            
+            if (formName == "nkhookMSG")
+            {
+                cfg.nkhookMsgShown = nkhookMsgShown;
+            }
+
             string output_Cfg = JsonConvert.SerializeObject(cfg, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(Environment.CurrentDirectory + "\\settings.json", false);
@@ -195,6 +201,7 @@ namespace BTDToolbox
                     programData.recentUpdate = false;
                     programData.useExternalEditor = false;
                     programData.disableUpdates = false;
+                    programData.nkhookMsgShown = nkhookMsgShown;
                     programData.autoFormatJSON = Main.autoFormatJSON;
 
                     programData.JsonEditor_OpenedTabs = new List<string>();

@@ -128,6 +128,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ThemedForm";
             this.Text = "ThemedFormTemplate";
+            this.Shown += new System.EventHandler(this.ThemedForm_Shown);
             this.Resize += new System.EventHandler(this.ThemedForm_Resize);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();

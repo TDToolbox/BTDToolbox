@@ -217,7 +217,9 @@ namespace BTDToolbox
             }
             else
             {
-                return true;
+                if (Main.getInstance().Launch_Program_ToolStrip.Visible == false)
+                    Main.getInstance().Launch_Program_ToolStrip.Visible = true;
+                return true;                
             }
         }
         public static void LaunchGame(string game)

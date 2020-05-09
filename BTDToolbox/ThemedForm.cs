@@ -30,6 +30,7 @@ namespace BTDToolbox
         int Sw;
         int Sh;
         bool mov;
+        public bool enableResizing = true;
 
         //Resize defaults
         int minWidth = 200;
@@ -39,6 +40,7 @@ namespace BTDToolbox
         public ThemedForm()
         {
             InitializeComponent();
+
             this.DoubleBuffered = true;
             
             //this.Dock = DockStyle.Fill;
@@ -197,6 +199,12 @@ namespace BTDToolbox
                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
             else
                 Main.getInstance().Refresh();
+        }
+
+        private void ThemedForm_Shown(object sender, EventArgs e)
+        {
+            if (!enableResizing)
+                Sizer.Hide();
         }
     }
 }

@@ -24,5 +24,10 @@ namespace BTDToolbox.Classes
             if(DoesNkhExist())
                 Process.Start(nkhEXE);
         }
+        public static void OpenNkhGithub()
+        {
+            ConsoleHandler.appendLog("Opening NKHook Github page...");
+            Process.Start("https://github.com/DisabledMallis/NKHook5");
+        }
     }
 }

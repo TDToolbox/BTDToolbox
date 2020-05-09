@@ -17,6 +17,7 @@ namespace BTDToolbox
             public string battlesPass { get; set; }
             public bool disableUpdates { get; set; }
             public bool autoFormatJSON { get; set; }
+            public bool nkhookMsgShown { get; set; }
 
 
             //Project wide variables

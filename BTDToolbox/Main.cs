@@ -175,6 +175,14 @@ namespace BTDToolbox
                 Serializer.SaveSmallSettings("updater");
             }
         }
+        private void showNKHMessage()
+        {
+            if (programData.nkhookMsgShown == false)
+            {
+                NKHook_Message msg = new NKHook_Message();
+                msg.Show();
+            }
+        }
 
         private void mainResize(object sender, EventArgs e)
         {
@@ -217,6 +225,7 @@ namespace BTDToolbox
             {
                 FirstTimeUse();
             }
+            showNKHMessage();
             showUpdateChangelog();
         }
         //
@@ -628,8 +637,8 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SelectGame form = new SelectGame();
-            form.Show();
+            NKHook_Message msg = new NKHook_Message();
+            msg.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -647,8 +656,8 @@ namespace BTDToolbox
 
         private void NKHook_Github_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening NKHook Github page...");
-            Process.Start("https://github.com/DisabledMallis/NKHook5-Dep");
+            NKHook_Message msg = new NKHook_Message();
+            msg.Show();
         }
 
         private void FlashReader_Click(object sender, EventArgs e)
