@@ -19,11 +19,18 @@ namespace BTDToolbox.Classes
             }
             return false;
         }
+
         public static void LaunchNKH()
         {
-            if(DoesNkhExist())
-                Process.Start(nkhEXE);
+            if(!DoesNkhExist())
+            {
+                ConsoleHandler.appendLog("Unable to find NKHook5-Injector.exe. Failed to launch...");
+                return;
+            }
+            ConsoleHandler.appendLog("Launching NKHook");
+            Process.Start(nkhEXE);
         }
+
         public static void OpenNkhGithub()
         {
             ConsoleHandler.appendLog("Opening NKHook Github page...");

@@ -43,6 +43,8 @@ namespace BTDToolbox
         public static bool disableUpdates = false;
         public static bool autoFormatJSON = true;
         public static bool enableConsole;
+        public static bool dontAskAboutNKH = false;
+
         bool projNoGame = false;
 
         // Win32 Constants
@@ -196,6 +198,19 @@ namespace BTDToolbox
         {
             if (e.KeyCode == Keys.F5)
             {
+                if (CurrentProjectVariables.GameName == "BTD5")
+                {
+                    if (NKHook.DoesNkhExist())
+                    {
+                        if (CurrentProjectVariables.UseNKHook == false && dontAskAboutNKH == false)
+                        {
+                            AlwaysUseNKH ask = new AlwaysUseNKH(true);
+                            ask.Show();
+                            return;
+                        }
+                    }
+                }
+                
                 CompileJet("launch");
             }
             if (e.Control && e.KeyCode == Keys.N)
@@ -1038,7 +1053,21 @@ namespace BTDToolbox
             {
                 if (NKHook.DoesNkhExist())
                 {
-                    CompileJet("launch nkh");
+                    if(CurrentProjectVariables.UseNKHook == false)
+                    {
+                        DialogResult diag = MessageBox.Show("Would you like your project to use NKHook by default? You can always change this later in Settings?", "Use NKHook by default?", MessageBoxButtons.YesNoCancel);
+                        if (diag == DialogResult.Cancel)
+                            return;
+                        else if (diag == DialogResult.No)
+                            CompileJet("launch nkh");
+                        else if (diag == DialogResult.Yes)
+                        {
+                            CurrentProjectVariables.UseNKHook = true;
+                            ProjectHandler.SaveProject();
+                        }
+                    }
+                    else
+                        CompileJet("launch nkh");
                 }
                 else
                 {
