@@ -177,14 +177,7 @@ namespace BTDToolbox
                 Serializer.SaveSmallSettings("updater");
             }
         }
-        private void showNKHMessage()
-        {
-            if (programData.nkhookMsgShown == false)
-            {
-                NKHook_Message msg = new NKHook_Message();
-                msg.Show();
-            }
-        }
+        
 
         private void mainResize(object sender, EventArgs e)
         {
@@ -208,6 +201,8 @@ namespace BTDToolbox
                             ask.Show();
                             return;
                         }
+                        else if (CurrentProjectVariables.UseNKHook == true)
+                            CompileJet("launch nkh");
                     }
                 }
                 
@@ -241,7 +236,6 @@ namespace BTDToolbox
             {
                 FirstTimeUse();
             }
-            showNKHMessage();
             showUpdateChangelog();
         }
         //
@@ -1046,6 +1040,18 @@ namespace BTDToolbox
         {
             Process.Start("https://discordapp.com/invite/jj5Q7mA");
         }
+        public void PopulateNKHMewnu()
+        {
+            Launch_Program_ToolStrip.DropDownItems.Clear();
+
+            if (CurrentProjectVariables.GameName == "BTD5")
+            {
+                Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
+                Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
+                Launch_Program_ToolStrip.DropDownItems.Add(new ToolStripSeparator());
+                Launch_Program_ToolStrip.DropDownItems.Add("NKHook Plugin Manager");
+            }
+        }
 
         private void Launch_Program_ToolStrip_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -1071,6 +1077,11 @@ namespace BTDToolbox
             if (e.ClickedItem.Text == "Without NKHook")
             {
                 CompileJet("launch");
+            }
+            if (e.ClickedItem.Text == "NKHook Plugin Manager")
+            {
+                NKHPluginMgr mgr = new NKHPluginMgr();
+                
             }
         }
     }
