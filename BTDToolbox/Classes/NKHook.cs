@@ -17,7 +17,7 @@ namespace BTDToolbox.Classes
             {
                 return true;
             }
-            return true;
+            return false;
         }
         public static void LaunchNKH()
         {

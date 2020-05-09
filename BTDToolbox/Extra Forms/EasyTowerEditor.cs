@@ -54,6 +54,7 @@ namespace BTDToolbox.Extra_Forms
         public EasyTowerEditor()
         {
             InitializeComponent();
+            NewTower_Button.Visible = false;
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
 
             EZTower_Opened = true;
@@ -66,6 +67,12 @@ namespace BTDToolbox.Extra_Forms
             {
                 label2.Show();
                 TowerName_TextBox.Show();
+
+                if(game == "BTD5")
+                {
+                    if (NKHook.DoesNkhExist())
+                        NewTower_Button.Visible = true;
+                }
             }
         }
         public void CreateTowerObject(string towerPath)
@@ -1183,6 +1190,28 @@ namespace BTDToolbox.Extra_Forms
         private void Open_Button_Click(object sender, EventArgs e)
         {
             //Open_Button.ForeColor = Color.Black;
+        }
+
+        private void NewTower_Button_Click(object sender, EventArgs e)
+        {
+            Open_Panel.Visible = !Open_Panel.Visible;
+        }
+
+        private void ChoseName_Button_Click(object sender, EventArgs e)
+        {
+            NewTowerName_BGPanel.Hide();
+        }
+
+        private void NewEmptyTower_Button_Click(object sender, EventArgs e)
+        {
+            NewTowerName_BGPanel.Show();
+            NewTowerName_BGPanel.BringToFront();
+        }
+
+        private void UseBaseTower_Buton_Click(object sender, EventArgs e)
+        {
+            NewTowerName_BGPanel.Show();
+            NewTowerName_BGPanel.BringToFront();
         }
     }
 }

@@ -154,18 +154,6 @@ namespace BTDToolbox
             {
                 ConsoleHandler.force_appendLog_CanRepeat("Something went wrong. Your project file wasnt found or you had more than one. ");
             }
-            /*var dirs = new DirectoryInfo(Environment.CurrentDirectory + "\\Projects").GetDirectories();
-            foreach (var dir in dirs)
-            {
-                if (dir.Name == projName)
-                {
-                    lastProject = dir.FullName;
-                    ProjectHandler.ReadProject(dir.FullName + "\\" + projName + ".toolbox");
-
-                    //Main.projName = dir.FullName + "\\" + projName;
-                    Serializer.SaveConfig(this, "jet explorer");
-                }
-            }*/
         }
         private void initTreeMenu()
         {
