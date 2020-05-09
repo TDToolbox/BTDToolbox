@@ -62,6 +62,7 @@ namespace BTDToolbox
             else
                 SubmitModName();
         }
+
         public string ReturnName(string projName, string gameName)
         {
             Random rand = new Random();
@@ -75,6 +76,8 @@ namespace BTDToolbox
             //MessageBox.Show(projectName_Identifier + projName);
             return projectName_Identifier + projName;
         }
+
+
         private void SubmitModName()
         {
             
@@ -95,7 +98,7 @@ namespace BTDToolbox
             string projdir = "";
 
             if(Guard.IsStringValid(customFolder))
-                projdir = customFolder + "\\" + projName;
+                projdir = customFolder + projName;
             else
                 projdir = Environment.CurrentDirectory + "\\Projects" + projName;
 
