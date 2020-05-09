@@ -49,13 +49,18 @@ namespace BTDToolbox.Extra_Forms
         string towerTypeName = "";
         string specialty = "";
         string filename = ""; //this is to get the TowerName.tower part
-
+        int checkboxesChecked = 0; //number of SelectionMenuCheckboxes Checked
 
         public EasyTowerEditor()
         {
             InitializeComponent();
             NewTower_Button.Visible = false;
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
+
+            SelectionMenu_Left_CB.CheckedChanged += SelectionMenu_ItemChecked;
+            SelectionMenu_Right_CB.CheckedChanged += SelectionMenu_ItemChecked;
+            SelectionMenu_FixedLeft_CB.CheckedChanged += SelectionMenu_ItemChecked;
+            SelectionMenu_FixedRight_CB.CheckedChanged += SelectionMenu_ItemChecked;
 
             EZTower_Opened = true;
             if (game == "BTDB")
@@ -75,6 +80,24 @@ namespace BTDToolbox.Extra_Forms
                 }
             }
         }
+
+        private void SelectionMenu_ItemChecked(object sender, EventArgs e)
+        {
+            checkboxesChecked = 0;
+
+            if (SelectionMenu_Left_CB.Checked)
+                checkboxesChecked++;
+
+            if (SelectionMenu_Right_CB.Checked)
+                checkboxesChecked++;
+
+            if (SelectionMenu_FixedLeft_CB.Checked)
+                checkboxesChecked++;
+
+            if (SelectionMenu_FixedRight_CB.Checked)
+                checkboxesChecked++;
+        }
+
         public void CreateTowerObject(string towerPath)
         {
             string json = File.ReadAllText(towerPath);
@@ -1199,9 +1222,33 @@ namespace BTDToolbox.Extra_Forms
 
         private void ChoseName_Button_Click(object sender, EventArgs e)
         {
-            NewTowerName_BGPanel.Hide();
-        }
+            if(checkboxesChecked == 0)
+            {
+                MessageBox.Show("Please check which side of the Tower Buy Menu you want the tower to be on");
+            }
+            else if (checkboxesChecked > 1)
+            {
+                MessageBox.Show("Please check only one checkbox");
+            }
+            else
+            {
+                NewTowerName_BGPanel.Hide();
+                var pos = NewTower.TowerSelectMenu_Pos.Left;
 
+                if (SelectionMenu_Right_CB.Checked)
+                    pos = NewTower.TowerSelectMenu_Pos.Right;
+
+                if (SelectionMenu_FixedLeft_CB.Checked)
+                    pos = NewTower.TowerSelectMenu_Pos.FixedLeft;
+
+                if (SelectionMenu_FixedRight_CB.Checked)
+                    pos = NewTower.TowerSelectMenu_Pos.FixedRight;
+                
+
+                NewTower newTower = new NewTower("newName", path, pos);
+            }
+        }
+        
         private void NewEmptyTower_Button_Click(object sender, EventArgs e)
         {
             NewTowerName_BGPanel.Show();

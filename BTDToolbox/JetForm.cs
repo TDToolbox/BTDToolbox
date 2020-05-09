@@ -576,11 +576,18 @@ namespace BTDToolbox
         }
         private void restoreSingleFile(string filepath, string filename)
         {
-            if (File.Exists(filepath))
+            string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + filepath.Replace(CurrentProjectVariables.PathToProjectFiles, "").Replace("\\" + projName + "\\", "");
+            if (!File.Exists(backupPath))
+            {
+
+            }
+            
+            /*if (File.Exists(filepath))
             {
                 File.Delete(filepath);
-            }
-            string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + filepath.Replace(CurrentProjectVariables.PathToProjectFiles, "").Replace("\\" + projName + "\\", "");
+            }*/
+           
+            MessageBox.Show(backupPath);
 
             if (File.Exists(backupPath))
             {

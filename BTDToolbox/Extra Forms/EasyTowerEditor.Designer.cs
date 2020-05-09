@@ -93,11 +93,16 @@
             this.NewEmptyTower_Button = new System.Windows.Forms.Button();
             this.UseBaseTower_Buton = new System.Windows.Forms.Button();
             this.NewTowerName_Panel = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.SelectionMenu_Right_CB = new System.Windows.Forms.CheckBox();
+            this.SelectionMenu_Left_CB = new System.Windows.Forms.CheckBox();
+            this.NewTowerName_TB = new System.Windows.Forms.RichTextBox();
             this.ChoseName_Button = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.NewTowerName_BGPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.NewTowerName_TB = new System.Windows.Forms.RichTextBox();
+            this.SelectionMenu_FixedRight_CB = new System.Windows.Forms.CheckBox();
+            this.SelectionMenu_FixedLeft_CB = new System.Windows.Forms.CheckBox();
             this.TowerPanel.SuspendLayout();
             this.UpgradesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -907,23 +912,78 @@
             // 
             // NewTowerName_Panel
             // 
+            this.NewTowerName_Panel.Controls.Add(this.SelectionMenu_FixedRight_CB);
+            this.NewTowerName_Panel.Controls.Add(this.SelectionMenu_FixedLeft_CB);
+            this.NewTowerName_Panel.Controls.Add(this.label20);
+            this.NewTowerName_Panel.Controls.Add(this.SelectionMenu_Right_CB);
+            this.NewTowerName_Panel.Controls.Add(this.SelectionMenu_Left_CB);
             this.NewTowerName_Panel.Controls.Add(this.NewTowerName_TB);
             this.NewTowerName_Panel.Controls.Add(this.ChoseName_Button);
             this.NewTowerName_Panel.Controls.Add(this.pictureBox2);
-            this.NewTowerName_Panel.Location = new System.Drawing.Point(258, 176);
+            this.NewTowerName_Panel.Location = new System.Drawing.Point(258, 137);
             this.NewTowerName_Panel.Name = "NewTowerName_Panel";
-            this.NewTowerName_Panel.Size = new System.Drawing.Size(551, 106);
+            this.NewTowerName_Panel.Size = new System.Drawing.Size(551, 258);
             this.NewTowerName_Panel.TabIndex = 39;
             // 
-            // pictureBox2
+            // label20
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(551, 106);
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.label20.Font = new System.Drawing.Font("Microsoft YaHei UI", 12.25F);
+            this.label20.ForeColor = System.Drawing.Color.White;
+            this.label20.Location = new System.Drawing.Point(8, 66);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(139, 23);
+            this.label20.TabIndex = 41;
+            this.label20.Text = "TowerSelectPos";
+            // 
+            // SelectionMenu_Right_CB
+            // 
+            this.SelectionMenu_Right_CB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectionMenu_Right_CB.AutoSize = true;
+            this.SelectionMenu_Right_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.SelectionMenu_Right_CB.ForeColor = System.Drawing.Color.White;
+            this.SelectionMenu_Right_CB.Location = new System.Drawing.Point(12, 123);
+            this.SelectionMenu_Right_CB.Name = "SelectionMenu_Right_CB";
+            this.SelectionMenu_Right_CB.Size = new System.Drawing.Size(94, 22);
+            this.SelectionMenu_Right_CB.TabIndex = 81;
+            this.SelectionMenu_Right_CB.Text = "Right Side";
+            this.SelectionMenu_Right_CB.UseVisualStyleBackColor = true;
+            // 
+            // SelectionMenu_Left_CB
+            // 
+            this.SelectionMenu_Left_CB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectionMenu_Left_CB.AutoSize = true;
+            this.SelectionMenu_Left_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.SelectionMenu_Left_CB.ForeColor = System.Drawing.Color.White;
+            this.SelectionMenu_Left_CB.Location = new System.Drawing.Point(14, 95);
+            this.SelectionMenu_Left_CB.Name = "SelectionMenu_Left_CB";
+            this.SelectionMenu_Left_CB.Size = new System.Drawing.Size(84, 22);
+            this.SelectionMenu_Left_CB.TabIndex = 80;
+            this.SelectionMenu_Left_CB.Text = "Left Side";
+            this.SelectionMenu_Left_CB.UseVisualStyleBackColor = true;
+            // 
+            // NewTowerName_TB
+            // 
+            this.NewTowerName_TB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.NewTowerName_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.NewTowerName_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.NewTowerName_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
+            this.NewTowerName_TB.ForeColor = System.Drawing.Color.White;
+            this.NewTowerName_TB.Location = new System.Drawing.Point(12, 15);
+            this.NewTowerName_TB.Name = "NewTowerName_TB";
+            this.NewTowerName_TB.Size = new System.Drawing.Size(525, 32);
+            this.NewTowerName_TB.TabIndex = 79;
+            this.NewTowerName_TB.Text = "";
             // 
             // ChoseName_Button
             // 
@@ -932,7 +992,7 @@
             this.ChoseName_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ChoseName_Button.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F);
             this.ChoseName_Button.ForeColor = System.Drawing.Color.White;
-            this.ChoseName_Button.Location = new System.Drawing.Point(0, 73);
+            this.ChoseName_Button.Location = new System.Drawing.Point(0, 225);
             this.ChoseName_Button.Name = "ChoseName_Button";
             this.ChoseName_Button.Size = new System.Drawing.Size(551, 33);
             this.ChoseName_Button.TabIndex = 78;
@@ -940,9 +1000,19 @@
             this.ChoseName_Button.UseVisualStyleBackColor = false;
             this.ChoseName_Button.Click += new System.EventHandler(this.ChoseName_Button_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(551, 258);
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
             // NewTowerName_BGPanel
             // 
-            this.NewTowerName_BGPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.NewTowerName_BGPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.NewTowerName_BGPanel.Controls.Add(this.label1);
             this.NewTowerName_BGPanel.Controls.Add(this.NewTowerName_Panel);
             this.NewTowerName_BGPanel.Location = new System.Drawing.Point(0, 28);
@@ -957,26 +1027,41 @@
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(266, 135);
+            this.label1.Location = new System.Drawing.Point(266, 96);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(534, 35);
             this.label1.TabIndex = 40;
             this.label1.Text = "Please enter a name for your new tower:";
             // 
-            // NewTowerName_TB
+            // SelectionMenu_FixedRight_CB
             // 
-            this.NewTowerName_TB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.SelectionMenu_FixedRight_CB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.NewTowerName_TB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.NewTowerName_TB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.NewTowerName_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
-            this.NewTowerName_TB.ForeColor = System.Drawing.Color.White;
-            this.NewTowerName_TB.Location = new System.Drawing.Point(12, 15);
-            this.NewTowerName_TB.Name = "NewTowerName_TB";
-            this.NewTowerName_TB.Size = new System.Drawing.Size(525, 42);
-            this.NewTowerName_TB.TabIndex = 79;
-            this.NewTowerName_TB.Text = "";
+            this.SelectionMenu_FixedRight_CB.AutoSize = true;
+            this.SelectionMenu_FixedRight_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.SelectionMenu_FixedRight_CB.ForeColor = System.Drawing.Color.White;
+            this.SelectionMenu_FixedRight_CB.Location = new System.Drawing.Point(12, 179);
+            this.SelectionMenu_FixedRight_CB.Name = "SelectionMenu_FixedRight_CB";
+            this.SelectionMenu_FixedRight_CB.Size = new System.Drawing.Size(211, 22);
+            this.SelectionMenu_FixedRight_CB.TabIndex = 83;
+            this.SelectionMenu_FixedRight_CB.Text = "Fixed Right Side (Pineapple)";
+            this.SelectionMenu_FixedRight_CB.UseVisualStyleBackColor = true;
+            // 
+            // SelectionMenu_FixedLeft_CB
+            // 
+            this.SelectionMenu_FixedLeft_CB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectionMenu_FixedLeft_CB.AutoSize = true;
+            this.SelectionMenu_FixedLeft_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.SelectionMenu_FixedLeft_CB.ForeColor = System.Drawing.Color.White;
+            this.SelectionMenu_FixedLeft_CB.Location = new System.Drawing.Point(12, 151);
+            this.SelectionMenu_FixedLeft_CB.Name = "SelectionMenu_FixedLeft_CB";
+            this.SelectionMenu_FixedLeft_CB.Size = new System.Drawing.Size(182, 22);
+            this.SelectionMenu_FixedLeft_CB.TabIndex = 82;
+            this.SelectionMenu_FixedLeft_CB.Text = "Fixed Left Side (Spikes)";
+            this.SelectionMenu_FixedLeft_CB.UseVisualStyleBackColor = true;
             // 
             // EasyTowerEditor
             // 
@@ -1011,6 +1096,7 @@
             this.Toolbar.PerformLayout();
             this.Open_Panel.ResumeLayout(false);
             this.NewTowerName_Panel.ResumeLayout(false);
+            this.NewTowerName_Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.NewTowerName_BGPanel.ResumeLayout(false);
             this.NewTowerName_BGPanel.PerformLayout();
@@ -1090,5 +1176,10 @@
         private System.Windows.Forms.Panel NewTowerName_BGPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox NewTowerName_TB;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox SelectionMenu_Right_CB;
+        private System.Windows.Forms.CheckBox SelectionMenu_Left_CB;
+        private System.Windows.Forms.CheckBox SelectionMenu_FixedRight_CB;
+        private System.Windows.Forms.CheckBox SelectionMenu_FixedLeft_CB;
     }
 }
