@@ -103,6 +103,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.SelectionMenu_FixedRight_CB = new System.Windows.Forms.CheckBox();
             this.SelectionMenu_FixedLeft_CB = new System.Windows.Forms.CheckBox();
+            this.CreateSpecialty_CB = new System.Windows.Forms.CheckBox();
             this.TowerPanel.SuspendLayout();
             this.UpgradesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -912,6 +913,7 @@
             // 
             // NewTowerName_Panel
             // 
+            this.NewTowerName_Panel.Controls.Add(this.CreateSpecialty_CB);
             this.NewTowerName_Panel.Controls.Add(this.SelectionMenu_FixedRight_CB);
             this.NewTowerName_Panel.Controls.Add(this.SelectionMenu_FixedLeft_CB);
             this.NewTowerName_Panel.Controls.Add(this.label20);
@@ -1064,6 +1066,21 @@
             this.SelectionMenu_FixedLeft_CB.Text = "Fixed Left Side (Spikes)";
             this.SelectionMenu_FixedLeft_CB.UseVisualStyleBackColor = true;
             // 
+            // CreateSpecialty_CB
+            // 
+            this.CreateSpecialty_CB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CreateSpecialty_CB.AutoSize = true;
+            this.CreateSpecialty_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.CreateSpecialty_CB.ForeColor = System.Drawing.Color.White;
+            this.CreateSpecialty_CB.Location = new System.Drawing.Point(347, 65);
+            this.CreateSpecialty_CB.Name = "CreateSpecialty_CB";
+            this.CreateSpecialty_CB.Size = new System.Drawing.Size(185, 22);
+            this.CreateSpecialty_CB.TabIndex = 84;
+            this.CreateSpecialty_CB.Text = "Create SpecialtyBuilding";
+            this.CreateSpecialty_CB.UseVisualStyleBackColor = true;
+            // 
             // EasyTowerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1182,5 +1199,6 @@
         private System.Windows.Forms.CheckBox SelectionMenu_Left_CB;
         private System.Windows.Forms.CheckBox SelectionMenu_FixedRight_CB;
         private System.Windows.Forms.CheckBox SelectionMenu_FixedLeft_CB;
+        private System.Windows.Forms.CheckBox CreateSpecialty_CB;
     }
 }

@@ -26,6 +26,7 @@ namespace BTDToolbox.Classes
         public Dictionary<TowerSelectMenu_Pos, string> TowerSelectFiles;
 
         public bool UseBaseTower { get; set; }
+        public bool CreateSpecialtyBuilding { get; set; }
         public string TowerName { get; set; }
         public string BaseTowerFile { get; set; }
         public TowerSelectMenu_Pos TowerSelPos { get; set; }
@@ -60,14 +61,15 @@ namespace BTDToolbox.Classes
                 this.UseBaseTower = true;
             else
                 this.UseBaseTower = false;
-
-            AddToTowerSelctionMenu();
         }
         #endregion
 
-        
+        public void DuplicateAllTowerFiles()
+        {
+            AddToTowerSelctionMenu();
+        }
 
-        public string CheckJSONFromFile(string path)
+        private string CheckJSONFromFile(string path)
         {
             if (!File.Exists(path))
             {
@@ -83,11 +85,8 @@ namespace BTDToolbox.Classes
             return "";
         }
 
-        public void DuplicateAllTowerFiles()
-        {
-            AddToTowerSelctionMenu();
-        }
 
+        #region TowerSelectionMenu Stuff
         public void AddToTowerSelctionMenu()
         {
 
@@ -189,6 +188,7 @@ namespace BTDToolbox.Classes
 
             return newItem;
         }
+        #endregion
     }
 }
 

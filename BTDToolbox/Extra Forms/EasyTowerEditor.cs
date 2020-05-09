@@ -1258,8 +1258,10 @@ namespace BTDToolbox.Extra_Forms
             if (useBaseTower)
                 baseT = path;
             
-            NewTower newTower = new NewTower(NewTowerName_TB.Text, baseT, pos);          
+            NewTower newTower = new NewTower(NewTowerName_TB.Text, baseT, pos);
+            newTower.CreateSpecialtyBuilding = CreateSpecialty_CB.Checked;
 
+            newTower.DuplicateAllTowerFiles();
         }
         private void NewEmptyTower_Button_Click(object sender, EventArgs e)
         {
