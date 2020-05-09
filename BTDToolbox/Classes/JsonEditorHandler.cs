@@ -68,15 +68,16 @@ namespace BTDToolbox.Classes
             string[] split = path.Split('\\');
             string filename = split[split.Length - 1];
             string backupProj = "";
-            if (!path.Contains("\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\"))
-                backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + path.Replace(CurrentProjectVariables.PathToProjectFiles.Replace("\\\\", "\\"), "");
+            
+            if (!path.Contains("\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject"))
+                backupProj = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject" + path.Replace(CurrentProjectVariables.PathToProjectFiles.Replace("\\\\", "\\"), "");
             else
             {
                 backupProj = path;
                 if(jeditor.tabControl1.SelectedTab.Text == filename + New_JsonEditor.readOnlyName)
                     ConsoleHandler.appendNotice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
             }
-            
+
             if (File.Exists(backupProj))
                 OpenFile(backupProj);
             else

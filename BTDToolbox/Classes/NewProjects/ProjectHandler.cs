@@ -50,14 +50,14 @@ namespace BTDToolbox.Classes.NewProjects
 
                 project = JsonConvert.DeserializeObject<ProjectClass.ProjectFile>(json);
 
-                CurrentProjectVariables.ProjectName = project.ProjectName;
-                CurrentProjectVariables.PathToProjectFiles = project.PathToProjectFiles;
-                CurrentProjectVariables.PathToProjectClassFile = project.PathToProjectClassFile;
+                CurrentProjectVariables.ProjectName = project.ProjectName.Replace("\\\\", "\\");
+                CurrentProjectVariables.PathToProjectFiles = project.PathToProjectFiles.Replace("\\\\", "\\");
+                CurrentProjectVariables.PathToProjectClassFile = project.PathToProjectClassFile.Replace("\\\\", "\\");
                 CurrentProjectVariables.GameName = project.GameName;
-                CurrentProjectVariables.GamePath = project.GamePath;
+                CurrentProjectVariables.GamePath = project.GamePath.Replace("\\\\", "\\");
                 CurrentProjectVariables.GameVersion = project.GameVersion;
                 CurrentProjectVariables.JetPassword = project.JetPassword;
-                CurrentProjectVariables.ExportPath= project.ExportPath;
+                CurrentProjectVariables.ExportPath = project.ExportPath;
                 CurrentProjectVariables.DateLastOpened = project.DateLastOpened;
                 CurrentProjectVariables.JsonEditor_OpenedTabs = project.JsonEditor_OpenedTabs;
                 CurrentProjectVariables.ModifiedFiles = project.ModifiedFiles;

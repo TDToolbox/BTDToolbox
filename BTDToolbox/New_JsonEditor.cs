@@ -99,64 +99,64 @@ namespace BTDToolbox
         }
         public void NewTab(string path, bool isFromZip)
         {
-            if (path != "" && path != null)
-            {
-                string filepath = "";
-                if (isFromZip)
-                {
-                    filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/");
-                    path = filepath;
-                }
-                else
-                    filepath = path;
-                
-
-                tabFilePaths.Add(path);
-                
-                if(!CurrentProjectVariables.JsonEditor_OpenedTabs.Contains(path))
-                {
-                    CurrentProjectVariables.JsonEditor_OpenedTabs.Add(path);
-                    ProjectHandler.SaveProject();
-                }
-
-                tabPages.Add(new TabPage());
-                userControls.Add(new JsonEditor_Instance());
-
-                //create the tab and do required processing
-
-                string[] split = path.Replace("/", "\\").Split('\\');
-                string filename = split[split.Length - 1];
-                if (path.Contains("BackupProject"))
-                {
-                    filename = filename + readOnlyName;
-                    userControls[userControls.Count - 1].Editor_TextBox.ReadOnly = true;
-                }
-
-                tabPages[tabPages.Count - 1].Text = filename;
-                tabPages[tabPages.Count - 1].Controls.Add(userControls[userControls.Count - 1]);
-                userControls[userControls.Count - 1].path = path;
-                userControls[userControls.Count - 1].filename = filename;
-
-                if(isFromZip == false)
-                    AddText(path, false);
-                else
-                    AddText(path, true);
-
-                if ((tabPages.Count - 1) < 0 || tabPages[tabPages.Count - 1] == null)
-                {
-                    return;
-                }
-
-                tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
-                
-                OpenTab(path);
-                ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
-                userControls[userControls.Count - 1].FinishedLoading();
-            }
-            else
+            if(!Guard.IsStringValid(path))
             {
                 ConsoleHandler.appendLog_CanRepeat("Something went wrong when trying to read the files path...");
+                return;
             }
+
+            string filepath = "";
+            if (isFromZip)
+            {
+                filepath = path.Replace(Environment.CurrentDirectory + "\\", "").Replace("\\", "/");
+                path = filepath;
+            }
+            else
+                filepath = path;
+
+
+            tabFilePaths.Add(path);
+
+            if (!CurrentProjectVariables.JsonEditor_OpenedTabs.Contains(path))
+            {
+                CurrentProjectVariables.JsonEditor_OpenedTabs.Add(path);
+                ProjectHandler.SaveProject();
+            }
+
+            tabPages.Add(new TabPage());
+            userControls.Add(new JsonEditor_Instance());
+
+            //create the tab and do required processing
+
+            string[] split = path.Replace("/", "\\").Split('\\');
+            string filename = split[split.Length - 1];
+            if (path.Contains("BackupProject"))
+            {
+                filename = filename + readOnlyName;
+                userControls[userControls.Count - 1].Editor_TextBox.ReadOnly = true;
+            }
+
+            tabPages[tabPages.Count - 1].Text = filename;
+            tabPages[tabPages.Count - 1].Controls.Add(userControls[userControls.Count - 1]);
+            userControls[userControls.Count - 1].path = path;
+            userControls[userControls.Count - 1].filename = filename;
+
+            MessageBox.Show(path);
+            if (isFromZip == false)
+                AddText(path, false);
+            else
+                AddText(path, true);
+
+            if ((tabPages.Count - 1) < 0 || tabPages[tabPages.Count - 1] == null)
+            {
+                return;
+            }
+
+            tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
+
+            OpenTab(path);
+            ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
+            userControls[userControls.Count - 1].FinishedLoading();
         }
         private void AddText(string path, bool isFromZip)
         {
