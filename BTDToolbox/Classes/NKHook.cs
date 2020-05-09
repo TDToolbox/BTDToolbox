@@ -21,7 +21,8 @@ namespace BTDToolbox.Classes
         }
         public static void LaunchNKH()
         {
-            Process.Start(nkhEXE);
+            if(DoesNkhExist())
+                Process.Start(nkhEXE);
         }
     }
 }

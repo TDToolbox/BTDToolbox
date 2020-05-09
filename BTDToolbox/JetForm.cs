@@ -173,6 +173,19 @@ namespace BTDToolbox
             treeMenu.Items.Add("Open in File Explorer");
             treeMenu.ItemClicked += treeContextClicked;
         }
+        private void HandleNKH()
+        {
+            Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Clear();
+
+            if (CurrentProjectVariables.GameName == "BTD5")
+            {
+                if (NKHook.DoesNkhExist())
+                {
+                    Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
+                    Main.getInstance().Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
+                }
+            }
+        }
         private void JetForm_Load(object sender, EventArgs e)
         {
             openDirWindow();
@@ -181,6 +194,7 @@ namespace BTDToolbox
         private void JetForm_Shown(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "jet explorer");
+            HandleNKH();
         }
         public void openDirWindow()
         {

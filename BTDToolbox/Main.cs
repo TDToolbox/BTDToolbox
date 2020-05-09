@@ -246,18 +246,6 @@ namespace BTDToolbox
                     jf.MdiParent = this;
                     jf.Show();
                     projName = dinfo.ToString();
-
-                    LaunchWIthNKH_Button.Visible = false;
-                    LaunchNoNKH_Button.Visible = false;
-
-                    if (CurrentProjectVariables.GameName == "BTD5")
-                    {
-                        if(NKHook.DoesNkhExist())
-                        {
-                            LaunchWIthNKH_Button.Visible = true;
-                            LaunchNoNKH_Button.Visible = true;
-                        }
-                    }
                 }
             }
         }
