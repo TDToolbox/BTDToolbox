@@ -246,6 +246,18 @@ namespace BTDToolbox
                     jf.MdiParent = this;
                     jf.Show();
                     projName = dinfo.ToString();
+
+                    LaunchWIthNKH_Button.Visible = false;
+                    LaunchNoNKH_Button.Visible = false;
+
+                    if (CurrentProjectVariables.GameName == "BTD5")
+                    {
+                        if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NKHook5\\NKHook5-Injector.exe"))
+                        {
+                            LaunchWIthNKH_Button.Visible = true;
+                            LaunchNoNKH_Button.Visible = true;
+                        }
+                    }
                 }
             }
         }
@@ -353,7 +365,19 @@ namespace BTDToolbox
         }
         private void LaunchProgram_Click(object sender, EventArgs e)
         {
-            CompileJet("launch");
+            if (CurrentProjectVariables.GameName != "BTD5")
+                CompileJet("launch");
+            else
+            {
+                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NKHook5\\NKHook5-Injector.exe"))
+                {
+
+                }
+                else
+                {
+                    CompileJet("launch");
+                }
+            }
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
         {

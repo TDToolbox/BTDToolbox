@@ -76,11 +76,12 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ShowBTD5_Pass = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowLastBattlesPass = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowBMCPass_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.bTD5DirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bTDBDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bMCDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ShowBMCPass_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.bTDBPasswordManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,23 +94,29 @@
             this.restorejetToBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Restore_BTD5 = new System.Windows.Forms.ToolStripMenuItem();
             this.Restore_BTDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.Restore_BMC = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreBTD5LocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreBTDBattlesLOCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreBMCLocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.remakeBackupjetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Replace_BTD5_Backup = new System.Windows.Forms.ToolStripMenuItem();
             this.Replace_BTDB_Backup = new System.Windows.Forms.ToolStripMenuItem();
+            this.Replace_BMC_Backup = new System.Windows.Forms.ToolStripMenuItem();
             this.createNewLOCFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bTD5ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.bTDBattlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.forBMCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Reset_EXE = new System.Windows.Forms.ToolStripMenuItem();
             this.resetBTD5exeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetBTDBattlesexeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetBMCexeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.validateGameFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ValidateBTD5 = new System.Windows.Forms.ToolStripMenuItem();
             this.ValidateBTDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.ValidateBMC = new System.Windows.Forms.ToolStripMenuItem();
             this.eraseConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ContactUs = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,13 +130,8 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.resetBMCexeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Restore_BMC = new System.Windows.Forms.ToolStripMenuItem();
-            this.Replace_BMC_Backup = new System.Windows.Forms.ToolStripMenuItem();
-            this.ValidateBMC = new System.Windows.Forms.ToolStripMenuItem();
-            this.restoreBMCLocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.forBMCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bMCDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LaunchWIthNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.LaunchNoNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -174,7 +176,7 @@
             this.NewProject_From_Backup,
             this.btdpToolStripMenuItem});
             this.New_ToolStrip.Name = "New_ToolStrip";
-            this.New_ToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.New_ToolStrip.Size = new System.Drawing.Size(142, 22);
             this.New_ToolStrip.Text = "New";
             // 
             // New_BTD5_Proj
@@ -223,41 +225,41 @@
             this.Open_Existing_JetFile,
             this.OpenExistingProject});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // Open_Existing_JetFile
             // 
             this.Open_Existing_JetFile.Name = "Open_Existing_JetFile";
-            this.Open_Existing_JetFile.Size = new System.Drawing.Size(180, 22);
+            this.Open_Existing_JetFile.Size = new System.Drawing.Size(155, 22);
             this.Open_Existing_JetFile.Text = "Existing .jet";
             this.Open_Existing_JetFile.Click += new System.EventHandler(this.Open_Existing_JetFile_Click);
             // 
             // OpenExistingProject
             // 
             this.OpenExistingProject.Name = "OpenExistingProject";
-            this.OpenExistingProject.Size = new System.Drawing.Size(180, 22);
+            this.OpenExistingProject.Size = new System.Drawing.Size(155, 22);
             this.OpenExistingProject.Text = "Existing project";
             this.OpenExistingProject.Click += new System.EventHandler(this.OpenExistingProject_Click);
             // 
             // MainForm_SaveButton
             // 
             this.MainForm_SaveButton.Name = "MainForm_SaveButton";
-            this.MainForm_SaveButton.Size = new System.Drawing.Size(180, 22);
+            this.MainForm_SaveButton.Size = new System.Drawing.Size(142, 22);
             this.MainForm_SaveButton.Text = "Save";
             this.MainForm_SaveButton.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // OpenSettings_Button
             // 
             this.OpenSettings_Button.Name = "OpenSettings_Button";
-            this.OpenSettings_Button.Size = new System.Drawing.Size(180, 22);
+            this.OpenSettings_Button.Size = new System.Drawing.Size(142, 22);
             this.OpenSettings_Button.Text = "Settings";
             this.OpenSettings_Button.Click += new System.EventHandler(this.OpenSettings_Button_Click);
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             this.openRecentToolStripMenuItem.Visible = false;
             // 
@@ -288,6 +290,9 @@
             // 
             // Launch_Program_ToolStrip
             // 
+            this.Launch_Program_ToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LaunchWIthNKH_Button,
+            this.LaunchNoNKH_Button});
             this.Launch_Program_ToolStrip.ForeColor = System.Drawing.Color.White;
             this.Launch_Program_ToolStrip.Name = "Launch_Program_ToolStrip";
             this.Launch_Program_ToolStrip.Size = new System.Drawing.Size(73, 20);
@@ -523,6 +528,13 @@
             this.ShowLastBattlesPass.Text = "BTDB Password";
             this.ShowLastBattlesPass.Click += new System.EventHandler(this.ShowLastBattlesPass_Click);
             // 
+            // ShowBMCPass_Button
+            // 
+            this.ShowBMCPass_Button.Name = "ShowBMCPass_Button";
+            this.ShowBMCPass_Button.Size = new System.Drawing.Size(204, 22);
+            this.ShowBMCPass_Button.Text = "BMC Password";
+            this.ShowBMCPass_Button.Click += new System.EventHandler(this.ShowBMCPass_Button_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -542,19 +554,19 @@
             this.bTDBDirectoryToolStripMenuItem.Text = "BTDB Directory";
             this.bTDBDirectoryToolStripMenuItem.Click += new System.EventHandler(this.BTDBDirectoryToolStripMenuItem_Click_1);
             // 
+            // bMCDirectoryToolStripMenuItem
+            // 
+            this.bMCDirectoryToolStripMenuItem.Name = "bMCDirectoryToolStripMenuItem";
+            this.bMCDirectoryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.bMCDirectoryToolStripMenuItem.Text = "BMC Directory";
+            this.bMCDirectoryToolStripMenuItem.Click += new System.EventHandler(this.bMCDirectoryToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(204, 22);
             this.toolStripMenuItem4.Text = "Toolbox Directory";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
-            // 
-            // ShowBMCPass_Button
-            // 
-            this.ShowBMCPass_Button.Name = "ShowBMCPass_Button";
-            this.ShowBMCPass_Button.Size = new System.Drawing.Size(204, 22);
-            this.ShowBMCPass_Button.Text = "BMC Password";
-            this.ShowBMCPass_Button.Click += new System.EventHandler(this.ShowBMCPass_Button_Click);
             // 
             // toolStripSeparator9
             // 
@@ -582,7 +594,7 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.settingsToolStripMenuItem.Text = "Settings file";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
@@ -600,21 +612,21 @@
             // EZ_TowerEditor
             // 
             this.EZ_TowerEditor.Name = "EZ_TowerEditor";
-            this.EZ_TowerEditor.Size = new System.Drawing.Size(180, 22);
+            this.EZ_TowerEditor.Size = new System.Drawing.Size(155, 22);
             this.EZ_TowerEditor.Text = "EZ Tower editor";
             this.EZ_TowerEditor.Click += new System.EventHandler(this.EZ_TowerEditor_Click);
             // 
             // EZ_BloonEditor
             // 
             this.EZ_BloonEditor.Name = "EZ_BloonEditor";
-            this.EZ_BloonEditor.Size = new System.Drawing.Size(180, 22);
+            this.EZ_BloonEditor.Size = new System.Drawing.Size(155, 22);
             this.EZ_BloonEditor.Text = "EZ Bloon editor";
             this.EZ_BloonEditor.Click += new System.EventHandler(this.EZ_BloonEditor_Click);
             // 
             // EZCard_Editor
             // 
             this.EZCard_Editor.Name = "EZCard_Editor";
-            this.EZCard_Editor.Size = new System.Drawing.Size(180, 22);
+            this.EZCard_Editor.Size = new System.Drawing.Size(155, 22);
             this.EZCard_Editor.Text = "EZ Card editor";
             this.EZCard_Editor.Click += new System.EventHandler(this.EZCard_Editor_Click);
             // 
@@ -655,16 +667,23 @@
             // Restore_BTD5
             // 
             this.Restore_BTD5.Name = "Restore_BTD5";
-            this.Restore_BTD5.Size = new System.Drawing.Size(180, 22);
+            this.Restore_BTD5.Size = new System.Drawing.Size(159, 22);
             this.Restore_BTD5.Text = "Restore BTD5.jet";
             this.Restore_BTD5.Click += new System.EventHandler(this.Backup_BTD5_Click_1);
             // 
             // Restore_BTDB
             // 
             this.Restore_BTDB.Name = "Restore_BTDB";
-            this.Restore_BTDB.Size = new System.Drawing.Size(180, 22);
+            this.Restore_BTDB.Size = new System.Drawing.Size(159, 22);
             this.Restore_BTDB.Text = "Restore BTDB jet";
             this.Restore_BTDB.Click += new System.EventHandler(this.Backup_BTDB_Click_1);
+            // 
+            // Restore_BMC
+            // 
+            this.Restore_BMC.Name = "Restore_BMC";
+            this.Restore_BMC.Size = new System.Drawing.Size(159, 22);
+            this.Restore_BMC.Text = "Restore BMC jet";
+            this.Restore_BMC.Click += new System.EventHandler(this.Restore_BMC_Click);
             // 
             // toolStripMenuItem5
             // 
@@ -690,6 +709,13 @@
             this.restoreBTDBattlesLOCToolStripMenuItem.Text = "Restore BTD Battles Loc";
             this.restoreBTDBattlesLOCToolStripMenuItem.Click += new System.EventHandler(this.RestoreBTDBattlesLOCToolStripMenuItem_Click);
             // 
+            // restoreBMCLocToolStripMenuItem
+            // 
+            this.restoreBMCLocToolStripMenuItem.Name = "restoreBMCLocToolStripMenuItem";
+            this.restoreBMCLocToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.restoreBMCLocToolStripMenuItem.Text = "Restore BMC Loc";
+            this.restoreBMCLocToolStripMenuItem.Click += new System.EventHandler(this.restoreBMCLocToolStripMenuItem_Click);
+            // 
             // remakeBackupjetToolStripMenuItem
             // 
             this.remakeBackupjetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -703,16 +729,23 @@
             // Replace_BTD5_Backup
             // 
             this.Replace_BTD5_Backup.Name = "Replace_BTD5_Backup";
-            this.Replace_BTD5_Backup.Size = new System.Drawing.Size(180, 22);
+            this.Replace_BTD5_Backup.Size = new System.Drawing.Size(150, 22);
             this.Replace_BTD5_Backup.Text = "for BTD5";
             this.Replace_BTD5_Backup.Click += new System.EventHandler(this.Replace_BTD5_Backup_Click);
             // 
             // Replace_BTDB_Backup
             // 
             this.Replace_BTDB_Backup.Name = "Replace_BTDB_Backup";
-            this.Replace_BTDB_Backup.Size = new System.Drawing.Size(180, 22);
+            this.Replace_BTDB_Backup.Size = new System.Drawing.Size(150, 22);
             this.Replace_BTDB_Backup.Text = "for BTD Battles";
             this.Replace_BTDB_Backup.Click += new System.EventHandler(this.Replace_BTDB_Backup_Click);
+            // 
+            // Replace_BMC_Backup
+            // 
+            this.Replace_BMC_Backup.Name = "Replace_BMC_Backup";
+            this.Replace_BMC_Backup.Size = new System.Drawing.Size(150, 22);
+            this.Replace_BMC_Backup.Text = "for BMC";
+            this.Replace_BMC_Backup.Click += new System.EventHandler(this.Replace_BMC_Backup_Click);
             // 
             // createNewLOCFileToolStripMenuItem
             // 
@@ -727,16 +760,23 @@
             // bTD5ToolStripMenuItem1
             // 
             this.bTD5ToolStripMenuItem1.Name = "bTD5ToolStripMenuItem1";
-            this.bTD5ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.bTD5ToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
             this.bTD5ToolStripMenuItem1.Text = "for BTD5";
             this.bTD5ToolStripMenuItem1.Click += new System.EventHandler(this.BTD5ToolStripMenuItem1_Click);
             // 
             // bTDBattlesToolStripMenuItem
             // 
             this.bTDBattlesToolStripMenuItem.Name = "bTDBattlesToolStripMenuItem";
-            this.bTDBattlesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bTDBattlesToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.bTDBattlesToolStripMenuItem.Text = "for BTD Battles";
             this.bTDBattlesToolStripMenuItem.Click += new System.EventHandler(this.BTDBattlesToolStripMenuItem_Click);
+            // 
+            // forBMCToolStripMenuItem
+            // 
+            this.forBMCToolStripMenuItem.Name = "forBMCToolStripMenuItem";
+            this.forBMCToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.forBMCToolStripMenuItem.Text = "for BMC";
+            this.forBMCToolStripMenuItem.Click += new System.EventHandler(this.forBMCToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -769,6 +809,13 @@
             this.resetBTDBattlesexeToolStripMenuItem.Text = "Reset BTD Battles.exe";
             this.resetBTDBattlesexeToolStripMenuItem.Click += new System.EventHandler(this.ResetBTDBattlesexeToolStripMenuItem_Click);
             // 
+            // resetBMCexeToolStripMenuItem
+            // 
+            this.resetBMCexeToolStripMenuItem.Name = "resetBMCexeToolStripMenuItem";
+            this.resetBMCexeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.resetBMCexeToolStripMenuItem.Text = "Reset BMC.exe";
+            this.resetBMCexeToolStripMenuItem.Click += new System.EventHandler(this.resetBMCexeToolStripMenuItem_Click);
+            // 
             // resetUserSettingsToolStripMenuItem
             // 
             this.resetUserSettingsToolStripMenuItem.Name = "resetUserSettingsToolStripMenuItem";
@@ -789,16 +836,23 @@
             // ValidateBTD5
             // 
             this.ValidateBTD5.Name = "ValidateBTD5";
-            this.ValidateBTD5.Size = new System.Drawing.Size(180, 22);
+            this.ValidateBTD5.Size = new System.Drawing.Size(132, 22);
             this.ValidateBTD5.Text = "BTD5";
             this.ValidateBTD5.Click += new System.EventHandler(this.ValidateBTD5_Click);
             // 
             // ValidateBTDB
             // 
             this.ValidateBTDB.Name = "ValidateBTDB";
-            this.ValidateBTDB.Size = new System.Drawing.Size(180, 22);
+            this.ValidateBTDB.Size = new System.Drawing.Size(132, 22);
             this.ValidateBTDB.Text = "BTD Battles";
             this.ValidateBTDB.Click += new System.EventHandler(this.ValidateBTDB_Click);
+            // 
+            // ValidateBMC
+            // 
+            this.ValidateBMC.Name = "ValidateBMC";
+            this.ValidateBMC.Size = new System.Drawing.Size(132, 22);
+            this.ValidateBMC.Text = "BMC";
+            this.ValidateBMC.Click += new System.EventHandler(this.ValidateBMC_Click);
             // 
             // eraseConsoleToolStripMenuItem
             // 
@@ -866,21 +920,21 @@
             // themedFormToolStripMenuItem
             // 
             this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.themedFormToolStripMenuItem.Text = "Themed Form";
             this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
             // 
             // TestForm
             // 
             this.TestForm.Name = "TestForm";
-            this.TestForm.Size = new System.Drawing.Size(180, 22);
+            this.TestForm.Size = new System.Drawing.Size(148, 22);
             this.TestForm.Text = "JSON Editor";
             this.TestForm.Click += new System.EventHandler(this.TestForm_Click);
             // 
             // testingToolStripMenuItem
             // 
             this.testingToolStripMenuItem.Name = "testingToolStripMenuItem";
-            this.testingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.testingToolStripMenuItem.Text = "Testing";
             this.testingToolStripMenuItem.Click += new System.EventHandler(this.TestingToolStripMenuItem_Click);
             // 
@@ -897,54 +951,17 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // resetBMCexeToolStripMenuItem
+            // LaunchWIthNKH_Button
             // 
-            this.resetBMCexeToolStripMenuItem.Name = "resetBMCexeToolStripMenuItem";
-            this.resetBMCexeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.resetBMCexeToolStripMenuItem.Text = "Reset BMC.exe";
-            this.resetBMCexeToolStripMenuItem.Click += new System.EventHandler(this.resetBMCexeToolStripMenuItem_Click);
+            this.LaunchWIthNKH_Button.Name = "LaunchWIthNKH_Button";
+            this.LaunchWIthNKH_Button.Size = new System.Drawing.Size(180, 22);
+            this.LaunchWIthNKH_Button.Text = "With NKHook";
             // 
-            // Restore_BMC
+            // LaunchNoNKH_Button
             // 
-            this.Restore_BMC.Name = "Restore_BMC";
-            this.Restore_BMC.Size = new System.Drawing.Size(180, 22);
-            this.Restore_BMC.Text = "Restore BMC jet";
-            this.Restore_BMC.Click += new System.EventHandler(this.Restore_BMC_Click);
-            // 
-            // Replace_BMC_Backup
-            // 
-            this.Replace_BMC_Backup.Name = "Replace_BMC_Backup";
-            this.Replace_BMC_Backup.Size = new System.Drawing.Size(180, 22);
-            this.Replace_BMC_Backup.Text = "for BMC";
-            this.Replace_BMC_Backup.Click += new System.EventHandler(this.Replace_BMC_Backup_Click);
-            // 
-            // ValidateBMC
-            // 
-            this.ValidateBMC.Name = "ValidateBMC";
-            this.ValidateBMC.Size = new System.Drawing.Size(180, 22);
-            this.ValidateBMC.Text = "BMC";
-            this.ValidateBMC.Click += new System.EventHandler(this.ValidateBMC_Click);
-            // 
-            // restoreBMCLocToolStripMenuItem
-            // 
-            this.restoreBMCLocToolStripMenuItem.Name = "restoreBMCLocToolStripMenuItem";
-            this.restoreBMCLocToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.restoreBMCLocToolStripMenuItem.Text = "Restore BMC Loc";
-            this.restoreBMCLocToolStripMenuItem.Click += new System.EventHandler(this.restoreBMCLocToolStripMenuItem_Click);
-            // 
-            // forBMCToolStripMenuItem
-            // 
-            this.forBMCToolStripMenuItem.Name = "forBMCToolStripMenuItem";
-            this.forBMCToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.forBMCToolStripMenuItem.Text = "for BMC";
-            this.forBMCToolStripMenuItem.Click += new System.EventHandler(this.forBMCToolStripMenuItem_Click);
-            // 
-            // bMCDirectoryToolStripMenuItem
-            // 
-            this.bMCDirectoryToolStripMenuItem.Name = "bMCDirectoryToolStripMenuItem";
-            this.bMCDirectoryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.bMCDirectoryToolStripMenuItem.Text = "BMC Directory";
-            this.bMCDirectoryToolStripMenuItem.Click += new System.EventHandler(this.bMCDirectoryToolStripMenuItem_Click);
+            this.LaunchNoNKH_Button.Name = "LaunchNoNKH_Button";
+            this.LaunchNoNKH_Button.Size = new System.Drawing.Size(180, 22);
+            this.LaunchNoNKH_Button.Text = "Without NKHook";
             // 
             // Main
             // 
@@ -1079,6 +1096,8 @@
         private System.Windows.Forms.ToolStripMenuItem restoreBMCLocToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forBMCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bMCDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem LaunchWIthNKH_Button;
+        private System.Windows.Forms.ToolStripMenuItem LaunchNoNKH_Button;
     }
 }
 

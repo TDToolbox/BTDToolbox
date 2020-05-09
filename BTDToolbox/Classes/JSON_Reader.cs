@@ -158,7 +158,7 @@ namespace BTDToolbox.Classes
             string projDir = CurrentProjectVariables.PathToProjectFiles;
             if(Directory.Exists(projDir))
             {
-                string ignoreFiles = ".mask,README_subcompounds.txt,a9e50211ce5c11a0fe587b9ef452798f.json,333fd8efdbad97247c84556b100b1e74.json,brick_wall.path,battle_knot.path,19032012,005f0c8868851848d1269efd2d7e91a2.json,b7f1428b233718e0acaef609d317bad3.json,d4671aff849ceb62af5e9417f9db61d2.json";
+                string ignoreFiles = ".mask,README_subcompounds.txt,a9e50211ce5c11a0fe587b9ef452798f.json,333fd8efdbad97247c84556b100b1e74.json,brick_wall.path,battle_knot.path,19032012,005f0c8868851848d1269efd2d7e91a2.json,b7f1428b233718e0acaef609d317bad3.json,d4671aff849ceb62af5e9417f9db61d2.json";  //These files are invalid normally
                 string[] ignoreFiles_split = ignoreFiles.Split(',');
                 var allfiles = Directory.GetFiles(projDir, "*",SearchOption.AllDirectories);
                 string badFiles = "";
