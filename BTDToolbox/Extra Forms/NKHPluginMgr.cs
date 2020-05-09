@@ -44,6 +44,7 @@ namespace BTDToolbox.Extra_Forms
             nkhDir = nkhEXE.FullName.Replace(nkhEXE.Name, "");
             
             PopulateUnloadedPlugings();
+            PopulateLoadedPlugings();
         }
 
         public NKHPluginMgr(string temp): this()
@@ -63,6 +64,23 @@ namespace BTDToolbox.Extra_Forms
 
             foreach(var file in files)
                 UnloadedPlugin_LB.Items.Add(file.Name);
+
+            UnloadedPlugin_LB.SelectedIndex = 0;
+        }
+
+        private void PopulateLoadedPlugings()
+        {
+            if (!Directory.Exists(nkhDir + "Plugins"))
+                return;
+
+            var files = new DirectoryInfo(nkhDir + "Plugins").GetFiles("*");
+            if (files.Length <= 0)
+                return;
+
+            foreach (var file in files)
+                LoadedPlugin_LB.Items.Add(file.Name);
+
+            LoadedPlugin_LB.SelectedIndex = 0;
         }
 
         private void LoadPlugin_Button_Click(object sender, EventArgs e)
@@ -73,7 +91,13 @@ namespace BTDToolbox.Extra_Forms
                 return;
             }
 
+            int index = UnloadedPlugin_LB.SelectedIndex;
             MoveLBItem(UnloadedPlugin_LB, LoadedPlugin_LB);
+
+            if (index - 1 >= 0)
+                UnloadedPlugin_LB.SelectedIndex = index - 1;
+            else if (UnloadedPlugin_LB.Items.Count > 0)
+                UnloadedPlugin_LB.SelectedIndex = index;
         }
 
         private void UnloadPlugin_Button_Click(object sender, EventArgs e)
@@ -83,7 +107,14 @@ namespace BTDToolbox.Extra_Forms
                 ConsoleHandler.force_appendLog("You need to select at least one plugin in the \"Loaded Plugins\" section.");
                 return;
             }
+            
+            int index = LoadedPlugin_LB.SelectedIndex;
             MoveLBItem(LoadedPlugin_LB, UnloadedPlugin_LB);
+
+            if (index - 1 >= 0)
+                LoadedPlugin_LB.SelectedIndex = index - 1;
+            else if(LoadedPlugin_LB.Items.Count>0)
+                LoadedPlugin_LB.SelectedIndex = index;
         }
         private void MoveLBItem(ListBox source, ListBox dest)
         {
@@ -99,8 +130,16 @@ namespace BTDToolbox.Extra_Forms
                 string sourcFile = nkhEXE.FullName.Replace(nkhEXE.Name, "") + "UnloadedPlugins\\" + f.Name;
                 string destFile = nkhEXE.FullName.Replace(nkhEXE.Name, "") + "Plugins\\" + f.Name;
 
-                CopyFile(sourcFile, destFile);
-                File.Delete(sourcFile);
+                if(source.Name == "LoadedPlugin_LB")
+                {
+                    CopyFile(destFile, sourcFile);
+                    File.Delete(destFile);
+                }
+                else
+                {
+                    CopyFile(sourcFile, destFile);
+                    File.Delete(sourcFile);
+                }
 
                 dest.Items.Add(f.Name);
                 unloadedLB.RemoveAt(source.SelectedIndex);
