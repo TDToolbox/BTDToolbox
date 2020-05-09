@@ -20,6 +20,7 @@ namespace BTDToolbox.Classes.NewProjects
             public string ExportPath { get; set; }
             public DateTime DateLastOpened { get; set; }
             public bool UseNKHook { get; set; }
+            public bool DontAskAboutNKH { get; set; }
             public List<string> JsonEditor_OpenedTabs { get; set; }
             public List<string> ModifiedFiles { get; set; }
         }

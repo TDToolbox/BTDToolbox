@@ -78,10 +78,14 @@ namespace BTDToolbox.Classes.NewProjects
             CurrentProjectVariables.ModifiedFiles = project.ModifiedFiles;
 
             CurrentProjectVariables.UseNKHook = false;
+            CurrentProjectVariables.DontAskAboutNKH = false;
             if (CurrentProjectVariables.GameName == "BTD5")
             {
                 if (NKHook.DoesNkhExist())
+                {
                     CurrentProjectVariables.UseNKHook = project.UseNKHook;
+                    CurrentProjectVariables.DontAskAboutNKH = project.DontAskAboutNKH;
+                }
             }
 
             return project;
@@ -105,10 +109,14 @@ namespace BTDToolbox.Classes.NewProjects
             
             
             project.UseNKHook = false;
+            project.DontAskAboutNKH = false;
             if (CurrentProjectVariables.GameName == "BTD5")
             {
                 if (NKHook.DoesNkhExist())
+                {
                     project.UseNKHook = CurrentProjectVariables.UseNKHook;
+                    project.DontAskAboutNKH = CurrentProjectVariables.DontAskAboutNKH;
+                }    
             }
 
 

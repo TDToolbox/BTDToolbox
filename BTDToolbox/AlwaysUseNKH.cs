@@ -38,7 +38,8 @@ namespace BTDToolbox
         }
         private void No_Button_Click(object sender, EventArgs e)
         {
-            Main.dontAskAboutNKH = Dont_Ask_Again_Checkbox.Checked;
+            CurrentProjectVariables.DontAskAboutNKH = Dont_Ask_Again_Checkbox.Checked;
+            ProjectHandler.SaveProject();
             useNKHDefault = false;
 
             ConsoleHandler.appendLog("You selected No. If you checked \"Dont Ask Me Again\" then BTD Toolbox won't ask you" +
