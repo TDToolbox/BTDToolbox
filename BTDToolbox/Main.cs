@@ -19,6 +19,8 @@ namespace BTDToolbox
     {
         //Form variables
         public static string version = "Toolbox 0.1.4";
+        public static bool canUseNKH = false;
+
         public static string projectFilePath = "";
         private static Main toolbox;
         public static BGForm bg;

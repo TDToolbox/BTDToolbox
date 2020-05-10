@@ -693,7 +693,7 @@ namespace BTDToolbox
         {
             string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
             var ezBloon = new EZBloon_Editor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BloonDefinitions\\" + filename;
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\" + filename;
             ezBloon.path = path;
             ezBloon.Show();
         }
@@ -701,7 +701,7 @@ namespace BTDToolbox
         {
             string filename = listView1.SelectedItems[0].Text;
             var ezTower = new EasyTowerEditor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions\\" + filename;
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + filename;
             ezTower.path = path;
             ezTower.Show();
         }
@@ -709,7 +709,7 @@ namespace BTDToolbox
         {
             string filename = listView1.SelectedItems[0].ToString().Replace("ListViewItem: {", "").Replace("}", "");
             var ezCard = new EZCard_Editor();
-            string path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\BattleCardDefinitions\\" + filename;
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\" + filename;
             ezCard.path = path;
             ezCard.Show();
         }

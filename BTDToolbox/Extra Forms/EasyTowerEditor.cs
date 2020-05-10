@@ -103,19 +103,15 @@ namespace BTDToolbox.Extra_Forms
         public void CreateTowerObject(string towerPath)
         {
             string json = File.ReadAllText(towerPath);
-            if (JSON_Reader.IsValidJson(json))
-            {
-                artist = Tower_Class.Tower.FromJson(json);
-                PopulateUI();
-
-                string[] split = towerPath.Split('\\');
-                filename = split[split.Length - 1];
-                PopulateToolbar();
-            }
-            else
-            {
+            if (!JSON_Reader.IsValidJson(json))
                 ConsoleHandler.append_Force_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
-            }
+
+            artist = Tower_Class.Tower.FromJson(json);
+            PopulateUI();
+            string[] split = towerPath.Split('\\');
+            filename = split[split.Length - 1];
+            PopulateToolbar();
+
             finishedLoading = true;
         }
         private void PopulateToolbar()

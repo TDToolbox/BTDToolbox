@@ -22,7 +22,13 @@ namespace BTDToolbox.Classes
             }
             return false;
         }
+        /*public static bool CanUseNKH()
+        {
+            if (!Main.canUseNKH)
+                return false;
 
+            if()
+        }*/
         public static void LaunchNKH()
         {
             if(!DoesNkhExist())
