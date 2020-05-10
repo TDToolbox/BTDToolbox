@@ -80,21 +80,19 @@
             // 
             // close_button
             // 
-            this.close_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.close_button.Location = new System.Drawing.Point(676, 8);
+            this.close_button.Location = new System.Drawing.Point(676, 11);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(788, 1834);
+            this.Sizer.Location = new System.Drawing.Point(788, 2214);
             // 
             // TitleBar_RightCorner
             // 
-            this.TitleBar_RightCorner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 5);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 11);
             // 
             // label2
             // 

@@ -17,7 +17,8 @@ namespace BTDToolbox.Extra_Forms
         {
             InitializeComponent();
             canResize = false;
-            this.MdiParent = Main.getInstance();           
+            this.MdiParent = Main.getInstance();
+            //this.Size = new Size(800, 550);
 
             Serializer.nkhookMsgShown = true;
             Serializer.SaveSmallSettings("nkhookMSG");
@@ -26,8 +27,9 @@ namespace BTDToolbox.Extra_Forms
         private void NKHook_Message_Load(object sender, EventArgs e)
         {
             //this.Size = new Size(800, 550);
-            /*var center = GeneralMethods.GetCenterScreen();
-            this.Location = new Point(center.X - (this.Size.Width / 2), center.Y - (this.Size.Height / 2) - 100);*/
+            var center = GeneralMethods.GetCenterScreen();
+            this.Location = new Point(center.X - (this.Size.Width / 2), center.Y - (this.Size.Height / 2) - 100);
+            //contentPanel.Size
         }
 
         private void GetNKHook_Button_Click(object sender, EventArgs e)

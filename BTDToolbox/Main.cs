@@ -98,6 +98,8 @@ namespace BTDToolbox
             lastProject = cfgFile.LastProject;
             disableUpdates = cfgFile.disableUpdates;
             autoFormatJSON = cfgFile.autoFormatJSON;
+
+            
         }
         private void FirstTimeUse()
         {
@@ -651,8 +653,9 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NKHook_Message msg = new NKHook_Message();
-            msg.Show();
+            SplashScreen transparacyTest = new SplashScreen();
+            transparacyTest.MdiParent = this;
+            transparacyTest.Show();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)

@@ -18,22 +18,20 @@ namespace BTDToolbox
             if (Serializer.Deserialize_Config() == null)
             {
                 Serializer.Deserialize_Config();
+                return;
+            }
+
+            if (Serializer.Deserialize_Config().enableSplash == true)
+            {
+                enableSplash = true;
+                Application.Run(new SplashScreen());
             }
             else
             {
-                if (Serializer.Deserialize_Config().enableSplash == true)
-                {
-                    enableSplash = true;
-                    Application.Run(new SplashScreen());
-                }
-
-                else
-                {
-                    enableSplash = false;
-                    Application.Run(new Main());
-                }
+                enableSplash = false;
+                Application.Run(new Main());
             }
-            
+
         }
     }
 }

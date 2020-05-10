@@ -45,8 +45,12 @@ namespace BTDToolbox
         {
             tmr.Stop();
             this.Hide();
-            Main mf = new Main();
-            mf.Show();
+            if (Main.getInstance() == null)
+            {
+                Main mf = new Main();
+                mf.Show();
+            }
+
         }
         protected override void WndProc(ref Message m)
         {
