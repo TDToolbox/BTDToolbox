@@ -34,6 +34,8 @@ namespace BTDToolbox
         public bool canResize = true;
         public bool moveCenterScreen = false;
 
+        private IntPtr cancelThisOnSize;
+
         //Resize defaults
         int minWidth = 200;
         int minHeight = 100;
@@ -58,6 +60,8 @@ namespace BTDToolbox
             Sizer.MouseDown += SizerMouseDown;
             Sizer.MouseMove += SizerMouseMove;
             Sizer.MouseUp += SizerMouseUp;
+
+            cancelThisOnSize = this.contentPanel.Handle;
 
             close_button.Click += close_button_Click;
             this.Load += onThemedLoad;
@@ -110,6 +114,8 @@ namespace BTDToolbox
         //resizing event methods
         private void SizerMouseDown(object sender, MouseEventArgs e)
         {
+            SendMessage(cancelThisOnSize, 11, 0, 0);
+            this.SuspendLayout();
             mov = true;
             My = MousePosition.Y;
             Mx = MousePosition.X;
@@ -187,6 +193,10 @@ namespace BTDToolbox
                 int hegiht = resolution.Height - this.Height;
                 this.Height = resolution.Height - hegiht - 55;
             }
+
+            SendMessage(cancelThisOnSize, 11, 1, 0);
+            this.ResumeLayout();
+            this.Refresh();
         }
 
         //toolbar drag method
