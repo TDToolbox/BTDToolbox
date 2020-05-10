@@ -390,6 +390,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Resize_Icon2.png" />
     <None Include="Resources\new title corner 8_left.png" />
     <None Include="Resources\new title corner 8_right.png" />
     <None Include="Resources\new title corner 7_left.png" />

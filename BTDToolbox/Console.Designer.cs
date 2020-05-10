@@ -62,7 +62,6 @@
             // 
             // contentPanel
             // 
-            this.contentPanel.BackColor = System.Drawing.Color.Black;
             this.contentPanel.Controls.Add(this.tabControl1);
             this.contentPanel.Controls.Add(this.invoke_button);
             this.contentPanel.Controls.Add(this.invoke_textbox);
@@ -73,6 +72,7 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.close_button.Location = new System.Drawing.Point(732, 0);
             // 

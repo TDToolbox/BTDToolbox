@@ -28,7 +28,6 @@
         /// </summary>
         public void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThemedForm));
             this.titleSeperator = new System.Windows.Forms.SplitContainer();
             this.TitleLabel = new System.Windows.Forms.Label();
             this.close_button = new System.Windows.Forms.Button();
@@ -64,7 +63,7 @@
             // 
             // titleSeperator.Panel2
             // 
-            this.titleSeperator.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.titleSeperator.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.titleSeperator.Panel2.Controls.Add(this.Sizer);
             this.titleSeperator.Panel2.Controls.Add(this.contentPanel);
             this.titleSeperator.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
@@ -133,9 +132,10 @@
             // Sizer
             // 
             this.Sizer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Sizer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.Sizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Sizer.BackgroundImage")));
+            this.Sizer.BackColor = System.Drawing.Color.Transparent;
+            this.Sizer.BackgroundImage = global::BTDToolbox.Properties.Resources.Resize_Icon2;
             this.Sizer.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.Sizer.ForeColor = System.Drawing.Color.Transparent;
             this.Sizer.Location = new System.Drawing.Point(788, 409);
             this.Sizer.Name = "Sizer";
             this.Sizer.Size = new System.Drawing.Size(12, 12);
@@ -146,7 +146,7 @@
             this.contentPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.contentPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.contentPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.contentPanel.Location = new System.Drawing.Point(12, 3);
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Size = new System.Drawing.Size(776, 406);

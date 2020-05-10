@@ -169,6 +169,9 @@
   <data name="Resize_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Resize_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Resize_Icon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Resize_Icon2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Splash1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Splash1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

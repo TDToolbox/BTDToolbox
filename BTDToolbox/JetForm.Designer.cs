@@ -121,6 +121,8 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             // 
             // TitleBar_RightCorner
             // 
@@ -394,7 +396,7 @@
             this.treeView1.Location = new System.Drawing.Point(0, 27);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(251, 380);
+            this.treeView1.Size = new System.Drawing.Size(251, 377);
             this.treeView1.TabIndex = 0;
             // 
             // lastSelectedLabel
@@ -429,7 +431,7 @@
             this.saveButton.ForeColor = System.Drawing.Color.White;
             this.saveButton.Location = new System.Drawing.Point(3, 380);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(499, 27);
+            this.saveButton.Size = new System.Drawing.Size(515, 27);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
@@ -449,7 +451,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(2, 27);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(519, 377);
+            this.listView1.Size = new System.Drawing.Size(519, 351);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
