@@ -1091,5 +1091,12 @@ namespace BTDToolbox
                 
             }
         }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            Browser b = new Browser("https://google.com");
+            b.MdiParent = this;
+            b.Show();
+        }
     }
 }
