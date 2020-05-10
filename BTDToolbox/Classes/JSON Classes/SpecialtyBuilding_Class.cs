@@ -6,7 +6,7 @@
 //
 //    var specialtyBuildingClass = SpecialtyBuildingClass.FromJson(jsonString);
 
-namespace BTDToolbox.Classes
+namespace BTDToolbox.Classes.JSON_Classes
 {
     using System;
     using System.Collections.Generic;
@@ -36,10 +36,10 @@ namespace BTDToolbox.Classes
         public string RelatedTower { get; set; }
 
         [JsonProperty("Effects")]
-        public Effects Effects { get; set; }
+        public Tiers Tiers { get; set; }
     }
 
-    public partial class Effects
+    public partial class Tiers
     {
         [JsonProperty("I")]
         public I I { get; set; }
@@ -181,12 +181,12 @@ namespace BTDToolbox.Classes
 
     public partial class SpecialtyBuildingClass
     {
-        public static SpecialtyBuildingClass FromJson(string json) => JsonConvert.DeserializeObject<SpecialtyBuildingClass>(json, BTDToolbox.Classes.Specialty_Converter.Settings);
+        public static SpecialtyBuildingClass FromJson(string json) => JsonConvert.DeserializeObject<SpecialtyBuildingClass>(json, BTDToolbox.Classes.JSON_Classes.Specialty_Converter.Settings);
     }
 
     public static class Serialize_Specialty
     {
-        public static string ToJson(this SpecialtyBuildingClass self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.Specialty_Converter.Settings);
+        public static string ToJson(this SpecialtyBuildingClass self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.JSON_Classes.Specialty_Converter.Settings);
     }
 
     internal static class Specialty_Converter

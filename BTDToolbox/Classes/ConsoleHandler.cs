@@ -7,40 +7,23 @@ namespace BTDToolbox
     {
         public static Console console;
 
-        public static void appendLog(String log)
+        public static void append(String log, bool canRepeat, bool force, bool notice)
         {
-            if (validateConsole())
-                console.appendLog(log);
+            if (!validateConsole())
+                return;
+
+            console.append(log, canRepeat, force, notice);
         }
-        public static void appendNotice(String log)
-        {
-            if (validateConsole())
-                console.appendNotice(log);
-        }
-        public static void force_appendNotice(String log)
-        {
-            if (validateConsole())
-                console.force_appendNotice(log);
-        }
-        public static void appendLog_CanRepeat(String log)
-        {
-            console.CanRepeat = true;
-            if (validateConsole())
-                console.appendLog(log);
-            console.CanRepeat = false;
-        }
-        public static void force_appendLog(String log)
-        {
-            if (validateConsole())
-                console.force_appendLog(log);            
-        }
-        public static void force_appendLog_CanRepeat(String log)
-        {
-            console.CanRepeat = true;
-            if (validateConsole())
-                console.force_appendLog(log);
-            console.CanRepeat = false;
-        }
+
+        public static void append(String log) => append(log, false, false, false);
+        public static void append_CanRepeat(String log) => append(log, true, false, false);
+        public static void append_Force(String log) => append(log, false, true, false);
+        public static void append_Force_CanRepeat(String log) => append(log, true, true, false);
+        public static void append_Notice(String log) => append(log, false, false, true);
+        public static void force_append_Notice(String log) => append(log, false, true, true);
+        public static void force_append_Notice_CanRepeat(String log) => append(log, true, true, true);
+        
+       
         public static void announcement()
         {
             if (validateConsole())
@@ -60,9 +43,7 @@ namespace BTDToolbox
         public static bool validateConsole()
         {
             if (Console.getInstance() == null)
-            {
                 return false;
-            }
             else
                 return true;
         }

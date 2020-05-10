@@ -42,7 +42,7 @@ namespace BTDToolbox
             ProjectHandler.SaveProject();
             useNKHDefault = false;
 
-            ConsoleHandler.appendLog("You selected No. If you checked \"Dont Ask Me Again\" then BTD Toolbox won't ask you" +
+            ConsoleHandler.append("You selected No. If you checked \"Dont Ask Me Again\" then BTD Toolbox won't ask you" +
                 " for the rest of this session. You can always change this by going to Settings and checking Use NKHook");
             Submit();
         }
@@ -53,7 +53,7 @@ namespace BTDToolbox
             ProjectHandler.SaveProject();
             useNKHDefault = true;
 
-            ConsoleHandler.appendLog("You selected Yes. From now on when you quick launch this project BTD Toolbox " +
+            ConsoleHandler.append("You selected Yes. From now on when you quick launch this project BTD Toolbox " +
                 "will use NKHook");
             Submit();
         }

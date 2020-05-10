@@ -27,7 +27,7 @@ namespace BTDToolbox.Extra_Forms
                 this.Close();
             if (!NKHook.DoesNkhExist())
             {
-                ConsoleHandler.force_appendNotice("You need to have NKHook downloaded to use this feature.");
+                ConsoleHandler.force_append_Notice("You need to have NKHook downloaded to use this feature.");
                 MessageBox.Show("You need to have NKHook downloaded to use this feature.");
                 NKHook_Message msg = new NKHook_Message();
                 msg.Show();
@@ -44,6 +44,7 @@ namespace BTDToolbox.Extra_Forms
             nkhDir = nkhEXE.FullName.Replace(nkhEXE.Name, "");
             
             PopulateUnloadedPlugings();
+            PopulateLoadedPlugings();
         }
 
         public NKHPluginMgr(string temp): this()
@@ -63,27 +64,57 @@ namespace BTDToolbox.Extra_Forms
 
             foreach(var file in files)
                 UnloadedPlugin_LB.Items.Add(file.Name);
+
+            UnloadedPlugin_LB.SelectedIndex = 0;
+        }
+
+        private void PopulateLoadedPlugings()
+        {
+            if (!Directory.Exists(nkhDir + "Plugins"))
+                return;
+
+            var files = new DirectoryInfo(nkhDir + "Plugins").GetFiles("*");
+            if (files.Length <= 0)
+                return;
+
+            foreach (var file in files)
+                LoadedPlugin_LB.Items.Add(file.Name);
+
+            LoadedPlugin_LB.SelectedIndex = 0;
         }
 
         private void LoadPlugin_Button_Click(object sender, EventArgs e)
         {
             if(UnloadedPlugin_LB.SelectedItems.Count <= 0)
             {
-                ConsoleHandler.force_appendLog("You need to select at least one plugin in the \"Unloaded Plugins\" section.");
+                ConsoleHandler.append_Force("You need to select at least one plugin in the \"Unloaded Plugins\" section.");
                 return;
             }
 
+            int index = UnloadedPlugin_LB.SelectedIndex;
             MoveLBItem(UnloadedPlugin_LB, LoadedPlugin_LB);
+
+            if (index - 1 >= 0)
+                UnloadedPlugin_LB.SelectedIndex = index - 1;
+            else if (UnloadedPlugin_LB.Items.Count > 0)
+                UnloadedPlugin_LB.SelectedIndex = index;
         }
 
         private void UnloadPlugin_Button_Click(object sender, EventArgs e)
         {
             if (LoadedPlugin_LB.SelectedItems.Count <= 0)
             {
-                ConsoleHandler.force_appendLog("You need to select at least one plugin in the \"Loaded Plugins\" section.");
+                ConsoleHandler.append_Force("You need to select at least one plugin in the \"Loaded Plugins\" section.");
                 return;
             }
+            
+            int index = LoadedPlugin_LB.SelectedIndex;
             MoveLBItem(LoadedPlugin_LB, UnloadedPlugin_LB);
+
+            if (index - 1 >= 0)
+                LoadedPlugin_LB.SelectedIndex = index - 1;
+            else if(LoadedPlugin_LB.Items.Count>0)
+                LoadedPlugin_LB.SelectedIndex = index;
         }
         private void MoveLBItem(ListBox source, ListBox dest)
         {
@@ -99,8 +130,16 @@ namespace BTDToolbox.Extra_Forms
                 string sourcFile = nkhEXE.FullName.Replace(nkhEXE.Name, "") + "UnloadedPlugins\\" + f.Name;
                 string destFile = nkhEXE.FullName.Replace(nkhEXE.Name, "") + "Plugins\\" + f.Name;
 
-                CopyFile(sourcFile, destFile);
-                File.Delete(sourcFile);
+                if(source.Name == "LoadedPlugin_LB")
+                {
+                    CopyFile(destFile, sourcFile);
+                    File.Delete(destFile);
+                }
+                else
+                {
+                    CopyFile(sourcFile, destFile);
+                    File.Delete(sourcFile);
+                }
 
                 dest.Items.Add(f.Name);
                 unloadedLB.RemoveAt(source.SelectedIndex);
@@ -125,7 +164,7 @@ namespace BTDToolbox.Extra_Forms
                 Directory.CreateDirectory(nkhEXE.FullName.Replace(nkhEXE.Name, "") + "UnloadedPlugins\\");
 
             var files = GeneralMethods.BrowseForFiles("Browse for plugins", "dll", "Dll files (*.dll)|*.dll", Environment.CurrentDirectory);
-            if (files.Count() <= 0)
+            if (files== null)
                 return;
 
             foreach(string file in files)
@@ -139,7 +178,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (!File.Exists(source))
             {
-                ConsoleHandler.force_appendLog("Unable to copy plugin. Source plugin does not exist");
+                ConsoleHandler.append_Force("Unable to copy plugin. Source plugin does not exist");
                 return "";
             }
 

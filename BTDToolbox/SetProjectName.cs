@@ -89,9 +89,9 @@ namespace BTDToolbox
         {
             
             if (CustomName_RadioButton.Checked)
-                ConsoleHandler.appendLog("You chose the project name: " + ProjectName_TextBox.Text);
+                ConsoleHandler.append("You chose the project name: " + ProjectName_TextBox.Text);
             else
-                ConsoleHandler.appendLog("You chose a random project name");
+                ConsoleHandler.append("You chose a random project name");
             if (isRenaming == true)
             {
                 string temp = gameName;
@@ -121,12 +121,12 @@ namespace BTDToolbox
                 {
                     if (result == DialogResult.Yes)
                     {
-                        ConsoleHandler.appendLog("Deleting original project");
+                        ConsoleHandler.append("Deleting original project");
                         try
                         {
                             Directory.Delete(projdir, true);
                         }
-                        catch { ConsoleHandler.appendLog("Directory is currently open in windows file explorer..."); }
+                        catch { ConsoleHandler.append("Directory is currently open in windows file explorer..."); }
                         writeProj = true;
                     }
                     else
@@ -174,7 +174,7 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ConsoleHandler.force_appendLog("Unable to locate or create backup... Cancelling project creation...");
+                    ConsoleHandler.append_Force("Unable to locate or create backup... Cancelling project creation...");
                     if (Directory.Exists(projdir))
                         Directory.Delete(projdir);
                     this.Close();
@@ -241,7 +241,7 @@ namespace BTDToolbox
 
             if (!Guard.IsStringValid(path))
             {
-                ConsoleHandler.appendLog("You didn't select a valid folder. Please try again, or use let toolbox use the default folder");
+                ConsoleHandler.append("You didn't select a valid folder. Please try again, or use let toolbox use the default folder");
                 MessageBox.Show("You didn't select a valid folder. Please try again, or use let toolbox use the default folder");
                 return;
             }
@@ -252,7 +252,7 @@ namespace BTDToolbox
         private void UseNKH_CB_CheckedChanged(object sender, EventArgs e)
         {
             if(UseNKH_CB.Checked)
-                ConsoleHandler.force_appendNotice("Checking this will make toolbox use NKH with your project by default. You can always change this later in Settings if you want by clicking \"File\" at the top, then \"Settings\"");
+                ConsoleHandler.force_append_Notice("Checking this will make toolbox use NKH with your project by default. You can always change this later in Settings if you want by clicking \"File\" at the top, then \"Settings\"");
             this.Focus();
         }
     }

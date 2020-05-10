@@ -48,7 +48,7 @@ namespace BTDToolbox.Extra_Forms
 
             if (gameDir == null || gameDir == "")
             {
-                ConsoleHandler.force_appendNotice("You're game directory has not been set! You need to set your game Dir before continuing. You can do this by clicking the \"Help\" tab at the top, then clicking on \"Browse for game\"");
+                ConsoleHandler.force_append_Notice("You're game directory has not been set! You need to set your game Dir before continuing. You can do this by clicking the \"Help\" tab at the top, then clicking on \"Browse for game\"");
                 this.Close();
             }
         }
@@ -62,7 +62,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
+                ConsoleHandler.append_Force_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
             }
 
         }
@@ -79,10 +79,10 @@ namespace BTDToolbox.Extra_Forms
         }
         private void SaveFile()
         {
-            bool error = false;
+            //bool error = false;
 
             /*try { newCard.DiscardCost = Int64.Parse(DiscardCost_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your discard cost is not a valid number..."); error = true; }*/
+            catch (FormatException e) { ConsoleHandler.force_append_Notice("Your discard cost is not a valid number..."); error = true; }*/
 
             /*if (!error)
             {
@@ -175,7 +175,7 @@ namespace BTDToolbox.Extra_Forms
         private void Save_Button_Click(object sender, EventArgs e)
         {
             SaveFile();
-            ConsoleHandler.appendLog_CanRepeat("Saved " + Files_ComboBox.SelectedItem.ToString());
+            ConsoleHandler.append_CanRepeat("Saved " + Files_ComboBox.SelectedItem.ToString());
         }
         private void SwitchPanel_Click(object sender, EventArgs e)
         {
@@ -204,9 +204,9 @@ namespace BTDToolbox.Extra_Forms
             if (e.KeyCode == Keys.F5)
             {
                 SaveFile();
-                ConsoleHandler.appendLog_CanRepeat("Saved " + Files_ComboBox.SelectedItem.ToString());
+                ConsoleHandler.append_CanRepeat("Saved " + Files_ComboBox.SelectedItem.ToString());
                 GeneralMethods.CompileJet("launch");
-                ConsoleHandler.appendLog_CanRepeat("Launching " + game);
+                ConsoleHandler.append_CanRepeat("Launching " + game);
             }
         }
         private void EZ_Base_FormClosed(object sender, FormClosedEventArgs e)

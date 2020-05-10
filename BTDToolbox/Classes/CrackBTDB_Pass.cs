@@ -36,7 +36,7 @@ namespace BTDToolbox.Classes
             }
             else
             {
-                ConsoleHandler.appendLog("Your game directory has not been set. Please select browse for Battles-Win.exe");
+                ConsoleHandler.append("Your game directory has not been set. Please select browse for Battles-Win.exe");
                 browseForExe("BTDB");
                 Get_BTDB_Password();
             }
@@ -52,9 +52,9 @@ namespace BTDToolbox.Classes
                 {
                     DownloadTools();
 
-                    ConsoleHandler.appendLog("Extracting strings2.zip");
+                    ConsoleHandler.append("Extracting strings2.zip");
                     ExtractTools(Strings2Dir + "\\strings2.zip", Strings2Dir);
-                    ConsoleHandler.appendLog("Extracting johntr.zip");
+                    ConsoleHandler.append("Extracting johntr.zip");
                     ExtractTools(JohntrDir + "\\johntr.zip", JohntrDir);
 
                     File.Delete(Strings2Dir + "\\strings2.zip");
@@ -62,14 +62,14 @@ namespace BTDToolbox.Classes
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Download cancelled...");
+                    ConsoleHandler.append("Download cancelled...");
                 }
             }
             RunDirectoryPropmts();
             RunStrings2();
             RunJohntr();
             string password = ReadPass();
-            ConsoleHandler.force_appendLog("The password for your data.jet is:  " + password);
+            ConsoleHandler.append_Force("The password for your data.jet is:  " + password);
         }
         public bool CheckForDependencies()
         {
@@ -143,30 +143,30 @@ namespace BTDToolbox.Classes
 
 
             //Download files
-            ConsoleHandler.appendLog("Downloading Directory Prompts...");
+            ConsoleHandler.append("Downloading Directory Prompts...");
             Client.DownloadFile(DirPropmts_url, DirPrompts_Dir + "\\Directory_Prompts.reg");
-            ConsoleHandler.appendLog("Finished downloading Directory Prompts.");
+            ConsoleHandler.append("Finished downloading Directory Prompts.");
 
-            ConsoleHandler.appendLog("Downloading strings2...");
+            ConsoleHandler.append("Downloading strings2...");
             Client.DownloadFile(strings2_url, Strings2Dir + "\\strings2");
             File.Move(Strings2Dir + "\\strings2", Strings2Dir + "\\strings2.zip");
-            ConsoleHandler.appendLog("Finished downloading strings2.");
+            ConsoleHandler.append("Finished downloading strings2.");
 
-            ConsoleHandler.appendLog("Downloading johntr. This will take up to 5 minutes...\n>> If the program freezes, just leave it.");
+            ConsoleHandler.append("Downloading johntr. This will take up to 5 minutes...\n>> If the program freezes, just leave it.");
             Client.DownloadFile(johntr_url, JohntrDir + "\\johntr.zip");
-            ConsoleHandler.appendLog("Finished downloading johntr");
-            ConsoleHandler.appendLog("Thank you for being patient. The tools have finished downloading.");
+            ConsoleHandler.append("Finished downloading johntr");
+            ConsoleHandler.append("Thank you for being patient. The tools have finished downloading.");
         }
         private void ExtractTools(string zipPath, string outputPath)
         {
-            ConsoleHandler.appendLog("Beginning extraction...");
+            ConsoleHandler.append("Beginning extraction...");
             ZipFile archive = new ZipFile(zipPath);
             foreach (ZipEntry e in archive)
             {
                 e.Extract(outputPath, ExtractExistingFileAction.DoNotOverwrite);
             }
             archive.Dispose();
-            ConsoleHandler.appendLog("Tool has been successfully downloaded and extracted...");
+            ConsoleHandler.append("Tool has been successfully downloaded and extracted...");
         }
 
         private bool CheckGamePath()
@@ -177,7 +177,7 @@ namespace BTDToolbox.Classes
             }
             else
             {
-                ConsoleHandler.appendLog("There was an issue detecting your BTDB Directory... Please browse for Battles-Win.exe");
+                ConsoleHandler.append("There was an issue detecting your BTDB Directory... Please browse for Battles-Win.exe");
                 browseForExe("BTDB");
                 if (isGamePathValid("BTDB"))
                 {
@@ -185,7 +185,7 @@ namespace BTDToolbox.Classes
                 }
                 else
                 { 
-                    ConsoleHandler.appendLog("Something went wrong...");
+                    ConsoleHandler.append("Something went wrong...");
                     return false;
                 }
             }
@@ -196,20 +196,20 @@ namespace BTDToolbox.Classes
             {
                 var p = new Process();
                 p.StartInfo.FileName = Serializer.Deserialize_Config().BTDB_Directory + "\\Battles-Win.exe";
-                ConsoleHandler.appendLog("Program needs to start BTD Battles in order to get its Process ID number.");
-                ConsoleHandler.appendLog("Starting BTD Battles.");
+                ConsoleHandler.append("Program needs to start BTD Battles in order to get its Process ID number.");
+                ConsoleHandler.append("Starting BTD Battles.");
                 MessageBox.Show("Starting BTD Battles. Do not do anything. The program will close Battles at the start menu");
                 p.Start();
 
-                ConsoleHandler.appendLog("Waiting for main menu...");
+                ConsoleHandler.append("Waiting for main menu...");
                 Thread.Sleep(8000);
-                ConsoleHandler.appendLog("Getting PID for BTD Battles...");
+                ConsoleHandler.append("Getting PID for BTD Battles...");
                 Process[] localByName = Process.GetProcessesByName("Battles-Win");
                 int i = localByName.Length;
                 while (i > 0)
                 {
                     pid = (localByName[i - 1].Id);
-                    ConsoleHandler.appendLog("Process ID for Battles aquired. PID Number: " + pid.ToString());
+                    ConsoleHandler.append("Process ID for Battles aquired. PID Number: " + pid.ToString());
                     i -= 1;
                 }
             }
@@ -220,13 +220,13 @@ namespace BTDToolbox.Classes
             DialogResult result = MessageBox.Show("Have you installed directory prompts in the past? If you dont know, press no.", "Have you installed Directory Prompts?", MessageBoxButtons.YesNo);
             if (result == DialogResult.No)
             {
-                ConsoleHandler.appendLog("Installing Directory Prompts. When the window opens, please press YES");
+                ConsoleHandler.append("Installing Directory Prompts. When the window opens, please press YES");
                 MessageBox.Show("Installing Directory Prompts. When the window opens, please press YES");
                 Process.Start(DirPrompts_Dir + "\\Directory_Prompts.reg");
             }
             else
             {
-                ConsoleHandler.appendLog("Skipping directory prompts...");
+                ConsoleHandler.append("Skipping directory prompts...");
             }
         }
         private void RunStrings2()
@@ -258,7 +258,7 @@ namespace BTDToolbox.Classes
             }
             catch (Exception ex)
             {
-                ConsoleHandler.appendLog("An exception occurred: " + ex);
+                ConsoleHandler.append("An exception occurred: " + ex);
             }
         }
         private void RunJohntr()
@@ -319,7 +319,7 @@ namespace BTDToolbox.Classes
             }
             else
             {
-                ConsoleHandler.appendLog("An error occured.. The file \"john.pot\" could not be found");
+                ConsoleHandler.append("An error occured.. The file \"john.pot\" could not be found");
             }
             return password;
         }

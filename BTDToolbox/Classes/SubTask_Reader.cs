@@ -13,11 +13,11 @@ namespace BTDToolbox.Classes
             string subtaskNum = JSON_Reader.GetSubtaskNum(CharIndex_UnderMouse, Editor_TextBox.Text);
             if (subtaskNum != "" && subtaskNum != " " && subtaskNum != null)
             {
-                ConsoleHandler.force_appendLog_CanRepeat("Subtask:  [" + subtaskNum + " ]");
+                ConsoleHandler.append_Force_CanRepeat("Subtask:  [" + subtaskNum + " ]");
             }
             else
             {
-                ConsoleHandler.force_appendLog("Unable to detect subtask. Please try clicking somewhere else...");
+                ConsoleHandler.append_Force("Unable to detect subtask. Please try clicking somewhere else...");
             }
         }*/
     }

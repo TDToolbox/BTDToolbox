@@ -45,7 +45,7 @@ namespace BTDToolbox.SaveEditor
         }
         public static void FindSaveFiles()
         {
-            ConsoleHandler.appendLog("Attempting to automatically find save folder...");
+            ConsoleHandler.append("Attempting to automatically find save folder...");
             string steam = CheckDirsForSteam("\\userdata");
             if (steam != "")
             {
@@ -74,7 +74,7 @@ namespace BTDToolbox.SaveEditor
             }
             else
             {
-                ConsoleHandler.force_appendLog_CanRepeat("Failed to automatically find the Steam folder");
+                ConsoleHandler.append_Force_CanRepeat("Failed to automatically find the Steam folder");
                 BrowseForSave();
             }
         }

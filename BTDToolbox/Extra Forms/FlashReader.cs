@@ -376,7 +376,7 @@ namespace BTDToolbox.Extra_Forms
             if(InputScript_Textbox.TextLength >= 3276799)
             {
                 MessageBox.Show("The text you entered was TOO LONG!!!");
-                ConsoleHandler.appendLog("You entered a text string that was too long");
+                ConsoleHandler.append("You entered a text string that was too long");
             }
             else
             {
@@ -388,7 +388,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private string FormatText(string unformattedText)
         {
-            ConsoleHandler.appendLog("Processing text...");
+            ConsoleHandler.append("Processing text...");
             string formattedText = "";
             num_of_tabs = 0;
 
@@ -420,25 +420,25 @@ namespace BTDToolbox.Extra_Forms
                     formattedText = formattedText + "\n" + string.Concat(Enumerable.Repeat(" ", (num_of_tabs * num_space_in_tab)));
                 }
             }
-            ConsoleHandler.appendLog("Finished Processing");
+            ConsoleHandler.append("Finished Processing");
             return formattedText;
         }
 
         private void Compile_Button_Click(object sender, EventArgs e)
         {
             if (unformattedText.Length == 0)
-                ConsoleHandler.appendLog("You need to input code before you can compile it...");
+                ConsoleHandler.append("You need to input code before you can compile it...");
             else
             {
                 unformattedText = CompileText(Editor_TextBox.Text);
                 Clipboard.SetText(unformattedText);
-                ConsoleHandler.appendLog("Copied code to clipboard");
+                ConsoleHandler.append("Copied code to clipboard");
             }
         }
 
         private string CompileText(string formattedText)
         {
-            ConsoleHandler.appendLog("Compiling text...");
+            ConsoleHandler.append("Compiling text...");
             string unformattedText = "";
             int skip = 0;
             num_of_tabs = 0;
@@ -483,7 +483,7 @@ namespace BTDToolbox.Extra_Forms
                     }
                 }
             }
-            ConsoleHandler.appendLog("Finished compiling");
+            ConsoleHandler.append("Finished compiling");
 
 
             return unformattedText;
@@ -492,12 +492,12 @@ namespace BTDToolbox.Extra_Forms
         private void CompileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (unformattedText.Length == 0)
-                ConsoleHandler.appendLog("You need to input code before you can compile it...");
+                ConsoleHandler.append("You need to input code before you can compile it...");
             else
             {
                 unformattedText = CompileText(Editor_TextBox.Text);
                 Clipboard.SetText(unformattedText);
-                ConsoleHandler.appendLog("Copied code to clipboard");
+                ConsoleHandler.append("Copied code to clipboard");
             }
         }
 
@@ -508,7 +508,7 @@ namespace BTDToolbox.Extra_Forms
                 NumOfRounds_Label.Text = "Num of rounds: " + Count("new RoundDef()", Editor_TextBox.Text);
             }
             else
-                ConsoleHandler.appendLog("You need to input code before you can calculate the number of rounds...");
+                ConsoleHandler.append("You need to input code before you can calculate the number of rounds...");
         }
 
         private int Count(string searchTerm, string inputText)
@@ -531,7 +531,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 Console.getInstance().Visible = true;
             }
-            ConsoleHandler.appendLog("BLOON TYPES:\n>> Red:  0\n>> Blue:  1\n>> Green:  2\n>> Yellow:  3\n>> Pink:  4\n>> Black:  5\n>> White:  6\n>> Lead:  7\n>> Zebra:  8\n>> Rainbow:  9\n>> Ceramic:  10\n>> MOAB:  11\n>> BFB:  12\n>> ZOMG:  13");
+            ConsoleHandler.append("BLOON TYPES:\n>> Red:  0\n>> Blue:  1\n>> Green:  2\n>> Yellow:  3\n>> Pink:  4\n>> Black:  5\n>> White:  6\n>> Lead:  7\n>> Zebra:  8\n>> Rainbow:  9\n>> Ceramic:  10\n>> MOAB:  11\n>> BFB:  12\n>> ZOMG:  13");
         }
         private int IndentNewLines()
         {

@@ -38,12 +38,12 @@ namespace BTDToolbox.Extra_Forms
                 }
                 foreach (var a in ver.Versions)
                 {
-                    ConsoleHandler.appendLog_CanRepeat(a.Version.VersionNumber);
+                    ConsoleHandler.append_CanRepeat(a.Version.VersionNumber);
                 }
             }
             else
             {
-                ConsoleHandler.appendLog_CanRepeat("Invalid json");
+                ConsoleHandler.append_CanRepeat("Invalid json");
             }
             */
         }

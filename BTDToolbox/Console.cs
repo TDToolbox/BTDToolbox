@@ -20,12 +20,13 @@ namespace BTDToolbox
         //Config variables
         ConfigFile programData;
         public static float consoleLogFont;
-        public string lastMessage;
-        string livePath = Environment.CurrentDirectory;
+        
         float fontSize;
-        public bool CanRepeat = false;
         int errorCount = 0;
+
+        private string lastMessage;
         private static Console console;
+        
 
         public Console() : base()
         {
@@ -40,8 +41,6 @@ namespace BTDToolbox
         private void StartUp()
         {
             Deserialize_Config();
-
-            int i = 0;
             if (programData.ExistingUser == false)
             {
                 this.StartPosition = FormStartPosition.Manual;
@@ -63,7 +62,42 @@ namespace BTDToolbox
             fontSize = programData.Console_FontSize;
             this.Font = new Font("Consolas", fontSize);
         }
+        public static Console getInstance()
+        {
+            return console;
+        }
 
+
+        public void append(String log, bool canRepeat, bool force, bool notice)
+        {
+            if (!canRepeat && log == lastMessage) return;
+            if (force) { Visible = true; BringToFront(); }
+            if (notice) output_log.SelectionColor = Color.Yellow;
+
+
+            DateTime now = DateTime.Now;
+
+
+            string secondSeperator = ":";
+            if (now.Second < 10)
+                secondSeperator = ":0";
+            
+            string currentTime = now.Hour + ":" + now.Minute + secondSeperator + now.Second;
+
+            try
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    output_log.AppendText("" + currentTime + " - " + ">> " + log + "\r\n");
+                    output_log.ScrollToCaret();
+                });
+
+                lastMessage = log;
+            }
+            catch (Exception) { Environment.Exit(0); }
+        }
+        
+        
         public void GetAnnouncement()
         {
             WebHandler web = new WebHandler();
@@ -74,95 +108,39 @@ namespace BTDToolbox
                 output_log.SelectionColor = Color.OrangeRed;
 
                 if (answer.Length > 0 && answer != null)
-                    appendLog("Announcement: " + answer);
+                    ConsoleHandler.append("Announcement: " + answer);
                 else
-                    appendLog("Failed to read announcement...");
+                    ConsoleHandler.append("Failed to read announcement...");
             }
             catch
             {
-                appendNotice("Something went wrong.. Failed to read announcements...");
-            }
-        }
-        public void appendNotice(string notice)
-        {
-            Invoke((MethodInvoker)delegate {
-                output_log.SelectionColor = Color.Yellow;
-                appendLog("Notice: " + notice);
-            });   
-        }
-        public void force_appendNotice(string notice)
-        {
-                Invoke((MethodInvoker)delegate {
-                    output_log.SelectionColor = Color.Yellow;
-                    force_appendLog("Notice: " + notice);
-                });               
-        }
-        public override void close_button_Click(object sender, EventArgs e)
-        {
-            Serializer.SaveConfig(this, "console");
-            this.Hide();
-        }
-
-        public void appendLog(String log)
-        {
-            if (!CanRepeat)
-            {
-                if (log != lastMessage)
-                {
-                    try
-                    {
-                        Invoke((MethodInvoker)delegate {
-                            output_log.AppendText(">> " + log + "\r\n");
-                            output_log.ScrollToCaret();
-                        });
-
-                        lastMessage = log;
-                    }
-                    catch (Exception)
-                    {
-                        Environment.Exit(0);
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    Invoke((MethodInvoker)delegate {
-                        output_log.AppendText(">> " + log + "\r\n");
-                        output_log.ScrollToCaret();
-                    });
-
-                    lastMessage = log;
-                }
-                catch (Exception)
-                {
-                    Environment.Exit(0);
-                }
+                ConsoleHandler.append_Notice("Something went wrong.. Failed to read announcements...");
             }
         }
 
-        public void force_appendLog(String log)
-        {
-            Invoke((MethodInvoker)delegate {
-                if (this.Visible == false)
-                    this.Visible = true;
-                this.BringToFront();
 
-                appendLog(log);
-            });
-        }
-        private void exitHandling(object sender, EventArgs e)
+        private void ExportLog_Button_Click(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "console");
+            ConsoleHandler.append_CanRepeat("Copied console log to clipboard.");
+            Clipboard.SetText(output_log.Text);
         }
+
+
         private void Deserialize_Config()
         {
             programData = Serializer.Deserialize_Config();
         }
-        public static Console getInstance()
+
+
+        private void exitHandling(object sender, EventArgs e)
         {
-            return console;
+            Serializer.SaveConfig(this, "console");
+        }
+
+        public override void close_button_Click(object sender, EventArgs e)
+        {
+            Serializer.SaveConfig(this, "console");
+            this.Hide();
         }
     }
 }

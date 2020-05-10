@@ -79,22 +79,24 @@ namespace BTDToolbox
             else
                 Main.getInstance().Launch_Program_ToolStrip.Visible = true;
 
-            ConsoleHandler.appendLog("Game: " + CurrentProjectVariables.GameName);
-            ConsoleHandler.appendLog("Loading Project: " + projName.ToString());
-
-
             LoadProjectFile();
+
+
+            ConsoleHandler.append("Game: " + CurrentProjectVariables.GameName);
+            ConsoleHandler.append("Loading Project: " + projName.ToString());
+
+            
             Serializer.SaveConfig(this, "game");
             Serializer.SaveConfig(this, "jet explorer");
 
             if (EZBloon_Editor.EZBloon_Opened == true)
-                ConsoleHandler.force_appendNotice("The EZ Bloon tool is currently opened for a different project. Please close it to avoid errors...");
+                ConsoleHandler.force_append_Notice("The EZ Bloon tool is currently opened for a different project. Please close it to avoid errors...");
 
             if (EasyTowerEditor.EZTower_Opened == true)
-                ConsoleHandler.force_appendNotice("The EZ Tower tool is currently opened for a different project. Please close it to avoid errors...");
+                ConsoleHandler.force_append_Notice("The EZ Tower tool is currently opened for a different project. Please close it to avoid errors...");
 
             if (EZCard_Editor.EZCard_Opened == true)
-                ConsoleHandler.force_appendNotice("The EZ Card tool is currently opened for a different project. Please close it to avoid errors...");
+                ConsoleHandler.force_append_Notice("The EZ Card tool is currently opened for a different project. Please close it to avoid errors...");
 
 
             if (CurrentProjectVariables.JsonEditor_OpenedTabs != null && CurrentProjectVariables.JsonEditor_OpenedTabs.Count > 0)
@@ -153,7 +155,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendLog_CanRepeat("Something went wrong. Your project file wasnt found or you had more than one. ");
+                ConsoleHandler.append_Force_CanRepeat("Something went wrong. Your project file wasnt found or you had more than one. ");
             }
         }
         private void initTreeMenu()
@@ -165,6 +167,10 @@ namespace BTDToolbox
         private void HandleNKH()
         {
             Main.getInstance().PopulateNKHMewnu();
+            if(CurrentProjectVariables.GameName == "BTD5")
+            {
+                showNKHMessage();
+            }
         }
         private void showNKHMessage()
         {
@@ -326,7 +332,7 @@ namespace BTDToolbox
         private void OpenFile(bool openFromZip)
         {
             if(listView1.SelectedItems.Count <= 0)
-                ConsoleHandler.appendLog("You need to select at least one file to open");
+                ConsoleHandler.append("You need to select at least one file to open");
             else
             {
                 int i = 0;
@@ -418,6 +424,7 @@ namespace BTDToolbox
                 {
                     FileInfo info = new FileInfo(name);
                     File.Copy(name, targetDir + "\\" + info.Name);
+                    ConsoleHandler.append_CanRepeat(info.FullName + "  was added to the project");
                 }
                 foreach (string safeName in ofd.SafeFileNames)
                 {
@@ -452,10 +459,11 @@ namespace BTDToolbox
 
                     if(source.ToLower() == dest.ToLower())
                     {
-                        ConsoleHandler.appendLog("The file names are too similar!");
+                        ConsoleHandler.append("The file names are too similar!");
                         return;
                     }
 
+                    ConsoleHandler.append_CanRepeat("Renaming:  " + select + "  to:  " + newName);
                     // get the file attributes for file or directory
                     FileAttributes attr = File.GetAttributes(source);
 
@@ -469,18 +477,20 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("You didn't enter a name");
+                    ConsoleHandler.append("You didn't enter a name");
                 }
             }
         }
         private void delete()
         {
+            ConsoleHandler.append_CanRepeat("Are you sure you want to delete the selected item(s)?");
             if (MessageBox.Show("Are you sure you want to delete the selected item(s)?", "Confirmation", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 ListView.SelectedListViewItemCollection Selected = listView1.SelectedItems;
                 foreach (ListViewItem item in Selected)
                 {
-                    if(item.Text.Contains("."))
+                    ConsoleHandler.append_CanRepeat("Deleting:  " + item);
+                    if (item.Text.Contains("."))
                     {
                         string currentPath = this.Text;
                         string toDelete = currentPath + "\\" + item.Text;
@@ -510,6 +520,7 @@ namespace BTDToolbox
                 string toCopy = currentPath + "\\" + item.Text;
 
                 pathCollection.Add(toCopy);
+                ConsoleHandler.append_CanRepeat(toCopy.Replace(CurrentProjectVariables.PathToProjectFiles,"") + " was copied and added to the clipboard");
             }
             Clipboard.SetFileDropList(pathCollection);
         }
@@ -520,6 +531,7 @@ namespace BTDToolbox
             
             foreach (string name in files)
             {
+                ConsoleHandler.append_CanRepeat("Pasting  " + name.Replace(CurrentProjectVariables.PathToProjectFiles, "") + "  to  " + targetDir.Replace(CurrentProjectVariables.PathToProjectFiles, ""));
                 if (name.Contains("."))
                 {
                     FileInfo info = new FileInfo(name);
@@ -615,7 +627,7 @@ namespace BTDToolbox
             string backupPath = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + f.FullName.Replace(CurrentProjectVariables.PathToProjectFiles.Replace("\\\\", "\\"), "");
             if (!File.Exists(backupPath))
             {
-                ConsoleHandler.appendLog_CanRepeat("Could not find " + filename + " in the backup, failed to restore file.");
+                ConsoleHandler.append_CanRepeat("Could not find " + filename + " in the backup, failed to restore file.");
                 return;
             }
 
@@ -633,7 +645,7 @@ namespace BTDToolbox
                 JsonEditorHandler.CloseFile(filepath);
                 JsonEditorHandler.OpenFile(filepath);
             }
-            ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
+            ConsoleHandler.append_CanRepeat(filename + "has been restored");
         }
         private void restoreOriginal()
         {
@@ -831,7 +843,7 @@ namespace BTDToolbox
 
         private void Open_Proj_Dir_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening project directory...");
+            ConsoleHandler.append("Opening project directory...");
             Process.Start(DeserializeConfig().LastProject);
         }
 
@@ -923,7 +935,7 @@ namespace BTDToolbox
         {
             if (e.ClickedItem.Text == "Open in File Explorer")
             {
-                ConsoleHandler.appendLog("Opening folder in File Explorer..");
+                ConsoleHandler.append("Opening folder in File Explorer..");
                 Process.Start(this.Text);
             }
         }
@@ -962,7 +974,7 @@ namespace BTDToolbox
                 if (diag == DialogResult.Yes)
                     restoreOriginal();
                 else
-                    ConsoleHandler.appendLog_CanRepeat("restore cancelled...");
+                    ConsoleHandler.append_CanRepeat("restore cancelled...");
             }
         }
         private void MultiSelected_CM_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -981,7 +993,7 @@ namespace BTDToolbox
                 if (diag == DialogResult.Yes)
                     restoreOriginal();
                 else
-                    ConsoleHandler.appendLog_CanRepeat("restore cancelled...");
+                    ConsoleHandler.append_CanRepeat("restore cancelled...");
             }
         }
 
@@ -1070,7 +1082,7 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ConsoleHandler.force_appendLog("Something went wrong and the saved password for this project is empty...");
+                    ConsoleHandler.append_Force("Something went wrong and the saved password for this project is empty...");
                     if (CurrentProjectVariables.GameName != "" && CurrentProjectVariables.GameName != null)
                     {
                         if (CurrentProjectVariables.GameName == "BTD5" || CurrentProjectVariables.GameName == "BMC")
@@ -1087,8 +1099,8 @@ namespace BTDToolbox
                     }
                     else
                     {
-                        ConsoleHandler.force_appendLog("Game name for project is invalid!");
-                        ConsoleHandler.force_appendNotice("Please enter a password so the jet file can be read");
+                        ConsoleHandler.append_Force("Game name for project is invalid!");
+                        ConsoleHandler.force_append_Notice("Please enter a password so the jet file can be read");
 
                         var getPasss = new Get_BTDB_Password();
                         getPasss.Show();
@@ -1097,7 +1109,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendLog("Unable to find project file...");
+                ConsoleHandler.append_Force("Unable to find project file...");
             }
         }
         private void ListDirectory(TreeView treeView, string path)
@@ -1138,7 +1150,7 @@ namespace BTDToolbox
                     backup.Password = CurrentProjectVariables.JetPassword;
                     var files = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles).GetFiles("*", SearchOption.AllDirectories);
 
-                    ConsoleHandler.force_appendLog("Searching for modified files");
+                    ConsoleHandler.append_Force("Searching for modified files");
                     foreach (var file in files)
                     {
                         string modText = RemoveWhitespace(File.ReadAllText(file.FullName));
@@ -1167,7 +1179,7 @@ namespace BTDToolbox
                             //It broke for some reason, probably something modded here...
                             if (!CurrentProjectVariables.ModifiedFiles.Contains(file.FullName))
                             {
-                                ConsoleHandler.appendLog_CanRepeat(ex.Message);
+                                ConsoleHandler.append_CanRepeat(ex.Message);
                                 CurrentProjectVariables.ModifiedFiles.Add(file.FullName);
 
                             }
@@ -1175,7 +1187,7 @@ namespace BTDToolbox
 
                     }
                     ProjectHandler.SaveProject();
-                    ConsoleHandler.force_appendLog("Finished verifying files");
+                    ConsoleHandler.append_Force("Finished verifying files");
 
 
                     if (CurrentProjectVariables.ModifiedFiles.Count > 0)
@@ -1191,7 +1203,7 @@ namespace BTDToolbox
 
                         foreach (var a in CurrentProjectVariables.ModifiedFiles)
                         {
-                            ConsoleHandler.force_appendLog_CanRepeat(a.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", ""));
+                            ConsoleHandler.append_Force_CanRepeat(a.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", ""));
                             if (open == true)
                             {
                                 JsonEditorHandler.OpenFile(a);
@@ -1199,13 +1211,13 @@ namespace BTDToolbox
                         }
                     }
                     else
-                        ConsoleHandler.force_appendLog("No modified files found..");
+                        ConsoleHandler.append_Force("No modified files found..");
                 }
                 else
-                    ConsoleHandler.force_appendLog("Backup not detected... Unable to continue...");
+                    ConsoleHandler.append_Force("Backup not detected... Unable to continue...");
             }
             else
-                ConsoleHandler.appendLog("User cancelled operation...");
+                ConsoleHandler.append("User cancelled operation...");
         }
         private void ViewModifiedFiles_Button_MouseHover(object sender, EventArgs e)
         {

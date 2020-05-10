@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Windows;
+using System.Windows.Forms;
 
 namespace BTDToolbox.Classes
 {
@@ -26,9 +26,10 @@ namespace BTDToolbox.Classes
         public Dictionary<TowerSelectMenu_Pos, string> TowerSelectFiles;
 
         public bool UseBaseTower { get; set; }
-        public bool CreateSpecialtyBuilding { get; set; }
+        public bool CreateSpecialty { get; set; }
         public string TowerName { get; set; }
         public string BaseTowerFile { get; set; }
+        public string BaseTowerName_NoExt { get; set; }
         public TowerSelectMenu_Pos TowerSelPos { get; set; }
 
         #endregion
@@ -44,7 +45,6 @@ namespace BTDToolbox.Classes
             TowerSelectFiles.Add(TowerSelectMenu_Pos.FixedLeft, towerSelFolder + "\\FixedTowerTop.json");
             TowerSelectFiles.Add(TowerSelectMenu_Pos.Right, towerSelFolder + "\\TowerOrderBottom.json");
             TowerSelectFiles.Add(TowerSelectMenu_Pos.Left, towerSelFolder + "\\TowerOrderTop.json");
-
         }
         public NewTower(string newTowerName, string baseTowerPath)
         {
@@ -66,14 +66,19 @@ namespace BTDToolbox.Classes
 
         public void DuplicateAllTowerFiles()
         {
-            AddToTowerSelctionMenu();
+            BaseTowerName_NoExt = BaseTowerFile.Replace(".tower", "");
+
+            if (CreateSpecialty)
+                AddSpecialty();
+
+            //AddToTowerSelctionMenu();
         }
 
         private string CheckJSONFromFile(string path)
         {
             if (!File.Exists(path))
             {
-                ConsoleHandler.appendLog_CanRepeat("Unable to make jsonObject because it doesnt exist at:  " + path);
+                ConsoleHandler.append_CanRepeat("Unable to make jsonObject because it doesnt exist at:  " + path);
                 return "";
             }
 
@@ -93,7 +98,7 @@ namespace BTDToolbox.Classes
             string towerSelFilePath = TowerSelectFiles[TowerSelPos];
             if (!File.Exists(towerSelFilePath))
             {
-                ConsoleHandler.force_appendLog("Unable to find the Tower Selection file!");
+                ConsoleHandler.append_Force("Unable to find the Tower Selection file!");
                 return;
             }
 
@@ -101,7 +106,7 @@ namespace BTDToolbox.Classes
             if(!Guard.IsStringValid(text))
             {
                 FileInfo file = new FileInfo(towerSelFilePath);
-                ConsoleHandler.force_appendLog("The Tower Select File  " + file.Name + "  has has invalid text/JSON. Unable to add tower to TowerSelectionMenu");
+                ConsoleHandler.append_Force("The Tower Select File  " + file.Name + "  has has invalid text/JSON. Unable to add tower to TowerSelectionMenu");
                 return;
             }
 
@@ -114,7 +119,7 @@ namespace BTDToolbox.Classes
                 if (!Guard.IsStringValid(newItem.ToString()))
                 {
                     foundBaseTower = false;
-                    ConsoleHandler.appendLog("Unable to find chosen base tower in tower selection menu files. Using blank values instead.");
+                    ConsoleHandler.append("Unable to find chosen base tower in tower selection menu files. Using blank values instead.");
                 }
                 else
                     foundBaseTower = true;
@@ -135,13 +140,12 @@ namespace BTDToolbox.Classes
         {
             menu.Items.Add(newItem);
             string text = menu.ToJson();
-            string output_Cfg = JsonConvert.SerializeObject(text, Formatting.Indented);
 
             StreamWriter serialize = new StreamWriter(TowerSelectFiles[TowerSelPos], false);
             serialize.Write(text);
             serialize.Close();
 
-            ConsoleHandler.appendLog("Success");
+            ConsoleHandler.append("Tower added to " + TowerSelectFiles[TowerSelPos].Replace(CurrentProjectVariables.PathToProjectFiles,""));
         }
 
         private TowerSelectItem TowerSelMenu_EmptyTower(TowerSelectItem newItem)
@@ -187,6 +191,122 @@ namespace BTDToolbox.Classes
             }
 
             return newItem;
+        }
+        #endregion
+
+
+        #region SpecialtyBuilding Stuff
+        private void AddSpecialty()
+        {
+            string specialtyPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\SpecialtyDefinitions\\" + TowerName + ".json";
+            if (File.Exists(specialtyPath))
+                File.Delete(specialtyPath);
+
+            if (UseBaseTower)
+                MakeDupSpecialty(specialtyPath);
+            else
+                MakeNewSpecialty(specialtyPath);
+        }
+
+        private void MakeNewSpecialty(string savePath)
+        {
+            MessageBox.Show("21:   " + savePath);
+            //MessageBox.Show("2:   " + CurrentProjectVariables.PathToProjectFiles);
+            SpecialtyBuildingClass specialty = new SpecialtyBuildingClass();
+            MessageBox.Show("22:   " + savePath);
+            //specialty.ToJson();
+
+            FileInfo f = new FileInfo(savePath);
+            specialty.FileName = f.Name;
+            specialty.Name = "";
+            specialty.Icon = "";
+            specialty.Building = "";
+
+            long[] newPrices = { 0, 0, 0, 0 };
+            specialty.Prices = newPrices;
+
+            specialty.RelatedTower = TowerName;
+
+
+            
+            specialty.Tiers = new Tiers()
+            {
+                I = new I()
+                {
+                    Text = "",
+                    TowerModifiers = new ITowerModifier[0]
+                },
+                Ii = new Ii()
+                {
+                    Text = "",
+                    TowerModifiers = new IiTowerModifier[0]
+                },
+                Iii = new Iii()
+                {
+                    Text = "",
+                    TowerModifiers = new IiiTowerModifier[0]
+                },
+                Iv = new Iv()
+                {
+                    Text = "",
+                    TowerModifiers = new IvTowerModifier[0]
+                },
+                X = new I
+                {
+                    Text = "",
+                    TowerModifiers = new ITowerModifier[0]
+                }
+            };
+           
+
+            SaveSpecialty(savePath, specialty);
+        }
+        private void MakeDupSpecialty(string savePath)
+        {
+            MessageBox.Show("12:   " + savePath);
+            //MessageBox.Show("2:   " + CurrentProjectVariables.PathToProjectFiles);
+            SpecialtyBuildingClass specialty = new SpecialtyBuildingClass();
+            //specialty.ToJson();
+            MessageBox.Show("11:   " + savePath);
+            MessageBox.Show("BaseTowerName_NoExt:   " + BaseTowerName_NoExt);
+            string baseSpecialPath = CurrentProjectVariables.PathToProjectFiles = "\\Assets\\JSON\\SpecialtyDefinitions\\" + BaseTowerName_NoExt + ".json";
+            MessageBox.Show("baseSpecialPath  "+baseSpecialPath);
+            if(!File.Exists(baseSpecialPath))
+            {
+                ConsoleHandler.append("The Base specialty building doesn't exist. Using a new one instead.");
+                MakeNewSpecialty(savePath);
+                return;
+            }
+            if (!JSON_Reader.IsValidJson(File.ReadAllText(baseSpecialPath)))
+            {
+                ConsoleHandler.append("The Base specialty building has invalid JSON. Using a new one instead.");
+                MakeNewSpecialty(savePath);
+                return;
+            }
+
+            SpecialtyBuildingClass baseSpecialty = SpecialtyBuildingClass.FromJson(baseSpecialPath);
+            
+
+            FileInfo f = new FileInfo(savePath);
+            specialty.FileName = f.Name;
+            specialty.Name = baseSpecialty.Name;
+            specialty.Icon = baseSpecialty.Icon;
+            specialty.Building = baseSpecialty.Building;
+
+            specialty.Prices = baseSpecialty.Prices;
+            specialty.RelatedTower = TowerName;
+
+            specialty.Tiers = baseSpecialty.Tiers;
+            SaveSpecialty(savePath, specialty);
+        }
+        
+        private void SaveSpecialty(string path, SpecialtyBuildingClass specialty)
+        {
+            string text = specialty.ToJson();
+
+            StreamWriter serialize = new StreamWriter(path, false);
+            serialize.Write(text);
+            serialize.Close();
         }
         #endregion
     }

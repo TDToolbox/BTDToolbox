@@ -51,7 +51,7 @@ namespace BTDToolbox.Classes.NewProjects
 
             if (!File.Exists(projFile))
             {
-                ConsoleHandler.appendLog("Something went wrong when trying to read the" +
+                ConsoleHandler.append("Something went wrong when trying to read the" +
                     "project. Project not found...");
                 return null;
 
@@ -123,7 +123,7 @@ namespace BTDToolbox.Classes.NewProjects
             string output_Cfg = JsonConvert.SerializeObject(project, Formatting.Indented);
             if(!Guard.IsStringValid(project.PathToProjectClassFile))
             {
-                ConsoleHandler.force_appendLog("Unknown error occured in the Project Handler... Project path is null or empty...");
+                ConsoleHandler.append_Force("Unknown error occured in the Project Handler... Project path is null or empty...");
                 return;
             }
 
@@ -150,7 +150,7 @@ namespace BTDToolbox.Classes.NewProjects
                 zip.Save();
                 zip.Dispose();
             }
-            catch (Exception e) { ConsoleHandler.appendLog_CanRepeat("SaveZipFile Exception: " + e.Message); }
+            catch (Exception e) { ConsoleHandler.append_CanRepeat("SaveZipFile Exception: " + e.Message); }
         }
         public static string ReadTextFromZipFile(ZipFile zip, string fileInZip)
         {
@@ -174,13 +174,13 @@ namespace BTDToolbox.Classes.NewProjects
                 }
                 catch (Exception e)
                 {
-                    ConsoleHandler.appendLog_CanRepeat("ReadTextFromZipFile Exception: " + e.Message);
+                    ConsoleHandler.append_CanRepeat("ReadTextFromZipFile Exception: " + e.Message);
                 }
             }
             else
             {
-                ConsoleHandler.force_appendLog_CanRepeat("Unable to check if  " + fileInZip.Replace("\\\\","\\").Replace(CurrentProjectVariables.PathToProjectFiles,"") + "  is modified because it wasnt found in the backup, and therefore has nothing to compare it too.");
-                //ConsoleHandler.force_appendLog_CanRepeat("Unable to find   " + fileInZip + "   in the Jet... Failed to read file..");
+                ConsoleHandler.append_Force_CanRepeat("Unable to check if  " + fileInZip.Replace("\\\\","\\").Replace(CurrentProjectVariables.PathToProjectFiles,"") + "  is modified because it wasnt found in the backup, and therefore has nothing to compare it too.");
+                //ConsoleHandler.append_Force_CanRepeat("Unable to find   " + fileInZip + "   in the Jet... Failed to read file..");
             }
             return returnText;
         }

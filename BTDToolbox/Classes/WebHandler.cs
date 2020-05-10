@@ -18,6 +18,19 @@ namespace BTDToolbox.Classes
         public string readURL { get; set; }
         public bool urlAquired { get; set; }
 
+        public bool checkWebsite(string URL)
+        {
+            try
+            {
+                WebClient wc = new WebClient();
+                string HTMLSource = wc.DownloadString(URL);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public void TryReadURL_StartThread()    
         {
             Thread thread = new Thread(() => urlAquired =TryReadURL_OnThread(startURL));
@@ -128,7 +141,7 @@ namespace BTDToolbox.Classes
             }
             else
             {
-                ConsoleHandler.appendLog("Unable to determine latest version of BTD Toolbox");
+                ConsoleHandler.append("Unable to determine latest version of BTD Toolbox");
                 return false;
             }
         }

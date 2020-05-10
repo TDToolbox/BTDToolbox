@@ -26,7 +26,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void GetNKHook_Button_Click(object sender, EventArgs e)
         {
-            NKHook.OpenNkhGithub();
+            NKHook.OpenMainWebsite();
             this.Close();
         }
 

@@ -19,7 +19,7 @@ namespace BTDToolbox.Extractor
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
-                ConsoleHandler.appendLog("Creating project files for: " + projName);
+                ConsoleHandler.append("Creating project files for: " + projName);
 
                 ZipFile archive = new ZipFile(sourcePath);
                 archive.Password = CurrentProjectVariables.JetPassword;

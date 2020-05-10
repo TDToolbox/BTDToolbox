@@ -22,7 +22,6 @@ namespace BTDToolbox.Extra_Forms
 
         Card card;
         Card newCard;
-        PowerCard powerCard;
         EasyTowerEditor ezTower;
         EZBloon_Editor ezBloon;
 
@@ -64,7 +63,7 @@ namespace BTDToolbox.Extra_Forms
                 PopulateUI_Cards();
             }
             else
-                ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
+                ConsoleHandler.append_Force_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
         }
         private void HandlePowerCards()
         {
@@ -208,21 +207,21 @@ namespace BTDToolbox.Extra_Forms
                     newCard.UnlockWin.Type = UnlockWinType_TB.Text;
 
                     try { newCard.UnlockWin.Count = Int64.Parse(UnlockWinCount_TB.Text); }
-                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your power's count is not a valid number..."); error = true; }
+                    catch (FormatException) { ConsoleHandler.force_append_Notice("Your power's count is not a valid number..."); error = true; }
 
                     try { newCard.UnlockWin.SpotlightCount = Int64.Parse(SpotlightCount_TB.Text); }
-                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your power's spotlight count is not a valid number..."); error = true; }
+                    catch (FormatException) { ConsoleHandler.force_append_Notice("Your power's spotlight count is not a valid number..."); error = true; }
                 }
             }
             else
             {
-                ConsoleHandler.force_appendNotice("You need to select at least one Unlock method!");
+                ConsoleHandler.force_append_Notice("You need to select at least one Unlock method!");
                 error = true;
             }
             newCard.StartingCard = StartingCard_CheckBox.Checked;
             newCard.Visible = Visible_CheckBox.Checked;
             try { newCard.DiscardCost = Int64.Parse(DiscardCost_TB.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your discard cost is not a valid number..."); error = true; }
+            catch (FormatException) { ConsoleHandler.force_append_Notice("Your discard cost is not a valid number..."); error = true; }
 
 
             //Panel 2 stuff
@@ -242,11 +241,11 @@ namespace BTDToolbox.Extra_Forms
                 newCard.Tower.Features = feats;
 
                 try { newCard.Tower.Upgrades[0] = Int64.Parse(Upgrades1_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your left path upgrade is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your left path upgrade is not a valid number..."); error = true; }
                 try { newCard.Tower.Upgrades[1] = Int64.Parse(Upgrades2_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your right path upgrade is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your right path upgrade is not a valid number..."); error = true; }
                 try { newCard.Tower.Cost = Int64.Parse(TowerCost_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your tower cost is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your tower cost is not a valid number..."); error = true; }
             }
 
 
@@ -266,15 +265,15 @@ namespace BTDToolbox.Extra_Forms
                 newCard.Bloon.Features = feats;
 
                 try { newCard.Bloon.UnlockRound = Int64.Parse(UnlockRound_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your unlock round is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your unlock round is not a valid number..."); error = true; }
                 try { newCard.Bloon.Cost = Int64.Parse(BloonCost_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your bloon cost is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your bloon cost is not a valid number..."); error = true; }
                 try { newCard.Bloon.IncomeChange = Int64.Parse(IncomeChange_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your income changed amount is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your income changed amount is not a valid number..."); error = true; }
                 try { newCard.Bloon.Interval = Double.Parse(Interval_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your interval amount is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your interval amount is not a valid number..."); error = true; }
                 try { newCard.Bloon.NumBloons = Int64.Parse(NumBloons_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your num bloons amount is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your num bloons amount is not a valid number..."); error = true; }
             }
 
 
@@ -288,7 +287,7 @@ namespace BTDToolbox.Extra_Forms
                 newCard.Power.Type = PowerType_TB.Text;
 
                 try { newCard.Power.Cost = Int64.Parse(PowerCost_TB.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your power cost is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your power cost is not a valid number..."); error = true; }
 
                 int i = 0;
                 string[] feats = new string[PowerFeatures_LB.SelectedItems.Count];
@@ -350,7 +349,7 @@ namespace BTDToolbox.Extra_Forms
                     }
                     else
                     {
-                        ConsoleHandler.force_appendLog_CanRepeat(item + "  has invalid JSON");
+                        ConsoleHandler.append_Force_CanRepeat(item + "  has invalid JSON");
                     }
                 }
             }
@@ -455,13 +454,13 @@ namespace BTDToolbox.Extra_Forms
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("You need to have a project opened to use this tool...");
+                    ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
                     this.Close();
                 }
             }
             else
             {
-                ConsoleHandler.force_appendNotice("Error! This program only works for BTD Battles. Please open a BTD Battles project and try again.");
+                ConsoleHandler.force_append_Notice("Error! This program only works for BTD Battles. Please open a BTD Battles project and try again.");
                 this.Close();
             }
         }
@@ -482,7 +481,7 @@ namespace BTDToolbox.Extra_Forms
         private void Save_Button_Click(object sender, EventArgs e)
         {
             SaveFile();
-            ConsoleHandler.appendLog_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());
+            ConsoleHandler.append_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());
         }
         private void SwitchPanel_Click(object sender, EventArgs e)
         {
@@ -517,9 +516,9 @@ namespace BTDToolbox.Extra_Forms
             if (e.KeyCode == Keys.F5)
             {
                 SaveFile();
-                ConsoleHandler.appendLog_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());
+                ConsoleHandler.append_CanRepeat("Saved " + CardFiles_ComboBox.SelectedItem.ToString());
                 GeneralMethods.CompileJet("launch");
-                ConsoleHandler.appendLog_CanRepeat("Launching " + game);
+                ConsoleHandler.append_CanRepeat("Launching " + game);
             }
             if (e.KeyCode == Keys.Enter)
             {
@@ -545,14 +544,14 @@ namespace BTDToolbox.Extra_Forms
                 if (card.Tower.TowerType != null)
                     selectedCard = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + card.Tower.TowerType + ".tower";
                 else
-                    ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+                    ConsoleHandler.append("This card doesn't have a specified tower type");
             }
             else if (openBloon == true)
             {
                 if (card.Bloon.BloonType != null)
                     selectedCard = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\" + card.Bloon.BloonType + ".bloon";
                 else
-                    ConsoleHandler.appendLog("This card doesn't have a specified bloon type");
+                    ConsoleHandler.append("This card doesn't have a specified bloon type");
             }
             else
                 selectedCard = path;
@@ -583,12 +582,12 @@ namespace BTDToolbox.Extra_Forms
             }
             else if (StartingCards_LB.SelectedIndices.Count > 1)
             {
-                ConsoleHandler.force_appendNotice("Please select only ONE file to continue");
+                ConsoleHandler.force_append_Notice("Please select only ONE file to continue");
                 this.Focus();
             }
             else if (StartingCards_LB.SelectedIndices.Count == 0)
             {
-                ConsoleHandler.force_appendNotice("You need to have at least one file selected to contiune...");
+                ConsoleHandler.force_append_Notice("You need to have at least one file selected to contiune...");
                 this.Focus();
             }
             Open_Panel.Visible = false;
@@ -601,12 +600,12 @@ namespace BTDToolbox.Extra_Forms
             }
             else if (StartingCards_LB.SelectedIndices.Count > 1)
             {
-                ConsoleHandler.force_appendNotice("Please select only ONE file to continue");
+                ConsoleHandler.force_append_Notice("Please select only ONE file to continue");
                 this.Focus();
             }
             else if (StartingCards_LB.SelectedIndices.Count == 0)
             {
-                ConsoleHandler.force_appendNotice("You need to have at least one file selected to contiune...");
+                ConsoleHandler.force_append_Notice("You need to have at least one file selected to contiune...");
                 this.Focus();
             }
             Open_Panel.Visible = false;
@@ -616,7 +615,7 @@ namespace BTDToolbox.Extra_Forms
             startingCards_array = new string[0];
             if(CountStartingCards() < 15)
             {
-                ConsoleHandler.force_appendNotice("ERROR! You need at least 15 starter cards or the game will crash!");
+                ConsoleHandler.force_append_Notice("ERROR! You need at least 15 starter cards or the game will crash!");
                 this.Focus();
             }
             StartingCards_LB.Items.Clear();
@@ -754,7 +753,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+                ConsoleHandler.append("This card doesn't have a specified tower type");
             }
         }
         private void OpenTowerText_Button_Click(object sender, EventArgs e)
@@ -791,7 +790,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.appendLog("This card doesn't have a specified tower type");
+                ConsoleHandler.append("This card doesn't have a specified tower type");
             }
         }
         private void GoToCard_Button_Click(object sender, EventArgs e)
@@ -830,7 +829,7 @@ namespace BTDToolbox.Extra_Forms
                         }
                         else
                         {
-                            ConsoleHandler.force_appendLog_CanRepeat("Could not find that card...");
+                            ConsoleHandler.append_Force_CanRepeat("Could not find that card...");
                             this.Focus();
                         }
                     }
@@ -839,7 +838,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.force_appendNotice("You didn't enter a card name to search...");
+                ConsoleHandler.force_append_Notice("You didn't enter a card name to search...");
                 this.Focus();
             }
         }

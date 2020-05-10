@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BTDToolbox.Classes
 {
@@ -24,17 +27,23 @@ namespace BTDToolbox.Classes
         {
             if(!DoesNkhExist())
             {
-                ConsoleHandler.appendLog("Unable to find NKHook5-Injector.exe. Failed to launch...");
+                ConsoleHandler.append("Unable to find NKHook5-Injector.exe. Failed to launch...");
                 return;
             }
-            ConsoleHandler.appendLog("Launching NKHook");
+            ConsoleHandler.append("Launching NKHook");
             Process.Start(nkhEXE);
         }
 
         public static void OpenNkhGithub()
         {
-            ConsoleHandler.appendLog("Opening NKHook Github page...");
+            ConsoleHandler.append("Opening NKHook Github page...");
             Process.Start("https://github.com/DisabledMallis/NKHook5");
+        }
+        public static void OpenMainWebsite()
+        {
+            string url = "https://nkhook.pro/";
+            ConsoleHandler.append("Opening NKHook's website...");
+            Process.Start(url);
         }
     }
 }
