@@ -1098,5 +1098,12 @@ namespace BTDToolbox
             b.MdiParent = this;
             b.Show();
         }
+
+        private void nKHookSiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Browser b = new Browser("https://nkhook.pro");
+            b.MdiParent = this;
+            b.Show();
+        }
     }
 }

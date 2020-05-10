@@ -133,6 +133,7 @@
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
+            this.nKHookSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -926,7 +927,8 @@
             this.themedFormToolStripMenuItem,
             this.TestForm,
             this.testingToolStripMenuItem,
-            this.toolStripMenuItem3});
+            this.toolStripMenuItem3,
+            this.nKHookSiteToolStripMenuItem});
             this.debugToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
@@ -972,6 +974,13 @@
             this.versionTag.Size = new System.Drawing.Size(98, 55);
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
+            // 
+            // nKHookSiteToolStripMenuItem
+            // 
+            this.nKHookSiteToolStripMenuItem.Name = "nKHookSiteToolStripMenuItem";
+            this.nKHookSiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nKHookSiteToolStripMenuItem.Text = "NKHook Site";
+            this.nKHookSiteToolStripMenuItem.Click += new System.EventHandler(this.nKHookSiteToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1109,6 +1118,7 @@
         private System.Windows.Forms.ToolStripMenuItem LaunchWIthNKH_Button;
         private System.Windows.Forms.ToolStripMenuItem LaunchNoNKH_Button;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem nKHookSiteToolStripMenuItem;
     }
 }
 
