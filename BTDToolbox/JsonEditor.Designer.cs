@@ -88,6 +88,8 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.close_button.Click += new System.EventHandler(this.Close_button_Click);
             // 
             // Sizer
@@ -354,7 +356,7 @@
             // JsonEditor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::BTDToolbox.Properties.Resources.JSON_valid;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ForeColor = System.Drawing.Color.Black;

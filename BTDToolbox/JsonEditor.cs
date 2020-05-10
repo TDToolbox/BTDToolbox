@@ -51,7 +51,7 @@ namespace BTDToolbox
         bool searchSubtask = false;
         bool tabLine = false;
         string tab;
-    public JsonEditor(string Path)
+        public JsonEditor(string Path)
         {
             InitializeComponent();
             Deserialize_Config();
@@ -187,9 +187,6 @@ namespace BTDToolbox
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            
-
-
             if (e.Control && e.KeyCode == Keys.F)
             {
                 searchSubtask = false;

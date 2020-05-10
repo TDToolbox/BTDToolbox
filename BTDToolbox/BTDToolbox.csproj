@@ -64,6 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Browser.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Classes\Announcements.cs" />
     <Compile Include="Classes\BattlesPass_Class.cs" />
     <Compile Include="Classes\Bloon_Class.cs" />
@@ -204,6 +207,9 @@
     <Compile Include="ZipForm.Designer.cs">
       <DependentUpon>ZipForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Browser.resx">
+      <DependentUpon>Browser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\BattlesPassManager.resx">
       <DependentUpon>BattlesPassManager.cs</DependentUpon>
     </EmbeddedResource>
