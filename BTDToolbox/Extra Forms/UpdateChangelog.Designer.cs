@@ -54,16 +54,10 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
             // 
             // TitleBar_RightCorner
             // 
             this.TitleBar_RightCorner.Location = new System.Drawing.Point(754, 2);
-            // 
-            // TitleBar_LeftCorner
-            // 
-            this.TitleBar_LeftCorner.SendToBack();
             // 
             // label1
             // 

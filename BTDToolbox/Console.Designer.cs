@@ -41,6 +41,8 @@
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.consoe_tab.SuspendLayout();
             this.error_tab.SuspendLayout();
@@ -66,17 +68,17 @@
             this.contentPanel.Controls.Add(this.invoke_textbox);
             this.contentPanel.Location = new System.Drawing.Point(3, -29);
             this.contentPanel.Size = new System.Drawing.Size(794, 438);
-            this.contentPanel.Controls.SetChildIndex(this.invoke_textbox, 0);
-            this.contentPanel.Controls.SetChildIndex(this.invoke_button, 0);
-            this.contentPanel.Controls.SetChildIndex(this.tabControl1, 0);
             // 
             // close_button
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.close_button.Location = new System.Drawing.Point(748, 0);
-            this.close_button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.close_button_MouseDown);
+            this.close_button.Location = new System.Drawing.Point(732, 0);
+            // 
+            // TitleBar_RightCorner
+            // 
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(740, 0);
             // 
             // invoke_button
             // 
@@ -179,7 +181,7 @@
             this.ExportLog_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExportLog_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExportLog_Button.ForeColor = System.Drawing.Color.White;
-            this.ExportLog_Button.Location = new System.Drawing.Point(601, -1);
+            this.ExportLog_Button.Location = new System.Drawing.Point(585, -1);
             this.ExportLog_Button.Name = "ExportLog_Button";
             this.ExportLog_Button.Size = new System.Drawing.Size(141, 25);
             this.ExportLog_Button.TabIndex = 3;
@@ -201,6 +203,8 @@
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.consoe_tab.ResumeLayout(false);
             this.error_tab.ResumeLayout(false);

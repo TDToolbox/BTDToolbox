@@ -165,7 +165,7 @@ namespace BTDToolbox
 
         private void showUpdateChangelog()
         {
-            if (programData.recentUpdate == false)
+            if (programData.recentUpdate == true)
             {
                 var changelog = new UpdateChangelog();
                 changelog.MdiParent = this;
@@ -242,29 +242,26 @@ namespace BTDToolbox
         //
         public void OpenJetForm()
         {
-            if (lastProject != "" && lastProject != null)
-            {
-                DirectoryInfo dinfo = new DirectoryInfo(lastProject);
-                string[] split = dinfo.ToString().Split('\\');
-                string name = split[split.Length - 1];
-                //projName = name;
+            if (!Guard.IsStringValid(lastProject))
+                return;
 
-                if (dinfo.Exists)
+            DirectoryInfo dinfo = new DirectoryInfo(lastProject);
+
+            if (!dinfo.Exists)
+                return;
+
+            foreach (JetForm o in JetProps.get())
+            {
+                if (o.projName == projName)
                 {
-                    foreach (JetForm o in JetProps.get())
-                    {
-                        if (o.projName == projName)
-                        {
-                            MessageBox.Show("The project is already opened..");
-                            return;
-                        }
-                    }
-                    JetForm jf = new JetForm(dinfo, this, name);
-                    jf.MdiParent = this;
-                    jf.Show();
-                    projName = dinfo.ToString();
+                    MessageBox.Show("The project is already opened..");
+                    return;
                 }
             }
+            JetForm jf = new JetForm(dinfo, this, dinfo.Name);
+            jf.MdiParent = this;
+            jf.Show();
+            projName = dinfo.ToString();
         }
         private void AddNewJet()
         {
@@ -352,9 +349,15 @@ namespace BTDToolbox
                     foreach (var a in JetProps.get())
                     {
                         if (a.Visible)
+                        {
+                            ConsoleHandler.append("Hiding JetViewer");
                             a.Hide();
+                        }
                         else
+                        {
+                            ConsoleHandler.append("Reopening JetViewer");
                             a.Show();
+                        }
                     }
                 }
                 else
@@ -378,9 +381,15 @@ namespace BTDToolbox
             if (ConsoleHandler.validateConsole())
             {
                 if (ConsoleHandler.console.Visible)
+                {
+                    ConsoleHandler.append("Hiding console.");
                     ConsoleHandler.console.Hide();
+                }
                 else
+                {
+                    ConsoleHandler.append("Showing console.");
                     ConsoleHandler.console.Show();
+                }
             }
         }
         private void Find_Button_Click(object sender, EventArgs e)

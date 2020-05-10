@@ -82,8 +82,8 @@ namespace BTDToolbox
             LoadProjectFile();
             this.TitleLabel.Text = "JetViewer:    |    " + CurrentProjectVariables.ProjectName;
 
-            ConsoleHandler.append("Game: " + CurrentProjectVariables.GameName);
-            ConsoleHandler.append("Loading Project: " + projName.ToString());
+            ConsoleHandler.append("Game: " + projName);
+            ConsoleHandler.append("Loading Project: " + projName);
 
             
             Serializer.SaveConfig(this, "game");
@@ -149,14 +149,10 @@ namespace BTDToolbox
 
 
             var files = new DirectoryInfo(projClassFolder).GetFiles("*.toolbox");
-            if (files.Count() == 1)
-            {
-                ProjectHandler.ReadProject(files[0].FullName);
-            }
-            else
-            {
+            if (files.Count() != 1)
                 ConsoleHandler.append_Force_CanRepeat("Something went wrong. Your project file wasnt found or you had more than one. ");
-            }
+
+            ProjectHandler.ReadProject(files[0].FullName);
         }
         private void initTreeMenu()
         {
@@ -201,9 +197,31 @@ namespace BTDToolbox
 
         private void JetForm_Closed(object sender, EventArgs e)
         {
+            ConsoleHandler.append("Closing JetViewer for " + projName);
             JetProps.decrement(this);
             Serializer.SaveConfig(this, "jet explorer");
             Serializer.SaveSmallSettings("external editor");
+
+            if (JsonEditorHandler.jeditor == null) return;
+
+            if (JsonEditorHandler.jeditor.userControls == null) return;
+
+            var removeUserControls = new List<JsonEditor_Instance>();
+            foreach (var tab in JsonEditorHandler.jeditor.userControls)
+            {
+                if (tab.path.Contains(projName.Replace("\\", "")))
+                    removeUserControls.Add(tab);
+            }
+
+            if (removeUserControls.Count == 0)
+                return;
+
+            ConsoleHandler.append("This project still has files opened. Closing opened files...");
+            foreach (var tab in removeUserControls)
+            {
+                ConsoleHandler.append("Closing:  " + tab.path.Replace(dirInfo.FullName, ""));
+                JsonEditorHandler.CloseFile(tab.path);
+            }
         }
 
         private void PopulateTreeView(string expandedpath)

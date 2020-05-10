@@ -41,6 +41,7 @@
             this.ChangeFontSize_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontSize_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.EasyTowerEditor_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Replace_TextBox = new System.Windows.Forms.ToolStripTextBox();
@@ -53,12 +54,13 @@
             this.lintPanel = new System.Windows.Forms.Panel();
             this.tB_line = new System.Windows.Forms.RichTextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.EZBoon_Button = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             this.JsonToolstrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -86,9 +88,6 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            this.close_button.TabStop = false;
             this.close_button.Click += new System.EventHandler(this.Close_button_Click);
             // 
             // Sizer
@@ -215,6 +214,13 @@
             this.EasyTowerEditor_Button.Size = new System.Drawing.Size(201, 22);
             this.EasyTowerEditor_Button.Text = "EZ Tower tool";
             this.EasyTowerEditor_Button.Visible = false;
+            // 
+            // EZBoon_Button
+            // 
+            this.EZBoon_Button.Name = "EZBoon_Button";
+            this.EZBoon_Button.Size = new System.Drawing.Size(201, 22);
+            this.EZBoon_Button.Text = "EZ Bloon tool";
+            this.EZBoon_Button.Click += new System.EventHandler(this.EZBoon_Button_Click);
             // 
             // Help_DropDown
             // 
@@ -345,13 +351,6 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
-            // EZBoon_Button
-            // 
-            this.EZBoon_Button.Name = "EZBoon_Button";
-            this.EZBoon_Button.Size = new System.Drawing.Size(201, 22);
-            this.EZBoon_Button.Text = "EZ Bloon tool";
-            this.EZBoon_Button.Click += new System.EventHandler(this.EZBoon_Button_Click);
-            // 
             // JsonEditor
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -370,6 +369,8 @@
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.JsonToolstrip.ResumeLayout(false);
             this.JsonToolstrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

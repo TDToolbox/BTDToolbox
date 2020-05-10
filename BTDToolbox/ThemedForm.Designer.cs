@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThemedForm));
             this.titleSeperator = new System.Windows.Forms.SplitContainer();
+            this.TitleLabel = new System.Windows.Forms.Label();
             this.close_button = new System.Windows.Forms.Button();
             this.TitleBar_RightCorner = new System.Windows.Forms.PictureBox();
-            this.TitleLabel = new System.Windows.Forms.Label();
             this.TitleBar_LeftCorner = new System.Windows.Forms.PictureBox();
             this.Sizer = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.Panel();
@@ -72,6 +72,18 @@
             this.titleSeperator.SplitterDistance = 25;
             this.titleSeperator.TabIndex = 0;
             // 
+            // TitleLabel
+            // 
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.TitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TitleLabel.ForeColor = System.Drawing.Color.White;
+            this.TitleLabel.Location = new System.Drawing.Point(12, 5);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(34, 16);
+            this.TitleLabel.TabIndex = 0;
+            this.TitleLabel.Text = "Title";
+            // 
             // close_button
             // 
             this.close_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -80,6 +92,7 @@
             this.close_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.close_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.close_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -88,6 +101,7 @@
             this.close_button.Name = "close_button";
             this.close_button.Size = new System.Drawing.Size(52, 26);
             this.close_button.TabIndex = 2;
+            this.close_button.TabStop = false;
             this.close_button.Text = "X";
             this.close_button.UseVisualStyleBackColor = false;
             this.close_button.Click += new System.EventHandler(this.close_button_Click);
@@ -100,23 +114,11 @@
             this.TitleBar_RightCorner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.TitleBar_RightCorner.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.TitleBar_RightCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(740, 0);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 2);
             this.TitleBar_RightCorner.Name = "TitleBar_RightCorner";
             this.TitleBar_RightCorner.Size = new System.Drawing.Size(60, 59);
             this.TitleBar_RightCorner.TabIndex = 3;
             this.TitleBar_RightCorner.TabStop = false;
-            // 
-            // TitleLabel
-            // 
-            this.TitleLabel.AutoSize = true;
-            this.TitleLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.TitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TitleLabel.ForeColor = System.Drawing.Color.White;
-            this.TitleLabel.Location = new System.Drawing.Point(12, 5);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(34, 16);
-            this.TitleLabel.TabIndex = 0;
-            this.TitleLabel.Text = "Title";
             // 
             // TitleBar_LeftCorner
             // 

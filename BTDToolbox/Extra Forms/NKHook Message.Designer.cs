@@ -45,11 +45,15 @@
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // titleSeperator
             // 
+            this.titleSeperator.Size = new System.Drawing.Size(800, 550);
+            this.titleSeperator.SplitterDistance = 30;
             // 
             // TitleLabel
             // 
@@ -70,13 +74,17 @@
             this.contentPanel.Controls.Add(this.Label1);
             this.contentPanel.Controls.Add(this.label2);
             this.contentPanel.Controls.Add(this.pictureBox1);
+            this.contentPanel.Size = new System.Drawing.Size(776, 595);
             // 
             // close_button
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            this.close_button.Location = new System.Drawing.Point(736, 6);
+            // 
+            // Sizer
+            // 
+            this.Sizer.Location = new System.Drawing.Point(788, 789);
             // 
             // label2
             // 
@@ -208,7 +216,7 @@
             this.GetNKHook_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GetNKHook_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.GetNKHook_Button.ForeColor = System.Drawing.Color.White;
-            this.GetNKHook_Button.Location = new System.Drawing.Point(0, 356);
+            this.GetNKHook_Button.Location = new System.Drawing.Point(0, 545);
             this.GetNKHook_Button.Name = "GetNKHook_Button";
             this.GetNKHook_Button.Size = new System.Drawing.Size(776, 50);
             this.GetNKHook_Button.TabIndex = 13;
@@ -220,10 +228,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 550);
             this.Name = "NKHook_Message";
             this.Text = "Get NKHook!";
-            this.Shown += new System.EventHandler(this.NKHook_Message_Shown);
             this.titleSeperator.Panel1.ResumeLayout(false);
             this.titleSeperator.Panel1.PerformLayout();
             this.titleSeperator.Panel2.ResumeLayout(false);
@@ -231,6 +238,8 @@
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

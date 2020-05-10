@@ -51,6 +51,7 @@
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.Important_Panel.SuspendLayout();
             this.Info_Panel.SuspendLayout();
@@ -76,25 +77,23 @@
             this.contentPanel.Controls.Add(this.Info_Panel);
             this.contentPanel.Controls.Add(this.pictureBox1);
             this.contentPanel.Location = new System.Drawing.Point(2, 3);
-            this.contentPanel.Size = new System.Drawing.Size(445, 450);
+            this.contentPanel.Size = new System.Drawing.Size(95, 498);
             // 
             // close_button
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            this.close_button.Location = new System.Drawing.Point(-401, 2);
+            this.close_button.Location = new System.Drawing.Point(-751, 3);
             this.close_button.Size = new System.Drawing.Size(65, 27);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(-262, 692);
+            this.Sizer.Location = new System.Drawing.Point(-612, 740);
             // 
             // TitleBar_RightCorner
             // 
             this.TitleBar_RightCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(406, 3);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(56, 4);
             this.TitleBar_RightCorner.Size = new System.Drawing.Size(44, 59);
             // 
             // pictureBox1
@@ -105,7 +104,7 @@
             this.pictureBox1.Image = global::BTDToolbox.Properties.Resources.Welcome_label;
             this.pictureBox1.Location = new System.Drawing.Point(30, 14);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(945, 91);
+            this.pictureBox1.Size = new System.Drawing.Size(500, 91);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -161,7 +160,7 @@
             this.Important_Panel.Controls.Add(this.label4);
             this.Important_Panel.Controls.Add(this.label1);
             this.Important_Panel.Controls.Add(this.label3);
-            this.Important_Panel.Location = new System.Drawing.Point(4, 313);
+            this.Important_Panel.Location = new System.Drawing.Point(4, 361);
             this.Important_Panel.Name = "Important_Panel";
             this.Important_Panel.Size = new System.Drawing.Size(547, 114);
             this.Important_Panel.TabIndex = 6;
@@ -267,7 +266,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(322, 416);
+            this.button1.Location = new System.Drawing.Point(-28, 464);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 26);
             this.button1.TabIndex = 9;
@@ -278,7 +277,7 @@
             // WatchTut_Button
             // 
             this.WatchTut_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.WatchTut_Button.Location = new System.Drawing.Point(7, 416);
+            this.WatchTut_Button.Location = new System.Drawing.Point(-343, 464);
             this.WatchTut_Button.Name = "WatchTut_Button";
             this.WatchTut_Button.Size = new System.Drawing.Size(295, 26);
             this.WatchTut_Button.TabIndex = 10;
@@ -301,6 +300,7 @@
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.Important_Panel.ResumeLayout(false);
             this.Important_Panel.PerformLayout();

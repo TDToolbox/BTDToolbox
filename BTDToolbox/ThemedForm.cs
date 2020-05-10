@@ -32,6 +32,7 @@ namespace BTDToolbox
         int Sh;
         bool mov;
         public bool canResize = true;
+        public bool moveCenterScreen = false;
 
         //Resize defaults
         int minWidth = 200;
@@ -60,8 +61,6 @@ namespace BTDToolbox
 
             close_button.Click += close_button_Click;
             this.Load += onThemedLoad;
-
-            
         }
 
         
@@ -70,6 +69,9 @@ namespace BTDToolbox
         {
             titleSeperator.SplitterDistance = 25;
             CheckInBounds();
+
+            if(moveCenterScreen)
+                this.Location = new Point(GeneralMethods.GetCenterScreen().X - this.Size.Width / 2 - 75, GeneralMethods.GetCenterScreen().Y - this.Size.Height / 2 - 145);
         }
         private void CheckInBounds()
         {
@@ -218,12 +220,12 @@ namespace BTDToolbox
 
         private void close_button_MouseDown(object sender, MouseEventArgs e)
         {
-            BackgroundImage = Resources.JSON_Invalid;
+            close_button.BackgroundImage = Properties.Resources.new_close_button_click;
         }
 
         private void close_button_MouseUp(object sender, MouseEventArgs e)
         {
-            //BackgroundImage = Resources.new_close_button_2;
+            close_button.BackgroundImage = Properties.Resources.new_close_button_2;
         }
     }
 }
