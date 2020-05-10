@@ -21,7 +21,7 @@ namespace BTDToolbox.Classes.Spritesheets
             string xmlPath = filename.Replace(split[split.Length-1], "") + "\\" + file + ".xml";
 
             StreamReader str = new StreamReader(xmlPath);
-            //ConsoleHandler.appendLog_CanRepeat(str.ReadToEnd());
+            //ConsoleHandler.append_CanRepeat(str.ReadToEnd());
             XDocument xml = XDocument.Load(xmlPath);
             //XDocument xml = XDocument.Parse(str.ReadToEnd());
 
@@ -81,7 +81,7 @@ namespace BTDToolbox.Classes.Spritesheets
                         CroppedImage.SetPixel(x, y, atlasImage.GetPixel(x + a, y + b));
                 CroppedImage.Save(extractpath);
             }
-            catch (Exception ex)
+            catch
             {
                 // handle the exception
             }

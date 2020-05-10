@@ -36,7 +36,7 @@ namespace BTDToolbox.SaveEditor
 
             if (!f.Exists)
             {
-                ConsoleHandler.force_appendNotice("Save file does not exist... Unable to continue");
+                ConsoleHandler.force_append_Notice("Save file does not exist... Unable to continue");
                 return;
             }
 
@@ -46,14 +46,14 @@ namespace BTDToolbox.SaveEditor
 
             if (decoded == null)
             {
-                ConsoleHandler.force_appendNotice("This file is not a valid JSON file... Unable to continue");
+                ConsoleHandler.force_append_Notice("This file is not a valid JSON file... Unable to continue");
                 return;
             }
 
             byte[] newBytes = Encoding.ASCII.GetBytes(decoded.ToString());
 
             File.WriteAllBytes(savemodDir + "\\" + game + "_Profile.save", newBytes);
-            ConsoleHandler.force_appendLog_CanRepeat("Finished decrypting save file...");
+            ConsoleHandler.append_Force_CanRepeat("Finished decrypting save file...");
         }
 
         public static void EncryptSave(string game)
@@ -93,7 +93,7 @@ namespace BTDToolbox.SaveEditor
 
             if (!f.Exists)
             {
-                ConsoleHandler.force_appendNotice("Save file does not exist... Unable to continue");
+                ConsoleHandler.force_append_Notice("Save file does not exist... Unable to continue");
                 return;
             }
 
@@ -105,7 +105,7 @@ namespace BTDToolbox.SaveEditor
 
             if (decoded == null)
             {
-                ConsoleHandler.force_appendNotice("This file is not a valid JSON file... Unable to continue");
+                ConsoleHandler.force_append_Notice("This file is not a valid JSON file... Unable to continue");
                 return;
             }
 
@@ -148,12 +148,12 @@ namespace BTDToolbox.SaveEditor
 
             if (encoded == null)
             {
-                ConsoleHandler.force_appendNotice("Encryption failed for some reason...");
+                ConsoleHandler.force_append_Notice("Encryption failed for some reason...");
                 return;
             }
 
             File.WriteAllBytes(encryptedSave, encoded);
-            ConsoleHandler.force_appendLog_CanRepeat("Finished writing save file...");
+            ConsoleHandler.append_Force_CanRepeat("Finished writing save file...");
         }
     }
 }

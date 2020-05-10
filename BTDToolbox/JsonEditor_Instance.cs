@@ -18,12 +18,12 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Ionic.Zip;
 using BTDToolbox.Classes.NewProjects;
+using BTDToolbox.Classes.JSON_Classes;
 
 namespace BTDToolbox
 {
     public partial class JsonEditor_Instance : UserControl
     {
-        Font font;
         ConfigFile programData;
         public bool jsonError;
         bool pasted = false;
@@ -172,7 +172,7 @@ namespace BTDToolbox
                 try
                 {
                     string error = JSON_Reader.GetJSON_Error(Editor_TextBox.Text);
-                    ConsoleHandler.force_appendNotice(error);
+                    ConsoleHandler.force_append_Notice(error);
                     //Line number
                     string[] split = error.Split(',');
                     string[] line = split[split.Length - 2].Split(' ');
@@ -196,7 +196,7 @@ namespace BTDToolbox
                 }           
                 catch
                 {
-                    ConsoleHandler.appendLog_CanRepeat("Something went wrong... Unable to find the bad json");
+                    ConsoleHandler.append_CanRepeat("Something went wrong... Unable to find the bad json");
                 }
             }
         }
@@ -422,11 +422,11 @@ namespace BTDToolbox
                     {
                         if (File.Exists(projPath + "TowerSpriteUpgradeDefinitions\\" + file + ".json"))
                         {
-                            ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Using default one instead...");
+                            ConsoleHandler.append_Force_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Using default one instead...");
                         }
                         else
                         {
-                            ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Additionally, the default one does not exist. Unable to open TowerSpriteUpgradeDef");
+                            ConsoleHandler.append_Force_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Additionally, the default one does not exist. Unable to open TowerSpriteUpgradeDef");
                             TowerSpriteUpgradeDef_Button.Visible = false;
                         }                      
                     }
@@ -480,7 +480,7 @@ namespace BTDToolbox
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
             else
-                ConsoleHandler.appendLog("The TowerSpriteUpgradeDef  " + towerSpriteUpgradeDef + " was not found");
+                ConsoleHandler.append("The TowerSpriteUpgradeDef  " + towerSpriteUpgradeDef + " was not found");
         }
         private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -646,7 +646,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendLog("You didn't enter anything to search");
+                ConsoleHandler.append("You didn't enter anything to search");
             }
         }
         private void FindOptions_Button_Click(object sender, EventArgs e)
@@ -817,7 +817,7 @@ namespace BTDToolbox
             if (!Find_Panel.Visible)
                 ShowSearchMenu("find");
             Option1_CB.Checked = true;
-            ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+            ConsoleHandler.force_append_Notice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
         }
         private void GetSubtaskNum()
         {
@@ -826,17 +826,17 @@ namespace BTDToolbox
                 string subtaskNum = JSON_Reader.GetSubtaskNum(CharIndex_UnderMouse, Editor_TextBox.Text);
                 if (subtaskNum != "" && subtaskNum != " " && subtaskNum != null)
                 {
-                    ConsoleHandler.force_appendLog_CanRepeat("Subtask:  [" + subtaskNum + " ]");
+                    ConsoleHandler.append_Force_CanRepeat("Subtask:  [" + subtaskNum + " ]");
                 }
                 else
                 {
-                    ConsoleHandler.force_appendLog_CanRepeat("Unable to detect subtask. Please try clicking somewhere else...");
+                    ConsoleHandler.append_Force_CanRepeat("Unable to detect subtask. Please try clicking somewhere else...");
                     this.Focus();
                 }
             }
             else
             {
-                ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                ConsoleHandler.append_Force("JSON error detected... You need to fix the JSON error before you can get the subtask");
             }
         }
         private void SearchForSubtask()
@@ -863,7 +863,7 @@ namespace BTDToolbox
             }
             if (!found)
             {
-                ConsoleHandler.force_appendLog_CanRepeat("That subtask was not found");
+                ConsoleHandler.append_Force_CanRepeat("That subtask was not found");
             }
         }
         private void Option1_CB_CheckedChanged(object sender, EventArgs e)
@@ -871,7 +871,7 @@ namespace BTDToolbox
             if (Option1_CB.Text == "Subtask")
             {
                 if (Option1_CB.Checked)
-                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+                    ConsoleHandler.force_append_Notice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
             }
         }
         #endregion
@@ -965,7 +965,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendNotice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
+                ConsoleHandler.force_append_Notice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
                 this.Focus();
             }
         }
@@ -979,7 +979,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendNotice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
+                ConsoleHandler.force_append_Notice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
                 this.Focus();
             }
         }
@@ -1020,7 +1020,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendNotice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
+                ConsoleHandler.force_append_Notice("ERROR! This file doesn't have valid Json. Please fix the Json to continue");
                 this.Focus();
             }
         }
@@ -1048,21 +1048,21 @@ namespace BTDToolbox
                             }
                             File.Copy(backupProj, path);
                             JsonEditorHandler.OpenFile(path);
-                            ConsoleHandler.appendLog_CanRepeat(filename + "has been restored");
+                            ConsoleHandler.append_CanRepeat(filename + "has been restored");
                         }
                     }
                     else
                     {
-                        ConsoleHandler.appendLog_CanRepeat("Could not find file in backup project... Unable to restore file");
+                        ConsoleHandler.append_CanRepeat("Could not find file in backup project... Unable to restore file");
                     }
                 }
                 else
                 {
-                    ConsoleHandler.appendLog_CanRepeat("User cancelled restore");
+                    ConsoleHandler.append_CanRepeat("User cancelled restore");
                 }
             }
             else
-                ConsoleHandler.appendNotice("You can't restore this file because it IS the original " + filename.Replace(New_JsonEditor.readOnlyName, "") + " and it is read only");
+                ConsoleHandler.append_Notice("You can't restore this file because it IS the original " + filename.Replace(New_JsonEditor.readOnlyName, "") + " and it is read only");
         }
         private void OpenInFileExplorerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1078,7 +1078,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendNotice("Operation cancelled. We don't want you to edit the backup on accident... If you really need to look at it, you can find it in the Backups folder");
+                ConsoleHandler.append_Notice("Operation cancelled. We don't want you to edit the backup on accident... If you really need to look at it, you can find it in the Backups folder");
             }
         }
         private void ViewOriginalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1086,7 +1086,7 @@ namespace BTDToolbox
             if (!filename.Contains(New_JsonEditor.readOnlyName))
                 JsonEditorHandler.OpenOriginalFile(path);
             else
-                ConsoleHandler.appendNotice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
+                ConsoleHandler.append_Notice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
         }
         #endregion
 
@@ -1113,7 +1113,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendNotice("You need to fix your JSON error before continuing...");
+                ConsoleHandler.force_append_Notice("You need to fix your JSON error before continuing...");
             }
         }
         #endregion
@@ -1123,7 +1123,7 @@ namespace BTDToolbox
         #region Unsorted
         private void ReformatJSON_Button_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("JSON Formatted!");
+            ConsoleHandler.append("JSON Formatted!");
             if (!Serializer.Deserialize_Config().autoFormatJSON)
             {
                 DialogResult diag = MessageBox.Show("Autoformatting isn't enabled in your settings. Would you like to toolbox to enable it, " +
@@ -1161,22 +1161,22 @@ namespace BTDToolbox
             if (!Find_Panel.Visible)
                 ShowSearchMenu("find");
             Option1_CB.Checked = true;
-            ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+            ConsoleHandler.force_append_Notice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
         }
 
         private void DisableAutoformattinhToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(Serializer.Deserialize_Config().autoFormatJSON == true)
             {
-                ConsoleHandler.appendLog("Auto-formatting disabled.");
-                ConsoleHandler.force_appendNotice("You can enable or disable this in Settings, " +
+                ConsoleHandler.append("Auto-formatting disabled.");
+                ConsoleHandler.force_append_Notice("You can enable or disable this in Settings, " +
                    "which you can find under the \"File\" button at the top of toolbox.");
                 Main.autoFormatJSON = false;
                 Serializer.SaveSmallSettings("autoFormatJSON");
             }
             else
             {
-                ConsoleHandler.force_appendLog("It is already disabled. You can use it manually by pressing the \"Re-format JSON\" button above. " +
+                ConsoleHandler.append_Force("It is already disabled. You can use it manually by pressing the \"Re-format JSON\" button above. " +
                     "Or, you can change it in  Settings, which you can find under the \"File\" button at the top of toolbox.");
             }
         }

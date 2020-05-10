@@ -36,7 +36,6 @@
             this.LoadedPlugin_LB = new System.Windows.Forms.ListBox();
             this.LoadPlugin_Button = new System.Windows.Forms.Button();
             this.UnloadPlugin_Button = new System.Windows.Forms.Button();
-            this.Done_Button = new System.Windows.Forms.Button();
             this.BrowseForPlugin_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
@@ -56,7 +55,6 @@
             // contentPanel
             // 
             this.contentPanel.Controls.Add(this.BrowseForPlugin_Button);
-            this.contentPanel.Controls.Add(this.Done_Button);
             this.contentPanel.Controls.Add(this.UnloadPlugin_Button);
             this.contentPanel.Controls.Add(this.LoadPlugin_Button);
             this.contentPanel.Controls.Add(this.LoadedPlugin_LB);
@@ -75,10 +73,12 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(180, 19);
+            this.label1.Location = new System.Drawing.Point(248, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(364, 20);
             this.label1.TabIndex = 0;
@@ -121,14 +121,16 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(120, 39);
+            this.label4.Location = new System.Drawing.Point(176, 39);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(481, 20);
+            this.label4.Size = new System.Drawing.Size(555, 20);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Use our mod loader, TD Loader, if you want to play with plugins";
+            this.label4.Text = "Use our mod loader, TD Loader, if you want to play the game with plugins";
             // 
             // LoadedPlugin_LB
             // 
@@ -163,21 +165,11 @@
             this.UnloadPlugin_Button.UseVisualStyleBackColor = true;
             this.UnloadPlugin_Button.Click += new System.EventHandler(this.UnloadPlugin_Button_Click);
             // 
-            // Done_Button
-            // 
-            this.Done_Button.Location = new System.Drawing.Point(628, 355);
-            this.Done_Button.Name = "Done_Button";
-            this.Done_Button.Size = new System.Drawing.Size(103, 37);
-            this.Done_Button.TabIndex = 10;
-            this.Done_Button.Text = "Done";
-            this.Done_Button.UseVisualStyleBackColor = true;
-            this.Done_Button.Click += new System.EventHandler(this.Done_Button_Click);
-            // 
             // BrowseForPlugin_Button
             // 
-            this.BrowseForPlugin_Button.Location = new System.Drawing.Point(326, 357);
+            this.BrowseForPlugin_Button.Location = new System.Drawing.Point(4, 6);
             this.BrowseForPlugin_Button.Name = "BrowseForPlugin_Button";
-            this.BrowseForPlugin_Button.Size = new System.Drawing.Size(137, 33);
+            this.BrowseForPlugin_Button.Size = new System.Drawing.Size(117, 23);
             this.BrowseForPlugin_Button.TabIndex = 11;
             this.BrowseForPlugin_Button.Text = "Browse for plugins";
             this.BrowseForPlugin_Button.UseVisualStyleBackColor = true;
@@ -211,7 +203,6 @@
         private System.Windows.Forms.Button LoadPlugin_Button;
         private System.Windows.Forms.ListBox LoadedPlugin_LB;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button Done_Button;
         private System.Windows.Forms.Button BrowseForPlugin_Button;
     }
 }

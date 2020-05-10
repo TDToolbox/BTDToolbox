@@ -32,9 +32,10 @@
             this.invoke_textbox = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.consoe_tab = new System.Windows.Forms.TabPage();
+            this.output_log = new System.Windows.Forms.RichTextBox();
             this.error_tab = new System.Windows.Forms.TabPage();
             this.ErrorLog = new System.Windows.Forms.RichTextBox();
-            this.output_log = new System.Windows.Forms.RichTextBox();
+            this.ExportLog_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -47,6 +48,10 @@
             // 
             // titleSeperator
             // 
+            // 
+            // titleSeperator.Panel1
+            // 
+            this.titleSeperator.Panel1.Controls.Add(this.ExportLog_Button);
             // 
             // TitleLabel
             // 
@@ -120,6 +125,23 @@
             this.consoe_tab.TabIndex = 0;
             this.consoe_tab.Text = "Console";
             // 
+            // output_log
+            // 
+            this.output_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.output_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.output_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.output_log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.output_log.ForeColor = System.Drawing.Color.White;
+            this.output_log.Location = new System.Drawing.Point(1, 0);
+            this.output_log.Name = "output_log";
+            this.output_log.ReadOnly = true;
+            this.output_log.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.output_log.Size = new System.Drawing.Size(763, 349);
+            this.output_log.TabIndex = 7;
+            this.output_log.Text = "";
+            // 
             // error_tab
             // 
             this.error_tab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
@@ -148,22 +170,21 @@
             this.ErrorLog.TabIndex = 7;
             this.ErrorLog.Text = "";
             // 
-            // output_log
+            // ExportLog_Button
             // 
-            this.output_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.output_log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.output_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.output_log.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.output_log.ForeColor = System.Drawing.Color.White;
-            this.output_log.Location = new System.Drawing.Point(1, 0);
-            this.output_log.Name = "output_log";
-            this.output_log.ReadOnly = true;
-            this.output_log.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.output_log.Size = new System.Drawing.Size(763, 349);
-            this.output_log.TabIndex = 7;
-            this.output_log.Text = "";
+            this.ExportLog_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExportLog_Button.BackColor = System.Drawing.Color.Olive;
+            this.ExportLog_Button.FlatAppearance.BorderSize = 0;
+            this.ExportLog_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExportLog_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExportLog_Button.ForeColor = System.Drawing.Color.White;
+            this.ExportLog_Button.Location = new System.Drawing.Point(601, -1);
+            this.ExportLog_Button.Name = "ExportLog_Button";
+            this.ExportLog_Button.Size = new System.Drawing.Size(141, 25);
+            this.ExportLog_Button.TabIndex = 3;
+            this.ExportLog_Button.Text = "Export Console Log";
+            this.ExportLog_Button.UseVisualStyleBackColor = false;
+            this.ExportLog_Button.Click += new System.EventHandler(this.ExportLog_Button_Click);
             // 
             // Console
             // 
@@ -196,5 +217,6 @@
         public System.Windows.Forms.RichTextBox output_log;
         private System.Windows.Forms.TabPage error_tab;
         public System.Windows.Forms.RichTextBox ErrorLog;
+        private System.Windows.Forms.Button ExportLog_Button;
     }
 }

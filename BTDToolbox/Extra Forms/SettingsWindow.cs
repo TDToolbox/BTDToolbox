@@ -17,7 +17,6 @@ namespace BTDToolbox
     public partial class SettingsWindow : ThemedForm
     {
         ConfigFile projectData;
-        bool saveNKH = false;
         public SettingsWindow()
         {
             InitializeComponent();
@@ -55,7 +54,7 @@ namespace BTDToolbox
             Serializer.SaveSmallSettings("external editor");
 
             ProjectHandler.SaveProject();
-            ConsoleHandler.appendLog_CanRepeat("Settings saved!!!");
+            ConsoleHandler.append_CanRepeat("Settings saved!!!");
             this.Close();
         }
 
@@ -67,7 +66,7 @@ namespace BTDToolbox
                 {
                     UseNKH_CB.Checked = false;
 
-                    ConsoleHandler.force_appendNotice("You need to have NKHook installed to do that!");
+                    ConsoleHandler.force_append_Notice("You need to have NKHook installed to do that!");
                     MessageBox.Show("You need to have NKHook installed to do that!");
                     NKHook_Message msg = new NKHook_Message();
                     msg.Show();

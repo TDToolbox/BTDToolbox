@@ -60,7 +60,7 @@ namespace BTDToolbox.Classes
             }
             else
             {
-                ConsoleHandler.force_appendNotice("One or more files was not found...");
+                ConsoleHandler.force_append_Notice("One or more files was not found...");
             }
         }
         public static void OpenOriginalFile(string path)
@@ -75,13 +75,13 @@ namespace BTDToolbox.Classes
             {
                 backupProj = path;
                 if(jeditor.tabControl1.SelectedTab.Text == filename + New_JsonEditor.readOnlyName)
-                    ConsoleHandler.appendNotice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
+                    ConsoleHandler.append_Notice("You are already looking at the original " + filename.Replace(New_JsonEditor.readOnlyName, ""));
             }
 
             if (File.Exists(backupProj))
                 OpenFile(backupProj);
             else
-                ConsoleHandler.appendLog_CanRepeat("Could not find file in backup project... Unable to view original file");
+                ConsoleHandler.append_CanRepeat("Could not find file in backup project... Unable to view original file");
         }
         public static void CloseFile(string path)
         {

@@ -83,11 +83,11 @@ namespace BTDToolbox.Extra_Forms
                 if (tryFindGameDir == "")
                 {
                     failed = true;
-                    ConsoleHandler.appendLog("Failed to automatically aquire game dir");
+                    ConsoleHandler.append("Failed to automatically aquire game dir");
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Game directory was automatically aquired...");
+                    ConsoleHandler.append("Game directory was automatically aquired...");
                     if (gameName == "BTD5")
                         Main.BTD5_Dir = tryFindGameDir;
                     else if (gameName == "BTDB")
@@ -111,11 +111,11 @@ namespace BTDToolbox.Extra_Forms
                         return false;
                     else if (diag == DialogResult.Yes)
                     {
-                        ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
+                        ConsoleHandler.append("Please browse for " + Get_EXE_Name(gameName));
                         browseForExe(gameName);
                         if (isGamePathValid(gameName) == false)
                         {
-                            ConsoleHandler.appendLog("Theres been an error identifying your game");
+                            ConsoleHandler.append("Theres been an error identifying your game");
                             return false;
                         }
                     }
@@ -127,7 +127,7 @@ namespace BTDToolbox.Extra_Forms
 
             if (!Validate_Backup(gameName))
             {
-                ConsoleHandler.force_appendNotice("Failed to create a new project because the backup failed to be aquired...");
+                ConsoleHandler.force_append_Notice("Failed to create a new project because the backup failed to be aquired...");
                 return false;
             }
             return true;

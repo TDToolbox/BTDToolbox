@@ -146,18 +146,18 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendLog("ERROR!!! Failed to find file to extract");
+                ConsoleHandler.append("ERROR!!! Failed to find file to extract");
                 if(isGamePathValid(gameName))
                 {
-                    ConsoleHandler.appendLog("Generating new backup...");
+                    ConsoleHandler.append("Generating new backup...");
                     CreateBackup(gameName);
-                    ConsoleHandler.appendLog("Creating project from backup...");
+                    ConsoleHandler.append("Creating project from backup...");
                     backgroundThread = new Thread(Extract_OnThread);
                     backgroundThread.Start();
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("ERROR!!! Failed to validate game path. Please browse for " + Get_EXE_Name(gameName));
+                    ConsoleHandler.append("ERROR!!! Failed to validate game path. Please browse for " + Get_EXE_Name(gameName));
                     browseForExe(gameName);
                     if(isGamePathValid(gameName))
                     {
@@ -167,7 +167,7 @@ namespace BTDToolbox
                     }
                     else
                     {
-                        ConsoleHandler.appendLog("There was an issue... Please try again...");
+                        ConsoleHandler.append("There was an issue... Please try again...");
                         this.Close();
                     }
                 }
@@ -180,7 +180,7 @@ namespace BTDToolbox
             DirectoryInfo dinfo = new DirectoryInfo(destPath);
             if (!dinfo.Exists)
             {
-                ConsoleHandler.appendLog("Creating project files for: " + projName);
+                ConsoleHandler.append("Creating project files for: " + projName);
 
                 ZipFile archive = new ZipFile(sourcePath);
                 archive.Password = password;
@@ -230,7 +230,7 @@ namespace BTDToolbox
                         //they should have a backup jet of gamed not invalid. create backup proj
                         if (error == false && gamed != "" && gamed != null)
                         {
-                            ConsoleHandler.force_appendNotice("Backup project not detected.... Creating one now..");
+                            ConsoleHandler.force_append_Notice("Backup project not detected.... Creating one now..");
                             Invoke((MethodInvoker)delegate {
                                 this.Focus();
 
@@ -273,10 +273,10 @@ namespace BTDToolbox
                         }
                         else
                         {
-                            ConsoleHandler.force_appendNotice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
+                            ConsoleHandler.force_append_Notice("Unable to find backup project or the game directory. Backup project WILL NOT be made, and you will NOT be able to use \"Restore to original\" until you browse for your game..");
                         }
                     }
-                    ConsoleHandler.appendLog("Project files created at: " + CurrentProjectVariables.PathToProjectFiles);
+                    ConsoleHandler.append("Project files created at: " + CurrentProjectVariables.PathToProjectFiles);
                     Invoke((MethodInvoker)delegate {
                         jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
                         jf.MdiParent = Main.getInstance();
@@ -300,10 +300,10 @@ namespace BTDToolbox
                 if (varr == DialogResult.OK)
                 {
                     MessageBox.Show("Please close the Jet viewer for the old project...");
-                    ConsoleHandler.appendLog("Deleting existing project....");
+                    ConsoleHandler.append("Deleting existing project....");
                     MessageBox.Show(dinfo.ToString());
                     DeleteDirectory(dinfo.ToString());
-                    ConsoleHandler.appendLog("Project Deleted. Creating new project...");
+                    ConsoleHandler.append("Project Deleted. Creating new project...");
                     Extract_OnThread();
                     return;
                 }
@@ -369,7 +369,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendNotice("Game is currently running. Please close the game and try again...");
+                ConsoleHandler.force_append_Notice("Game is currently running. Please close the game and try again...");
                 this.Close();
             }
         }
@@ -382,7 +382,7 @@ namespace BTDToolbox
                 {
                     cont = false;
                     this.Invoke(new Action(() => this.Close()));
-                    ConsoleHandler.appendLog("There was an issue reading your game directory. Go to the \"Help\" tab at the top, browse for your game again, and then try again...");
+                    ConsoleHandler.append("There was an issue reading your game directory. Go to the \"Help\" tab at the top, browse for your game again, and then try again...");
                     backgroundThread.Abort();
                 }
             }
@@ -403,7 +403,7 @@ namespace BTDToolbox
                     DirectoryInfo projDir = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles);
                     if (Directory.Exists(projDir.ToString()))
                     {
-                        ConsoleHandler.appendLog("Compiling jet...");
+                        ConsoleHandler.append("Compiling jet...");
                         int numFiles = Directory.GetFiles((projDir.ToString()), "*", SearchOption.AllDirectories).Length;
                         int numFolders = Directory.GetDirectories(projDir.ToString(), "*", SearchOption.AllDirectories).Count();
                         totalFiles = numFiles + numFolders;
@@ -424,7 +424,7 @@ namespace BTDToolbox
                         }
                         catch(System.IO.IOException)
                         {
-                            ConsoleHandler.force_appendNotice("Something went wrong... Is your jet file opened?");
+                            ConsoleHandler.force_append_Notice("Something went wrong... Is your jet file opened?");
                             this.Invoke(new Action(() => this.Close()));
                         }
 
@@ -443,7 +443,7 @@ namespace BTDToolbox
                             }
                         }*/
 
-                        ConsoleHandler.appendLog("Jet was successfully exported to: " + dir);
+                        ConsoleHandler.append("Jet was successfully exported to: " + dir);
 
                         if (launch == true)
                         {
@@ -465,12 +465,12 @@ namespace BTDToolbox
                     }
                     else
                     {
-                        ConsoleHandler.appendLog("Output directory not found... Failed to compile...");
+                        ConsoleHandler.append("Output directory not found... Failed to compile...");
                     }
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Something went wrong with the export. The export path might have been invalid, or it might have been cancelled...");
+                    ConsoleHandler.append("Something went wrong with the export. The export path might have been invalid, or it might have been cancelled...");
                     try
                     {
                         this.Invoke(new Action(() => this.Close()));
@@ -536,7 +536,7 @@ namespace BTDToolbox
             if (this == null)
                 return;
 
-            ConsoleHandler.appendLog("An error occured that may prevent the program from running properly.\r\nThe error is below: \r\n\r\n" + exception + "\r\n");
+            ConsoleHandler.append("An error occured that may prevent the program from running properly.\r\nThe error is below: \r\n\r\n" + exception + "\r\n");
 
             if(exception == "The password did not match.")
             {
@@ -566,7 +566,7 @@ namespace BTDToolbox
             string backupAssetBundle = Environment.CurrentDirectory + "\\Backups\\AssetBundles_Original";
             if (!Directory.Exists(backupAssetBundle))
             {
-                ConsoleHandler.appendLog("Unable to find the Backup for BMC Asset Bundles. Reaquiring...");
+                ConsoleHandler.append("Unable to find the Backup for BMC Asset Bundles. Reaquiring...");
                 GeneralMethods.CreateBackup("BMC");
             }
             var jets = new DirectoryInfo(backupAssetBundle).GetFiles();

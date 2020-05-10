@@ -17,7 +17,7 @@ namespace BTDToolbox.Classes
             string answer = web.WaitOn_URL(url);
 
             
-            ConsoleHandler.appendLog(answer);
+            ConsoleHandler.append(answer);
         }
     }
 }

@@ -82,7 +82,7 @@
     <Compile Include="Classes\NKHook_Handling.cs" />
     <Compile Include="Classes\QuickType.cs" />
     <Compile Include="Classes\SessionSettings\CurrentSessionSettings.cs" />
-    <Compile Include="Classes\SpecialtyBuilding_Class.cs" />
+    <Compile Include="Classes\JSON Classes\SpecialtyBuilding_Class.cs" />
     <Compile Include="Classes\Spritesheets\SpriteSheet_Handler.cs" />
     <Compile Include="Classes\Sprite_Class.cs" />
     <Compile Include="Classes\SubTask_Reader.cs" />

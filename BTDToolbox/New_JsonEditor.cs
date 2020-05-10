@@ -101,7 +101,7 @@ namespace BTDToolbox
         {
             if(!Guard.IsStringValid(path))
             {
-                ConsoleHandler.appendLog_CanRepeat("Something went wrong when trying to read the files path...");
+                ConsoleHandler.append_CanRepeat("Something went wrong when trying to read the files path...");
                 return;
             }
 
@@ -154,7 +154,7 @@ namespace BTDToolbox
             tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
 
             OpenTab(path);
-            ConsoleHandler.appendLog_CanRepeat("Opened " + filename);
+            ConsoleHandler.append_CanRepeat("Opened " + filename);
             userControls[userControls.Count - 1].FinishedLoading();
         }
         private void AddText(string path, bool isFromZip)
@@ -186,7 +186,7 @@ namespace BTDToolbox
             }
             catch (Exception)
             {
-                ConsoleHandler.appendLog_CanRepeat("File contains invalid json. Unable to format..");
+                ConsoleHandler.append_CanRepeat("File contains invalid json. Unable to format..");
                 userControls[userControls.Count - 1].Editor_TextBox.Text = unformattedText;
             }
         }
@@ -293,7 +293,7 @@ namespace BTDToolbox
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     //exception occurred. file probably modded
                     if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
@@ -307,9 +307,9 @@ namespace BTDToolbox
             else
             {
                 if (!File.Exists(pathToFile))
-                    ConsoleHandler.force_appendLog("Can't check if file is modified because the file itself was not found. Was it deleted?");
+                    ConsoleHandler.append_Force("Can't check if file is modified because the file itself was not found. Was it deleted?");
                 else
-                    ConsoleHandler.force_appendLog("Can't check if file is modified because the backup was not found");
+                    ConsoleHandler.append_Force("Can't check if file is modified because the backup was not found");
             }
                 
         }

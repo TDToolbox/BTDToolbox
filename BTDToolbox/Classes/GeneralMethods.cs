@@ -28,36 +28,36 @@ namespace BTDToolbox
         {
             if (File.Exists(fileName))
             {
-                ConsoleHandler.appendLog("Deleting file...");
+                ConsoleHandler.append("Deleting file...");
                 File.Delete(fileName);
-                ConsoleHandler.appendLog("File deleted.");
+                ConsoleHandler.append("File deleted.");
             }
             else
             {
-                ConsoleHandler.appendLog("Error! Unable to delete the file:\r\n" + fileName);
+                ConsoleHandler.append("Error! Unable to delete the file:\r\n" + fileName);
             }
         }
         public static void DeleteDirectory(string path)
         {
             if(path == Environment.CurrentDirectory)
             {
-                ConsoleHandler.force_appendNotice("A Critical error occured... Attempted to delete BTD Toolbox folder...");
+                ConsoleHandler.force_append_Notice("A Critical error occured... Attempted to delete BTD Toolbox folder...");
                 return;
             }
             if (Directory.Exists(path))
             {
-                ConsoleHandler.appendLog("Deleting directory..");
+                ConsoleHandler.append("Deleting directory..");
                 var directory = new DirectoryInfo(path) { Attributes = FileAttributes.Normal };
                 foreach (var info in directory.GetFileSystemInfos("*", SearchOption.AllDirectories))
                 {
                     info.Attributes = FileAttributes.Normal;
                 }
                 directory.Delete(true);
-                ConsoleHandler.appendLog("Directory deleted.");
+                ConsoleHandler.append("Directory deleted.");
             }
             else
             {
-                ConsoleHandler.appendLog("Directory not found. Unable to delete directory at:\r\n" + path);
+                ConsoleHandler.append("Directory not found. Unable to delete directory at:\r\n" + path);
             }
         }
         public static void CopyFile(string originalLocation, string newLocation)
@@ -69,22 +69,22 @@ namespace BTDToolbox
             {
                 if (!File.Exists(newLocation))
                 {
-                    ConsoleHandler.appendLog("Copying "+ filename + "...");
+                    ConsoleHandler.append("Copying "+ filename + "...");
                     File.Copy(originalLocation, newLocation);
-                    ConsoleHandler.appendLog("Copied " + filename + "!");
+                    ConsoleHandler.append("Copied " + filename + "!");
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("A file with that name already exists...");
+                    ConsoleHandler.append("A file with that name already exists...");
                     DeleteFile(newLocation);
-                    ConsoleHandler.appendLog("Replacing existing file..");
+                    ConsoleHandler.append("Replacing existing file..");
                     File.Copy(originalLocation, newLocation);
-                    ConsoleHandler.appendLog("Copied " + filename + "!");
+                    ConsoleHandler.append("Copied " + filename + "!");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Failed to copy " + filename + " because it was not found at: \r\n" + originalLocation);
+                ConsoleHandler.append("Failed to copy " + filename + " because it was not found at: \r\n" + originalLocation);
             }
         }
         public static void CopyDirectory(string source, string destination)
@@ -92,17 +92,17 @@ namespace BTDToolbox
             string[] split = source.Split('\\');
             string dirname = split[split.Length - 1];
 
-            ConsoleHandler.appendLog("Copying " + dirname + "...");
+            ConsoleHandler.append("Copying " + dirname + "...");
             foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
                 Directory.CreateDirectory(dirPath.Replace(source, destination));
 
             foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
                 File.Copy(newPath, newPath.Replace(source, destination), true);
-            ConsoleHandler.appendLog("Copied " + dirname + "!");
+            ConsoleHandler.append("Copied " + dirname + "!");
         }
         public static ConfigFile DeserializeConfig()
         {
-            //ConsoleHandler.appendLog("Reading config file..");
+            //ConsoleHandler.append("Reading config file..");
             programData = Serializer.Deserialize_Config();
             return programData;
         }
@@ -177,7 +177,7 @@ namespace BTDToolbox
 
             if (game == null || game == "")
             {
-                ConsoleHandler.appendLog("Unable to get game name..");
+                ConsoleHandler.append("Unable to get game name..");
                 return null;
             }
             return game;
@@ -212,7 +212,7 @@ namespace BTDToolbox
 
             if (gameDir == null || gameDir == "")
             {
-                ConsoleHandler.appendLog("Unable to detect launch directory for " + game);
+                ConsoleHandler.append("Unable to detect launch directory for " + game);
                 return false;
             }
             else
@@ -234,13 +234,13 @@ namespace BTDToolbox
                 exeName = Get_EXE_Name(game);
                 
                 exePath = gameDir + "\\" + exeName;
-                ConsoleHandler.appendLog("Launching " + game + "...");
+                ConsoleHandler.append("Launching " + game + "...");
                 Process.Start(exePath);
-                ConsoleHandler.appendLog("Steam is taking over for the rest of the launch.");
+                ConsoleHandler.append("Steam is taking over for the rest of the launch.");
             }
             else
             {
-                ConsoleHandler.appendLog("Unable to launch game... Game directory not detected...");
+                ConsoleHandler.append("Unable to launch game... Game directory not detected...");
             }
 
         }
@@ -252,17 +252,17 @@ namespace BTDToolbox
                 string backupDir = Environment.CurrentDirectory + "\\Backups";
                 string backupLocName = gameName + "_Original_LOC.xml";
 
-                ConsoleHandler.appendLog("Validating backup...");
+                ConsoleHandler.append("Validating backup...");
                 if (Directory.Exists(backupDir))
                 {
                     if (!File.Exists(backupDir + "\\" + backupName))
                     {
-                        ConsoleHandler.appendLog("Failed to validate backup...");
+                        ConsoleHandler.append("Failed to validate backup...");
                         return false;
                     }
                     if (!File.Exists(backupDir + "\\" + backupLocName))
                     {
-                        ConsoleHandler.appendLog("Failed to validate backup loc...");
+                        ConsoleHandler.append("Failed to validate backup loc...");
                         return false;
                     }
                     if(gameName == "BMC")
@@ -270,23 +270,23 @@ namespace BTDToolbox
                         string backupAssetBundle = backupDir + "\\AssetBundles_Original";
                         if (!Directory.Exists(backupAssetBundle))
                         {
-                            ConsoleHandler.appendLog("Failed to validate backup Asset Bundle for BMC...");
+                            ConsoleHandler.append("Failed to validate backup Asset Bundle for BMC...");
                             return false;
                         }
                     }
                     
-                    ConsoleHandler.appendLog("Backup validated");
+                    ConsoleHandler.append("Backup validated");
                     return true;
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Failed to validate one or more backup files...");
+                    ConsoleHandler.append("Failed to validate one or more backup files...");
                     return false;
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Failed to validate one or more backup files...");
+                ConsoleHandler.append("Failed to validate one or more backup files...");
                 return false;
             }
         }
@@ -305,8 +305,8 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendLog("Unable to locate the original" + jetName + ". Are you sure it exists?");
-                ConsoleHandler.appendLog("If this problem continues, double check that your " + jetName + " is spelled just like this:  " + jetName);
+                ConsoleHandler.append("Unable to locate the original" + jetName + ". Are you sure it exists?");
+                ConsoleHandler.append("If this problem continues, double check that your " + jetName + " is spelled just like this:  " + jetName);
                 return null;
             }
         }
@@ -318,10 +318,10 @@ namespace BTDToolbox
             string fullBackupPath = backupDir + "\\" + backupName;
 
             MessageBox.Show("One or more of the backup files failed to be aquired... Please wait while they are reaquired...");
-            ConsoleHandler.appendLog("Aquiring new backups..");
+            ConsoleHandler.append("Aquiring new backups..");
             if (!Directory.Exists(backupDir))
             {
-                ConsoleHandler.appendLog("Backup directory does not exist. Creating directory...");
+                ConsoleHandler.append("Backup directory does not exist. Creating directory...");
                 Directory.CreateDirectory(backupDir);
             }
 
@@ -334,9 +334,9 @@ namespace BTDToolbox
                 CopyFile(steamJetPath, fullBackupPath);    
                 
                 if (File.Exists(fullBackupPath))
-                    ConsoleHandler.appendLog("Backup jet created!");
+                    ConsoleHandler.append("Backup jet created!");
                 else
-                    ConsoleHandler.appendLog("Backup jet failed...");
+                    ConsoleHandler.append("Backup jet failed...");
 
                 if (game == "BMC")
                 {
@@ -351,7 +351,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendLog("Unable to create backup for " + game + ".");
+                ConsoleHandler.append("Unable to create backup for " + game + ".");
             }
         }
         public static void SteamValidate(string game)
@@ -373,7 +373,7 @@ namespace BTDToolbox
 
             if (!Directory.Exists(backupDir))
             {
-                ConsoleHandler.appendLog("Backup directory does not exist. Creating directory...");
+                ConsoleHandler.append("Backup directory does not exist. Creating directory...");
                 Directory.CreateDirectory(backupDir);
             }
 
@@ -383,7 +383,7 @@ namespace BTDToolbox
             if (steamJetPath != null)
                 CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
             else
-                ConsoleHandler.appendLog("Unable to create backup for " + game + ".");
+                ConsoleHandler.append("Unable to create backup for " + game + ".");
         }
         public static void RestoreGame_ToBackup(string game)
         {
@@ -399,21 +399,21 @@ namespace BTDToolbox
 
                 if (!File.Exists(backupJetLoc))
                 {
-                    ConsoleHandler.appendLog("Unable to restore " + jetName + ". Backup file doesn't exist..");
+                    ConsoleHandler.append("Unable to restore " + jetName + ". Backup file doesn't exist..");
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Replacing " + jetName + " with the backup " + jetName);
+                    ConsoleHandler.append("Replacing " + jetName + " with the backup " + jetName);
                     if (File.Exists(steamJetPath))
                         File.Delete(steamJetPath);
 
                     File.Copy(Environment.CurrentDirectory + "\\Backups\\" + game + "_Original.jet", steamJetPath);
-                    ConsoleHandler.appendLog(jetName + " successfully restored!");
+                    ConsoleHandler.append(jetName + " successfully restored!");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Unable to restore " + jetName + ". Game directory not detected..");
+                ConsoleHandler.append("Unable to restore " + jetName + ". Game directory not detected..");
             }
         }
         public static void RestoreGame_ToBackup_LOC(string game)
@@ -429,21 +429,21 @@ namespace BTDToolbox
 
                 if (!File.Exists(backupJetLoc))
                 {
-                    ConsoleHandler.appendLog("Unable to restore " + locName + ". Backup file doesn't exist..");
+                    ConsoleHandler.append("Unable to restore " + locName + ". Backup file doesn't exist..");
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Replacing " + locName + " with the backup " + locName);
+                    ConsoleHandler.append("Replacing " + locName + " with the backup " + locName);
                     if (File.Exists(locPath))
                         File.Delete(locPath);
 
                     File.Copy(backupJetLoc, locPath);
-                    ConsoleHandler.appendLog(locName + " successfully restored!");
+                    ConsoleHandler.append(locName + " successfully restored!");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Unable to restore " + locName + ". Game directory not detected..");
+                ConsoleHandler.append("Unable to restore " + locName + ". Game directory not detected..");
             }
         }
         public static bool IsJSON_Valid(string text)
@@ -515,7 +515,7 @@ namespace BTDToolbox
         {
             if (isGamePathValid(game) == false)
             {
-                ConsoleHandler.appendLog("Error identifying Game Directory or Backups. Please browse for your EXE again...\r\n");
+                ConsoleHandler.append("Error identifying Game Directory or Backups. Please browse for your EXE again...\r\n");
                 browseForExe(game);
                 if (isGamePathValid(game) == false)
                 {
@@ -541,17 +541,17 @@ namespace BTDToolbox
 
 
             MessageBox.Show("Please browse for " + exeName + ".\n\nMake sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup");
-            ConsoleHandler.appendLog("Make sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup..");
+            ConsoleHandler.append("Make sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup..");
             string exePath = BrowseForFile("Open game exe", "exe", "Exe files (*.exe)|*.exe|All files (*.*)|*.*", "");
             if (!Guard.IsStringValid(exePath))
             {
-                ConsoleHandler.force_appendLog("Invalid EXE path!");
+                ConsoleHandler.append_Force("Invalid EXE path!");
                 return;
             }
 
             if (!exePath.Contains(exeName))
             {
-                ConsoleHandler.appendLog("You selected an Invalid .exe. Please browse for the exe for your game.");
+                ConsoleHandler.append("You selected an Invalid .exe. Please browse for the exe for your game.");
                 return;
             }
 
@@ -605,7 +605,7 @@ namespace BTDToolbox
                         }
                         if (exPath == "" || exPath == null)
                         {
-                            ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                            ConsoleHandler.append("Select where you want to export your jet file. Make sure to give it a name..");
                             dest = OutputJet();
 
                             CurrentProjectVariables.ExportPath = dest;
@@ -630,7 +630,7 @@ namespace BTDToolbox
                         }
                         else
                         {
-                            ConsoleHandler.force_appendNotice("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?");
+                            ConsoleHandler.force_append_Notice("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?");
                             DialogResult diag = MessageBox.Show("Unable to find your game directory, and therefore, unable to launch. Do you want to try browsing for your game?", "Browse for game?", MessageBoxButtons.YesNoCancel);
                             if (diag == DialogResult.Yes)
                             {
@@ -654,7 +654,7 @@ namespace BTDToolbox
                                         }
                                         if (exPath == "" || exPath == null)
                                         {
-                                            ConsoleHandler.appendLog("Select where you want to export your jet file. Make sure to give it a name..");
+                                            ConsoleHandler.append("Select where you want to export your jet file. Make sure to give it a name..");
                                             dest = OutputJet();
                                             CurrentProjectVariables.ExportPath = dest;
                                             ProjectHandler.SaveProject();
@@ -682,7 +682,7 @@ namespace BTDToolbox
                             }
                             else
                             {
-                                ConsoleHandler.appendLog("Export cancelled...");
+                                ConsoleHandler.append("Export cancelled...");
                             }
                         }
                         else
@@ -697,12 +697,12 @@ namespace BTDToolbox
                     if (JetProps.get().Count < 1)
                     {
                         MessageBox.Show("You have no .jets or projects open, you need one to launch.");
-                        ConsoleHandler.appendLog("You need to open a project to continue...");
+                        ConsoleHandler.append("You need to open a project to continue...");
                     }
                     else
                     {
                         MessageBox.Show("You have multiple .jets or projects open, only one can be launched.");
-                        ConsoleHandler.appendLog("You need to close projects to continue...");
+                        ConsoleHandler.append("You need to close projects to continue...");
                     }
                 }
             }

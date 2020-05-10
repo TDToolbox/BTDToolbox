@@ -27,7 +27,7 @@ namespace BTDToolbox.Extra_Forms
                 this.Close();
             if (!NKHook.DoesNkhExist())
             {
-                ConsoleHandler.force_appendNotice("You need to have NKHook downloaded to use this feature.");
+                ConsoleHandler.force_append_Notice("You need to have NKHook downloaded to use this feature.");
                 MessageBox.Show("You need to have NKHook downloaded to use this feature.");
                 NKHook_Message msg = new NKHook_Message();
                 msg.Show();
@@ -87,7 +87,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if(UnloadedPlugin_LB.SelectedItems.Count <= 0)
             {
-                ConsoleHandler.force_appendLog("You need to select at least one plugin in the \"Unloaded Plugins\" section.");
+                ConsoleHandler.append_Force("You need to select at least one plugin in the \"Unloaded Plugins\" section.");
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (LoadedPlugin_LB.SelectedItems.Count <= 0)
             {
-                ConsoleHandler.force_appendLog("You need to select at least one plugin in the \"Loaded Plugins\" section.");
+                ConsoleHandler.append_Force("You need to select at least one plugin in the \"Loaded Plugins\" section.");
                 return;
             }
             
@@ -164,7 +164,7 @@ namespace BTDToolbox.Extra_Forms
                 Directory.CreateDirectory(nkhEXE.FullName.Replace(nkhEXE.Name, "") + "UnloadedPlugins\\");
 
             var files = GeneralMethods.BrowseForFiles("Browse for plugins", "dll", "Dll files (*.dll)|*.dll", Environment.CurrentDirectory);
-            if (files.Count() <= 0)
+            if (files== null)
                 return;
 
             foreach(string file in files)
@@ -178,7 +178,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if (!File.Exists(source))
             {
-                ConsoleHandler.force_appendLog("Unable to copy plugin. Source plugin does not exist");
+                ConsoleHandler.append_Force("Unable to copy plugin. Source plugin does not exist");
                 return "";
             }
 

@@ -39,10 +39,10 @@ namespace BTDToolbox
                         LaunchUpdate();
                     }
                     else
-                    { ConsoleHandler.appendLog("Update cancelled..."); }
+                    { ConsoleHandler.append("Update cancelled..."); }
                 }
                 else
-                { ConsoleHandler.appendLog("Toolbox is up to date!"); }
+                { ConsoleHandler.append("Toolbox is up to date!"); }
             }
             else
             {
@@ -61,7 +61,7 @@ namespace BTDToolbox
             }
             catch
             {
-                ConsoleHandler.appendNotice("Something went wrong when checking for updates.. Failed to check for updates");
+                ConsoleHandler.append_Notice("Something went wrong when checking for updates.. Failed to check for updates");
                 return false;
             }
             
@@ -72,30 +72,30 @@ namespace BTDToolbox
             string git_Text = reader.WaitOn_URL(gitURL);
             string updaterURL = reader.processGit_Text(git_Text, "toolbox2019_updater: ", 1);
 
-            ConsoleHandler.appendLog("Downloading BTD Toolbox updater...");
+            ConsoleHandler.append("Downloading BTD Toolbox updater...");
             client.DownloadFile(updaterURL, "Update");
 
             if (File.Exists(toolbox_updater_zipName))
                 File.Delete(toolbox_updater_zipName);
             File.Move("Update", toolbox_updater_zipName);
-            ConsoleHandler.appendLog("Updater successfully downloaded!");
+            ConsoleHandler.append("Updater successfully downloaded!");
         }
         private void ExtractUpdate()
         {
             string zipPath = Environment.CurrentDirectory + "\\" + toolbox_updater_zipName;
             string extractedFilePath = Environment.CurrentDirectory;
-            ConsoleHandler.appendLog("Extracting updater...");
+            ConsoleHandler.append("Extracting updater...");
             ZipFile archive = new ZipFile(zipPath);
             foreach (ZipEntry e in archive)
             {
                 e.Extract(extractedFilePath, ExtractExistingFileAction.DoNotOverwrite);
             }
             archive.Dispose();
-            ConsoleHandler.appendLog("BTD Toolbox updater has been successfully downloaded and extracted...");
+            ConsoleHandler.append("BTD Toolbox updater has been successfully downloaded and extracted...");
         }
         private bool AskToUpdate()
         {
-            ConsoleHandler.appendLog("There is a new update availible for BTD Toolbox! Do you want to download it?");
+            ConsoleHandler.append("There is a new update availible for BTD Toolbox! Do you want to download it?");
             DialogResult result = MessageBox.Show("There is a new update availible for BTD Toolbox! Do you want to download it?", "Update BTD Toolbox?", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -106,7 +106,7 @@ namespace BTDToolbox
         }
         private void LaunchUpdate()
         {
-            ConsoleHandler.appendLog("Toolbox needs to close in order to update..");
+            ConsoleHandler.append("Toolbox needs to close in order to update..");
             MessageBox.Show("Closing Toolbox to continue update...");
 
             //save config real quick

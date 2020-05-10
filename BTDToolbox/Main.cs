@@ -27,9 +27,8 @@ namespace BTDToolbox
 
 
         //Project Variables
-        
-        Thread backupThread;
         public static bool exit = false;
+
 
         //Config variables
         ConfigFile cfgFile;
@@ -44,7 +43,6 @@ namespace BTDToolbox
         public static bool autoFormatJSON = true;
         public static bool enableConsole;
         
-
         bool projNoGame = false;
 
         // Win32 Constants
@@ -144,9 +142,9 @@ namespace BTDToolbox
             else
                 ConsoleHandler.console.Hide();
 
-            ConsoleHandler.appendLog("Program loaded!");
+            ConsoleHandler.append("Program loaded!");
             if (programData.recentUpdate == true)
-                ConsoleHandler.appendLog("BTD Toolbox has successfully updated.");
+                ConsoleHandler.append("BTD Toolbox has successfully updated.");
 
             if(!disableUpdates)
             {
@@ -226,11 +224,11 @@ namespace BTDToolbox
         }
         private void Main_Shown(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Searching for existing projects...");
+            ConsoleHandler.append("Searching for existing projects...");
             OpenJetForm();
 
             if (JetProps.getForm(0) == null)
-                ConsoleHandler.appendLog("No projects detected.");
+                ConsoleHandler.append("No projects detected.");
             //taken from here
             if (existingUser == false)
             {
@@ -291,7 +289,7 @@ namespace BTDToolbox
                 string name = split[split.Length - 1];
                 if (!name.StartsWith("proj_"))
                 {
-                    ConsoleHandler.appendLog("Invalid project... Please browse for a folder that starts with    proj_");
+                    ConsoleHandler.append("Invalid project... Please browse for a folder that starts with    proj_");
                     MessageBox.Show("Error!! Not a valid project file. Please try again...");
                 }
                 else
@@ -367,7 +365,7 @@ namespace BTDToolbox
             }
             catch (Exception ex)
             {
-                ConsoleHandler.appendLog(ex.StackTrace);
+                ConsoleHandler.append(ex.StackTrace);
             }
         }
         private void LaunchProgram_Click(object sender, EventArgs e)
@@ -446,11 +444,11 @@ namespace BTDToolbox
                     if (tryFindGameDir == "")
                     {
                         failed = true;
-                        ConsoleHandler.appendLog("Failed to automatically aquire game dir");
+                        ConsoleHandler.append("Failed to automatically aquire game dir");
                     }
                     else
                     {
-                        ConsoleHandler.appendLog("Game directory was automatically aquired...");
+                        ConsoleHandler.append("Game directory was automatically aquired...");
                         if (gameName == "BTD5")
                             BTD5_Dir = tryFindGameDir;
                         else if (gameName == "BTDB")
@@ -475,17 +473,17 @@ namespace BTDToolbox
                         else
                         {
                             failed = true;
-                            ConsoleHandler.force_appendNotice("Failed to create a new project because the backup failed to be aquired...");
+                            ConsoleHandler.force_append_Notice("Failed to create a new project because the backup failed to be aquired...");
                         }
                     }
 
                     if(failed)
                     {
-                        ConsoleHandler.appendLog("Please browse for " + Get_EXE_Name(gameName));
+                        ConsoleHandler.append("Please browse for " + Get_EXE_Name(gameName));
                         browseForExe(gameName);
                         if (isGamePathValid(gameName) == false)
                         {
-                            ConsoleHandler.appendLog("Theres been an error identifying your game");
+                            ConsoleHandler.append("Theres been an error identifying your game");
                         }
                         else
                         {
@@ -497,7 +495,7 @@ namespace BTDToolbox
                                 var setProjName = new SetProjectName();
                                 setProjName.Show();
                             }
-                            ConsoleHandler.force_appendNotice("Failed to create a new project because the backup failed to be aquired...");
+                            ConsoleHandler.force_append_Notice("Failed to create a new project because the backup failed to be aquired...");
                         }
                     }
                     
@@ -562,50 +560,50 @@ namespace BTDToolbox
         private void ResetBTD5exeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string g = "BTD5";
-            ConsoleHandler.appendLog("Please browse for BTD5-Win.exe");
+            ConsoleHandler.append("Please browse for BTD5-Win.exe");
             browseForExe(g);
             if (isGamePathValid(g) == true)
             {
-                ConsoleHandler.appendLog("Success! Selected exe at: " + DeserializeConfig().BTD5_Directory);
+                ConsoleHandler.append("Success! Selected exe at: " + DeserializeConfig().BTD5_Directory);
             }
             else
-                ConsoleHandler.appendLog("Invalid game directory selected.");
+                ConsoleHandler.append("Invalid game directory selected.");
         }
         private void ResetBTDBattlesexeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string g = "BTDB";
-            ConsoleHandler.appendLog("Please browse for Battles-win.exe");
+            ConsoleHandler.append("Please browse for Battles-win.exe");
             browseForExe(g);
             if (isGamePathValid(g) == true)
             {
-                ConsoleHandler.appendLog("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
+                ConsoleHandler.append("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
             }
             else
-                ConsoleHandler.appendLog("Invalid game directory selected.");
+                ConsoleHandler.append("Invalid game directory selected.");
         }
         private void resetBMCexeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string g = "BMC";
-            ConsoleHandler.appendLog("Please browse for MonkeyCity-Win.exe");
+            ConsoleHandler.append("Please browse for MonkeyCity-Win.exe");
             browseForExe(g);
             if (isGamePathValid(g) == true)
             {
-                ConsoleHandler.appendLog("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
+                ConsoleHandler.append("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
             }
             else
-                ConsoleHandler.appendLog("Invalid game directory selected.");
+                ConsoleHandler.append("Invalid game directory selected.");
         }
 
         private void ResetUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Resetting user settings...");
+            ConsoleHandler.append("Resetting user settings...");
             string settingsPath = livePath + "\\settings.json";
             if (File.Exists(settingsPath))
             {
                 File.Delete(settingsPath);
             }
             DeserializeConfig();
-            ConsoleHandler.appendLog("User settings have been reset.");
+            ConsoleHandler.append("User settings have been reset.");
         }
         private void Backup_BTD5_Click_1(object sender, EventArgs e)
         {
@@ -641,7 +639,7 @@ namespace BTDToolbox
 
         private void OpenBTDToolboxGithubToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening BTD Toolbox Github page...");
+            ConsoleHandler.append("Opening BTD Toolbox Github page...");
             Process.Start("https://github.com/TDToolbox/BTDToolbox-2019");
         }
 
@@ -687,7 +685,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.appendLog_CanRepeat("User cancelled password tool...");
+                ConsoleHandler.append_CanRepeat("User cancelled password tool...");
             }
         }
 
@@ -697,21 +695,21 @@ namespace BTDToolbox
         {
             if (isGamePathValid("BMC"))
             {
-                ConsoleHandler.appendLog("Opening Monkey City Directory");
+                ConsoleHandler.append("Opening Monkey City Directory");
                 Process.Start(DeserializeConfig().BMC_Directory);
             }
             else
             {
-                ConsoleHandler.appendLog("Could not find your BMC directory");
+                ConsoleHandler.append("Could not find your BMC directory");
                 browseForExe("BMC");
                 if (isGamePathValid("BMC"))
                 {
-                    ConsoleHandler.appendLog("Opening BMC Directory");
+                    ConsoleHandler.append("Opening BMC Directory");
                     Process.Start(DeserializeConfig().BMC_Directory);
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Something went wrong...");
+                    ConsoleHandler.append("Something went wrong...");
                 }
             }
         }
@@ -719,21 +717,21 @@ namespace BTDToolbox
         {
             if (isGamePathValid("BTD5"))
             {
-                ConsoleHandler.appendLog("Opening BTD5 Directory");
+                ConsoleHandler.append("Opening BTD5 Directory");
                 Process.Start(DeserializeConfig().BTD5_Directory);
             }
             else
             {
-                ConsoleHandler.appendLog("Could not find your BTD5 directory");
+                ConsoleHandler.append("Could not find your BTD5 directory");
                 browseForExe("BTD5");
                 if(isGamePathValid("BTD5"))
                 {
-                    ConsoleHandler.appendLog("Opening BTD5 Directory");
+                    ConsoleHandler.append("Opening BTD5 Directory");
                     Process.Start(DeserializeConfig().BTD5_Directory);
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Something went wrong...");
+                    ConsoleHandler.append("Something went wrong...");
                 }
             }
         }
@@ -742,58 +740,58 @@ namespace BTDToolbox
         {
             if (isGamePathValid("BTDB"))
             {
-                ConsoleHandler.appendLog("Opening BTD Battles Directory");
+                ConsoleHandler.append("Opening BTD Battles Directory");
                 Process.Start(DeserializeConfig().BTDB_Directory);
             }
             else
             {
-                ConsoleHandler.appendLog("Could not find your BTDB directory");
+                ConsoleHandler.append("Could not find your BTDB directory");
                 browseForExe("BTDB");
                 if (isGamePathValid("BTDB"))
                 {
-                    ConsoleHandler.appendLog("Opening BTDB Directory");
+                    ConsoleHandler.append("Opening BTDB Directory");
                     Process.Start(DeserializeConfig().BTDB_Directory);
                 }
                 else
                 {
-                    ConsoleHandler.appendLog("Something went wrong...");
+                    ConsoleHandler.append("Something went wrong...");
                 }
             }
         }
 
         private void ToolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening BTD Toolbox Directory");
+            ConsoleHandler.append("Opening BTD Toolbox Directory");
             Process.Start(Environment.CurrentDirectory);
         }
 
         private void ShowBTD5_Pass_Click(object sender, EventArgs e)
         {
             string pass = "Q%_{6#Px]]";
-            ConsoleHandler.force_appendLog("The password for BTD5.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
+            ConsoleHandler.append_Force("The password for BTD5.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
 
             DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
             if (diag == DialogResult.Yes)
             {
                 Clipboard.SetText(pass);
-                ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+                ConsoleHandler.append("The password has been automatically copied to your clipboard so you can paste it easily.");
             }
             else
-                ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
+                ConsoleHandler.append("The password was not copied to clipboard... You can see it in the messages above");
         }
         private void ShowBMCPass_Button_Click(object sender, EventArgs e)
         {
             string pass = "Q%_{6#Px]]";
-            ConsoleHandler.force_appendLog("The password for BMC's data.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
+            ConsoleHandler.append_Force("The password for BMC's data.jet is:   Q%_{6#Px]]\n>> Make sure you don't copy it with spaces in it");
 
             DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
             if (diag == DialogResult.Yes)
             {
                 Clipboard.SetText(pass);
-                ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+                ConsoleHandler.append("The password has been automatically copied to your clipboard so you can paste it easily.");
             }
             else
-                ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
+                ConsoleHandler.append("The password was not copied to clipboard... You can see it in the messages above");
         }
         private void ShowLastBattlesPass_Click(object sender, EventArgs e)
         {
@@ -808,26 +806,26 @@ namespace BTDToolbox
 
             if(pass != null && pass !="")
             {
-                ConsoleHandler.force_appendLog("The last password you used for BTDB is:   " + pass);
+                ConsoleHandler.append_Force("The last password you used for BTDB is:   " + pass);
                 DialogResult diag = MessageBox.Show("Would you like toolbox to copy it to your clipboard? It will overwrite whatever is currently copied?", "Copy to clipboard?", MessageBoxButtons.YesNo);
                 if(diag == DialogResult.Yes)
                 {
                     Clipboard.SetText(pass);
-                    ConsoleHandler.appendLog("The password has been automatically copied to your clipboard so you can paste it easily.");
+                    ConsoleHandler.append("The password has been automatically copied to your clipboard so you can paste it easily.");
                 }
                 else
-                    ConsoleHandler.appendLog("The password was not copied to clipboard... You can see it in the messages above");
+                    ConsoleHandler.append("The password was not copied to clipboard... You can see it in the messages above");
             }
             else
             {
-                ConsoleHandler.force_appendLog("You don't have a battles password saved... Next time you make a new project, make sure to check \"Remember Password\"");
+                ConsoleHandler.append_Force("You don't have a battles password saved... Next time you make a new project, make sure to check \"Remember Password\"");
             }
         }
 
         private void EraseConsoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.ClearConsole();
-            ConsoleHandler.appendLog("Console successfully cleared.");
+            ConsoleHandler.append("Console successfully cleared.");
         }
 
         private void EasyTowerEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -870,12 +868,12 @@ namespace BTDToolbox
 
         private void Reset_EXE_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.force_appendNotice("This will reset your game path...");
+            ConsoleHandler.force_append_Notice("This will reset your game path...");
         }
 
         private void Reset_EXE_MouseHover(object sender, EventArgs e)
         {
-            ConsoleHandler.force_appendNotice("This will reset your game path...");
+            ConsoleHandler.force_append_Notice("This will reset your game path...");
         }
         private void ValidateBTD5_Click(object sender, EventArgs e)
         {
@@ -892,17 +890,17 @@ namespace BTDToolbox
 
         private void FontForPCToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening download for BTD Font for PC");
+            ConsoleHandler.append("Opening download for BTD Font for PC");
             Process.Start("https://drive.google.com/open?id=19CgzvVJWo1E7lP-YSzaezGW79grUalnY");
         }
         private void OnlineFontGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening Online BTD Font Generator...");
+            ConsoleHandler.append("Opening Online BTD Font Generator...");
             Process.Start("https://fontmeme.com/bloons-td-battles-font/");
         }
         private void SpriteSheetDecompilerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening Sprite Decompiler github link...");
+            ConsoleHandler.append("Opening Sprite Decompiler github link...");
             Process.Start("https://github.com/TheSubtleKiller/SpriteSheetRebuilder");
         }
         private void NewProject_From_Backup_Click(object sender, EventArgs e)
@@ -935,7 +933,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendNotice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
+                ConsoleHandler.force_append_Notice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
             }
         }
 
@@ -954,13 +952,13 @@ namespace BTDToolbox
             if(!mwMessageShown)
             {
                 mwMessageShown = true;
-                ConsoleHandler.force_appendLog("Monkey Wrench is a great tool made by Topper, that allows you to convert .jpng files into regular .png files, and back again.");
-                ConsoleHandler.force_appendLog("Once it's opened, type     \'help\'     without quotes, to learn how to use the commands.");
+                ConsoleHandler.append_Force("Monkey Wrench is a great tool made by Topper, that allows you to convert .jpng files into regular .png files, and back again.");
+                ConsoleHandler.append_Force("Once it's opened, type     \'help\'     without quotes, to learn how to use the commands.");
             }
         }
         private void MonkeyWrenchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.appendLog("Opening download for Monkey Wrench");
+            ConsoleHandler.append("Opening download for Monkey Wrench");
             Process.Start("https://drive.google.com/open?id=1lmQUXRRGHkuZIDqTzP2A3YhEDb5NfRuU");
         }
 
@@ -972,8 +970,8 @@ namespace BTDToolbox
             if(!seMessageShown)
             {
                 seMessageShown = true;
-                ConsoleHandler.force_appendLog("This save editor was originally made by Vadmeme on github. They're allowing anyone to use it, so we added it to toolbox.");
-                ConsoleHandler.force_appendLog("If you're interested, the link for it is here: https://github.com/Vadmeme/BTDSaveEditor");
+                ConsoleHandler.append_Force("This save editor was originally made by Vadmeme on github. They're allowing anyone to use it, so we added it to toolbox.");
+                ConsoleHandler.append_Force("If you're interested, the link for it is here: https://github.com/Vadmeme/BTDSaveEditor");
             }
         }
         private void BTD5SaveModToolStripMenuItem_Click(object sender, EventArgs e)
@@ -994,7 +992,7 @@ namespace BTDToolbox
             if (File.Exists(btd5Save))
                 JsonEditorHandler.OpenFile(btd5Save);
             else
-                ConsoleHandler.appendLog("Decrypted save file not found");
+                ConsoleHandler.append("Decrypted save file not found");
         }
         private void BTDBSaveModToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1017,7 +1015,7 @@ namespace BTDToolbox
             if (File.Exists(btdbSave))
                 JsonEditorHandler.OpenFile(btdbSave);
             else
-                ConsoleHandler.appendLog("Decrypted save file not found");
+                ConsoleHandler.append("Decrypted save file not found");
         }
         private void BrowseForSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1028,7 +1026,7 @@ namespace BTDToolbox
             if (File.Exists(save))
                 JsonEditorHandler.OpenFile(save);
             else
-                ConsoleHandler.appendLog("Decrypted save file not found");
+                ConsoleHandler.append("Decrypted save file not found");
         }
 
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1069,7 +1067,7 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ConsoleHandler.force_appendNotice("Unable to locate NKHook5-Injector.exe. Opening Get NKHook message... You need to launch without it until you download NKHook.");
+                    ConsoleHandler.force_append_Notice("Unable to locate NKHook5-Injector.exe. Opening Get NKHook message... You need to launch without it until you download NKHook.");
                     NKHook_Message msg = new NKHook_Message();
                     msg.Show();
                 }

@@ -46,10 +46,10 @@ namespace BTDToolbox.Extra_Forms
                     PopulateUI();
                 }
                 else
-                    ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
+                    ConsoleHandler.append_Force_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
             }
             else
-                ConsoleHandler.appendLog_CanRepeat("Error! Thats not a valid bloon file");
+                ConsoleHandler.append_CanRepeat("Error! Thats not a valid bloon file");
         }
         private void PopulateUI()
         {
@@ -226,39 +226,39 @@ namespace BTDToolbox.Extra_Forms
                     initialHealth = Int64.Parse(InitialHealth_TextBox.Text);
                     if (initialHealth <= 0)
                     {
-                        ConsoleHandler.force_appendNotice("Inital Health must be at least 1, automatically setting it to 1");
+                        ConsoleHandler.force_append_Notice("Inital Health must be at least 1, automatically setting it to 1");
                         initialHealth = 1;
                     }
                     newBloon.InitialHealth = initialHealth;
                 }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your initial health is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your initial health is not a valid number..."); error = true; }
             }
 
             try { newBloon.BaseSpeed = Double.Parse(BaseSpeed_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your base speed is not a valid number..."); error = true; }
+            catch (FormatException) { ConsoleHandler.force_append_Notice("Your base speed is not a valid number..."); error = true; }
 
             try { newBloon.SpeedMultiplier = Double.Parse(SpeedMultiplier_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your speed multiplier is not a valid number..."); error = true; }
+            catch (FormatException) { ConsoleHandler.force_append_Notice("Your speed multiplier is not a valid number..."); error = true; }
 
             try { newBloon.Rbe = Int64.Parse(RBE_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your RBE is not a valid number..."); error = true; }
+            catch (FormatException) { ConsoleHandler.force_append_Notice("Your RBE is not a valid number..."); error = true; }
 
             if(Radius_TextBox.Text.Length > 0)
             {
                 try { newBloon.Radius = Double.Parse(Radius_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your radius is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your radius is not a valid number..."); error = true; }
             }
 
             if (Scale_TextBox.Text.Length > 0)
             {
                 try { newBloon.Scale = Double.Parse(Scale_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your scale is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your scale is not a valid number..."); error = true; }
             }
 
             if (ChildEffectScale_TextBox.Text.Length > 0)
             {
                 try { newBloon.ChildEffectScale = Double.Parse(ChildEffectScale_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your child effect scale is not a valid number..."); error = true; }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your child effect scale is not a valid number..."); error = true; }
             }
 
             if (HitAddon_TextBox.Visible == true)
@@ -266,7 +266,7 @@ namespace BTDToolbox.Extra_Forms
                 if (HitAddon_TextBox.Text.Length > 0)
                 {
                     try { newBloon.HitAddon = Double.Parse(HitAddon_TextBox.Text); }
-                    catch (FormatException e) { ConsoleHandler.force_appendNotice("Your hit addon is not a valid number..."); error = true; }
+                    catch (FormatException) { ConsoleHandler.force_append_Notice("Your hit addon is not a valid number..."); error = true; }
                 }
             }
 
@@ -459,7 +459,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.force_appendNotice("You need to have a project opened to use this tool...");
+                ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
                 this.Close();
             }
         }
@@ -471,7 +471,7 @@ namespace BTDToolbox.Extra_Forms
         private void Save_Button_Click(object sender, EventArgs e)
         {
             SaveFile();
-            ConsoleHandler.appendLog_CanRepeat("Saved " + BloonFiles_ComboBox.SelectedItem.ToString());
+            ConsoleHandler.append_CanRepeat("Saved " + BloonFiles_ComboBox.SelectedItem.ToString());
         }
         private void SwitchPanel_Click(object sender, EventArgs e)
         {
@@ -556,12 +556,12 @@ namespace BTDToolbox.Extra_Forms
                 }
                 else
                 {
-                    ConsoleHandler.force_appendLog_CanRepeat("This tool does not allow adding the current selected bloon as a child bloon...");
+                    ConsoleHandler.append_Force_CanRepeat("This tool does not allow adding the current selected bloon as a child bloon...");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog_CanRepeat("You didn't select a bloon to add");
+                ConsoleHandler.append_CanRepeat("You didn't select a bloon to add");
             }
         }
         private void RemoveChild_Button_Click(object sender, EventArgs e)
@@ -578,7 +578,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.appendLog_CanRepeat("You didn't select a bloon to remove");
+                ConsoleHandler.append_CanRepeat("You didn't select a bloon to remove");
             }
         }
 
@@ -587,9 +587,9 @@ namespace BTDToolbox.Extra_Forms
             if (e.KeyCode == Keys.F5)
             {
                 SaveFile();
-                ConsoleHandler.appendLog_CanRepeat("Saved " + BloonFiles_ComboBox.SelectedItem.ToString());
+                ConsoleHandler.append_CanRepeat("Saved " + BloonFiles_ComboBox.SelectedItem.ToString());
                 GeneralMethods.CompileJet("launch");
-                ConsoleHandler.appendLog_CanRepeat("Launching " + game);
+                ConsoleHandler.append_CanRepeat("Launching " + game);
             }
         }
 

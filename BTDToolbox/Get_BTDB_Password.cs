@@ -44,12 +44,12 @@ namespace BTDToolbox
             string password = Password_TextBox.Text.ToString();
             if (password.Length < 3)
             {
-                ConsoleHandler.appendLog("The password you entered was too short...");
+                ConsoleHandler.append("The password you entered was too short...");
                 MessageBox.Show("The password you entered was too short...");
             }
             else
             {
-                ConsoleHandler.appendLog("You entered the password:  " + password);
+                ConsoleHandler.append("You entered the password:  " + password);
                 var zip = new ZipForm();
                 zip.jetFile_Game = "BTDB";
                 zip.password = password;
@@ -59,7 +59,7 @@ namespace BTDToolbox
                 if (Dont_Ask_Again_Checkbox.Checked)
                 {
                     rememberPass = true;
-                    ConsoleHandler.appendLog("Program will remember your password for the rest of this session.");
+                    ConsoleHandler.append("Program will remember your password for the rest of this session.");
                     ZipForm.rememberedPassword = Password_TextBox.Text;
                 }
                 else
@@ -88,7 +88,7 @@ namespace BTDToolbox
             bool result = GeneralMethods.Bad_JetPass(projectJet, Password_TextBox.Text);
             if (!result)
             {
-                ConsoleHandler.appendLog("Password correct");
+                ConsoleHandler.append("Password correct");
                 CurrentProjectVariables.JetPassword = Password_TextBox.Text;
                 ProjectHandler.SaveProject();
 
@@ -113,7 +113,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendLog("You entered a bad password. Please check your password and try again");
+                ConsoleHandler.append_Force("You entered a bad password. Please check your password and try again");
             }
 
             /*
@@ -125,7 +125,7 @@ namespace BTDToolbox
             }
             else
             {
-                ConsoleHandler.force_appendLog("Your project file was not detected...");
+                ConsoleHandler.append_Force("Your project file was not detected...");
             }*/
 
             //GetPass();

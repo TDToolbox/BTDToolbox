@@ -47,17 +47,17 @@ namespace BTDToolbox.Classes
         {
             if (ValidateManager())
             {
-                ConsoleHandler.appendLog("Launching mod loader...");
+                ConsoleHandler.append("Launching mod loader...");
                 Process.Start(modLoader_Path);
             }
             else
             {
-                ConsoleHandler.appendLog("Mod loader not found! Downloading mod loader...");
+                ConsoleHandler.append("Mod loader not found! Downloading mod loader...");
                 Download_ModLoader();
                 Extract_ModLoader();
                 if (ValidateManager())
                 {
-                    ConsoleHandler.appendLog("Launching mod loader...");
+                    ConsoleHandler.append("Launching mod loader...");
                     Process.Start(modLoader_Path);
                 }
             }
@@ -76,21 +76,21 @@ namespace BTDToolbox.Classes
             if (File.Exists(modloader_zipName))
                 File.Delete(modloader_zipName);
             File.Move("Update", modloader_zipName);
-            ConsoleHandler.appendLog("Mod Loader successfully downloaded!");
+            ConsoleHandler.append("Mod Loader successfully downloaded!");
         }
         private void Extract_ModLoader()
         {
             string zipPath = Environment.CurrentDirectory + "\\" + modloader_zipName;
             string extractedFilePath = Environment.CurrentDirectory;
 
-            ConsoleHandler.appendLog("Extracting Mod Loader...");
+            ConsoleHandler.append("Extracting Mod Loader...");
             ZipFile archive = new ZipFile(zipPath);
             foreach (ZipEntry e in archive)
             {
                 e.Extract(extractedFilePath, ExtractExistingFileAction.DoNotOverwrite);
             }
             archive.Dispose();
-            ConsoleHandler.appendLog("BTD Mod Loader updater has been successfully downloaded and extracted...");
+            ConsoleHandler.append("BTD Mod Loader updater has been successfully downloaded and extracted...");
 
             File.Delete(modloader_zipName);
             if (File.Exists(modloader_zipName))

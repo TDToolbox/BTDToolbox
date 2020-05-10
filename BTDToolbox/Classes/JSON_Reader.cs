@@ -42,12 +42,12 @@ namespace BTDToolbox.Classes
                 catch (JsonReaderException jex)
                 {
                     //Exception in parsing json
-                    ConsoleHandler.appendLog(jex.Message);
+                    ConsoleHandler.append(jex.Message);
                     return false;
                 }
                 catch (Exception ex) //some other exception
                 {
-                    ConsoleHandler.appendLog(ex.ToString());
+                    ConsoleHandler.append(ex.ToString());
                     return false;
                 }
             }
@@ -86,7 +86,7 @@ namespace BTDToolbox.Classes
                     //Exception in parsing json
                     return jex.Message;
                 }
-                catch (Exception ex) //some other exception
+                catch //some other exception
                 {
                     return null;
                 }
@@ -106,7 +106,7 @@ namespace BTDToolbox.Classes
                 dynamic result = serializer.DeserializeObject(json);
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -154,7 +154,7 @@ namespace BTDToolbox.Classes
         }
         public static void ValidateAllJsonFiles()
         {
-            ConsoleHandler.appendLog("Beginning project validation. This may take up to a minute...");
+            ConsoleHandler.append("Beginning project validation. This may take up to a minute...");
             string projDir = CurrentProjectVariables.PathToProjectFiles;
             if(Directory.Exists(projDir))
             {
@@ -169,9 +169,8 @@ namespace BTDToolbox.Classes
                     totalFiles++;
                 }
 
-                ConsoleHandler.appendLog("There are: " + totalFiles + " files to check");
+                ConsoleHandler.append("There are: " + totalFiles + " files to check");
                 int bad = 0;
-                string text = "";
                 bool skip = false;
                 foreach (string file in allfiles)
                 {
@@ -201,21 +200,21 @@ namespace BTDToolbox.Classes
                 
                 if(badFiles.Length > 0)
                 {
-                    ConsoleHandler.force_appendNotice("Found: " + bad + " invalid files");
+                    ConsoleHandler.force_append_Notice("Found: " + bad + " invalid files");
                     string[] split = badFiles.Split(',');
                     foreach (string badFile in split)
                     {
-                        ConsoleHandler.force_appendLog_CanRepeat(badFile);
+                        ConsoleHandler.append_Force_CanRepeat(badFile);
                     }
                 }
                 else
                 {
-                    ConsoleHandler.force_appendLog_CanRepeat("All files are valid!");
+                    ConsoleHandler.append_Force_CanRepeat("All files are valid!");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Project not found or does not exist. Open a project to continue...");
+                ConsoleHandler.append("Project not found or does not exist. Open a project to continue...");
             }
         }
     }

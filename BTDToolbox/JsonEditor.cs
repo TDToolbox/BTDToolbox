@@ -51,7 +51,6 @@ namespace BTDToolbox
         bool searchSubtask = false;
         bool tabLine = false;
         string tab;
-        bool deletingWhiteSpace = false;
     public JsonEditor(string Path)
         {
             InitializeComponent();
@@ -654,7 +653,7 @@ namespace BTDToolbox
             {
                 try
                 {
-                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+                    ConsoleHandler.force_append_Notice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
                     searchSubtask = true;
                     ShowFindMenu();
 
@@ -678,7 +677,7 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                    ConsoleHandler.append_Force("JSON error detected... You need to fix the JSON error before you can get the subtask");
                 }
             }
         }
@@ -731,7 +730,7 @@ namespace BTDToolbox
             {
                 try
                 {
-                    ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+                    ConsoleHandler.force_append_Notice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
                     searchSubtask = true;
                     ShowFindMenu();
 
@@ -755,7 +754,7 @@ namespace BTDToolbox
                 }
                 else
                 {
-                    ConsoleHandler.force_appendLog("JSON error detected... You need to fix the JSON error before you can get the subtask");
+                    ConsoleHandler.append_Force("JSON error detected... You need to fix the JSON error before you can get the subtask");
                 }
             }
         }
@@ -764,11 +763,11 @@ namespace BTDToolbox
             string subtaskNum = JSON_Reader.GetSubtaskNum(CharIndex_UnderMouse, Editor_TextBox.Text);
             if (subtaskNum != "" && subtaskNum != " " && subtaskNum != null)
             {
-                ConsoleHandler.force_appendLog_CanRepeat("Subtask:  [" + subtaskNum + " ]");
+                ConsoleHandler.append_Force_CanRepeat("Subtask:  [" + subtaskNum + " ]");
             }
             else
             {
-                ConsoleHandler.force_appendLog("Unable to detect subtask. Please try clicking somewhere else...");
+                ConsoleHandler.append_Force("Unable to detect subtask. Please try clicking somewhere else...");
             }
         }
         private void SearchForSubtask()
@@ -797,12 +796,12 @@ namespace BTDToolbox
             }
             if (!found)
             {
-                ConsoleHandler.force_appendLog_CanRepeat("That subtask was not found");
+                ConsoleHandler.append_Force_CanRepeat("That subtask was not found");
             }
         }
         private void FindSubtask_Button_Click(object sender, EventArgs e)
         {
-            ConsoleHandler.force_appendNotice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
+            ConsoleHandler.force_append_Notice("Please enter the subtask numbers you are looking for in the \"Find\" text box above.\n>> Example:    0,0,1");
             searchSubtask = true;
             ShowFindMenu();
         }

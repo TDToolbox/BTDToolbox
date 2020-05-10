@@ -61,7 +61,7 @@ namespace BTDToolbox.Extra_Forms
             }
             catch
             {
-                ConsoleHandler.appendLog_CanRepeat("Something went wrong when trying to read that JSON file... Does it have invalid JSON?");
+                ConsoleHandler.append_CanRepeat("Something went wrong when trying to read that JSON file... Does it have invalid JSON?");
             }
         }
         private void CreateSprite()
@@ -90,7 +90,7 @@ namespace BTDToolbox.Extra_Forms
                         if (b == a.Sprite)
                         {
                             Sprites_ListBox.Items.Add(b);
-                            //ConsoleHandler.appendLog_CanRepeat(a.Sprite.ToString());
+                            //ConsoleHandler.append_CanRepeat(a.Sprite.ToString());
                             
                             int posX_int = 0;
                             int posY_int = 0;
@@ -101,7 +101,7 @@ namespace BTDToolbox.Extra_Forms
                                 posX_int = Int32.Parse(posX_long.ToString());
                                 posY_int = Int32.Parse(posY_long.ToString());
                             }
-                            catch { ConsoleHandler.appendLog_CanRepeat("One of the numbers being entered is not a valid number..."); };
+                            catch { ConsoleHandler.append_CanRepeat("One of the numbers being entered is not a valid number..."); };
 
                             Bitmap spr = new Bitmap(bm[i]);
                             spr.MakeTransparent();
@@ -249,7 +249,7 @@ namespace BTDToolbox.Extra_Forms
         {
             if(sprite.StageOptions != null)
             {
-                ConsoleHandler.appendLog_CanRepeat("Good sprite");
+                ConsoleHandler.append_CanRepeat("Good sprite");
                 foreach (SpriteInfo a in sprite.StageOptions.SpriteInfo)
                 {
                     Array.Resize(ref spriteInfo, spriteInfo.Length + 1);
@@ -261,7 +261,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.appendLog_CanRepeat("bad sprite");
+                ConsoleHandler.append_CanRepeat("bad sprite");
             }
         }
 
@@ -350,16 +350,16 @@ namespace BTDToolbox.Extra_Forms
                 }
                 else if (allfiles.Length < 1)
                 {
-                    ConsoleHandler.appendLog("XML File for sprite not detected...");
+                    ConsoleHandler.append("XML File for sprite not detected...");
                 }
                 else if (allfiles.Length > 1)
                 {
-                    ConsoleHandler.appendLog("Multiple XML files for sprite detected...");
+                    ConsoleHandler.append("Multiple XML files for sprite detected...");
                 }
             }
             else
             {
-                ConsoleHandler.appendLog("Game directory not set!");
+                ConsoleHandler.append("Game directory not set!");
             }
             return "";
         }
@@ -430,8 +430,8 @@ namespace BTDToolbox.Extra_Forms
                     
                     if (spriteInfo != null && File_ComboBox.Items.Count == spriteInfo.Length)    //this wont work. Need to check if items are the same
                     {
-                        ConsoleHandler.appendLog_CanRepeat("File_ComboBox items: " + File_ComboBox.Items.Count);
-                        ConsoleHandler.appendLog_CanRepeat("SpriteInfo.Length: " + spriteInfo.Length);
+                        ConsoleHandler.append_CanRepeat("File_ComboBox items: " + File_ComboBox.Items.Count);
+                        ConsoleHandler.append_CanRepeat("SpriteInfo.Length: " + spriteInfo.Length);
 
                         bool sameSprites = true;
                         foreach(var a in spriteInfo)
@@ -442,18 +442,18 @@ namespace BTDToolbox.Extra_Forms
                             if(!File_ComboBox.Items.Contains(a))
                             {
                                 sameSprites = false;
-                                ConsoleHandler.appendLog_CanRepeat("not same sprites");
+                                ConsoleHandler.append_CanRepeat("not same sprites");
                             }
                         }
                         if(sameSprites)
                         {
-                            ConsoleHandler.appendLog_CanRepeat("same sprites");
+                            ConsoleHandler.append_CanRepeat("same sprites");
                             CreateSprite();
                         }
                     }
                     else
                     {
-                        ConsoleHandler.appendLog_CanRepeat("create new sprite object");
+                        ConsoleHandler.append_CanRepeat("create new sprite object");
                         string y = p + Folder_ComboBox.SelectedItem + "\\" + File_ComboBox.SelectedItem;
                         CreateSpriteObject(y);
                     }
@@ -482,7 +482,7 @@ namespace BTDToolbox.Extra_Forms
                     {
                         if (!Sprites_ListBox.Items.Contains(a.Sprite.ToString()))
                         {
-                            ConsoleHandler.appendLog_CanRepeat("Missing a sprite");
+                            ConsoleHandler.append_CanRepeat("Missing a sprite");
                             sameSprites = false;
                             break;
                         }

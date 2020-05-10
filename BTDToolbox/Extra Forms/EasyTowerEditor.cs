@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using BTDToolbox.Classes.JSON_Classes;
 using BTDToolbox.Classes.NewProjects;
 using System;
 using System.Collections.Generic;
@@ -113,7 +114,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.force_appendLog_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
+                ConsoleHandler.append_Force_CanRepeat("The file you are trying to load has invalid JSON, and as a result, can't be loaded...");
             }
             finishedLoading = true;
         }
@@ -260,12 +261,12 @@ namespace BTDToolbox.Extra_Forms
                         string gameDir = CurrentProjectVariables.GamePath;
                         if(gameDir == null || gameDir == "")
                         {
-                            ConsoleHandler.force_appendNotice("You haven't browsed for your " + game + " Game so you will not be able to edit the tower and upgrade descriptions");
+                            ConsoleHandler.force_append_Notice("You haven't browsed for your " + game + " Game so you will not be able to edit the tower and upgrade descriptions");
                             this.Focus();
                         }
                         else
                         {
-                            ConsoleHandler.force_appendNotice("Unable to find your LOC file...");
+                            ConsoleHandler.force_append_Notice("Unable to find your LOC file...");
                             DialogResult diag = MessageBox.Show("Unable to find " + game + "'s LOC file. Do you want toolbox to make Steam validate " + game + " so it can reaquire it? If you have any mods applied to " + game + " steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
                             if (diag == DialogResult.Yes)
                             {
@@ -280,7 +281,7 @@ namespace BTDToolbox.Extra_Forms
                             }
                             else
                             {
-                                ConsoleHandler.force_appendNotice("Valdation cancelled. You will not be able to mod the tower or upgrade descriptions...");
+                                ConsoleHandler.force_append_Notice("Valdation cancelled. You will not be able to mod the tower or upgrade descriptions...");
                                 this.Focus();
                             }
                         }
@@ -312,10 +313,10 @@ namespace BTDToolbox.Extra_Forms
         private void SaveFile()
         {
             try { artist.BaseCost = Int32.Parse(BaseCost_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your base cost is not a valid number..."); }
+            catch (FormatException) { ConsoleHandler.force_append_Notice("Your base cost is not a valid number..."); }
 
             try { artist.RankToUnlock = Int32.Parse(RankToUnlock_TextBox.Text); }
-            catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Rank To Unlock is not a valid number..."); }
+            catch (FormatException) { ConsoleHandler.force_append_Notice("Your Rank To Unlock is not a valid number..."); }
 
             artist.Icon = Icon_TextBox.Text;
             artist.TargetingMode = TargetingMode_ComboBox.SelectedItem.ToString();
@@ -331,17 +332,17 @@ namespace BTDToolbox.Extra_Forms
             if(UsePlacementRadius_Checkbox.Checked == false)
             {
                 try { artist.PlacementH = Int32.Parse(PlacementH_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Height is not a valid number..."); }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your Placement Height is not a valid number..."); }
 
                 try { artist.PlacementW = Int32.Parse(PlacementW_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Width is not a valid number..."); }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your Placement Width is not a valid number..."); }
 
                 artist.PlacementRadius = 0;
             }
             else
             {
                 try { artist.PlacementRadius = Int32.Parse(PlacementRadius_TextBox.Text); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Your Placement Radius is not a valid number..."); }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Your Placement Radius is not a valid number..."); }
 
                 artist.PlacementH = 0;
                 artist.PlacementW = 0;
@@ -423,7 +424,7 @@ namespace BTDToolbox.Extra_Forms
             {
                 Array.Resize(ref array, array.Length + 1);
                 try { array[array.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the right path..."); }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Invalid long number detected in the right path..."); }
 
             }
             return array;
@@ -438,14 +439,14 @@ namespace BTDToolbox.Extra_Forms
             {
                 Array.Resize(ref leftPath, leftPath.Length + 1);
                 try { leftPath[leftPath.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the left path..."); }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Invalid long number detected in the left path..."); }
                 
             }
             for (int i = 0; i < upgradeCount; i++)
             {
                 Array.Resize(ref rightPath, rightPath.Length + 1);
                 try { rightPath[rightPath.Length - 1] = Int32.Parse(inputArray[i]); }
-                catch (FormatException e) { ConsoleHandler.force_appendNotice("Invalid long number detected in the right path..."); }
+                catch (FormatException) { ConsoleHandler.force_append_Notice("Invalid long number detected in the right path..."); }
             }
             long[][] upgrades = new long[][] { leftPath, rightPath };
 
@@ -491,7 +492,7 @@ namespace BTDToolbox.Extra_Forms
                 else if (game == "BTDB")
                     UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
                 else
-                    ConsoleHandler.force_appendNotice("Something went wrong and your current game was not detected. Please reload BTD Toolbox, otherwise you may encounter errors");
+                    ConsoleHandler.force_append_Notice("Something went wrong and your current game was not detected. Please reload BTD Toolbox, otherwise you may encounter errors");
 
             }
         }
@@ -562,7 +563,7 @@ namespace BTDToolbox.Extra_Forms
             }
             else
             {
-                ConsoleHandler.force_appendNotice("You need to have a project opened to use this tool...");
+                ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
                 this.Close();
             }
         }
@@ -820,6 +821,7 @@ namespace BTDToolbox.Extra_Forms
                 ResetUI();
 
                 path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + AllTowerFiles_ComboBox.SelectedItem;
+                
                 CreateTowerObject(path);
                 this.Refresh();
             }
@@ -863,7 +865,7 @@ namespace BTDToolbox.Extra_Forms
             SaveFile();
             if (File.Exists(loc_Path))
                 SaveLoc();
-            ConsoleHandler.appendLog_CanRepeat("Saved " + AllTowerFiles_ComboBox.SelectedItem.ToString());
+            ConsoleHandler.append_CanRepeat("Saved " + AllTowerFiles_ComboBox.SelectedItem.ToString());
         }
         private void UpgradeIcon_TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -969,7 +971,7 @@ namespace BTDToolbox.Extra_Forms
                 {
                     CanBePlacedOnLand_CheckBox.Checked = false;
                     CanBePlacedInWater_CheckBox.Checked = false;
-                    ConsoleHandler.appendNotice("CanBePlacedOnPath  overrides CanBePlacedOnLand and CanBePlacedInWater");
+                    ConsoleHandler.append_Notice("CanBePlacedOnPath  overrides CanBePlacedOnLand and CanBePlacedInWater");
                 }
             }
             
@@ -1002,7 +1004,7 @@ namespace BTDToolbox.Extra_Forms
                     PlacementRadius_TextBox.Show();
                     PlacementH_TextBox.Text = "0";
                     PlacementW_TextBox.Text = "0";
-                    ConsoleHandler.appendNotice("Using placement radius overrides PlcementH and PlacementW");
+                    ConsoleHandler.append_Notice("Using placement radius overrides PlcementH and PlacementW");
                 }
                 if (!UsePlacementRadius_Checkbox.Checked)
                 {
@@ -1029,9 +1031,9 @@ namespace BTDToolbox.Extra_Forms
             if (e.KeyCode == Keys.F5)
             {
                 SaveFile();
-                ConsoleHandler.appendLog_CanRepeat("Saved " + AllTowerFiles_ComboBox.SelectedItem.ToString());
+                ConsoleHandler.append_CanRepeat("Saved " + AllTowerFiles_ComboBox.SelectedItem.ToString());
                 GeneralMethods.CompileJet("launch");
-                ConsoleHandler.appendLog_CanRepeat("Launching " + game);
+                ConsoleHandler.append_CanRepeat("Launching " + game);
             }
         }
 
@@ -1065,7 +1067,7 @@ namespace BTDToolbox.Extra_Forms
 
                         if (s.RelatedTower != null)
                         {
-                            //ConsoleHandler.appendLog_CanRepeat(s.RelatedTower);
+                            //ConsoleHandler.append_CanRepeat(s.RelatedTower);
                             if (s.RelatedTower == file)
                             {
                                 specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
@@ -1144,11 +1146,11 @@ namespace BTDToolbox.Extra_Forms
                 {
                     if (File.Exists(projPath + "TowerSpriteUpgradeDefinitions\\" + file + ".json"))
                     {
-                        ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Using default one instead...");
+                        ConsoleHandler.append_Force_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Using default one instead...");
                     }
                     else
                     {
-                        ConsoleHandler.force_appendLog_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Additionally, the default one does not exist. Unable to open TowerSpriteUpgradeDef");
+                        ConsoleHandler.append_Force_CanRepeat("Tower file has invalid JSON, and therefore, unable to get current TowerSpriteDefinition file. Additionally, the default one does not exist. Unable to open TowerSpriteUpgradeDef");
                         TowerSpriteUpgradeDef_Button.Visible = false;
                     }
                 }
@@ -1200,7 +1202,7 @@ namespace BTDToolbox.Extra_Forms
             if (File.Exists(filepath))
                 JsonEditorHandler.OpenFile(filepath);
             else
-                ConsoleHandler.appendLog("The TowerSpriteUpgradeDef  " + towerSpriteUpgradeDef + " was not found");
+                ConsoleHandler.append("The TowerSpriteUpgradeDef  " + towerSpriteUpgradeDef + " was not found");
             this.Focus();
         }
         private void SpecialtyBuildingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1257,9 +1259,16 @@ namespace BTDToolbox.Extra_Forms
             string baseT = "";
             if (useBaseTower)
                 baseT = path;
+
             
-            NewTower newTower = new NewTower(NewTowerName_TB.Text, baseT, pos);
-            newTower.CreateSpecialtyBuilding = CreateSpecialty_CB.Checked;
+            NewTower newTower = new NewTower()
+            {
+                TowerName = NewTowerName_TB.Text,
+                UseBaseTower = useBaseTower,
+                BaseTowerFile = baseT,
+                TowerSelPos = pos,
+                CreateSpecialty = CreateSpecialty_CB.Checked
+            };            
 
             newTower.DuplicateAllTowerFiles();
         }
