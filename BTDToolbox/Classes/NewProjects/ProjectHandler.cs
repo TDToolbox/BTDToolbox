@@ -168,7 +168,6 @@ namespace BTDToolbox.Classes.NewProjects
                             Stream s = entry.OpenReader(CurrentProjectVariables.JetPassword);
                             StreamReader sr = new StreamReader(s);
                             returnText = sr.ReadToEnd();
-                            
                         }
                     }
                 }
@@ -179,7 +178,7 @@ namespace BTDToolbox.Classes.NewProjects
             }
             else
             {
-                ConsoleHandler.append_Force_CanRepeat("Unable to check if  " + fileInZip.Replace("\\\\","\\").Replace(CurrentProjectVariables.PathToProjectFiles,"") + "  is modified because it wasnt found in the backup, and therefore has nothing to compare it too.");
+                //ConsoleHandler.append_Force_CanRepeat("Unable to check if  " + fileInZip.Replace("\\\\","\\").Replace(CurrentProjectVariables.PathToProjectFiles,"") + "  is modified because it wasnt found in the backup, and therefore has nothing to compare it too.");
                 //ConsoleHandler.append_Force_CanRepeat("Unable to find   " + fileInZip + "   in the Jet... Failed to read file..");
             }
             return returnText;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -21,13 +22,17 @@ namespace BTDToolbox.Extra_Forms
             int sizeY = 550;
             this.Location = new Point(GeneralMethods.GetCenterScreen().X - sizeX/2 - 75, GeneralMethods.GetCenterScreen().Y - sizeY/ 2 - 145);
             
-            this.Refresh();
-            this.Size = new Size(sizeX, sizeY);
-            
+            this.Refresh();            
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
+
+        private void WatchTut_Button_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://youtu.be/nY9Cfe2O_XI?list=PLWFKnf1pcvUuGt2UQO7E5xNfVdn-IY_AQ&t=238");
             this.Close();
         }
     }

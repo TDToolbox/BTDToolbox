@@ -39,16 +39,19 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.GettingStarted_Panel = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.WatchTut_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.Important_Panel.SuspendLayout();
             this.Info_Panel.SuspendLayout();
@@ -57,6 +60,8 @@
             // 
             // titleSeperator
             // 
+            this.titleSeperator.Size = new System.Drawing.Size(450, 500);
+            this.titleSeperator.SplitterDistance = 27;
             // 
             // TitleLabel
             // 
@@ -65,24 +70,31 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.WatchTut_Button);
             this.contentPanel.Controls.Add(this.button1);
             this.contentPanel.Controls.Add(this.Important_Panel);
             this.contentPanel.Controls.Add(this.GettingStarted_Panel);
             this.contentPanel.Controls.Add(this.Info_Panel);
             this.contentPanel.Controls.Add(this.pictureBox1);
+            this.contentPanel.Location = new System.Drawing.Point(2, 3);
+            this.contentPanel.Size = new System.Drawing.Size(95, 498);
             // 
             // close_button
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            this.close_button.Location = new System.Drawing.Point(1085, -2);
-            this.close_button.Size = new System.Drawing.Size(65, 22);
+            this.close_button.Location = new System.Drawing.Point(-751, 3);
+            this.close_button.Size = new System.Drawing.Size(65, 27);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(1138, 311);
+            this.Sizer.Location = new System.Drawing.Point(-612, 740);
+            // 
+            // TitleBar_RightCorner
+            // 
+            this.TitleBar_RightCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(56, 4);
+            this.TitleBar_RightCorner.Size = new System.Drawing.Size(44, 59);
             // 
             // pictureBox1
             // 
@@ -148,7 +160,7 @@
             this.Important_Panel.Controls.Add(this.label4);
             this.Important_Panel.Controls.Add(this.label1);
             this.Important_Panel.Controls.Add(this.label3);
-            this.Important_Panel.Location = new System.Drawing.Point(4, 269);
+            this.Important_Panel.Location = new System.Drawing.Point(4, 361);
             this.Important_Panel.Name = "Important_Panel";
             this.Important_Panel.Size = new System.Drawing.Size(547, 114);
             this.Important_Panel.TabIndex = 6;
@@ -207,6 +219,17 @@
             this.GettingStarted_Panel.Size = new System.Drawing.Size(547, 114);
             this.GettingStarted_Panel.TabIndex = 8;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(23, 72);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(99, 18);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "on your game";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -240,21 +263,10 @@
             this.label10.TabIndex = 4;
             this.label10.Text = "- You can easily do this by clicking \"File\" at the top, then \"New\", and click ";
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(23, 72);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(99, 18);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "on your game";
-            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(653, 372);
+            this.button1.Location = new System.Drawing.Point(-28, 464);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 26);
             this.button1.TabIndex = 9;
@@ -262,11 +274,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // WatchTut_Button
+            // 
+            this.WatchTut_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.WatchTut_Button.Location = new System.Drawing.Point(-343, 464);
+            this.WatchTut_Button.Name = "WatchTut_Button";
+            this.WatchTut_Button.Size = new System.Drawing.Size(295, 26);
+            this.WatchTut_Button.TabIndex = 10;
+            this.WatchTut_Button.Text = "Click to watch a tutorial on How to Use Toolbox";
+            this.WatchTut_Button.UseVisualStyleBackColor = true;
+            this.WatchTut_Button.Click += new System.EventHandler(this.WatchTut_Button_Click);
+            // 
             // First_Time_Use
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(450, 500);
             this.Name = "First_Time_Use";
             this.Text = "First_Time_Use";
             this.titleSeperator.Panel1.ResumeLayout(false);
@@ -276,6 +299,8 @@
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.Important_Panel.ResumeLayout(false);
             this.Important_Panel.PerformLayout();
@@ -304,5 +329,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button WatchTut_Button;
     }
 }

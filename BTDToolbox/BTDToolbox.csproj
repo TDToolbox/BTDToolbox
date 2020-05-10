@@ -72,6 +72,7 @@
     <Compile Include="Classes\Guard.cs" />
     <Compile Include="Classes\ImageProcessing.cs" />
     <Compile Include="Classes\JSON Classes\TowerSelectionMenu.cs" />
+    <Compile Include="Classes\JSON Classes\TowerSpriteUpgrade.cs" />
     <Compile Include="Classes\JsonEditorHandler.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NewProjects\CurrentProjectVariables.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Classes\Spritesheets\SpriteSheet_Handler.cs" />
     <Compile Include="Classes\Sprite_Class.cs" />
     <Compile Include="Classes\SubTask_Reader.cs" />
-    <Compile Include="Classes\Tower_Class.cs" />
+    <Compile Include="Classes\JSON Classes\Tower_Class.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
     <Compile Include="Classes\JSON_Reader.cs" />
@@ -389,6 +390,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Resize_Icon2.png" />
+    <None Include="Resources\new title corner 8_left.png" />
+    <None Include="Resources\new title corner 8_right.png" />
+    <None Include="Resources\new title corner 7_left.png" />
+    <None Include="Resources\new title corner 7_right.png" />
+    <None Include="Resources\new close button-click.png" />
+    <None Include="Resources\new close button 2.png" />
+    <None Include="Resources\newTitle corner 5_right.png" />
+    <None Include="Resources\newTitle 2.png" />
+    <None Include="Resources\newTitle corner 5.png" />
     <None Include="Resources\bg 3_v2.png" />
     <None Include="Resources\bg 3_no extra space_smaller 1.png" />
     <None Include="Resources\bg 3_no extra space_smaller 4.png" />

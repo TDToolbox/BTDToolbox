@@ -22,6 +22,7 @@ namespace BTDToolbox.Extra_Forms
         public NKHPluginMgr()
         {
             InitializeComponent();
+            
 
             if (CurrentProjectVariables.GameName != "BTD5")
                 this.Close();
@@ -36,20 +37,18 @@ namespace BTDToolbox.Extra_Forms
             if(IsDisposed)
                 return;
 
-
-            this.Show();
             this.MdiParent = Main.getInstance();
-
+            this.canResize = false;
+            //this.Size = new Size(800, 450);
+            this.moveCenterScreen = true;
+            this.Show();
+            
+            
             FileInfo nkhEXE = new FileInfo(NKHook.nkhEXE);
             nkhDir = nkhEXE.FullName.Replace(nkhEXE.Name, "");
             
             PopulateUnloadedPlugings();
             PopulateLoadedPlugings();
-        }
-
-        public NKHPluginMgr(string temp): this()
-        {
-
         }
         #endregion
         
@@ -152,7 +151,6 @@ namespace BTDToolbox.Extra_Forms
 
         private void Done_Button_Click(object sender, EventArgs e)
         {
-
             this.Close();
             return;
         }

@@ -15,10 +15,11 @@ namespace Tower_Class
 
     using System.Globalization;
     using BTDToolbox.Classes;
+    using BTDToolbox.Classes.JSON_Classes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    public partial class Artist
+    public partial class Tower
     {
         [JsonProperty("AircraftList", NullValueHandling = NullValueHandling.Ignore)]
         public object[] AircraftList { get; set; }
@@ -156,9 +157,16 @@ namespace Tower_Class
         public long Duration { get; set; }
     }
 
-    public partial class Artist
+    public partial class Tower
     {
-        public static Artist FromJson(string json) => JsonConvert.DeserializeObject<Artist>(json, QuickType.Converter.Settings);
+        public static Tower FromJson(string json)
+        {
+            string text = json;
+            if (json.EndsWith(".tower"))
+                text = System.IO.File.ReadAllText(json);
+
+            return JsonConvert.DeserializeObject<Tower>(text, QuickType.Converter.Settings);
+        }
     }
 
     public partial class Album
@@ -173,9 +181,10 @@ namespace Tower_Class
 
     public static class Serialize
     {
-        public static string ToJson(this Artist self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
+        public static string ToJson(this Tower self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
         public static string ToJson(this Album self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
         public static string ToJson(this Track self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
+        public static string ToJson(this TowerSpriteUpgrade self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.JSON_Classes.Converter.Settings);
     }
 
     internal static class Converter

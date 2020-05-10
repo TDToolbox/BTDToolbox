@@ -1,5 +1,6 @@
 ﻿using BTDToolbox.Classes;
 using BTDToolbox.Extra_Forms;
+using BTDToolbox.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +31,8 @@ namespace BTDToolbox
         int Sw;
         int Sh;
         bool mov;
-        public bool enableResizing = true;
+        public bool canResize = true;
+        public bool moveCenterScreen = false;
 
         //Resize defaults
         int minWidth = 200;
@@ -60,10 +62,16 @@ namespace BTDToolbox
             close_button.Click += close_button_Click;
             this.Load += onThemedLoad;
         }
+
+        
+
         public void onThemedLoad(object sender, EventArgs e)
         {
             titleSeperator.SplitterDistance = 25;
             CheckInBounds();
+
+            if(moveCenterScreen)
+                this.Location = new Point(GeneralMethods.GetCenterScreen().X - this.Size.Width / 2 - 75, GeneralMethods.GetCenterScreen().Y - this.Size.Height / 2 - 145);
         }
         private void CheckInBounds()
         {
@@ -93,7 +101,7 @@ namespace BTDToolbox
             }
         }
         public virtual void close_button_Click(object sender, EventArgs e)
-        {
+        {            
             if (!JsonEditorHandler.AreJsonErrors())
                 this.Close();
             Main.bg.SendToBack();
@@ -195,7 +203,10 @@ namespace BTDToolbox
 
         private void ThemedForm_Resize(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
+            if (Main.getInstance() == null || this == null || this.Visible == false)
+                return;
+
+            if (Main.getInstance().InvokeRequired)
                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
             else
                 Main.getInstance().Refresh();
@@ -203,8 +214,18 @@ namespace BTDToolbox
 
         private void ThemedForm_Shown(object sender, EventArgs e)
         {
-            if (!enableResizing)
+            if (!canResize)
                 Sizer.Hide();
+        }
+
+        private void close_button_MouseDown(object sender, MouseEventArgs e)
+        {
+            close_button.BackgroundImage = Properties.Resources.new_close_button_click;
+        }
+
+        private void close_button_MouseUp(object sender, MouseEventArgs e)
+        {
+            close_button.BackgroundImage = Properties.Resources.new_close_button_2;
         }
     }
 }

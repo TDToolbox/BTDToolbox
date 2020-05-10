@@ -139,6 +139,7 @@ namespace BTDToolbox
 
         public override void close_button_Click(object sender, EventArgs e)
         {
+            ConsoleHandler.append("Hiding console.");
             Serializer.SaveConfig(this, "console");
             this.Hide();
         }

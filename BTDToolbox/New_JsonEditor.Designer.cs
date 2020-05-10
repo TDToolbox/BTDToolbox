@@ -40,6 +40,8 @@
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             this.ContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,9 +62,11 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
             this.close_button.Click += new System.EventHandler(this.Close_button_Click);
+            // 
+            // TitleBar_RightCorner
+            // 
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 3);
             // 
             // tabControl1
             // 
@@ -86,7 +90,7 @@
             this.restoreToOriginalToolStripMenuItem,
             this.openInFileExplorerToolStripMenuItem});
             this.ContextMenu.Name = "ContextMenu";
-            this.ContextMenu.Size = new System.Drawing.Size(184, 114);
+            this.ContextMenu.Size = new System.Drawing.Size(184, 92);
             this.ContextMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ContextClicked);
             // 
             // closeToolStripMenuItem
@@ -132,6 +136,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.ContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -41,6 +41,8 @@
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.consoe_tab.SuspendLayout();
             this.error_tab.SuspendLayout();
@@ -55,14 +57,11 @@
             // 
             // TitleLabel
             // 
-            this.TitleLabel.Location = new System.Drawing.Point(12, 5);
             this.TitleLabel.Size = new System.Drawing.Size(58, 16);
             this.TitleLabel.Text = "Console";
-            this.TitleLabel.Visible = false;
             // 
             // contentPanel
             // 
-            this.contentPanel.BackColor = System.Drawing.Color.Black;
             this.contentPanel.Controls.Add(this.tabControl1);
             this.contentPanel.Controls.Add(this.invoke_button);
             this.contentPanel.Controls.Add(this.invoke_textbox);
@@ -73,9 +72,13 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            this.close_button.Location = new System.Drawing.Point(748, 0);
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.close_button.Location = new System.Drawing.Point(732, 0);
+            // 
+            // TitleBar_RightCorner
+            // 
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(740, 0);
             // 
             // invoke_button
             // 
@@ -123,7 +126,7 @@
             this.consoe_tab.Padding = new System.Windows.Forms.Padding(3);
             this.consoe_tab.Size = new System.Drawing.Size(764, 349);
             this.consoe_tab.TabIndex = 0;
-            this.consoe_tab.Text = "Console";
+            this.consoe_tab.Text = "Output Log";
             // 
             // output_log
             // 
@@ -168,7 +171,7 @@
             this.ErrorLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.ErrorLog.Size = new System.Drawing.Size(770, 371);
             this.ErrorLog.TabIndex = 7;
-            this.ErrorLog.Text = "";
+            this.ErrorLog.Text = "This feature has not been implemented yet...";
             // 
             // ExportLog_Button
             // 
@@ -178,7 +181,7 @@
             this.ExportLog_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExportLog_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExportLog_Button.ForeColor = System.Drawing.Color.White;
-            this.ExportLog_Button.Location = new System.Drawing.Point(601, -1);
+            this.ExportLog_Button.Location = new System.Drawing.Point(585, -1);
             this.ExportLog_Button.Name = "ExportLog_Button";
             this.ExportLog_Button.Size = new System.Drawing.Size(141, 25);
             this.ExportLog_Button.TabIndex = 3;
@@ -200,6 +203,8 @@
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.consoe_tab.ResumeLayout(false);
             this.error_tab.ResumeLayout(false);

@@ -20,9 +20,12 @@ namespace BTDToolbox
         public SettingsWindow()
         {
             InitializeComponent();
-            this.Size = new Size(350, 500);
 
+            this.Size = new Size(350, 500);
             projectData = Serializer.Deserialize_Config();
+            
+            this.canResize = false;
+            this.moveCenterScreen = true;
             Setup();
         }
         private void Setup()

@@ -42,6 +42,8 @@
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             this.SuspendLayout();
             // 
             // titleSeperator
@@ -68,8 +70,10 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            // 
+            // Sizer
+            // 
+            this.Sizer.Location = new System.Drawing.Point(888, 409);
             // 
             // label1
             // 
@@ -78,7 +82,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(248, 19);
+            this.label1.Location = new System.Drawing.Point(236, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(364, 20);
             this.label1.TabIndex = 0;
@@ -108,6 +112,9 @@
             // 
             // UnloadedPlugin_LB
             // 
+            this.UnloadedPlugin_LB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.UnloadedPlugin_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.UnloadedPlugin_LB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UnloadedPlugin_LB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
@@ -116,7 +123,7 @@
             this.UnloadedPlugin_LB.ItemHeight = 20;
             this.UnloadedPlugin_LB.Location = new System.Drawing.Point(425, 101);
             this.UnloadedPlugin_LB.Name = "UnloadedPlugin_LB";
-            this.UnloadedPlugin_LB.Size = new System.Drawing.Size(306, 242);
+            this.UnloadedPlugin_LB.Size = new System.Drawing.Size(305, 242);
             this.UnloadedPlugin_LB.TabIndex = 3;
             // 
             // label4
@@ -126,7 +133,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(176, 39);
+            this.label4.Location = new System.Drawing.Point(175, 35);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(555, 20);
             this.label4.TabIndex = 6;
@@ -134,6 +141,9 @@
             // 
             // LoadedPlugin_LB
             // 
+            this.LoadedPlugin_LB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LoadedPlugin_LB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.LoadedPlugin_LB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LoadedPlugin_LB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
@@ -142,7 +152,7 @@
             this.LoadedPlugin_LB.ItemHeight = 20;
             this.LoadedPlugin_LB.Location = new System.Drawing.Point(46, 101);
             this.LoadedPlugin_LB.Name = "LoadedPlugin_LB";
-            this.LoadedPlugin_LB.Size = new System.Drawing.Size(306, 242);
+            this.LoadedPlugin_LB.Size = new System.Drawing.Size(305, 242);
             this.LoadedPlugin_LB.TabIndex = 7;
             // 
             // LoadPlugin_Button
@@ -189,6 +199,8 @@
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
             this.contentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -145,6 +145,21 @@
   <data name="Logo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BTD_icon_2_512x512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="newTitle_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\newTitle 2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new_close_button_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new close button 2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new_close_button_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new close button-click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new_title_corner_8_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new title corner 8_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new_title_corner_8_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new title corner 8_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="PossibleBTD5MODIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PossibleBTD5MODIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -153,6 +168,9 @@
   </data>
   <data name="Resize_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Resize_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Resize_Icon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Resize_Icon2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Splash1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Splash1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

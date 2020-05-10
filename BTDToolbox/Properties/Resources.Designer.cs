@@ -151,6 +151,56 @@ namespace BTDToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap new_close_button_2 {
+            get {
+                object obj = ResourceManager.GetObject("new_close_button_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap new_close_button_click {
+            get {
+                object obj = ResourceManager.GetObject("new_close_button_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap new_title_corner_8_left {
+            get {
+                object obj = ResourceManager.GetObject("new_title_corner_8_left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap new_title_corner_8_right {
+            get {
+                object obj = ResourceManager.GetObject("new_title_corner_8_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap newTitle_2 {
+            get {
+                object obj = ResourceManager.GetObject("newTitle_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon PossibleBTD5MODIcon {
@@ -176,6 +226,16 @@ namespace BTDToolbox.Properties {
         internal static System.Drawing.Bitmap Resize_Icon {
             get {
                 object obj = ResourceManager.GetObject("Resize_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Resize_Icon2 {
+            get {
+                object obj = ResourceManager.GetObject("Resize_Icon2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -92,6 +92,8 @@
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileViewContainer)).BeginInit();
             this.fileViewContainer.Panel1.SuspendLayout();
             this.fileViewContainer.Panel2.SuspendLayout();
@@ -119,8 +121,12 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            // 
+            // TitleBar_RightCorner
+            // 
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(740, 0);
             // 
             // imageList1
             // 
@@ -192,7 +198,7 @@
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Open_Proj_Dir});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // Open_Proj_Dir
@@ -205,19 +211,19 @@
             // Save_ToolStrip
             // 
             this.Save_ToolStrip.Name = "Save_ToolStrip";
-            this.Save_ToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.Save_ToolStrip.Size = new System.Drawing.Size(176, 22);
             this.Save_ToolStrip.Text = "Save";
             this.Save_ToolStrip.Click += new System.EventHandler(this.Save_ToolStrip_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
             // 
             // ValidateAllFiles
             // 
             this.ValidateAllFiles.Name = "ValidateAllFiles";
-            this.ValidateAllFiles.Size = new System.Drawing.Size(180, 22);
+            this.ValidateAllFiles.Size = new System.Drawing.Size(176, 22);
             this.ValidateAllFiles.Text = "Validate All Files";
             this.ValidateAllFiles.Click += new System.EventHandler(this.ValidateAllFiles_Click);
             // 
@@ -226,7 +232,7 @@
             this.ViewModifiedFiles_Button.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FindAllModifiedFles_Button});
             this.ViewModifiedFiles_Button.Name = "ViewModifiedFiles_Button";
-            this.ViewModifiedFiles_Button.Size = new System.Drawing.Size(180, 22);
+            this.ViewModifiedFiles_Button.Size = new System.Drawing.Size(176, 22);
             this.ViewModifiedFiles_Button.Text = "View Modified Files";
             this.ViewModifiedFiles_Button.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ViewModifiedFiles_Button_DropDownItemClicked);
             this.ViewModifiedFiles_Button.Click += new System.EventHandler(this.ViewModifiedFiles_Button_Click);
@@ -242,7 +248,7 @@
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(173, 6);
             // 
             // retToolStripMenuItem
             // 
@@ -250,7 +256,7 @@
             this.makeBackupOfProjectToolStripMenuItem,
             this.revertToBackupToolStripMenuItem1});
             this.retToolStripMenuItem.Name = "retToolStripMenuItem";
-            this.retToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.retToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.retToolStripMenuItem.Text = "Backup project";
             this.retToolStripMenuItem.Visible = false;
             // 
@@ -269,27 +275,27 @@
             // revertToBackupToolStripMenuItem
             // 
             this.revertToBackupToolStripMenuItem.Name = "revertToBackupToolStripMenuItem";
-            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.revertToBackupToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.revertToBackupToolStripMenuItem.Text = "Remake Project";
             this.revertToBackupToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(173, 6);
             this.toolStripSeparator2.Visible = false;
             // 
             // RenameProject_Button
             // 
             this.RenameProject_Button.Name = "RenameProject_Button";
-            this.RenameProject_Button.Size = new System.Drawing.Size(180, 22);
+            this.RenameProject_Button.Size = new System.Drawing.Size(176, 22);
             this.RenameProject_Button.Text = "Rename Project";
             this.RenameProject_Button.Click += new System.EventHandler(this.RenameProject_Button_Click);
             // 
             // DeleteProject_Button
             // 
             this.DeleteProject_Button.Name = "DeleteProject_Button";
-            this.DeleteProject_Button.Size = new System.Drawing.Size(180, 22);
+            this.DeleteProject_Button.Size = new System.Drawing.Size(176, 22);
             this.DeleteProject_Button.Text = "Delete Project";
             this.DeleteProject_Button.Click += new System.EventHandler(this.DeleteProject_Button_Click);
             // 
@@ -390,7 +396,7 @@
             this.treeView1.Location = new System.Drawing.Point(0, 27);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(251, 380);
+            this.treeView1.Size = new System.Drawing.Size(251, 377);
             this.treeView1.TabIndex = 0;
             // 
             // lastSelectedLabel
@@ -425,7 +431,7 @@
             this.saveButton.ForeColor = System.Drawing.Color.White;
             this.saveButton.Location = new System.Drawing.Point(3, 380);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(499, 27);
+            this.saveButton.Size = new System.Drawing.Size(515, 27);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save .jet";
             this.saveButton.UseVisualStyleBackColor = false;
@@ -445,7 +451,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(2, 27);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(519, 377);
+            this.listView1.Size = new System.Drawing.Size(519, 351);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -649,6 +655,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
             this.titleSeperator.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.fileViewContainer.Panel1.ResumeLayout(false);
             this.fileViewContainer.Panel1.PerformLayout();
             this.fileViewContainer.Panel2.ResumeLayout(false);
