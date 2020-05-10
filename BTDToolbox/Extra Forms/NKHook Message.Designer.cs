@@ -62,6 +62,8 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.contentPanel.Controls.Add(this.GetNKHook_Button);
             this.contentPanel.Controls.Add(this.label10);
             this.contentPanel.Controls.Add(this.label9);
@@ -74,17 +76,25 @@
             this.contentPanel.Controls.Add(this.Label1);
             this.contentPanel.Controls.Add(this.label2);
             this.contentPanel.Controls.Add(this.pictureBox1);
-            this.contentPanel.Size = new System.Drawing.Size(776, 595);
+            this.contentPanel.Size = new System.Drawing.Size(776, 510);
             // 
             // close_button
             // 
+            this.close_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.Location = new System.Drawing.Point(736, 6);
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.close_button.Location = new System.Drawing.Point(676, 8);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(788, 789);
+            this.Sizer.Location = new System.Drawing.Point(788, 1834);
+            // 
+            // TitleBar_RightCorner
+            // 
+            this.TitleBar_RightCorner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 5);
             // 
             // label2
             // 
@@ -216,7 +226,7 @@
             this.GetNKHook_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GetNKHook_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.GetNKHook_Button.ForeColor = System.Drawing.Color.White;
-            this.GetNKHook_Button.Location = new System.Drawing.Point(0, 545);
+            this.GetNKHook_Button.Location = new System.Drawing.Point(0, 460);
             this.GetNKHook_Button.Name = "GetNKHook_Button";
             this.GetNKHook_Button.Size = new System.Drawing.Size(776, 50);
             this.GetNKHook_Button.TabIndex = 13;

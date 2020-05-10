@@ -75,11 +75,7 @@ namespace BTDToolbox
             if (force) { Visible = true; BringToFront(); }
             if (notice) output_log.SelectionColor = Color.Yellow;
 
-            if(!DoesLogFileExist())
-                CreateLogFile();
-
             DateTime now = DateTime.Now;
-
 
             string secondSeperator = ":";
             if (now.Second < 10)
@@ -97,7 +93,7 @@ namespace BTDToolbox
 
                 lastMessage = log;
             }
-            catch (Exception e) { WriteToLogFile("CRAH DETECTED!   " + currentTime + " - " + ">> " + log + "\r\nException Message:   >>" + e.Message);  Environment.Exit(0); }
+            catch (Exception e) { WriteToLogFile("CRASH DETECTED!   " + currentTime + " - " + ">> " + log + "\r\nException Message:   >>" + e.Message);  Environment.Exit(0); }
         }
         
         
@@ -164,8 +160,6 @@ namespace BTDToolbox
         }
         public void WriteToLogFile(string text)
         {
-            if (!DoesLogFileExist()) CreateLogFile();
-
             string logFile = Environment.CurrentDirectory + "\\ConsoleLog.txt";
             string logText = File.ReadAllText(logFile);
 
