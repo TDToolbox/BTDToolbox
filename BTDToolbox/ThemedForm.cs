@@ -199,10 +199,12 @@ namespace BTDToolbox
 
         private void ThemedForm_Resize(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
+            if(Main.finishedLoading == true)
                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
-            else
-                Main.getInstance().Refresh();
+            /* if (this.InvokeRequired)
+                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
+             else
+                 Main.getInstance().Refresh();*/
         }
 
         private void ThemedForm_Shown(object sender, EventArgs e)

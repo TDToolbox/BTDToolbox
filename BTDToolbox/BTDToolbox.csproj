@@ -390,6 +390,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\new title corner 8_left.png" />
+    <None Include="Resources\new title corner 8_right.png" />
+    <None Include="Resources\new title corner 7_left.png" />
+    <None Include="Resources\new title corner 7_right.png" />
     <None Include="Resources\new close button-click.png" />
     <None Include="Resources\new close button 2.png" />
     <None Include="Resources\newTitle corner 5_right.png" />

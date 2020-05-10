@@ -173,29 +173,29 @@ namespace BTDToolbox.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap new_title_corner_8_left {
+            get {
+                object obj = ResourceManager.GetObject("new_title_corner_8_left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap new_title_corner_8_right {
+            get {
+                object obj = ResourceManager.GetObject("new_title_corner_8_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap newTitle_2 {
             get {
                 object obj = ResourceManager.GetObject("newTitle_2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap newTitle_corner_5 {
-            get {
-                object obj = ResourceManager.GetObject("newTitle_corner_5", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap newTitle_corner_5_right {
-            get {
-                object obj = ResourceManager.GetObject("newTitle_corner_5_right", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -24,7 +24,7 @@ namespace BTDToolbox
         public static BGForm bg;
         private static UpdateHandler update;
         string livePath = Environment.CurrentDirectory;
-
+        public static bool finishedLoading = false;
 
         //Project Variables
         public static bool exit = false;
@@ -230,11 +230,12 @@ namespace BTDToolbox
             if (JetProps.getForm(0) == null)
                 ConsoleHandler.append("No projects detected.");
             //taken from here
-            if (existingUser == true)
+            if (existingUser == false)
             {
                 FirstTimeUse();
             }
             showUpdateChangelog();
+            finishedLoading = true;
         }
         //
         //

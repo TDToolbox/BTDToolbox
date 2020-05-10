@@ -39,10 +39,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.GettingStarted_Panel = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
@@ -57,6 +57,8 @@
             // 
             // titleSeperator
             // 
+            this.titleSeperator.Size = new System.Drawing.Size(450, 500);
+            this.titleSeperator.SplitterDistance = 27;
             // 
             // TitleLabel
             // 
@@ -70,6 +72,7 @@
             this.contentPanel.Controls.Add(this.GettingStarted_Panel);
             this.contentPanel.Controls.Add(this.Info_Panel);
             this.contentPanel.Controls.Add(this.pictureBox1);
+            this.contentPanel.Size = new System.Drawing.Size(426, 643);
             // 
             // close_button
             // 
@@ -77,12 +80,12 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            this.close_button.Location = new System.Drawing.Point(1085, -2);
-            this.close_button.Size = new System.Drawing.Size(65, 22);
+            this.close_button.Location = new System.Drawing.Point(735, -2);
+            this.close_button.Size = new System.Drawing.Size(65, 35);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(1138, 311);
+            this.Sizer.Location = new System.Drawing.Point(788, 548);
             // 
             // pictureBox1
             // 
@@ -148,7 +151,7 @@
             this.Important_Panel.Controls.Add(this.label4);
             this.Important_Panel.Controls.Add(this.label1);
             this.Important_Panel.Controls.Add(this.label3);
-            this.Important_Panel.Location = new System.Drawing.Point(4, 269);
+            this.Important_Panel.Location = new System.Drawing.Point(4, 506);
             this.Important_Panel.Name = "Important_Panel";
             this.Important_Panel.Size = new System.Drawing.Size(547, 114);
             this.Important_Panel.TabIndex = 6;
@@ -207,6 +210,17 @@
             this.GettingStarted_Panel.Size = new System.Drawing.Size(547, 114);
             this.GettingStarted_Panel.TabIndex = 8;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(23, 72);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(99, 18);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "on your game";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -240,21 +254,10 @@
             this.label10.TabIndex = 4;
             this.label10.Text = "- You can easily do this by clicking \"File\" at the top, then \"New\", and click ";
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(23, 72);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(99, 18);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "on your game";
-            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(653, 372);
+            this.button1.Location = new System.Drawing.Point(303, 609);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 26);
             this.button1.TabIndex = 9;
@@ -266,7 +269,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(450, 500);
             this.Name = "First_Time_Use";
             this.Text = "First_Time_Use";
             this.titleSeperator.Panel1.ResumeLayout(false);

@@ -58,9 +58,9 @@
             this.titleSeperator.Panel1.BackColor = System.Drawing.Color.Black;
             this.titleSeperator.Panel1.BackgroundImage = global::BTDToolbox.Properties.Resources.newTitle_2;
             this.titleSeperator.Panel1.Controls.Add(this.close_button);
+            this.titleSeperator.Panel1.Controls.Add(this.pictureBox1);
             this.titleSeperator.Panel1.Controls.Add(this.TitleLabel);
             this.titleSeperator.Panel1.Controls.Add(this.TitleBarCorner);
-            this.titleSeperator.Panel1.Controls.Add(this.pictureBox1);
             // 
             // titleSeperator.Panel2
             // 
@@ -111,10 +111,10 @@
             // TitleBarCorner
             // 
             this.TitleBarCorner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.TitleBarCorner.Image = global::BTDToolbox.Properties.Resources.newTitle_corner_5;
+            this.TitleBarCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_left;
             this.TitleBarCorner.Location = new System.Drawing.Point(0, 0);
             this.TitleBarCorner.Name = "TitleBarCorner";
-            this.TitleBarCorner.Size = new System.Drawing.Size(33, 59);
+            this.TitleBarCorner.Size = new System.Drawing.Size(31, 59);
             this.TitleBarCorner.TabIndex = 0;
             this.TitleBarCorner.TabStop = false;
             // 
@@ -122,11 +122,11 @@
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(759, 0);
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox1.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
+            this.pictureBox1.Location = new System.Drawing.Point(740, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(41, 59);
+            this.pictureBox1.Size = new System.Drawing.Size(64, 228);
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 

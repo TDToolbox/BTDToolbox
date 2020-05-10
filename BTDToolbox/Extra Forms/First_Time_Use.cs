@@ -22,7 +22,7 @@ namespace BTDToolbox.Extra_Forms
             this.Location = new Point(GeneralMethods.GetCenterScreen().X - sizeX/2 - 75, GeneralMethods.GetCenterScreen().Y - sizeY/ 2 - 145);
             
             this.Refresh();
-            this.Size = new Size(sizeX, sizeY);
+            //this.Size = new Size(sizeX, sizeY);
             
         }
 
