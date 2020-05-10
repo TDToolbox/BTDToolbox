@@ -55,7 +55,6 @@
             // 
             // TitleLabel
             // 
-            this.TitleLabel.Location = new System.Drawing.Point(12, 5);
             this.TitleLabel.Size = new System.Drawing.Size(58, 16);
             this.TitleLabel.Text = "Console";
             // 
@@ -72,9 +71,9 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
-            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.close_button.Location = new System.Drawing.Point(748, 0);
+            this.close_button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.close_button_MouseDown);
             // 
             // invoke_button
             // 

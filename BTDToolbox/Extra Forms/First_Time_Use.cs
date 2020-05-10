@@ -12,7 +12,7 @@ namespace BTDToolbox.Extra_Forms
 {
     public partial class First_Time_Use : ThemedForm
     {
-        public First_Time_Use()
+        public First_Time_Use() : base()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.Manual;

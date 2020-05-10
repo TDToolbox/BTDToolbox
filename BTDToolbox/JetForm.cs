@@ -80,7 +80,7 @@ namespace BTDToolbox
                 Main.getInstance().Launch_Program_ToolStrip.Visible = true;
 
             LoadProjectFile();
-
+            this.TitleLabel.Text = "JetViewer:    |    " + CurrentProjectVariables.ProjectName;
 
             ConsoleHandler.append("Game: " + CurrentProjectVariables.GameName);
             ConsoleHandler.append("Loading Project: " + projName.ToString());
@@ -768,6 +768,7 @@ namespace BTDToolbox
         private void JetForm_Activated(object sender, EventArgs e)
         {
             LoadProjectFile();
+            this.TitleLabel.Text = "JetViewer:    |    " + CurrentProjectVariables.ProjectName;
         }
 
 

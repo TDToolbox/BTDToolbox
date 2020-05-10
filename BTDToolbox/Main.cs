@@ -230,7 +230,7 @@ namespace BTDToolbox
             if (JetProps.getForm(0) == null)
                 ConsoleHandler.append("No projects detected.");
             //taken from here
-            if (existingUser == false)
+            if (existingUser == true)
             {
                 FirstTimeUse();
             }

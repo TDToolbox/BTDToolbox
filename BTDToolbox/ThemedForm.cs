@@ -1,5 +1,6 @@
 ﻿using BTDToolbox.Classes;
 using BTDToolbox.Extra_Forms;
+using BTDToolbox.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,6 +61,9 @@ namespace BTDToolbox
             close_button.Click += close_button_Click;
             this.Load += onThemedLoad;
         }
+
+        
+
         public void onThemedLoad(object sender, EventArgs e)
         {
             titleSeperator.SplitterDistance = 25;
@@ -93,7 +97,7 @@ namespace BTDToolbox
             }
         }
         public virtual void close_button_Click(object sender, EventArgs e)
-        {
+        {            
             if (!JsonEditorHandler.AreJsonErrors())
                 this.Close();
             Main.bg.SendToBack();
@@ -205,6 +209,21 @@ namespace BTDToolbox
         {
             if (!enableResizing)
                 Sizer.Hide();
+        }
+
+        private void close_button_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void close_button_MouseDown(object sender, MouseEventArgs e)
+        {
+            BackgroundImage = Resources.JSON_Invalid;
+        }
+
+        private void close_button_MouseUp(object sender, MouseEventArgs e)
+        {
+            //BackgroundImage = Resources.new_close_button_2;
         }
     }
 }

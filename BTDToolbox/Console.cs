@@ -139,8 +139,13 @@ namespace BTDToolbox
 
         public override void close_button_Click(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "console");
-            this.Hide();
+            /*Serializer.SaveConfig(this, "console");
+            this.Hide();*/
+        }
+
+        private void close_button_MouseDown(object sender, MouseEventArgs e)
+        {
+            
         }
     }
 }
