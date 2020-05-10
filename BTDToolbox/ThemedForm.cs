@@ -60,6 +60,8 @@ namespace BTDToolbox
 
             close_button.Click += close_button_Click;
             this.Load += onThemedLoad;
+
+            
         }
 
         
@@ -199,23 +201,19 @@ namespace BTDToolbox
 
         private void ThemedForm_Resize(object sender, EventArgs e)
         {
-            if(Main.finishedLoading == true)
+            if (Main.getInstance() == null || this == null || this.Visible == false)
+                return;
+
+            if (Main.getInstance().InvokeRequired)
                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
-            /* if (this.InvokeRequired)
-                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
-             else
-                 Main.getInstance().Refresh();*/
+            else
+                Main.getInstance().Refresh();
         }
 
         private void ThemedForm_Shown(object sender, EventArgs e)
         {
             if (!enableResizing)
                 Sizer.Hide();
-        }
-
-        private void close_button_MouseCaptureChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void close_button_MouseDown(object sender, MouseEventArgs e)

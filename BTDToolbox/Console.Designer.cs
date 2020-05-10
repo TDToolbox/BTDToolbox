@@ -66,6 +66,9 @@
             this.contentPanel.Controls.Add(this.invoke_textbox);
             this.contentPanel.Location = new System.Drawing.Point(3, -29);
             this.contentPanel.Size = new System.Drawing.Size(794, 438);
+            this.contentPanel.Controls.SetChildIndex(this.invoke_textbox, 0);
+            this.contentPanel.Controls.SetChildIndex(this.invoke_button, 0);
+            this.contentPanel.Controls.SetChildIndex(this.tabControl1, 0);
             // 
             // close_button
             // 

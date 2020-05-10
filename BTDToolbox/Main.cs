@@ -69,8 +69,8 @@ namespace BTDToolbox
         public Main()
         {
             InitializeComponent();
-            
             toolbox = this;
+            
             Startup();
 
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
@@ -230,7 +230,7 @@ namespace BTDToolbox
             if (JetProps.getForm(0) == null)
                 ConsoleHandler.append("No projects detected.");
             //taken from here
-            if (existingUser == false)
+            if (existingUser == true)
             {
                 FirstTimeUse();
             }

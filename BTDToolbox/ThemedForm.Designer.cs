@@ -31,17 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThemedForm));
             this.titleSeperator = new System.Windows.Forms.SplitContainer();
             this.close_button = new System.Windows.Forms.Button();
+            this.TitleBar_RightCorner = new System.Windows.Forms.PictureBox();
             this.TitleLabel = new System.Windows.Forms.Label();
-            this.TitleBarCorner = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.TitleBar_LeftCorner = new System.Windows.Forms.PictureBox();
             this.Sizer = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TitleBarCorner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             this.SuspendLayout();
             // 
             // titleSeperator
@@ -58,9 +58,9 @@
             this.titleSeperator.Panel1.BackColor = System.Drawing.Color.Black;
             this.titleSeperator.Panel1.BackgroundImage = global::BTDToolbox.Properties.Resources.newTitle_2;
             this.titleSeperator.Panel1.Controls.Add(this.close_button);
-            this.titleSeperator.Panel1.Controls.Add(this.pictureBox1);
+            this.titleSeperator.Panel1.Controls.Add(this.TitleBar_RightCorner);
             this.titleSeperator.Panel1.Controls.Add(this.TitleLabel);
-            this.titleSeperator.Panel1.Controls.Add(this.TitleBarCorner);
+            this.titleSeperator.Panel1.Controls.Add(this.TitleBar_LeftCorner);
             // 
             // titleSeperator.Panel2
             // 
@@ -74,8 +74,7 @@
             // 
             // close_button
             // 
-            this.close_button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.close_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.close_button.BackColor = System.Drawing.Color.Transparent;
             this.close_button.BackgroundImage = global::BTDToolbox.Properties.Resources.new_close_button_2;
             this.close_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -92,9 +91,20 @@
             this.close_button.Text = "X";
             this.close_button.UseVisualStyleBackColor = false;
             this.close_button.Click += new System.EventHandler(this.close_button_Click);
-            this.close_button.MouseCaptureChanged += new System.EventHandler(this.close_button_MouseCaptureChanged);
             this.close_button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.close_button_MouseDown);
             this.close_button.MouseUp += new System.Windows.Forms.MouseEventHandler(this.close_button_MouseUp);
+            // 
+            // TitleBar_RightCorner
+            // 
+            this.TitleBar_RightCorner.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.TitleBar_RightCorner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.TitleBar_RightCorner.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.TitleBar_RightCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(740, 0);
+            this.TitleBar_RightCorner.Name = "TitleBar_RightCorner";
+            this.TitleBar_RightCorner.Size = new System.Drawing.Size(60, 59);
+            this.TitleBar_RightCorner.TabIndex = 3;
+            this.TitleBar_RightCorner.TabStop = false;
             // 
             // TitleLabel
             // 
@@ -108,27 +118,15 @@
             this.TitleLabel.TabIndex = 0;
             this.TitleLabel.Text = "Title";
             // 
-            // TitleBarCorner
+            // TitleBar_LeftCorner
             // 
-            this.TitleBarCorner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.TitleBarCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_left;
-            this.TitleBarCorner.Location = new System.Drawing.Point(0, 0);
-            this.TitleBarCorner.Name = "TitleBarCorner";
-            this.TitleBarCorner.Size = new System.Drawing.Size(31, 59);
-            this.TitleBarCorner.TabIndex = 0;
-            this.TitleBarCorner.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox1.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
-            this.pictureBox1.Location = new System.Drawing.Point(740, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 228);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.TitleBar_LeftCorner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.TitleBar_LeftCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_left;
+            this.TitleBar_LeftCorner.Location = new System.Drawing.Point(0, 0);
+            this.TitleBar_LeftCorner.Name = "TitleBar_LeftCorner";
+            this.TitleBar_LeftCorner.Size = new System.Drawing.Size(31, 59);
+            this.TitleBar_LeftCorner.TabIndex = 0;
+            this.TitleBar_LeftCorner.TabStop = false;
             // 
             // Sizer
             // 
@@ -168,8 +166,8 @@
             this.titleSeperator.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
             this.titleSeperator.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TitleBarCorner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -181,7 +179,7 @@
         public System.Windows.Forms.Panel contentPanel;
         public System.Windows.Forms.Button close_button;
         public System.Windows.Forms.Panel Sizer;
-        private System.Windows.Forms.PictureBox TitleBarCorner;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox TitleBar_LeftCorner;
+        private System.Windows.Forms.PictureBox TitleBar_RightCorner;
     }
 }

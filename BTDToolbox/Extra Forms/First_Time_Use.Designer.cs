@@ -72,7 +72,7 @@
             this.contentPanel.Controls.Add(this.GettingStarted_Panel);
             this.contentPanel.Controls.Add(this.Info_Panel);
             this.contentPanel.Controls.Add(this.pictureBox1);
-            this.contentPanel.Size = new System.Drawing.Size(426, 643);
+            this.contentPanel.Size = new System.Drawing.Size(0, 739);
             // 
             // close_button
             // 
@@ -80,12 +80,12 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Indigo;
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Purple;
-            this.close_button.Location = new System.Drawing.Point(735, -2);
-            this.close_button.Size = new System.Drawing.Size(65, 35);
+            this.close_button.Location = new System.Drawing.Point(-51, 1);
+            this.close_button.Size = new System.Drawing.Size(65, 27);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(788, 548);
+            this.Sizer.Location = new System.Drawing.Point(88, 644);
             // 
             // pictureBox1
             // 
@@ -151,7 +151,7 @@
             this.Important_Panel.Controls.Add(this.label4);
             this.Important_Panel.Controls.Add(this.label1);
             this.Important_Panel.Controls.Add(this.label3);
-            this.Important_Panel.Location = new System.Drawing.Point(4, 506);
+            this.Important_Panel.Location = new System.Drawing.Point(4, 602);
             this.Important_Panel.Name = "Important_Panel";
             this.Important_Panel.Size = new System.Drawing.Size(547, 114);
             this.Important_Panel.TabIndex = 6;
@@ -257,7 +257,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(303, 609);
+            this.button1.Location = new System.Drawing.Point(-123, 705);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 26);
             this.button1.TabIndex = 9;
