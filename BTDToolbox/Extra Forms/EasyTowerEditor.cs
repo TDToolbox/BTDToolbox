@@ -472,24 +472,29 @@ namespace BTDToolbox.Extra_Forms
             //var item = Upgrades_ListBox.SelectedIndex;
             if (Upgrades_ListBox.Items.Count > 0)
             {
-                UpgradeName_TextBox.Text = upgradenames[Upgrades_ListBox.SelectedIndex].ToString();
-                UpgradePrice_TextBox.Text = upgradePrices[Upgrades_ListBox.SelectedIndex].ToString();
-                UpgradeIcon_TextBox.Text = upgradeIcons[Upgrades_ListBox.SelectedIndex].ToString();
-                UpgradeAvatar_TextBox.Text = upgradeAvatars[Upgrades_ListBox.SelectedIndex].ToString();
+                if (upgradenames.Length - 1 >= Upgrades_ListBox.SelectedIndex)
+                    UpgradeName_TextBox.Text = upgradenames[Upgrades_ListBox.SelectedIndex].ToString();
 
-                RankToUnlockUpgrade_TextBox.Text = upgradeRanks[Upgrades_ListBox.SelectedIndex].ToString();
-                XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
+                if (upgradePrices.Length - 1 >= Upgrades_ListBox.SelectedIndex)
+                    UpgradePrice_TextBox.Text = upgradePrices[Upgrades_ListBox.SelectedIndex].ToString();
+                
+                if (upgradeIcons.Length - 1 >= Upgrades_ListBox.SelectedIndex)
+                    UpgradeIcon_TextBox.Text = upgradeIcons[Upgrades_ListBox.SelectedIndex].ToString();
+                
+                if (upgradeAvatars.Length - 1 >= Upgrades_ListBox.SelectedIndex)
+                    UpgradeAvatar_TextBox.Text = upgradeAvatars[Upgrades_ListBox.SelectedIndex].ToString();
 
-                if (game == "BTD5" || game == "BMC")
-                {
-                    if (File.Exists(loc_Path))
-                        UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
-                }
-                else if (game == "BTDB")
+                if(upgradeRanks.Length-1 >= Upgrades_ListBox.SelectedIndex)
+                    RankToUnlockUpgrade_TextBox.Text = upgradeRanks[Upgrades_ListBox.SelectedIndex].ToString();
+                
+                if (upgradeXPs.Length - 1 >= Upgrades_ListBox.SelectedIndex)
+                    XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
+
+                if (game == "BTD5" || game == "BMC")    
+                    if (File.Exists(loc_Path)) return;
+
+                if (loc_upgradeDescs.Length - 1 >= Upgrades_ListBox.SelectedIndex)
                     UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
-                else
-                    ConsoleHandler.force_append_Notice("Something went wrong and your current game was not detected. Please reload BTD Toolbox, otherwise you may encounter errors");
-
             }
         }
         private void ResetUI()
