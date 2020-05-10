@@ -180,6 +180,6 @@
         public System.Windows.Forms.Button close_button;
         public System.Windows.Forms.Panel Sizer;
         private System.Windows.Forms.PictureBox TitleBar_LeftCorner;
-        private System.Windows.Forms.PictureBox TitleBar_RightCorner;
+        public System.Windows.Forms.PictureBox TitleBar_RightCorner;
     }
 }
