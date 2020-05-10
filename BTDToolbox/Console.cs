@@ -1,4 +1,5 @@
 ﻿using BTDToolbox.Classes;
+using Microsoft.VisualBasic.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,8 @@ namespace BTDToolbox
             if (force) { Visible = true; BringToFront(); }
             if (notice) output_log.SelectionColor = Color.Yellow;
 
+            if(!DoesLogFileExist())
+                CreateLogFile();
 
             DateTime now = DateTime.Now;
 
@@ -83,7 +86,7 @@ namespace BTDToolbox
                 secondSeperator = ":0";
             
             string currentTime = now.Hour + ":" + now.Minute + secondSeperator + now.Second;
-
+            WriteToLogFile("" + currentTime + " - " + ">> " + log + "\r\n");
             try
             {
                 Invoke((MethodInvoker)delegate
@@ -94,7 +97,7 @@ namespace BTDToolbox
 
                 lastMessage = log;
             }
-            catch (Exception) { Environment.Exit(0); }
+            catch (Exception e) { WriteToLogFile("CRAH DETECTED!   " + currentTime + " - " + ">> " + log + "\r\nException Message:   >>" + e.Message);  Environment.Exit(0); }
         }
         
         
@@ -142,6 +145,37 @@ namespace BTDToolbox
             ConsoleHandler.append("Hiding console.");
             Serializer.SaveConfig(this, "console");
             this.Hide();
+        }
+
+        private bool DoesLogFileExist()
+        {
+            if (File.Exists(Environment.CurrentDirectory + "\\ConsoleLog.txt"))
+                return true;
+            return false;
+        }
+        public void CreateLogFile()
+        {
+            if (DoesLogFileExist())
+                File.Delete(Environment.CurrentDirectory + "\\ConsoleLog.txt");
+
+            File.Create(Environment.CurrentDirectory + "\\ConsoleLog.txt").Close();
+            if (console != null)
+                ConsoleHandler.append("New log file created.");
+        }
+        public void WriteToLogFile(string text)
+        {
+            if (!DoesLogFileExist()) CreateLogFile();
+
+            string logFile = Environment.CurrentDirectory + "\\ConsoleLog.txt";
+            string logText = File.ReadAllText(logFile);
+
+            if(logText.Length > 0)
+                logText += "\n";
+            logText += text;
+
+            StreamWriter stream = new StreamWriter(logFile);
+            stream.Write(logText);
+            stream.Close();
         }
     }
 }

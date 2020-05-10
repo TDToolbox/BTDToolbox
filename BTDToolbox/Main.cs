@@ -70,7 +70,6 @@ namespace BTDToolbox
         {
             InitializeComponent();
             toolbox = this;
-            
             Startup();
 
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
@@ -109,15 +108,12 @@ namespace BTDToolbox
         private void ExitHandling(object sender, EventArgs e)
         {
             exit = true;
-            if (ConsoleHandler.validateConsole())
-            {
-                if (ConsoleHandler.console.Visible)
-                    enableConsole = true;
-                else
-                    enableConsole = false;
+            ConsoleHandler.append("Closing toolbox");
+            if (ConsoleHandler.validateConsole() == false)
+                return;
 
-                Serializer.SaveConfig(this, "main");
-            }
+            enableConsole = ConsoleHandler.console.Visible;
+            Serializer.SaveConfig(this, "main");
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -136,6 +132,7 @@ namespace BTDToolbox
 
             ConsoleHandler.console = new Console();
             ConsoleHandler.console.MdiParent = this;
+            ConsoleHandler.console.CreateLogFile();
 
             if (enableConsole == true)
                 ConsoleHandler.console.Show();

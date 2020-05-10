@@ -460,7 +460,7 @@
             // name_column
             // 
             this.name_column.Text = "Name";
-            this.name_column.Width = 517;
+            this.name_column.Width = 180;
             // 
             // OneSelected_CM
             // 
