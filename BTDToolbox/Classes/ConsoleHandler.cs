@@ -12,23 +12,18 @@ namespace BTDToolbox
             if (!validateConsole())
                 return;
 
-            console.append(log);
+            console.append(log, canRepeat, force, notice);
         }
 
         public static void append(String log) => append(log, false, false, false);
         public static void append_CanRepeat(String log) => append(log, true, false, false);
         public static void append_Force(String log) => append(log, false, true, false);
+        public static void append_Force_CanRepeat(String log) => append(log, true, true, false);
         public static void append_Notice(String log) => append(log, false, false, true);
         public static void force_append_Notice(String log) => append(log, false, true, true);
+        public static void force_append_Notice_CanRepeat(String log) => append(log, true, true, true);
         
-        
-        public static void append_Force_CanRepeat(String log)
-        {
-            console.CanRepeat = true;
-            if (validateConsole())
-                console.append_Force(log);
-            console.CanRepeat = false;
-        }
+       
         public static void announcement()
         {
             if (validateConsole())

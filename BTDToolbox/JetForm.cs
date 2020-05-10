@@ -79,11 +79,13 @@ namespace BTDToolbox
             else
                 Main.getInstance().Launch_Program_ToolStrip.Visible = true;
 
+            LoadProjectFile();
+
+
             ConsoleHandler.append("Game: " + CurrentProjectVariables.GameName);
             ConsoleHandler.append("Loading Project: " + projName.ToString());
 
-
-            LoadProjectFile();
+            
             Serializer.SaveConfig(this, "game");
             Serializer.SaveConfig(this, "jet explorer");
 
