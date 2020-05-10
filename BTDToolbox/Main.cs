@@ -165,7 +165,7 @@ namespace BTDToolbox
 
         private void showUpdateChangelog()
         {
-            if (programData.recentUpdate == true)
+            if (programData.recentUpdate == false)
             {
                 var changelog = new UpdateChangelog();
                 changelog.MdiParent = this;

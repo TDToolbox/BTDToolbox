@@ -31,7 +31,7 @@ namespace BTDToolbox
         int Sw;
         int Sh;
         bool mov;
-        public bool enableResizing = true;
+        public bool canResize = true;
 
         //Resize defaults
         int minWidth = 200;
@@ -212,7 +212,7 @@ namespace BTDToolbox
 
         private void ThemedForm_Shown(object sender, EventArgs e)
         {
-            if (!enableResizing)
+            if (!canResize)
                 Sizer.Hide();
         }
 

@@ -57,9 +57,9 @@
             // 
             this.titleSeperator.Panel1.BackColor = System.Drawing.Color.Black;
             this.titleSeperator.Panel1.BackgroundImage = global::BTDToolbox.Properties.Resources.newTitle_2;
+            this.titleSeperator.Panel1.Controls.Add(this.TitleLabel);
             this.titleSeperator.Panel1.Controls.Add(this.close_button);
             this.titleSeperator.Panel1.Controls.Add(this.TitleBar_RightCorner);
-            this.titleSeperator.Panel1.Controls.Add(this.TitleLabel);
             this.titleSeperator.Panel1.Controls.Add(this.TitleBar_LeftCorner);
             // 
             // titleSeperator.Panel2
@@ -179,7 +179,7 @@
         public System.Windows.Forms.Panel contentPanel;
         public System.Windows.Forms.Button close_button;
         public System.Windows.Forms.Panel Sizer;
-        private System.Windows.Forms.PictureBox TitleBar_LeftCorner;
         public System.Windows.Forms.PictureBox TitleBar_RightCorner;
+        public System.Windows.Forms.PictureBox TitleBar_LeftCorner;
     }
 }

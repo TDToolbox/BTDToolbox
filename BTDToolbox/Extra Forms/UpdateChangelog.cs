@@ -18,7 +18,8 @@ namespace BTDToolbox
         public UpdateChangelog()
         {
             InitializeComponent();
-            
+            this.canResize = false;
+
             WebClient client = new WebClient();
             string credText = client.DownloadString("https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/toolbox%20update%20changelog");
             string[] split = credText.Split('\n');
