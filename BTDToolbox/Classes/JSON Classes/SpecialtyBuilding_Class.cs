@@ -12,6 +12,7 @@ namespace BTDToolbox.Classes.JSON_Classes
     using System.Collections.Generic;
 
     using System.Globalization;
+    using IWshRuntimeLibrary;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -181,7 +182,14 @@ namespace BTDToolbox.Classes.JSON_Classes
 
     public partial class SpecialtyBuildingClass
     {
-        public static SpecialtyBuildingClass FromJson(string json) => JsonConvert.DeserializeObject<SpecialtyBuildingClass>(json, BTDToolbox.Classes.JSON_Classes.Specialty_Converter.Settings);
+        public static SpecialtyBuildingClass FromJson(string json)
+        {
+            string text = json;
+            if (json.EndsWith(".json"))
+                text = System.IO.File.ReadAllText(json);
+
+            return JsonConvert.DeserializeObject<SpecialtyBuildingClass>(text, BTDToolbox.Classes.JSON_Classes.Specialty_Converter.Settings);
+        }
     }
 
     public static class Serialize_Specialty

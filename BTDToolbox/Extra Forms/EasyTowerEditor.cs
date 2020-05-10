@@ -22,7 +22,7 @@ namespace BTDToolbox.Extra_Forms
         public string json { get; set; }
         public string path { get; set; }
 
-        Tower_Class.Artist artist;
+        Tower_Class.Tower artist;
         bool finishedLoading = false;
         bool firstLoad = false;
         public static bool EZTower_Opened = false;
@@ -105,7 +105,7 @@ namespace BTDToolbox.Extra_Forms
             string json = File.ReadAllText(towerPath);
             if (JSON_Reader.IsValidJson(json))
             {
-                artist = Tower_Class.Artist.FromJson(json);
+                artist = Tower_Class.Tower.FromJson(json);
                 PopulateUI();
 
                 string[] split = towerPath.Split('\\');
@@ -1052,30 +1052,20 @@ namespace BTDToolbox.Extra_Forms
             string specialtyBuilding = "";
             string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
 
-            if (!Directory.Exists(projPath + "SpecialtyDefinitions")) //dir not found, return nothing
-                return specialtyBuilding;
             foreach (var x in Directory.GetFiles(projPath + "SpecialtyDefinitions"))
             {
                 string json = File.ReadAllText(x);
-                if (JSON_Reader.IsValidJson(json))
+                if (!JSON_Reader.IsValidJson(json))
+                    continue;
+
+                SpecialtyBuildingClass s = new SpecialtyBuildingClass();
+                s = SpecialtyBuildingClass.FromJson(json);
+
+                if (s != null && s.RelatedTower != null && s.RelatedTower == file)
                 {
-                    SpecialtyBuildingClass s = new SpecialtyBuildingClass();
-                    s = SpecialtyBuildingClass.FromJson(json);
-
-                    if (s != null)
-                    {
-
-                        if (s.RelatedTower != null)
-                        {
-                            //ConsoleHandler.append_CanRepeat(s.RelatedTower);
-                            if (s.RelatedTower == file)
-                            {
-                                specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
-                                towerTypeName = s.RelatedTower;
-                                break;
-                            }
-                        }
-                    }
+                    specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
+                    towerTypeName = s.RelatedTower;
+                    break;
                 }
             }
             return specialtyBuilding;
@@ -1124,14 +1114,14 @@ namespace BTDToolbox.Extra_Forms
 
             //TowerSpriteUpgradeDef
             //Attempting to get the TowerSpriteUpgradeDef from tower file
-            Tower_Class.Artist tower = new Tower_Class.Artist();
+            Tower_Class.Tower tower = new Tower_Class.Tower();
             string towerfile = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
             if (File.Exists(towerfile))
             {
                 string json = File.ReadAllText(towerfile);
                 if (JSON_Reader.IsValidJson(json))
                 {
-                    tower = Tower_Class.Artist.FromJson(json);
+                    tower = Tower_Class.Tower.FromJson(json);
                     if (tower != null)
                     {
                         if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
@@ -1212,7 +1202,6 @@ namespace BTDToolbox.Extra_Forms
                 JsonEditorHandler.OpenFile(filepath);
             this.Focus();
         }
-
         private void Open_Button_Click(object sender, EventArgs e)
         {
             //Open_Button.ForeColor = Color.Black;
@@ -1277,6 +1266,7 @@ namespace BTDToolbox.Extra_Forms
             NewTowerName_BGPanel.Show();
             NewTowerName_BGPanel.BringToFront();
             useBaseTower = false;
+            Open_Panel.Hide();
         }
 
         private void UseBaseTower_Buton_Click(object sender, EventArgs e)
@@ -1284,6 +1274,13 @@ namespace BTDToolbox.Extra_Forms
             NewTowerName_BGPanel.Show();
             NewTowerName_BGPanel.BringToFront();
             useBaseTower = true;
+            Open_Panel.Hide();
+        }
+
+        private void CancelNewTower_Button_Click(object sender, EventArgs e)
+        {
+            NewTowerName_BGPanel.Hide();
+            useBaseTower = false;
         }
     }
 }

@@ -58,7 +58,6 @@
             this.TitleLabel.Location = new System.Drawing.Point(12, 5);
             this.TitleLabel.Size = new System.Drawing.Size(58, 16);
             this.TitleLabel.Text = "Console";
-            this.TitleLabel.Visible = false;
             // 
             // contentPanel
             // 
@@ -123,7 +122,7 @@
             this.consoe_tab.Padding = new System.Windows.Forms.Padding(3);
             this.consoe_tab.Size = new System.Drawing.Size(764, 349);
             this.consoe_tab.TabIndex = 0;
-            this.consoe_tab.Text = "Console";
+            this.consoe_tab.Text = "Output Log";
             // 
             // output_log
             // 
@@ -168,7 +167,7 @@
             this.ErrorLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.ErrorLog.Size = new System.Drawing.Size(770, 371);
             this.ErrorLog.TabIndex = 7;
-            this.ErrorLog.Text = "";
+            this.ErrorLog.Text = "This feature has not been implemented yet...";
             // 
             // ExportLog_Button
             // 

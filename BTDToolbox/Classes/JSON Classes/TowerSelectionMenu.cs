@@ -46,10 +46,11 @@ namespace BTDToolbox.Classes.JSON_Classes
     {
         public static TowerSelectionMenu FromJson(string json)
         {
-            TowerSelectionMenu obj = null;
-            try { obj = JsonConvert.DeserializeObject<TowerSelectionMenu>(json, BTDToolbox.Classes.JSON_Classes.Converter.Settings); }
-            catch (Newtonsoft.Json.JsonSerializationException) { }
-            return obj;
+            string text = json;
+            if (json.EndsWith(".tower"))
+                text = System.IO.File.ReadAllText(json);
+
+            return JsonConvert.DeserializeObject<TowerSelectionMenu>(text, BTDToolbox.Classes.JSON_Classes.Converter.Settings);
         }
     }
 

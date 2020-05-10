@@ -282,8 +282,8 @@ namespace BTDToolbox
                 string json = File.ReadAllText(x);
                 if (JSON_Reader.IsValidJson(json))
                 {
-                    Tower_Class.Artist t = new Tower_Class.Artist();
-                    t = Tower_Class.Artist.FromJson(json);
+                    Tower_Class.Tower t = new Tower_Class.Tower();
+                    t = Tower_Class.Tower.FromJson(json);
                     if (t != null)
                     {
                         if (t.SpriteUpgradeDefinition != null)
@@ -400,14 +400,14 @@ namespace BTDToolbox
 
                 //TowerSpriteUpgradeDef
                 //Attempting to get the TowerSpriteUpgradeDef from tower file
-                Tower_Class.Artist tower = new Tower_Class.Artist();
+                Tower_Class.Tower tower = new Tower_Class.Tower();
                 string towerfile = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + file + ".tower";
                 if (File.Exists(towerfile))
                 {
                     string json = File.ReadAllText(towerfile);
                     if (JSON_Reader.IsValidJson(json))
                     {
-                        tower = Tower_Class.Artist.FromJson(json);
+                        tower = Tower_Class.Tower.FromJson(json);
                         if (tower != null)
                         {
                             if (tower.SpriteUpgradeDefinition == null || tower.SpriteUpgradeDefinition == "")
