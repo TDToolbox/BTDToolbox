@@ -85,6 +85,12 @@ namespace BTDToolbox
         }
         public static void CopyDirectory(string source, string destination)
         {
+            if(!Directory.Exists(source))
+            {
+                ConsoleHandler.append("Unable to copy directory. It doesn't exist");
+                return;
+            }
+
             string[] split = source.Split('\\');
             string dirname = split[split.Length - 1];
 

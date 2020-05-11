@@ -76,6 +76,10 @@
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.close_button.Location = new System.Drawing.Point(732, 0);
             // 
+            // Sizer
+            // 
+            this.Sizer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Sizer_MouseUp);
+            // 
             // TitleBar_RightCorner
             // 
             this.TitleBar_RightCorner.Location = new System.Drawing.Point(740, 0);

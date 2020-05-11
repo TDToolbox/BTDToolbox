@@ -1,6 +1,4 @@
 ﻿using Ionic.Zip;
-using Ionic.Zlib;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -8,24 +6,18 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using static System.Windows.Forms.ToolStripItem;
 using static BTDToolbox.GeneralMethods;
 using BTDToolbox.Classes;
 using BTDToolbox.Extra_Forms;
 using BTDToolbox.Classes.NewProjects;
-using BTDToolbox.Properties;
-using System.Text.RegularExpressions;
-using System.Security.Cryptography;
 
 namespace BTDToolbox
 {
     public partial class JetForm : ThemedForm
     {
         private DirectoryInfo dirInfo;
-        private Main Form;
         private string tempName;
         public string projName;
         private ContextMenuStrip treeMenu;
@@ -33,55 +25,42 @@ namespace BTDToolbox
         //Config values
         public static float jetExplorer_FontSize;
         public static int jetExplorer_SplitterWidth;
-        public static string lastProject;
-        public static bool useExternalEditor;
 
-        public JetForm(DirectoryInfo dirInfo, Main Form, string projName)
+        public JetForm(DirectoryInfo dirInfo, string projName)
         {
             InitializeComponent();
+
+            this.MdiParent = Main.getInstance();
+            this.dirInfo = dirInfo;
+            this.projName = projName;
+            LoadProjectFile();
             StartUp();
 
-            goUpButton.Font = new Font("Microsoft Sans Serif", 9);
-            this.dirInfo = dirInfo;
-            this.Form = Form;
-            this.projName = projName;
+
             Serializer.cfg.LastProject = dirInfo.FullName;
-            this.DoubleBuffered = true;
-            string gamedir = "";
-
-            initTreeMenu();
+            Serializer.SaveSettings();
 
 
-            if (projName.Contains("BTD5"))
-            {
-                Serializer.cfg.CurrentGame = "BTD5";
-                gamedir = Serializer.cfg.BTD5_Directory;
-            }
-            else if (projName.Contains("BTDB"))
-            {
-                Serializer.cfg.CurrentGame = "BTDB";
-                gamedir = Serializer.cfg.BTDB_Directory;
-            }
-            else if (projName.Contains("BMC"))
-            {
-                Serializer.cfg.CurrentGame = "BMC";
-                gamedir = Serializer.cfg.BMC_Directory;
-            }
-
-            if (gamedir == "" || gamedir == null)
+            if (!Guard.IsStringValid(CurrentProjectVariables.GamePath))
                 Main.getInstance().Launch_Program_ToolStrip.Visible = false;
             else
                 Main.getInstance().Launch_Program_ToolStrip.Visible = true;
 
-            LoadProjectFile();
-            this.TitleLabel.Text = "JetViewer:    |    " + CurrentProjectVariables.ProjectName;
 
-            ConsoleHandler.append("Game: " + projName);
+            this.TitleLabel.Text = "JetViewer:    |    " + projName;
+            ConsoleHandler.append("Game: " + CurrentProjectVariables.GameName);
             ConsoleHandler.append("Loading Project: " + projName);
 
 
-            Serializer.SaveSettings();
+            if (CurrentProjectVariables.JsonEditor_OpenedTabs != null && CurrentProjectVariables.JsonEditor_OpenedTabs.Count > 0)
+                ASkReopenPreviousFiles();
 
+            initTreeMenu();
+            IsEZEditorOpen();
+        }
+
+        private void IsEZEditorOpen()
+        {
             if (EZBloon_Editor.EZBloon_Opened == true)
                 ConsoleHandler.force_append_Notice("The EZ Bloon tool is currently opened for a different project. Please close it to avoid errors...");
 
@@ -90,23 +69,23 @@ namespace BTDToolbox
 
             if (EZCard_Editor.EZCard_Opened == true)
                 ConsoleHandler.force_append_Notice("The EZ Card tool is currently opened for a different project. Please close it to avoid errors...");
+        }
 
-
-            if (CurrentProjectVariables.JsonEditor_OpenedTabs != null && CurrentProjectVariables.JsonEditor_OpenedTabs.Count > 0)
+        private void ASkReopenPreviousFiles()
+        {
+            DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                DialogResult dialogResult = MessageBox.Show("Do you want to re-open your previous files?", "Reopen previous files?", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    foreach (string tab in CurrentProjectVariables.JsonEditor_OpenedTabs)
-                        JsonEditorHandler.OpenFile(tab);
-                }
-                else
-                {
-                    CurrentProjectVariables.JsonEditor_OpenedTabs = new List<string>();
-                    ProjectHandler.SaveProject();
-                }
+                foreach (string tab in CurrentProjectVariables.JsonEditor_OpenedTabs)
+                    JsonEditorHandler.OpenFile(tab);
+            }
+            else
+            {
+                CurrentProjectVariables.JsonEditor_OpenedTabs = new List<string>();
+                ProjectHandler.SaveProject();
             }
         }
+
         private void StartUp()
         {
             //config stuff
@@ -114,10 +93,8 @@ namespace BTDToolbox
             this.Location = new Point(Serializer.cfg.JetExplorer_PosX, Serializer.cfg.JetExplorer_PosY);
 
             this.Font = new Font("Microsoft Sans Serif", Serializer.cfg.JetExplorer_FontSize);
-            lastProject = Serializer.cfg.LastProject;
             jetExplorer_SplitterWidth = Serializer.cfg.JetExplorer_SplitterWidth;
             fileViewContainer.SplitterDistance = jetExplorer_SplitterWidth;
-            useExternalEditor = Serializer.cfg.useExternalEditor;
             
             //other setup
             this.KeyPreview = true;
@@ -140,11 +117,18 @@ namespace BTDToolbox
             else
                 projClassFolder = dirInfo.FullName;
 
-
             var files = new DirectoryInfo(projClassFolder).GetFiles("*.toolbox");
-            if (files.Count() != 1)
-                ConsoleHandler.append_Force_CanRepeat("Something went wrong. Your project file wasnt found or you had more than one. ");
-
+            if (files.Count() <= 0)
+            {
+                ConsoleHandler.append_Force_CanRepeat("Unable to find a .toolbox file in your project directory");
+                return;
+            }
+            else if (files.Count() > 1)
+            {
+                ConsoleHandler.append_Force_CanRepeat("You have more than one .toolbox file in your project directory. Unable to read project data");
+                return;
+            }    
+            
             ProjectHandler.ReadProject(files[0].FullName);
         }
         private void initTreeMenu()
@@ -888,35 +872,61 @@ namespace BTDToolbox
                 jetf = this
             };
         }
-        public void RenameProject(string newProjName)    //Musts get name from SetProjectName Form first. It will call this func
+        public void RenameProject(string newProjName, string newProjPath)    //Musts get name from SetProjectName Form first. It will call this func
         {
-            if (!File.Exists(newProjName))
+            string oldName = CurrentProjectVariables.PathToProjectFiles;
+            if(!Guard.IsStringValid(oldName) || !File.Exists(CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".toolbox"))
             {
-                string oldName = CurrentProjectVariables.PathToProjectClassFile;
-                //MessageBox.Show(newProjName);
-                CopyDirectory(oldName, newProjName);
-                DirectoryInfo dinfo = new DirectoryInfo(newProjName);
+                ConsoleHandler.append("Unable to rename project. The .toolbox file for the original project wasn't found");
+                return;
+            }
+            if (Directory.Exists(newProjPath))
+            {
+                ConsoleHandler.force_append_Notice_CanRepeat("Another project already has that name. Pick a new name and try again");
+                return;
+            }
 
-                JetForm jf = new JetForm(dinfo, Main.getInstance(), newProjName);
-                jf.MdiParent = Main.getInstance();
-                jf.Show();
+            ConsoleHandler.append("Renaming project...");
+            CopyDirectory(oldName, newProjPath + "\\" + newProjName);
+            DirectoryInfo dinfo = new DirectoryInfo(newProjPath);
 
-                try
+            if(!Directory.Exists(newProjPath + "\\" + newProjName))
+            {
+                ConsoleHandler.append("Rename project failed. failed to copy files to their new location");
+                return;
+            }
+
+            bool success = false;
+            foreach (JetForm o in JetProps.get())
+            {
+                if (o.dirInfo.FullName.Trim() == oldName.Trim())
                 {
-                    foreach (JetForm o in JetProps.get())
-                    {
-                        if (o.projName == oldName)
-                        {
-                            o.Close();
-                            DeleteDirectory(oldName);
-                        }
-                    }
-                }
-                catch
-                {
-
+                    o.Close();
+                    success = true;
+                    break;
                 }
             }
+
+            if (!success)
+                ConsoleHandler.append("Failed to close original project. Please manually close it");
+            
+            if(!File.Exists(CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".toolbox"))
+            {
+                ConsoleHandler.append("Original .toolbox file doesn't exist");
+                return;
+            }
+
+            
+            File.Copy(CurrentProjectVariables.PathToProjectClassFile + "\\" + CurrentProjectVariables.ProjectName + ".toolbox", newProjPath + "\\" +newProjName +".toolbox");
+            Directory.Delete(CurrentProjectVariables.PathToProjectClassFile, true);
+
+            CurrentProjectVariables.PathToProjectClassFile = newProjPath;
+            CurrentProjectVariables.ProjectName = newProjName;
+            CurrentProjectVariables.PathToProjectFiles = newProjPath + "\\" + newProjName;
+            ProjectHandler.SaveProject();
+
+            JetForm jf = new JetForm(dinfo, newProjName);
+            jf.Show();
         }
 
         private void DeleteProject_Button_Click(object sender, EventArgs e)

@@ -1,4 +1,7 @@
-﻿namespace BTDToolbox
+﻿using BTDToolbox.Classes.NewProjects;
+using System.Drawing;
+
+namespace BTDToolbox
 {
     partial class JetForm : ThemedForm
     {
@@ -110,8 +113,8 @@
             // 
             // TitleLabel
             // 
-            this.TitleLabel.Size = new System.Drawing.Size(67, 16);
-            this.TitleLabel.Text = "JetViewer";
+            this.TitleLabel.Size = new System.Drawing.Size(97, 16);
+            this.TitleLabel.Text = "JetViewer:    |    ";
             // 
             // contentPanel
             // 

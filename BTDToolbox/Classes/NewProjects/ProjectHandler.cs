@@ -115,9 +115,11 @@ namespace BTDToolbox.Classes.NewProjects
 
 
             string output_Cfg = JsonConvert.SerializeObject(project, Formatting.Indented);
-            if(!Guard.IsStringValid(project.PathToProjectClassFile))
+            if(!Guard.IsStringValid(project.PathToProjectClassFile) || !Directory.Exists(project.PathToProjectClassFile))
             {
-                ConsoleHandler.append_Force("Unknown error occured in the Project Handler... Project path is null or empty...");
+                ConsoleHandler.force_append_Notice_CanRepeat("WARNING!!!!! Unable to find the .toolbox file for this project! " +
+                    "Failed to save project data. This can easily make toolbox not work properly. Please contact Toolbox" +
+                    " Devs if this continues");
                 return;
             }
 

@@ -166,6 +166,15 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Project Name";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SetProjectName_KeyDown);
+            this.Controls.SetChildIndex(this.pictureBox1, 0);
+            this.Controls.SetChildIndex(this.ProjectName_TextBox, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.CreateProject_Button, 0);
+            this.Controls.SetChildIndex(this.CustomName_RadioButton, 0);
+            this.Controls.SetChildIndex(this.RandomName_RadioButton, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.CustomLocation_Button, 0);
+            this.Controls.SetChildIndex(this.UseNKH_CB, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

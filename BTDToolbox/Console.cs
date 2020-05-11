@@ -156,5 +156,10 @@ namespace BTDToolbox
             stream.Write(logText);
             stream.Close();
         }
+
+        private void Sizer_MouseUp(object sender, MouseEventArgs e)
+        {
+            output_log.ScrollToCaret();
+        }
     }
 }

@@ -114,6 +114,7 @@ namespace BTDToolbox
         //resizing event methods
         private void SizerMouseDown(object sender, MouseEventArgs e)
         {
+            titleSeperator.Hide();
             SendMessage(cancelThisOnSize, 11, 0, 0);
             this.SuspendLayout();
             mov = true;
@@ -161,7 +162,7 @@ namespace BTDToolbox
         private void SizerMouseUp(object sender, MouseEventArgs e)
         {
             mov = false;
-
+            titleSeperator.Show();
             //Top left corner
             if (this.Location.X < 0)
             {

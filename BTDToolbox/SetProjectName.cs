@@ -25,24 +25,29 @@ namespace BTDToolbox
         public SetProjectName()
         {
             InitializeComponent();
+
             gameName = CurrentProjectVariables.GameName;
 
-            if(!NKHook.CanUseNKH())
+            if (!NKHook.CanUseNKH())
             {
                 label2.Location = new Point(12, 120);
                 UseNKH_CB.Visible = false;
             }
-            if (isRenaming == false)
+
+            this.AcceptButton = CreateProject_Button;
+            this.Activate();
+            this.Show();
+            this.Shown += SetProjectName_Shown;
+        }
+
+        private void SetProjectName_Shown(object sender, EventArgs e)
+        {
+            if (isRenaming == true)
                 CreateProject_Button.Text = "Rename";
             else if (gameName == "BTDB")
                 CreateProject_Button.Text = "Continue";
             else
                 CreateProject_Button.Text = "Create Project";
-
-            this.AcceptButton = CreateProject_Button;
-            this.Activate();
-            this.Show();
-            
         }
 
         private void CreateProject_Button_Click(object sender, EventArgs e)
@@ -52,19 +57,10 @@ namespace BTDToolbox
 
         private void CreateProject()
         {
-            if (CustomName_RadioButton.Checked)
-            {
-                if (ProjectName_TextBox.TextLength == 0)
-                {
-                    MessageBox.Show("Error! You didn't enter a project name!");
-                }
-                else
-                {
-                    SubmitModName();
-                }
-            }
-            else
-                SubmitModName();
+            if (CustomName_RadioButton.Checked && ProjectName_TextBox.TextLength == 0)
+                MessageBox.Show("Error! You didn't enter a project name!");
+
+            SubmitModName();
         }
 
         public string ReturnName(string projName, string gameName)
@@ -98,7 +94,8 @@ namespace BTDToolbox
             else
                 renamePath = Environment.CurrentDirectory + "\\Projects\\" + newProjName;
 
-            jetf.RenameProject(renamePath);
+            ConsoleHandler.append("Renaming project to  " + newProjName);
+            jetf.RenameProject(newProjName, renamePath);
         }
         private void SubmitModName()
         {
@@ -109,6 +106,7 @@ namespace BTDToolbox
                 ConsoleHandler.append("You chose a random project name");
             if (isRenaming == true)
             {
+                this.Hide();
                 RenameProject();
                 this.Close();
                 return;

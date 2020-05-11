@@ -275,7 +275,7 @@ namespace BTDToolbox
                     }
                     ConsoleHandler.append("Project files created at: " + CurrentProjectVariables.PathToProjectFiles);
                     Invoke((MethodInvoker)delegate {
-                        jf = new JetForm(dinfo, Main.getInstance(), dinfo.Name);
+                        jf = new JetForm(dinfo, dinfo.Name);
                         jf.MdiParent = Main.getInstance();
                         jf.Show();
                     });

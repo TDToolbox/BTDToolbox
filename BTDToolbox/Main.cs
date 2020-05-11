@@ -47,6 +47,7 @@ namespace BTDToolbox
         public Main()
         {
             InitializeComponent();
+            Serializer.LoadSettings();
             toolbox = this;
             Startup();
 
@@ -202,7 +203,7 @@ namespace BTDToolbox
                 }
             }
 
-            JetForm jf = new JetForm(dinfo, this, dinfo.Name);
+            JetForm jf = new JetForm(dinfo, dinfo.Name);
             jf.MdiParent = this;
             jf.Show();
             Serializer.cfg.LastProject = dinfo.ToString();
@@ -244,7 +245,7 @@ namespace BTDToolbox
                     else if (path.Contains("BMC"))
                         Serializer.cfg.CurrentGame = "BMC";
 
-                    JetForm jf = new JetForm(dirInfo, this, name);
+                    JetForm jf = new JetForm(dirInfo, name);
                     jf.MdiParent = this;
                     jf.Show();
                     Serializer.SaveSettings();

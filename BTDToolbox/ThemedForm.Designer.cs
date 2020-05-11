@@ -29,9 +29,10 @@
         public void InitializeComponent()
         {
             this.titleSeperator = new System.Windows.Forms.SplitContainer();
-            this.TitleLabel = new System.Windows.Forms.Label();
             this.close_button = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TitleBar_RightCorner = new System.Windows.Forms.PictureBox();
+            this.TitleLabel = new System.Windows.Forms.Label();
             this.TitleBar_LeftCorner = new System.Windows.Forms.PictureBox();
             this.Sizer = new System.Windows.Forms.Panel();
             this.contentPanel = new System.Windows.Forms.Panel();
@@ -39,6 +40,7 @@
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
             this.titleSeperator.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).BeginInit();
             this.SuspendLayout();
@@ -56,9 +58,10 @@
             // 
             this.titleSeperator.Panel1.BackColor = System.Drawing.Color.Black;
             this.titleSeperator.Panel1.BackgroundImage = global::BTDToolbox.Properties.Resources.newTitle_2;
-            this.titleSeperator.Panel1.Controls.Add(this.TitleLabel);
             this.titleSeperator.Panel1.Controls.Add(this.close_button);
+            this.titleSeperator.Panel1.Controls.Add(this.pictureBox1);
             this.titleSeperator.Panel1.Controls.Add(this.TitleBar_RightCorner);
+            this.titleSeperator.Panel1.Controls.Add(this.TitleLabel);
             this.titleSeperator.Panel1.Controls.Add(this.TitleBar_LeftCorner);
             // 
             // titleSeperator.Panel2
@@ -70,18 +73,6 @@
             this.titleSeperator.Size = new System.Drawing.Size(800, 450);
             this.titleSeperator.SplitterDistance = 25;
             this.titleSeperator.TabIndex = 0;
-            // 
-            // TitleLabel
-            // 
-            this.TitleLabel.AutoSize = true;
-            this.TitleLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.TitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TitleLabel.ForeColor = System.Drawing.Color.White;
-            this.TitleLabel.Location = new System.Drawing.Point(12, 5);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(34, 16);
-            this.TitleLabel.TabIndex = 0;
-            this.TitleLabel.Text = "Title";
             // 
             // close_button
             // 
@@ -107,9 +98,19 @@
             this.close_button.MouseDown += new System.Windows.Forms.MouseEventHandler(this.close_button_MouseDown);
             this.close_button.MouseUp += new System.Windows.Forms.MouseEventHandler(this.close_button_MouseUp);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = global::BTDToolbox.Properties.Resources.newTitle_2;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 24);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(815, 225);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
             // TitleBar_RightCorner
             // 
-            this.TitleBar_RightCorner.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.TitleBar_RightCorner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TitleBar_RightCorner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.TitleBar_RightCorner.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.TitleBar_RightCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
@@ -118,6 +119,18 @@
             this.TitleBar_RightCorner.Size = new System.Drawing.Size(60, 59);
             this.TitleBar_RightCorner.TabIndex = 3;
             this.TitleBar_RightCorner.TabStop = false;
+            // 
+            // TitleLabel
+            // 
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.TitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TitleLabel.ForeColor = System.Drawing.Color.White;
+            this.TitleLabel.Location = new System.Drawing.Point(12, 5);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(34, 16);
+            this.TitleLabel.TabIndex = 0;
+            this.TitleLabel.Text = "Title";
             // 
             // TitleBar_LeftCorner
             // 
@@ -156,7 +169,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.titleSeperator);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -169,6 +182,7 @@
             this.titleSeperator.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).EndInit();
             this.titleSeperator.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleBar_RightCorner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleBar_LeftCorner)).EndInit();
             this.ResumeLayout(false);
@@ -184,5 +198,6 @@
         public System.Windows.Forms.Panel Sizer;
         public System.Windows.Forms.PictureBox TitleBar_RightCorner;
         public System.Windows.Forms.PictureBox TitleBar_LeftCorner;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
