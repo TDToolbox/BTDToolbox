@@ -300,7 +300,7 @@ namespace BTDToolbox
             string backupLocName = game + "_Original_LOC.xml";
             string fullBackupPath = backupDir + "\\" + backupName;
 
-            MessageBox.Show("One or more of the backup files failed to be aquired... Please wait while they are reaquired...");
+            ConsoleHandler.append("One or more of the backup files failed to be aquired... Please wait while they are reaquired...");
             ConsoleHandler.append("Aquiring new backups..");
             if (!Directory.Exists(backupDir))
             {

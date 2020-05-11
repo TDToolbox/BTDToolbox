@@ -219,7 +219,10 @@ namespace BTDToolbox
             if (Main.getInstance().InvokeRequired)
                 Invoke((MethodInvoker)delegate { Main.getInstance().Refresh(); });
             else
-                Main.getInstance().Refresh();
+                try
+                { Main.getInstance().Refresh(); }
+                catch (OutOfMemoryException) { }
+                
         }
 
         private void ThemedForm_Shown(object sender, EventArgs e)

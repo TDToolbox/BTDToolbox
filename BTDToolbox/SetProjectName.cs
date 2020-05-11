@@ -18,7 +18,7 @@ namespace BTDToolbox
         public static string projectName;
         public static string gameName;
         public bool hasClickedRandomName;
-        public bool isRenaming = false;
+        public bool isRenaming;
         public JetForm jetf;
         string customFolder;
 
@@ -27,25 +27,29 @@ namespace BTDToolbox
             InitializeComponent();
             gameName = CurrentProjectVariables.GameName;
 
-            if (gameName == "BTDB")
-                CreateProject_Button.Text = "Continue";
-            else
-                CreateProject_Button.Text = "Create Project";
-
             if(!NKHook.CanUseNKH())
             {
                 label2.Location = new Point(12, 120);
                 UseNKH_CB.Visible = false;
             }
+            if (isRenaming == false)
+                CreateProject_Button.Text = "Rename";
+            else if (gameName == "BTDB")
+                CreateProject_Button.Text = "Continue";
+            else
+                CreateProject_Button.Text = "Create Project";
 
             this.AcceptButton = CreateProject_Button;
             this.Activate();
+            this.Show();
+            
         }
 
         private void CreateProject_Button_Click(object sender, EventArgs e)
         {
             CreateProject();
         }
+
         private void CreateProject()
         {
             if (CustomName_RadioButton.Checked)
@@ -73,11 +77,29 @@ namespace BTDToolbox
                 int randName = rand.Next(1, 99999999);
                 projName = randName.ToString();
             }
-            //MessageBox.Show(projectName_Identifier + projName);
             return projectName_Identifier + projName;
         }
 
+        private bool HasCustomDestination()
+        {
+            if (Guard.IsStringValid(customFolder))
+                return true;
+            else
+                return false;
+        }
 
+        private void RenameProject()
+        {
+            string newProjName = ReturnName(ProjectName_TextBox.Text, gameName);
+            string renamePath = "";
+
+            if (HasCustomDestination())
+                renamePath = customFolder + "\\" + newProjName;
+            else
+                renamePath = Environment.CurrentDirectory + "\\Projects\\" + newProjName;
+
+            jetf.RenameProject(renamePath);
+        }
         private void SubmitModName()
         {
             
@@ -87,10 +109,9 @@ namespace BTDToolbox
                 ConsoleHandler.append("You chose a random project name");
             if (isRenaming == true)
             {
-                string temp = gameName;
-                jetf.RenameProject(ReturnName(ProjectName_TextBox.Text, gameName));
-                gameName = temp;
+                RenameProject();
                 this.Close();
+                return;
             }
 
             bool writeProj = true;

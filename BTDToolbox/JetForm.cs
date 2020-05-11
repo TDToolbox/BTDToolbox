@@ -49,8 +49,6 @@ namespace BTDToolbox
             this.DoubleBuffered = true;
             string gamedir = "";
 
-            //MessageBox.Show(dirInfo.FullName);
-
             initTreeMenu();
 
 
@@ -884,17 +882,18 @@ namespace BTDToolbox
 
         private void RenameProject_Button_Click(object sender, EventArgs e)
         {
-            var setName = new SetProjectName();
-            setName.isRenaming = true;
-            setName.Show();
-            setName.jetf = this;
+            new SetProjectName()
+            {
+                isRenaming = true,
+                jetf = this
+            };
         }
         public void RenameProject(string newProjName)    //Musts get name from SetProjectName Form first. It will call this func
         {
             if (!File.Exists(newProjName))
             {
-                string oldName = projName;
-
+                string oldName = CurrentProjectVariables.PathToProjectClassFile;
+                //MessageBox.Show(newProjName);
                 CopyDirectory(oldName, newProjName);
                 DirectoryInfo dinfo = new DirectoryInfo(newProjName);
 
