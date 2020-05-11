@@ -19,7 +19,7 @@ namespace BTDToolbox
         {
             InitializeComponent();
             this.canResize = false;
-            //this.moveCenterScreen = true;
+            this.moveCenterScreen = true;
 
             WebClient client = new WebClient();
             string credText = client.DownloadString("https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/credits.tdc");
