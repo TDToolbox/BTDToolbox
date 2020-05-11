@@ -115,6 +115,7 @@ namespace BTDToolbox.Classes.NewProjects
 
 
             string output_Cfg = JsonConvert.SerializeObject(project, Formatting.Indented);
+            ConsoleHandler.append("PATH TO PROJECT FILE"+project.PathToProjectClassFile);
             if(!Guard.IsStringValid(project.PathToProjectClassFile) || !Directory.Exists(project.PathToProjectClassFile))
             {
                 ConsoleHandler.force_append_Notice_CanRepeat("WARNING!!!!! Unable to find the .toolbox file for this project! " +

@@ -36,8 +36,8 @@ namespace BTDToolbox.Extra_Forms
         string[] loc_upgradeNames = new string[] { };
         string[] loc_upgradeDescs = new string[] { };
 
-        string game = CurrentProjectVariables.GameName;
-        string gameDir = CurrentProjectVariables.GamePath;
+        string game = "";
+        string gameDir = "";
         string[] loc_Text = new string[] { };
         string loc_Path = "";
         string loc_towerName = "";
@@ -89,6 +89,8 @@ namespace BTDToolbox.Extra_Forms
                         NewTower_Button.Visible = true;
                 }
             }
+            game = CurrentProjectVariables.GameName;
+            gameDir = CurrentProjectVariables.GamePath;
 
             this.Show();
         }
@@ -581,6 +583,16 @@ namespace BTDToolbox.Extra_Forms
         {
             if (game == "BTD5" || game == "BMC")
             {
+                if (!File.Exists(gameDir + "\\Assets\\Loc\\English.xml"))
+                {
+                    ConsoleHandler.append("Failed to find the game's English.xml file. Unable to save LOC data");
+                    return;
+                }
+                if (!File.Exists(loc_Path))
+                {
+                    ConsoleHandler.append("Failed to find stored English.xml file. Unable to save LOC data");
+                    return;
+                }
                 loc_Text = File.ReadAllLines(loc_Path);
 
                 string towerName = "";
@@ -709,18 +721,7 @@ namespace BTDToolbox.Extra_Forms
                     }
                     i++;
                 }
-                //File.WriteAllLines(Environment.CurrentDirectory + "\\NewLOC.xml", loc_Text);
-
-                string gameDir = "";
-                if (Serializer.cfg.CurrentGame == "BTD5")
-                {
-                    gameDir = Serializer.cfg.BTD5_Directory;
-                }
-                else
-                {
-                    gameDir = Serializer.cfg.BTDB_Directory;
-                }
-                File.WriteAllLines(gameDir + "\\Assets\\Loc\\English.xml", loc_Text);
+                File.WriteAllLines(gameDir + "\\Assets\\Loc\\English.xml", loc_Text);               
             }
         }
         private void ReadLoc()

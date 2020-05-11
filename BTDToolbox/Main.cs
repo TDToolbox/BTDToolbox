@@ -375,27 +375,29 @@ namespace BTDToolbox
         
         private void NewProject(string gameName)
         {
-            if (projNoGame == false)
+            if (projNoGame)
+                return;
+
+            if (isGamePathValid(gameName) == false)
             {
-                if (isGamePathValid(gameName) == false)
+                string gameDir = GetGameDir(gameName);
+                if (!Guard.IsStringValid(gameDir))
                 {
-                    string gameDir = GetGameDir(gameName);
-                    if (!Guard.IsStringValid(gameDir))
-                    {
-                        ConsoleHandler.append("The game directory wasn't found. Cancelling project creation.");
-                        return;
-                    }
-
-                    CurrentProjectVariables.GameName = gameName;
-                    CurrentProjectVariables.GamePath = gameDir;
-                    ProjectHandler.SaveProject();
-                    SaveGamePath(gameName, gameDir);
-                    Serializer.SaveSettings();
-
-                    if (!Validate_Backup(gameName))
-                        CreateBackup(gameName);
+                    ConsoleHandler.append("The game directory wasn't found. Cancelling project creation.");
+                    return;
                 }
 
+                CurrentProjectVariables.GameName = gameName;
+                CurrentProjectVariables.GamePath = gameDir;
+                
+                if(Guard.IsStringValid(CurrentProjectVariables.PathToProjectClassFile))
+                    ProjectHandler.SaveProject();
+
+                SaveGamePath(gameName, gameDir);
+                Serializer.SaveSettings();
+
+                if (!Validate_Backup(gameName))
+                    CreateBackup(gameName);
             }
 
             var setProjName = new SetProjectName();

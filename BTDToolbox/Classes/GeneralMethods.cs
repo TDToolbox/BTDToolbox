@@ -759,15 +759,24 @@ namespace BTDToolbox
 
         public static string GetGameDir(string gamename)
         {
+            ConsoleHandler.append("Attempting to aquire " + gamename + "'s game directory automatically");
             string gameDir = TryFindSteamDir(GetSteamFolderName(gamename));
-            if (Guard.IsStringValid(gameDir)) return gameDir;
+            if (Guard.IsStringValid(gameDir))
+            {
+                ConsoleHandler.append("Successfully aquired game directory for " + gamename + "!");
+                return gameDir;
+            }
             ConsoleHandler.append("Failed to automatically aquire game dir");
 
             ConsoleHandler.append("Please browse for " + Get_EXE_Name(gamename));
 
             gameDir = browseForExe(gamename);
-            if (isGamePathValid(gamename) == true) return gameDir;
-            
+            if (isGamePathValid(gamename) == true)
+            {
+                ConsoleHandler.append("The game directory you selected for " + gamename + " is valid");
+                return gameDir;
+            }
+
             ConsoleHandler.append("Theres been an error identifying your game");
             return gameDir;
         }
