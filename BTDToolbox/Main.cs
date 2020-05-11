@@ -58,8 +58,10 @@ namespace BTDToolbox
             this.versionTag.BackColor = Color.FromArgb(15, 15, 15);
             this.versionTag.Text = version;
             this.DoubleBuffered = true;
-            this.FormClosed += ExitHandling;
         }
+
+        
+
         private void Startup()
         {
             this.Size = new Size(Serializer.cfg.Main_SizeX, Serializer.cfg.Main_SizeY);
@@ -72,16 +74,6 @@ namespace BTDToolbox
             var firstUser = new First_Time_Use();
             firstUser.MdiParent = this;
             firstUser.Show();
-        }
-        private void ExitHandling(object sender, EventArgs e)
-        {
-            exit = true;
-            ConsoleHandler.append("Closing toolbox");
-            if (ConsoleHandler.validateConsole() == false)
-                return;
-
-            Serializer.cfg.EnableConsole = ConsoleHandler.console.Visible;
-            Serializer.SaveSettings();
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -171,9 +163,7 @@ namespace BTDToolbox
         }
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (New_JsonEditor.isJsonError)
-                MessageBox.Show("One or more of your files has a JSON error! If you dont fix it your mod wont work and it will crash your game");
-            Application.Exit();
+            
         }
         private void Main_Shown(object sender, EventArgs e)
         {
@@ -976,6 +966,21 @@ namespace BTDToolbox
         private void Tutorials_Button_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             Tutorials.OpenTutorial(e.ClickedItem.Text);
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ConsoleHandler.append("Closing toolbox");
+            ProjectHandler.SaveProject();
+
+            Serializer.cfg.EnableConsole = ConsoleHandler.console.Visible;
+            Serializer.SaveSettings();
+
+            if (New_JsonEditor.isJsonError)
+                MessageBox.Show("One or more of your files has a JSON error! If you dont fix it your mod wont work and it will crash your game");
+
+
+            //Application.Exit();
         }
     }
 }

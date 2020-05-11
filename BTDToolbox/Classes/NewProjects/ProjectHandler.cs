@@ -110,14 +110,8 @@ namespace BTDToolbox.Classes.NewProjects
             
             project.UseNKHook = false;
             project.DontAskAboutNKH = false;
-            if (CurrentProjectVariables.GameName == "BTD5")
-            {
-                if (NKHook.DoesNkhExist())
-                {
-                    project.UseNKHook = CurrentProjectVariables.UseNKHook;
-                    project.DontAskAboutNKH = CurrentProjectVariables.DontAskAboutNKH;
-                }    
-            }
+            project.UseNKHook = CurrentProjectVariables.UseNKHook;
+            project.DontAskAboutNKH = CurrentProjectVariables.DontAskAboutNKH;
 
 
             string output_Cfg = JsonConvert.SerializeObject(project, Formatting.Indented);

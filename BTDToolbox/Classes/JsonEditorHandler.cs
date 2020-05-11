@@ -49,6 +49,7 @@ namespace BTDToolbox.Classes
         {
             if (File.Exists(path))
             {
+                ConsoleHandler.append("Opening:  " + path.Replace(CurrentProjectVariables.PathToProjectFiles, ""));
                 if (Serializer.cfg.useExternalEditor == false)
                 {
                     ValidateEditor();
@@ -83,8 +84,11 @@ namespace BTDToolbox.Classes
             else
                 ConsoleHandler.append_CanRepeat("Could not find file in backup project... Unable to view original file");
         }
-        public static void CloseFile(string path)
+        public static void CloseFile(string path) => CloseFile(path, false);
+        public static void CloseFile(string path, bool saveOpenedFileList)
         {
+            ConsoleHandler.append("Closing:  " + path.Replace(CurrentProjectVariables.PathToProjectFiles, ""));
+            jeditor.saveOpenFileList = saveOpenedFileList;
             jeditor.CloseTab(path);
         }
         public static bool AreJsonErrors()

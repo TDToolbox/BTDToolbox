@@ -18,7 +18,7 @@ namespace BTDToolbox.Extra_Forms
             InitializeComponent();
             canResize = false;
             this.MdiParent = Main.getInstance();
-            //this.Size = new Size(800, 550);
+            this.Size = new Size(800, 550);
 
             Serializer.cfg.nkhookMsgShown = true;
             Serializer.SaveSettings();

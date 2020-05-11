@@ -49,6 +49,8 @@
             this.Replace_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Launch_Program_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.WebBrowser_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.NKHook_Github = new System.Windows.Forms.ToolStripMenuItem();
             this.bTDFontsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,6 +92,7 @@
             this.EZ_TowerEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.EZ_BloonEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.EZCard_Editor = new System.Windows.Forms.ToolStripMenuItem();
+            this.Tutorials_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restorejetToBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Restore_BTD5 = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,9 +135,6 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.nKHookSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
-            this.WebBrowser_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.Tutorials_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -323,6 +323,18 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 20);
             this.toolStripMenuItem1.Text = "Tools";
+            // 
+            // WebBrowser_Button
+            // 
+            this.WebBrowser_Button.Name = "WebBrowser_Button";
+            this.WebBrowser_Button.Size = new System.Drawing.Size(191, 22);
+            this.WebBrowser_Button.Text = "Web Browser";
+            this.WebBrowser_Button.Click += new System.EventHandler(this.WebBrowser_Button_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(188, 6);
             // 
             // toolStripMenuItem2
             // 
@@ -616,23 +628,32 @@
             // EZ_TowerEditor
             // 
             this.EZ_TowerEditor.Name = "EZ_TowerEditor";
-            this.EZ_TowerEditor.Size = new System.Drawing.Size(180, 22);
+            this.EZ_TowerEditor.Size = new System.Drawing.Size(155, 22);
             this.EZ_TowerEditor.Text = "EZ Tower editor";
             this.EZ_TowerEditor.Click += new System.EventHandler(this.EZ_TowerEditor_Click);
             // 
             // EZ_BloonEditor
             // 
             this.EZ_BloonEditor.Name = "EZ_BloonEditor";
-            this.EZ_BloonEditor.Size = new System.Drawing.Size(180, 22);
+            this.EZ_BloonEditor.Size = new System.Drawing.Size(155, 22);
             this.EZ_BloonEditor.Text = "EZ Bloon editor";
             this.EZ_BloonEditor.Click += new System.EventHandler(this.EZ_BloonEditor_Click);
             // 
             // EZCard_Editor
             // 
             this.EZCard_Editor.Name = "EZCard_Editor";
-            this.EZCard_Editor.Size = new System.Drawing.Size(180, 22);
+            this.EZCard_Editor.Size = new System.Drawing.Size(155, 22);
             this.EZCard_Editor.Text = "EZ Card editor";
             this.EZCard_Editor.Click += new System.EventHandler(this.EZCard_Editor_Click);
+            // 
+            // Tutorials_Button
+            // 
+            this.Tutorials_Button.ForeColor = System.Drawing.Color.White;
+            this.Tutorials_Button.Name = "Tutorials_Button";
+            this.Tutorials_Button.Size = new System.Drawing.Size(64, 20);
+            this.Tutorials_Button.Text = "Tutorials";
+            this.Tutorials_Button.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Tutorials_Button_DropDownItemClicked);
+            this.Tutorials_Button.Click += new System.EventHandler(this.Tutorials_Button_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -971,27 +992,6 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // WebBrowser_Button
-            // 
-            this.WebBrowser_Button.Name = "WebBrowser_Button";
-            this.WebBrowser_Button.Size = new System.Drawing.Size(191, 22);
-            this.WebBrowser_Button.Text = "Web Browser";
-            this.WebBrowser_Button.Click += new System.EventHandler(this.WebBrowser_Button_Click);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(188, 6);
-            // 
-            // Tutorials_Button
-            // 
-            this.Tutorials_Button.ForeColor = System.Drawing.Color.White;
-            this.Tutorials_Button.Name = "Tutorials_Button";
-            this.Tutorials_Button.Size = new System.Drawing.Size(64, 20);
-            this.Tutorials_Button.Text = "Tutorials";
-            this.Tutorials_Button.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Tutorials_Button_DropDownItemClicked);
-            this.Tutorials_Button.Click += new System.EventHandler(this.Tutorials_Button_Click);
-            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1010,6 +1010,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BTD Toolbox";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
             this.Load += new System.EventHandler(this.Main_Load);
             this.Shown += new System.EventHandler(this.Main_Shown);

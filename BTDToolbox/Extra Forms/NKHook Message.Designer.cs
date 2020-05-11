@@ -62,8 +62,6 @@
             // 
             // contentPanel
             // 
-            this.contentPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.contentPanel.Controls.Add(this.GetNKHook_Button);
             this.contentPanel.Controls.Add(this.label10);
             this.contentPanel.Controls.Add(this.label9);
@@ -84,15 +82,16 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.close_button.Location = new System.Drawing.Point(676, 11);
+            this.close_button.Location = new System.Drawing.Point(735, 5);
+            this.close_button.Size = new System.Drawing.Size(53, 22);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(788, 2214);
+            this.Sizer.Location = new System.Drawing.Point(788, 2309);
             // 
             // TitleBar_RightCorner
             // 
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 11);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 5);
             // 
             // label2
             // 

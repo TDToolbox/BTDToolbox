@@ -32,13 +32,10 @@ namespace BTDToolbox
             else
                 CreateProject_Button.Text = "Create Project";
 
-            if(gameName == "BTD5")
+            if(!NKHook.CanUseNKH())
             {
-                if(!NKHook.DoesNkhExist())
-                {
-                    label2.Location = new Point(12, 120);
-                    UseNKH_CB.Visible = false;
-                }
+                label2.Location = new Point(12, 120);
+                UseNKH_CB.Visible = false;
             }
 
             this.AcceptButton = CreateProject_Button;

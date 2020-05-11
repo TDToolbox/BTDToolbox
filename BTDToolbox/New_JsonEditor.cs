@@ -24,6 +24,7 @@ namespace BTDToolbox
         public static int JsonEditor_Height = 0;
         public static string selectedPath = "";
         public static bool isJsonError = false;
+        public bool saveOpenFileList = false;
         public static string readOnlyName = "_original (READ-ONLY)";
         public Point mouseClickPos;
 
@@ -150,7 +151,6 @@ namespace BTDToolbox
             tabControl1.TabPages.Add(tabPages[tabPages.Count - 1]);
 
             OpenTab(path);
-            ConsoleHandler.append_CanRepeat("Opened " + filename);
             userControls[userControls.Count - 1].FinishedLoading();
         }
         private void AddText(string path, bool isFromZip)
@@ -240,14 +240,15 @@ namespace BTDToolbox
             if(!path.Contains("Backups"))
                 CheckIfModified(path);
 
-            tabFilePaths.RemoveAt(i);
-            CurrentProjectVariables.JsonEditor_OpenedTabs.RemoveAt(i);
-            ProjectHandler.SaveProject();
+            if(!saveOpenFileList)
+            {
+                tabFilePaths.RemoveAt(i);
+                CurrentProjectVariables.JsonEditor_OpenedTabs.RemoveAt(i);
+                ProjectHandler.SaveProject();
 
-            tabPages.RemoveAt(i);
-            userControls.RemoveAt(i);
-
-            
+                tabPages.RemoveAt(i);
+                userControls.RemoveAt(i);
+            }            
 
             if (tabControl1.TabPages.Count <= 0)
                 this.Close();
@@ -311,8 +312,9 @@ namespace BTDToolbox
         }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Serializer.SaveSettings();
             ProjectHandler.SaveProject();
+            Serializer.SaveSettings();
+            
 
             foreach (string t in tabFilePaths)
             {
@@ -323,7 +325,9 @@ namespace BTDToolbox
         }
         private void Close_button_Click(object sender, EventArgs e)
         {
+            ProjectHandler.SaveProject();
             Serializer.SaveSettings();
+            
             if (JsonEditorHandler.AreJsonErrors())
             {
                 DialogResult diag = MessageBox.Show(tabControl1.SelectedTab.Text + " has a Json Error! Your mod will break if you don't fix it.\nClose anyways?", "WARNING!!", MessageBoxButtons.YesNo);

@@ -31,7 +31,7 @@ namespace BTDToolbox
             DisableUpdates_CB.Checked = Serializer.cfg.disableUpdates;
             AutoFormatJSON_CB.Checked = Serializer.cfg.autoFormatJSON;
 
-            if (NKHook.CanUseNKH())
+            if (!NKHook.CanUseNKH())
                 return;
             
             UseNKH_CB.Checked = CurrentProjectVariables.UseNKHook;

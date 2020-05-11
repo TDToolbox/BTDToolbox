@@ -22,7 +22,8 @@ namespace BTDToolbox.Extra_Forms
             int sizeY = 550;
             this.Location = new Point(GeneralMethods.GetCenterScreen().X - sizeX/2 - 75, GeneralMethods.GetCenterScreen().Y - sizeY/ 2 - 145);
             
-            this.Refresh();            
+            this.Refresh();
+            Serializer.cfg.ExistingUser = true;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -32,7 +33,7 @@ namespace BTDToolbox.Extra_Forms
 
         private void WatchTut_Button_Click(object sender, EventArgs e)
         {
-            Process.Start("https://youtu.be/nY9Cfe2O_XI?list=PLWFKnf1pcvUuGt2UQO7E5xNfVdn-IY_AQ&t=238");
+            Browser browser = new Browser(Main.getInstance(), "https://youtu.be/nY9Cfe2O_XI?list=PLWFKnf1pcvUuGt2UQO7E5xNfVdn-IY_AQ&t=238");
             this.Close();
         }
     }

@@ -194,10 +194,12 @@ namespace BTDToolbox
 
         private void JetForm_Closed(object sender, EventArgs e)
         {
+            
             Serializer.SaveSettings();
             ConsoleHandler.append("Closing JetViewer for " + projName);
             JetProps.decrement(this);
 
+            
             if (JsonEditorHandler.jeditor == null) return;
 
             if (JsonEditorHandler.jeditor.userControls == null) return;
@@ -216,7 +218,7 @@ namespace BTDToolbox
             foreach (var tab in removeUserControls)
             {
                 ConsoleHandler.append("Closing:  " + tab.path.Replace(dirInfo.FullName, ""));
-                JsonEditorHandler.CloseFile(tab.path);
+                JsonEditorHandler.CloseFile(tab.path, true);
             }
         }
 
