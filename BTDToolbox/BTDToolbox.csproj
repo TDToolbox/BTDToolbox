@@ -91,6 +91,7 @@
     <Compile Include="Classes\Sprite_Class.cs" />
     <Compile Include="Classes\SubTask_Reader.cs" />
     <Compile Include="Classes\JSON Classes\Tower_Class.cs" />
+    <Compile Include="Classes\Tutorials.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Classes\ConsoleHandler.cs" />
     <Compile Include="Classes\JSON_Reader.cs" />

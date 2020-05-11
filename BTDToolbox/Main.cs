@@ -190,22 +190,10 @@ namespace BTDToolbox
         {
             if (e.KeyCode == Keys.F5)
             {
-                if (CurrentProjectVariables.GameName == "BTD5")
-                {
-                    if (NKHook.DoesNkhExist())
-                    {
-                        if (CurrentProjectVariables.UseNKHook == false && CurrentProjectVariables.DontAskAboutNKH == false)
-                        {
-                            AlwaysUseNKH ask = new AlwaysUseNKH(true);
-                            ask.Show();
-                            return;
-                        }
-                        else if (CurrentProjectVariables.UseNKHook == true)
-                            CompileJet("launch nkh");
-                    }
-                }
-                
-                CompileJet("launch");
+                if (NKHook.CanUseNKH() && CurrentProjectVariables.UseNKHook == true)
+                    CompileJet("launch nkh");
+                else
+                    CompileJet("launch");
             }
             if (e.Control && e.KeyCode == Keys.N)
             {
@@ -374,7 +362,7 @@ namespace BTDToolbox
         }
         private void LaunchProgram_Click(object sender, EventArgs e)
         {
-            if (CurrentProjectVariables.GameName != "BTD5")
+            if(!NKHook.CanUseNKH())
                 CompileJet("launch");
         }
         private void ToggleConsole_Click(object sender, EventArgs e)
@@ -655,9 +643,8 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SplashScreen transparacyTest = new SplashScreen();
-            transparacyTest.MdiParent = this;
-            transparacyTest.Show();
+            if(!Tutorials.HasFreshTutList())
+                Tutorials.GetTutorialsList();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -1064,6 +1051,9 @@ namespace BTDToolbox
 
         private void Launch_Program_ToolStrip_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            if (!NKHook.CanUseNKH())
+                return;
+
             if(e.ClickedItem.Text == "With NKHook")
             {
                 if (NKHook.DoesNkhExist())
@@ -1089,8 +1079,7 @@ namespace BTDToolbox
             }
             if (e.ClickedItem.Text == "NKHook Plugin Manager")
             {
-                NKHPluginMgr mgr = new NKHPluginMgr();
-                
+                NKHPluginMgr mgr = new NKHPluginMgr();   
             }
         }
 
@@ -1106,6 +1095,27 @@ namespace BTDToolbox
             Browser b = new Browser("https://nkhook.pro");
             b.MdiParent = this;
             b.Show();
+        }
+
+        private void WebBrowser_Button_Click(object sender, EventArgs e)
+        {
+            Browser b = new Browser("https://youtu.be/nY9Cfe2O_XI?t=238");
+            b.MdiParent = this;
+            b.Show();
+        }
+
+        private void Tutorials_Button_Click(object sender, EventArgs e)
+        {
+            if (!Tutorials.HasFreshTutList())
+            {
+                ConsoleHandler.append("Aquiring a fresh list of availible tutorials");
+                Tutorials.GetTutorialsList();
+            }
+        }
+
+        private void Tutorials_Button_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            Tutorials.OpenTutorial(e.ClickedItem.Text);
         }
     }
 }

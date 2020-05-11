@@ -18,6 +18,8 @@ namespace BTDToolbox.Classes
         public string readURL { get; set; }
         public bool urlAquired { get; set; }
 
+        
+
         public bool checkWebsite(string URL)
         {
             try
@@ -75,6 +77,11 @@ namespace BTDToolbox.Classes
             }
             return success;
         }
+        /// <summary>
+        /// Complete method. Waits on URL then reads and returns text from it
+        /// </summary>
+        /// <param name="url">url to read text from</param>
+        /// <returns>text read off of website</returns>
         public string WaitOn_URL(string url)   //call this one to read the text from the git url
         {
             WebHandler get = new WebHandler();

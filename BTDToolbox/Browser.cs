@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BTDToolbox
 {
@@ -11,8 +13,15 @@ namespace BTDToolbox
         public Browser(string url)
         {
             InitializeComponent();
+            //MessageBox.Show(url);
             webBrowser1.Url = new Uri(url);
             this.TitleLabel.Text = "Browser";
+            
+        }
+        public Browser(Main MdiParent, string url):this(url)
+        {
+            this.MdiParent = Main.getInstance();
+            this.Show();
         }
 
         private System.Windows.Forms.WebBrowser webBrowser1;

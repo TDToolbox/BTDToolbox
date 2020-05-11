@@ -21,26 +21,28 @@ namespace BTDToolbox
         {
             InitializeComponent();
 
-            this.Size = new Size(350, 500);
-            projectData = Serializer.Deserialize_Config();
             
-            this.canResize = false;
-            this.moveCenterScreen = true;
             Setup();
         }
         private void Setup()
         {
+            this.Size = new Size(350, 500);
+            projectData = Serializer.Deserialize_Config();
+
+            this.canResize = false;
+            this.moveCenterScreen = true;
+
             EnableSplash.Checked = projectData.enableSplash;
             useExternalEditor.Checked = projectData.useExternalEditor;
             DisableUpdates_CB.Checked = projectData.disableUpdates;
             AutoFormatJSON_CB.Checked = projectData.autoFormatJSON;
 
-            if(CurrentProjectVariables.GameName == "BTD5")
-            {
-                UseNKH_CB.Checked = CurrentProjectVariables.UseNKHook;
-                UseNKH_CB.Visible = true;
-                CurrentProjSettings_Label.Visible = true;
-            }
+            if (NKHook.CanUseNKH())
+                return;
+            
+            UseNKH_CB.Checked = CurrentProjectVariables.UseNKHook;
+            UseNKH_CB.Visible = true;
+            CurrentProjSettings_Label.Visible = true;
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {

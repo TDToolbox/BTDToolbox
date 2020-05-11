@@ -185,7 +185,9 @@ namespace BTDToolbox
         private void JetForm_Shown(object sender, EventArgs e)
         {
             Serializer.SaveConfig(this, "jet explorer");
-            HandleNKH();
+            
+            if (NKHook.CanUseNKH())
+                HandleNKH();
         }
         public void openDirWindow()
         {

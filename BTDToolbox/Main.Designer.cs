@@ -48,8 +48,6 @@
             this.Find_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Replace_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Launch_Program_ToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.LaunchWIthNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.LaunchNoNKH_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.NKHook_Github = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,8 +130,11 @@
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.versionTag = new System.Windows.Forms.Label();
             this.nKHookSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionTag = new System.Windows.Forms.Label();
+            this.WebBrowser_Button = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.Tutorials_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -148,7 +149,8 @@
             this.viewToolStripMenuItem1,
             this.EZ_Tools,
             this.helpToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.debugToolStripMenuItem,
+            this.Tutorials_Button});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1483, 24);
@@ -292,9 +294,6 @@
             // 
             // Launch_Program_ToolStrip
             // 
-            this.Launch_Program_ToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LaunchWIthNKH_Button,
-            this.LaunchNoNKH_Button});
             this.Launch_Program_ToolStrip.ForeColor = System.Drawing.Color.White;
             this.Launch_Program_ToolStrip.Name = "Launch_Program_ToolStrip";
             this.Launch_Program_ToolStrip.Size = new System.Drawing.Size(73, 20);
@@ -302,21 +301,11 @@
             this.Launch_Program_ToolStrip.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Launch_Program_ToolStrip_DropDownItemClicked);
             this.Launch_Program_ToolStrip.Click += new System.EventHandler(this.LaunchProgram_Click);
             // 
-            // LaunchWIthNKH_Button
-            // 
-            this.LaunchWIthNKH_Button.Name = "LaunchWIthNKH_Button";
-            this.LaunchWIthNKH_Button.Size = new System.Drawing.Size(165, 22);
-            this.LaunchWIthNKH_Button.Text = "With NKHook";
-            // 
-            // LaunchNoNKH_Button
-            // 
-            this.LaunchNoNKH_Button.Name = "LaunchNoNKH_Button";
-            this.LaunchNoNKH_Button.Size = new System.Drawing.Size(165, 22);
-            this.LaunchNoNKH_Button.Text = "Without NKHook";
-            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.WebBrowser_Button,
+            this.toolStripSeparator10,
             this.toolStripMenuItem2,
             this.NKHook_Github,
             this.bTDFontsToolStripMenuItem,
@@ -627,21 +616,21 @@
             // EZ_TowerEditor
             // 
             this.EZ_TowerEditor.Name = "EZ_TowerEditor";
-            this.EZ_TowerEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_TowerEditor.Size = new System.Drawing.Size(180, 22);
             this.EZ_TowerEditor.Text = "EZ Tower editor";
             this.EZ_TowerEditor.Click += new System.EventHandler(this.EZ_TowerEditor_Click);
             // 
             // EZ_BloonEditor
             // 
             this.EZ_BloonEditor.Name = "EZ_BloonEditor";
-            this.EZ_BloonEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_BloonEditor.Size = new System.Drawing.Size(180, 22);
             this.EZ_BloonEditor.Text = "EZ Bloon editor";
             this.EZ_BloonEditor.Click += new System.EventHandler(this.EZ_BloonEditor_Click);
             // 
             // EZCard_Editor
             // 
             this.EZCard_Editor.Name = "EZCard_Editor";
-            this.EZCard_Editor.Size = new System.Drawing.Size(155, 22);
+            this.EZCard_Editor.Size = new System.Drawing.Size(180, 22);
             this.EZCard_Editor.Text = "EZ Card editor";
             this.EZCard_Editor.Click += new System.EventHandler(this.EZCard_Editor_Click);
             // 
@@ -962,6 +951,13 @@
             this.toolStripMenuItem3.Text = "Browser";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
+            // nKHookSiteToolStripMenuItem
+            // 
+            this.nKHookSiteToolStripMenuItem.Name = "nKHookSiteToolStripMenuItem";
+            this.nKHookSiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nKHookSiteToolStripMenuItem.Text = "NKHook Site";
+            this.nKHookSiteToolStripMenuItem.Click += new System.EventHandler(this.nKHookSiteToolStripMenuItem_Click);
+            // 
             // versionTag
             // 
             this.versionTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -975,12 +971,26 @@
             this.versionTag.TabIndex = 3;
             this.versionTag.Text = "null";
             // 
-            // nKHookSiteToolStripMenuItem
+            // WebBrowser_Button
             // 
-            this.nKHookSiteToolStripMenuItem.Name = "nKHookSiteToolStripMenuItem";
-            this.nKHookSiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.nKHookSiteToolStripMenuItem.Text = "NKHook Site";
-            this.nKHookSiteToolStripMenuItem.Click += new System.EventHandler(this.nKHookSiteToolStripMenuItem_Click);
+            this.WebBrowser_Button.Name = "WebBrowser_Button";
+            this.WebBrowser_Button.Size = new System.Drawing.Size(191, 22);
+            this.WebBrowser_Button.Text = "Web Browser";
+            this.WebBrowser_Button.Click += new System.EventHandler(this.WebBrowser_Button_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(188, 6);
+            // 
+            // Tutorials_Button
+            // 
+            this.Tutorials_Button.ForeColor = System.Drawing.Color.White;
+            this.Tutorials_Button.Name = "Tutorials_Button";
+            this.Tutorials_Button.Size = new System.Drawing.Size(64, 20);
+            this.Tutorials_Button.Text = "Tutorials";
+            this.Tutorials_Button.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Tutorials_Button_DropDownItemClicked);
+            this.Tutorials_Button.Click += new System.EventHandler(this.Tutorials_Button_Click);
             // 
             // Main
             // 
@@ -1115,10 +1125,11 @@
         private System.Windows.Forms.ToolStripMenuItem restoreBMCLocToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem forBMCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bMCDirectoryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem LaunchWIthNKH_Button;
-        private System.Windows.Forms.ToolStripMenuItem LaunchNoNKH_Button;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem nKHookSiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem WebBrowser_Button;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        public System.Windows.Forms.ToolStripMenuItem Tutorials_Button;
     }
 }
 

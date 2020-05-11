@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTDToolbox.Classes.NewProjects;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -22,13 +23,19 @@ namespace BTDToolbox.Classes
             }
             return false;
         }
-        /*public static bool CanUseNKH()
+        public static bool CanUseNKH()
         {
             if (!Main.canUseNKH)
                 return false;
 
-            if()
-        }*/
+            if (CurrentProjectVariables.GameName != "BTD5")
+                return false;
+
+            if (!DoesNkhExist())
+                return false;
+
+            return true;
+        }
         public static void LaunchNKH()
         {
             if(!DoesNkhExist())

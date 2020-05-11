@@ -267,13 +267,9 @@ namespace BTDToolbox.Extra_Forms
                             if (diag == DialogResult.Yes)
                             {
                                 if (game == "BTD5")
-                                {
                                     GeneralMethods.SteamValidate("BTD5");
-                                }
                                 else
-                                {
                                     GeneralMethods.SteamValidate("BMC");
-                                }
                             }
                             else
                             {

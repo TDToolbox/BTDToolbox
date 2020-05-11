@@ -27,13 +27,7 @@ namespace BTDToolbox
 
         private void Submit()
         {
-            if(Launch == true)
-            {
-                if(useNKHDefault)
-                    GeneralMethods.CompileJet("launch nkh");
-                else
-                    GeneralMethods.CompileJet("launch");
-            }
+            GeneralMethods.CompileJet("launch nkh");
             this.Close();
         }
         private void No_Button_Click(object sender, EventArgs e)
