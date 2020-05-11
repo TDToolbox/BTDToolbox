@@ -285,7 +285,6 @@
     <Compile Include="Extra Forms\PerPixelAlphaForm.Designer.cs">
       <DependentUpon>PerPixelAlphaForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ProjectConfig.cs" />
     <Compile Include="Classes\SerializeOps.cs" />
     <Compile Include="SetProjectName.cs">
       <SubType>Form</SubType>

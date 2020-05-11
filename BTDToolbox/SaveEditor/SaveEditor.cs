@@ -19,9 +19,9 @@ namespace BTDToolbox.SaveEditor
         {
             string save = "";
             if (game == "BTD5")
-                save = Serializer.Deserialize_Config().SavePathBTD5 + "\\Profile.save";
+                save = Serializer.cfg.SavePathBTD5 + "\\Profile.save";
             if (game == "BTDB")
-                save = Serializer.Deserialize_Config().SavePathBTDB + "\\Profile.save";
+                save = Serializer.cfg.SavePathBTDB + "\\Profile.save";
 
             if (browsedSave != "" && browsedSave != null)
             {
@@ -63,12 +63,12 @@ namespace BTDToolbox.SaveEditor
             if (game == "BTD5")
             {
                 unencryptedSave = savemodDir + "\\BTD5_Profile.save";
-                encryptedSave = Serializer.Deserialize_Config().SavePathBTD5 + "\\Profile.save";
+                encryptedSave = Serializer.cfg.SavePathBTD5 + "\\Profile.save";
             }
             if (game == "BTDB")
             {
                 unencryptedSave = savemodDir + "\\BTDB_Profile.save";
-                encryptedSave = Serializer.Deserialize_Config().SavePathBTDB + "\\Profile.save";
+                encryptedSave = Serializer.cfg.SavePathBTDB + "\\Profile.save";
             }
             if (game == "UnknownGame")
             {

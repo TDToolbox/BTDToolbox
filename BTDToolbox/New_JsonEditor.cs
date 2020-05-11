@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
 using Ionic.Zip;
 using System.Text.RegularExpressions;
@@ -33,7 +32,6 @@ namespace BTDToolbox
         public List<string> tabFilePaths;
         public List<JsonEditor_Instance> userControls;
 
-        ConfigFile programData;
         public New_JsonEditor()
         {
             InitializeComponent();
@@ -45,10 +43,8 @@ namespace BTDToolbox
             this.Font = new Font("Consolas", 11);
             JsonEditor_Width = tabControl1.Width;
             JsonEditor_Height = tabControl1.Height;
-
-            programData = Serializer.Deserialize_Config();
-            this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
-            this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
+            this.Size = new Size(Serializer.cfg.JSON_Editor_SizeX, Serializer.cfg.JSON_Editor_SizeY);
+            this.Location = new Point(Serializer.cfg.JSON_Editor_PosX, Serializer.cfg.JSON_Editor_PosY);
 
             
 
@@ -315,7 +311,7 @@ namespace BTDToolbox
         }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor");
+            Serializer.SaveSettings();
             ProjectHandler.SaveProject();
 
             foreach (string t in tabFilePaths)
@@ -327,7 +323,7 @@ namespace BTDToolbox
         }
         private void Close_button_Click(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor");
+            Serializer.SaveSettings();
             if (JsonEditorHandler.AreJsonErrors())
             {
                 DialogResult diag = MessageBox.Show(tabControl1.SelectedTab.Text + " has a Json Error! Your mod will break if you don't fix it.\nClose anyways?", "WARNING!!", MessageBoxButtons.YesNo);

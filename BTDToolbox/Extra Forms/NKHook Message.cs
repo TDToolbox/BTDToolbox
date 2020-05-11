@@ -20,8 +20,8 @@ namespace BTDToolbox.Extra_Forms
             this.MdiParent = Main.getInstance();
             //this.Size = new Size(800, 550);
 
-            Serializer.nkhookMsgShown = true;
-            Serializer.SaveSmallSettings("nkhookMSG");
+            Serializer.cfg.nkhookMsgShown = true;
+            Serializer.SaveSettings();
         }
 
         private void NKHook_Message_Load(object sender, EventArgs e)

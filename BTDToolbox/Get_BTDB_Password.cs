@@ -21,7 +21,7 @@ namespace BTDToolbox
         public bool isExtracting { get; set; }
         public bool launch { get; set; }
         string savedProjPass = "";
-        string savedSettingsPass = Serializer.Deserialize_Config().battlesPass;
+        string savedSettingsPass = Serializer.cfg.battlesPass;
         public Get_BTDB_Password()
         {
             InitializeComponent();
@@ -95,7 +95,7 @@ namespace BTDToolbox
                 if(Dont_Ask_Again_Checkbox.Checked)
                 {
                     ZipForm.rememberedPassword = Password_TextBox.Text;
-                    Serializer.SaveSmallSettings("battlesPass");
+                    Serializer.SaveSettings();
                 }
 
                 var zip = new ZipForm();

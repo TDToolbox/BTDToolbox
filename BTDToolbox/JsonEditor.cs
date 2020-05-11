@@ -14,8 +14,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
-
 
 namespace BTDToolbox
 {
@@ -39,8 +37,6 @@ namespace BTDToolbox
         public static int maxLC = 1;
 
         //Congif variables
-        //JsonEditor_Config jsonEditorConfig;
-        ConfigFile programData;
         private ContextMenuStrip selMenu;
         private ContextMenuStrip highlightMenu;
         public static bool jsonError;
@@ -54,7 +50,7 @@ namespace BTDToolbox
         public JsonEditor(string Path)
         {
             InitializeComponent();
-            Deserialize_Config();
+            Serializer.SaveSettings();
             StartUp();
 
             initSelContextMenu();
@@ -102,10 +98,10 @@ namespace BTDToolbox
         }
         private void StartUp()
         {
-            this.Size = new Size(programData.JSON_Editor_SizeX, programData.JSON_Editor_SizeY);
-            this.Location = new Point(programData.JSON_Editor_PosX, programData.JSON_Editor_PosY);
+            this.Size = new Size(Serializer.cfg.JSON_Editor_SizeX, Serializer.cfg.JSON_Editor_SizeY);
+            this.Location = new Point(Serializer.cfg.JSON_Editor_PosX, Serializer.cfg.JSON_Editor_PosY);
 
-            jsonEditorFont = programData.JSON_Editor_FontSize;
+            jsonEditorFont = Serializer.cfg.JSON_Editor_FontSize;
             Font newfont = new Font("Consolas", jsonEditorFont);
             tB_line.Font = newfont;
             Editor_TextBox.Font = newfont;
@@ -123,10 +119,7 @@ namespace BTDToolbox
             else
                 EZBoon_Button.Visible = false;
         }
-        private void Deserialize_Config()
-        {
-            programData = Serializer.Deserialize_Config();
-        }
+
         private void EditorLoading(object sender, EventArgs e)
         {
             tB_line.Font = Editor_TextBox.Font;
@@ -182,7 +175,7 @@ namespace BTDToolbox
         }
         private void exitHandling(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor");
+            Serializer.SaveSettings();
             JsonProps.decrement(this);
         }
         private void Editor_TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -393,7 +386,7 @@ namespace BTDToolbox
         }
         private void JsonEditor_Load(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "json editor");
+            Serializer.SaveSettings();
         }
         private void ShowReplaceMenu_Button_Click(object sender, EventArgs e)
         {

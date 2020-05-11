@@ -35,7 +35,7 @@ namespace BTDToolbox.Extra_Forms
         public static bool EZCard_Opened = false;
         public string[] startingCards_array = new string[0];
 
-        string game = Serializer.Deserialize_Config().CurrentGame;
+        string game = Serializer.cfg.CurrentGame;
 
         public EZCard_Editor()
         {
@@ -416,53 +416,49 @@ namespace BTDToolbox.Extra_Forms
         {
             if (game == "BTDB")
             {
-                if (Main.projName != "" && Main.projName != null)
-                {
-                    Game_Label.Text = "BTDB";
-                    string cardPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions";
-                    var cardFiles = Directory.GetFiles(cardPath);
-                    string[] cards_length2 = new string[0];
-                    string[] cards_length3 = new string[0];
-
-                    foreach (string file in cardFiles)
-                    {
-                        string[] split = file.Split('\\');
-                        string filename = split[split.Length - 1].Replace("\\", "");
-
-                        if (filename.EndsWith(".json"))
-                        {
-                            if (filename.Replace(".json","").Length == 1)
-                            {
-                                if (!CardFiles_ComboBox.Items.Contains(filename.Replace(".json", "")))
-                                    CardFiles_ComboBox.Items.Add("Card " + filename.Replace(".json", ""));
-                            }
-                            else if (filename.Replace(".json", "").Length == 2)
-                            {
-                                Array.Resize(ref cards_length2, cards_length2.Length + 1);
-                                cards_length2[cards_length2.Length - 1] = "Card " + filename.Replace(".json", "");
-                            }
-                            else if (filename.Replace(".json", "").Length == 3)
-                            {
-                                Array.Resize(ref cards_length3, cards_length3.Length + 1);
-                                cards_length3[cards_length3.Length - 1] = "Card " + filename.Replace(".json", "");
-                            }
-                        }
-                    }
-                    CardFiles_ComboBox.Items.AddRange(cards_length2);
-                    CardFiles_ComboBox.Items.AddRange(cards_length3);
-                    CardFiles_ComboBox.SelectedIndex = 0;
-                }
-                else
-                {
-                    ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
-                    this.Close();
-                }
-            }
-            else
-            {
                 ConsoleHandler.force_append_Notice("Error! This program only works for BTD Battles. Please open a BTD Battles project and try again.");
                 this.Close();
             }
+
+            if (!Guard.IsStringValid(Serializer.cfg.LastProject))
+            {
+                ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
+                this.Close();
+            }
+
+            Game_Label.Text = "BTDB";
+            string cardPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions";
+            var cardFiles = Directory.GetFiles(cardPath);
+            string[] cards_length2 = new string[0];
+            string[] cards_length3 = new string[0];
+
+            foreach (string file in cardFiles)
+            {
+                string[] split = file.Split('\\');
+                string filename = split[split.Length - 1].Replace("\\", "");
+
+                if (filename.EndsWith(".json"))
+                {
+                    if (filename.Replace(".json", "").Length == 1)
+                    {
+                        if (!CardFiles_ComboBox.Items.Contains(filename.Replace(".json", "")))
+                            CardFiles_ComboBox.Items.Add("Card " + filename.Replace(".json", ""));
+                    }
+                    else if (filename.Replace(".json", "").Length == 2)
+                    {
+                        Array.Resize(ref cards_length2, cards_length2.Length + 1);
+                        cards_length2[cards_length2.Length - 1] = "Card " + filename.Replace(".json", "");
+                    }
+                    else if (filename.Replace(".json", "").Length == 3)
+                    {
+                        Array.Resize(ref cards_length3, cards_length3.Length + 1);
+                        cards_length3[cards_length3.Length - 1] = "Card " + filename.Replace(".json", "");
+                    }
+                }
+            }
+            CardFiles_ComboBox.Items.AddRange(cards_length2);
+            CardFiles_ComboBox.Items.AddRange(cards_length3);
+            CardFiles_ComboBox.SelectedIndex = 0;
         }
         private void CardFiles_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {

@@ -65,7 +65,7 @@ namespace BTDToolbox.Classes.NewProjects
             string json = File.ReadAllText(projFile);
             project = JsonConvert.DeserializeObject<ProjectClass.ProjectFile>(json);
 
-            CurrentProjectVariables.ProjectName = project.ProjectName.Replace("\\\\", "\\");
+            CurrentProjectVariables.ProjectName = project.ProjectName.Replace("\\", "");
             CurrentProjectVariables.PathToProjectFiles = project.PathToProjectFiles.Replace("\\\\", "\\");
             CurrentProjectVariables.PathToProjectClassFile = project.PathToProjectClassFile.Replace("\\\\", "\\");
             CurrentProjectVariables.GameName = project.GameName;

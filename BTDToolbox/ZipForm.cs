@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.GeneralMethods;
-using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
 using BTDToolbox.Classes;
 
@@ -28,7 +27,6 @@ namespace BTDToolbox
         public static string savedExportPath = "";
 
         //Config variables
-        ConfigFile programData;
         string jetName = "";
         public string gameDir;
         public string gameName;
@@ -64,7 +62,6 @@ namespace BTDToolbox
         }
         private void StartUp()
         {
-            programData = DeserializeConfig();
             //string std = DeserializeConfig().CurrentGame;
 
             gameName = CurrentProjectVariables.GameName;
@@ -132,7 +129,7 @@ namespace BTDToolbox
                         if(rememberedPassword != null && rememberedPassword != "")
                         {
                             password = rememberedPassword;
-                            Serializer.SaveSmallSettings("battlesPass");
+                            Serializer.SaveSettings();
                         }
                         backgroundThread = new Thread(Extract_OnThread);
                         backgroundThread.Start();
@@ -221,11 +218,11 @@ namespace BTDToolbox
                     {
                         string gamed = "";
                         if (gameName == "BTD5")
-                            gamed = Serializer.Deserialize_Config().BTD5_Directory;
+                            gamed = Serializer.cfg.BTD5_Directory;
                         else if (gameName == "BTDB")
-                            gamed = Serializer.Deserialize_Config().BTDB_Directory;
+                            gamed = Serializer.cfg.BTDB_Directory;
                         else if (gameName == "BMC")
-                            gamed = Serializer.Deserialize_Config().BMC_Directory;
+                            gamed = Serializer.cfg.BMC_Directory;
 
                         //they should have a backup jet of gamed not invalid. create backup proj
                         if (error == false && gamed != "" && gamed != null)
@@ -330,7 +327,7 @@ namespace BTDToolbox
         {
             if (!IsGameRunning(gameName))
             {
-                this.Text = "Compiling..";
+                this.Text = "Compiling " + CurrentProjectVariables.ProjectName;
                 Filename_TB.Text = ReturnJetName(gameName);
 
                 if (gameName == "BTDB")
@@ -339,7 +336,7 @@ namespace BTDToolbox
                     if (rememberedPassword != null && rememberedPassword != "")
                     {
                         password = rememberedPassword;
-                        Serializer.SaveSmallSettings("battlesPass");
+                        Serializer.SaveSettings();
                         CurrentProjectVariables.JetPassword = password;
                         ProjectHandler.SaveProject();
                     }
@@ -397,8 +394,8 @@ namespace BTDToolbox
 
                 if (dir != "\\Assets\\" + jetName)
                 {
-                    if (DeserializeConfig().LastProject == null)
-                        Serializer.SaveConfig(jf, "jet explorer");
+                    if (!Guard.IsStringValid(Serializer.cfg.LastProject))
+                        Serializer.SaveSettings();
 
                     DirectoryInfo projDir = new DirectoryInfo(CurrentProjectVariables.PathToProjectFiles);
                     if (Directory.Exists(projDir.ToString()))
@@ -554,7 +551,7 @@ namespace BTDToolbox
 
         public static void CreateAssetBundleJet(string exportPath)
         {
-            string defaultLocation = Serializer.Deserialize_Config().BMC_Directory + "\\AssetBundles";
+            string defaultLocation = Serializer.cfg.BMC_Directory + "\\AssetBundles";
             ZipFile zip = new ZipFile();
             zip.AddDirectory(defaultLocation, "");
             zip.Save(exportPath);

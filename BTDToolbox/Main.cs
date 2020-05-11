@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using static BTDToolbox.GeneralMethods;
-using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
 
 namespace BTDToolbox
@@ -21,30 +20,14 @@ namespace BTDToolbox
         public static string version = "Toolbox 0.1.4";
         public static bool canUseNKH = false;
 
-        public static string projectFilePath = "";
+        //public static string projectFilePath = "";
         private static Main toolbox;
         public static BGForm bg;
         private static UpdateHandler update;
-        string livePath = Environment.CurrentDirectory;
         public static bool finishedLoading = false;
 
         //Project Variables
-        public static bool exit = false;
-
-
-        //Config variables
-        ConfigFile cfgFile;
-        bool existingUser = true;
-        public string lastProject;
-        public static string projName;
-        public static string gameName;
-        public static string BTD5_Dir;
-        public static string BTDB_Dir;
-        public static string BMC_Dir;
-        public static bool disableUpdates = false;
-        public static bool autoFormatJSON = true;
-        public static bool enableConsole;
-        
+        public static bool exit = false;        
         bool projNoGame = false;
 
         // Win32 Constants
@@ -57,13 +40,6 @@ namespace BTDToolbox
         [DllImport("user32.dll")]
         private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);
         private const int WM_NCCALCSIZE = 0x83;
-
-        /*//private const int SB_BOTH = 3;
-        private const int WM_NCCALCSIZE = 0x83;
-        [DllImport("user32.dll")]
-        private static extern int ShowScrollBar(IntPtr hWnd, int wBar, int bShow);*/
-
-
 
         //
         //Initialize window
@@ -86,22 +62,10 @@ namespace BTDToolbox
         }
         private void Startup()
         {
-            cfgFile = DeserializeConfig();
-            existingUser = cfgFile.ExistingUser;
-
-            this.Size = new Size(cfgFile.Main_SizeX, cfgFile.Main_SizeY);
+            this.Size = new Size(Serializer.cfg.Main_SizeX, Serializer.cfg.Main_SizeY);
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(cfgFile.Main_PosX, cfgFile.Main_PosY);
-            this.Font = new Font("Microsoft Sans Serif", cfgFile.Main_FontSize);
-            if (cfgFile.Main_Fullscreen)
-                this.WindowState = FormWindowState.Maximized;
-
-            enableConsole = cfgFile.EnableConsole;
-            lastProject = cfgFile.LastProject;
-            disableUpdates = cfgFile.disableUpdates;
-            autoFormatJSON = cfgFile.autoFormatJSON;
-
-            
+            this.Location = new Point(Serializer.cfg.Main_PosX, Serializer.cfg.Main_PosY);
+            this.Font = new Font("Microsoft Sans Serif", Serializer.cfg.Main_FontSize);
         }
         private void FirstTimeUse()
         {
@@ -116,7 +80,7 @@ namespace BTDToolbox
             if (ConsoleHandler.validateConsole() == false)
                 return;
 
-            enableConsole = ConsoleHandler.console.Visible;
+            Serializer.cfg.EnableConsole = ConsoleHandler.console.Visible;
             Serializer.SaveSettings();
         }
         private void Main_Load(object sender, EventArgs e)
@@ -138,16 +102,16 @@ namespace BTDToolbox
             ConsoleHandler.console.MdiParent = this;
             ConsoleHandler.console.CreateLogFile();
 
-            if (enableConsole == true)
+            if (Serializer.cfg.EnableConsole == true)
                 ConsoleHandler.console.Show();
             else
                 ConsoleHandler.console.Hide();
 
             ConsoleHandler.append("Program loaded!");
-            if (programData.recentUpdate == true)
+            if (Serializer.cfg.recentUpdate == true)
                 ConsoleHandler.append("BTD Toolbox has successfully updated.");
 
-            if(!disableUpdates)
+            if(!Serializer.cfg.disableUpdates)
             {
                 ConsoleHandler.announcement();
                 var isUpdate = new UpdateHandler();
@@ -166,7 +130,7 @@ namespace BTDToolbox
 
         private void showUpdateChangelog()
         {
-            if (programData.recentUpdate == true)
+            if (Serializer.cfg.recentUpdate == true)
             {
                 var changelog = new UpdateChangelog();
                 changelog.MdiParent = this;
@@ -219,7 +183,7 @@ namespace BTDToolbox
             if (JetProps.getForm(0) == null)
                 ConsoleHandler.append("No projects detected.");
             //taken from here
-            if (existingUser == false)
+            if (Serializer.cfg.ExistingUser == false)
                 FirstTimeUse();
 
             showUpdateChangelog();
@@ -231,26 +195,27 @@ namespace BTDToolbox
         //
         public void OpenJetForm()
         {
-            if (!Guard.IsStringValid(lastProject))
+            if (!Guard.IsStringValid(Serializer.cfg.LastProject))
                 return;
 
-            DirectoryInfo dinfo = new DirectoryInfo(lastProject);
+            DirectoryInfo dinfo = new DirectoryInfo(Serializer.cfg.LastProject);
 
             if (!dinfo.Exists)
                 return;
 
             foreach (JetForm o in JetProps.get())
             {
-                if (o.projName == projName)
+                if (o.projName == Serializer.cfg.LastProject)
                 {
                     MessageBox.Show("The project is already opened..");
                     return;
                 }
             }
+
             JetForm jf = new JetForm(dinfo, this, dinfo.Name);
             jf.MdiParent = this;
             jf.Show();
-            projName = dinfo.ToString();
+            Serializer.cfg.LastProject = dinfo.ToString();
         }
         private void AddNewJet()
         {
@@ -268,7 +233,7 @@ namespace BTDToolbox
         }
         private void BrowseForExistingProjects()    //check this if having issues with last project
         {
-            string path = BrowseForDirectory("Browse for an existing project", livePath);
+            string path = BrowseForDirectory("Browse for an existing project", Environment.CurrentDirectory);
             if (path != null && path != "")
             {
                 string[] split = path.Split('\\');
@@ -281,13 +246,13 @@ namespace BTDToolbox
                 else
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(path);
-                    projName = path;
+                    Serializer.cfg.LastProject = path;
                     if (path.Contains("BTD5"))
-                        gameName = "BTD5";
+                        Serializer.cfg.CurrentGame = "BTD5";
                     else if (path.Contains("BTDB"))
-                        gameName = "BTDB";
+                        Serializer.cfg.CurrentGame = "BTDB";
                     else if (path.Contains("BMC"))
-                        gameName = "BMC";
+                        Serializer.cfg.CurrentGame = "BMC";
 
                     JetForm jf = new JetForm(dirInfo, this, name);
                     jf.MdiParent = this;
@@ -447,13 +412,13 @@ namespace BTDToolbox
                     {
                         ConsoleHandler.append("Game directory was automatically aquired...");
                         if (gameName == "BTD5")
-                            BTD5_Dir = tryFindGameDir;
+                            Serializer.cfg.BTD5_Directory = tryFindGameDir;
                         else if (gameName == "BTDB")
-                            BTDB_Dir = tryFindGameDir;
+                            Serializer.cfg.BTDB_Directory = tryFindGameDir;
                         else if (gameName == "BMC")
-                            BMC_Dir = tryFindGameDir;
+                            Serializer.cfg.BMC_Directory = tryFindGameDir;
 
-                        Serializer.SaveConfig(this, "directories");
+                        Serializer.SaveSettings();
 
                         CurrentProjectVariables.GameName = tryFindGameDir;
                         ProjectHandler.SaveProject();
@@ -511,29 +476,25 @@ namespace BTDToolbox
         }
         private void New_BTD5_Proj_Click(object sender, EventArgs e)
         {
-            gameName = "BTD5";
+            Serializer.cfg.CurrentGame = "BTD5";
             ProjectHandler.CreateProject();
             CurrentProjectVariables.GameName = "BTD5";
-            CurrentProjectVariables.GamePath = DeserializeConfig().BTD5_Directory;
-
-            Serializer.SaveConfig(this, "game");
-            NewProject(gameName);
+            CurrentProjectVariables.GamePath = Serializer.cfg.BTD5_Directory;
+            NewProject(Serializer.cfg.CurrentGame);
         }
         private void New_BTDB_Proj_Click(object sender, EventArgs e)
         {
-            gameName = "BTDB";
+            Serializer.cfg.CurrentGame = "BTDB";
             ProjectHandler.CreateProject();
             CurrentProjectVariables.GameName = "BTDB";
-            CurrentProjectVariables.GamePath = DeserializeConfig().BTDB_Directory;
-
-            Serializer.SaveConfig(this, "game");
-            NewProject(gameName);
+            CurrentProjectVariables.GamePath = Serializer.cfg.BTDB_Directory;
+            NewProject(Serializer.cfg.CurrentGame);
         }
         private void New_BMC_Proj_Button_Click(object sender, EventArgs e)
         {
             ProjectHandler.CreateProject();
             CurrentProjectVariables.GameName = "BMC";
-            CurrentProjectVariables.GamePath = DeserializeConfig().BMC_Directory;
+            CurrentProjectVariables.GamePath = Serializer.cfg.BMC_Directory;
 
             NewProject("BMC");
         }
@@ -561,7 +522,7 @@ namespace BTDToolbox
             browseForExe(g);
             if (isGamePathValid(g) == true)
             {
-                ConsoleHandler.append("Success! Selected exe at: " + DeserializeConfig().BTD5_Directory);
+                ConsoleHandler.append("Success! Selected exe at: " + Serializer.cfg.BTD5_Directory);
             }
             else
                 ConsoleHandler.append("Invalid game directory selected.");
@@ -573,7 +534,7 @@ namespace BTDToolbox
             browseForExe(g);
             if (isGamePathValid(g) == true)
             {
-                ConsoleHandler.append("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
+                ConsoleHandler.append("Success! Selected exe at: " + Serializer.cfg.BTDB_Directory);
             }
             else
                 ConsoleHandler.append("Invalid game directory selected.");
@@ -585,7 +546,7 @@ namespace BTDToolbox
             browseForExe(g);
             if (isGamePathValid(g) == true)
             {
-                ConsoleHandler.append("Success! Selected exe at: " + DeserializeConfig().BTDB_Directory);
+                ConsoleHandler.append("Success! Selected exe at: " + Serializer.cfg.BTDB_Directory);
             }
             else
                 ConsoleHandler.append("Invalid game directory selected.");
@@ -594,12 +555,9 @@ namespace BTDToolbox
         private void ResetUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConsoleHandler.append("Resetting user settings...");
-            string settingsPath = livePath + "\\settings.json";
-            if (File.Exists(settingsPath))
-            {
-                File.Delete(settingsPath);
-            }
-            DeserializeConfig();
+            if (File.Exists(Serializer.settingsPath))
+                File.Delete(Serializer.settingsPath);
+
             ConsoleHandler.append("User settings have been reset.");
         }
         private void Backup_BTD5_Click_1(object sender, EventArgs e)
@@ -693,7 +651,7 @@ namespace BTDToolbox
             if (isGamePathValid("BMC"))
             {
                 ConsoleHandler.append("Opening Monkey City Directory");
-                Process.Start(DeserializeConfig().BMC_Directory);
+                Process.Start(Serializer.cfg.BMC_Directory);
             }
             else
             {
@@ -702,7 +660,7 @@ namespace BTDToolbox
                 if (isGamePathValid("BMC"))
                 {
                     ConsoleHandler.append("Opening BMC Directory");
-                    Process.Start(DeserializeConfig().BMC_Directory);
+                    Process.Start(Serializer.cfg.BMC_Directory);
                 }
                 else
                 {
@@ -715,7 +673,7 @@ namespace BTDToolbox
             if (isGamePathValid("BTD5"))
             {
                 ConsoleHandler.append("Opening BTD5 Directory");
-                Process.Start(DeserializeConfig().BTD5_Directory);
+                Process.Start(Serializer.cfg.BTD5_Directory);
             }
             else
             {
@@ -724,7 +682,7 @@ namespace BTDToolbox
                 if(isGamePathValid("BTD5"))
                 {
                     ConsoleHandler.append("Opening BTD5 Directory");
-                    Process.Start(DeserializeConfig().BTD5_Directory);
+                    Process.Start(Serializer.cfg.BTD5_Directory);
                 }
                 else
                 {
@@ -738,7 +696,7 @@ namespace BTDToolbox
             if (isGamePathValid("BTDB"))
             {
                 ConsoleHandler.append("Opening BTD Battles Directory");
-                Process.Start(DeserializeConfig().BTDB_Directory);
+                Process.Start(Serializer.cfg.BTDB_Directory);
             }
             else
             {
@@ -747,7 +705,7 @@ namespace BTDToolbox
                 if (isGamePathValid("BTDB"))
                 {
                     ConsoleHandler.append("Opening BTDB Directory");
-                    Process.Start(DeserializeConfig().BTDB_Directory);
+                    Process.Start(Serializer.cfg.BTDB_Directory);
                 }
                 else
                 {
@@ -798,8 +756,8 @@ namespace BTDToolbox
                 if (CurrentProjectVariables.JetPassword != "" && CurrentProjectVariables.JetPassword != null)
                     pass = CurrentProjectVariables.JetPassword;
             }
-            else if(Serializer.Deserialize_Config().battlesPass != null && Serializer.Deserialize_Config().battlesPass != "")
-                pass = Serializer.Deserialize_Config().battlesPass;
+            else if(Serializer.cfg.battlesPass != null && Serializer.cfg.battlesPass != "")
+                pass = Serializer.cfg.battlesPass;
 
             if(pass != null && pass !="")
             {
@@ -902,6 +860,7 @@ namespace BTDToolbox
         }
         private void NewProject_From_Backup_Click(object sender, EventArgs e)
         {
+            Serializer.SaveSettings();
             AddNewJet();
         }
 
@@ -921,17 +880,16 @@ namespace BTDToolbox
         }
         private void EZCard_Editor_Click(object sender, EventArgs e)
         {
-            if (Serializer.Deserialize_Config().CurrentGame == "BTDB")
-            {
-                var ezCard = new EZCard_Editor();
-                string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
-                ezCard.path = path;
-                ezCard.Show();
-            }
-            else
+            if (CurrentProjectVariables.GameName == "BTDB")
             {
                 ConsoleHandler.force_append_Notice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
+                return;
             }
+
+            var ezCard = new EZCard_Editor();
+            string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
+            ezCard.path = path;
+            ezCard.Show();
         }
 
         private void BTDBPasswordManagerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -973,11 +931,11 @@ namespace BTDToolbox
         }
         private void BTD5SaveModToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string save = Serializer.Deserialize_Config().SavePathBTD5;
+            string save = Serializer.cfg.SavePathBTD5;
             if (save == null || save == "")
             {
                 SaveEditor.TryFindSteam.FindSaveFiles();
-                save = Serializer.Deserialize_Config().SavePathBTD5;
+                save = Serializer.cfg.SavePathBTD5;
                 if (save == "" || save == null)
                 {
                     return;
@@ -996,11 +954,11 @@ namespace BTDToolbox
             MessageBox.Show("Thanks for trying the save editor for BTDB. Unfortunately, we haven't been able to successfully edit the save for BTD Battles" +
                 ", as it resets the save when you run it. This happens with BTD Battles Only, but as a result " +
                 "you will only be able to read the save file, and not edit it. Hopefully we figure this out soon");
-            string save = Serializer.Deserialize_Config().SavePathBTDB;
+            string save = Serializer.cfg.SavePathBTDB;
             if (save == null || save == "")
             {
                 SaveEditor.TryFindSteam.FindSaveFiles();
-                save = Serializer.Deserialize_Config().SavePathBTDB;
+                save = Serializer.cfg.SavePathBTDB;
                 if (save == "" || save == null)
                 {
                     return;

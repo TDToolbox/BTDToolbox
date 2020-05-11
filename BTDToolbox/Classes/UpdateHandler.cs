@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 using static BTDToolbox.GeneralMethods;
 
 
@@ -20,7 +19,6 @@ namespace BTDToolbox
     {
         WebClient client= new WebClient();
         WebHandler reader;
-        ConfigFile programData;
 
         public bool reinstall { get; set; }
         string toolbox_updater_zipName = "BTDToolbox_Updater.zip";
@@ -111,8 +109,7 @@ namespace BTDToolbox
 
             //save config real quick
             UpdateChangelog.recentUpdate = true;
-            programData = DeserializeConfig();
-            Serializer.SaveSmallSettings("updater");
+            Serializer.SaveSettings();
 
             Process p = new Process();
             p.StartInfo.Arguments = "-lineNumber:0 -url:https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/Updater_launch%20parameters";

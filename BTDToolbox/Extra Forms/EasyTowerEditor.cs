@@ -529,7 +529,7 @@ namespace BTDToolbox.Extra_Forms
             firstLoad = true;
             if (game == "BTD5")
             {
-                loc_Path = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Loc\\English.xml";
+                loc_Path = Serializer.cfg.BTD5_Directory + "\\Assets\\Loc\\English.xml";
             }
             else if (game == "BMC")
             {
@@ -539,31 +539,34 @@ namespace BTDToolbox.Extra_Forms
             {
                 loc_Path = "";
             }
-            if (Main.projName != "" && Main.projName != null)
-            {
-                string towersPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions";
-                var towerFiles = Directory.GetFiles(towersPath);
-                foreach (string file in towerFiles)
-                {
-                    string[] split = file.Split('\\');
-                    string filename = split[split.Length - 1].Replace("\\", "");
-
-                    if (!AllTowerFiles_ComboBox.Items.Contains(filename))
-                        AllTowerFiles_ComboBox.Items.Add(filename);
-
-                    if (file == path)
-                    {
-                        AllTowerFiles_ComboBox.SelectedItem = AllTowerFiles_ComboBox.Items[AllTowerFiles_ComboBox.Items.Count - 1];
-                    }
-                }                
-                CreateTowerObject(path);
-            }
-            else
+            if (!Guard.IsStringValid(Serializer.cfg.LastProject))
             {
                 ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
                 this.Close();
             }
+
+
+            PopulateTowerList();
+            CreateTowerObject(path);
         }
+
+        private void PopulateTowerList()
+        {
+            string towersPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions";
+            var towerFiles = Directory.GetFiles(towersPath);
+            foreach (string file in towerFiles)
+            {
+                string[] split = file.Split('\\');
+                string filename = split[split.Length - 1].Replace("\\", "");
+
+                if (!AllTowerFiles_ComboBox.Items.Contains(filename))
+                    AllTowerFiles_ComboBox.Items.Add(filename);
+
+                if (file == path)
+                    AllTowerFiles_ComboBox.SelectedItem = AllTowerFiles_ComboBox.Items[AllTowerFiles_ComboBox.Items.Count - 1];
+            }
+        }
+
         private void SaveLoc()
         {
             if (game == "BTD5" || game == "BMC")
@@ -699,13 +702,13 @@ namespace BTDToolbox.Extra_Forms
                 //File.WriteAllLines(Environment.CurrentDirectory + "\\NewLOC.xml", loc_Text);
 
                 string gameDir = "";
-                if (Serializer.Deserialize_Config().CurrentGame == "BTD5")
+                if (Serializer.cfg.CurrentGame == "BTD5")
                 {
-                    gameDir = Serializer.Deserialize_Config().BTD5_Directory;
+                    gameDir = Serializer.cfg.BTD5_Directory;
                 }
                 else
                 {
-                    gameDir = Serializer.Deserialize_Config().BTDB_Directory;
+                    gameDir = Serializer.cfg.BTDB_Directory;
                 }
                 File.WriteAllLines(gameDir + "\\Assets\\Loc\\English.xml", loc_Text);
             }

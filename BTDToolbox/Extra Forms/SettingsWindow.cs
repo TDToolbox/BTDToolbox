@@ -10,13 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
-
 namespace BTDToolbox
 {
     public partial class SettingsWindow : ThemedForm
     {
-        ConfigFile projectData;
         public SettingsWindow()
         {
             InitializeComponent();
@@ -27,15 +24,14 @@ namespace BTDToolbox
         private void Setup()
         {
             this.Size = new Size(350, 500);
-            projectData = Serializer.Deserialize_Config();
 
             this.canResize = false;
             this.moveCenterScreen = true;
 
-            EnableSplash.Checked = projectData.enableSplash;
-            useExternalEditor.Checked = projectData.useExternalEditor;
-            DisableUpdates_CB.Checked = projectData.disableUpdates;
-            AutoFormatJSON_CB.Checked = projectData.autoFormatJSON;
+            EnableSplash.Checked = Serializer.cfg.enableSplash;
+            useExternalEditor.Checked = Serializer.cfg.useExternalEditor;
+            DisableUpdates_CB.Checked = Serializer.cfg.disableUpdates;
+            AutoFormatJSON_CB.Checked = Serializer.cfg.autoFormatJSON;
 
             if (NKHook.CanUseNKH())
                 return;
@@ -48,16 +44,12 @@ namespace BTDToolbox
         {
             JetForm.useExternalEditor = useExternalEditor.Checked;
             Program.enableSplash = EnableSplash.Checked;
-            Main.disableUpdates = DisableUpdates_CB.Checked;
-            Main.autoFormatJSON = AutoFormatJSON_CB.Checked;
+            Serializer.cfg.disableUpdates = DisableUpdates_CB.Checked;
+            Serializer.cfg.autoFormatJSON = AutoFormatJSON_CB.Checked;
 
             CurrentProjectVariables.UseNKHook = UseNKH_CB.Checked;
 
-            Serializer.SaveSmallSettings("splash");
-            Serializer.SaveSmallSettings("disableUpdates");
-            Serializer.SaveSmallSettings("autoFormatJSON");
-            Serializer.SaveSmallSettings("external editor");
-
+            Serializer.SaveSettings();
             ProjectHandler.SaveProject();
             ConsoleHandler.append_CanRepeat("Settings saved!!!");
             this.Close();

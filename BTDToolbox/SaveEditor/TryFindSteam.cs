@@ -10,8 +10,8 @@ namespace BTDToolbox.SaveEditor
 {
     class TryFindSteam
     {
-        public static string BTD5SavePath = Serializer.Deserialize_Config().SavePathBTD5;
-        public static string BTDBSavePath = Serializer.Deserialize_Config().SavePathBTDB;
+        public static string BTD5SavePath = Serializer.cfg.SavePathBTD5;
+        public static string BTDBSavePath = Serializer.cfg.SavePathBTDB;
 
         public static List<string> drives = new List<string>() { "A:\\", "B:\\", "C:\\","D:\\", "E:\\", "F:\\",
             "G:\\", "H:\\", "I:\\","J:\\", "K:\\", "L:\\","M:\\", "N:\\", "O:\\","P:\\", "Q:\\", "R:\\",
@@ -31,16 +31,11 @@ namespace BTDToolbox.SaveEditor
 
             string[] split = file.Split('\\');
             if (file.Contains("306020")) //this game is btd5
-            {
                 BTD5SavePath = file.Replace(split[split.Length - 1], "");
-                Serializer.SaveSmallSettings("btd5 save");
-            }
             else if (file.Contains("444640"))   //this game is btdb
-            {
                 BTDBSavePath = file.Replace(split[split.Length - 1], "");
-                Serializer.SaveSmallSettings("btdb save");
-            }
 
+            Serializer.SaveSettings();
             return file;
         }
         public static void FindSaveFiles()
@@ -54,7 +49,6 @@ namespace BTDToolbox.SaveEditor
                 if(btd5SavePath != "")
                 {
                     BTD5SavePath = btd5SavePath + "\\local\\Data\\Docs";
-                    Serializer.SaveSmallSettings("btd5 save");
                 }
 
                 string btdbSavePath = FindSaveFolder(steam, "444640");
@@ -67,10 +61,10 @@ namespace BTDToolbox.SaveEditor
                         {
                             string[] split = f.Split('\\');
                             BTDBSavePath = f.Replace(split[split.Length - 1], "");
-                            Serializer.SaveSmallSettings("btdb save");
                         }
                     }
                 }
+                Serializer.SaveSettings();
             }
             else
             {

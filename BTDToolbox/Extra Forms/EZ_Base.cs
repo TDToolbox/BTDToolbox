@@ -28,7 +28,7 @@ namespace BTDToolbox.Extra_Forms
         public static bool EZTBase_Opened = false;
 
 
-        string game = Serializer.Deserialize_Config().CurrentGame;
+        string game = Serializer.cfg.CurrentGame;
 
         public EZ_Base()
         {
@@ -38,12 +38,12 @@ namespace BTDToolbox.Extra_Forms
             if (game == "BTD5")
             {
                 Game_Label.Text = "BTD5";
-                gameDir = Serializer.Deserialize_Config().BTD5_Directory;
+                gameDir = Serializer.cfg.BTD5_Directory;
             }
             else
             {
                 Game_Label.Text = "BTDB";
-                gameDir = Serializer.Deserialize_Config().BTDB_Directory;
+                gameDir = Serializer.cfg.BTDB_Directory;
             }
 
             if (gameDir == null || gameDir == "")
@@ -153,7 +153,7 @@ namespace BTDToolbox.Extra_Forms
         {
             EZTBase_Opened = true;
 
-            string towersPath = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\TowerDefinitions";
+            string towersPath = Environment.CurrentDirectory + "\\" + Serializer.cfg.LastProject + "\\Assets\\JSON\\TowerDefinitions";
             var towerFiles = Directory.GetFiles(towersPath);
             foreach (string file in towerFiles)
             {
@@ -169,7 +169,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void Files_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            path = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + jetDir + "\\" + Files_ComboBox.SelectedItem;
+            path = Environment.CurrentDirectory + "\\" + Serializer.cfg.LastProject + jetDir + "\\" + Files_ComboBox.SelectedItem;
             CreateJSONObject(path);
         }
         private void Save_Button_Click(object sender, EventArgs e)

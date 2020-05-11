@@ -27,7 +27,7 @@ namespace BTDToolbox.Extra_Forms
         bool forceAdvancedView = false;
         public static bool EZBloon_Opened = false;
 
-        string game = Serializer.Deserialize_Config().CurrentGame;
+        string game = Serializer.cfg.CurrentGame;
 
         public EZBloon_Editor()
         {
@@ -411,57 +411,55 @@ namespace BTDToolbox.Extra_Forms
         {
             EZBloon_Opened = true;
 
-            if(Main.projName != "" && Main.projName != null)
-            {
-                string bloonPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions";
-                var bloonFiles = Directory.GetFiles(bloonPath);
-                foreach (string file in bloonFiles)
-                {
-                    string[] split = file.Split('\\');
-                    string filename = split[split.Length - 1].Replace("\\", "");
-
-                    if (filename.EndsWith(".bloon"))
-                    {
-                        if (!BloonFiles_ComboBox.Items.Contains(filename))
-                            BloonFiles_ComboBox.Items.Add(filename);
-
-                        if (!AvailibleChildBloons_LB.Items.Contains(filename.Replace(".bloon","")))
-                            AvailibleChildBloons_LB.Items.Add(filename.Replace(".bloon", ""));
-
-                        if (file == path)
-                            BloonFiles_ComboBox.SelectedItem = BloonFiles_ComboBox.Items[BloonFiles_ComboBox.Items.Count - 1];
-                    }
-                }
-
-                Game_Label.Text = CurrentProjectVariables.GameName;
-                if (game == "BTD5" || game == "BMC")
-                {
-                    string abilityPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonAbilities";
-                    var abilityFiles = Directory.GetFiles(abilityPath);
-                    foreach (var file in abilityFiles)
-                    {
-                        string[] split = file.Split('\\');
-                        string filename = split[split.Length - 1].Replace("\\", "");
-                        if (!BloonAbility_CheckedListBox.Items.Contains(filename.Replace(".json","")))
-                        {
-                            BloonAbility_CheckedListBox.Items.Add(filename.Replace(".json", ""), false);
-                        }
-                    }
-                    ApplyStatus_CheckedListBox.Show();
-                    ApplyStatus_Label.Show();
-                }
-                else
-                {
-                    ApplyStatus_CheckedListBox.Hide();
-                    ApplyStatus_Label.Hide();
-                }
-                CreateBloonObject(path);
-            }
-            else
+            if(!Guard.IsStringValid(Serializer.cfg.LastProject))
             {
                 ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
                 this.Close();
             }
+
+            string bloonPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions";
+            var bloonFiles = Directory.GetFiles(bloonPath);
+            foreach (string file in bloonFiles)
+            {
+                string[] split = file.Split('\\');
+                string filename = split[split.Length - 1].Replace("\\", "");
+
+                if (filename.EndsWith(".bloon"))
+                {
+                    if (!BloonFiles_ComboBox.Items.Contains(filename))
+                        BloonFiles_ComboBox.Items.Add(filename);
+
+                    if (!AvailibleChildBloons_LB.Items.Contains(filename.Replace(".bloon", "")))
+                        AvailibleChildBloons_LB.Items.Add(filename.Replace(".bloon", ""));
+
+                    if (file == path)
+                        BloonFiles_ComboBox.SelectedItem = BloonFiles_ComboBox.Items[BloonFiles_ComboBox.Items.Count - 1];
+                }
+            }
+
+            Game_Label.Text = CurrentProjectVariables.GameName;
+            if (game == "BTD5" || game == "BMC")
+            {
+                string abilityPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonAbilities";
+                var abilityFiles = Directory.GetFiles(abilityPath);
+                foreach (var file in abilityFiles)
+                {
+                    string[] split = file.Split('\\');
+                    string filename = split[split.Length - 1].Replace("\\", "");
+                    if (!BloonAbility_CheckedListBox.Items.Contains(filename.Replace(".json", "")))
+                    {
+                        BloonAbility_CheckedListBox.Items.Add(filename.Replace(".json", ""), false);
+                    }
+                }
+                ApplyStatus_CheckedListBox.Show();
+                ApplyStatus_Label.Show();
+            }
+            else
+            {
+                ApplyStatus_CheckedListBox.Hide();
+                ApplyStatus_Label.Hide();
+            }
+            CreateBloonObject(path);
         }
         private void BloonFiles_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {

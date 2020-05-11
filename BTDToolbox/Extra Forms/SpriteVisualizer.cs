@@ -66,7 +66,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void CreateSprite()
         {
-            string p = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";// + path;
+            string p = Environment.CurrentDirectory + "\\" + Serializer.cfg.LastProject + "\\Assets\\JSON\\";// + path;
             string path = p + Folder_ComboBox.SelectedItem + "\\" + File_ComboBox.SelectedItem;
             sprite = SpriteReader.FromJson(File.ReadAllText(path));
 
@@ -375,13 +375,13 @@ namespace BTDToolbox.Extra_Forms
 
         private void SpriteVisualizer_Load(object sender, EventArgs e)
         {
-            if(Serializer.Deserialize_Config().CurrentGame == "BTD5")
+            if(Serializer.cfg.CurrentGame == "BTD5")
             {
-                textures_Dir = Serializer.Deserialize_Config().BTD5_Directory + "\\Assets\\Textures\\Ultra";
+                textures_Dir = Serializer.cfg.BTD5_Directory + "\\Assets\\Textures\\Ultra";
             }
             else
             {
-                textures_Dir = Serializer.Deserialize_Config().BTDB_Directory + "\\Assets\\Textures\\High";
+                textures_Dir = Serializer.cfg.BTDB_Directory + "\\Assets\\Textures\\High";
             }
         }
 
@@ -391,7 +391,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void PopulateFolder_CB(string path)
         {
-            var folders = Directory.GetDirectories(Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON");
+            var folders = Directory.GetDirectories(Environment.CurrentDirectory + "\\" + Serializer.cfg.LastProject + "\\Assets\\JSON");
 
             foreach (string folder in folders)
             {
@@ -405,7 +405,7 @@ namespace BTDToolbox.Extra_Forms
             File_ComboBox.Items.Clear();
             File_ComboBox.Text = "";
 
-            string p = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\" + path;
+            string p = Environment.CurrentDirectory + "\\" + Serializer.cfg.LastProject + "\\Assets\\JSON\\" + path;
             var files = Directory.GetFiles(p, "*", SearchOption.AllDirectories);
             foreach(string file in files)
             {
@@ -421,7 +421,7 @@ namespace BTDToolbox.Extra_Forms
         }
         private void File_ComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            string p = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";
+            string p = Environment.CurrentDirectory + "\\" + Serializer.cfg.LastProject + "\\Assets\\JSON\\";
 
             if(Folder_ComboBox.Items.Count > 0 && Folder_ComboBox.SelectedItem != null)
             {
@@ -469,7 +469,7 @@ namespace BTDToolbox.Extra_Forms
 
         private void Reload_Button_Click(object sender, EventArgs e)
         {
-            string p = Environment.CurrentDirectory + "\\" + Serializer.Deserialize_Config().LastProject + "\\Assets\\JSON\\";// + path;
+            string p = Environment.CurrentDirectory + "\\" + Serializer.cfg.LastProject + "\\Assets\\JSON\\";// + path;
             string path = p + Folder_ComboBox.SelectedItem + "\\" + File_ComboBox.SelectedItem;
             sprite = SpriteReader.FromJson(File.ReadAllText(path));
 

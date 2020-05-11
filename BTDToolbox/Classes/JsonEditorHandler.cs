@@ -34,7 +34,7 @@ namespace BTDToolbox.Classes
         }
         public static void OpenFileFromZip(string path)
         {
-            if (Serializer.Deserialize_Config().useExternalEditor == false)
+            if (Serializer.cfg.useExternalEditor == false)
             {
                 ValidateEditor();
 
@@ -49,7 +49,7 @@ namespace BTDToolbox.Classes
         {
             if (File.Exists(path))
             {
-                if (Serializer.Deserialize_Config().useExternalEditor == false)
+                if (Serializer.cfg.useExternalEditor == false)
                 {
                     ValidateEditor();
                     if (jeditor.tabFilePaths.Contains(path))

@@ -52,8 +52,8 @@ namespace BTDToolbox.Extra_Forms
 
             ZipForm.existingJetFile = JetPath;
 
-            Main.gameName = GameName;
-            Serializer.SaveConfig(this, "game");
+            Serializer.cfg.CurrentGame = GameName;
+            Serializer.SaveSettings();
 
             ProjectHandler.CreateProject();
             CurrentProjectVariables.GameName = GameName;
@@ -89,13 +89,13 @@ namespace BTDToolbox.Extra_Forms
                 {
                     ConsoleHandler.append("Game directory was automatically aquired...");
                     if (gameName == "BTD5")
-                        Main.BTD5_Dir = tryFindGameDir;
+                        Serializer.cfg.BTD5_Directory = tryFindGameDir;
                     else if (gameName == "BTDB")
-                        Main.BTDB_Dir = tryFindGameDir;
+                        Serializer.cfg.BTDB_Directory = tryFindGameDir;
                     else if (gameName == "BMC")
-                        Main.BMC_Dir = tryFindGameDir;
+                        Serializer.cfg.BMC_Directory = tryFindGameDir;
 
-                    Serializer.SaveConfig(this, "directories");
+                    Serializer.SaveSettings();
 
                     CurrentProjectVariables.GameName = tryFindGameDir;
                     ProjectHandler.SaveProject();

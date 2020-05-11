@@ -14,16 +14,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
     class GeneralMethods
     {
-        public static bool badJetPass = false;
-
-        public static ConfigFile programData;
-        
+        public static bool badJetPass = false;        
         public static void DeleteFile(string fileName)
         {
             if (File.Exists(fileName))
@@ -100,13 +96,6 @@ namespace BTDToolbox
                 File.Copy(newPath, newPath.Replace(source, destination), true);
             ConsoleHandler.append("Copied " + dirname + "!");
         }
-        public static ConfigFile DeserializeConfig()
-        {
-            //ConsoleHandler.append("Reading config file..");
-            programData = Serializer.Deserialize_Config();
-            return programData;
-        }
-
         public static string BrowseForFile(string title, string defaultExt, string filter, string startDir)
         {
             OpenFileDialog fileDiag = new OpenFileDialog();
@@ -173,7 +162,7 @@ namespace BTDToolbox
         }
         public static string GetCurrent_GameName()
         {
-            string game = DeserializeConfig().CurrentGame;
+            string game = CurrentProjectVariables.GameName;
 
             if (game == null || game == "")
             {
@@ -186,11 +175,11 @@ namespace BTDToolbox
         {
             string gameDir = "";
             if (game == "BTD5")
-                gameDir = DeserializeConfig().BTD5_Directory;
+                gameDir = Serializer.cfg.BTD5_Directory;
             else if (game == "BTDB")
-                gameDir = DeserializeConfig().BTDB_Directory;
+                gameDir = Serializer.cfg.BTDB_Directory;
             else if (game == "BMC")
-                gameDir = DeserializeConfig().BMC_Directory;
+                gameDir = Serializer.cfg.BMC_Directory;
 
             return gameDir;
         }
@@ -340,7 +329,7 @@ namespace BTDToolbox
 
                 if (game == "BMC")
                 {
-                    string source = Serializer.Deserialize_Config().BMC_Directory + "\\AssetBundles";
+                    string source = Serializer.cfg.BMC_Directory + "\\AssetBundles";
                     string destination = backupDir + "\\AssetBundles_Original";
                     if (Directory.Exists(destination))
                         Directory.Delete(destination, true);
@@ -557,13 +546,13 @@ namespace BTDToolbox
 
             string gameDir = exePath.Replace("\\" + exeName, "");
             if (game == "BTD5")
-                Main.BTD5_Dir = gameDir;
+                Serializer.cfg.BTD5_Directory = gameDir;
             else if (game == "BTDB")
-                Main.BTDB_Dir = gameDir;
+                Serializer.cfg.BTDB_Directory = gameDir;
             else if (game == "BMC")
-                Main.BMC_Dir = gameDir;
+                Serializer.cfg.BMC_Directory = gameDir;
 
-            Serializer.SaveConfig(Main.getInstance(), "directories");
+            Serializer.SaveSettings();
         }
         public static string OutputJet()
         {
@@ -593,7 +582,6 @@ namespace BTDToolbox
                     if (switchCase.Contains("output"))
                     {
                         isOutputting = true;
-                        //string exPath = programData.ExportPath;
                         string exPath = CurrentProjectVariables.ExportPath;
                         if (exPath != "" && exPath != null)
                         {

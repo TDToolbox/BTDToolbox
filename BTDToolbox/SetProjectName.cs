@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 using BTDToolbox.Classes.NewProjects;
 using System.IO;
 using BTDToolbox.Classes;
@@ -20,15 +19,12 @@ namespace BTDToolbox
         public static string gameName;
         public bool hasClickedRandomName;
         public bool isRenaming = false;
-        ConfigFile programData;
         public JetForm jetf;
         string customFolder;
 
         public SetProjectName()
         {
             InitializeComponent();
-            
-            programData = Serializer.Deserialize_Config();
             gameName = CurrentProjectVariables.GameName;
 
             if (gameName == "BTDB")

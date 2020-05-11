@@ -11,7 +11,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 using static System.Windows.Forms.ToolStripItem;
 using static BTDToolbox.GeneralMethods;
 using BTDToolbox.Classes;
@@ -25,7 +24,6 @@ namespace BTDToolbox
 {
     public partial class JetForm : ThemedForm
     {
-        string livePath = Environment.CurrentDirectory;
         private DirectoryInfo dirInfo;
         private Main Form;
         private string tempName;
@@ -33,7 +31,6 @@ namespace BTDToolbox
         private ContextMenuStrip treeMenu;
 
         //Config values
-        ConfigFile programData;
         public static float jetExplorer_FontSize;
         public static int jetExplorer_SplitterWidth;
         public static string lastProject;
@@ -42,14 +39,13 @@ namespace BTDToolbox
         public JetForm(DirectoryInfo dirInfo, Main Form, string projName)
         {
             InitializeComponent();
-            programData = DeserializeConfig();
             StartUp();
 
             goUpButton.Font = new Font("Microsoft Sans Serif", 9);
             this.dirInfo = dirInfo;
             this.Form = Form;
             this.projName = projName;
-            Main.projName = dirInfo.FullName;
+            Serializer.cfg.LastProject = dirInfo.FullName;
             this.DoubleBuffered = true;
             string gamedir = "";
 
@@ -60,18 +56,18 @@ namespace BTDToolbox
 
             if (projName.Contains("BTD5"))
             {
-                Main.gameName = "BTD5";
-                gamedir = Serializer.Deserialize_Config().BTD5_Directory;
+                Serializer.cfg.CurrentGame = "BTD5";
+                gamedir = Serializer.cfg.BTD5_Directory;
             }
             else if (projName.Contains("BTDB"))
             {
-                Main.gameName = "BTDB";
-                gamedir = Serializer.Deserialize_Config().BTDB_Directory;
+                Serializer.cfg.CurrentGame = "BTDB";
+                gamedir = Serializer.cfg.BTDB_Directory;
             }
             else if (projName.Contains("BMC"))
             {
-                Main.gameName = "BMC";
-                gamedir = Serializer.Deserialize_Config().BMC_Directory;
+                Serializer.cfg.CurrentGame = "BMC";
+                gamedir = Serializer.cfg.BMC_Directory;
             }
 
             if (gamedir == "" || gamedir == null)
@@ -85,9 +81,8 @@ namespace BTDToolbox
             ConsoleHandler.append("Game: " + projName);
             ConsoleHandler.append("Loading Project: " + projName);
 
-            
-            Serializer.SaveConfig(this, "game");
-            Serializer.SaveConfig(this, "jet explorer");
+
+            Serializer.SaveSettings();
 
             if (EZBloon_Editor.EZBloon_Opened == true)
                 ConsoleHandler.force_append_Notice("The EZ Bloon tool is currently opened for a different project. Please close it to avoid errors...");
@@ -117,14 +112,14 @@ namespace BTDToolbox
         private void StartUp()
         {
             //config stuff
-            this.Size = new Size(programData.JetExplorer_SizeX, programData.JetExplorer_SizeY);
-            this.Location = new Point(programData.JetExplorer_PosX, programData.JetExplorer_PosY);
+            this.Size = new Size(Serializer.cfg.JetExplorer_SizeX, Serializer.cfg.JetExplorer_SizeY);
+            this.Location = new Point(Serializer.cfg.JetExplorer_PosX, Serializer.cfg.JetExplorer_PosY);
 
-            this.Font = new Font("Microsoft Sans Serif", programData.JetExplorer_FontSize);
-            lastProject = programData.LastProject;
-            jetExplorer_SplitterWidth = programData.JetExplorer_SplitterWidth;
+            this.Font = new Font("Microsoft Sans Serif", Serializer.cfg.JetExplorer_FontSize);
+            lastProject = Serializer.cfg.LastProject;
+            jetExplorer_SplitterWidth = Serializer.cfg.JetExplorer_SplitterWidth;
             fileViewContainer.SplitterDistance = jetExplorer_SplitterWidth;
-            useExternalEditor = programData.useExternalEditor;
+            useExternalEditor = Serializer.cfg.useExternalEditor;
             
             //other setup
             this.KeyPreview = true;
@@ -170,7 +165,7 @@ namespace BTDToolbox
         }
         private void showNKHMessage()
         {
-            if (programData.nkhookMsgShown == false)
+            if (Serializer.cfg.nkhookMsgShown == false)
             {
                 NKHook_Message msg = new NKHook_Message();
                 msg.Show();
@@ -184,8 +179,8 @@ namespace BTDToolbox
         }
         private void JetForm_Shown(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "jet explorer");
-            
+            Serializer.SaveSettings();
+
             if (NKHook.CanUseNKH())
                 HandleNKH();
         }
@@ -199,10 +194,9 @@ namespace BTDToolbox
 
         private void JetForm_Closed(object sender, EventArgs e)
         {
+            Serializer.SaveSettings();
             ConsoleHandler.append("Closing JetViewer for " + projName);
             JetProps.decrement(this);
-            Serializer.SaveConfig(this, "jet explorer");
-            Serializer.SaveSmallSettings("external editor");
 
             if (JsonEditorHandler.jeditor == null) return;
 
@@ -683,7 +677,7 @@ namespace BTDToolbox
                     {
                         string[] split = a.Split('\\');
                         string filename = split[split.Length - 1];
-                        string sourcefile = Environment.CurrentDirectory + "\\Backups\\" + Main.gameName + "_BackupProject\\" + filepath.Replace(Environment.CurrentDirectory, "").Replace("\\" + projName + "\\", "") + "\\" + filename;
+                        string sourcefile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_BackupProject\\" + filepath.Replace(Environment.CurrentDirectory, "").Replace("\\" + projName + "\\", "") + "\\" + filename;
 
                         restoreSingleFile(a, filename);
                     }
@@ -731,7 +725,7 @@ namespace BTDToolbox
         
         private void exitHandling(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "jet explorer");
+            Serializer.SaveSettings();
         }
 
         private void JetForm_KeyDown(object sender, KeyEventArgs e)
@@ -865,7 +859,7 @@ namespace BTDToolbox
         private void Open_Proj_Dir_Click(object sender, EventArgs e)
         {
             ConsoleHandler.append("Opening project directory...");
-            Process.Start(DeserializeConfig().LastProject);
+            Process.Start(Serializer.cfg.LastProject);
         }
 
         private void Save_ToolStrip_Click(object sender, EventArgs e)

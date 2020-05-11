@@ -15,13 +15,10 @@ namespace BTDToolbox
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (Serializer.Deserialize_Config() == null)
-            {
-                Serializer.Deserialize_Config();
-                return;
-            }
+            if (Serializer.cfg == null)
+                Serializer.LoadSettings();
 
-            if (Serializer.Deserialize_Config().enableSplash == true)
+            if (Serializer.cfg.enableSplash == true)
             {
                 enableSplash = true;
                 Application.Run(new SplashScreen());

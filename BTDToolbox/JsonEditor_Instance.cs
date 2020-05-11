@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using BTDToolbox.Classes;
 using System.IO;
 using BTDToolbox.Extra_Forms;
-using static BTDToolbox.ProjectConfig;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
@@ -24,7 +23,6 @@ namespace BTDToolbox
 {
     public partial class JsonEditor_Instance : UserControl
     {
-        ConfigFile programData;
         public bool jsonError;
         bool pasted = false;
         public bool fileModified = false;
@@ -72,8 +70,8 @@ namespace BTDToolbox
         public void FinishedLoading()
         {
             HandleTools();
-            if (Serializer.Deserialize_Config().JSON_Editor_FontSize > 0)
-                Editor_TextBox.Font = new Font("Consolas", Serializer.Deserialize_Config().JSON_Editor_FontSize);
+            if (Serializer.cfg.JSON_Editor_FontSize > 0)
+                Editor_TextBox.Font = new Font("Consolas", Serializer.cfg.JSON_Editor_FontSize);
             else
                 Editor_TextBox.Font = new Font("Consolas", 14);
             tB_line.Font = Editor_TextBox.Font;
@@ -211,20 +209,15 @@ namespace BTDToolbox
             if (!jsonError)
             {
                 JsonEditorHandler.CloseFile(path);
-                if (programData == null)
-                    programData = Serializer.Deserialize_Config();
-                Serializer.SaveJSONEditor_Instance(this);
-                Serializer.SaveJSONEditor_Tabs();
+                Serializer.SaveSettings();
             }
             else
             {
                 DialogResult dialogResult = MessageBox.Show("This file has a JSON error! Are you sure you want to close and save it?", "ARE YOU SURE!!!!!", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    if (programData == null)
-                        programData = Serializer.Deserialize_Config();
                     JsonEditorHandler.CloseFile(path);
-                    Serializer.SaveJSONEditor_Instance(this);
+                    Serializer.SaveSettings();
                 }
             }
             
@@ -936,7 +929,7 @@ namespace BTDToolbox
                 }
                 ShowSearchMenu("replace");
             }
-            if(Serializer.Deserialize_Config().autoFormatJSON == true)
+            if(Serializer.cfg.autoFormatJSON == true)
             {
                 if (e.Control && (e.KeyCode == Keys.V || e.KeyCode == Keys.X))
                 {
@@ -953,7 +946,7 @@ namespace BTDToolbox
 
             Editor_TextBox.Font = new Font("Consolas", FontSize);
             tB_line.Font = new Font("Consolas", FontSize);
-            Serializer.SaveJSONEditor_Instance(this);
+            Serializer.SaveSettings();
         }
         private void EZTowerEditor_Button_Click(object sender, EventArgs e)
         {
@@ -1124,14 +1117,14 @@ namespace BTDToolbox
         private void ReformatJSON_Button_Click(object sender, EventArgs e)
         {
             ConsoleHandler.append("JSON Formatted!");
-            if (!Serializer.Deserialize_Config().autoFormatJSON)
+            if (!Serializer.cfg.autoFormatJSON)
             {
                 DialogResult diag = MessageBox.Show("Autoformatting isn't enabled in your settings. Would you like to toolbox to enable it, " +
                     "or keep it set to manual, so you have to press this button to format?", "Enable AutoFormating?", MessageBoxButtons.YesNo);
                 if(diag == DialogResult.Yes)
                 {
-                    Main.autoFormatJSON = true;
-                    Serializer.SaveSmallSettings("autoFormatJSON");
+                    Serializer.cfg.autoFormatJSON = true;
+                    Serializer.SaveSettings();
                 }
             }
             ReformatText();
@@ -1166,13 +1159,13 @@ namespace BTDToolbox
 
         private void DisableAutoformattinhToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(Serializer.Deserialize_Config().autoFormatJSON == true)
+            if(Serializer.cfg.autoFormatJSON == true)
             {
                 ConsoleHandler.append("Auto-formatting disabled.");
                 ConsoleHandler.force_append_Notice("You can enable or disable this in Settings, " +
                    "which you can find under the \"File\" button at the top of toolbox.");
-                Main.autoFormatJSON = false;
-                Serializer.SaveSmallSettings("autoFormatJSON");
+                Serializer.cfg.autoFormatJSON = false;
+                Serializer.SaveSettings();
             }
             else
             {

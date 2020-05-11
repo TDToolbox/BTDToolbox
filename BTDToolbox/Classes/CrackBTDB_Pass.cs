@@ -195,7 +195,7 @@ namespace BTDToolbox.Classes
             if (CheckGamePath())
             {
                 var p = new Process();
-                p.StartInfo.FileName = Serializer.Deserialize_Config().BTDB_Directory + "\\Battles-Win.exe";
+                p.StartInfo.FileName = Serializer.cfg.BTDB_Directory + "\\Battles-Win.exe";
                 ConsoleHandler.append("Program needs to start BTD Battles in order to get its Process ID number.");
                 ConsoleHandler.append("Starting BTD Battles.");
                 MessageBox.Show("Starting BTD Battles. Do not do anything. The program will close Battles at the start menu");
@@ -280,7 +280,7 @@ namespace BTDToolbox.Classes
                 File.Delete(workingDir + "\\data.jet");
 
             File.Copy(Strings2Dir + "\\strings.txt", workingDir + "\\strings.txt");
-            File.Copy(Serializer.Deserialize_Config().BTDB_Directory + "\\Assets\\data.jet", workingDir + "\\data.jet");
+            File.Copy(Serializer.cfg.BTDB_Directory + "\\Assets\\data.jet", workingDir + "\\data.jet");
 
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";

@@ -12,22 +12,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BTDToolbox.ProjectConfig;
 
 namespace BTDToolbox
 {
     public partial class Console : ThemedForm
     {
-        //Config variables
-        ConfigFile programData;
-        public static float consoleLogFont;
-        
-        float fontSize;
         int errorCount = 0;
 
         private string lastMessage;
         private static Console console;
-        
 
         public Console() : base()
         {
@@ -41,8 +34,7 @@ namespace BTDToolbox
 
         private void StartUp()
         {
-            Deserialize_Config();
-            if (programData.ExistingUser == false)
+            if (Serializer.cfg.ExistingUser == false)
             {
                 this.StartPosition = FormStartPosition.Manual;
                 Rectangle resolution = Screen.PrimaryScreen.Bounds;
@@ -57,11 +49,10 @@ namespace BTDToolbox
             }
             else
             {
-                this.Size = new Size(programData.Console_SizeX, programData.Console_SizeY);
-                this.Location = new Point(programData.Console_PosX, programData.Console_PosY);
+                this.Size = new Size(Serializer.cfg.Console_SizeX, Serializer.cfg.Console_SizeY);
+                this.Location = new Point(Serializer.cfg.Console_PosX, Serializer.cfg.Console_PosY);
             }
-            fontSize = programData.Console_FontSize;
-            this.Font = new Font("Consolas", fontSize);
+            this.Font = new Font("Consolas", Serializer.cfg.Console_FontSize);
         }
         public static Console getInstance()
         {
@@ -125,21 +116,15 @@ namespace BTDToolbox
         }
 
 
-        private void Deserialize_Config()
-        {
-            programData = Serializer.Deserialize_Config();
-        }
-
-
         private void exitHandling(object sender, EventArgs e)
         {
-            Serializer.SaveConfig(this, "console");
+            Serializer.SaveSettings();
         }
 
         public override void close_button_Click(object sender, EventArgs e)
         {
             ConsoleHandler.append("Hiding console.");
-            Serializer.SaveConfig(this, "console");
+            Serializer.SaveSettings();
             this.Hide();
         }
 
