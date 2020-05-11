@@ -63,8 +63,6 @@ namespace BTDToolbox
         public void append(String log, bool canRepeat, bool force, bool notice)
         {
             if (!canRepeat && log == lastMessage) return;
-            if (force) { Visible = true; BringToFront(); }
-            if (notice) output_log.SelectionColor = Color.Yellow;
 
             DateTime now = DateTime.Now;
 
@@ -78,6 +76,9 @@ namespace BTDToolbox
             {
                 Invoke((MethodInvoker)delegate
                 {
+                    if (force) { Visible = true; BringToFront(); }
+                    if (notice) output_log.SelectionColor = Color.Yellow;
+
                     output_log.AppendText("" + currentTime + " - " + ">> " + log + "\r\n");
                     output_log.ScrollToCaret();
                 });
@@ -92,20 +93,14 @@ namespace BTDToolbox
         {
             WebHandler web = new WebHandler();
             string url = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/toolbox%20announcements";
-            try
-            {
-                string answer = web.WaitOn_URL(url);
-                output_log.SelectionColor = Color.OrangeRed;
 
-                if (answer.Length > 0 && answer != null)
-                    ConsoleHandler.append("Announcement: " + answer);
-                else
-                    ConsoleHandler.append("Failed to read announcement...");
-            }
-            catch
-            {
-                ConsoleHandler.append_Notice("Something went wrong.. Failed to read announcements...");
-            }
+            string answer = web.WaitOn_URL(url);
+            Invoke((MethodInvoker)delegate { output_log.SelectionColor = Color.LawnGreen; });
+            
+            if (!Guard.IsStringValid(answer))
+                ConsoleHandler.append("Failed to read announcement...");
+
+            ConsoleHandler.append("Announcement: " + answer);
         }
 
 

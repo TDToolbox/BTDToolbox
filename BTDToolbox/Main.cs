@@ -108,9 +108,15 @@ namespace BTDToolbox
 
             if(!Serializer.cfg.disableUpdates)
             {
-                ConsoleHandler.announcement();
-                var isUpdate = new UpdateHandler();
-                isUpdate.HandleUpdates();
+                new Thread(() =>
+                {
+                    ConsoleHandler.announcement();
+                    var isUpdate = new UpdateHandler();
+                    isUpdate.HandleUpdates();
+
+                }).Start();
+
+                
             }
 
             foreach (Control con in Controls)
