@@ -150,10 +150,14 @@ namespace BTDToolbox
             cfg.openTutorialsInToolbox = true;
             cfg.EnableConsole = true;
             cfg.ExistingUser = false;
+            SaveSettings();
         }
 
         public static Config LoadSettings()
         {
+            if (serializer == null)
+                serializer = new Serializer();
+
             if (!File.Exists(settingsPath))
             {
                 ConsoleHandler.append("Settings file doesn't exist! Creating a new settings file.");

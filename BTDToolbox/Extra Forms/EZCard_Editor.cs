@@ -40,9 +40,21 @@ namespace BTDToolbox.Extra_Forms
         public EZCard_Editor()
         {
             InitializeComponent();
-            EZCard_Opened = true;
-            
+            if (CurrentProjectVariables.GameName == "BTDB")
+            {
+                ConsoleHandler.force_append_Notice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
+                return;
+            }
+            if (!Guard.IsStringValid(CurrentProjectVariables.PathToProjectFiles))
+            {
+                ConsoleHandler.append("Can't use EZ Card tool because you don't have a project opened");
+                this.Close();
+                return;
+            }
+
             Set_ClickEvents();
+            this.Show();
+            EZCard_Opened = true;
         }
         public void CreateCardObject(string cardPath)
         {

@@ -381,98 +381,34 @@ namespace BTDToolbox
         {
             AddNewJet();
         }
-        public static string TryFindSteamDir(string gameFolder)
-        {
-            string gamedir = SaveEditor.TryFindSteam.CheckDirsForSteam("\\steamapps\\common\\" + gameFolder);
-            return gamedir;
-        }
+        
         private void NewProject(string gameName)
         {
             if (projNoGame == false)
             {
                 if (isGamePathValid(gameName) == false)
                 {
-                    string gameFolder = "";
-                    if (gameName == "BTD5")
-                        gameFolder = "BloonsTD5";
-                    if (gameName == "BTDB")
-                        gameFolder = "Bloons TD Battles";
-                    if (gameName == "BMC")
-                        gameFolder = "Bloons Monkey City";
-
-                    bool failed = false;
-                    string tryFindGameDir = TryFindSteamDir(gameFolder);
-                    
-                    if (tryFindGameDir == "")
+                    string gameDir = GetGameDir(gameName);
+                    if (!Guard.IsStringValid(gameDir))
                     {
-                        failed = true;
-                        ConsoleHandler.append("Failed to automatically aquire game dir");
-                    }
-                    else
-                    {
-                        ConsoleHandler.append("Game directory was automatically aquired...");
-                        if (gameName == "BTD5")
-                            Serializer.cfg.BTD5_Directory = tryFindGameDir;
-                        else if (gameName == "BTDB")
-                            Serializer.cfg.BTDB_Directory = tryFindGameDir;
-                        else if (gameName == "BMC")
-                            Serializer.cfg.BMC_Directory = tryFindGameDir;
-
-                        Serializer.SaveSettings();
-
-                        CurrentProjectVariables.GameName = tryFindGameDir;
-                        ProjectHandler.SaveProject();
-                        
-
-                        if (!Validate_Backup(gameName))
-                            CreateBackup(gameName);
-
-                        if (Validate_Backup(gameName))
-                        {
-                            var setProjName = new SetProjectName();
-                            setProjName.Show();
-                        }
-                        else
-                        {
-                            failed = true;
-                            ConsoleHandler.force_append_Notice("Failed to create a new project because the backup failed to be aquired...");
-                        }
+                        ConsoleHandler.append("The game directory wasn't found. Cancelling project creation.");
+                        return;
                     }
 
-                    if(failed)
-                    {
-                        ConsoleHandler.append("Please browse for " + Get_EXE_Name(gameName));
-                        browseForExe(gameName);
-                        if (isGamePathValid(gameName) == false)
-                        {
-                            ConsoleHandler.append("Theres been an error identifying your game");
-                        }
-                        else
-                        {
-                            if (!Validate_Backup(gameName))
-                                CreateBackup(gameName);
+                    CurrentProjectVariables.GameName = gameName;
+                    CurrentProjectVariables.GamePath = gameDir;
+                    ProjectHandler.SaveProject();
+                    SaveGamePath(gameName, gameDir);
+                    Serializer.SaveSettings();
 
-                            if (Validate_Backup(gameName))
-                            {
-                                var setProjName = new SetProjectName();
-                                setProjName.Show();
-                            }
-                            ConsoleHandler.force_append_Notice("Failed to create a new project because the backup failed to be aquired...");
-                        }
-                    }
-                    
+                    if (!Validate_Backup(gameName))
+                        CreateBackup(gameName);
                 }
-                else
-                {
-                    var setProjName = new SetProjectName();
-                    setProjName.Show();
-                }
+
             }
-            else
-            {
-                var setProjName = new SetProjectName();
-                setProjName.Show();
-            }
+
+            var setProjName = new SetProjectName();
+            setProjName.Show();
         }
         private void New_BTD5_Proj_Click(object sender, EventArgs e)
         {
@@ -645,74 +581,50 @@ namespace BTDToolbox
         }
 
 
-
-        private void bMCDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (isGamePathValid("BMC"))
-            {
-                ConsoleHandler.append("Opening Monkey City Directory");
-                Process.Start(Serializer.cfg.BMC_Directory);
-            }
-            else
-            {
-                ConsoleHandler.append("Could not find your BMC directory");
-                browseForExe("BMC");
-                if (isGamePathValid("BMC"))
-                {
-                    ConsoleHandler.append("Opening BMC Directory");
-                    Process.Start(Serializer.cfg.BMC_Directory);
-                }
-                else
-                {
-                    ConsoleHandler.append("Something went wrong...");
-                }
-            }
-        }
         private void BTD5DirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if (isGamePathValid("BTD5"))
+            if (!isGamePathValid("BTD5"))
             {
-                ConsoleHandler.append("Opening BTD5 Directory");
-                Process.Start(Serializer.cfg.BTD5_Directory);
+                string gameD = GetGameDir("BTD5");
+                if (!Guard.IsStringValid(gameD))
+                    return;
+
+                SaveGamePath("BTD5", gameD);
             }
-            else
-            {
-                ConsoleHandler.append("Could not find your BTD5 directory");
-                browseForExe("BTD5");
-                if(isGamePathValid("BTD5"))
-                {
-                    ConsoleHandler.append("Opening BTD5 Directory");
-                    Process.Start(Serializer.cfg.BTD5_Directory);
-                }
-                else
-                {
-                    ConsoleHandler.append("Something went wrong...");
-                }
-            }
+
+            ConsoleHandler.append("Opening BTD5 Directory");
+            Process.Start(Serializer.cfg.BTD5_Directory);
         }
 
         private void BTDBDirectoryToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if (isGamePathValid("BTDB"))
+            if (!isGamePathValid("BTDB"))
             {
-                ConsoleHandler.append("Opening BTD Battles Directory");
-                Process.Start(Serializer.cfg.BTDB_Directory);
+                string gameD = GetGameDir("BTDB");
+                if (!Guard.IsStringValid(gameD))
+                    return;
+
+                SaveGamePath("BTDB", gameD);
             }
-            else
-            {
-                ConsoleHandler.append("Could not find your BTDB directory");
-                browseForExe("BTDB");
-                if (isGamePathValid("BTDB"))
-                {
-                    ConsoleHandler.append("Opening BTDB Directory");
-                    Process.Start(Serializer.cfg.BTDB_Directory);
-                }
-                else
-                {
-                    ConsoleHandler.append("Something went wrong...");
-                }
-            }
+
+            ConsoleHandler.append("Opening BTDB Directory");
+            Process.Start(Serializer.cfg.BTDB_Directory);
         }
+        private void bMCDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!isGamePathValid("BMC"))
+            {
+                string gameD = GetGameDir("BMC");
+                if (!Guard.IsStringValid(gameD))
+                    return;
+
+                SaveGamePath("BMC", gameD);
+            }
+
+            ConsoleHandler.append("Opening BMC Directory");
+            Process.Start(Serializer.cfg.BMC_Directory);
+        }
+
 
         private void ToolStripMenuItem4_Click(object sender, EventArgs e)
         {
@@ -869,27 +781,18 @@ namespace BTDToolbox
             var ezTower = new EasyTowerEditor();
             string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\DartMonkey.tower";
             ezTower.path = path;
-            ezTower.Show();
         }
         private void EZ_BloonEditor_Click(object sender, EventArgs e)
         {
             var ezBloon = new EZBloon_Editor();
             string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BloonDefinitions\\Red.bloon";
             ezBloon.path = path;
-            ezBloon.Show();
         }
         private void EZCard_Editor_Click(object sender, EventArgs e)
         {
-            if (CurrentProjectVariables.GameName == "BTDB")
-            {
-                ConsoleHandler.force_append_Notice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
-                return;
-            }
-
             var ezCard = new EZCard_Editor();
             string path = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions\\0.json";
             ezCard.path = path;
-            ezCard.Show();
         }
 
         private void BTDBPasswordManagerToolStripMenuItem_Click(object sender, EventArgs e)

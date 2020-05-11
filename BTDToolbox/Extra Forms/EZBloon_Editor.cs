@@ -32,6 +32,13 @@ namespace BTDToolbox.Extra_Forms
         public EZBloon_Editor()
         {
             InitializeComponent();
+            if (!Guard.IsStringValid(CurrentProjectVariables.PathToProjectFiles))
+            {
+                ConsoleHandler.append("Can't use EZ Bloon tool because you don't have a project opened");
+                this.Close();
+                return;
+            }
+            this.Show();
             EZBloon_Opened = true;
         }
         public void CreateBloonObject(string bloonPath)

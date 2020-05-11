@@ -17,8 +17,6 @@ namespace BTDToolbox
         public SettingsWindow()
         {
             InitializeComponent();
-
-            
             Setup();
         }
         private void Setup()
@@ -42,8 +40,8 @@ namespace BTDToolbox
         }
         private void Save_Button_Click(object sender, EventArgs e)
         {
-            JetForm.useExternalEditor = useExternalEditor.Checked;
-            Program.enableSplash = EnableSplash.Checked;
+            Serializer.cfg.useExternalEditor = useExternalEditor.Checked;
+            Serializer.cfg.enableSplash = EnableSplash.Checked;
             Serializer.cfg.disableUpdates = DisableUpdates_CB.Checked;
             Serializer.cfg.autoFormatJSON = AutoFormatJSON_CB.Checked;
 

@@ -59,6 +59,12 @@ namespace BTDToolbox.Extra_Forms
             if (NKHook.CanUseNKH())
                 NewTower_Button.Visible = true;
 
+            if(!Guard.IsStringValid(CurrentProjectVariables.PathToProjectFiles))
+            {
+                ConsoleHandler.append("Can't use EZ Tower tool because you don't have a project opened");
+                this.Close();
+                return;
+            }
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
 
             SelectionMenu_Left_CB.CheckedChanged += SelectionMenu_ItemChecked;
@@ -83,6 +89,8 @@ namespace BTDToolbox.Extra_Forms
                         NewTower_Button.Visible = true;
                 }
             }
+
+            this.Show();
         }
 
         private void SelectionMenu_ItemChecked(object sender, EventArgs e)

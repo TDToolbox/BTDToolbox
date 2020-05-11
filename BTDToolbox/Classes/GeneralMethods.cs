@@ -19,7 +19,7 @@ namespace BTDToolbox
 {
     class GeneralMethods
     {
-        public static bool badJetPass = false;        
+        public static bool badJetPass = false;
         public static void DeleteFile(string fileName)
         {
             if (File.Exists(fileName))
@@ -35,7 +35,7 @@ namespace BTDToolbox
         }
         public static void DeleteDirectory(string path)
         {
-            if(path == Environment.CurrentDirectory)
+            if (path == Environment.CurrentDirectory)
             {
                 ConsoleHandler.force_append_Notice("A Critical error occured... Attempted to delete BTD Toolbox folder...");
                 return;
@@ -65,7 +65,7 @@ namespace BTDToolbox
             {
                 if (!File.Exists(newLocation))
                 {
-                    ConsoleHandler.append("Copying "+ filename + "...");
+                    ConsoleHandler.append("Copying " + filename + "...");
                     File.Copy(originalLocation, newLocation);
                     ConsoleHandler.append("Copied " + filename + "!");
                 }
@@ -160,17 +160,11 @@ namespace BTDToolbox
             else
                 return null;
         }
-        public static string GetCurrent_GameName()
-        {
-            string game = CurrentProjectVariables.GameName;
-
-            if (game == null || game == "")
-            {
-                ConsoleHandler.append("Unable to get game name..");
-                return null;
-            }
-            return game;
-        }
+        /// <summary>
+        /// Returns the saved game path for the game
+        /// </summary>
+        /// <param name="game">name of game we want</param>
+        /// <returns></returns>
         public static string ReturnGamePath(string game)
         {
             string gameDir = "";
@@ -208,7 +202,7 @@ namespace BTDToolbox
             {
                 if (Main.getInstance().Launch_Program_ToolStrip.Visible == false)
                     Main.getInstance().Launch_Program_ToolStrip.Visible = true;
-                return true;                
+                return true;
             }
         }
         public static void LaunchGame(string game)
@@ -221,7 +215,7 @@ namespace BTDToolbox
             {
                 gameDir = CurrentProjectVariables.GamePath;
                 exeName = Get_EXE_Name(game);
-                
+
                 exePath = gameDir + "\\" + exeName;
                 ConsoleHandler.append("Launching " + game + "...");
                 Process.Start(exePath);
@@ -254,7 +248,7 @@ namespace BTDToolbox
                         ConsoleHandler.append("Failed to validate backup loc...");
                         return false;
                     }
-                    if(gameName == "BMC")
+                    if (gameName == "BMC")
                     {
                         string backupAssetBundle = backupDir + "\\AssetBundles_Original";
                         if (!Directory.Exists(backupAssetBundle))
@@ -263,7 +257,7 @@ namespace BTDToolbox
                             return false;
                         }
                     }
-                    
+
                     ConsoleHandler.append("Backup validated");
                     return true;
                 }
@@ -289,7 +283,7 @@ namespace BTDToolbox
                 jetName = ReturnJetName(game);
                 gameDir = ReturnGamePath(game);
                 steamJetPath = gameDir + "\\Assets\\" + jetName;
-                
+
                 return steamJetPath;
             }
             else
@@ -320,8 +314,8 @@ namespace BTDToolbox
             if (steamJetPath != null)
             {
                 CopyFile(gameDir + "\\Assets\\Loc\\English.xml", backupDir + "\\" + backupLocName);
-                CopyFile(steamJetPath, fullBackupPath);    
-                
+                CopyFile(steamJetPath, fullBackupPath);
+
                 if (File.Exists(fullBackupPath))
                     ConsoleHandler.append("Backup jet created!");
                 else
@@ -461,11 +455,11 @@ namespace BTDToolbox
             int i = 0;
             try
             {
-                foreach(ZipEntry e in archive)
+                foreach (ZipEntry e in archive)
                 {
                     e.Extract(tempDir);
-                    
-                    if(i >= 5)
+
+                    if (i >= 5)
                         break;
                     i++;
                 }
@@ -492,41 +486,12 @@ namespace BTDToolbox
                 e.Cancel = true;
             }
         }
-        public static string DetermineJet_Game(string jetPath)
-        {
-            string game = "";
-            if (Bad_JetPass(jetPath, "Q%_{6#Px]]"))
-                game = "BTDB";
-
-            return game;
-        }
-        public static bool ValidateEXE(string game)
-        {
-            if (isGamePathValid(game) == false)
-            {
-                ConsoleHandler.append("Error identifying Game Directory or Backups. Please browse for your EXE again...\r\n");
-                browseForExe(game);
-                if (isGamePathValid(game) == false)
-                {
-                    MessageBox.Show("The EXE was not found... Please try again.");
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
-        public static void browseForExe(string game)
+        public static string browseForExe(string game)
         {
             string exeName = Get_EXE_Name(game);
 
-            if(!Guard.IsStringValid(exeName))
-                return;
+            if (!Guard.IsStringValid(exeName))
+                return "";
 
 
             MessageBox.Show("Please browse for " + exeName + ".\n\nMake sure that your game is UNMODDED, otherwise Toolbox will make a corrupt backup");
@@ -535,24 +500,18 @@ namespace BTDToolbox
             if (!Guard.IsStringValid(exePath))
             {
                 ConsoleHandler.append_Force("Invalid EXE path!");
-                return;
+                return "";
             }
 
             if (!exePath.Contains(exeName))
             {
                 ConsoleHandler.append("You selected an Invalid .exe. Please browse for the exe for your game.");
-                return;
+                return "";
             }
 
             string gameDir = exePath.Replace("\\" + exeName, "");
-            if (game == "BTD5")
-                Serializer.cfg.BTD5_Directory = gameDir;
-            else if (game == "BTDB")
-                Serializer.cfg.BTDB_Directory = gameDir;
-            else if (game == "BMC")
-                Serializer.cfg.BMC_Directory = gameDir;
-
-            Serializer.SaveSettings();
+            SaveGamePath(game, gameDir);
+            return gameDir;
         }
         public static string OutputJet()
         {
@@ -570,7 +529,7 @@ namespace BTDToolbox
         public static void CompileJet(string switchCase)
         {
             if (New_JsonEditor.isJsonError != true)
-            {                
+            {
                 if (JetProps.get().Count == 1)
                 {
                     string dest = "";
@@ -598,7 +557,7 @@ namespace BTDToolbox
 
                             CurrentProjectVariables.ExportPath = dest;
                             ProjectHandler.SaveProject();
-                            
+
                             //ZipForm.savedExportPath = dest;
                             //Serializer.SaveSmallSettings("export path");
                         }
@@ -707,8 +666,8 @@ namespace BTDToolbox
         }
         public static bool IsGameRunning(string game)
         {
-            string exename =  Get_EXE_Name(game).Replace(".exe", "");
-            
+            string exename = Get_EXE_Name(game).Replace(".exe", "");
+
             Process[] pname = Process.GetProcessesByName(exename);
             if (pname.Length == 0)
                 return false;
@@ -779,6 +738,61 @@ namespace BTDToolbox
             // Get the character's position.
             int pos = rch.GetCharIndexFromPosition(new Point(x, y));
             return pos;
+        }
+
+        /// <summary>
+        /// Will attempt to automatically find the game dir
+        /// </summary>
+        /// <param name="gameFolder">The name of the Steam Folder that the game is in</param>
+        /// <returns></returns>
+        public static string TryFindSteamDir(string gameFolder)
+        {
+            string gamedir = SaveEditor.TryFindSteam.CheckDirsForSteam("\\steamapps\\common\\" + gameFolder);
+            return gamedir;
+        }
+
+        public static string GetGameDir(string gamename)
+        {
+            string gameDir = TryFindSteamDir(GetSteamFolderName(gamename));
+            if (Guard.IsStringValid(gameDir)) return gameDir;
+            ConsoleHandler.append("Failed to automatically aquire game dir");
+
+            ConsoleHandler.append("Please browse for " + Get_EXE_Name(gamename));
+
+            gameDir = browseForExe(gamename);
+            if (isGamePathValid(gamename) == true) return gameDir;
+            
+            ConsoleHandler.append("Theres been an error identifying your game");
+            return gameDir;
+        }
+        public static string GetSteamFolderName(string gamename)
+        {
+            string foldername = "";
+            switch (gamename)
+            {
+                case "BTD5":
+                    foldername = "BloonsTD5";
+                    break;
+                case "BTDB":
+                    foldername = "Bloons TD Battles";
+                    break;
+                case "BMC":
+                    foldername = "Bloons Monkey City";
+                    break;
+            }
+
+            return foldername;
+        }
+        public static void SaveGamePath(string gamename, string path)
+        {
+            if (gamename == "BTD5")
+                Serializer.cfg.BTD5_Directory = path;
+            else if (gamename == "BTDB")
+                Serializer.cfg.BTDB_Directory = path;
+            else if (gamename == "BMC")
+                Serializer.cfg.BMC_Directory = path;
+
+            Serializer.SaveSettings();
         }
     }
 }

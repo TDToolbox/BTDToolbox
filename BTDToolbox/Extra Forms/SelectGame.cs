@@ -67,70 +67,30 @@ namespace BTDToolbox.Extra_Forms
 
         public bool DoWork(string gameName)
         {
-            if (isGamePathValid(gameName) == false)
+            if(isGamePathValid(gameName))
             {
-                string gameFolder = "";
-                if (gameName == "BTD5")
-                    gameFolder = "BloonsTD5";
-                if (gameName == "BTDB")
-                    gameFolder = "Bloons TD Battles";
-                if (gameName == "BMC")
-                    gameFolder = "Bloons Monkey City";
-
-                bool failed = false;
-                string tryFindGameDir = Main.TryFindSteamDir(gameFolder);
-
-                if (tryFindGameDir == "")
-                {
-                    failed = true;
-                    ConsoleHandler.append("Failed to automatically aquire game dir");
-                }
-                else
-                {
-                    ConsoleHandler.append("Game directory was automatically aquired...");
-                    if (gameName == "BTD5")
-                        Serializer.cfg.BTD5_Directory = tryFindGameDir;
-                    else if (gameName == "BTDB")
-                        Serializer.cfg.BTDB_Directory = tryFindGameDir;
-                    else if (gameName == "BMC")
-                        Serializer.cfg.BMC_Directory = tryFindGameDir;
-
-                    Serializer.SaveSettings();
-
-                    CurrentProjectVariables.GameName = tryFindGameDir;
-                    ProjectHandler.SaveProject();
-                }
-
-                if (failed)
-                {
-                    DialogResult diag = MessageBox.Show("Unable to find the game directory. Do you want to create the project without" +
-                        " the game? Choose no to browse for your game's EXE." +
-                        " If you choose Yes, you wont be able to launch your mod until you select it.", "Browse for EXE", MessageBoxButtons.YesNoCancel); ;
-                    
-                    if (diag == DialogResult.Cancel)
-                        return false;
-                    else if (diag == DialogResult.Yes)
-                    {
-                        ConsoleHandler.append("Please browse for " + Get_EXE_Name(gameName));
-                        browseForExe(gameName);
-                        if (isGamePathValid(gameName) == false)
-                        {
-                            ConsoleHandler.append("Theres been an error identifying your game");
-                            return false;
-                        }
-                    }
-                }
+                if (!Validate_Backup(gameName))
+                    CreateBackup(gameName);
+                return true;
             }
 
-            if (!Validate_Backup(gameName))
-                CreateBackup(gameName);
-
-            if (!Validate_Backup(gameName))
+            string gameD = GetGameDir(gameName);
+            if(Guard.IsStringValid(gameD))
             {
-                ConsoleHandler.force_append_Notice("Failed to create a new project because the backup failed to be aquired...");
-                return false;
+                SaveGamePath(gameName, gameD);
+                if (!Validate_Backup(gameName))
+                    CreateBackup(gameName);
+                return true;
             }
-            return true;
+
+            DialogResult diag = MessageBox.Show("Unable to find the game directory. Do you want to create the project without" +
+                    " the game? If you choose Yes you wont be able to launch your mod from toolbox until you " +
+                    "save the game path.", "Create Project Without the Game?", MessageBoxButtons.YesNo); ;
+
+            if (diag == DialogResult.Yes)
+                return true;
+            
+            return false;
         }
 
 
