@@ -18,6 +18,7 @@ namespace BTDToolbox
             public bool disableUpdates { get; set; }
             public bool autoFormatJSON { get; set; }
             public bool nkhookMsgShown { get; set; }
+            public bool openTutorialsInToolbox { get; set; }
 
 
             //Project wide variables

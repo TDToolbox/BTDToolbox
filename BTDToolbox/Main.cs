@@ -117,7 +117,7 @@ namespace BTDToolbox
                 return;
 
             enableConsole = ConsoleHandler.console.Visible;
-            Serializer.SaveConfig(this, "main");
+            Serializer.SaveSettings();
         }
         private void Main_Load(object sender, EventArgs e)
         {
@@ -173,7 +173,7 @@ namespace BTDToolbox
                 changelog.Show();
 
                 UpdateChangelog.recentUpdate = false;
-                Serializer.SaveSmallSettings("updater");
+                Serializer.SaveSettings();
             }
         }
         
@@ -289,11 +289,10 @@ namespace BTDToolbox
                     else if (path.Contains("BMC"))
                         gameName = "BMC";
 
-                    Serializer.SaveConfig(this, "game");
                     JetForm jf = new JetForm(dirInfo, this, name);
                     jf.MdiParent = this;
                     jf.Show();
-                    Serializer.SaveConfig(this, "main");   //try changing this if having issues with last project
+                    Serializer.SaveSettings();
                 }
             }
         }
