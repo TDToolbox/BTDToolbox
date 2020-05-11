@@ -148,9 +148,9 @@
             this.toolStripMenuItem1,
             this.viewToolStripMenuItem1,
             this.EZ_Tools,
+            this.Tutorials_Button,
             this.helpToolStripMenuItem,
-            this.debugToolStripMenuItem,
-            this.Tutorials_Button});
+            this.debugToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1483, 24);

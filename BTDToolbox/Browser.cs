@@ -13,13 +13,21 @@ namespace BTDToolbox
         public Browser(string url)
         {
             InitializeComponent();
-            //MessageBox.Show(url);
+            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            {
+                ConsoleHandler.append("Attempted to open the url |  " + url + "  | this is a bad url");
+                this.Close();
+                return;
+            }
+            
             webBrowser1.Url = new Uri(url);
             this.TitleLabel.Text = "Browser";
-            
         }
         public Browser(Main MdiParent, string url):this(url)
         {
+            if (this.IsDisposed)
+                return;
+
             this.MdiParent = Main.getInstance();
             this.Show();
         }

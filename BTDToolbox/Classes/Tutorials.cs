@@ -13,25 +13,6 @@ namespace BTDToolbox.Classes
         string tutorialFilePath = Environment.CurrentDirectory + "\\TutorialInfo.txt";
         public static Dictionary<string, string> tutorials = new Dictionary<string, string>();
         
-        private void PopulateTutorialsList()
-        {
-            if (tutorials.Count == 0)
-                return;
-
-            Main.getInstance().Invoke((MethodInvoker)delegate
-            {
-                Main.getInstance().Tutorials_Button.DropDownItems.Clear();
-
-                foreach (var tutorial in tutorials)
-                {
-                    Main.getInstance().Tutorials_Button.DropDownItems.Add(tutorial.Key);
-                }
-
-                Main.getInstance().Tutorials_Button.ShowDropDown();
-            });
-            
-        }
-
         public static bool HasFreshTutList()
         {
             if (tut == null)
@@ -59,7 +40,7 @@ namespace BTDToolbox.Classes
                         tut = null;
                         return;
                     }
-                    ConsoleHandler.append("Failed to get tutorials list. Toolbox will use the stored list instead, please not it may " +
+                    ConsoleHandler.append("Failed to get tutorials list. Toolbox will use the stored list instead, please note it may " +
                         "not be updated. Restart BTD Toolbox if you want to try getting the list again.");
                 }
                 else
@@ -73,6 +54,26 @@ namespace BTDToolbox.Classes
                 tut.PopulateTutorialsList();
             }).Start();
         }
+
+        private void PopulateTutorialsList()
+        {
+            if (tutorials.Count == 0)
+                return;
+
+            Main.getInstance().Invoke((MethodInvoker)delegate
+            {
+                Main.getInstance().Tutorials_Button.DropDownItems.Clear();
+
+                foreach (var tutorial in tutorials)
+                {
+                    Main.getInstance().Tutorials_Button.DropDownItems.Add(tutorial.Key);
+                }
+
+                Main.getInstance().Tutorials_Button.ShowDropDown();
+            });
+
+        }
+
         public static void OpenTutorial(string tutorialName)
         {
             if(tutorials == null)
@@ -91,6 +92,7 @@ namespace BTDToolbox.Classes
 
             File.Create(tutorialFilePath).Close();
         }
+
         private Dictionary<string, string> CreateTutorialsDictionary(Dictionary<string, string> tutorials)
         {
             string[] lines = File.ReadAllLines(tutorialFilePath);
@@ -104,6 +106,7 @@ namespace BTDToolbox.Classes
             }
             return tutorials;
         }
+
         private void WriteToTutFile(string text)
         {
             File.WriteAllText(tutorialFilePath, text);
