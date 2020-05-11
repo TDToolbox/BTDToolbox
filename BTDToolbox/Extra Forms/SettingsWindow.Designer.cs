@@ -36,6 +36,7 @@
             this.Settings_Label = new System.Windows.Forms.Label();
             this.UseNKH_CB = new System.Windows.Forms.CheckBox();
             this.CurrentProjSettings_Label = new System.Windows.Forms.Label();
+            this.UseDeveloperMode = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.titleSeperator)).BeginInit();
             this.titleSeperator.Panel1.SuspendLayout();
             this.titleSeperator.Panel2.SuspendLayout();
@@ -55,6 +56,7 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.Controls.Add(this.UseDeveloperMode);
             this.contentPanel.Controls.Add(this.CurrentProjSettings_Label);
             this.contentPanel.Controls.Add(this.UseNKH_CB);
             this.contentPanel.Controls.Add(this.Settings_Label);
@@ -68,6 +70,8 @@
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             // 
             // TitleBar_RightCorner
             // 
@@ -169,6 +173,18 @@
             this.CurrentProjSettings_Label.Text = "Current Project Settings";
             this.CurrentProjSettings_Label.Visible = false;
             // 
+            // UseDeveloperMode
+            // 
+            this.UseDeveloperMode.AutoSize = true;
+            this.UseDeveloperMode.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UseDeveloperMode.ForeColor = System.Drawing.Color.White;
+            this.UseDeveloperMode.Location = new System.Drawing.Point(28, 177);
+            this.UseDeveloperMode.Name = "UseDeveloperMode";
+            this.UseDeveloperMode.Size = new System.Drawing.Size(183, 24);
+            this.UseDeveloperMode.TabIndex = 9;
+            this.UseDeveloperMode.Text = "Use Developer Mode";
+            this.UseDeveloperMode.UseVisualStyleBackColor = true;
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,5 +216,6 @@
         private System.Windows.Forms.CheckBox AutoFormatJSON_CB;
         private System.Windows.Forms.Label CurrentProjSettings_Label;
         private System.Windows.Forms.CheckBox UseNKH_CB;
+        private System.Windows.Forms.CheckBox UseDeveloperMode;
     }
 }

@@ -49,6 +49,8 @@ namespace BTDToolbox
             InitializeComponent();
             Serializer.LoadSettings();
             toolbox = this;
+
+            DeveloperMode.ControlDeveloperMode();
             Startup();
 
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.FromArgb(15, 15, 15);
@@ -952,9 +954,7 @@ namespace BTDToolbox
 
         private void WebBrowser_Button_Click(object sender, EventArgs e)
         {
-            Browser b = new Browser("https://youtu.be/nY9Cfe2O_XI?t=238");
-            b.MdiParent = this;
-            b.Show();
+            Browser b = new Browser(this,"https://duckduckgo.com/");
         }
 
         private void Tutorials_Button_Click(object sender, EventArgs e)

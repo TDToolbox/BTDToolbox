@@ -25,6 +25,9 @@ namespace BTDToolbox.Classes
         }
         public static bool CanUseNKH()
         {
+            if (Serializer.cfg.UseDeveloperMode)
+                return true;
+
             if (!Main.canUseNKH)
                 return false;
 

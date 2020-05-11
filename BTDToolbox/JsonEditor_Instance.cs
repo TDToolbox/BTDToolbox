@@ -49,13 +49,13 @@ namespace BTDToolbox
         int CharIndex_UnderMouse = 0;
         string previousSearchPhrase = "";
         bool searchPhrase_selected = false;
+        bool scrollKeyPressed = false;
 
         #region Initialize
         public JsonEditor_Instance()
         {
             InitializeComponent();
             SetHideEvents();
-
             Editor_TextBox.Select();
             AddLineNumbers();
 
@@ -65,8 +65,18 @@ namespace BTDToolbox
             SearchOptions_Button.KeyDown += Find_TB_KeyDown;
             Editor_TextBox.MouseUp += Editor_TextBox_RightClicked;
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
+            MouseWheel += JsonEditor_Instance_MouseWheel;
             //path and filename have NOT been set yet. Use FinishedLoading()
         }
+
+        private void JsonEditor_Instance_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if(scrollKeyPressed)
+            {
+                //if(e.Button == MouseButtons.)
+            }
+        }
+
         public void FinishedLoading()
         {
             HandleTools();
@@ -1214,6 +1224,18 @@ namespace BTDToolbox
 
                 pasted = false;
             }
+        }
+
+        private void JsonEditor_Instance_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Control)
+                scrollKeyPressed = true;
+        }
+
+        private void JsonEditor_Instance_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Control)
+                scrollKeyPressed = false;
         }
     }
 }

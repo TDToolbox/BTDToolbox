@@ -30,6 +30,7 @@ namespace BTDToolbox
             useExternalEditor.Checked = Serializer.cfg.useExternalEditor;
             DisableUpdates_CB.Checked = Serializer.cfg.disableUpdates;
             AutoFormatJSON_CB.Checked = Serializer.cfg.autoFormatJSON;
+            UseDeveloperMode.Checked = Serializer.cfg.UseDeveloperMode;
 
             if (!NKHook.CanUseNKH())
                 return;
@@ -44,12 +45,14 @@ namespace BTDToolbox
             Serializer.cfg.enableSplash = EnableSplash.Checked;
             Serializer.cfg.disableUpdates = DisableUpdates_CB.Checked;
             Serializer.cfg.autoFormatJSON = AutoFormatJSON_CB.Checked;
+            Serializer.cfg.UseDeveloperMode = UseDeveloperMode.Checked;
 
             CurrentProjectVariables.UseNKHook = UseNKH_CB.Checked;
 
             Serializer.SaveSettings();
             ProjectHandler.SaveProject();
             ConsoleHandler.append_CanRepeat("Settings saved!!!");
+            DeveloperMode.ControlDeveloperMode();
             this.Close();
         }
 

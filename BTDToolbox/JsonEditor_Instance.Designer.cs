@@ -610,6 +610,8 @@
             this.Controls.Add(this.tB_line);
             this.Name = "JsonEditor_Instance";
             this.Size = new System.Drawing.Size(754, 337);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.JsonEditor_Instance_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.JsonEditor_Instance_KeyUp);
             this.Resize += new System.EventHandler(this.JsonEditor_UserControl_Resize);
             this.JsonToolstrip.ResumeLayout(false);
             this.JsonToolstrip.PerformLayout();

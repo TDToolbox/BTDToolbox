@@ -24,21 +24,24 @@
             // 
             // contentPanel
             // 
-            this.contentPanel.Size = new System.Drawing.Size(0, 770);
+            this.contentPanel.Location = new System.Drawing.Point(5, 3);
+            this.contentPanel.Size = new System.Drawing.Size(391, 595);
             // 
             // close_button
             // 
             this.close_button.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.close_button.FlatAppearance.BorderSize = 0;
-            this.close_button.Location = new System.Drawing.Point(-62, 10);
+            this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.close_button.Location = new System.Drawing.Point(-457, 16);
             // 
             // Sizer
             // 
-            this.Sizer.Location = new System.Drawing.Point(-10, 773);
+            this.Sizer.Location = new System.Drawing.Point(-2404, 1865);
             // 
             // TitleBar_RightCorner
             // 
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(-43, 12);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(-457, 0);
             // 
             // CreditViewer
             // 

@@ -68,7 +68,7 @@
             // 
             // TitleBar_RightCorner
             // 
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 3);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(755, 0);
             // 
             // tabControl1
             // 
@@ -123,8 +123,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.KeyPreview = true;
             this.Name = "New_JsonEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

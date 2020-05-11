@@ -180,7 +180,7 @@
             this.NewProject_From_Backup,
             this.btdpToolStripMenuItem});
             this.New_ToolStrip.Name = "New_ToolStrip";
-            this.New_ToolStrip.Size = new System.Drawing.Size(142, 22);
+            this.New_ToolStrip.Size = new System.Drawing.Size(180, 22);
             this.New_ToolStrip.Text = "New";
             // 
             // New_BTD5_Proj
@@ -229,7 +229,7 @@
             this.Open_Existing_JetFile,
             this.OpenExistingProject});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // Open_Existing_JetFile
@@ -249,21 +249,21 @@
             // MainForm_SaveButton
             // 
             this.MainForm_SaveButton.Name = "MainForm_SaveButton";
-            this.MainForm_SaveButton.Size = new System.Drawing.Size(142, 22);
+            this.MainForm_SaveButton.Size = new System.Drawing.Size(180, 22);
             this.MainForm_SaveButton.Text = "Save";
             this.MainForm_SaveButton.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // OpenSettings_Button
             // 
             this.OpenSettings_Button.Name = "OpenSettings_Button";
-            this.OpenSettings_Button.Size = new System.Drawing.Size(142, 22);
+            this.OpenSettings_Button.Size = new System.Drawing.Size(180, 22);
             this.OpenSettings_Button.Text = "Settings";
             this.OpenSettings_Button.Click += new System.EventHandler(this.OpenSettings_Button_Click);
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             this.openRecentToolStripMenuItem.Visible = false;
             // 
@@ -1035,7 +1035,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem OpenExistingProject;
-        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Find_Button;
         private System.Windows.Forms.ToolStripMenuItem Replace_Button;
         private System.Windows.Forms.ToolStripMenuItem Credits;
@@ -1131,6 +1130,7 @@
         private System.Windows.Forms.ToolStripMenuItem WebBrowser_Button;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         public System.Windows.Forms.ToolStripMenuItem Tutorials_Button;
+        public System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
     }
 }
 

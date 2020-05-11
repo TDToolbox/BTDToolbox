@@ -77,6 +77,7 @@ namespace BTDToolbox
         public bool autoFormatJSON { get; set; }
         public bool nkhookMsgShown { get; set; }
         public bool openTutorialsInToolbox { get; set; }
+        public bool UseDeveloperMode { get; set; }
 
     }
     public class Configaaa
@@ -150,6 +151,7 @@ namespace BTDToolbox
             cfg.openTutorialsInToolbox = true;
             cfg.EnableConsole = true;
             cfg.ExistingUser = false;
+            cfg.UseDeveloperMode = false;
             SaveSettings();
         }
 

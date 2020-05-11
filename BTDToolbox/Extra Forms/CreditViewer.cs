@@ -15,7 +15,7 @@ namespace BTDToolbox
 {
     public partial class CreditViewer : ThemedForm
     {
-        public CreditViewer() : base()
+        public CreditViewer()
         {
             InitializeComponent();
             this.canResize = false;
