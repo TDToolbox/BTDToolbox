@@ -24,8 +24,9 @@
             // 
             // contentPanel
             // 
+            this.contentPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.contentPanel.Location = new System.Drawing.Point(5, 3);
-            this.contentPanel.Size = new System.Drawing.Size(0, 777);
+            this.contentPanel.Size = new System.Drawing.Size(390, 595);
             // 
             // close_button
             // 
@@ -33,7 +34,7 @@
             this.close_button.FlatAppearance.BorderSize = 0;
             this.close_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.close_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.close_button.Location = new System.Drawing.Point(340, 0);
+            this.close_button.Location = new System.Drawing.Point(337, 5);
             // 
             // Sizer
             // 
@@ -41,7 +42,7 @@
             // 
             // TitleBar_RightCorner
             // 
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(340, 0);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(358, 0);
             // 
             // CreditViewer
             // 
