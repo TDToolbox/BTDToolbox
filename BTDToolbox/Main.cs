@@ -113,11 +113,9 @@ namespace BTDToolbox
                     ConsoleHandler.announcement();
                     var isUpdate = new UpdateHandler();
                     isUpdate.HandleUpdates();
-
-                }).Start();
-
-                
+                }).Start();                
             }
+
 
             foreach (Control con in Controls)
                 if (con is MdiClient)

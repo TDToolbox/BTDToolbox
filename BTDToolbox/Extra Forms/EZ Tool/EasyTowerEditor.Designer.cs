@@ -103,8 +103,8 @@
             this.ChoseName_Button = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.NewTowerName_BGPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.CancelNewTower_Button = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.TowerPanel.SuspendLayout();
             this.UpgradesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -1071,18 +1071,6 @@
             this.NewTowerName_BGPanel.TabIndex = 130;
             this.NewTowerName_BGPanel.Visible = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(266, 96);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(534, 35);
-            this.label1.TabIndex = 40;
-            this.label1.Text = "Please enter a name for your new tower:";
-            // 
             // CancelNewTower_Button
             // 
             this.CancelNewTower_Button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
@@ -1096,6 +1084,18 @@
             this.CancelNewTower_Button.Text = "Cancel New Tower";
             this.CancelNewTower_Button.UseVisualStyleBackColor = false;
             this.CancelNewTower_Button.Click += new System.EventHandler(this.CancelNewTower_Button_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(266, 96);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(534, 35);
+            this.label1.TabIndex = 40;
+            this.label1.Text = "Please enter a name for your new tower:";
             // 
             // EasyTowerEditor
             // 
@@ -1116,6 +1116,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.NewTowerName_BGPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "EasyTowerEditor";
             this.Text = "EasyTowerEditor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EasyTowerEditor_FormClosed);

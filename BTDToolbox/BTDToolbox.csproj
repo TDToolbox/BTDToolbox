@@ -115,28 +115,28 @@
     <Compile Include="Extra Forms\CreditViewer.Designer.cs">
       <DependentUpon>CreditViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extra Forms\EZ_Base.cs">
+    <Compile Include="Extra Forms\EZ Tool\EZ_Base.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extra Forms\EZ_Base.Designer.cs">
+    <Compile Include="Extra Forms\EZ Tool\EZ_Base.Designer.cs">
       <DependentUpon>EZ_Base.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extra Forms\EZCard_Editor.cs">
+    <Compile Include="Extra Forms\EZ Tool\EZCard_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extra Forms\EZCard_Editor.Designer.cs">
+    <Compile Include="Extra Forms\EZ Tool\EZCard_Editor.Designer.cs">
       <DependentUpon>EZCard_Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extra Forms\EZBloon_Editor.cs">
+    <Compile Include="Extra Forms\EZ Tool\EZBloon_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extra Forms\EZBloon_Editor.Designer.cs">
+    <Compile Include="Extra Forms\EZ Tool\EZBloon_Editor.Designer.cs">
       <DependentUpon>EZBloon_Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extra Forms\EasyTowerEditor.cs">
+    <Compile Include="Extra Forms\EZ Tool\EasyTowerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extra Forms\EasyTowerEditor.Designer.cs">
+    <Compile Include="Extra Forms\EZ Tool\EasyTowerEditor.Designer.cs">
       <DependentUpon>EasyTowerEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Extra Forms\First_Time_Use.cs">
@@ -218,16 +218,16 @@
     <EmbeddedResource Include="Extra Forms\BGForm.resx">
       <DependentUpon>BGForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extra Forms\EZ_Base.resx">
+    <EmbeddedResource Include="Extra Forms\EZ Tool\EZ_Base.resx">
       <DependentUpon>EZ_Base.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extra Forms\EZCard_Editor.resx">
+    <EmbeddedResource Include="Extra Forms\EZ Tool\EZCard_Editor.resx">
       <DependentUpon>EZCard_Editor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extra Forms\EZBloon_Editor.resx">
+    <EmbeddedResource Include="Extra Forms\EZ Tool\EZBloon_Editor.resx">
       <DependentUpon>EZBloon_Editor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extra Forms\EasyTowerEditor.resx">
+    <EmbeddedResource Include="Extra Forms\EZ Tool\EasyTowerEditor.resx">
       <DependentUpon>EasyTowerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\First_Time_Use.resx">

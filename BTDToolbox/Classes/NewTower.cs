@@ -71,6 +71,7 @@ namespace BTDToolbox.Classes
             {
                 FileInfo f = new FileInfo(BaseTowerFile);
                 BaseTowerName_NoExt = f.Name.Replace(".tower", "");
+                this.UseBaseTower = true;
             }
 
             /*if (CreateSpecialty)
@@ -117,6 +118,7 @@ namespace BTDToolbox.Classes
                 return;
             }
 
+            ConsoleHandler.append("Creating new tower entry in TowerSelectionMenu");
             TowerSelectionMenu menu = TowerSelectionMenu.FromJson(text);
             TowerSelectItem newItem = new TowerSelectItem();
             bool foundBaseTower = false;
@@ -160,7 +162,7 @@ namespace BTDToolbox.Classes
             newItem.FactoryName = TowerName;
             newItem.Icon = "";
             newItem.KeyboardShortcut = "";
-
+            ConsoleHandler.append("Creating empty TowerSelectMenu entry");
             if (TowerSelPos == TowerSelectMenu_Pos.FixedLeft || TowerSelPos == TowerSelectMenu_Pos.FixedRight)
                 newItem.ObjectType = 1;
             else
@@ -172,8 +174,8 @@ namespace BTDToolbox.Classes
         {
             FileInfo baseTower = new FileInfo(BaseTowerFile);
             TowerSelectItem newItem = new TowerSelectItem();
-
-            foreach(var a in TowerSelectFiles)
+            ConsoleHandler.append("Duplicating base TowerSelectMenu entry");
+            foreach (var a in TowerSelectFiles)
             {
                 string tempText = CheckJSONFromFile(a.Value);
 
@@ -188,6 +190,7 @@ namespace BTDToolbox.Classes
                 {
                     if (item.ToString() == baseTower.Name.Replace(".tower", ""))
                     {
+                        ConsoleHandler.append("Found base tower's TowerSelect entry in: " + a.Value.Replace(CurrentProjectVariables.PathToProjectFiles,""));
                         newItem.FactoryName = TowerName;
                         newItem.Icon = item.Icon;
                         newItem.KeyboardShortcut = item.KeyboardShortcut;
@@ -205,6 +208,7 @@ namespace BTDToolbox.Classes
         #region SpecialtyBuilding Stuff
         private void AddSpecialty()
         {
+            ConsoleHandler.append("Creating Specialty Building");
             string specialtyPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\SpecialtyDefinitions\\" + TowerName + ".json";
             if (File.Exists(specialtyPath))
                 File.Delete(specialtyPath);
@@ -217,6 +221,7 @@ namespace BTDToolbox.Classes
 
         private void MakeNewSpecialty(string savePath)
         {
+            ConsoleHandler.append("Creating new Specialty Building");
             SpecialtyBuildingClass specialty = new SpecialtyBuildingClass();
 
             FileInfo f = new FileInfo(savePath);
@@ -266,6 +271,7 @@ namespace BTDToolbox.Classes
         }
         private void MakeDupSpecialty(string savePath)
         {
+            ConsoleHandler.append("Duplicating base tower's specialty building");
             SpecialtyBuildingClass specialty = new SpecialtyBuildingClass();
 
             string baseSpecialName = GetSpecialtyBuilding();
@@ -274,7 +280,8 @@ namespace BTDToolbox.Classes
             
             if(!File.Exists(baseSpecialPath))
             {
-                ConsoleHandler.append("The Base specialty building doesn't exist. Using a new one instead.");
+                ConsoleHandler.append("Unable to find the base tower's specialty building by RelatedTower property" +
+                    ". Creating a new one instead.");
                 MakeNewSpecialty(savePath);
                 return;
             }
@@ -305,6 +312,7 @@ namespace BTDToolbox.Classes
             string specialtyBuilding = "";
             string projPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\";
 
+            ConsoleHandler.append("Searching for base tower's specialty building...");
             foreach (var x in Directory.GetFiles(projPath + "SpecialtyDefinitions"))
             {
                 string json = File.ReadAllText(x);
@@ -315,8 +323,9 @@ namespace BTDToolbox.Classes
                 s = SpecialtyBuildingClass.FromJson(json);
 
                 if (s != null && s.RelatedTower != null && s.RelatedTower == BaseTowerName_NoExt)
-                {
+                {  
                     specialtyBuilding = x.Replace(projPath + "SpecialtyDefinitions\\", "");
+                    ConsoleHandler.append("Found base tower's specialty building called:  " + specialtyBuilding);
                     break;
                 }
             }
@@ -324,6 +333,7 @@ namespace BTDToolbox.Classes
         }
         private void SaveSpecialty(string path, SpecialtyBuildingClass specialty)
         {
+            ConsoleHandler.append("Saving specialty building");
             string text = specialty.ToJson();
 
             StreamWriter serialize = new StreamWriter(path, false);
@@ -336,6 +346,7 @@ namespace BTDToolbox.Classes
         #region TowerDefinition Stuff
         private void AddTowerDef()
         {
+            ConsoleHandler.append("Creating tower definition for new tower");
             string towerDefPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + TowerName + ".tower";
             if (File.Exists(towerDefPath))
                 File.Delete(towerDefPath);
@@ -348,6 +359,7 @@ namespace BTDToolbox.Classes
 
         private void MakeNewTowerDef(string savePath)
         {
+            ConsoleHandler.append("Creating new tower definition");
             Tower_Class.Tower tower = new Tower_Class.Tower()
             {
                 AircraftList = { },
@@ -380,17 +392,18 @@ namespace BTDToolbox.Classes
         }
         private void MakeDupeTowerDef(string savePath)
         {
+            ConsoleHandler.append("Duplicating base tower's TowerDefinition");
             string baseTowerDefPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerDefinitions\\" + BaseTowerName_NoExt + ".tower";
 
             if (!File.Exists(baseTowerDefPath))
             {
-                ConsoleHandler.append("The Base specialty building doesn't exist. Using a new one instead.");
+                ConsoleHandler.append("The Base Tower's TowerDefinition wasn't found. Creating a new one instead.");
                 MakeNewTowerDef(savePath);
                 return;
             }
             if (!JSON_Reader.IsValidJson(File.ReadAllText(baseTowerDefPath)))
             {
-                ConsoleHandler.append("The Base specialty building has invalid JSON. Using a new one instead.");
+                ConsoleHandler.append("The Base Tower's TowerDefinition has invalid JSON. Creating a new one instead.");
                 MakeNewTowerDef(baseTowerDefPath);
                 return;
             }
@@ -404,6 +417,7 @@ namespace BTDToolbox.Classes
 
         private void SaveTowerDef(string path, Tower_Class.Tower tower)
         {
+            ConsoleHandler.append("Saving TowerDefiniton");
             string text = tower.ToJson();
 
             StreamWriter serialize = new StreamWriter(path, false);
@@ -490,18 +504,20 @@ namespace BTDToolbox.Classes
         #region TowerSpriteUpgrade Stuff
         private void AddTowerSpriteDef()
         {
+            ConsoleHandler.append("Creating TowerSpriteUpgrade file");
             string towerSpriteDefPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + TowerName + ".json";
             if (File.Exists(towerSpriteDefPath))
                 File.Delete(towerSpriteDefPath);
 
             if (UseBaseTower)
-                MakeNewTowerSpriteUpgradeDef(towerSpriteDefPath);
-            else
                 MakeDupTowerSpriteUpgradeDef(towerSpriteDefPath);
+            else
+                MakeNewTowerSpriteUpgradeDef(towerSpriteDefPath);
         }
 
         private void MakeNewTowerSpriteUpgradeDef(string savePath)
         {
+            ConsoleHandler.append("Creating a new TowerSpriteUpgrade file");
             var spritesDictionary = new Dictionary<string, string>();
             for (int i = 0; i < 7; i++)
                 spritesDictionary.Add(i.ToString(), "");
@@ -540,16 +556,17 @@ namespace BTDToolbox.Classes
 
         private void MakeDupTowerSpriteUpgradeDef(string savePath)
         {
+            ConsoleHandler.append("Duplicating base tower's TowerSpriteUpgrade file");
             string baseTowerSpriteDefPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\TowerSpriteUpgradeDefinitions\\" + BaseTowerName_NoExt + ".json";
             if (!File.Exists(baseTowerSpriteDefPath))
             {
-                ConsoleHandler.append("The Base TowerSpriteUpgradeDefinition doesn't exist. Using a new one instead.");
+                ConsoleHandler.append("The Base TowerSpriteUpgradeDefinition doesn't exist. Creating a new one instead.");
                 MakeNewTowerSpriteUpgradeDef(savePath);
                 return;
             }
             if (!JSON_Reader.IsValidJson(File.ReadAllText(baseTowerSpriteDefPath)))
             {
-                ConsoleHandler.append("The Base TowerSpriteUpgradeDefinition has invalid JSON. Using a new one instead.");
+                ConsoleHandler.append("The Base TowerSpriteUpgradeDefinition has invalid JSON. Creating a new one instead.");
                 MakeNewTowerSpriteUpgradeDef(savePath);
                 return;
             }
@@ -557,10 +574,12 @@ namespace BTDToolbox.Classes
             if (File.Exists(savePath))
                 File.Delete(savePath);
 
+            ConsoleHandler.append("Saving TowerSpriteUpgrade file");
             File.Copy(baseTowerSpriteDefPath, savePath);
         }
         private void SaveTowerSpriteDef(string path, TowerSpriteUpgrade towerSprite)
         {
+            ConsoleHandler.append("Saving TowerSpriteUpgrade file");
             string text = towerSprite.ToJson();
 
             StreamWriter serialize = new StreamWriter(path, false);
