@@ -56,7 +56,9 @@ namespace BTDToolbox.Extra_Forms
         public EasyTowerEditor()
         {
             InitializeComponent();
-            NewTower_Button.Visible = false;
+            if (NKHook.CanUseNKH())
+                NewTower_Button.Visible = true;
+
             Weapons_Button.DropDownItemClicked += Weapons_Button_Click;
 
             SelectionMenu_Left_CB.CheckedChanged += SelectionMenu_ItemChecked;
