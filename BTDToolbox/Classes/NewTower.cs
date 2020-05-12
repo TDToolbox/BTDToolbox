@@ -74,12 +74,16 @@ namespace BTDToolbox.Classes
                 this.UseBaseTower = true;
             }
 
-            /*if (CreateSpecialty)
-                AddSpecialty();*/
+            if (CreateSpecialty)
+                AddSpecialty();
 
-            //AddTowerDef();
+            AddTowerDef();
+            AddUpgradesFile();
+            AddWeapons();
             AddTowerSpriteDef();
-            //AddToTowerSelctionMenu();
+            AddToTowerSelctionMenu();
+
+            ConsoleHandler.append("Finished creating new tower: " + TowerName);
         }
 
         private string CheckJSONFromFile(string path)
@@ -586,6 +590,124 @@ namespace BTDToolbox.Classes
             serialize.Write(text);
             serialize.Close();
         }
+        #endregion
+
+
+        #region UpgradesFile stuff
+        private void AddUpgradesFile()
+        {
+            ConsoleHandler.append("Creating UpgradeDefinitions file");
+            string towerSpriteDefPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\UpgradeDefinitions\\" + TowerName + ".upgrades";
+            if (File.Exists(towerSpriteDefPath))
+                File.Delete(towerSpriteDefPath);
+
+            if (UseBaseTower)
+                DupUpgradesFile(towerSpriteDefPath);
+            else
+                MakeNewUpgradesFile(towerSpriteDefPath);
+        }
+        private void MakeNewUpgradesFile(string savePath)
+        {
+            ConsoleHandler.append("Creating new UpgradeDefinitions file");
+            UpgradesFile upgrades = new UpgradesFile();
+            upgrades.Upgrades = new Upgrade[8];
+            for(int i = 0; i<upgrades.Upgrades.Length; i++)
+            {
+                upgrades.Upgrades[i] = new Upgrade();
+                upgrades.Upgrades[i].Name = "";
+                upgrades.Upgrades[i].TowerUpgrade = new TowerUpgrade();
+                upgrades.Upgrades[i].WeaponUpgrade = new WeaponUpgrade();
+                upgrades.Upgrades[i].WeaponUpgrade.TaskUpgrade = new TaskUpgrade[0];
+
+            }
+
+            SaveUpgradesFile(upgrades, savePath);
+        }
+        private void DupUpgradesFile(string savePath)
+        {
+            ConsoleHandler.append("Duplicating base tower's UpgradeDefinitions");
+            string baseTowerUpgradeDef = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\UpgradeDefinitions\\" + BaseTowerName_NoExt + ".upgrades";
+
+            if (!File.Exists(baseTowerUpgradeDef))
+            {
+                ConsoleHandler.append("The Base Tower's UpgradeDefinitions wasn't found. Creating a new one instead.");
+                MakeNewUpgradesFile(savePath);
+                return;
+            }
+            if (!JSON_Reader.IsValidJson(File.ReadAllText(baseTowerUpgradeDef)))
+            {
+                ConsoleHandler.append("The Base Tower's UpgradeDefinitions has invalid JSON. Creating a new one instead.");
+                MakeNewUpgradesFile(savePath);
+                return;
+            }
+
+            UpgradesFile upgrades = UpgradesFile.FromJson(baseTowerUpgradeDef);
+            
+            if(upgrades.Upgrades == null)
+            {
+                ConsoleHandler.append("The Base Tower's UpgradeDefinitions is empty. Creating a new one instead.");
+                MakeNewUpgradesFile(savePath);
+                return;
+            }
+
+            SaveUpgradesFile(upgrades, savePath);
+        }
+        private void SaveUpgradesFile(UpgradesFile upgrades, string savePath)
+        {
+            ConsoleHandler.append("Saving UpgradeDefinition file");
+            string text = upgrades.ToJson();
+
+            StreamWriter serialize = new StreamWriter(savePath, false);
+            serialize.Write(text);
+            serialize.Close();
+
+        }
+        #endregion
+
+
+
+        #region Weapons Stuff
+        private void AddWeapons()
+        {
+            ConsoleHandler.append("Adding WeaponDefinitions"); 
+            
+            string weaponDefinitions = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\WeaponDefinitions\\" + TowerName;
+            if (Directory.Exists(weaponDefinitions))
+                Directory.Delete(weaponDefinitions, true);
+
+
+            string baseTowerWeaponDef = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\WeaponDefinitions\\" + BaseTowerName_NoExt;
+            if (UseBaseTower)
+            {
+                if(Directory.Exists(baseTowerWeaponDef))
+                {
+                    if (!Directory.Exists(weaponDefinitions))
+                        Directory.CreateDirectory(weaponDefinitions);
+
+                    ConsoleHandler.append("Duplicating Base Tower's WeaponDefinitions");
+                    GeneralMethods.CopyDirectory(baseTowerWeaponDef, weaponDefinitions);
+                }
+                else
+                    ConsoleHandler.append("Base Tower's WeaponDefinitions were not found. Creating empty weapon definitions");
+            }
+            else
+            {
+                ConsoleHandler.append("Creating new WeaponDefinitions");
+                Directory.CreateDirectory(weaponDefinitions);
+            }
+           
+            foreach(var jetform in JetProps.get())
+            {
+                if(jetform.dirInfo.FullName == CurrentProjectVariables.PathToProjectFiles)
+                {
+                    ConsoleHandler.append(jetform.dirInfo.FullName);
+                    jetform.treeView1.Nodes.Clear();
+                    jetform.listView1.Items.Clear();
+                    jetform.PopulateTreeView(CurrentProjectVariables.PathToProjectFiles);
+                }
+            }           
+        }
+
         #endregion
     }
 }

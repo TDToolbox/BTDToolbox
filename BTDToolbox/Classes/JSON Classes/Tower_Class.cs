@@ -181,6 +181,7 @@ namespace Tower_Class
 
     public static class Serialize
     {
+        public static string ToJson(this UpgradesFile self) => JsonConvert.SerializeObject(self, BTDToolbox.Classes.JSON_Classes.Converter.Settings);
         public static string ToJson(this Tower self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
         public static string ToJson(this Album self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
         public static string ToJson(this Track self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);

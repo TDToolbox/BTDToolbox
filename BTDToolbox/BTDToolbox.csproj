@@ -77,6 +77,7 @@
     <Compile Include="Classes\ImageProcessing.cs" />
     <Compile Include="Classes\JSON Classes\TowerSelectionMenu.cs" />
     <Compile Include="Classes\JSON Classes\TowerSpriteUpgrade.cs" />
+    <Compile Include="Classes\JSON Classes\UpgradesFile.cs" />
     <Compile Include="Classes\JsonEditorHandler.cs" />
     <Compile Include="Classes\ModLoader_Handling.cs" />
     <Compile Include="Classes\NewProjects\CurrentProjectVariables.cs" />

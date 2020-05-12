@@ -147,9 +147,13 @@ namespace BTDToolbox
                 logText += "\n";
             logText += text;
 
-            StreamWriter stream = new StreamWriter(logFile);
-            stream.Write(logText);
-            stream.Close();
+            try
+            {
+                StreamWriter stream = new StreamWriter(logFile);
+                stream.Write(logText);
+                stream.Close();
+            }
+            catch {  };
         }
 
         private void Sizer_MouseUp(object sender, MouseEventArgs e)

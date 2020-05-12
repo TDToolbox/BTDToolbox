@@ -17,7 +17,7 @@ namespace BTDToolbox
 {
     public partial class JetForm : ThemedForm
     {
-        private DirectoryInfo dirInfo;
+        public DirectoryInfo dirInfo;
         private string tempName;
         public string projName;
         private ContextMenuStrip treeMenu;
@@ -204,7 +204,7 @@ namespace BTDToolbox
             }
         }
 
-        private void PopulateTreeView(string expandedpath)
+        public void PopulateTreeView(string expandedpath)
         {
             TreeNode rootNode;
             

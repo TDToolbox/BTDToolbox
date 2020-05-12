@@ -682,7 +682,6 @@ namespace BTDToolbox
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.SplitContainer fileViewContainer;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button goUpButton;
         private System.Windows.Forms.ColumnHeader name_column;
         private System.Windows.Forms.Panel findPanel;
@@ -691,7 +690,6 @@ namespace BTDToolbox
         private System.Windows.Forms.Label instanceCountLabel;
         private System.Windows.Forms.Button nextSearchResultButton;
         private System.Windows.Forms.Label lastSelectedLabel;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -736,5 +734,7 @@ namespace BTDToolbox
         private System.Windows.Forms.ToolStripMenuItem restoreToOriginalToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ViewModifiedFiles_Button;
         private System.Windows.Forms.ToolStripMenuItem FindAllModifiedFles_Button;
+        public System.Windows.Forms.ListView listView1;
+        public System.Windows.Forms.TreeView treeView1;
     }
 }
