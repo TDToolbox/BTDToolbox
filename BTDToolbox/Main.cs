@@ -176,7 +176,7 @@ namespace BTDToolbox
         }
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+            Environment.Exit(Environment.ExitCode);
         }
         private void Main_Shown(object sender, EventArgs e)
         {

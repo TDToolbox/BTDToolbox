@@ -71,9 +71,10 @@ namespace BTDToolbox
                 secondSeperator = ":0";
             
             string currentTime = now.Hour + ":" + now.Minute + secondSeperator + now.Second;
-            WriteToLogFile("" + currentTime + " - " + ">> " + log + "\r\n");
+            
             try
             {
+                WriteToLogFile("" + currentTime + " - " + ">> " + log + "\r\n");
                 Invoke((MethodInvoker)delegate
                 {
                     if (force) { Visible = true; BringToFront(); }
@@ -85,7 +86,7 @@ namespace BTDToolbox
 
                 lastMessage = log;
             }
-            catch (Exception e) { WriteToLogFile("CRASH DETECTED!   " + currentTime + " - " + ">> " + log + "\r\nException Message:   >>" + e.Message);  Environment.Exit(0); }
+            catch (Exception e) { try { WriteToLogFile("CRASH DETECTED!   " + currentTime + " - " + ">> " + log + "\r\nException Message:   >>" + e.Message); Environment.Exit(0); } catch { } }
         }
         
         
