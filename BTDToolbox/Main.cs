@@ -129,17 +129,23 @@ namespace BTDToolbox
 
         private void showUpdateChangelog()
         {
-            if (Serializer.cfg.recentUpdate == true)
-            {
-                var changelog = new UpdateChangelog();
-                changelog.MdiParent = this;
-                changelog.Show();
+            if (Serializer.cfg.recentUpdate == false)
+                return;
 
-                UpdateChangelog.recentUpdate = false;
-                Serializer.SaveSettings();
-            }
+            UpdateChangelog getChangelog = new UpdateChangelog();
+            getChangelog.GotChangelog += Update_GotChangelog;
+            getChangelog.StartUpdateChangelog();
         }
-        
+
+        private void Update_GotChangelog(object source, MyEventArgs e)
+        {
+            Invoke((MethodInvoker)delegate {
+                UpdateChangelog update = new UpdateChangelog(e.GetInfo())
+                {
+                    MdiParent = this
+                };
+            });            
+        }
 
         private void mainResize(object sender, EventArgs e)
         {
@@ -982,11 +988,21 @@ namespace BTDToolbox
 
         private void creditsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             CreditViewer cv = new CreditViewer();
-            cv.MdiParent = this;
-            cv.Show();
+            cv.GotCredits += Cv_GotCredits;
+            cv.StartCreditsView();
         }
 
+        private void Cv_GotCredits(object source, CreditViewer.CreditsEventArgs e)
+        {
+            Invoke((MethodInvoker)delegate {
+                CreditViewer cred = new CreditViewer(e.GetInfo())
+                {
+                    MdiParent = this
+                };
+            });
+        }
         private void contactUsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Process.Start("https://discordapp.com/invite/jj5Q7mA");

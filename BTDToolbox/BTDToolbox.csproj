@@ -110,6 +110,7 @@
     <Compile Include="Extra Forms\BGForm.Designer.cs">
       <DependentUpon>BGForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extra Forms\CreditsEvent.cs" />
     <Compile Include="Extra Forms\CreditViewer.cs">
       <SubType>Form</SubType>
     </Compile>

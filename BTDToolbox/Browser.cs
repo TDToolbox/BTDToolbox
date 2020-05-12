@@ -19,8 +19,10 @@ namespace BTDToolbox
                 this.Close();
                 return;
             }
-            
-            webBrowser1.Url = new Uri(url);
+
+            try { webBrowser1.Url = new Uri(url); }
+            catch { System.Diagnostics.Process.Start(url); }
+
             this.TitleLabel.Text = "Browser";
         }
         public Browser(Main MdiParent, string url):this(url)

@@ -108,7 +108,7 @@ namespace BTDToolbox
             MessageBox.Show("Closing Toolbox to continue update...");
 
             //save config real quick
-            UpdateChangelog.recentUpdate = true;
+            Serializer.cfg.recentUpdate = true;
             Serializer.SaveSettings();
 
             Process p = new Process();
