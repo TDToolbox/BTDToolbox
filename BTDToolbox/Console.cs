@@ -145,20 +145,27 @@ namespace BTDToolbox
         }
         public void WriteToLogFile(string text)
         {
-            string logFile = Environment.CurrentDirectory + "\\ConsoleLog.txt";
-            string logText = File.ReadAllText(logFile);
-
-            if(logText.Length > 0)
-                logText += "\n";
-            logText += text;
-
             try
             {
-                StreamWriter stream = new StreamWriter(logFile);
-                stream.Write(logText);
-                stream.Close();
+                string logFile = Environment.CurrentDirectory + "\\ConsoleLog.txt";
+                string logText = File.ReadAllText(logFile);
+
+                if (logText.Length > 0)
+                    logText += "\n";
+                logText += text;
+
+                try
+                {
+                    StreamWriter stream = new StreamWriter(logFile);
+                    stream.Write(logText);
+                    stream.Close();
+                }
+                catch { };
+            }catch(IOException)
+            {
+                ConsoleHandler.append("couldn't save the console log");
             }
-            catch {  };
+            
         }
 
         private void Sizer_MouseUp(object sender, MouseEventArgs e)
