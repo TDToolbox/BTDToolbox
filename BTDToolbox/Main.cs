@@ -364,12 +364,6 @@ namespace BTDToolbox
             tft.MdiParent = this;
             tft.Show();
         }
-        private void OpenCredits_Click(object sender, EventArgs e)
-        {
-            CreditViewer cv = new CreditViewer();
-            cv.MdiParent = this;
-            cv.Show();
-        }
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CompileJet("output");
@@ -890,11 +884,6 @@ namespace BTDToolbox
         {
 
         }
-
-        private void ContactUs_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://discordapp.com/invite/jj5Q7mA");
-        }
         public void PopulateNKHMewnu()
         {
             Launch_Program_ToolStrip.DropDownItems.Clear();
@@ -989,6 +978,18 @@ namespace BTDToolbox
 
 
             //Application.Exit();
+        }
+
+        private void creditsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreditViewer cv = new CreditViewer();
+            cv.MdiParent = this;
+            cv.Show();
+        }
+
+        private void contactUsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://discordapp.com/invite/jj5Q7mA");
         }
     }
 }

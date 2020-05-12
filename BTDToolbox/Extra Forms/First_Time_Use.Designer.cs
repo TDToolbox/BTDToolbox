@@ -77,7 +77,7 @@
             this.contentPanel.Controls.Add(this.Info_Panel);
             this.contentPanel.Controls.Add(this.pictureBox1);
             this.contentPanel.Location = new System.Drawing.Point(2, 3);
-            this.contentPanel.Size = new System.Drawing.Size(95, 511);
+            this.contentPanel.Size = new System.Drawing.Size(445, 463);
             // 
             // close_button
             // 
@@ -95,7 +95,7 @@
             // TitleBar_RightCorner
             // 
             this.TitleBar_RightCorner.Image = global::BTDToolbox.Properties.Resources.new_title_corner_8_right;
-            this.TitleBar_RightCorner.Location = new System.Drawing.Point(56, 0);
+            this.TitleBar_RightCorner.Location = new System.Drawing.Point(406, 0);
             this.TitleBar_RightCorner.Size = new System.Drawing.Size(44, 59);
             // 
             // pictureBox1
@@ -162,7 +162,7 @@
             this.Important_Panel.Controls.Add(this.label4);
             this.Important_Panel.Controls.Add(this.label1);
             this.Important_Panel.Controls.Add(this.label3);
-            this.Important_Panel.Location = new System.Drawing.Point(4, 374);
+            this.Important_Panel.Location = new System.Drawing.Point(4, 326);
             this.Important_Panel.Name = "Important_Panel";
             this.Important_Panel.Size = new System.Drawing.Size(547, 114);
             this.Important_Panel.TabIndex = 6;
@@ -268,7 +268,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(-28, 477);
+            this.button1.Location = new System.Drawing.Point(322, 429);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 26);
             this.button1.TabIndex = 9;
@@ -279,7 +279,7 @@
             // WatchTut_Button
             // 
             this.WatchTut_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.WatchTut_Button.Location = new System.Drawing.Point(-343, 477);
+            this.WatchTut_Button.Location = new System.Drawing.Point(7, 429);
             this.WatchTut_Button.Name = "WatchTut_Button";
             this.WatchTut_Button.Size = new System.Drawing.Size(295, 26);
             this.WatchTut_Button.TabIndex = 10;
