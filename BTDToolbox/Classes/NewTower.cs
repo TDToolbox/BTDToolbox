@@ -34,7 +34,7 @@ namespace BTDToolbox.Classes
         public TowerSelectMenu_Pos TowerSelPos { get; set; }
 
         #endregion
-
+        string towerDataFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NKHook5\\Plugins\\NewTowersList.json";
 
         #region Constructors
         public NewTower()
@@ -65,6 +65,36 @@ namespace BTDToolbox.Classes
         }
         #endregion
 
+
+        public void CreateTowerPluginData()
+        {
+            string json = "";
+            TowerList list = new TowerList();
+            ConsoleHandler.append("Adding " + TowerName + " to auto-load tower list");
+            if (File.Exists(towerDataFile))
+            {
+                json = File.ReadAllText(towerDataFile);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                list = js.Deserialize<TowerList>(json);
+            }
+
+            if (list.List == null)
+                list.List = new List<string>();
+
+
+            if (list.List.Contains(TowerName))
+                return;
+
+            list.List.Add(TowerName);
+
+            string output_Cfg = JsonConvert.SerializeObject(list, Formatting.Indented);
+            StreamWriter serialize = new StreamWriter(towerDataFile, false);
+            serialize.Write(output_Cfg);
+            serialize.Close();
+            ConsoleHandler.append("Finished writing " + TowerName + " to the auto-load tower list." +
+                " this will auto-load your tower into BTD5 if you have the plugin.");
+        }
+
         public void DuplicateAllTowerFiles()
         {
             if(Guard.IsStringValid(BaseTowerFile))
@@ -83,6 +113,7 @@ namespace BTDToolbox.Classes
             AddTowerSpriteDef();
             AddToTowerSelctionMenu();
 
+            CreateTowerPluginData();
             ConsoleHandler.append("Finished creating new tower: " + TowerName);
         }
 
@@ -709,6 +740,10 @@ namespace BTDToolbox.Classes
         }
 
         #endregion
+    }
+    class TowerList
+    {
+        public List<string> List { get; set; }
     }
 }
 
