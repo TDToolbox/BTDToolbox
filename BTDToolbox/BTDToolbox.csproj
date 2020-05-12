@@ -189,7 +189,6 @@
     <Compile Include="Extra Forms\UpdateChangelog.Designer.cs">
       <DependentUpon>UpdateChangelog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extractor\Extractor.cs" />
     <Compile Include="AlwaysUseNKH.cs">
       <SubType>Form</SubType>
     </Compile>

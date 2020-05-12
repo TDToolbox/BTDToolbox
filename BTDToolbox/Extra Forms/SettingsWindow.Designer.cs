@@ -184,6 +184,7 @@
             this.UseDeveloperMode.TabIndex = 9;
             this.UseDeveloperMode.Text = "Use Developer Mode";
             this.UseDeveloperMode.UseVisualStyleBackColor = true;
+            this.UseDeveloperMode.Visible = false;
             // 
             // SettingsWindow
             // 

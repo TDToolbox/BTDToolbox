@@ -10,8 +10,6 @@ namespace BTDToolbox.SaveEditor
 {
     class TryFindSteam
     {
-        public static string BTD5SavePath = Serializer.cfg.SavePathBTD5;
-        public static string BTDBSavePath = Serializer.cfg.SavePathBTDB;
 
         public static List<string> drives = new List<string>() { "A:\\", "B:\\", "C:\\","D:\\", "E:\\", "F:\\",
             "G:\\", "H:\\", "I:\\","J:\\", "K:\\", "L:\\","M:\\", "N:\\", "O:\\","P:\\", "Q:\\", "R:\\",
@@ -31,9 +29,9 @@ namespace BTDToolbox.SaveEditor
 
             string[] split = file.Split('\\');
             if (file.Contains("306020")) //this game is btd5
-                BTD5SavePath = file.Replace(split[split.Length - 1], "");
+                Serializer.cfg.SavePathBTD5 = file.Replace(split[split.Length - 1], "");
             else if (file.Contains("444640"))   //this game is btdb
-                BTDBSavePath = file.Replace(split[split.Length - 1], "");
+                Serializer.cfg.SavePathBTDB = file.Replace(split[split.Length - 1], "");
 
             Serializer.SaveSettings();
             return file;
@@ -48,7 +46,7 @@ namespace BTDToolbox.SaveEditor
                 string btd5SavePath = FindSaveFolder(steam, "306020");
                 if(btd5SavePath != "")
                 {
-                    BTD5SavePath = btd5SavePath + "\\local\\Data\\Docs";
+                    Serializer.cfg.SavePathBTD5 = btd5SavePath + "\\local\\Data\\Docs";
                 }
 
                 string btdbSavePath = FindSaveFolder(steam, "444640");
@@ -60,7 +58,7 @@ namespace BTDToolbox.SaveEditor
                         if (f.Contains("Profile.save"))
                         {
                             string[] split = f.Split('\\');
-                            BTDBSavePath = f.Replace(split[split.Length - 1], "");
+                            Serializer.cfg.SavePathBTDB = f.Replace(split[split.Length - 1], "");
                         }
                     }
                 }
