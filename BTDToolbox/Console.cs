@@ -95,8 +95,13 @@ namespace BTDToolbox
             string url = "https://raw.githubusercontent.com/TDToolbox/BTDToolbox-2019_LiveFIles/master/toolbox%20announcements";
 
             string answer = web.WaitOn_URL(url);
-            Invoke((MethodInvoker)delegate { output_log.SelectionColor = Color.LawnGreen; });
-            
+
+            Invoke((MethodInvoker)delegate
+            {
+                output_log.SelectionColor = Color.LawnGreen;
+            });
+
+
             if (!Guard.IsStringValid(answer))
                 ConsoleHandler.append("Failed to read announcement...");
 

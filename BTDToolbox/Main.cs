@@ -977,6 +977,7 @@ namespace BTDToolbox
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            exit = true;
             ConsoleHandler.append("Closing toolbox");
             ProjectHandler.SaveProject();
 
