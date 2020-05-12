@@ -153,6 +153,12 @@
     <Compile Include="Extra Forms\FlashReader.Designer.cs">
       <DependentUpon>FlashReader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extra Forms\TDLoader_Message.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extra Forms\TDLoader_Message.Designer.cs">
+      <DependentUpon>TDLoader_Message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extra Forms\NKHook Message.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\FlashReader.resx">
       <DependentUpon>FlashReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extra Forms\TDLoader_Message.resx">
+      <DependentUpon>TDLoader_Message.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extra Forms\NKHook Message.resx">
       <DependentUpon>NKHook Message.cs</DependentUpon>

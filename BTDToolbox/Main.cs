@@ -17,7 +17,7 @@ namespace BTDToolbox
     public partial class Main : Form
     {
         //Form variables
-        public static string version = "Toolbox 0.1.4";
+        public static string version = "Toolbox 0.1.3";
         public static bool canUseNKH = false;
 
         //public static string projectFilePath = "";
@@ -541,8 +541,7 @@ namespace BTDToolbox
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            var modMM = new ModLoader_Handling();
-            modMM.Handle_ModLoader();
+            var tdLoader = new TDLoader_Message();
         }
 
         private void OpenSettings_Button_Click(object sender, EventArgs e)
