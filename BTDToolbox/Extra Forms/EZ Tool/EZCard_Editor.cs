@@ -40,6 +40,7 @@ namespace BTDToolbox.Extra_Forms
         public EZCard_Editor()
         {
             InitializeComponent();
+           
             if (CurrentProjectVariables.GameName != "BTDB")
             {
                 ConsoleHandler.force_append_Notice("This tool only works for BTD Battles projects. To use it, please open a BTDB project");
@@ -427,18 +428,6 @@ namespace BTDToolbox.Extra_Forms
         //
         private void EasyTowerEditor_Shown(object sender, EventArgs e)
         {
-            if (game == "BTDB")
-            {
-                ConsoleHandler.force_append_Notice("Error! This program only works for BTD Battles. Please open a BTD Battles project and try again.");
-                this.Close();
-            }
-
-            if (!Guard.IsStringValid(Serializer.cfg.LastProject))
-            {
-                ConsoleHandler.force_append_Notice("You need to have a project opened to use this tool...");
-                this.Close();
-            }
-
             Game_Label.Text = "BTDB";
             string cardPath = CurrentProjectVariables.PathToProjectFiles + "\\Assets\\JSON\\BattleCardDefinitions";
             var cardFiles = Directory.GetFiles(cardPath);

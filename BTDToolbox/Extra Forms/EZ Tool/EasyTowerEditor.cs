@@ -137,7 +137,14 @@ namespace BTDToolbox.Extra_Forms
                 ResetUI();
                 TowerType_Label.Text = artist.TypeName;
 
-                TowerName_TextBox.Text = artist.Name;
+                string name = "";
+                if (!Guard.IsStringValid(artist.Name))
+                    name = artist.TypeName;
+                else
+                    name = artist.Name;
+
+                TowerName_TextBox.Text = name;
+
                 BaseCost_TextBox.Text = artist.BaseCost.ToString();
                 RankToUnlock_TextBox.Text = artist.RankToUnlock.ToString();
                 Icon_TextBox.Text = artist.Icon;
@@ -262,34 +269,22 @@ namespace BTDToolbox.Extra_Forms
                 }
                 if(game == "BTD5" || game == "BMC")
                 {
-                    if(File.Exists(loc_Path))
-                        ReadLoc();
+                    if(!File.Exists(loc_Path))
+                    {
+                        ConsoleHandler.append("LOC file dosn't exist! Couldn't find: " + loc_Path);
+                    }
                     else
                     {
+                        ReadLoc();
+
                         string gameDir = CurrentProjectVariables.GamePath;
-                        if(gameDir == null || gameDir == "")
+                        if (!Guard.IsStringValid(gameDir))
                         {
                             ConsoleHandler.force_append_Notice("You haven't browsed for your " + game + " Game so you will not be able to edit the tower and upgrade descriptions");
                             this.Focus();
                         }
-                        else
-                        {
-                            ConsoleHandler.force_append_Notice("Unable to find your LOC file...");
-                            DialogResult diag = MessageBox.Show("Unable to find " + game + "'s LOC file. Do you want toolbox to make Steam validate " + game + " so it can reaquire it? If you have any mods applied to " + game + " steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
-                            if (diag == DialogResult.Yes)
-                            {
-                                if (game == "BTD5")
-                                    GeneralMethods.SteamValidate("BTD5");
-                                else
-                                    GeneralMethods.SteamValidate("BMC");
-                            }
-                            else
-                            {
-                                ConsoleHandler.force_append_Notice("Valdation cancelled. You will not be able to mod the tower or upgrade descriptions...");
-                                this.Focus();
-                            }
-                        }
                     }
+                   
                 }
 
                 if (upgradenames != null)
@@ -313,6 +308,22 @@ namespace BTDToolbox.Extra_Forms
                     }
                 }
             }        
+        }
+        private void AskToGetNewLoc()
+        {
+            DialogResult diag = MessageBox.Show("Unable to find " + game + "'s LOC file. Do you want toolbox to make Steam validate " + game + " so it can reaquire it? If you have any mods applied to " + game + " steam, they will be lost. Do you want to continue?", "Continue?", MessageBoxButtons.YesNo);
+            if (diag == DialogResult.Yes)
+            {
+                if (game == "BTD5")
+                    GeneralMethods.SteamValidate("BTD5");
+                else
+                    GeneralMethods.SteamValidate("BMC");
+            }
+            else
+            {
+                ConsoleHandler.force_append_Notice("Valdation cancelled. You will not be able to mod the tower or upgrade descriptions...");
+                this.Focus();
+            }
         }
         private void SaveFile()
         {
@@ -497,9 +508,6 @@ namespace BTDToolbox.Extra_Forms
                 
                 if (upgradeXPs.Length - 1 >= Upgrades_ListBox.SelectedIndex)
                     XpToUnlockUpgrade_TextBox.Text = upgradeXPs[Upgrades_ListBox.SelectedIndex].ToString();
-
-                if (game == "BTD5" || game == "BMC")    
-                    if (File.Exists(loc_Path)) return;
 
                 if (loc_upgradeDescs.Length - 1 >= Upgrades_ListBox.SelectedIndex)
                     UpgradeDesc_TextBox.Text = loc_upgradeDescs[Upgrades_ListBox.SelectedIndex].ToString();
@@ -803,6 +811,7 @@ namespace BTDToolbox.Extra_Forms
                     }
                     else if (name.Contains(towerUpgradeDesc_A1) || name.Contains(towerUpgradeDesc_A2) || name.Contains(towerUpgradeDesc_A3) || name.Contains(towerUpgradeDesc_A4) || name.Contains(towerUpgradeDesc_B1) || name.Contains(towerUpgradeDesc_B2) || name.Contains(towerUpgradeDesc_B3) || name.Contains(towerUpgradeDesc_B4))
                     {
+                        
                         string[] split = name.Split('>');
                         string upgradeDesc = split[split.Length - 2].Replace("</T", "");
 
@@ -1098,17 +1107,20 @@ namespace BTDToolbox.Extra_Forms
                 UpgradeFile_Button.Visible = false;
 
 
-
-            specialty = GetSpecialtyBuilding();
-            if (!specialty.Contains(".json"))
-                specialty = specialty + ".json";
-            if (specialty != null && specialty != "")
+            if(Directory.Exists(projPath + "SpecialtyDefinitions"))
             {
-                if (File.Exists(projPath + "SpecialtyDefinitions\\" + specialty))
-                    specialtyBuildingToolStripMenuItem.Visible = true;
-                else
-                    specialtyBuildingToolStripMenuItem.Visible = false;
+                specialty = GetSpecialtyBuilding();
+                if (!specialty.Contains(".json"))
+                    specialty = specialty + ".json";
+                if (specialty != null && specialty != "")
+                {
+                    if (File.Exists(projPath + "SpecialtyDefinitions\\" + specialty))
+                        specialtyBuildingToolStripMenuItem.Visible = true;
+                    else
+                        specialtyBuildingToolStripMenuItem.Visible = false;
+                }
             }
+            
 
             if (Directory.Exists(projPath + "WeaponDefinitions\\" + file))
             {
@@ -1271,6 +1283,17 @@ namespace BTDToolbox.Extra_Forms
             };            
 
             newTower.DuplicateAllTowerFiles();
+
+            if(!File.Exists(CurrentProjectVariables.PathToProjectFiles +"\\Assets\\JSON\\TowerDefinitions\\" + NewTowerName_TB.Text + ".tower"))
+            {
+                ConsoleHandler.append("Something went wrong with the tower creation. The new TowerDefinitions file " +
+                    "wasn't found. You should double check to make sure its there");
+                return;
+            }
+            
+
+            PopulateTowerList();
+            AllTowerFiles_ComboBox.SelectedItem = NewTowerName_TB.Text + ".tower";
         }
         private void NewEmptyTower_Button_Click(object sender, EventArgs e)
         {

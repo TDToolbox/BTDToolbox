@@ -125,15 +125,15 @@
             this.UpdaterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reinstallBTDToolboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBTDToolboxGithubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contactUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contactUsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themedFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TestForm = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.nKHookSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contactUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contactUsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.versionTag = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -629,21 +629,21 @@
             // EZ_TowerEditor
             // 
             this.EZ_TowerEditor.Name = "EZ_TowerEditor";
-            this.EZ_TowerEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_TowerEditor.Size = new System.Drawing.Size(180, 22);
             this.EZ_TowerEditor.Text = "EZ Tower editor";
             this.EZ_TowerEditor.Click += new System.EventHandler(this.EZ_TowerEditor_Click);
             // 
             // EZ_BloonEditor
             // 
             this.EZ_BloonEditor.Name = "EZ_BloonEditor";
-            this.EZ_BloonEditor.Size = new System.Drawing.Size(155, 22);
+            this.EZ_BloonEditor.Size = new System.Drawing.Size(180, 22);
             this.EZ_BloonEditor.Text = "EZ Bloon editor";
             this.EZ_BloonEditor.Click += new System.EventHandler(this.EZ_BloonEditor_Click);
             // 
             // EZCard_Editor
             // 
             this.EZCard_Editor.Name = "EZCard_Editor";
-            this.EZCard_Editor.Size = new System.Drawing.Size(155, 22);
+            this.EZCard_Editor.Size = new System.Drawing.Size(180, 22);
             this.EZCard_Editor.Text = "EZ Card editor";
             this.EZCard_Editor.Click += new System.EventHandler(this.EZCard_Editor_Click);
             // 
@@ -910,54 +910,6 @@
             this.openBTDToolboxGithubToolStripMenuItem.Text = "Open BTD Toolbox Github";
             this.openBTDToolboxGithubToolStripMenuItem.Click += new System.EventHandler(this.OpenBTDToolboxGithubToolStripMenuItem_Click);
             // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.themedFormToolStripMenuItem,
-            this.TestForm,
-            this.testingToolStripMenuItem,
-            this.toolStripMenuItem3,
-            this.nKHookSiteToolStripMenuItem});
-            this.debugToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.debugToolStripMenuItem.Text = "Debug";
-            // 
-            // themedFormToolStripMenuItem
-            // 
-            this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
-            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.themedFormToolStripMenuItem.Text = "Themed Form";
-            this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
-            // 
-            // TestForm
-            // 
-            this.TestForm.Name = "TestForm";
-            this.TestForm.Size = new System.Drawing.Size(180, 22);
-            this.TestForm.Text = "JSON Editor";
-            this.TestForm.Click += new System.EventHandler(this.TestForm_Click);
-            // 
-            // testingToolStripMenuItem
-            // 
-            this.testingToolStripMenuItem.Name = "testingToolStripMenuItem";
-            this.testingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.testingToolStripMenuItem.Text = "Testing";
-            this.testingToolStripMenuItem.Click += new System.EventHandler(this.TestingToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem3.Text = "Browser";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
-            // nKHookSiteToolStripMenuItem
-            // 
-            this.nKHookSiteToolStripMenuItem.Name = "nKHookSiteToolStripMenuItem";
-            this.nKHookSiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.nKHookSiteToolStripMenuItem.Text = "NKHook Site";
-            this.nKHookSiteToolStripMenuItem.Click += new System.EventHandler(this.nKHookSiteToolStripMenuItem_Click);
-            // 
             // contactUsToolStripMenuItem
             // 
             this.contactUsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -981,6 +933,54 @@
             this.contactUsToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
             this.contactUsToolStripMenuItem1.Text = "Contact Us";
             this.contactUsToolStripMenuItem1.Click += new System.EventHandler(this.contactUsToolStripMenuItem1_Click);
+            // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.themedFormToolStripMenuItem,
+            this.TestForm,
+            this.testingToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.nKHookSiteToolStripMenuItem});
+            this.debugToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
+            // themedFormToolStripMenuItem
+            // 
+            this.themedFormToolStripMenuItem.Name = "themedFormToolStripMenuItem";
+            this.themedFormToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.themedFormToolStripMenuItem.Text = "Themed Form";
+            this.themedFormToolStripMenuItem.Click += new System.EventHandler(this.Debug_ThemedForm_Click);
+            // 
+            // TestForm
+            // 
+            this.TestForm.Name = "TestForm";
+            this.TestForm.Size = new System.Drawing.Size(148, 22);
+            this.TestForm.Text = "JSON Editor";
+            this.TestForm.Click += new System.EventHandler(this.TestForm_Click);
+            // 
+            // testingToolStripMenuItem
+            // 
+            this.testingToolStripMenuItem.Name = "testingToolStripMenuItem";
+            this.testingToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.testingToolStripMenuItem.Text = "Testing";
+            this.testingToolStripMenuItem.Click += new System.EventHandler(this.TestingToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(148, 22);
+            this.toolStripMenuItem3.Text = "Browser";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // nKHookSiteToolStripMenuItem
+            // 
+            this.nKHookSiteToolStripMenuItem.Name = "nKHookSiteToolStripMenuItem";
+            this.nKHookSiteToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.nKHookSiteToolStripMenuItem.Text = "NKHook Site";
+            this.nKHookSiteToolStripMenuItem.Click += new System.EventHandler(this.nKHookSiteToolStripMenuItem_Click);
             // 
             // versionTag
             // 
