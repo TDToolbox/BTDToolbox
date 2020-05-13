@@ -214,7 +214,7 @@ namespace BTDToolbox.Classes
             {
                 string tempText = CheckJSONFromFile(a.Value);
 
-                if (Guard.IsStringValid(tempText))
+                if (!Guard.IsStringValid(tempText))
                     continue;
 
                 TowerSelectionMenu tempMenu = TowerSelectionMenu.FromJson(tempText);
@@ -223,7 +223,7 @@ namespace BTDToolbox.Classes
 
                 foreach (TowerSelectItem item in tempMenu.Items)
                 {
-                    if (item.ToString() == baseTower.Name.Replace(".tower", ""))
+                    if (item.FactoryName == baseTower.Name.Replace(".tower", ""))
                     {
                         ConsoleHandler.append("Found base tower's TowerSelect entry in: " + a.Value.Replace(CurrentProjectVariables.PathToProjectFiles,""));
                         newItem.FactoryName = TowerName;

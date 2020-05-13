@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -16,9 +17,35 @@ namespace BTDToolbox.Classes
         bool exitLoop = false;
         public string startURL { get; set; }
         public string readURL { get; set; }
+        public string LatestVersionNumber { get; set; }
         public bool urlAquired { get; set; }
 
-        
+        public void DownloadFile(string filename, string url, string savePath, string replaceText, int linenumber)
+        {
+            WebClient client = new WebClient();
+
+            string git_Text = WaitOn_URL(url);
+            string updaterURL = processGit_Text(git_Text, replaceText, linenumber);
+
+            if (File.Exists(Environment.CurrentDirectory + "\\" + filename))// "\\DownloadFile"))
+                File.Delete(Environment.CurrentDirectory + "\\" + filename);// "\\DownloadFile");
+
+            ConsoleHandler.append("Downloading latest "+ filename +"...");
+            for(int i = 0; i < 100; i++)
+            {
+                try { client.DownloadFile(updaterURL, Environment.CurrentDirectory + "\\" + filename); break; }
+                catch { }
+                Thread.Sleep(50);
+            }
+
+           
+
+            //File.Move(Environment.CurrentDirectory + "\\DownloadFile", savePath);
+            File.Move(Environment.CurrentDirectory + "\\" + filename, savePath);
+            //File.Delete(Environment.CurrentDirectory + "\\DownloadFile");
+            File.Delete(Environment.CurrentDirectory + "\\" + filename);
+            ConsoleHandler.append(filename + " successfully downloaded!");
+        }
 
         public bool checkWebsite(string URL)
         {
@@ -43,38 +70,24 @@ namespace BTDToolbox.Classes
             bool success = false;
             WebClient client = new WebClient();
 
-            try
+            for (int i = 0; i <= 100; i++)
             {
-                readURL = client.DownloadString(url);
-                success = true;
-            }
-            catch
-            {
-                if (success == false)
+                Thread.Sleep(100);
+                try
                 {
-                    for (int i = 0; i <= 100; i++)
+                    if (exitLoop)
+                        break;
+
+                    readURL = client.DownloadString(url);
+                    if (Guard.IsStringValid(readURL))
                     {
-                        Thread.Sleep(100);
-                        try
-                        {
-                            if (!exitLoop)
-                            {
-                                readURL = client.DownloadString(url);
-                                if (readURL != null && readURL != "")
-                                {
-                                    success = true;
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        catch { }
+                        success = true;
+                        break;
                     }
                 }
+                catch { }
             }
+
             return success;
         }
         /// <summary>
@@ -93,64 +106,61 @@ namespace BTDToolbox.Classes
                 GeneralMethods.checkedForExit();
                 Thread.Sleep(100);
                 if (get.urlAquired)
-                {
                     break;
-                }
             }
+
             if (get.readURL == null)
                 get.readURL = "";
             return get.readURL;
         }      
         public string processGit_Text(string url, string deleteText, int lineNumber)    //call this one read git text and return the url we want. Delete text is the starting word, for example "toolbox2019: "
         {
-            if (url != null && url != "")
-            {
-                string[] split = url.Split('\n');
-                return split[lineNumber].Replace(deleteText, "");
-            }
-            else
-            {
+            if (!Guard.IsStringValid(url))
                 return null;
-            }
+
+            string[] split = url.Split('\n');
+            return split[lineNumber].Replace(deleteText, "");
         }
         public string Get_GitVersion(string url)    // will read processed git url and return a git version number
         {
-            if(url != null)
-            {
+            if (!Guard.IsStringValid(url))
+                return null;
 
-                string[] version = url.Split('/');
-                return (version[version.Length - 2]).Replace(".", "");
-            }
-            else
-            {
-                return "";
-            }
+            string[] version = url.Split('/');
+            return (version[version.Length - 2]).Replace(".", "");
         }
-        public  bool CheckForUpdate(string url, string deleteText, int lineNumber, string currentVersion) //Use this to check for updates
+        public bool CheckForUpdate(string url, string deleteText, int lineNumber, string currentVersion) //Use this to check for updates
         {
-            reader = new WebHandler();
+            if(reader == null)
+                reader = new WebHandler();
+
             string processedUrl = reader.processGit_Text(reader.WaitOn_URL(url), deleteText, lineNumber);
             string gitVersion = reader.Get_GitVersion(processedUrl);
-            string toolboxVersion = "";
 
-            int number = 0; ;
+            LatestVersionNumber = gitVersion;
+
+            if (!Guard.IsStringValid(currentVersion))
+                return true;
+
+            if (!Guard.IsStringValid(gitVersion))
+            {
+                ConsoleHandler.append("Unable to determine latest version");
+                return false;
+            }
+
+            int number = 0;
+            string toolboxVersion = "";
+            
             foreach (char c in currentVersion)
             {
                 if (Int32.TryParse(c.ToString(), out number))
                     toolboxVersion = toolboxVersion + c;
-            }
-            if(gitVersion != null && gitVersion != "")
-            {
-                if (Int32.Parse(toolboxVersion) < Int32.Parse(gitVersion))
-                    return true;
-                else
-                    return false;
-            }
+            }            
+            
+            if (Int32.Parse(toolboxVersion) < Int32.Parse(gitVersion))
+                return true;
             else
-            {
-                ConsoleHandler.append("Unable to determine latest version of BTD Toolbox");
                 return false;
-            }
         }
     }
 }

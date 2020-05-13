@@ -18,6 +18,10 @@ namespace BTDToolbox
     
     public class Config
     {
+        //Version info
+        public string NKHookVersion { get; set; }
+        public string TowerLoadNKPluginVersion { get; set; }
+
         //GameCfg
         public string BTD5_Directory { get; set; }
         public string BTDB_Directory { get; set; }
@@ -31,6 +35,7 @@ namespace BTDToolbox
         public string LastProject { get; set; }
         public string CurrentGame { get; set; }
         public string ExportPath { get; set; }
+        
 
 
         //Main Form variables

@@ -18,7 +18,7 @@ namespace BTDToolbox
     {
         //Form variables
         public static string version = "Toolbox 0.1.5";
-        public static bool canUseNKH = false;
+        public static bool canUseNKH = true;
 
         //public static string projectFilePath = "";
         private static Main toolbox;
@@ -535,8 +535,10 @@ namespace BTDToolbox
 
         private void TestingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(!Tutorials.HasFreshTutList())
-                Tutorials.GetTutorialsList();
+            
+            NKHook nkh = new NKHook();
+            nkh.DoUpdateTowerPlugin();
+            nkh.DoUpdateNKH();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -893,12 +895,16 @@ namespace BTDToolbox
         {
             Launch_Program_ToolStrip.DropDownItems.Clear();
 
-            if (CurrentProjectVariables.GameName == "BTD5")
+            if (NKHook.CanUseNKH())
             {
                 Launch_Program_ToolStrip.DropDownItems.Add("With NKHook");
                 Launch_Program_ToolStrip.DropDownItems.Add("Without NKHook");
                 Launch_Program_ToolStrip.DropDownItems.Add(new ToolStripSeparator());
                 Launch_Program_ToolStrip.DropDownItems.Add("NKHook Plugin Manager");
+
+                NKHook nkh = new NKHook();
+                nkh.DoUpdateNKH();
+                nkh.DoUpdateTowerPlugin();
             }
         }
 
