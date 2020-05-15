@@ -91,7 +91,7 @@ namespace BTDToolbox.Classes
             StreamWriter serialize = new StreamWriter(towerDataFile, false);
             serialize.Write(output_Cfg);
             serialize.Close();
-            ConsoleHandler.append("Finished writing " + TowerName + " to the auto-load tower list." +
+            ConsoleHandler.append("Finished creating " + TowerName + " to the auto-load tower list." +
                 " this will auto-load your tower into BTD5 if you have the plugin.");
         }
 
@@ -113,7 +113,7 @@ namespace BTDToolbox.Classes
             AddTowerSpriteDef();
             AddToTowerSelctionMenu();
 
-            CreateTowerPluginData();
+            //CreateTowerPluginData();
             ConsoleHandler.append("Finished creating new tower: " + TowerName);
         }
 

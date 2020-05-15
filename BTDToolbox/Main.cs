@@ -110,7 +110,9 @@ namespace BTDToolbox
             {
                 new Thread(() =>
                 {
+                    ConsoleHandler.append("Reading announcements...");
                     ConsoleHandler.announcement();
+                    ConsoleHandler.append("Checking for updates...");
                     var isUpdate = new UpdateHandler();
                     isUpdate.HandleUpdates();
                 }).Start();                

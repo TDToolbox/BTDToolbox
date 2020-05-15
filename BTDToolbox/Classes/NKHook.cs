@@ -107,6 +107,9 @@ namespace BTDToolbox.Classes
                 if (File.Exists(savePath))
                     File.Delete(savePath);
 
+                if (File.Exists(Environment.CurrentDirectory + "\\NKHook5-Injector.exe"))
+                    File.Delete(Environment.CurrentDirectory + "\\NKHook5-Injector.exe");
+
                 File.Copy(nkhEXE, Environment.CurrentDirectory + "\\NKHook5-Injector.exe");
                 Serializer.cfg.NKHookVersion = web.LatestVersionNumber;
                 Serializer.SaveSettings();
@@ -133,30 +136,6 @@ namespace BTDToolbox.Classes
                 Serializer.cfg.TowerLoadNKPluginVersion = web.LatestVersionNumber;
                 Serializer.SaveSettings();
             }).Start();
-        }
-
-        public static void DoesHaveTowerLoader()
-        {
-            if (File.Exists(pathTowerLoadPlugin))
-                return;
-
-
-            ConsoleHandler.append("NKHook NewTowerLoader plugin not found.");
-            DownloadTowerLoader();
-        }
-        
-        public static void DownloadTowerLoader()
-        {
-            /*ConsoleHandler.append("Downloading NKHook NewTowerLoader plugin...");
-
-            new Thread(() =>
-            {
-                WebHandler webHandler = new WebHandler();
-                webHandler.DownloadFile("NKHook", "",
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NKHook5\\Plugins\\NewTowerLoader.dll", "NKHookTowerLoader: ");
-                
-                ConsoleHandler.append("Successfully downloaded TowerLoading Plugin");
-            }).Start();*/
         }
     }
 }
