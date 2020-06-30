@@ -92,6 +92,9 @@ namespace BTDToolbox.Classes.NewProjects
         }
         public static void SaveProject()
         {
+            if (JetProps.get().Count <= 0)
+                return;
+
             if (project == null)
                 project = new ProjectClass.ProjectFile();
 
@@ -115,6 +118,10 @@ namespace BTDToolbox.Classes.NewProjects
 
 
             string output_Cfg = JsonConvert.SerializeObject(project, Formatting.Indented);
+
+            if (JetProps.get().Count <= 0)
+                return;
+
             if(!Guard.IsStringValid(project.PathToProjectClassFile) || !Directory.Exists(project.PathToProjectClassFile))
             {
                 ConsoleHandler.force_append_Notice_CanRepeat("WARNING!!!!! Unable to find the .toolbox file for this project! " +

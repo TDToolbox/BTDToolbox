@@ -85,10 +85,7 @@ namespace BTDToolbox
         public bool UseDeveloperMode { get; set; }
 
     }
-    public class Configaaa
-    {
 
-    }
     public class Serializer
     {
         public static Config cfg;

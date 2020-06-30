@@ -60,15 +60,19 @@ namespace BTDToolbox.SaveEditor
         {
             string unencryptedSave = "";
             string encryptedSave = "";
+            string dirPath = "";
+
             if (game == "BTD5")
             {
                 unencryptedSave = savemodDir + "\\BTD5_Profile.save";
                 encryptedSave = Serializer.cfg.SavePathBTD5 + "\\Profile.save";
+                dirPath = Serializer.cfg.SavePathBTD5;
             }
             if (game == "BTDB")
             {
                 unencryptedSave = savemodDir + "\\BTDB_Profile.save";
                 encryptedSave = Serializer.cfg.SavePathBTDB + "\\Profile.save";
+                dirPath = Serializer.cfg.SavePathBTDB;
             }
             if (game == "UnknownGame")
             {
@@ -88,6 +92,8 @@ namespace BTDToolbox.SaveEditor
             if (!Directory.Exists(savemodDir))
                 Directory.CreateDirectory(savemodDir);
 
+            if (!Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
 
             FileInfo f = new FileInfo(unencryptedSave);
 

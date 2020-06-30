@@ -80,7 +80,7 @@ namespace BTDToolbox
 
             if (path.Contains("Profile.save"))
             {
-                if (path.Contains("BTDB"))
+                /*if (path.Contains("BTDB"))
                 {
                     MessageBox.Show("This file is READ_Only until we figure out how to stop BTDB " +
                         "from reseting the save. If you know how to do this, please contact the " +
@@ -91,7 +91,8 @@ namespace BTDToolbox
                 else
                 {
                     Encrypt_Button.Visible = true;
-                }
+                }*/
+                Encrypt_Button.Visible = true;
             }
             finishedLoading = true;
         }
@@ -113,7 +114,7 @@ namespace BTDToolbox
             if (finishedLoading)
             {
                 File.WriteAllText(path, Editor_TextBox.Text);
-                if(!CurrentProjectVariables.ModifiedFiles.Contains(path))
+                if(!path.EndsWith(".save") && !CurrentProjectVariables.ModifiedFiles.Contains(path))
                 {
                     CurrentProjectVariables.ModifiedFiles.Add(path);
                 }

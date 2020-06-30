@@ -47,21 +47,31 @@ namespace BTDToolbox.Classes
         }
         public static void OpenFile(string path)
         {
-            if (File.Exists(path))
-            {
-                ConsoleHandler.append("Opening:  " + path.Replace(CurrentProjectVariables.PathToProjectFiles, ""));
-                if (Serializer.cfg.useExternalEditor == false)
-                {
-                    ValidateEditor();
-                    if (jeditor.tabFilePaths.Contains(path))
-                        jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
-                    else
-                        jeditor.NewTab(path, false);
-                }
-            }
-            else
+            if (!File.Exists(path) || !Guard.IsStringValid(path))
             {
                 ConsoleHandler.force_append_Notice("One or more files was not found...");
+                return;
+            }
+            if(!path.EndsWith(".save") && !Guard.IsStringValid(CurrentProjectVariables.PathToProjectFiles))
+            {
+                ConsoleHandler.append("You need to create or open a project in order to open a file");
+                return;
+            }
+
+            if(!path.EndsWith(".save"))
+                ConsoleHandler.append("Opening:  " + path.Replace(CurrentProjectVariables.PathToProjectFiles, ""));
+            else
+                ConsoleHandler.append("Opening:  " + path.Replace(Environment.CurrentDirectory + "\\Save mods\\", ""));
+
+
+
+            if (Serializer.cfg.useExternalEditor == false)
+            {
+                ValidateEditor();
+                if (jeditor.tabFilePaths.Contains(path))
+                    jeditor.tabControl1.SelectedIndex = jeditor.tabFilePaths.IndexOf(path);
+                else
+                    jeditor.NewTab(path, false);
             }
         }
         public static void OpenOriginalFile(string path)

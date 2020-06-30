@@ -262,53 +262,57 @@ namespace BTDToolbox
         private void CheckIfModified(string pathToFile)
         {
             string backupfile = Environment.CurrentDirectory + "\\Backups\\" + CurrentProjectVariables.GameName + "_Original.jet";
-            if (File.Exists(pathToFile) && File.Exists(backupfile))
+            if (!File.Exists(pathToFile) || !File.Exists(backupfile))
             {
-                ZipFile backup = new ZipFile(backupfile);
-                backup.Password = CurrentProjectVariables.JetPassword;
+                if (JetProps.get().Count <= 0)
+                    return;
 
-                string modText = RemoveWhitespace(File.ReadAllText(pathToFile));
-                string pathInZip = pathToFile.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
-                string originalText = RemoveWhitespace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip));
-                
-                try
+                if (!File.Exists(pathToFile))
+                    ConsoleHandler.append_Force("Can't check if file is modified because the file itself was not found. Was it deleted?");
+                else if (!File.Exists(backupfile))
+                    ConsoleHandler.append_Force("Can't check if file is modified because the backup was not found");
+
+                return;
+            }
+
+
+            ZipFile backup = new ZipFile(backupfile);
+            backup.Password = CurrentProjectVariables.JetPassword;
+
+            string modText = RemoveWhitespace(File.ReadAllText(pathToFile));
+            string pathInZip = pathToFile.Replace(CurrentProjectVariables.PathToProjectFiles + "\\", "");
+            string originalText = RemoveWhitespace(ProjectHandler.ReadTextFromZipFile(backup, pathInZip));
+
+            try
+            {
+                if (modText == originalText)
                 {
-                    if (modText == originalText)
+                    //file not modded
+                    if (CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
                     {
-                        //file not modded
-                        if (CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
-                        {
-                            CurrentProjectVariables.ModifiedFiles.Remove(pathToFile);
-                        }
-                    }
-                    else
-                    {
-                        //file modded
-                        if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
-                        {
-                            CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
-                        }
+                        CurrentProjectVariables.ModifiedFiles.Remove(pathToFile);
                     }
                 }
-                catch
+                else
                 {
-                    //exception occurred. file probably modded
+                    //file modded
                     if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
                     {
                         CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
                     }
                 }
-
-                ProjectHandler.SaveProject();
             }
-            else
+            catch
             {
-                if (!File.Exists(pathToFile))
-                    ConsoleHandler.append_Force("Can't check if file is modified because the file itself was not found. Was it deleted?");
-                else
-                    ConsoleHandler.append_Force("Can't check if file is modified because the backup was not found");
+                //exception occurred. file probably modded
+                if (!CurrentProjectVariables.ModifiedFiles.Contains(pathToFile))
+                {
+                    CurrentProjectVariables.ModifiedFiles.Add(pathToFile);
+                }
             }
-                
+
+            ProjectHandler.SaveProject();
+
         }
         private void New_JsonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
