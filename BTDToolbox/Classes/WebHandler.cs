@@ -38,13 +38,30 @@ namespace BTDToolbox.Classes
                 Thread.Sleep(50);
             }
 
-           
 
-            //File.Move(Environment.CurrentDirectory + "\\DownloadFile", savePath);
-            File.Move(Environment.CurrentDirectory + "\\" + filename, savePath);
-            //File.Delete(Environment.CurrentDirectory + "\\DownloadFile");
-            File.Delete(Environment.CurrentDirectory + "\\" + filename);
-            ConsoleHandler.append(filename + " successfully downloaded!");
+            if (!Directory.GetParent(savePath).Exists)
+            {
+                Directory.GetParent(savePath).Create();
+            }
+            if (!File.Exists(savePath))
+            {
+                if (File.Exists(Environment.CurrentDirectory + "\\" + filename))
+                {
+                    //File.Move(Environment.CurrentDirectory + "\\DownloadFile", savePath);
+                    File.Move(Environment.CurrentDirectory + "\\" + filename, savePath);
+                    //File.Delete(Environment.CurrentDirectory + "\\DownloadFile");
+                    File.Delete(Environment.CurrentDirectory + "\\" + filename);
+                    ConsoleHandler.append(filename + " successfully downloaded!");
+                }
+                else
+                {
+                    ConsoleHandler.append(filename + " failed to download! (this COULD be really bad!)");
+                }
+            }
+            else
+            {
+                ConsoleHandler.append(filename + " is already downloaded?");
+            }
         }
 
         public bool checkWebsite(string URL)
