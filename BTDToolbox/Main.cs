@@ -1009,5 +1009,10 @@ namespace BTDToolbox
         {
             Process.Start("https://discordapp.com/invite/jj5Q7mA");
         }
+
+        private void chaiScriptEditorBTD5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

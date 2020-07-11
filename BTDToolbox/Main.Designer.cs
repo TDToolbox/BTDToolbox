@@ -1004,6 +1004,7 @@
             this.chaiScriptEditorBTD5ToolStripMenuItem.Name = "chaiScriptEditorBTD5ToolStripMenuItem";
             this.chaiScriptEditorBTD5ToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.chaiScriptEditorBTD5ToolStripMenuItem.Text = "ChaiScript Editor (BTD5)";
+            this.chaiScriptEditorBTD5ToolStripMenuItem.Click += new System.EventHandler(this.chaiScriptEditorBTD5ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
