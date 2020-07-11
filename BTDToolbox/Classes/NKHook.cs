@@ -110,7 +110,7 @@ namespace BTDToolbox.Classes
                 if (File.Exists(Environment.CurrentDirectory + "\\NKHook5-Injector.exe"))
                     File.Delete(Environment.CurrentDirectory + "\\NKHook5-Injector.exe");
 
-                File.Copy(nkhEXE, Environment.CurrentDirectory + "\\NKHook5-Injector.exe");
+                //File.Copy(nkhEXE, Environment.CurrentDirectory + "\\NKHook5-Injector.exe");
                 Serializer.cfg.NKHookVersion = web.LatestVersionNumber;
                 Serializer.SaveSettings();
             }).Start();
